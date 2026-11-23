@@ -1,10 +1,16 @@
 # Bắt đầu ở đây khi tiếp quản AI Marketing Company
 
-## Nhánh PR #5 · Pool nhiều agency
+## Mốc nội bộ sau PR #5 · Schema v10
+
+Ngày 23/11/2026, [PR #5](https://github.com/datnv41001/ai-company/pull/5) đã vào `main` tại [`6657ef81364c941fe1fe13d1f92efcdd7ce334d0`](https://github.com/datnv41001/ai-company/commit/6657ef81364c941fe1fe13d1f92efcdd7ce334d0). Git tree của bản merge trùng với head đã kiểm toán `9a82526d902b525636734397676a796c3736d3b9`. CI trên chính commit merge đạt 3/3 job ngay lần đầu. Ruff và 93/93 bài SQLite/PostgreSQL đạt; cả chín đường nâng v1–v9 lên v10 đều chạy lại thành công. Chromium đạt tại 1280 × 850 và 390 × 844. Trong kịch bản Qwen local, A dừng do thu hồi quyền, B và C đạt 4/4 bước ngay lần đầu, qua QA và khách thử duyệt. [CI trên commit merge](https://github.com/datnv41001/ai-company/actions/runs/45150904549).
+
+Trong kịch bản PostgreSQL có hạn mức run 1.000 micro-USD, tổng chi ròng cộng khoản giữ lần lượt là 700 sau timeout, 350 sau đối soát, 750 sau khi giữ thêm 400 và 350 khi offer mới hết hạn trước lúc worker nhận. Gửi receipt cho offer đó trả HTTP 409, kể cả số tiền bằng 0. Chứng từ v9 từng ghi cho offer chưa nhận vẫn còn trong lịch sử để kiểm kê. [Kiểm thử tài chính và thu hồi quyền](tests/test_pool_dispatch.py) · [Truy vấn đối chiếu sổ cái](docs/POOL-RUNBOOK.md).
+
+Phạm vi nghiệm thu là phát triển nội bộ với dữ liệu tổng hợp và Qwen local. Đối soát nhà cung cấp trả phí, kiểm thử phục hồi dữ liệu thực tế, tải lớn và chất lượng nội dung trên brief khách thật vẫn là các việc cần nghiệm thu riêng.
 
 Schema hiện tại là v10. Migration 010 tính lại số đã chi và đang giữ của từng pool run từ ledger v9. Chứng từ mới cập nhật ledger và run trong cùng giao dịch, bao gồm hoàn tiền và phí đến muộn. API trả 409 nếu offer đã đóng với sự kiện `unsent`. Xem phần đối soát trong runbook để kiểm tra số dư hoặc rà soát chứng từ cũ.
 
-Schema v9 bổ sung danh tính PostgreSQL riêng cho worker, dispatcher, hàng đợi theo campaign và ledger ngân sách theo kỳ UTC. Quyết định kỹ thuật nằm trong [ADR-008](docs/ADR-008-COMPANY-OPERATIONS.md). Để dựng lại trên máy khác, cấp route, kiểm tra chi phí hoặc khôi phục, dùng [hướng dẫn pool Docker](docs/POOL-RUNBOOK.md). Chạy migration trước khi khởi động API của nhánh này. Lịch sử v8 và snapshot giữ nguyên qua nâng cấp.
+Schema v9 bổ sung danh tính PostgreSQL riêng cho worker, dispatcher, hàng đợi theo campaign và ledger ngân sách theo kỳ UTC. Quyết định kỹ thuật nằm trong [ADR-008](docs/ADR-008-COMPANY-OPERATIONS.md). Để dựng lại trên máy khác, cấp route, kiểm tra chi phí hoặc khôi phục, dùng [hướng dẫn pool Docker](docs/POOL-RUNBOOK.md). Chạy migration trước khi khởi động API từ main. Lịch sử v8 và snapshot giữ nguyên qua nâng cấp.
 
 ## 1. Lấy đúng mã trên máy mới
 
@@ -75,7 +81,7 @@ Schema 6 khóa endpoint chiến lược cũ (HTTP 410). Khi dùng OpenAI, đặt
 
 Thu hồi quyền xem hoặc đổi sang brand/campaign khác hủy run queued/running ngay khi giao dịch commit. Quyền được cấp lại cần brief và run mới. Năm đường nâng DB v1–v5 lên v6, hành vi với lượt gọi còn trên mạng, hạn chế chi phí và kiểm thử claims nằm ở [ADR-006](docs/ADR-006-WORKFORCE-CONTROLS.md).
 
-[ADR-005](docs/ADR-005-AI-WORKFORCE.md) ghi ranh giới quyền, lease, retry, prompt, cách đọc chi phí, hạn chế chất lượng, bằng chứng demo và rollback schema 5. [CI](.github/workflows/ci.yml) ghi lệnh chạy suite, bảy đường nâng cấp và nghiệm thu model thật bằng Compose trên database thử riêng.
+[ADR-005](docs/ADR-005-AI-WORKFORCE.md) ghi ranh giới quyền, lease, retry, prompt, cách đọc chi phí, hạn chế chất lượng, bằng chứng demo và rollback schema 5. [CI](.github/workflows/ci.yml) ghi lệnh chạy suite, chín đường nâng cấp và nghiệm thu model thật bằng Compose trên database thử riêng.
 
 ## 3. Hợp đồng nghiệp vụ cổng duyệt · schema 8
 
@@ -99,9 +105,9 @@ Suite bao gồm [luồng và phân trang](tests/test_review_lifecycle.py), [lờ
 
 ## 4. Kiểm thử và dữ liệu nâng cấp
 
-[Workflow CI](.github/workflows/ci.yml) là lệnh tham chiếu chi tiết cho một máy Linux sạch. Job `api-tests` chạy Ruff, SQLite, HTTP với PostgreSQL thật, nâng cấp từ từng phiên bản v1–v7 có dữ liệu. Job `compose-browser` build đúng repo bằng Compose và thao tác qua Chromium với hai kích thước. Kiểm tra job trên **đúng commit** của PR.
+[Workflow CI](.github/workflows/ci.yml) là lệnh tham chiếu chi tiết cho một máy Linux sạch. Job `api-tests` chạy Ruff, SQLite, HTTP với PostgreSQL thật, nâng cấp từ từng phiên bản v1–v9 có dữ liệu lên v10. Job `compose-browser` build đúng repo bằng Compose và thao tác qua Chromium với hai kích thước. Kiểm tra job trên **đúng commit** của PR.
 
-Khi chạy pytest nhanh với SQLite, đặt DATABASE_URL tới SQLite thử riêng, cài `requirements-dev.txt`, chạy `python -m pytest -q`. Các bài PostgreSQL bị skip trong chế độ này. Khi chạy suite đầy đủ, dùng DB trống cục bộ tên bắt đầu bằng `amc_test`, runtime role `amc_runtime`, có `AMC_TEST_PG=1` và chạy migration trước pytest. Tách bảy DB thử trống cho `tests/check_postgres_upgrade.py`. Chạy mặc định cho v1, lần lượt thêm `--from-v2`, `--from-v3`, `--from-v4`, `--from-v5`, `--from-v6`, `--from-v7` vào sáu lượt còn lại. Với test trình duyệt, cài `requirements-browser.txt`, chạy `python -m playwright install chromium` rồi trỏ `AMC_BROWSER_TEST_URL` đến một instance loopback chỉ có dữ liệu thử. Test tạo tài khoản mẫu. Không chạy các kịch bản này trong DB đang phục vụ người dùng.
+Khi chạy pytest nhanh với SQLite, đặt DATABASE_URL tới SQLite thử riêng, cài `requirements-dev.txt`, chạy `python -m pytest -q`. Các bài PostgreSQL bị skip trong chế độ này. Khi chạy suite đầy đủ, dùng DB trống cục bộ tên bắt đầu bằng `amc_test`, runtime role `amc_runtime`, có `AMC_TEST_PG=1` và chạy migration trước pytest. Tách chín DB thử trống cho `tests/check_postgres_upgrade.py`. Chạy mặc định cho v1, lần lượt thêm `--from-v2`, `--from-v3`, `--from-v4`, `--from-v5`, `--from-v6`, `--from-v7`, `--from-v8`, `--from-v9` vào tám lượt còn lại. Với test trình duyệt, cài `requirements-browser.txt`, chạy `python -m playwright install chromium` rồi trỏ `AMC_BROWSER_TEST_URL` đến một instance loopback chỉ có dữ liệu thử. Test tạo tài khoản mẫu. Không chạy các kịch bản này trong DB đang phục vụ người dùng.
 
 Schema v4 giữ các quyết định v3, kể cả lý do từng để trống. Schema v3 giữ bản nháp và quyền cũ trong DB; khách ngoài được backfill grant chỉ xem và có danh sách review rỗng tới lần chia sẻ đầu tiên. Không tự chuyển viewer nội bộ thành khách. [Trình chạy migration](migrations/apply.py) ghi version trong cùng giao dịch. Xem quy trình phục hồi trong [ADR-003](docs/ADR-003-CLIENT-DELIVERY.md).
 
@@ -111,4 +117,4 @@ Người hoặc AI sửa mã cập nhật **cùng PR** phần hợp đồng tư�
 
 Ghi vào PR: hành vi cũ → mới, đường vào API/UI, files chính, phiên bản schema, lệnh kiểm thử, kết quả đạt/skip, link CI, dữ liệu cần chuyển và điểm còn mở. Người nhận chạy lại thay đổi từ SHA của PR và lấy dữ liệu mẫu qua fixture. Chưa merge thì nêu tên nhánh. Khi hoàn tất một work package, cập nhật mục tiếp theo và mốc xác minh. Mẫu có ở [pull request template](.github/pull_request_template.md).
 
-**Công việc tiếp theo.** [Kế hoạch kiến trúc và nghiệm thu PR #5](docs/PR5-AI-COMPANY-OPERATIONS.md) mô tả AI Director đa dự án, dispatcher và pool theo phạm vi được cấp, ngân sách agency và đối soát từng attempt. Bộ thử đồng thời dùng hai khách trong cùng agency và một agency khác. Đây là kế hoạch triển khai cho vòng phát triển nội bộ tiếp theo.
+**Công việc tiếp theo.** [Kế hoạch AI Director và workflow có đồ thị phụ thuộc](docs/PR6-DIRECTOR-WORKFLOW-DAG.md) mô tả hợp đồng node/cạnh, thứ tự chuyển đổi, điều kiện nghiệm thu và rollback. Bắt đầu bằng ADR và test RED trên một workflow có hai nhánh cùng cấp đầu vào cho bước tổng hợp.

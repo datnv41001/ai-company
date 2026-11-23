@@ -1,0 +1,107 @@
+diff --git a/app/main.py b/app/main.py
+--- a/app/main.py
++++ b/app/main.py
+@@ -4,8 +4,10 @@
+ from pathlib import Path
+ from typing import Any
+ 
+-from fastapi import Depends, FastAPI, HTTPException
+-from fastapi.responses import FileResponse
++from fastapi import Depends, FastAPI, HTTPException, Request
++from fastapi.exception_handlers import request_validation_exception_handler
++from fastapi.exceptions import RequestValidationError
++from fastapi.responses import FileResponse, JSONResponse
+ from fastapi.staticfiles import StaticFiles
+ from sqlalchemy import select
+ from sqlalchemy.inspection import inspect
+@@ -303,3 +305,15 @@
+ def role_catalog(user: User = Depends(current_user)):
+     _ = user
+     return json.loads((ROOT.parent / "catalog" / "agent_roles.json").read_text(encoding="utf-8"))
++
++
++@app.exception_handler(RequestValidationError)
++async def validation_error(request: Request, exc: RequestValidationError):
++    if request.scope.get("endpoint") not in (register, login):
++        return await request_validation_exception_handler(request, exc)
++    # Validation inputs can contain a password or the entire submitted body.
++    errors = [
++        {"loc": error["loc"], "type": error["type"], "msg": "Invalid authentication input"}
++        for error in exc.errors()
++    ]
++    return JSONResponse(status_code=422, content={"detail": errors})
+diff --git a/app/services/marketing.py b/app/services/marketing.py
+--- a/app/services/marketing.py
++++ b/app/services/marketing.py
+@@ -4,7 +4,7 @@
+     ("intake", "Complete client discovery and validate brief", "ai-account-director", "Approved client brief with explicit missing-information list"),
+     ("research", "Research market, customer segments and competitors", "ai-market-researcher", "Source-linked research and evidence log"),
+     ("strategy", "Propose positioning, channels, KPI and campaign strategy", "ai-marketing-strategist", "Campaign strategy proposal with assumptions"),
+-    ("content", "Build channel-specific content calendar and drafts", "ai-copywriter", "Editorial calendar and editable content drafts"),
++    ("content", "Build channel-specific content calendar and drafts", "ai-copywriter-content-strategist", "Editorial calendar and editable content drafts"),
+     ("creative", "Prepare creative briefs and design asset plan", "ai-creative-director", "Creative brief and asset checklist"),
+     ("quality", "Validate claims, brand voice, permissions and risks", "ai-content-qa", "QA findings and approval-ready assets"),
+     ("reporting", "Define measurable reporting and data requirements", "ai-marketing-data-analyst", "KPI measurement plan and data-source mapping"),
+diff --git a/tests/test_api.py b/tests/test_api.py
+--- a/tests/test_api.py
++++ b/tests/test_api.py
+@@ -56,6 +56,19 @@
+     second = client.post(url, headers=headers(owner))
+     assert second.json()["created_count"] == 0
+     assert len(second.json()["tasks"]) == 7
++
++
++def test_planned_roles_exist_in_role_catalog(client):
++    owner = sign_up(client, "rolecheck")
++    _, _, campaign = setup_campaign(client, owner)
++    plan = client.post(
++        f"/api/tenants/{owner['tenant_id']}/campaigns/{campaign['id']}/plan",
++        headers=headers(owner),
++    )
++    catalog = client.get("/api/catalog/roles", headers=headers(owner))
++    assert plan.status_code == catalog.status_code == 200
++    registered = {role["id"] for role in catalog.json()}
++    assert {task["role_slug"] for task in plan.json()["tasks"]} <= registered
+ 
+ 
+ def test_approval_requires_separate_human_and_is_tenant_scoped(client):
+@@ -126,6 +139,20 @@
+     assert client.get(f"/api/tenants/{tid}/audit", headers=headers(viewer)).status_code == 404
+ 
+ 
++def test_auth_validation_keeps_submitted_credentials_out_of_response(client):
++    marker = "demo-value"
++    cases = [
++        ("register", {"email": "review@example.com", "organization_name": "Review", "password": marker}),
++        ("login", {"email": "review@example.com", "password": [marker]}),
++        ("register", [{"password": marker}]),
++    ]
++    for endpoint, payload in cases:
++        result = client.post(f"/api/auth/{endpoint}", json=payload)
++        assert result.status_code == 422
++        assert marker not in result.text
++        assert isinstance(result.json()["detail"], list)
++
++
+ def test_ai_strategy_api_persists_a_draft_only_with_mocked_provider(client, monkeypatch):
+     from app.schemas import StrategyDraft
+     owner = sign_up(client, "strategist")
+@@ -144,8 +171,8 @@
+     import json
+     from pathlib import Path
+     root = Path(__file__).resolve().parents[1]
+-    roles = json.loads((root / "catalog/agent_roles.json").read_text())
+-    workflows = json.loads((root / "catalog/workflows.json").read_text())
++    roles = json.loads((root / "catalog/agent_roles.json").read_text(encoding="utf-8"))
++    workflows = json.loads((root / "catalog/workflows.json").read_text(encoding="utf-8"))
+     assert len(roles) == 37
+     assert len(workflows) == 24
+     assert all(i["status"] == "specification_only" for i in roles + workflows)
+diff --git a/migrations/001_correct_content_role.sql b/migrations/001_correct_content_role.sql
+new file mode 100644
+--- /dev/null
++++ b/migrations/001_correct_content_role.sql
+@@ -0,0 +1,3 @@
++UPDATE work_tasks
++SET role_slug = 'ai-copywriter-content-strategist'
++WHERE workflow_key = 'content' AND role_slug = 'ai-copywriter';

@@ -1,0 +1,172 @@
+[
+  {
+    "file": ".codex/INITIAL_REVIEW_PROMPT.md",
+    "sha256": "1e94484b3d5a5f76dca11125d490cd78a2756bbe901d99c2d0257a16749b8f29",
+    "bytes": 2802
+  },
+  {
+    "file": ".env.example",
+    "sha256": "039d78759a681c22e7c9c133071b4f5a4dd52155f73fa646bc719f705c4f0e30",
+    "bytes": 289
+  },
+  {
+    "file": ".github/workflows/ci.yml",
+    "sha256": "16336d768384deca1d9339bd5109d7d908d3829ebf1d296062a35e64de6a6d1a",
+    "bytes": 353
+  },
+  {
+    "file": ".gitignore",
+    "sha256": "2e45d6a946597cb9740b0cd413fb1d325b5ae4c27e491eb0a0398039ee8887f6",
+    "bytes": 133
+  },
+  {
+    "file": "AGENTS.md",
+    "sha256": "6f4b7137157b6a08746b9d93298441ee3228ddc11d5d196d7bbe75c5063505e6",
+    "bytes": 2529
+  },
+  {
+    "file": "Dockerfile",
+    "sha256": "1f05214cbfa81fa2cd38ab1694ec539b37fe86dfbafdb6d89d63acc13157416d",
+    "bytes": 327
+  },
+  {
+    "file": "LICENSE-STATUS.md",
+    "sha256": "5a9a5016a111aba5a401d652d06f1a02f7d3571b0ec0c5d678e8af832b1eb543",
+    "bytes": 654
+  },
+  {
+    "file": "README.md",
+    "sha256": "225c68693fdf5d937f660f6d97e972dedc2710d6e4316a8f90d30ae3e501dc10",
+    "bytes": 5033
+  },
+  {
+    "file": "app/__init__.py",
+    "sha256": "2866e57e9674ce1a713b09672b8d4c89f30dc7e1710dd1e00fb74f294cc89e04",
+    "bytes": 46
+  },
+  {
+    "file": "app/database.py",
+    "sha256": "0635bbde67c62040bed81f6aa4b68bd1035ae241b376972886962997a3a9dc65",
+    "bytes": 1016
+  },
+  {
+    "file": "app/main.py",
+    "sha256": "2f14a6500c9941aac28be751a0e8913f7b48bd0c9c3ed747b403c0d4ae734cb9",
+    "bytes": 14850
+  },
+  {
+    "file": "app/models.py",
+    "sha256": "42dc079dced79b124b5d9d1e6ca082d1a0683c766e74dc126ee0441f1e2ad752",
+    "bytes": 5272
+  },
+  {
+    "file": "app/schemas.py",
+    "sha256": "9335db8946d32ed1a6f13c27ee4b3976ec6cf07ffa2a22b264e3c79d29560e38",
+    "bytes": 1640
+  },
+  {
+    "file": "app/security.py",
+    "sha256": "dbd3a207156c92e86e8e477c328b5fc2006820b867cc0b9bcee9ba673388f712",
+    "bytes": 2466
+  },
+  {
+    "file": "app/services/__init__.py",
+    "sha256": "ebfd224afb2dcb8f8109bc0cc1d3de1e1f50464ccfe15d8ba9220f3e9db521a6",
+    "bytes": 45
+  },
+  {
+    "file": "app/services/llm.py",
+    "sha256": "a37daee4ca64be9e1b3cd3ebba8589e344987fd2474fdf05c6825d214e466098",
+    "bytes": 2364
+  },
+  {
+    "file": "app/services/marketing.py",
+    "sha256": "659cc75ead2edff237a21075d6727da61a968738177f473aba6d74a18c5b7fbb",
+    "bytes": 1082
+  },
+  {
+    "file": "app/static/app.js",
+    "sha256": "3a0d4f7c3847881299359c4d498438ad67a60faffd610416660469df8eb9ae6f",
+    "bytes": 5599
+  },
+  {
+    "file": "app/static/index.html",
+    "sha256": "a31316ddef9726cf05a096e23375d54b0ecaaf995fbcc7fa55ae2009dbf31604",
+    "bytes": 6488
+  },
+  {
+    "file": "app/static/style.css",
+    "sha256": "70402e3775ffb63dcf2d20ca5bb08f3cdee732e8142fb41dfc13dac21e1b131e",
+    "bytes": 5287
+  },
+  {
+    "file": "catalog/agent_roles.json",
+    "sha256": "7397489f7705ec791ed4c4533a43728a95d0c972dad2385b7196e40ef4264f72",
+    "bytes": 9292
+  },
+  {
+    "file": "catalog/workflows.json",
+    "sha256": "f1ea1725b776b79ac29a817365207d046e832ee6c1085f85bfab1f8b030e8ba1",
+    "bytes": 7411
+  },
+  {
+    "file": "compose.yaml",
+    "sha256": "9b40fd83545e0802e4637c5756e506c59eceeb416be5f6b4b96a9a323c0a7ef4",
+    "bytes": 866
+  },
+  {
+    "file": "docs/ADR-001-OWN-SaaS-CORE.md",
+    "sha256": "02b5c53cc08a30401b7e76831bba21b16eafef9dcb7a449aa191e686b6e7b2f7",
+    "bytes": 4739
+  },
+  {
+    "file": "docs/CODEX_LOCAL_HANDOFF.md",
+    "sha256": "1b5c23b58d70a5d8314662988d860d5324f901b4cac0bb4e820736999e47c82b",
+    "bytes": 3944
+  },
+  {
+    "file": "docs/GITHUB_RESEARCH_AND_REUSE.md",
+    "sha256": "d6f4f9c4094ad0eb7e5e90243ece7b964aea61cd8acf534d1cf13558771e7cb8",
+    "bytes": 7718
+  },
+  {
+    "file": "docs/IMPLEMENTATION_STATUS.md",
+    "sha256": "334456b375f1b72f87e0e31efbf7f487c0b53cbb3875d7c25c445c29f42d21ce",
+    "bytes": 3899
+  },
+  {
+    "file": "docs/PRODUCT_SPEC_V1.md",
+    "sha256": "ef3f4178656069f50e0dd1917a4c9a0ad1a0c44df1d2f2c626a785d7117b73da",
+    "bytes": 44925
+  },
+  {
+    "file": "docs/SECURITY_AND_GA_BLOCKERS.md",
+    "sha256": "0b6b27a2141a415ea73697e838f9ad9922b94a8ee711a64803a0171b8ca64408",
+    "bytes": 4806
+  },
+  {
+    "file": "pyproject.toml",
+    "sha256": "d3defbfed6bb0218b215775f753517c822931d8298ed8a0d88d322716a6aa9f8",
+    "bytes": 192
+  },
+  {
+    "file": "requirements-dev.txt",
+    "sha256": "698b320b9cd8155c33c6e20edd23d29a6590987ec40a039fcdbc19e89f885083",
+    "bytes": 48
+  },
+  {
+    "file": "requirements.txt",
+    "sha256": "ada6e4bf9c92887f2f89e4c65292767915ec9438a5a966a3491ca7b096389d4b",
+    "bytes": 197
+  },
+  {
+    "file": "tests/conftest.py",
+    "sha256": "1ae04eefb1c220c9f84419fbd172f7732d6cef8420e8820d076812ec3992c70e",
+    "bytes": 835
+  },
+  {
+    "file": "tests/test_api.py",
+    "sha256": "dce735d5d48b98c99e1dc1c91b12538123f290073710c92afcbf64610a6426d3",
+    "bytes": 9699
+  }
+]

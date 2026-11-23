@@ -1,0 +1,298 @@
+[
+  {
+    "id": "ai-managing-director",
+    "display_name": "AI Managing Director",
+    "group": "Ban điều hành",
+    "status": "specification_only",
+    "tools": [],
+    "approval_default": "required_for_external_actions"
+  },
+  {
+    "id": "ai-marketing-operations-director",
+    "display_name": "AI Marketing Operations Director",
+    "group": "Ban điều hành",
+    "status": "specification_only",
+    "tools": [],
+    "approval_default": "required_for_external_actions"
+  },
+  {
+    "id": "ai-resource-project-manager",
+    "display_name": "AI Resource/Project Manager",
+    "group": "Ban điều hành",
+    "status": "specification_only",
+    "tools": [],
+    "approval_default": "required_for_external_actions"
+  },
+  {
+    "id": "ai-executive-assistant",
+    "display_name": "AI Executive Assistant",
+    "group": "Ban điều hành",
+    "status": "specification_only",
+    "tools": [],
+    "approval_default": "required_for_external_actions"
+  },
+  {
+    "id": "ai-business-development",
+    "display_name": "AI Business Development",
+    "group": "Khối khách hàng và kinh doanh",
+    "status": "specification_only",
+    "tools": [],
+    "approval_default": "required_for_external_actions"
+  },
+  {
+    "id": "ai-solutions-consultant",
+    "display_name": "AI Solutions Consultant",
+    "group": "Khối khách hàng và kinh doanh",
+    "status": "specification_only",
+    "tools": [],
+    "approval_default": "required_for_external_actions"
+  },
+  {
+    "id": "ai-account-director",
+    "display_name": "AI Account Director",
+    "group": "Khối khách hàng và kinh doanh",
+    "status": "specification_only",
+    "tools": [],
+    "approval_default": "required_for_external_actions"
+  },
+  {
+    "id": "ai-client-success",
+    "display_name": "AI Client Success",
+    "group": "Khối khách hàng và kinh doanh",
+    "status": "specification_only",
+    "tools": [],
+    "approval_default": "required_for_external_actions"
+  },
+  {
+    "id": "ai-commercial-proposal-specialist",
+    "display_name": "AI Commercial/Proposal Specialist",
+    "group": "Khối khách hàng và kinh doanh",
+    "status": "specification_only",
+    "tools": [],
+    "approval_default": "required_for_external_actions"
+  },
+  {
+    "id": "ai-market-researcher",
+    "display_name": "AI Market Researcher",
+    "group": "Khối Insights, Strategy & Brand",
+    "status": "specification_only",
+    "tools": [],
+    "approval_default": "required_for_external_actions"
+  },
+  {
+    "id": "ai-consumer-insights-analyst",
+    "display_name": "AI Consumer Insights Analyst",
+    "group": "Khối Insights, Strategy & Brand",
+    "status": "specification_only",
+    "tools": [],
+    "approval_default": "required_for_external_actions"
+  },
+  {
+    "id": "ai-competitor-intelligence",
+    "display_name": "AI Competitor Intelligence",
+    "group": "Khối Insights, Strategy & Brand",
+    "status": "specification_only",
+    "tools": [],
+    "approval_default": "required_for_external_actions"
+  },
+  {
+    "id": "ai-marketing-strategist",
+    "display_name": "AI Marketing Strategist",
+    "group": "Khối Insights, Strategy & Brand",
+    "status": "specification_only",
+    "tools": [],
+    "approval_default": "required_for_external_actions"
+  },
+  {
+    "id": "ai-brand-strategist",
+    "display_name": "AI Brand Strategist",
+    "group": "Khối Insights, Strategy & Brand",
+    "status": "specification_only",
+    "tools": [],
+    "approval_default": "required_for_external_actions"
+  },
+  {
+    "id": "ai-product-marketing-gtm",
+    "display_name": "AI Product Marketing/GTM",
+    "group": "Khối Insights, Strategy & Brand",
+    "status": "specification_only",
+    "tools": [],
+    "approval_default": "required_for_external_actions"
+  },
+  {
+    "id": "ai-customer-journey-planner",
+    "display_name": "AI Customer Journey Planner",
+    "group": "Khối Insights, Strategy & Brand",
+    "status": "specification_only",
+    "tools": [],
+    "approval_default": "required_for_external_actions"
+  },
+  {
+    "id": "ai-creative-director",
+    "display_name": "AI Creative Director",
+    "group": "Khối Creative & Content",
+    "status": "specification_only",
+    "tools": [],
+    "approval_default": "required_for_external_actions"
+  },
+  {
+    "id": "ai-copywriter-content-strategist",
+    "display_name": "AI Copywriter/Content Strategist",
+    "group": "Khối Creative & Content",
+    "status": "specification_only",
+    "tools": [],
+    "approval_default": "required_for_external_actions"
+  },
+  {
+    "id": "ai-social-content-specialist",
+    "display_name": "AI Social Content Specialist",
+    "group": "Khối Creative & Content",
+    "status": "specification_only",
+    "tools": [],
+    "approval_default": "required_for_external_actions"
+  },
+  {
+    "id": "ai-visual-design",
+    "display_name": "AI Visual Design",
+    "group": "Khối Creative & Content",
+    "status": "specification_only",
+    "tools": [],
+    "approval_default": "required_for_external_actions"
+  },
+  {
+    "id": "ai-video-storyboard",
+    "display_name": "AI Video/Storyboard",
+    "group": "Khối Creative & Content",
+    "status": "specification_only",
+    "tools": [],
+    "approval_default": "required_for_external_actions"
+  },
+  {
+    "id": "ai-editorial-localization",
+    "display_name": "AI Editorial/Localization",
+    "group": "Khối Creative & Content",
+    "status": "specification_only",
+    "tools": [],
+    "approval_default": "required_for_external_actions"
+  },
+  {
+    "id": "ai-digital-asset-librarian",
+    "display_name": "AI Digital Asset Librarian",
+    "group": "Khối Creative & Content",
+    "status": "specification_only",
+    "tools": [],
+    "approval_default": "required_for_external_actions"
+  },
+  {
+    "id": "ai-performance-media-planner",
+    "display_name": "AI Performance Media Planner",
+    "group": "Khối Activation & Growth",
+    "status": "specification_only",
+    "tools": [],
+    "approval_default": "required_for_external_actions"
+  },
+  {
+    "id": "ai-google-ads-specialist",
+    "display_name": "AI Google Ads Specialist",
+    "group": "Khối Activation & Growth",
+    "status": "specification_only",
+    "tools": [],
+    "approval_default": "required_for_external_actions"
+  },
+  {
+    "id": "ai-meta-ads-specialist",
+    "display_name": "AI Meta Ads Specialist",
+    "group": "Khối Activation & Growth",
+    "status": "specification_only",
+    "tools": [],
+    "approval_default": "required_for_external_actions"
+  },
+  {
+    "id": "ai-tiktok-linkedin-channel-specialist",
+    "display_name": "AI TikTok/LinkedIn Channel Specialist",
+    "group": "Khối Activation & Growth",
+    "status": "specification_only",
+    "tools": [],
+    "approval_default": "required_for_external_actions"
+  },
+  {
+    "id": "ai-seo-geo-specialist",
+    "display_name": "AI SEO/GEO Specialist",
+    "group": "Khối Activation & Growth",
+    "status": "specification_only",
+    "tools": [],
+    "approval_default": "required_for_external_actions"
+  },
+  {
+    "id": "ai-website-cro-specialist",
+    "display_name": "AI Website/CRO Specialist",
+    "group": "Khối Activation & Growth",
+    "status": "specification_only",
+    "tools": [],
+    "approval_default": "required_for_external_actions"
+  },
+  {
+    "id": "ai-crm-lifecycle-specialist",
+    "display_name": "AI CRM/Lifecycle Specialist",
+    "group": "Khối Activation & Growth",
+    "status": "specification_only",
+    "tools": [],
+    "approval_default": "required_for_external_actions"
+  },
+  {
+    "id": "ai-pr-influencer-event-coordinator",
+    "display_name": "AI PR/Influencer/Event Coordinator",
+    "group": "Khối Activation & Growth",
+    "status": "specification_only",
+    "tools": [],
+    "approval_default": "required_for_external_actions"
+  },
+  {
+    "id": "ai-marketing-data-analyst",
+    "display_name": "AI Marketing Data Analyst",
+    "group": "Khối Data, Governance & Quality",
+    "status": "specification_only",
+    "tools": [],
+    "approval_default": "required_for_external_actions"
+  },
+  {
+    "id": "ai-attribution-experiment-analyst",
+    "display_name": "AI Attribution/Experiment Analyst",
+    "group": "Khối Data, Governance & Quality",
+    "status": "specification_only",
+    "tools": [],
+    "approval_default": "required_for_external_actions"
+  },
+  {
+    "id": "ai-martech-tracking-specialist",
+    "display_name": "AI MarTech/Tracking Specialist",
+    "group": "Khối Data, Governance & Quality",
+    "status": "specification_only",
+    "tools": [],
+    "approval_default": "required_for_external_actions"
+  },
+  {
+    "id": "ai-content-qa",
+    "display_name": "AI Content QA",
+    "group": "Khối Data, Governance & Quality",
+    "status": "specification_only",
+    "tools": [],
+    "approval_default": "required_for_external_actions"
+  },
+  {
+    "id": "ai-policy-brand-compliance",
+    "display_name": "AI Policy/Brand Compliance",
+    "group": "Khối Data, Governance & Quality",
+    "status": "specification_only",
+    "tools": [],
+    "approval_default": "required_for_external_actions"
+  },
+  {
+    "id": "ai-cost-capacity-analyst",
+    "display_name": "AI Cost & Capacity Analyst",
+    "group": "Khối Data, Governance & Quality",
+    "status": "specification_only",
+    "tools": [],
+    "approval_default": "required_for_external_actions"
+  }
+]

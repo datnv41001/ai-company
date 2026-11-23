@@ -1,0 +1,10 @@
+fastapi>=0.128,<1
+uvicorn[standard]>=0.35,<1
+SQLAlchemy>=2.0,<2.1
+PyJWT>=2.10,<3
+argon2-cffi>=23.1,<26
+python-dotenv>=1,<2
+email-validator>=2,<3
+httpx>=0.27,<1
+openai>=2,<3
+psycopg[binary]>=3.2,<4

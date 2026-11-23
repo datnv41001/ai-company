@@ -1,0 +1,40 @@
+services:
+  db:
+    image: postgres:16.6-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: amc
+      POSTGRES_USER: amc
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?set POSTGRES_PASSWORD in .env}
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U amc -d amc"]
+      interval: 5s
+      retries: 20
+  migrate:
+    build: .
+    command: ["python", "migrations/apply.py"]
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      AMC_MIGRATION_DSN: postgresql://amc:${POSTGRES_PASSWORD}@db:5432/amc
+      AMC_RUNTIME_PASSWORD: ${AMC_RUNTIME_PASSWORD:?set a separate application password}
+  api:
+    build: .
+    restart: unless-stopped
+    depends_on:
+      migrate:
+        condition: service_completed_successfully
+    environment:
+      APP_ENV: development
+      DATABASE_URL: postgresql+psycopg://amc_runtime:${AMC_RUNTIME_PASSWORD}@db:5432/amc
+      JWT_SECRET: ${JWT_SECRET:?set JWT_SECRET in .env}
+      JWT_ISSUER: amc-development
+      OPENAI_API_KEY: ${OPENAI_API_KEY:-}
+      OPENAI_MODEL: ${OPENAI_MODEL:-gpt-4.1-mini}
+    ports:
+      - "127.0.0.1:8000:8000"
+volumes:
+  postgres_data:

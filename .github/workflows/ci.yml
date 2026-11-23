@@ -1,0 +1,38 @@
+name: Verify bootstrap
+on:
+  push:
+  pull_request:
+jobs:
+  api-tests:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python -m pip install -r requirements-dev.txt
+      - run: ruff check app tests migrations
+      - name: Test SQLite and PostgreSQL isolation
+        shell: bash
+        run: |
+          set -euo pipefail
+          export POSTGRES_PASSWORD="$(openssl rand -hex 32)"
+          export AMC_RUNTIME_PASSWORD="$(openssl rand -hex 32)"
+          export JWT_SECRET="$(openssl rand -hex 48)"
+          docker run --detach --rm --name amc-test-pg -e POSTGRES_PASSWORD -e POSTGRES_DB=amc_test_ci \
+            -p 127.0.0.1::5432 postgres:16-alpine
+          trap 'docker stop amc-test-pg >/dev/null' EXIT
+          for i in {1..60}; do
+            if docker exec amc-test-pg pg_isready -h 127.0.0.1 -U postgres; then break; fi
+            sleep 1
+          done
+          port="$(docker port amc-test-pg 5432/tcp | cut -d: -f2)"
+          export AMC_MIGRATION_DSN="postgresql://postgres:$POSTGRES_PASSWORD@127.0.0.1:$port/amc_test_ci"
+          export DATABASE_URL="postgresql+psycopg://amc_runtime:$AMC_RUNTIME_PASSWORD@127.0.0.1:$port/amc_test_ci"
+          export AMC_TEST_PG=1 PYTHONPATH=.
+          python migrations/apply.py
+          python -m pytest -q
+          docker exec amc-test-pg createdb -U postgres amc_test_upgrade
+          export AMC_MIGRATION_DSN="${AMC_MIGRATION_DSN%/*}/amc_test_upgrade"
+          export DATABASE_URL="${DATABASE_URL%/*}/amc_test_upgrade"
+          python tests/check_postgres_upgrade.py

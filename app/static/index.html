@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="dark">
+  <title>AMC | AI Marketing Company</title>
+  <link rel="stylesheet" href="/static/style.css">
+  <script src="/static/app.js" defer></script>
+</head>
+<body>
+  <div class="shell">
+    <aside class="sidebar">
+      <div class="logo"><div class="logo-mark">A</div><div><strong>AI Marketing</strong><small>COMPANY WORKSPACE</small></div></div>
+      <div class="nav-title">OPERATING SYSTEM</div>
+      <div class="nav active">▦ &nbsp; Tổng quan</div>
+      <div class="nav">◎ &nbsp; Khách hàng & Thương hiệu</div>
+      <div class="nav">◈ &nbsp; Chiến dịch</div>
+      <div class="nav">☷ &nbsp; Nhân viên AI</div>
+      <div class="nav">✓ &nbsp; Phê duyệt</div>
+      <div class="nav">◉ &nbsp; Kiểm soát & Nhật ký</div>
+      <div class="sidebar-bottom"><span class="dot"></span> Engineering bootstrap<br><small>Không phải bản thương mại hoàn chỉnh</small></div>
+    </aside>
+    <main class="main">
+      <header class="topbar"><div><small>WORKSPACE</small><h1>AI Marketing Company</h1></div><div id="who" class="top-pill">Chưa đăng nhập</div></header>
+      <section class="hero"><div><div class="eyebrow">FULL PRODUCT V1.0 · DEVELOPMENT FOUNDATION</div><h2>Điều hành đội ngũ Marketing AI<br>trên một nền tảng.</h2><p>Lõi kỹ thuật đầu tiên: tổ chức, thương hiệu, chiến dịch, nhiệm vụ, bản thảo, kiểm duyệt và dấu vết hoạt động.</p></div><div class="hero-orb">AMC<span>ENGINEERING</span></div></section>
+      <div id="notice" role="status"></div>
+      <section id="auth" class="section-panel">
+        <div class="section-head"><div><small>GET STARTED</small><h3>Đăng ký workspace hoặc đăng nhập</h3></div></div>
+        <div class="auth-grid">
+          <form id="register-form" class="panel"><h4>Tạo tổ chức</h4><label>Email<input name="email" type="email" required placeholder="name@company.com"></label><label>Mật khẩu (≥12 ký tự)<input name="password" type="password" minlength="12" required></label><label>Tên tổ chức<input name="organization_name" required minlength="2" placeholder="Marketing Agency"></label><label>Chế độ<select name="mode"><option value="agency">Agency Mode</option><option value="inhouse">In-house Mode</option></select></label><button type="submit">Tạo tổ chức →</button></form>
+          <form id="login-form" class="panel"><h4>Đăng nhập</h4><label>Email<input name="email" type="email" required></label><label>Mật khẩu<input name="password" type="password" required></label><button type="submit">Đăng nhập →</button><p class="muted">Tài khoản và dữ liệu nằm trên máy chủ riêng của bạn. Chưa hỗ trợ quên mật khẩu hay xác minh email.</p></form>
+        </div>
+      </section>
+      <section id="workspace" class="hidden">
+        <label id="workspace-choice" class="hidden">Không gian làm việc<select id="workspace-select"></select></label>
+        <p id="client-scope" class="hidden"></p>
+        <div class="metric-grid"><div class="metric"><span>Khách hàng</span><strong id="client-count">0</strong><small>Đang quản lý</small></div><div class="metric"><span>Thương hiệu</span><strong id="brand-count">0</strong><small>Brand Kit và hồ sơ</small></div><div class="metric"><span>Chiến dịch</span><strong id="campaign-count">0</strong><small>Dự án đang lưu</small></div><div class="metric"><span>AI Roles</span><strong id="role-count">37</strong><small>Thông số vai trò, chưa kích hoạt toàn bộ</small></div></div>
+        <div class="section-head"><div><small>OPERATIONS</small><h3>Thiết lập nghiệp vụ</h3></div><button id="refresh" class="secondary">Làm mới</button></div>
+        <div id="workspace-forms" class="triple">
+          <form id="client-form" class="panel"><h4>01 · Khách hàng</h4><p>Thêm doanh nghiệp sẽ được quản lý Marketing.</p><label>Tên khách hàng<input name="name" required minlength="2"></label><label>Lĩnh vực<input name="sector" placeholder="Ví dụ: SaaS, Bán lẻ"></label><button type="submit">Thêm khách hàng</button></form>
+          <form id="brand-form" class="panel"><h4>02 · Thương hiệu</h4><p>Ghi rõ sự thật sản phẩm và quy chuẩn thương hiệu.</p><label>Khách hàng<select name="client_id" id="brand-client" required></select></label><label>Tên thương hiệu<input name="name" required minlength="2"></label><label>Quy chuẩn<input name="brand_guidelines" placeholder="Giọng điệu, claims không được dùng"></label><label>Thông tin sản phẩm được xác minh<input name="product_truth" placeholder="Nguồn sự thật sản phẩm"></label><button type="submit">Tạo Brand Kit</button></form>
+          <form id="campaign-form" class="panel"><h4>03 · Chiến dịch</h4><p>Đặt mục tiêu và brief để phân rã công việc Marketing.</p><label>Thương hiệu<select name="brand_id" id="campaign-brand" required></select></label><label>Tên chiến dịch<input name="name" required minlength="2"></label><label>Mục tiêu<input name="objective" required minlength="5"></label><label>Brief<textarea name="brief" rows="3" minlength="10" required></textarea></label><button type="submit">Tạo chiến dịch</button></form>
+        </div>
+        <div class="section-head"><div><small>CAMPAIGN WORK</small><h3>Chiến dịch & nhiệm vụ</h3></div></div>
+        <div class="panel"><div id="campaigns-list" class="empty">Chưa có chiến dịch. Hãy tạo khách hàng, thương hiệu và chiến dịch ở trên.</div></div>
+        <div class="section-head"><div><small>GOVERNANCE</small><h3>Thao tác nhạy cảm & bản thảo</h3></div></div>
+        <div class="two-col"><div class="panel"><h4>Yêu cầu thực thi bên ngoài</h4><p>Thiết kế để yêu cầu duyệt trước khi đăng bài, gửi email, thay đổi ngân sách. Gọi API thực tế chưa được bật.</p><div id="actions-list" class="empty">Chưa có yêu cầu hành động.</div></div><div class="panel"><h4>Tài liệu bàn giao</h4><p>Các bản nháp và kết quả AI cần được kiểm duyệt trước khi sử dụng.</p><div id="deliverables-list" class="empty">Chưa có tài liệu.</div></div></div>
+      </section>
+      <footer>AMC Engineering Bootstrap · 2026 · Bản khởi tạo chưa có xác thực email, RLS production, billing hoặc connectors.</footer>
+    </main>
+  </div>
+</body>
+</html>

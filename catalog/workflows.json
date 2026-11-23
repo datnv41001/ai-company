@@ -1,0 +1,170 @@
+[
+  {
+    "id": "WF-01 Lead-to-Client",
+    "trigger": "lead/form/API",
+    "steps": "qualify -> discovery -> proposal/SOW -> commercial signoff -> onboarding",
+    "approval_and_errors": "hợp đồng giá/điều khoản do người duyệt, chống trùng lead",
+    "status": "specification_only"
+  },
+  {
+    "id": "WF-02 Brand Onboarding",
+    "trigger": "khách đăng ký/khởi tạo brand",
+    "steps": "Brand questionnaire -> collect files -> extract -> validate -> version Brand Kit -> approve",
+    "approval_and_errors": "thiếu tài liệu = chờ bổ sung, không tạo sự thật giả",
+    "status": "specification_only"
+  },
+  {
+    "id": "WF-03 Audit & Research",
+    "trigger": "brief nghiên cứu",
+    "steps": "lấy nguồn -> đo độ mới -> đối chiếu -> competitor/customer analysis -> QA -> report",
+    "approval_and_errors": "nguồn không truy cập = ghi 'không có dữ liệu'",
+    "status": "specification_only"
+  },
+  {
+    "id": "WF-04 Annual/Quarter Strategy",
+    "trigger": "business objective",
+    "steps": "audit -> research -> positioning -> channels -> budget scenario -> KPI -> approval",
+    "approval_and_errors": "gắn giả định, không bảo đảm tăng trưởng",
+    "status": "specification_only"
+  },
+  {
+    "id": "WF-05 Product Launch/GTM",
+    "trigger": "launch brief",
+    "steps": "customer/problem -> proposition -> campaign -> content -> asset -> tracking -> review",
+    "approval_and_errors": "thông số sản phẩm từ tài liệu chính thức",
+    "status": "specification_only"
+  },
+  {
+    "id": "WF-06 Campaign Factory",
+    "trigger": "approved strategy",
+    "steps": "breakdown -> tasks -> content/creative/media -> timeline -> review -> publish plan",
+    "approval_and_errors": "quản lý phụ thuộc, scope, deadline",
+    "status": "specification_only"
+  },
+  {
+    "id": "WF-07 Content Calendar",
+    "trigger": "content brief",
+    "steps": "pillar -> content variants -> per-channel edit -> brand QA -> preview -> approve",
+    "approval_and_errors": "sửa có version, không xuất bản thiếu duyệt",
+    "status": "specification_only"
+  },
+  {
+    "id": "WF-08 Creative & Video",
+    "trigger": "approved creative brief",
+    "steps": "concept -> generation/edit -> copyright check -> storyboard/video -> approval",
+    "approval_and_errors": "provider quota, tài sản đầu vào phải có quyền",
+    "status": "specification_only"
+  },
+  {
+    "id": "WF-09 Social Publishing",
+    "trigger": "approved assets + schedule",
+    "steps": "kiểm quyền channel -> preview -> publish -> verify remote ID -> archive receipt",
+    "approval_and_errors": "retry có idempotency; token hết hạn chờ reconnect",
+    "status": "specification_only"
+  },
+  {
+    "id": "WF-10 Community & Reputation",
+    "trigger": "inbound authorized comments",
+    "steps": "classify -> draft reply -> sensitivity check -> human approve/high-confidence policy -> send",
+    "approval_and_errors": "khiếu nại/khủng hoảng escalate",
+    "status": "specification_only"
+  },
+  {
+    "id": "WF-11 SEO/GEO",
+    "trigger": "website access",
+    "steps": "crawl authorized -> technical/content audit -> recommendations -> change proposal -> approved commit/CMS update",
+    "approval_and_errors": "không tự đăng hàng loạt nội dung kém giá trị",
+    "status": "specification_only"
+  },
+  {
+    "id": "WF-12 Ads Planning/Execution",
+    "trigger": "campaign approval",
+    "steps": "media plan -> campaign draft -> spend ceiling -> explicit approval -> API action -> verify -> monitor",
+    "approval_and_errors": "chưa được API quyền = draft/export, không giả lập thành công",
+    "status": "specification_only"
+  },
+  {
+    "id": "WF-13 Landing/CRO",
+    "trigger": "conversion objective",
+    "steps": "landing spec -> layout/copy -> form -> tracking -> A/B test -> analyze -> optimize",
+    "approval_and_errors": "production publish phải duyệt, rollback",
+    "status": "specification_only"
+  },
+  {
+    "id": "WF-14 Lifecycle/CRM",
+    "trigger": "consented segment/event",
+    "steps": "segment -> journey -> content -> legal consent -> send -> deliverability/opt-out -> report",
+    "approval_and_errors": "không gửi spam, không contact chưa có quyền",
+    "status": "specification_only"
+  },
+  {
+    "id": "WF-15 PR/Influencer/Events",
+    "trigger": "communications brief",
+    "steps": "research -> shortlist -> outreach draft -> brief/contract checklist -> logistics -> measurement",
+    "approval_and_errors": "KOL/giá/thỏa thuận cần người phê duyệt",
+    "status": "specification_only"
+  },
+  {
+    "id": "WF-16 Ecommerce/Trade",
+    "trigger": "catalog update/promo",
+    "steps": "product truth -> channel content -> promotion plan -> availability/price check -> approved publish",
+    "approval_and_errors": "giá/tồn từ source of truth",
+    "status": "specification_only"
+  },
+  {
+    "id": "WF-17 Analytics Ingestion",
+    "trigger": "schedule/API sync/CSV",
+    "steps": "fetch -> validation -> raw snapshot -> normalize -> reconciliation -> store",
+    "approval_and_errors": "lỗi nguồn phát cảnh báo, không bịa dữ liệu",
+    "status": "specification_only"
+  },
+  {
+    "id": "WF-18 Marketing Reporting",
+    "trigger": "period close",
+    "steps": "compute KPI deterministic -> narrative evidence -> exceptions -> review -> PDF/HTML/export -> client portal",
+    "approval_and_errors": "trace raw source, thiếu nguồn = null/not available",
+    "status": "specification_only"
+  },
+  {
+    "id": "WF-19 Optimization Loop",
+    "trigger": "performance anomaly",
+    "steps": "threshold -> root cause hypotheses -> recommendation -> simulation -> approval -> action -> measurement",
+    "approval_and_errors": "không tự chi vượt ngân sách",
+    "status": "specification_only"
+  },
+  {
+    "id": "WF-20 Lead-to-Sales",
+    "trigger": "qualified opt-in lead",
+    "steps": "score -> dedup -> route CRM -> activity -> status feedback -> attribution",
+    "approval_and_errors": "privacy/consent, dữ liệu chuyển giao phải đúng quyền",
+    "status": "specification_only"
+  },
+  {
+    "id": "WF-21 Client Feedback & Change",
+    "trigger": "edit request",
+    "steps": "record -> SOW/scope check -> impact and price/time -> change approval -> tasks -> deliver",
+    "approval_and_errors": "không làm tăng phạm vi không kiểm soát",
+    "status": "specification_only"
+  },
+  {
+    "id": "WF-22 Incident & Recovery",
+    "trigger": "error/provider outage/security",
+    "steps": "detect -> block dangerous action -> alert -> retry/rollback -> audit -> postmortem",
+    "approval_and_errors": "fail closed, không báo success giả",
+    "status": "specification_only"
+  },
+  {
+    "id": "WF-23 Weekly/Monthly Operations",
+    "trigger": "schedule",
+    "steps": "client update -> deadlines -> spent vs plan -> QA failures -> billing status -> exec report",
+    "approval_and_errors": "số liệu kiểm chứng, lịch đúng timezone",
+    "status": "specification_only"
+  },
+  {
+    "id": "WF-24 Subscription Lifecycle",
+    "trigger": "billing event",
+    "steps": "subscription -> entitlement -> proration -> invoice/refund -> renewal/dunning -> graceful limit",
+    "approval_and_errors": "billing idempotency, ngừng agent theo policy",
+    "status": "specification_only"
+  }
+]

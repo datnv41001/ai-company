@@ -79,7 +79,11 @@ def exercise():
                 expect(pane.get_by_text("Bản này đã đúng brief", exact=False)).to_be_visible()
                 pane.get_by_role("button", name="Duyệt phiên bản này").click()
                 expect(pane.get_by_role("button", name=title + " · v1 · Khách đã duyệt")).to_be_visible()
-                assert page.evaluate("document.documentElement.scrollWidth <= innerWidth")
+                # Element identifiers help diagnose font-dependent wrapping on Linux and Windows.
+                overflow = page.evaluate("""() => Array.from(document.querySelectorAll('body *'))
+                    .filter(el => el.getBoundingClientRect().right > innerWidth + 0.5)
+                    .map(el => [el.tagName, el.id, el.className])""")
+                assert page.evaluate("document.documentElement.scrollWidth <= innerWidth"), overflow
                 page.route("**/reviews", lambda route: route.fulfill(status=503, body="unavailable"))
                 page.locator("#refresh").click()
                 expect(pane.get_by_text("Không tải được danh sách bản bàn giao.")).to_be_visible()

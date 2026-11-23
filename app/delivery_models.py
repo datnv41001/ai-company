@@ -31,6 +31,8 @@ class ClientReview(Base):
         ForeignKeyConstraint(["tenant_id", "client_id", "brand_id"], ["brands.tenant_id", "brands.client_id", "brands.id"]),
         ForeignKeyConstraint(["tenant_id", "brand_id", "campaign_id"], ["campaigns.tenant_id", "campaigns.brand_id", "campaigns.id"]),
         ForeignKeyConstraint(["tenant_id", "campaign_id", "deliverable_id"], ["deliverables.tenant_id", "deliverables.campaign_id", "deliverables.id"]),
+        Index("ix_review_page", "tenant_id", "created_at", "id"),
+        Index("ix_client_review_page", "tenant_id", "client_id", "created_at", "id"),
         UniqueConstraint("deliverable_id", "version"),
         UniqueConstraint("tenant_id", "id", "digest"),
         CheckConstraint("version > 0 AND expires_at > created_at"),
@@ -68,3 +70,30 @@ class ReviewEntry(Base):
     note: Mapped[str] = mapped_column(Text, default="")
     request_key: Mapped[str] = mapped_column(String(80))
     created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), default=utcnow)
+
+
+class PortalInvitation(Base):
+    __tablename__ = "portal_invitations"
+    __table_args__ = (
+        ForeignKeyConstraint(["tenant_id", "client_id"], ["clients.tenant_id", "clients.id"]),
+        ForeignKeyConstraint(["tenant_id", "client_id", "brand_id"], ["brands.tenant_id", "brands.client_id", "brands.id"]),
+        ForeignKeyConstraint(["tenant_id", "brand_id", "campaign_id"], ["campaigns.tenant_id", "campaigns.brand_id", "campaigns.id"]),
+        CheckConstraint("campaign_id IS NULL OR brand_id IS NOT NULL"),
+        CheckConstraint("state IN ('pending','accepted','revoked')"),
+        Index("uq_pending_portal_invite", "tenant_id", "user_id", unique=True,
+              sqlite_where=text("state='pending'"), postgresql_where=text("state='pending'")),
+    )
+    id: Mapped[str] = mapped_column(String(36), primary_key=True, default=new_id)
+    tenant_id: Mapped[str] = mapped_column(String(36), index=True)
+    client_id: Mapped[str] = mapped_column(String(36))
+    user_id: Mapped[str] = mapped_column(ForeignKey("users.id"), index=True)
+    invited_by: Mapped[str] = mapped_column(ForeignKey("users.id"))
+    email: Mapped[str] = mapped_column(String(320))
+    workspace_name: Mapped[str] = mapped_column(String(150))
+    client_name: Mapped[str] = mapped_column(String(160))
+    brand_id: Mapped[str | None] = mapped_column(String(36))
+    campaign_id: Mapped[str | None] = mapped_column(String(36))
+    can_comment: Mapped[bool] = mapped_column(Boolean)
+    can_decide: Mapped[bool] = mapped_column(Boolean)
+    expires_at: Mapped[datetime] = mapped_column(DateTime(timezone=True))
+    state: Mapped[str] = mapped_column(String(12), default="pending")

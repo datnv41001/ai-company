@@ -44,6 +44,8 @@ def prepare_database(bind):
                                        ("campaigns","tenant_id,brand_id,id"), ("deliverables","tenant_id,campaign_id,id")):
                     conn.exec_driver_sql(f"CREATE UNIQUE INDEX uq_delivery_{table} ON {table} ({columns})")
             Base.metadata.create_all(conn)
+            for index in Base.metadata.tables["client_reviews"].indexes:
+                index.create(conn, checkfirst=True)
             if first_delivery_upgrade:
                 conn.exec_driver_sql("""INSERT INTO portal_grants(tenant_id,user_id,client_id,can_comment,can_decide)
                     SELECT tenant_id,user_id,client_id,0,0 FROM memberships WHERE role='client_viewer'""")
@@ -61,9 +63,9 @@ def prepare_database(bind):
         enabled = set(conn.scalars(text("""SELECT relname FROM pg_class
             WHERE relnamespace='public'::regnamespace AND relrowsecurity""")))
         if not set(Base.metadata.tables).issubset(enabled) or not conn.scalar(
-            text("SELECT EXISTS (SELECT FROM public.amc_schema_versions WHERE version=3)")
+            text("SELECT EXISTS (SELECT FROM public.amc_schema_versions WHERE version=4)")
         ):
-            raise RuntimeError("Apply the PostgreSQL client isolation migration before starting the API")
+            raise RuntimeError("Apply the PostgreSQL schema migrations before starting the API")
 
 
 def get_db() -> Generator[Session, None, None]:

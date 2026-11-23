@@ -6,9 +6,9 @@ from datetime import timezone
 from typing import Literal
 from uuid import uuid4
 
-from fastapi import APIRouter, Depends, HTTPException
+from fastapi import APIRouter, Depends, HTTPException, Query, Response
 from pydantic import AwareDatetime, BaseModel, ConfigDict, Field
-from sqlalchemy import select, text
+from sqlalchemy import and_, select, text, tuple_
 from sqlalchemy.exc import IntegrityError
 from sqlalchemy.orm import Session
 
@@ -114,27 +114,50 @@ def capabilities(db, member):
     return member.role in ("editor", "admin", "owner"), False
 
 
-def render(db, member, review, detail=True):
+def render(db, member, review):
     events = event_list(db, review)
     item = {k: getattr(review, k) for k in ("id", "deliverable_id", "client_id", "brand_id", "campaign_id", "version", "title", "digest")}
     item.update(status=status(review, events), expires_at=as_utc(review.expires_at))
-    if detail:
-        comment, decide = capabilities(db, member)
-        item.update(
-            preview=review.preview,
-            can_comment=comment,
-            can_decide=decide,
-            can_cancel=member.role in ("admin", "owner"),
-            history=[{"id": e.id, "actor_id": e.actor_id, "kind": e.kind, "note": e.note, "digest": e.digest, "at": as_utc(e.created_at)} for e in events],
-        )
+    comment, decide = capabilities(db, member)
+    item.update(
+        preview=review.preview,
+        can_comment=comment,
+        can_decide=decide,
+        can_cancel=member.role in ("editor", "admin", "owner"),
+        history=[{"id": e.id, "actor_id": e.actor_id, "kind": e.kind, "note": e.note, "digest": e.digest, "at": as_utc(e.created_at)} for e in events],
+    )
     return item
 
 
 @router.get("/reviews")
-def reviews(tenant_id: str, user: User = Depends(current_user), db: Session = Depends(get_db)):
-    m = require_tenant(db, user, tenant_id)
-    rows = db.scalars(scope_query(db, m).order_by(ClientReview.created_at.desc(), ClientReview.id))
-    return [render(db, m, row, False) for row in rows]
+def reviews(tenant_id: str, response: Response, limit: int = Query(25, ge=1, le=100),
+            cursor: str | None = Query(None, min_length=1, max_length=36),
+            user: User = Depends(current_user), db: Session = Depends(get_db)):
+    member = require_tenant(db, user, tenant_id)
+    scoped = scope_query(db, member)
+    r, e = ClientReview, ReviewEntry
+    if cursor:
+        # Resolve the cursor under the current grant, including after a revocation.
+        anchor = db.execute(scoped.with_only_columns(r.created_at, r.id).where(r.id == cursor)).one_or_none()
+        if anchor is None:
+            raise HTTPException(422, "Cursor unavailable; refresh the list")
+        scoped = scoped.where(tuple_(r.created_at, r.id) < tuple_(*anchor))
+    columns = (r.id, r.deliverable_id, r.client_id, r.brand_id, r.campaign_id, r.version, r.title, r.digest, r.expires_at)
+    # Only one terminal entry can exist. Comments and snapshot payloads stay out of the list query.
+    query = scoped.with_only_columns(*columns, e.kind).outerjoin(
+        e, and_(e.review_id == r.id, e.kind != "comment")
+    ).order_by(r.created_at.desc(), r.id.desc()).limit(limit + 1)
+    rows = db.execute(query).mappings().all()
+    if len(rows) > limit:
+        response.headers["X-Next-Cursor"] = rows[limit - 1]["id"]
+    result = []
+    now = utcnow()
+    for row in rows[:limit]:
+        item = dict(row)
+        item["expires_at"] = as_utc(item["expires_at"])
+        item["status"] = item.pop("kind") or ("expired" if item["expires_at"] <= now else "pending")
+        result.append(item)
+    return result
 
 
 @router.get("/reviews/{rid}")
@@ -143,20 +166,24 @@ def view_review(tenant_id: str, rid: str, user: User = Depends(current_user), db
     return render(db, m, find_review(db, m, rid))
 
 
+def validate_scope(db, tenant_id, client_id, body):
+    if body.brand_id:
+        brand = db.get(Brand, body.brand_id)
+        if not brand or (brand.tenant_id, brand.client_id) != (tenant_id, client_id):
+            raise not_found()
+    if body.campaign_id:
+        campaign = db.get(Campaign, body.campaign_id)
+        if not body.brand_id or not campaign or (campaign.tenant_id, campaign.brand_id) != (tenant_id, body.brand_id):
+            raise not_found()
+
+
 @router.put("/members/{uid}/review-rights")
 def rights(tenant_id: str, uid: str, body: Rights, user: User = Depends(current_user), db: Session = Depends(get_db)):
     require_tenant(db, user, tenant_id, "admin")
     member = db.get(Membership, (tenant_id, uid), with_for_update=True)
     if not member or member.role != "client_viewer":
         raise not_found()
-    if body.brand_id:
-        brand = db.get(Brand, body.brand_id)
-        if not brand or (brand.tenant_id, brand.client_id) != (tenant_id, member.client_id):
-            raise not_found()
-    if body.campaign_id:
-        campaign = db.get(Campaign, body.campaign_id)
-        if not body.brand_id or not campaign or (campaign.tenant_id, campaign.brand_id) != (tenant_id, body.brand_id):
-            raise not_found()
+    validate_scope(db, tenant_id, member.client_id, body)
     grant = db.get(PortalGrant, (tenant_id, uid))
     if grant is None:
         raise not_found()
@@ -171,6 +198,10 @@ def rights(tenant_id: str, uid: str, body: Rights, user: User = Depends(current_
 def edit_draft(tenant_id: str, did: str, body: Edit, user: User = Depends(current_user), db: Session = Depends(get_db)):
     require_tenant(db, user, tenant_id, "editor")
     doc = working_copy(db, tenant_id, did)
+    previous = db.scalar(select(ClientReview).where(ClientReview.deliverable_id == did).order_by(ClientReview.version.desc()).limit(1))
+    if previous and status(previous, event_list(db, previous)) == "pending":
+        # The document lock also guards decisions. A decision committed first stays final.
+        append(db, previous, user.id, "cancelled", "Agency bắt đầu sửa bản làm việc.", str(uuid4()))
     doc.title, doc.content = body.title, {**doc.content, "client_preview": body.client_preview}
     doc.last_editor_id, doc.status, doc.reviewed_by, doc.review_note = user.id, "draft", None, None
     db.add(AuditEvent(tenant_id=tenant_id, user_id=user.id, subject_id=did, event="deliverable.edited", details={}))
@@ -238,11 +269,9 @@ def record(tenant_id: str, rid: str, body: Decision, user: User = Depends(curren
         raise not_found()
     review = find_review(db, m, rid)
     comment, decide = capabilities(db, m)
-    allowed = {"comment": comment, "cancelled": m.role in ("owner", "admin")}.get(body.kind, decide)
+    allowed = {"comment": comment, "cancelled": m.role in ("editor", "owner", "admin")}.get(body.kind, decide)
     if not allowed:
         raise not_found()
-    if body.kind == "comment" and not body.note.strip():
-        raise HTTPException(422, "Write a comment")
     if body.digest != review.digest:
         raise HTTPException(409, "Content digest does not match this version")
     events = event_list(db, review)
@@ -251,6 +280,10 @@ def record(tenant_id: str, rid: str, body: Decision, user: User = Depends(curren
         if (replay.kind, replay.note) != (body.kind, body.note):
             raise HTTPException(409, "Idempotency key already used for another decision")
         return render(db, m, review)
+    if body.kind in ("rejected", "changes_requested") and len(body.note.strip()) < 5:
+        raise HTTPException(422, "Vui lòng nêu lý do cụ thể (ít nhất 5 ký tự).")
+    if body.kind == "comment" and not body.note.strip():
+        raise HTTPException(422, "Write a comment")
     if status(review, events) != "pending":
         raise HTTPException(409, "Review is closed or expired")
     try:

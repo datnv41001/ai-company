@@ -92,7 +92,7 @@ def test_rescope_cancel_and_supersede(api, delivery):
     assert api.patch(path + "/draft", headers=editor["headers"], json={"title": "Updated", "client_preview": "Second version"}).status_code == 200
     v2 = share()
     assert event(api, base, reviewer, v1, "approved").status_code == 409
-    assert api.get(base + "/reviews/" + v1["id"], headers=reviewer["headers"]).json()["status"] == "superseded"
+    assert api.get(base + "/reviews/" + v1["id"], headers=reviewer["headers"]).json()["status"] == "cancelled"
     assert event(api, base, owner, v2, "cancelled").json()["status"] == "cancelled"
     assert event(api, base, reviewer, v2, "approved").status_code == 409
     assert api.delete(base + f"/members/{reviewer['id']}/client-scope", headers=owner["headers"]).status_code == 204
@@ -104,7 +104,7 @@ def test_competing_decisions_and_direct_sql(api, delivery):
     owner, base, ((alice, _), (bob, b)), _, peer, _, _, share, _ = delivery
     v = share()
     with ThreadPoolExecutor(2) as pool:
-        jobs = [pool.submit(event, api, base, who, v, kind) for who, kind in [(alice, "approved"), (peer, "rejected")]]
+        jobs = [pool.submit(event, api, base, who, v, kind, note="Revise the brief") for who, kind in [(alice, "approved"), (peer, "rejected")]]
     assert sorted(j.result().status_code for j in jobs) == [200, 409]
     with engine.connect() as conn:
         for who, expected in ((alice, 1), (bob, 0)):
@@ -146,6 +146,91 @@ def test_edit_requires_new_independent_qa_and_rejection_is_final(api, delivery):
     assert api.post(path + "/review", headers=qa["headers"], json={"decision": "approved"}).status_code == 200
     revised = create(api, path + "/share", owner, {"expires_at": (utcnow() + timedelta(days=1)).isoformat()})
     assert revised["title"] == title and revised["preview"] == content
-    assert event(api, base, alice, revised, "rejected").json()["status"] == "rejected"
+    assert event(api, base, alice, revised, "rejected", note="Sai thông tin sản phẩm").json()["status"] == "rejected"
     assert event(api, base, alice, revised, "approved").status_code == 409
-    assert api.get(base + "/reviews/" + old["id"], headers=alice["headers"]).json()["status"] == "superseded"
+    assert api.get(base + "/reviews/" + old["id"], headers=alice["headers"]).json()["status"] == "cancelled"
+
+
+def test_reasons_and_edit_cancel_before_reshare(api, delivery):
+    _, base, ((alice, _), _), editor, _, _, path, share, _ = delivery
+    first = share()
+    for kind in ("rejected", "changes_requested"):
+        for invalid in ("", "    ", " abc "):
+            assert event(api, base, alice, first, kind, note=invalid).status_code == 422
+    assert api.patch(path+"/draft", headers=editor["headers"], json={"title":"Đổi", "client_preview":"Nội dung mới"}).status_code == 200
+    assert event(api, base, alice, first, "approved").status_code == 409
+    history = api.get(base+"/reviews/"+first["id"], headers=alice["headers"]).json()["history"]
+    assert [(e["kind"], e["actor_id"]) for e in history] == [("cancelled", editor["id"])]
+    second = share()
+    reason = "Vui lòng ghi rõ giá sản phẩm."
+    response = event(api, base, alice, second, "changes_requested", note=reason)
+    assert response.status_code == 200 and response.json()["history"][-1]["note"] == reason
+
+
+def test_cursor_large_shared_history(api, delivery):
+    import os
+    import psycopg
+    from contextlib import closing
+    from sqlalchemy import create_engine, event as sql_event, select
+    from app.database import get_db
+    from app.delivery_models import ClientReview
+    from app.main import app
+
+    owner, base, ((alice, _), (bob, _)), _, _, _, _, share, _ = delivery
+    first = share()
+    scoped_table = ClientReview.__table__
+    if get_db in app.dependency_overrides:
+        with closing(app.dependency_overrides[get_db]()) as dependency:
+            seed_engine = next(dependency).get_bind()
+        api_engine = seed_engine
+    else:
+        # Only fixture data in agency_fixtures' disposable, explicitly selected test database.
+        seed_engine = create_engine("postgresql+psycopg://", creator=lambda: psycopg.connect(os.environ["AMC_MIGRATION_DSN"]))
+        api_engine = engine
+    try:
+        with seed_engine.begin() as conn:
+            template = dict(conn.execute(select(scoped_table).where(scoped_table.c.id == first["id"])).mappings().one())
+            conn.execute(scoped_table.insert(), [{**template, "id": str(uuid4()), "version": n} for n in range(2, 1002)])
+    finally:
+        if seed_engine is not api_engine:
+            seed_engine.dispose()
+
+    queries = []
+    def capture(conn, cursor, sql, parameters, context, executemany):
+        if "client_reviews" in sql or "review_entries" in sql:
+            queries.append(sql)
+
+    sql_event.listen(api_engine, "before_cursor_execute", capture)
+    try:
+        result = api.get(base+"/reviews", headers=alice["headers"])
+    finally:
+        sql_event.remove(api_engine, "before_cursor_execute", capture)
+    items = result.json()
+    assert len(items) == 25 and all("preview" not in i and "history" not in i for i in items)
+    assert len(queries) == 1 and "JOIN review_entries" in queries[0]
+    cursor = result.headers["X-Next-Cursor"]
+    assert api.get(base+"/reviews", params={"cursor":cursor}, headers=bob["headers"]).status_code == 422
+    assert api.get(base+"/reviews", params={"limit":101}, headers=owner["headers"]).status_code == 422
+    seen = [i["id"] for i in items]
+    while cursor:
+        page = api.get(base+"/reviews", params={"limit":100, "cursor":cursor}, headers=alice["headers"])
+        assert page.status_code == 200 and 1 <= len(page.json()) <= 100
+        seen.extend(i["id"] for i in page.json())
+        cursor = page.headers.get("X-Next-Cursor")
+    assert len(seen) == len(set(seen)) == 1001
+
+
+@pytest.mark.parametrize("api", ["postgres"], indirect=True)
+def test_edit_and_client_decision_share_one_lock(api, delivery):
+    owner, base, ((alice, _), _), editor, _, _, path, share, _ = delivery
+    v1 = share()
+    with ThreadPoolExecutor(2) as pool:
+        edit = pool.submit(api.patch, path+"/draft", headers=editor["headers"], json={"title":"Next version","client_preview":"Updated"})
+        decide = pool.submit(event, api, base, alice, v1, "approved")
+    assert edit.result().status_code == 200
+    code = decide.result().status_code
+    assert code in (200, 409)
+    record = api.get(base+"/reviews/"+v1["id"], headers=owner["headers"]).json()
+    expected = "approved" if code == 200 else "cancelled"
+    assert record["status"] == expected
+    assert [e["kind"] for e in record["history"]] == [expected]

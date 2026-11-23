@@ -158,9 +158,13 @@ class Lab:
     def verify_assets_and_dependencies(self, *runs):
         for rid in runs:
             row = self.owner.execute("select checkpoints,deliverable_id,tenant_id,campaign_id from workforce_runs where id=%s", (rid,)).fetchone()
-            assert [c["skill"] for c in row[0]] == ["director", "research", "strategy", "content"]
+            skills = ["director","research","strategy","content"]
+            if self.workflow == "diamond-v1":
+                skills.append("seo")
+                assert self.owner.execute("select deliverable from amc_ops.dag_plans where run=%s",(rid,)).fetchone() == (row[1],)
+            assert [c["skill"] for c in row[0]] == skills
             assert self.owner.execute("select tenant_id,campaign_id from deliverables where id=%s", (row[1],)).fetchone() == row[2:]
-            assert self.owner.execute("select count(*) from amc_ops.tasks where run=%s and done", (rid,)).fetchone() == (4,)
+            assert self.owner.execute("select count(*) from amc_ops.tasks where run=%s and done", (rid,)).fetchone() == (len(skills),)
         assert self.owner.execute("select deliverable_id from workforce_runs where id=%s", (self.runs[0],)).fetchone() == (None,)
 
     def limit_x(self, amount):

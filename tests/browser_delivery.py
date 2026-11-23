@@ -179,7 +179,8 @@ def exercise():
                     f"PASS browser {width}x{height}: unsaved edits blocked, revision-specific findings, A-B-A stale decision refused and fresh decision accepted"
                 )
 
-            _, _, _, invited_email, invited_password = user("InvitedReviewer")
+            invite_token, _, invite_id, invited_email, invited_password = user("InvitedReviewer")
+            api.put(base+"/operations/budget",headers={"Authorization":"Bearer "+token},json={"enabled":True,"ceiling":1000,"capacity":2}).raise_for_status()
             owner_page = login_page(admin_email, admin_password, {"width": 1280, "height": 850})
             admin_panel = owner_page.locator("#recipient-panel")
             admin_panel.get_by_text("Quản lý người nhận và lời mời", exact=True).click()
@@ -218,6 +219,27 @@ def exercise():
             ops.get_by_role("button",name="Giao việc cho AI Director").click()
             expect(ops.get_by_text("Notebook launch · Đang chờ worker")).to_be_visible()
             print("PASS browser: named client submitted sourced brief; agency queued local inference")
+            dag_brief=post(base+"/workforce/briefs",{"title":"Diamond browser","campaign_id":camp["id"],"recipient_id":invite_id},token)
+            api.put(base+"/workforce/briefs/"+dag_brief["id"]+"/submission",headers={"Authorization":"Bearer "+invite_token},
+                    json={"objective":"Visit the store","audience":"University students","offer":"Notebook for students",
+                          "sources":[{"label":"Brand card","excerpt":"A5 blue notebook"}]}).raise_for_status()
+            owner_page.locator("#refresh").click()
+            panel=owner_page.locator("#workforce-panel")
+            panel.get_by_text("Diamond browser · Đã nhận brief").click()
+            brief_form=panel.get_by_text("Diamond browser · Đã nhận brief",exact=True).locator("..")
+            brief_form.get_by_label("Mẫu workflow").select_option("diamond-v1")
+            brief_form.get_by_role("button",name="Giao việc cho AI Director").click()
+            card=panel.get_by_role("heading",name="Diamond browser · Đang chờ worker").locator("..")
+            card.get_by_role("button",name="Xem kết quả và chi phí").click()
+            for width,height in ((1280,850),(390,844)):
+                owner_page.set_viewport_size({"width":width,"height":height})
+                graph=card.get_by_role("region",name="Trạng thái workflow")
+                expect(graph.get_by_text("Mẫu diamond-v1 · Phiên bản 1")).to_be_visible()
+                expect(graph.locator('[data-node="director"]')).to_contain_text("Sẵn sàng")
+                expect(graph.locator('[data-node="join"]')).to_contain_text("Content, SEO")
+                assert graph.evaluate("(e) => e.scrollWidth <= e.clientWidth + 1")
+            print("PASS diamond graph in Chromium at 1280px and 390px")
+
             first = share("Review operations")
             for n in range(25):
                 share(f"Later {n}")

@@ -8,7 +8,7 @@ from dataclasses import dataclass
 from datetime import timedelta
 from uuid import uuid4
 
-from sqlalchemy import select
+from sqlalchemy import select, text
 from sqlalchemy.orm import Session
 
 from .access import set_context, set_worker_scope
@@ -18,6 +18,7 @@ from .revision_qa import evaluate
 from .models import AuditEvent, Deliverable, Membership, utcnow
 from .workforce_gateway import Gateway, GatewayError, PROMPT_VERSION, infer, quality, request_body, reserve_tokens, validate_output
 from .workforce_models import WorkforceRun
+from . import workflow_dag
 
 MAX_TRIES = 3
 
@@ -57,7 +58,7 @@ def close_attempt(run, **updates):
     run.journal = [*run.journal[:-1], {**run.journal[-1], **updates, "finished_at": utcnow().isoformat()}]
 
 
-def claim(db, scope, config, *, run_id=None, commit=True):
+def claim(db, scope, config, *, run_id=None, node=None, commit=True):
     now = utcnow()
     q = authorized_queue(db, scope)
     if run_id is not None:
@@ -72,12 +73,24 @@ def claim(db, scope, config, *, run_id=None, commit=True):
         return
     if run.state == "running":
         close_attempt(run, outcome="lease_expired")
-    stage = run.plan[len(run.checkpoints)]
-    body = request_body(run, config.model)
+    if run.knowledge.get("workflow") == "diamond-v1" and node is None:
+        raise RuntimeError("Missing frozen node for pool dispatch")
+    if node is not None:
+        stage = node.id
+        earlier, assignment = workflow_dag.inputs(db, run.id, node)
+        body = request_body(run, config.model, node=node, predecessors=earlier, assignment=assignment)
+    else:
+        stage = run.plan[len(run.checkpoints)]
+        body = request_body(run, config.model)
     reserved = config.price(reserve_tokens(body), body["max_tokens"])
-    if run.attempts >= MAX_TRIES or run.reserved_microusd + reserved > run.budget_microusd or run.knowledge["prompt_version"] != PROMPT_VERSION:
+    prior_attempts = node.attempts if node else run.attempts
+    if prior_attempts >= MAX_TRIES or run.reserved_microusd + reserved > run.budget_microusd or run.knowledge["prompt_version"] != PROMPT_VERSION:
         error = (
-            "attempts_exhausted" if run.attempts >= MAX_TRIES else "prompt_version" if run.knowledge["prompt_version"] != PROMPT_VERSION else "budget_exhausted"
+            "attempts_exhausted"
+            if prior_attempts >= MAX_TRIES
+            else "prompt_version"
+            if run.knowledge["prompt_version"] != PROMPT_VERSION
+            else "budget_exhausted"
         )
         if run_id is not None and error == "budget_exhausted" and reserved <= run.budget_microusd:
             # A late receipt can make this pooled retry affordable. Preserve its repair context.
@@ -91,11 +104,12 @@ def claim(db, scope, config, *, run_id=None, commit=True):
         return
     token = str(uuid4())
     run.lease, run.state, run.ready_at = token, "running", now + timedelta(seconds=config.timeout + 20)
-    run.attempts += 1
+    run.attempts = prior_attempts + 1
     run.reserved_microusd += reserved
     run.journal = [
         *run.journal,
         {
+            **({"node_id": node.id, "plan_revision": node.revision} if node else {}),
             "skill": stage,
             "attempt": run.attempts,
             "provider": config.provider,
@@ -149,12 +163,12 @@ def bounded_call(config, body):
             child.join()
 
 
-def finish(db, scope, config, task, result, error, *, commit=True):
+def finish(db, scope, config, task, result, error, *, node=None, commit=True):
     rid, token, body = task
     run = db.scalar(authorized_queue(db, scope).where(WorkforceRun.id == rid).with_for_update())
     if not run or run.state != "running" or run.lease != token or as_utc(run.ready_at) <= utcnow():
         return False  # A stale worker must never append a second checkpoint or artifact.
-    stage = run.plan[len(run.checkpoints)]
+    stage = node.id if node else run.plan[len(run.checkpoints)]
     metrics = {}
     if result is not None:
         raw, inputs, outputs = result
@@ -176,10 +190,16 @@ def finish(db, scope, config, task, result, error, *, commit=True):
         run.ready_at = utcnow() + timedelta(seconds=2**run.attempts)
     else:
         close_attempt(run, outcome="ok", **metrics)
-        run.checkpoints = [*run.checkpoints, {"skill": stage, "output": output, "quality": quality(output, run.knowledge["sources"])}]
+        record = {"skill": stage, "output": output, "quality": quality(output, run.knowledge["sources"])}
+        if node:
+            record.update(node_id=node.id, plan_revision=node.revision)
+            joined = workflow_dag.checkpoint(db, run, node, record)
+        else:
+            run.checkpoints = [*run.checkpoints, record]
+            joined = len(run.checkpoints) == len(run.plan)
         run.last_error, run.attempts, run.ready_at = None, 0, utcnow()
         run.state = "queued"
-        if len(run.checkpoints) == len(run.plan):
+        if joined:
             # Only draft copy and specialist proposals enter QA. Director instructions, prompts and source excerpts stay private.
             preview = "\n\n".join(p["skill"].upper() + "\n" + p["output"]["text"] for p in run.checkpoints if p["skill"] != "director")
             doc = Deliverable(
@@ -192,6 +212,12 @@ def finish(db, scope, config, task, result, error, *, commit=True):
             )
             db.add(doc)
             db.flush()
+            if node:
+                db.execute(
+                    text("""update amc_ops.dag_plans set deliverable=:d where run=:r and revision=:v
+                    and deliverable is null returning run"""),
+                    {"d": doc.id, "r": rid, "v": node.revision},
+                ).scalar_one()
             run.deliverable_id, run.state = doc.id, "awaiting_qa"
             db.flush()  # The evidence lookup follows the persisted worker-to-draft link.
             evaluate(db, doc, scope.operator)

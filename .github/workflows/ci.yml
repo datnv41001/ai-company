@@ -69,6 +69,10 @@ jobs:
           export AMC_MIGRATION_DSN="${AMC_MIGRATION_DSN%/*}/amc_test_populated_v9"
           export DATABASE_URL="${DATABASE_URL%/*}/amc_test_populated_v9"
           python tests/check_postgres_upgrade.py --from-v9
+          docker exec amc-test-pg createdb -U postgres amc_test_populated_v10
+          export AMC_MIGRATION_DSN="${AMC_MIGRATION_DSN%/*}/amc_test_populated_v10"
+          export DATABASE_URL="${DATABASE_URL%/*}/amc_test_populated_v10"
+          python tests/check_postgres_upgrade.py --from-v10
   compose-browser:
     runs-on: ubuntu-latest
     steps:
@@ -144,11 +148,15 @@ jobs:
           export DATABASE_URL="postgresql+psycopg://amc_runtime:$AMC_RUNTIME_PASSWORD@127.0.0.1:$port/amc_test_qwen_pool"
           export PYTHONPATH=. AMC_POOL_REPORT=pool-measurements.json AMC_TEST_PG=1
           python migrations/apply.py
-          python tests/pool_model_smoke.py --docker
-          exit "$single_result"
+          pool_result=0
+          python tests/pool_model_smoke.py --docker || pool_result=$?
+          AMC_POOL_REPORT=diamond-measurements.json python tests/pool_model_smoke.py --docker --workflow diamond-v1
+          test "$single_result" -eq 0 && test "$pool_result" -eq 0
       - uses: actions/upload-artifact@v4
         if: always()
         with:
           name: pool-model-measurements
-          path: pool-measurements.json
+          path: |
+            pool-measurements.json
+            diamond-measurements.json
           if-no-files-found: ignore

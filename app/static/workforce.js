@@ -17,6 +17,19 @@ function createWorkforce(root, api, notify) {
     b.onclick=async()=>{ b.disabled=true; try {await run();} catch(e){notify(e.message,true);} finally{b.disabled=false;} };
   }
   const labels={director:'Director',research:'Research',strategy:'Strategy',content:'Content',seo:'SEO',creative:'Creative',ads:'Ads',analytics:'Analytics'};
+  const graphStates={waiting:'Đang chờ',ready:'Sẵn sàng',running:'Đang xử lý',succeeded:'Hoàn tất',failed:'Thất bại',blocked:'Bị chặn',retry_wait:'Chờ thử lại'};
+  function showGraph(info,graph) {
+    const view=node(info,'section');view.setAttribute('aria-label','Trạng thái workflow');
+    node(view,'h4','Mẫu diamond-v1 · Phiên bản '+graph.revision);
+    const list=node(view,'ul');
+    for(const n of graph.nodes) {
+      const item=node(list,'li');item.dataset.node=n.node_id;
+      node(item,'strong',(labels[n.node_id]||'Join')+' · '+graphStates[n.status]);
+      if(n.missing.length)node(item,'p','Chờ đầu ra: '+n.missing.map(k=>labels[k]).join(', '));
+      if(n.error && n.error!=='ok')node(item,'p','Lỗi gần nhất: '+n.error);
+      if(n.node_id!=='join')node(item,'p',n.attempts+' lượt · giữ '+n.held+' · đã chi '+n.spent+' micro-USD');
+    }
+  }
   const states={queued:'Đang chờ worker',running:'Đang xử lý',failed:'Đã dừng',awaiting_qa:'Đã chuyển sang QA'};
   async function show(tenant,role,campaigns,expanded) {
     const ticket=++revision; root.inert=true;
@@ -65,21 +78,25 @@ function createWorkforce(root, api, notify) {
           await api(base+'/briefs/'+b.id+'/submission','PUT',{objective:goal.value,audience:audience.value,offer:offer.value,sources:[{label:label.value,excerpt:excerpt.value}]});await reload();
         });
       } else if (!external && role!=='viewer' && b.submitted && !runs.some(r=>r.brief_id===b.id)) {
+        const workflow=field(row,'Mẫu workflow','select');
+        workflow.add(new Option('Tuyến tính','linear'));workflow.add(new Option('Content và SEO sau Strategy (diamond-v1)','diamond-v1'));
         const select=field(row,'Chuyên môn bổ sung','select');select.multiple=true;
         ['seo','creative','ads','analytics'].forEach(s=>select.add(new Option(labels[s],s)));
+        workflow.onchange=()=>{select.disabled=workflow.value==='diamond-v1';};
         const budget=field(row,'Ngân sách model (USD, 0 cho local)','input');budget.type='number';budget.step='0.01';budget.min=0;budget.max=1;budget.value=0;
         action(row,'Giao việc cho AI Director',async()=>{await api(base+'/briefs/'+b.id+'/run','POST',{
-          extra_skills:Array.from(select.selectedOptions,o=>o.value),budget_microusd:Math.round(Number(budget.value)*1000000)});await reload();});
+          workflow:workflow.value,extra_skills:select.disabled?[]:Array.from(select.selectedOptions,o=>o.value),budget_microusd:Math.round(Number(budget.value)*1000000)});await reload();});
       }
     }
     if(!external) {
       action(box,'Cập nhật tiến độ',reload);
       for(const r of runs) {
         const row=node(box,'div');node(row,'h4',r.title+' · '+(states[r.state]||r.state));
-        node(row,'p',r.done+'/'+r.skills.length+' bước · '+r.skills.map(s=>labels[s]).join(' → '));
+        node(row,'p',r.done+'/'+r.skills.length+' bước · '+(r.workflow==='diamond-v1'?'Director → Research → Strategy → (Content + SEO) → Join':r.skills.map(s=>labels[s]).join(' → ')));
         const info=node(row,'div');action(row,'Xem kết quả và chi phí',async()=>{
           const v=await api(base+'/runs/'+r.id);if(ticket!==revision)return;
           info.replaceChildren();node(info,'p',v.journal.length+' lượt xử lý · Chi phí đã tính hoặc giữ chỗ: '+(v.reserved_microusd/1000000).toFixed(6)+' USD');
+          if(v.graph)showGraph(info,v.graph);
           if(v.last_error)node(info,'p',v.last_error==='recipient_revoked'?'Đã hủy do thu hồi quyền của người giao brief.':'Lỗi: '+v.last_error);
           v.checkpoints.forEach(p=>{node(info,'h4',labels[p.skill]);node(info,'p',p.output.text);
             node(info,'p','Nguồn: '+p.output.source_ids.map(k=>v.source_registry?.[k]?.label||k).join(', '));

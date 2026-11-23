@@ -16,7 +16,7 @@ from .database import engine, prepare_database
 from .delivery import as_utc
 from .revision_qa import evaluate
 from .models import AuditEvent, Deliverable, Membership, utcnow
-from .workforce_gateway import Gateway, GatewayError, MAX_OUTPUT, PROMPT_VERSION, infer, quality, request_body, reserve_tokens, validate_output
+from .workforce_gateway import Gateway, GatewayError, PROMPT_VERSION, infer, quality, request_body, reserve_tokens, validate_output
 from .workforce_models import WorkforceRun
 
 MAX_TRIES = 3
@@ -74,7 +74,7 @@ def claim(db, scope, config, *, run_id=None, commit=True):
         close_attempt(run, outcome="lease_expired")
     stage = run.plan[len(run.checkpoints)]
     body = request_body(run, config.model)
-    reserved = config.price(reserve_tokens(body), MAX_OUTPUT)
+    reserved = config.price(reserve_tokens(body), body["max_tokens"])
     if run.attempts >= MAX_TRIES or run.reserved_microusd + reserved > run.budget_microusd or run.knowledge["prompt_version"] != PROMPT_VERSION:
         run.last_error = (
             "attempts_exhausted" if run.attempts >= MAX_TRIES else "prompt_version" if run.knowledge["prompt_version"] != PROMPT_VERSION else "budget_exhausted"
@@ -155,7 +155,7 @@ def finish(db, scope, config, task, result, error, *, commit=True):
     if result is not None:
         raw, inputs, outputs = result
         try:
-            if type(inputs) is not int or type(outputs) is not int or not (0 < inputs <= reserve_tokens(body) and 0 < outputs <= MAX_OUTPUT):
+            if type(inputs) is not int or type(outputs) is not int or not (0 < inputs <= reserve_tokens(body) and 0 < outputs <= body["max_tokens"]):
                 raise GatewayError("invalid_usage")
             cost = config.price(inputs, outputs)
             run.reserved_microusd += cost - run.journal[-1]["reserved_microusd"]

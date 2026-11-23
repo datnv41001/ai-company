@@ -31,3 +31,19 @@ def test_pool_contract_is_installed():
     with pg_runtime.connect() as conn:
         assert conn.scalar(text("select to_regprocedure('amc_ops.take()') is not null"))
         assert conn.scalar(text("select to_regprocedure('amc_ops.report(uuid,jsonb,text)') is not null"))
+
+
+def test_truncated_content_repair_changes_grammar_and_reserves_output_room():
+    from app.workforce_gateway import MAX_OUTPUT
+
+    run = SimpleNamespace(plan=["content"], checkpoints=[], knowledge={"sources": {"S1": {"excerpt": "Notebook"}}}, last_error=None, attempts=0)
+    original = request_body(run, "local")
+    run.last_error, run.attempts = "incomplete_output", 1
+    repaired = request_body(run, "local")
+
+    def fields(body):
+        return body["response_format"]["json_schema"]["schema"]["properties"]
+
+    assert fields(repaired)["body_copy"]["maxLength"] < fields(original)["body_copy"]["maxLength"]
+    assert original["max_tokens"] == MAX_OUTPUT < repaired["max_tokens"]
+    assert repaired["temperature"] > original["temperature"]

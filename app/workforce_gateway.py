@@ -80,12 +80,17 @@ class Gateway:
 def request_body(run, model):
     stage = run.plan[len(run.checkpoints)]
     sources = run.knowledge["sources"]
-    properties = {name: {"type": "string"} for name in SECTIONS[stage]}
+    error = getattr(run, "last_error", None)
+    attempt = getattr(run, "attempts", 0)
+    # Bound each free-text production inside the grammar. A smaller retry schema
+    # leaves room for closing brackets and citations even after a verbose first call.
+    field_limit = 96 if error == "incomplete_output" else 200
+    properties = {name: {"type": "string", "minLength": 3, "maxLength": field_limit} for name in SECTIONS[stage]}
     properties["source_ids"] = {"type": "array", "minItems": 1, "maxItems": min(4,len(sources)), "items": {"type": "string", "enum": list(sources)}}
     if stage == "director":
         properties["assignments"] = {
             "type": "object",
-            "properties": {k: {"type": "string", "minLength": 4, "maxLength": 160} for k in run.plan[1:]},
+            "properties": {k: {"type": "string", "minLength": 4, "maxLength": min(96,field_limit)} for k in run.plan[1:]},
             "required": run.plan[1:],
             "additionalProperties": False,
         }
@@ -105,14 +110,13 @@ def request_body(run, model):
         "invalid_source": "Use only these supplied source IDs: " + ", ".join(sources),
         "timeout": "Previous timeout left usage unconfirmed. Produce a concise fresh response.",
     }
-    error = getattr(run, "last_error", None)
     if error in repair:
         system += " Previous error " + error + ". " + repair[error]
     return {
-        "temperature": 0,
+        "temperature": 0.25 if error in repair else 0,
         "model": model,
         "messages": [{"role": "system", "content": system}, {"role": "user", "content": data}],
-        "max_tokens": MAX_OUTPUT,
+        "max_tokens": MAX_OUTPUT + min(attempt, 2) * 160 if error == "incomplete_output" else MAX_OUTPUT,
         "response_format": {"type": "json_schema", "json_schema": {"name": stage, "strict": True, "schema": schema}},
     }
 
@@ -134,7 +138,8 @@ def infer(config, body):
         headers["Authorization"] = "Bearer " + key
     try:
         with httpx.Client(timeout=config.timeout, trust_env=False) as client:
-            res = client.post(config.url + "/chat/completions", json=body, headers=headers)
+            payload = {**body, "seed": 42} if config.provider == "local" else body
+            res = client.post(config.url + "/chat/completions", json=payload, headers=headers)
             res.raise_for_status()
             message = res.json()
         usage = message["usage"]

@@ -129,7 +129,8 @@ jobs:
                   break
               except OSError: time.sleep(2)
           else: raise RuntimeError('Model failed to start')"
-          python tests/workforce_compose_smoke.py
+          single_result=0
+          python tests/workforce_compose_smoke.py || single_result=$?
           "${compose[@]}" exec -T db createdb -U amc amc_test_qwen_pool
           port="$("${compose[@]}" port db 5432 | cut -d: -f2)"
           set -a
@@ -140,6 +141,7 @@ jobs:
           export PYTHONPATH=. AMC_POOL_REPORT=pool-measurements.json AMC_TEST_PG=1
           python migrations/apply.py
           python tests/pool_model_smoke.py --docker
+          exit "$single_result"
       - uses: actions/upload-artifact@v4
         if: always()
         with:

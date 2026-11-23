@@ -19,8 +19,10 @@ from test_workforce import DATA, call_model
 
 @dataclass(frozen=True)
 class FixedHold(Gateway):
+    amount: int = 700
+
     def price(self, inputs, outputs):
-        return 700
+        return self.amount
 
 
 class Worker:
@@ -98,7 +100,7 @@ class Lab:
         self.cases.append((base, admin, reader, client, campaign))
 
     def dispatch(self, reserve=0):
-        config = FixedHold(**vars(self.config)) if reserve == 700 else self.config
+        config = FixedHold(**vars(self.config), amount=reserve) if reserve else self.config
         return dispatch(self.bind, config)
 
     def consume(self):

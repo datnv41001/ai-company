@@ -116,3 +116,95 @@ def test_offline_worker_and_cutover(pool_lab):
     )
     assert response.status_code == 409
     assert lab.owner.execute("select execution_mode from workforce_runs where id=%s", (lab.runs[-1],)).fetchone() == ("legacy",)
+
+
+@pytest.fixture()
+def one_run(pool_lab):
+    lab = pool_lab
+    lab.limit_x(10000)  # Keep the agency cap separate from the run's 1,000.
+    lab.owner.execute("update workforce_runs set budget_microusd=1000 where id=%s", (lab.runs[0],))
+    lab.owner.execute("update workforce_runs set ready_at=now()+interval '1 day' where id=%s", (lab.runs[1],))
+    assert lab.dispatch(reserve=700)
+    return lab
+
+
+def exposure(lab):
+    return lab.owner.execute("""
+        select r.reserved_microusd, (select sum(l.held+l.spent) from amc_ops.attempts a
+        join amc_ops.ledger l using(id) where a.run=r.id)
+        from workforce_runs r where r.id=%s""", (lab.runs[0],)).fetchone()
+
+
+def sent_timeout(lab):
+    worker, job = next((w,j) for w in lab.workers if (j:=w.take()))
+    assert worker.error(job,"timeout")
+    assert lab.consume()
+    lab.owner.execute("update workforce_runs set ready_at=now() where id=%s", (job["run"],))
+    return job
+
+
+def test_late_receipt_releases_run_budget_for_next_400(one_run):
+    lab = one_run
+    job = sent_timeout(lab)
+    lab.bill(job, 350, "invoice")
+    assert lab.dispatch(reserve=400)
+    assert exposure(lab) == (750, 750)
+    assert lab.balance_x() == (400,350)
+
+
+def test_unsent_rejects_receipts_without_financial_effect(one_run):
+    lab = one_run
+    rid = lab.runs[0]
+    job = {"id":str(lab.owner.execute("select id from amc_ops.attempts where run=%s",(rid,)).fetchone()[0])}
+    lab.owner.execute("update workforce_runs set ready_at=now() where id=%s",(rid,))
+    assert lab.consume()
+    for amount in (350, 0):
+        assert lab.receipt(job,amount,"unsent").status_code == 409
+    assert exposure(lab) == (0,0)
+    assert lab.owner.execute("select event from amc_ops.ledger where id=%s order by seq",(job["id"],)).fetchall() == [("hold",),("unsent",)]
+
+
+def test_overage_duplicate_and_refund_keep_run_retryable(one_run):
+    lab = one_run
+    job = sent_timeout(lab)
+    lab.bill(job, 3_000_000_000, "overage")
+    assert exposure(lab) == (3_000_000_000, 3_000_000_000)
+    assert not lab.dispatch(reserve=400)
+    assert lab.states()[0] == "queued"
+    lab.bill(job,0,"refund")
+    lab.bill(job,3_000_000_000,"overage")  # Replay after refund must not restore old spend.
+    assert exposure(lab) == (0,0)
+    assert lab.dispatch(reserve=400)
+    assert exposure(lab) == (400,400)
+
+
+def test_concurrent_receipts_and_dispatch_share_one_balance(one_run):
+    from threading import Barrier
+    lab = one_run
+    job = sent_timeout(lab)
+    barrier = Barrier(3)
+    def bill():
+        barrier.wait(timeout=10)
+        return lab.receipt(job,350,"same-receipt").status_code
+    def dispatch():
+        barrier.wait(timeout=10)
+        return lab.dispatch(reserve=400)
+    with ThreadPoolExecutor(max_workers=3) as executor:
+        left, right, claim = executor.submit(bill), executor.submit(bill), executor.submit(dispatch)
+        assert left.result() == right.result() == 200
+        if not claim.result():
+            assert lab.dispatch(reserve=400)
+    assert exposure(lab) == (750,750)
+    assert lab.owner.execute("select count(*) from amc_ops.ledger where id=%s and event='receipt'",(job["id"],)).fetchone() == (1,)
+
+
+def test_receipt_after_revocation_only_changes_finances(one_run):
+    lab = one_run
+    _,job = next((w,j) for w in lab.workers if (j:=w.take()))
+    lab.revoke_and_restore_a()
+    assert lab.consume()
+    assert exposure(lab) == (700,700)
+    lab.bill(job,220,"withdrawn-invoice")
+    assert exposure(lab) == (220,220)
+    assert lab.owner.execute("select state,last_error,deliverable_id,json_array_length(checkpoints) from workforce_runs where id=%s",
+                             (job["run"],)).fetchone() == ("failed","recipient_revoked",None,0)

@@ -1,0 +1,40 @@
+"""Inference process. Its dedicated PostgreSQL login can only take and report its own jobs."""
+
+import os
+import time
+
+import psycopg
+from psycopg.types.json import Jsonb
+
+from .workforce_gateway import Gateway, GatewayError
+from .workforce_worker import bounded_call
+
+
+def take(conn):
+    return conn.execute("select amc_ops.take()").fetchone()[0]
+
+
+def report(conn, job, result=None, error=None):
+    return conn.execute("select amc_ops.report(%s,%s,%s)", (job["id"], Jsonb(result) if result is not None else None, error)).fetchone()[0]
+
+
+def main():
+    config = Gateway.configured()
+    if config.provider != "local":
+        raise ValueError("Pool supports local inference only")
+    with psycopg.connect(os.environ["AMC_POOL_DSN"], autocommit=True) as conn:
+        while True:
+            job = take(conn)
+            if job is None:
+                time.sleep(0.5)
+                continue
+            try:
+                result = bounded_call(config, job["body"])
+            except GatewayError as exc:
+                report(conn, job, result=exc.usage, error=str(exc))
+            else:
+                report(conn, job, result=result)
+
+
+if __name__ == "__main__":
+    main()

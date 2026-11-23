@@ -16,6 +16,7 @@ from sqlalchemy.orm import Session
 from .revision_qa import content_digest, evaluate
 from .workforce_evidence import RULESET
 from .delivery import router as delivery_router, working_copy
+from .operations import router as operations_router
 from .workforce import router as workforce_router
 from .recipients import router as recipients_router, revoke_pending
 from .delivery_models import PortalGrant
@@ -42,6 +43,7 @@ app = FastAPI(title="AI Marketing Company - Engineering Bootstrap", version="0.1
 app.include_router(delivery_router)
 app.include_router(recipients_router)
 app.include_router(workforce_router)
+app.include_router(operations_router)
 app.mount("/static", StaticFiles(directory=ROOT / "static"), name="static")
 
 

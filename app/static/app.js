@@ -18,6 +18,23 @@
     $('workspace-choice').classList.toggle('hidden', me.tenants.length < 2);
     await enter(state.token, me.tenants.find(m => m.tenant_id === tenantId), me.email);
   });
+  const operations = async () => {
+    if (!['owner','admin'].includes(state.role)) return;
+    const tenant = state.tenantId;
+    const data = await api(tenantPath('operations'));
+    if (state.tenantId !== tenant || !data.available) return;
+    $('operations-month').textContent = 'Kỳ UTC ' + data.month + (data.enabled ? ' · Đang điều phối' : ' · Chưa bật pool');
+    const labels = {'Hạn mức (micro-USD)':data.ceiling ?? 'Chưa thiết lập','Đang giữ (micro-USD)':data.held,
+      'Đã ghi chi (micro-USD)':data.spent,'Lượt xử lý':data.attempts,'Đang xử lý':data.active};
+    if (data.ceiling != null && data.held + data.spent >= data.ceiling) labels['Ngân sách'] = 'Đã chạm hạn mức';
+    for (const [key,count] of Object.entries(data.outcomes || {})) labels[key] = count;
+    $('operations-values').replaceChildren(...Object.entries(labels).flatMap(([label,value]) => {
+      const term = document.createElement('dt'), number = document.createElement('dd');
+      term.textContent = label; number.textContent = String(value); return [term,number];
+    }));
+    $('operations-panel').classList.remove('hidden');
+  };
+  $('operations-refresh').addEventListener('click', () => operations().catch(e => msg(e.message,true)));
   const tenantPath = name => `/api/tenants/${state.tenantId}/${name}`;
   const fromForm = form => Object.fromEntries(new FormData(form).entries());
   const process = (form, handler) => form.addEventListener('submit', async event => { event.preventDefault(); try { await handler(fromForm(form)); } catch (e) { msg(e.message, true); } });
@@ -25,6 +42,7 @@
     const tenantId = membership.tenant_id;
     state.token = token; state.tenantId = tenantId; state.mode = membership.mode; state.email = email;
     portal.setContext({tenant:tenantId,role:membership.role});
+    $('operations-panel').classList.add('hidden'); $('operations-values').replaceChildren();
     accessPanel.reset(); workforce.reset();
     state.role = membership.role;
     state.readOnly = ['viewer', 'client_viewer'].includes(membership.role);
@@ -91,13 +109,14 @@
       );
       if (tenantId !== state.tenantId) return;
       state.clients=clients;state.brands=brands;state.campaigns=campaigns;render(actions,deliverables);
-      await Promise.all([workforce.show(tenantId,state.role,campaigns.map(c=>({...c,client_id:brands.find(b=>b.id===c.brand_id)?.client_id}))),portal.show(deliverables,campaigns,refresh),
+      await Promise.all([operations(), workforce.show(tenantId,state.role,campaigns.map(c=>({...c,client_id:brands.find(b=>b.id===c.brand_id)?.client_id}))),portal.show(deliverables,campaigns,refresh),
         accessPanel.show(tenantId, state.role, clients, brands, campaigns)]);
     } catch (error) {
       if (tenantId !== state.tenantId) return;
       state.clients = []; state.brands = []; state.campaigns = [];
       render([], []);
-      accessPanel.reset(); workforce.reset();
+      $('operations-panel').classList.add('hidden'); $('operations-values').replaceChildren();
+    accessPanel.reset(); workforce.reset();
       $('review-panel').replaceChildren();
       throw error;
     }

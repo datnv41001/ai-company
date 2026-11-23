@@ -1,0 +1,5 @@
+# Expose the disposable test database to the host-side acceptance driver.
+services:
+  db:
+    ports:
+      - "127.0.0.1::5432"

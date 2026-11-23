@@ -57,9 +57,11 @@ def close_attempt(run, **updates):
     run.journal = [*run.journal[:-1], {**run.journal[-1], **updates, "finished_at": utcnow().isoformat()}]
 
 
-def claim(db, scope, config):
+def claim(db, scope, config, *, run_id=None, commit=True):
     now = utcnow()
     q = authorized_queue(db, scope)
+    if run_id is not None:
+        q = q.where(WorkforceRun.id == run_id)
     run = db.scalar(
         q.where(WorkforceRun.state.in_(["queued", "running"]), WorkforceRun.ready_at <= now)
         .order_by(WorkforceRun.ready_at, WorkforceRun.id)
@@ -78,7 +80,10 @@ def claim(db, scope, config):
             "attempts_exhausted" if run.attempts >= MAX_TRIES else "prompt_version" if run.knowledge["prompt_version"] != PROMPT_VERSION else "budget_exhausted"
         )
         run.state, run.lease = "failed", None
-        db.commit()
+        if commit:
+            db.commit()
+        else:
+            db.flush()
         return
     token = str(uuid4())
     run.lease, run.state, run.ready_at = token, "running", now + timedelta(seconds=config.timeout + 20)
@@ -98,7 +103,10 @@ def claim(db, scope, config):
         },
     ]
     ident = run.id
-    db.commit()  # No database lock or connection is held during inference.
+    if commit:
+        db.commit()
+    else:
+        db.flush()
     return ident, token, body
 
 
@@ -106,7 +114,7 @@ def _child(pipe, config, body):
     try:
         pipe.send(("ok", infer(config, body)))
     except GatewayError as exc:
-        pipe.send(("error", str(exc)))
+        pipe.send(("error", (str(exc), exc.usage)))
     finally:
         pipe.close()
 
@@ -125,7 +133,7 @@ def bounded_call(config, body):
         except EOFError:
             raise GatewayError("provider_process") from None
         if kind != "ok":
-            raise GatewayError(value)
+            raise GatewayError(*value)
         return value
     finally:
         reader.close()
@@ -137,14 +145,14 @@ def bounded_call(config, body):
             child.join()
 
 
-def finish(db, scope, config, task, result, error):
+def finish(db, scope, config, task, result, error, *, commit=True):
     rid, token, body = task
     run = db.scalar(authorized_queue(db, scope).where(WorkforceRun.id == rid).with_for_update())
     if not run or run.state != "running" or run.lease != token or as_utc(run.ready_at) <= utcnow():
         return False  # A stale worker must never append a second checkpoint or artifact.
     stage = run.plan[len(run.checkpoints)]
     metrics = {}
-    if not error:
+    if result is not None:
         raw, inputs, outputs = result
         try:
             if type(inputs) is not int or type(outputs) is not int or not (0 < inputs <= reserve_tokens(body) and 0 < outputs <= MAX_OUTPUT):
@@ -152,7 +160,8 @@ def finish(db, scope, config, task, result, error):
             cost = config.price(inputs, outputs)
             run.reserved_microusd += cost - run.journal[-1]["reserved_microusd"]
             metrics = {"input_tokens": inputs, "output_tokens": outputs, "estimated_microusd": cost}
-            output = validate_output(raw, stage, run.plan, run.knowledge["sources"])
+            if not error:
+                output = validate_output(raw, stage, run.plan, run.knowledge["sources"])
         except GatewayError as exc:
             error = str(exc)
     run.lease = None
@@ -185,7 +194,10 @@ def finish(db, scope, config, task, result, error):
             db.add(
                 AuditEvent(tenant_id=run.tenant_id, user_id=scope.operator, subject_id=doc.id, event="workforce.submitted_to_qa", details={"run_id": run.id})
             )
-    db.commit()
+    if commit:
+        db.commit()
+    else:
+        db.flush()
     return True
 
 
@@ -206,7 +218,7 @@ def process_one(bind, scope, config, call=bounded_call):
     try:
         result = call(config, task[2])
     except GatewayError as exc:
-        error = str(exc)
+        error, result = str(exc), exc.usage
     with Session(bind) as db:
         finish(db, scope, config, task, result, error)
     return True

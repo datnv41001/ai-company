@@ -61,6 +61,10 @@ jobs:
           export AMC_MIGRATION_DSN="${AMC_MIGRATION_DSN%/*}/amc_test_populated_v7"
           export DATABASE_URL="${DATABASE_URL%/*}/amc_test_populated_v7"
           python tests/check_postgres_upgrade.py --from-v7
+          docker exec amc-test-pg createdb -U postgres amc_test_populated_v8
+          export AMC_MIGRATION_DSN="${AMC_MIGRATION_DSN%/*}/amc_test_populated_v8"
+          export DATABASE_URL="${DATABASE_URL%/*}/amc_test_populated_v8"
+          python tests/check_postgres_upgrade.py --from-v8
   compose-browser:
     runs-on: ubuntu-latest
     steps:
@@ -101,7 +105,7 @@ jobs:
 
   workforce-model:
     runs-on: ubuntu-latest
-    timeout-minutes: 25
+    timeout-minutes: 45
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
@@ -114,7 +118,7 @@ jobs:
           set -euo pipefail
           python scripts/init_env.py
           python scripts/fetch_workforce_model.py
-          compose=(docker compose -p amc-workforce-test --profile local-model)
+          compose=(docker compose -p amc-workforce-test -f compose.yaml -f tests/compose_pool_database.yaml --profile local-model)
           trap 'docker compose -p amc-workforce-test --profile workforce --profile local-model down' EXIT
           "${compose[@]}" up -d --build db migrate api model
           curl --fail --retry 30 --retry-all-errors --retry-delay 1 http://127.0.0.1:8000/api/health
@@ -126,3 +130,19 @@ jobs:
               except OSError: time.sleep(2)
           else: raise RuntimeError('Model failed to start')"
           python tests/workforce_compose_smoke.py
+          "${compose[@]}" exec -T db createdb -U amc amc_test_qwen_pool
+          port="$("${compose[@]}" port db 5432 | cut -d: -f2)"
+          set -a
+          source .env
+          set +a
+          export AMC_MIGRATION_DSN="postgresql://amc:$POSTGRES_PASSWORD@127.0.0.1:$port/amc_test_qwen_pool"
+          export DATABASE_URL="postgresql+psycopg://amc_runtime:$AMC_RUNTIME_PASSWORD@127.0.0.1:$port/amc_test_qwen_pool"
+          export PYTHONPATH=. AMC_POOL_REPORT=pool-measurements.json AMC_TEST_PG=1
+          python migrations/apply.py
+          python tests/pool_model_smoke.py --docker
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: pool-model-measurements
+          path: pool-measurements.json
+          if-no-files-found: ignore

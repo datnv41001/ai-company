@@ -1,0 +1,35 @@
+# Use with -f compose.yaml -f compose.pool.yaml for local-only inference.
+x-pool-worker: &pool-worker
+  build: .
+  command: ["python", "-m", "app.pool_worker"]
+  restart: unless-stopped
+  depends_on:
+    migrate:
+      condition: service_completed_successfully
+  environment: &model-settings
+    AMC_LOCAL_MODEL_URL: http://model:8080/v1
+    AMC_WORKFORCE_PROVIDER: local
+    AMC_WORKFORCE_MODEL: amc-local
+    AMC_MODEL_TIMEOUT: "180"
+
+services:
+  dispatcher:
+    build: .
+    command: ["python", "-m", "app.pool_dispatch"]
+    restart: unless-stopped
+    depends_on:
+      migrate:
+        condition: service_completed_successfully
+    environment:
+      <<: *model-settings
+      AMC_DISPATCH_URL: ${AMC_DISPATCH_URL:?set dedicated dispatcher URL}
+  worker-one:
+    <<: *pool-worker
+    environment:
+      <<: *model-settings
+      AMC_POOL_DSN: ${AMC_POOL_ONE_DSN:?set first worker DSN}
+  worker-two:
+    <<: *pool-worker
+    environment:
+      <<: *model-settings
+      AMC_POOL_DSN: ${AMC_POOL_TWO_DSN:?set second worker DSN}

@@ -12,7 +12,7 @@ import httpx
 
 def exercise():
     project = "amc-workforce-test"
-    compose = ["docker", "compose", "-p", project]
+    compose = ["docker", "compose", "-p", project, "-f", "compose.yaml", "-f", "tests/compose_pool_database.yaml"]
     with httpx.Client(base_url="http://127.0.0.1:8000", timeout=15, trust_env=False) as api:
 
         def request(method, path, user=None, body=None):

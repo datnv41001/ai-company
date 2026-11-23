@@ -1,7 +1,7 @@
 """Public intake and private worker checkpoints have separate database policies."""
 
 from datetime import datetime
-from sqlalchemy import CheckConstraint, DateTime, ForeignKey, ForeignKeyConstraint, Index, JSON, String, UniqueConstraint
+from sqlalchemy import CheckConstraint, DateTime, ForeignKey, ForeignKeyConstraint, Index, JSON, String, UniqueConstraint, text
 from sqlalchemy.orm import Mapped, mapped_column
 from .models import Base, new_id, utcnow
 
@@ -33,6 +33,8 @@ class WorkforceRun(Base):
         ),
         ForeignKeyConstraint(["tenant_id", "campaign_id", "deliverable_id"], ["deliverables.tenant_id", "deliverables.campaign_id", "deliverables.id"]),
         UniqueConstraint("brief_id"),
+        Index("ix_workforce_deliverable", "tenant_id", "campaign_id", "deliverable_id",
+              postgresql_where=text("deliverable_id IS NOT NULL"), sqlite_where=text("deliverable_id IS NOT NULL")),
         Index("ix_workforce_queue", "tenant_id", "campaign_id", "state", "ready_at"),
         CheckConstraint("state IN ('queued','running','failed','awaiting_qa')"),
     )

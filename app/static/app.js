@@ -6,7 +6,7 @@
   const api = async (path, method='GET', body=null, withCursor=false) => {
     const response = await fetch(path, {method, headers: {'Content-Type':'application/json', ...(state.token ? {'Authorization':`Bearer ${state.token}`} : {})}, ...(body ? {body: JSON.stringify(body)} : {})});
     const result = await response.json().catch(() => ({}));
-    if(!response.ok) throw new Error(typeof result.detail === 'string' ? result.detail : `HTTP ${response.status}`);
+    if(!response.ok) throw Object.assign(new Error(typeof result.detail === 'string' ? result.detail : `HTTP ${response.status}`),{status:response.status});
     return withCursor ? {items:result, next:response.headers.get("X-Next-Cursor")} : result;
   };
   const workforce = createWorkforce($('workforce-panel'),api,msg);

@@ -34,7 +34,8 @@ def delivery(api, agency):
 
     def approve_and_share(hours=3):
         assert api.post(path + "/submit", headers=editor["headers"]).status_code == 200
-        assert api.post(path + "/review", headers=owner["headers"], json={"decision": "approved", "note": "private-qa"}).status_code == 200
+        digest = api.get(path, headers=owner["headers"]).json()["qa_evidence"]["content_digest"]
+        assert api.post(path + "/review", headers=owner["headers"], json={"decision": "approved", "note": "private-qa", "expected_content_digest": digest}).status_code == 200
         return create(api, path + "/share", owner, {"expires_at": (utcnow() + timedelta(hours=hours)).isoformat()})
 
     def grant(who, **changes):
@@ -77,7 +78,8 @@ def test_exact_version_and_independent_rights(api, delivery):
     v2 = share()
     assert v2["version"] == 2 and v2["status"] == "pending" and v2["digest"] != v1["digest"]
     assert api.get(url, headers=alice["headers"]).json()["status"] == "approved"
-    assert api.get(url, headers=alice["headers"]).json()["preview"] == "Public copy"
+    archived = api.get(url, headers=alice["headers"]).json()
+    assert [archived[k] for k in ("version","title","preview","digest")] == [v1[k] for k in ("version","title","preview","digest")]
     assert event(api, base, alice, v2, "changes_requested", note="Please shorten").json()["status"] == "changes_requested"
 
 
@@ -140,10 +142,11 @@ def test_edit_requires_new_independent_qa_and_rejection_is_final(api, delivery):
     content = "Câu thứ nhất.\nDòng thứ hai."
     assert api.patch(path + "/draft", headers=owner["headers"], json={"title": title, "client_preview": content}).status_code == 200
     assert api.post(path + "/submit", headers=owner["headers"]).status_code == 200
-    assert api.post(path + "/review", headers=owner["headers"], json={"decision": "approved"}).status_code == 403
+    digest = api.get(path, headers=owner["headers"]).json()["qa_evidence"]["content_digest"]
+    assert api.post(path + "/review", headers=owner["headers"], json={"decision": "approved", "expected_content_digest": digest}).status_code == 403
     qa = account(api, "SecondQA")
     create(api, base + "/members", owner, {"email": qa["email"], "role": "admin"})
-    assert api.post(path + "/review", headers=qa["headers"], json={"decision": "approved"}).status_code == 200
+    assert api.post(path + "/review", headers=qa["headers"], json={"decision": "approved", "expected_content_digest": digest}).status_code == 200
     revised = create(api, path + "/share", owner, {"expires_at": (utcnow() + timedelta(days=1)).isoformat()})
     assert revised["title"] == title and revised["preview"] == content
     assert event(api, base, alice, revised, "rejected", note="Sai thông tin sản phẩm").json()["status"] == "rejected"

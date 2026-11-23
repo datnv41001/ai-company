@@ -60,6 +60,10 @@ class ReviewIn(BaseModel):
     note: str = Field(default="", max_length=1000)
 
 
+class DeliverableReviewIn(ReviewIn):
+    expected_content_digest: str = Field(pattern=r'^[0-9a-f]{64}$')
+
+
 class ActionIn(BaseModel):
     campaign_id: str
     action_kind: Literal["publish_social", "send_email", "adjust_ads_budget", "delete_asset", "write_crm"]

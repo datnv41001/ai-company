@@ -1,4 +1,5 @@
 """Exercise upgrading a populated starter. Requires an empty local amc_test* database."""
+import hashlib
 import os
 import sys
 from pathlib import Path
@@ -14,7 +15,8 @@ MIGRATIONS = Path(__file__).resolve().parents[1] / "migrations"
 
 
 def verify():
-    from_v5 = "--from-v5" in sys.argv
+    from_v6 = "--from-v6" in sys.argv
+    from_v5 = "--from-v5" in sys.argv or from_v6
     from_v4 = "--from-v4" in sys.argv or from_v5
     from_v3 = "--from-v3" in sys.argv or from_v4
     dsn = os.environ["AMC_MIGRATION_DSN"]
@@ -64,6 +66,11 @@ def verify():
                 VALUES ('old-run','agency','a','br','ca','old-brief','{}','[]','[]','[{"outcome":"running"}]',
                         'running',now(),1,1000,100,now())""")
             conn.execute("DELETE FROM portal_grants WHERE user_id='external'")
+        if from_v6:
+            conn.execute((MIGRATIONS/"006_workforce_authority.sql").read_text(encoding="utf-8"))
+            conn.execute("INSERT INTO amc_schema_versions VALUES (6)")
+            conn.execute("""UPDATE deliverables SET status='approved',reviewed_by='alice',
+                         content='{"client_preview":"Legacy","qa_evidence":{"state":"current"},"qa_claims":[]}' WHERE id='doc'""")
     migrate(dsn, os.environ.get("AMC_RUNTIME_PASSWORD"))
     migrate(dsn)
     prepare_database(runtime)
@@ -81,7 +88,7 @@ def verify():
             owner.execute("UPDATE memberships SET role='client_viewer',client_id='a' WHERE user_id='alice'")
         identify()
         assert set(c.scalars(text("SELECT id FROM clients"))) == {"a"}
-        assert set(c.scalars(text("SELECT version FROM amc_schema_versions"))) == {2,3,4,5,6}
+        assert set(c.scalars(text("SELECT version FROM amc_schema_versions"))) == {2,3,4,5,6,7}
         if "--from-v2" in sys.argv or from_v3:
             c.rollback()
             c.execute(text("SELECT set_config('amc.user_id','external',true),set_config('amc.tenant_id','agency',true)"))
@@ -92,13 +99,17 @@ def verify():
             if from_v3 and not from_v5:
                 assert c.execute(text("SELECT kind,note FROM review_entries")).one() == ("rejected", "")
             with psycopg.connect(dsn) as owner:
+                if from_v6:
+                    assert owner.execute("SELECT qa_evidence,qa_approved_digest FROM deliverables WHERE id='doc'").fetchone() == (None,None)
+                    assert owner.execute("SELECT version,title,preview,digest FROM client_reviews WHERE id='rv'").fetchone() == (
+                        1, "Title", "Preview", hashlib.sha256(b'{"preview":"Preview","title":"Title"}').hexdigest())
                 if from_v5:
                     assert owner.execute("SELECT state,last_error,reserved_microusd FROM workforce_runs").fetchone() == ("failed","recipient_revoked",100)
                     assert owner.execute("SELECT count(*) FROM audit_events WHERE event='workforce.recipient_revoked'").fetchone() == (1,)
                 assert owner.execute("SELECT title FROM deliverables WHERE id='doc'").fetchone() == ("Internal",)
     runtime.dispose()
-    baseline = "v5" if from_v5 else "v4" if from_v4 else "v3" if from_v3 else "v2" if "--from-v2" in sys.argv else "v1"
-    print(f"PASS: populated {baseline} to v6, repeated migration, privileged API login refused, client isolated")
+    baseline = "v6" if from_v6 else "v5" if from_v5 else "v4" if from_v4 else "v3" if from_v3 else "v2" if "--from-v2" in sys.argv else "v1"
+    print(f"PASS: populated {baseline} to v7, repeated migration, privileged API login refused, client isolated")
 
 
 if __name__ == "__main__":

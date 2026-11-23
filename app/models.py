@@ -103,6 +103,8 @@ class WorkTask(Base):
 
 
 class Deliverable(Base):
+    qa_evidence: Mapped[dict | None] = mapped_column(JSON, nullable=True)
+    qa_approved_digest: Mapped[str | None] = mapped_column(String(64), nullable=True)
     last_editor_id: Mapped[str | None] = mapped_column(ForeignKey("users.id"), nullable=True)
     __tablename__ = "deliverables"
     __table_args__ = (

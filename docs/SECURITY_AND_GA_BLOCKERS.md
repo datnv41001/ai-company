@@ -2,6 +2,8 @@
 
 **Current status: NO-GO for production.** The bootstrap is intentionally safe for local development and demonstrates scoped API behavior; it is not a commercial service.
 
+Schema 3 enforces PostgreSQL row policies for client delivery and includes populated upgrade tests. See the [handoff](../HANDOFF.md) for current coverage. The checklist below addresses the full product.
+
 ## Stop-ship (P0) before ANY public deployment
 
 - [ ] Auth: verified email, invitation acceptance, rate limits, account lockout/abuse protection, password reset, MFA and optional SSO; secure cookie/session strategy and CSRF policy; JWT signing key rotation and explicit revocation.

@@ -9,12 +9,14 @@
     if(!response.ok) throw new Error(typeof result.detail === 'string' ? result.detail : `HTTP ${response.status}`);
     return result;
   };
+  const portal = createReviewPanel($('review-panel'),api,msg);
   const tenantPath = name => `/api/tenants/${state.tenantId}/${name}`;
   const fromForm = form => Object.fromEntries(new FormData(form).entries());
   const process = (form, handler) => form.addEventListener('submit', async event => { event.preventDefault(); try { await handler(fromForm(form)); } catch (e) { msg(e.message, true); } });
   const enter = async (token, membership, email='') => {
     const tenantId = membership.tenant_id;
     state.token = token; state.tenantId = tenantId; state.mode = membership.mode; state.email = email;
+    portal.setContext({tenant:tenantId,role:membership.role});
     state.readOnly = ['viewer', 'client_viewer'].includes(membership.role);
     $('workspace-select').value = tenantId;
     $('workspace-forms').classList.toggle('hidden', state.readOnly);
@@ -36,7 +38,9 @@
     state.memberships = result.tenants;
     $('workspace-select').replaceChildren(...result.tenants.map(m => new Option(m.organization_name, m.tenant_id)));
     $('workspace-choice').classList.toggle('hidden', result.tenants.length < 2);
-    await enter(result.access_token, result.tenants[0], data.email);
+    const linked=new URLSearchParams(location.search).get('workspace');
+    await enter(result.access_token,result.tenants.find(m=>m.tenant_id===linked)||result.tenants[0],data.email);
+    if(linked && !result.tenants.some(m=>m.tenant_id===linked)) msg('Bạn không có quyền mở liên kết của workspace này.',true);
   });
   $('workspace-select').addEventListener('change', event => {
     const membership = state.memberships.find(m => m.tenant_id === event.target.value);
@@ -67,7 +71,8 @@
     $('actions-list').innerHTML = actions.length ? actions.map(a=>`<div class="item"><div><strong>${esc(a.action_kind)}</strong><small>${esc(a.state)} · ${esc(a.id.slice(0,8))}</small></div><span class="tag">${esc(a.state)}</span></div>`).join('') : '<div class="empty">Chưa có yêu cầu hành động.</div>';
     $('deliverables-list').innerHTML = deliverables.length ? deliverables.map(a=>`<div class="item"><div><strong>${esc(a.title)}</strong><small>${esc(a.status)} · ${esc(a.id.slice(0,8))}</small></div><span class="tag">${esc(a.status)}</span></div>`).join('') : '<div class="empty">Chưa có tài liệu.</div>';
   };
-  const refresh = async () => {
+  const refresh = async (selected=null) => {
+    portal.select(selected);
     const tenantId = state.tenantId;
     try {
       const [clients,brands,campaigns,actions,deliverables] = await Promise.all(
@@ -75,10 +80,12 @@
       );
       if (tenantId !== state.tenantId) return;
       state.clients=clients;state.brands=brands;state.campaigns=campaigns;render(actions,deliverables);
+      await portal.show(deliverables,campaigns,refresh);
     } catch (error) {
       if (tenantId !== state.tenantId) return;
       state.clients = []; state.brands = []; state.campaigns = [];
       render([], []);
+      $('review-panel').replaceChildren();
       throw error;
     }
   };

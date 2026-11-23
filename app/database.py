@@ -36,7 +36,17 @@ def prepare_database(bind):
                 c["name"] for c in inspector.get_columns("memberships")
             }:
                 conn.exec_driver_sql("ALTER TABLE memberships ADD COLUMN client_id VARCHAR(36) REFERENCES clients(id)")
+            # Old SQLite files lack the composite candidate keys referenced by v3.
+            first_delivery_upgrade = not inspector.has_table("portal_grants")
+            if inspector.has_table("deliverables") and first_delivery_upgrade:
+                conn.exec_driver_sql("ALTER TABLE deliverables ADD COLUMN last_editor_id VARCHAR(36) REFERENCES users(id)")
+                for table, columns in (("memberships","tenant_id,user_id,client_id"), ("brands","tenant_id,client_id,id"),
+                                       ("campaigns","tenant_id,brand_id,id"), ("deliverables","tenant_id,campaign_id,id")):
+                    conn.exec_driver_sql(f"CREATE UNIQUE INDEX uq_delivery_{table} ON {table} ({columns})")
             Base.metadata.create_all(conn)
+            if first_delivery_upgrade:
+                conn.exec_driver_sql("""INSERT INTO portal_grants(tenant_id,user_id,client_id,can_comment,can_decide)
+                    SELECT tenant_id,user_id,client_id,0,0 FROM memberships WHERE role='client_viewer'""")
         return
     if bind.dialect.name != "postgresql":
         raise RuntimeError("Unsupported database")
@@ -51,7 +61,7 @@ def prepare_database(bind):
         enabled = set(conn.scalars(text("""SELECT relname FROM pg_class
             WHERE relnamespace='public'::regnamespace AND relrowsecurity""")))
         if not set(Base.metadata.tables).issubset(enabled) or not conn.scalar(
-            text("SELECT EXISTS (SELECT FROM public.amc_schema_versions WHERE version=2)")
+            text("SELECT EXISTS (SELECT FROM public.amc_schema_versions WHERE version=3)")
         ):
             raise RuntimeError("Apply the PostgreSQL client isolation migration before starting the API")
 

@@ -3,7 +3,7 @@
 Project: commercial AI Marketing Company V1.0. Single complete product scope; no partial release masquerading as GA.
 
 **Mandatory read order:**
-1. `README.md`
+1. `README.md` and `HANDOFF.md` (current cross-machine runbook, behavior, tests and next task)
 2. `docs/PRODUCT_SPEC_V1.md` (authoritative full product charter)
 3. `docs/ADR-001-OWN-SaaS-CORE.md` (proposed architecture, challenge allowed)
 4. `docs/GITHUB_RESEARCH_AND_REUSE.md`
@@ -20,6 +20,8 @@ Project: commercial AI Marketing Company V1.0. Single complete product scope; no
 - If copying third-party code/skills, first record upstream repo, path, exact commit SHA, license, attribution and security check; do not import GPL/AGPL/ELv2/n8n fair-code materials into proprietary core without approval.
 - Agent roles and workflow catalog entries are `specification_only` until passed tested E2E acceptance; do not misrepresent them as executable agents.
 - Architectural disagreement is encouraged; document it as an ADR with evidence and a reversible migration path. Do not silently widen scope or replace the full-product charter.
+
+**Cross-machine handoff:** Update the matching entry in HANDOFF.md in the same PR when behavior, permissions, migrations or operating commands change. Comment non-obvious invariants beside their enforcement point. Record base SHA, verification, known gaps and rollback using the PR template.
 
 **Definition of Done for each change:** tests first or with feature; static checks; API/schema migration; permission scope; failure handling; audit events; documentation; evidence from a demo run; no unsupported claims; bounded costs; reviewer challenges resolved.
 

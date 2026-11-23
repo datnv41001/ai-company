@@ -1,5 +1,8 @@
 # AI Marketing Company (AMC) — Engineering Bootstrap
 
+**[Chạy bằng Docker và tiếp quản trên máy mới → HANDOFF.md](HANDOFF.md)**
+
+
 ## Chạy cục bộ với PostgreSQL trên Windows
 
 Sau khi cài `requirements-dev.txt` trong môi trường Python 3.12, chạy lệnh dưới đây từ thư mục mã nguồn. Thay đường dẫn `--pg-bin` bằng thư mục PostgreSQL đã cài. Ứng dụng dùng PostgreSQL trên cổng 55432 và giao diện tại [127.0.0.1:8000](http://127.0.0.1:8000). Trang [API docs](http://127.0.0.1:8000/docs) liệt kê các endpoint. Đăng ký tổ chức trên trang chủ để bắt đầu.
@@ -18,7 +21,7 @@ The completed product must support Agency Mode + In-house Mode, 49 product modul
 
 - Register an organization as Agency or In-house; login with bearer JWT and Argon2 password hashing.
 - Persist clients, brands, campaigns, workflow skeleton tasks, deliverables, action approvals and audit events.
-- Scope API resources by tenant and client. The read-only `client_viewer` role is bound to one client per agency. PostgreSQL enforces row policies in addition to the API checks. Internal `viewer` members retain agency-wide read access.
+- Scope API resources by tenant and client. Each external membership belongs to one client per agency. It can read that client profile and explicitly shared snapshots. Commenting and deciding require separate grants. PostgreSQL enforces row policies in addition to the API checks. Internal `viewer` members retain agency-wide read access.
 - Create an idempotent **deterministic** 7-task marketing campaign plan (NOT an LLM-generated plan).
 - If the operator configures a model API key, request a real structured strategy **draft** from an OpenAI-compatible chat API. Draft always needs review; it does not perform actions.
 - Independent human review of deliverables and external-action proposals; self-approval is forbidden.

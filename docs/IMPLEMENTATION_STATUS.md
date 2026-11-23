@@ -16,11 +16,11 @@ These **49** entries are required for commercial GA, and **none** is fully imple
 | AGY-01 | Client CRM | Partial: client records only | NOT PASSED |
 | AGY-02 | Discovery & Brief | Partial: campaign brief only | NOT PASSED |
 | AGY-03 | Commercial | Spec only | NOT PASSED |
-| AGY-04 | Client Portal | Spec only | NOT PASSED |
+| AGY-04 | Client Portal | Partial (schema 3): shared review snapshots, scoped grants, portal UI; see [handoff](../HANDOFF.md) | NOT PASSED |
 | AGY-05 | Project/PMO | Partial: campaign + 7 deterministic task records | NOT PASSED |
 | AGY-06 | Account Operations | Spec only | NOT PASSED |
 | AGY-07 | Service Finance | Spec only | NOT PASSED |
-| AGY-08 | Feedback & Change | Spec only | NOT PASSED |
+| AGY-08 | Feedback & Change | Partial: comments, change requests, resubmission | NOT PASSED |
 | MKT-01 | Market Intelligence | Spec only | NOT PASSED |
 | MKT-02 | Audience & Customer Journey | Spec only | NOT PASSED |
 | MKT-03 | Brand Management | Partial: brand guidelines text only | NOT PASSED |
@@ -47,8 +47,8 @@ These **49** entries are required for commercial GA, and **none** is fully imple
 | AIO-04 | Model Gateway | Spec only | NOT PASSED |
 | AIO-05 | Tools/Connectors Gateway | Spec only | NOT PASSED |
 | AIO-06 | Knowledge & Memory | Spec only | NOT PASSED |
-| AIO-07 | Human-in-the-loop | Spec only | NOT PASSED |
-| AIO-08 | Artifact/Version | Spec only | NOT PASSED |
+| AIO-07 | Human-in-the-loop | Partial: independent agency QA and client decision | NOT PASSED |
+| AIO-08 | Artifact/Version | Partial: immutable, hashed client-facing review snapshots | NOT PASSED |
 | AIO-09 | Evals & QA | Spec only | NOT PASSED |
 | AIO-10 | Security & Audit | Spec only | NOT PASSED |
 | AIO-11 | Scheduling & Incident | Spec only | NOT PASSED |

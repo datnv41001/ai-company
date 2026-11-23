@@ -26,20 +26,28 @@ def migrate(dsn: str, runtime_password: str | None = None):
         if unsafe:
             raise ValueError("amc_runtime must be an unprivileged role without inherited roles")
         conn.execute("CREATE TABLE IF NOT EXISTS amc_schema_versions (version int PRIMARY KEY)")
-        if conn.execute("SELECT 1 FROM amc_schema_versions WHERE version=2").fetchone():
+        versions = {row[0] for row in conn.execute("SELECT version FROM amc_schema_versions")}
+        if versions - {2, 3}:
+            raise ValueError("Unknown schema version; use its matching application revision")
+        if 3 in versions:
             return
-        tables = {row[0] for row in conn.execute(
-            "SELECT tablename FROM pg_tables WHERE schemaname='public' AND tablename <> 'amc_schema_versions'")}
-        if not tables:
-            conn.execute((HERE / "000_starter_schema.sql").read_text(encoding="utf-8"))
-        elif tables != BASE:
-            raise ValueError("Expected an empty database or the ten tables of the reviewed starter")
-        conn.execute((HERE / "001_correct_content_role.sql").read_text(encoding="utf-8"))
-        conn.execute((HERE / "002_client_isolation.sql").read_text(encoding="utf-8"))
-        conn.execute("INSERT INTO amc_schema_versions VALUES (2)")
-        conn.execute("GRANT SELECT ON amc_schema_versions TO amc_runtime")
+        if 2 not in versions:
+            tables = {row[0] for row in conn.execute(
+                "SELECT tablename FROM pg_tables WHERE schemaname='public' AND tablename <> 'amc_schema_versions'")}
+            if not tables:
+                conn.execute((HERE / "000_starter_schema.sql").read_text(encoding="utf-8"))
+            elif tables != BASE:
+                raise ValueError("Expected an empty database or the ten tables of the reviewed starter")
+            conn.execute((HERE / "001_correct_content_role.sql").read_text(encoding="utf-8"))
+            conn.execute((HERE / "002_client_isolation.sql").read_text(encoding="utf-8"))
+            conn.execute("INSERT INTO amc_schema_versions VALUES (2)")
+            conn.execute("GRANT SELECT ON amc_schema_versions TO amc_runtime")
+        for migration in ("003_delivery_tables.sql", "003_delivery_policies.sql"):
+            conn.execute((HERE / migration).read_text(encoding="utf-8"))
+        conn.execute("INSERT INTO amc_schema_versions VALUES (3)")
+
 
 
 if __name__ == "__main__":
     migrate(os.environ["AMC_MIGRATION_DSN"], os.getenv("AMC_RUNTIME_PASSWORD"))
-    print("AMC schema version 2 ready")
+    print("AMC schema version 3 ready")

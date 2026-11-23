@@ -7,6 +7,9 @@ from app.database import Base, get_db
 from app.main import app
 
 
+pytest_plugins = ["agency_fixtures"]
+
+
 @pytest.fixture()
 def client():
     engine = create_engine("sqlite+pysqlite:///:memory:", connect_args={"check_same_thread": False}, poolclass=StaticPool)

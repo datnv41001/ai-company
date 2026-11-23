@@ -2,7 +2,7 @@
 from sqlalchemy import event, select, text
 from sqlalchemy.orm import Session
 
-from .models import ActionRequest, Brand, Campaign, Client, Deliverable, Membership, WorkTask
+from .models import Client, Membership
 
 _CONTEXT = text("""SELECT set_config('amc.user_id',:actor,true),
     set_config('amc.tenant_id',:tenant,true), set_config('amc.lookup_email',:email,true)""")
@@ -33,12 +33,5 @@ def visible(model, membership: Membership):
     client = membership.client_id
     if model is Client:
         return stmt.where(Client.id == client)
-    if model is Brand:
-        return stmt.where(Brand.client_id == client)
-    brands = select(Brand.id).where(Brand.tenant_id == tenant, Brand.client_id == client)
-    if model is Campaign:
-        return stmt.where(Campaign.brand_id.in_(brands))
-    if model in (WorkTask, Deliverable, ActionRequest):
-        campaigns = select(Campaign.id).where(Campaign.tenant_id == tenant, Campaign.brand_id.in_(brands))
-        return stmt.where(model.campaign_id.in_(campaigns))
-    raise ValueError("Missing scoped read rule")
+    # Raw agency rows can contain internal briefs, notes, budgets and draft content.
+    return stmt.where(False)

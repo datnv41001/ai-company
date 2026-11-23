@@ -1,5 +1,6 @@
 """Exercise upgrading a populated starter. Requires an empty local amc_test* database."""
 import os
+import sys
 from pathlib import Path
 
 import psycopg
@@ -25,6 +26,17 @@ def verify():
         conn.execute("INSERT INTO users VALUES ('alice','synthetic@example.com','unused',now())")
         conn.execute("INSERT INTO memberships VALUES ('agency','alice','viewer')")
         conn.execute("INSERT INTO clients VALUES ('a','agency','Client A','Retail'), ('b','agency','Client B','Retail')")
+        if "--from-v2" in sys.argv:
+            conn.execute((MIGRATIONS / "002_client_isolation.sql").read_text(encoding="utf-8"))
+            conn.execute("CREATE TABLE amc_schema_versions(version int PRIMARY KEY)")
+            conn.execute("INSERT INTO amc_schema_versions VALUES (2)")
+            conn.execute("GRANT SELECT ON amc_schema_versions TO amc_runtime")
+            conn.execute("INSERT INTO users VALUES ('external','external@example.com','unused',now())")
+            conn.execute("INSERT INTO memberships(tenant_id,user_id,role,client_id) VALUES ('agency','external','client_viewer','a')")
+            conn.execute("INSERT INTO brands(id,tenant_id,client_id,name,brand_guidelines,product_truth) VALUES('br','agency','a','Brand','','')")
+            conn.execute("INSERT INTO campaigns(id,tenant_id,brand_id,name,brief,objective,status) VALUES('ca','agency','br','Name','Brief','Goal','draft')")
+            conn.execute("""INSERT INTO deliverables(id,tenant_id,campaign_id,title,content,status,created_by)
+                         VALUES('doc','agency','ca','Internal','{}','draft','alice')""")
     migrate(dsn, os.environ.get("AMC_RUNTIME_PASSWORD"))
     migrate(dsn)
     prepare_database(runtime)
@@ -42,9 +54,18 @@ def verify():
             owner.execute("UPDATE memberships SET role='client_viewer',client_id='a' WHERE user_id='alice'")
         identify()
         assert set(c.scalars(text("SELECT id FROM clients"))) == {"a"}
-        assert set(c.scalars(text("SELECT version FROM amc_schema_versions"))) == {2}
+        assert set(c.scalars(text("SELECT version FROM amc_schema_versions"))) == {2,3}
+        if "--from-v2" in sys.argv:
+            c.rollback()
+            c.execute(text("SELECT set_config('amc.user_id','external',true),set_config('amc.tenant_id','agency',true)"))
+            assert c.execute(text("SELECT client_id,can_comment,can_decide FROM portal_grants")).one() == ("a",False,False)
+            for table in ("client_reviews","review_entries","deliverables"):
+                assert c.scalar(text(f"SELECT count(*) FROM {table}")) == 0
+            with psycopg.connect(dsn) as owner:
+                assert owner.execute("SELECT title FROM deliverables WHERE id='doc'").fetchone() == ("Internal",)
     runtime.dispose()
-    print("PASS: populated v1 database, repeated migration, privileged API login refused, internal grant retained, mapped client isolated")
+    baseline = "v2" if "--from-v2" in sys.argv else "v1"
+    print(f"PASS: populated {baseline} to v3, repeated migration, privileged API login refused, client isolated")
 
 
 if __name__ == "__main__":

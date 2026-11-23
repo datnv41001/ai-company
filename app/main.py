@@ -13,6 +13,8 @@ from sqlalchemy import select, text
 from sqlalchemy.inspection import inspect
 from sqlalchemy.orm import Session
 
+from .delivery import router as delivery_router, working_copy
+from .delivery_models import PortalGrant
 from .access import set_context, visible
 from .database import APP_ENV, engine, get_db, prepare_database
 from .models import User, Tenant, Membership, Client, Brand, Campaign, WorkTask, Deliverable, ActionRequest, AuditEvent, new_id
@@ -34,6 +36,7 @@ async def lifespan(_app: FastAPI):
 
 
 app = FastAPI(title="AI Marketing Company - Engineering Bootstrap", version="0.1.0", lifespan=lifespan)
+app.include_router(delivery_router)
 app.mount("/static", StaticFiles(directory=ROOT / "static"), name="static")
 
 
@@ -148,6 +151,9 @@ def add_member(tenant_id: str, body: AddMemberIn, user: User = Depends(current_u
         raise HTTPException(409, "User is already a member")
     record = Membership(tenant_id=tenant_id, user_id=found.id, role=body.role, client_id=body.client_id)
     db.add(record)
+    if body.role == "client_viewer":
+        db.flush()
+        db.add(PortalGrant(tenant_id=tenant_id,user_id=found.id,client_id=body.client_id))
     audit(db, tenant_id, user.id, "member.granted", found.id, {"role": body.role, "client_id": body.client_id})
     return done(db, record)
 
@@ -160,7 +166,15 @@ def change_client_scope(tenant_id: str, member_id: str, body: ClientScopeIn, use
     if record is None or record.role not in ("viewer", "client_viewer"):
         raise HTTPException(404, "Eligible membership not found")
     old_scope = record.client_id
+    if record.role == "client_viewer" and old_scope == body.client_id:
+        return data(record)
+    grant = db.get(PortalGrant, (tenant_id, member_id))
+    if grant:
+        db.delete(grant)
+        db.flush()
     record.role, record.client_id = "client_viewer", body.client_id
+    db.flush()
+    db.add(PortalGrant(tenant_id=tenant_id,user_id=member_id,client_id=body.client_id))
     audit(db, tenant_id, user.id, "member.client_scope_changed", member_id,
           {"previous_client_id": old_scope, "client_id": body.client_id})
     return done(db, record)
@@ -265,6 +279,15 @@ def list_deliverables(tenant_id: str, user: User = Depends(current_user), db: Se
     return [data(i) for i in db.scalars(visible(Deliverable, membership))]
 
 
+@app.get("/api/tenants/{tenant_id}/deliverables/{deliverable_id}")
+def get_working_deliverable(tenant_id: str, deliverable_id: str, user: User = Depends(current_user), db: Session = Depends(get_db)):
+    membership = member(db, user, tenant_id)
+    item = db.scalar(visible(Deliverable, membership).where(Deliverable.id == deliverable_id))
+    if item is None:
+        raise HTTPException(404, "Resource not found")
+    return data(item)
+
+
 @app.post("/api/tenants/{tenant_id}/deliverables", status_code=201)
 def create_deliverable(tenant_id: str, body: DeliverableIn, user: User = Depends(current_user), db: Session = Depends(get_db)):
     member(db, user, tenant_id, "editor")
@@ -279,7 +302,7 @@ def create_deliverable(tenant_id: str, body: DeliverableIn, user: User = Depends
 @app.post("/api/tenants/{tenant_id}/deliverables/{deliverable_id}/submit")
 def submit_deliverable(tenant_id: str, deliverable_id: str, user: User = Depends(current_user), db: Session = Depends(get_db)):
     member(db, user, tenant_id, "editor")
-    item = target(db, Deliverable, tenant_id, deliverable_id)
+    item = working_copy(db, tenant_id, deliverable_id)
     if item.status != "draft":
         raise HTTPException(409, "Only draft deliverables may be submitted")
     item.status = "submitted"
@@ -290,10 +313,10 @@ def submit_deliverable(tenant_id: str, deliverable_id: str, user: User = Depends
 @app.post("/api/tenants/{tenant_id}/deliverables/{deliverable_id}/review")
 def review_deliverable(tenant_id: str, deliverable_id: str, body: ReviewIn, user: User = Depends(current_user), db: Session = Depends(get_db)):
     member(db, user, tenant_id, "admin")
-    item = target(db, Deliverable, tenant_id, deliverable_id)
+    item = working_copy(db, tenant_id, deliverable_id)
     if item.status != "submitted":
         raise HTTPException(409, "Deliverable is not awaiting review")
-    if item.created_by == user.id:
+    if user.id in (item.created_by, item.last_editor_id):
         raise HTTPException(403, "Self-approval is forbidden")
     item.status, item.reviewed_by, item.review_note = body.decision, user.id, body.note
     audit(db, tenant_id, user.id, "deliverable.reviewed", item.id, {"decision": body.decision})

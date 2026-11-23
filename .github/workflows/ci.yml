@@ -11,7 +11,7 @@ jobs:
         with:
           python-version: '3.12'
       - run: python -m pip install -r requirements-dev.txt
-      - run: ruff check app tests migrations
+      - run: ruff check app tests migrations scripts
       - name: Test SQLite and PostgreSQL isolation
         shell: bash
         run: |
@@ -36,3 +36,34 @@ jobs:
           export AMC_MIGRATION_DSN="${AMC_MIGRATION_DSN%/*}/amc_test_upgrade"
           export DATABASE_URL="${DATABASE_URL%/*}/amc_test_upgrade"
           python tests/check_postgres_upgrade.py
+
+          docker exec amc-test-pg createdb -U postgres amc_test_populated_v2
+          export AMC_MIGRATION_DSN="${AMC_MIGRATION_DSN%/*}/amc_test_populated_v2"
+          export DATABASE_URL="${DATABASE_URL%/*}/amc_test_populated_v2"
+          python tests/check_postgres_upgrade.py --from-v2
+  compose-browser:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python -m pip install -r requirements-browser.txt -r requirements-dev.txt
+      - run: python -m playwright install --with-deps chromium
+      - name: Rehearse a fresh-machine handoff
+        shell: bash
+        run: |
+          set -euo pipefail
+          python scripts/init_env.py
+          docker compose -p amc-acceptance config -q
+          trap 'docker compose -p amc-acceptance down' EXIT
+          docker compose -p amc-acceptance up -d --build
+          curl --fail --retry 30 --retry-connrefused --retry-delay 1 http://127.0.0.1:8000/api/health
+          docker compose -p amc-acceptance exec -T api python -m pip freeze > compose-versions.txt
+          docker compose -p amc-acceptance images >> compose-versions.txt
+          docker image inspect postgres:16.6-alpine --format '{{json .RepoDigests}}' >> compose-versions.txt
+          AMC_BROWSER_TEST_URL=http://127.0.0.1:8000 python tests/browser_delivery.py
+      - uses: actions/upload-artifact@v4
+        with:
+          name: compose-versions
+          path: compose-versions.txt

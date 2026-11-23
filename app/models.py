@@ -33,6 +33,7 @@ class Tenant(Base):
 class Membership(Base):
     __tablename__ = "memberships"
     __table_args__ = (
+        UniqueConstraint("tenant_id","user_id","client_id"),
         ForeignKeyConstraint(["tenant_id", "client_id"], ["clients.tenant_id", "clients.id"]),
         CheckConstraint("(role = 'client_viewer' AND client_id IS NOT NULL) OR "
                         "(role IN ('viewer','editor','admin','owner') AND client_id IS NULL)", name="membership_scope"),
@@ -57,6 +58,7 @@ class Client(Base):
 class Brand(Base):
     __tablename__ = "brands"
     __table_args__ = (
+        UniqueConstraint("tenant_id","client_id","id"),
         UniqueConstraint("tenant_id", "id", name="uq_brands_tenant_id"),
         ForeignKeyConstraint(["tenant_id", "client_id"], ["clients.tenant_id", "clients.id"]),
     )
@@ -71,6 +73,7 @@ class Brand(Base):
 class Campaign(Base):
     __tablename__ = "campaigns"
     __table_args__ = (
+        UniqueConstraint("tenant_id","brand_id","id"),
         UniqueConstraint("tenant_id", "id", name="uq_campaigns_tenant_id"),
         ForeignKeyConstraint(["tenant_id", "brand_id"], ["brands.tenant_id", "brands.id"]),
     )
@@ -100,8 +103,10 @@ class WorkTask(Base):
 
 
 class Deliverable(Base):
+    last_editor_id: Mapped[str | None] = mapped_column(ForeignKey("users.id"), nullable=True)
     __tablename__ = "deliverables"
     __table_args__ = (
+        UniqueConstraint("tenant_id","campaign_id","id"),
         ForeignKeyConstraint(["tenant_id", "campaign_id"], ["campaigns.tenant_id", "campaigns.id"]),
     )
     id: Mapped[str] = mapped_column(String(36), primary_key=True, default=new_id)

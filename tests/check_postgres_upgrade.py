@@ -15,7 +15,8 @@ MIGRATIONS = Path(__file__).resolve().parents[1] / "migrations"
 
 
 def verify():
-    from_v8 = "--from-v8" in sys.argv
+    from_v9 = "--from-v9" in sys.argv
+    from_v8 = "--from-v8" in sys.argv or from_v9
     from_v7 = "--from-v7" in sys.argv or from_v8
     from_v6 = "--from-v6" in sys.argv or from_v7
     from_v5 = "--from-v5" in sys.argv or from_v6
@@ -91,6 +92,11 @@ def verify():
                 checkpoints,journal,state,lease,ready_at,attempts,budget_microusd,reserved_microusd,created_at)
                 VALUES('active-run','agency','a','br','ca','active-brief','{}','["director"]','[]','[{"outcome":"running"}]',
                     'running','v8-lease',now()+interval '1 hour',1,1000,700,now())""")
+        if from_v9:
+            import financial_upgrade_fixture
+            conn.execute((MIGRATIONS/"009_company_operations.sql").read_text(encoding="utf-8"))
+            conn.execute("INSERT INTO amc_schema_versions VALUES(9)")
+            original = financial_upgrade_fixture.seed(conn)
     migrate(dsn, os.environ.get("AMC_RUNTIME_PASSWORD"))
     migrate(dsn)
     prepare_database(runtime)
@@ -108,7 +114,7 @@ def verify():
             owner.execute("UPDATE memberships SET role='client_viewer',client_id='a' WHERE user_id='alice'")
         identify()
         assert set(c.scalars(text("SELECT id FROM clients"))) == {"a"}
-        assert set(c.scalars(text("SELECT version FROM amc_schema_versions"))) == {2,3,4,5,6,7,8,9}
+        assert set(c.scalars(text("SELECT version FROM amc_schema_versions"))) == {2,3,4,5,6,7,8,9,10}
         if "--from-v2" in sys.argv or from_v3:
             c.rollback()
             c.execute(text("SELECT set_config('amc.user_id','external',true),set_config('amc.tenant_id','agency',true)"))
@@ -128,17 +134,19 @@ def verify():
                             "approved", hashlib.sha256(b'{"preview":"Preview","title":"Title"}').hexdigest())
                     assert owner.execute("SELECT version,title,preview,digest FROM client_reviews WHERE id='rv'").fetchone() == (
                         1, "Title", "Preview", hashlib.sha256(b'{"preview":"Preview","title":"Title"}').hexdigest())
+                if from_v9:
+                    financial_upgrade_fixture.verify(owner, original)
                 if from_v8:
                     assert owner.execute("SELECT execution_mode,lease,reserved_microusd,state FROM workforce_runs WHERE id='active-run'").fetchone() == (
                         'legacy','v8-lease',700,'running')
-                    assert owner.execute("SELECT count(*) FROM amc_ops.tasks").fetchone() == (0,)
+                    assert owner.execute("SELECT count(*) FROM amc_ops.tasks WHERE run='active-run'").fetchone() == (0,)
                 if from_v5:
                     assert owner.execute("SELECT state,last_error,reserved_microusd FROM workforce_runs WHERE id='old-run'").fetchone() == ("failed","recipient_revoked",100)
                     assert owner.execute("SELECT count(*) FROM audit_events WHERE event='workforce.recipient_revoked'").fetchone() == (1,)
                 assert owner.execute("SELECT title FROM deliverables WHERE id='doc'").fetchone() == ("Internal",)
     runtime.dispose()
-    baseline = "v8" if from_v8 else "v7" if from_v7 else "v6" if from_v6 else "v5" if from_v5 else "v4" if from_v4 else "v3" if from_v3 else "v2" if "--from-v2" in sys.argv else "v1"
-    print(f"PASS: populated {baseline} to v9, repeated migration, privileged API login refused, client isolated")
+    baseline = "v9" if from_v9 else "v8" if from_v8 else "v7" if from_v7 else "v6" if from_v6 else "v5" if from_v5 else "v4" if from_v4 else "v3" if from_v3 else "v2" if "--from-v2" in sys.argv else "v1"
+    print(f"PASS: populated {baseline} to v10, repeated migration, privileged API login refused, client isolated")
 
 
 if __name__ == "__main__":

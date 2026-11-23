@@ -60,6 +60,6 @@ def reconcile(tenant_id: str, attempt: UUID, body: Receipt, user: User = Depends
     require_operations(db, user, tenant_id)
     accepted = db.scalar(text("select amc_ops.bill(:t,:i,:amount,:receipt)"), {"t": tenant_id, "i": attempt, **body.model_dump()})
     if not accepted:
-        raise HTTPException(409, "Closed attempt or matching receipt required")
+        raise HTTPException(409, "Receipt requires a collected, closed attempt and a consistent receipt key")
     db.commit()
     return {"recorded": True}

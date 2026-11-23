@@ -1,6 +1,8 @@
 # Chạy pool trên máy phát triển
 
-PR #5 dùng schema PostgreSQL v9. Chuẩn bị Git, Python 3.12, Docker Engine và Compose v2. Từ thư mục repo, thực hiện phần khởi động Docker trong HANDOFF.md. Sao lưu database và thử khôi phục trên một database tách biệt trước khi nâng một bản có dữ liệu.
+PR #5 dùng schema PostgreSQL v10. Chuẩn bị Git, Python 3.12, Docker Engine và Compose v2. Từ thư mục repo, thực hiện phần khởi động Docker trong HANDOFF.md. Sao lưu database và thử khôi phục trên một database tách biệt trước khi nâng một bản có dữ liệu.
+
+Đối với volume v9 hiện có, sao lưu trước, tạm dừng dispatcher và API ghi khi nâng cấp. Migration 010 đổi tổng ngân sách run sang bigint và cần khóa bảng trong lúc tính lại. Khởi động lại các tiến trình với cùng commit v10, kiểm tra truy vấn chênh lệch bên dưới rồi mới mở lại tác vụ. Nếu cần quay lại v9, khôi phục bản sao đã kiểm thử vào database riêng, đối chiếu chứng từ phát sinh sau thời điểm backup trước khi chuyển kết nối.
 
 ## Khởi động
 
@@ -29,6 +31,21 @@ Script init_pool ghi ba mật khẩu riêng vào .env.pool và cấp LOGIN bằn
 
 Một attempt giữ ngân sách trước khi worker nhận việc. Khi đã gửi và mất kết nối hoặc bị thu hồi, khoản giữ chờ đối soát. Gọi `POST /api/tenants/{tenant}/operations/attempts/{uuid}/receipts` với `{"amount":350,"receipt":"provider-receipt-1"}` ở quyền owner/admin. amount là tổng phí xác nhận cho attempt. Lặp đúng chứng từ được chấp nhận một lần về tài chính. Để sửa sai, thêm chứng từ điều chỉnh mới với số tuyệt đối và lưu chứng từ ở hệ thống tài chính của agency. Đối soát ghi vào kỳ của attempt. Nếu vượt hạn mức, số đã ghi chi vẫn phản ánh phí thực tế. Model local dùng giá 0. Bài test kế toán dùng số giả lập 700/1.000.
 
+Hạn mức run áp dụng cho toàn bộ vòng đời. PostgreSQL lưu tổng chi ròng cộng khoản giữ đang mở vào `workforce_runs.reserved_microusd`. Run 1.000 giữ 700 rồi timeout vẫn ghi nhận 700; chứng từ 350 đưa số đó về 350; lần giữ tiếp theo 400 đưa tổng lên 750. Khi phí làm vượt trần, hệ thống chờ đối soát trước khi cấp thêm. Hoàn toàn bộ bằng một chứng từ mới với amount bằng 0. Chứng từ lặp sau hoàn tiền giữ nguyên kết quả lần ghi đầu. Đối soát run đã thu hồi chỉ cập nhật tiền.
+
+Offer hết hạn trước lúc worker nhận có sự kiện `unsent`. API trả HTTP 409 cho mọi chứng từ của offer này. Khi nâng từ v9, migration giữ nguyên chứng từ lịch sử. Dùng truy vấn đầu tiên để nhận diện chứng từ v9 từng được ghi cho offer unsent và đối chiếu với hồ sơ trước khi quyết định xử lý. Truy vấn thứ hai phải trả về 0 dòng sau migration.
+
+```sql
+SELECT r.tenant, r.id, r.receipt, r.absolute_cost
+FROM amc_ops.ledger r WHERE r.event = 'receipt'
+AND EXISTS (SELECT FROM amc_ops.ledger u WHERE u.id = r.id AND u.event = 'unsent');
+
+SELECT r.id, r.reserved_microusd, COALESCE(SUM(l.held + l.spent), 0) AS ledger_total
+FROM workforce_runs r LEFT JOIN amc_ops.attempts a ON a.run = r.id
+LEFT JOIN amc_ops.ledger l ON l.id = a.id WHERE r.execution_mode = 'pool'
+GROUP BY r.id HAVING r.reserved_microusd <> COALESCE(SUM(l.held + l.spent), 0);
+```
+
 Kiểm chứng bằng tài khoản migration trên database thử nghiệm. Hai truy vấn chỉ đọc sau cho biết một login đã xử lý bao nhiêu campaign và cách số dư hình thành.
 
 ```sql
@@ -40,8 +57,8 @@ FROM amc_ops.ledger GROUP BY tenant,month;
 
 ## Khôi phục
 
-Để tạm dừng việc mới, dừng dispatcher. Worker đang suy luận có thể báo kết quả đến khi lease hết hạn. Khởi động lại dispatcher để ghi kết quả, thu hồi lease hết hạn và tiếp tục giới hạn ba lần thử. Khi chuyển về legacy, tạm dừng enqueue, chờ pool xử lý xong các run còn mở, đối soát khoản chưa xác nhận, đặt enabled=false, rồi chạy worker legacy cho run mới. Giữ schema v9 để bảo toàn ledger và snapshot. Rollback toàn database dùng bản backup đã thử khôi phục và cùng phiên bản ứng dụng, sau khi xuất bằng chứng phát sinh kể từ backup.
+Để tạm dừng việc mới, dừng dispatcher. Worker đang suy luận có thể báo kết quả đến khi lease hết hạn. Khởi động lại dispatcher để ghi kết quả, thu hồi lease hết hạn và tiếp tục giới hạn ba lần thử. Khi chuyển về legacy, tạm dừng enqueue, chờ pool xử lý xong các run còn mở, đối soát khoản chưa xác nhận, đặt enabled=false, rồi chạy worker legacy cho run mới. Giữ schema v10 để bảo toàn ledger và snapshot. Rollback toàn database dùng bản backup đã thử khôi phục và cùng phiên bản ứng dụng, sau khi xuất bằng chứng phát sinh kể từ backup.
 
 ## Nghiệm thu
 
-Chạy Ruff và pytest với môi trường PostgreSQL thử `amc_test*`. Các biến cần thiết và lệnh tạo database nằm trong .github/workflows/ci.yml. Job api-tests kiểm tra SQLite, PostgreSQL, 8 đường migration và tính lặp; compose-browser kiểm tra desktop/mobile; workforce-model chạy Qwen thật, bao gồm A/B/C với hai LOGIN. Artifact pool-model-measurements chứa loại lỗi, số lượt, tỷ lệ lần đầu theo tử/mẫu, và phần token chưa xác nhận. Bộ test dùng tài khoản và brief tổng hợp. Khâu duyệt nội dung thật vẫn thuộc trách nhiệm người QA. Khả năng chịu tải ở quy mô thương mại và đối soát nhà cung cấp trả phí cần nghiệm thu riêng.
+Chạy Ruff và pytest với môi trường PostgreSQL thử `amc_test*`. Các biến cần thiết và lệnh tạo database nằm trong .github/workflows/ci.yml. Job api-tests kiểm tra SQLite, PostgreSQL, 9 đường migration và tính lặp; compose-browser kiểm tra desktop/mobile; workforce-model chạy Qwen thật, bao gồm A/B/C với hai LOGIN. Artifact pool-model-measurements chứa loại lỗi, số lượt, tỷ lệ lần đầu theo tử/mẫu, và phần token chưa xác nhận. Bộ test dùng tài khoản và brief tổng hợp. Khâu duyệt nội dung thật vẫn thuộc trách nhiệm người QA. Khả năng chịu tải ở quy mô thương mại và đối soát nhà cung cấp trả phí cần nghiệm thu riêng.

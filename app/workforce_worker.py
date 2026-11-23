@@ -76,9 +76,13 @@ def claim(db, scope, config, *, run_id=None, commit=True):
     body = request_body(run, config.model)
     reserved = config.price(reserve_tokens(body), body["max_tokens"])
     if run.attempts >= MAX_TRIES or run.reserved_microusd + reserved > run.budget_microusd or run.knowledge["prompt_version"] != PROMPT_VERSION:
-        run.last_error = (
+        error = (
             "attempts_exhausted" if run.attempts >= MAX_TRIES else "prompt_version" if run.knowledge["prompt_version"] != PROMPT_VERSION else "budget_exhausted"
         )
+        if run_id is not None and error == "budget_exhausted" and reserved <= run.budget_microusd:
+            # A late receipt can make this pooled retry affordable. Preserve its repair context.
+            return
+        run.last_error = error
         run.state, run.lease = "failed", None
         if commit:
             db.commit()

@@ -57,23 +57,35 @@ def test_title_only_revision_rejects_old_approval_and_rejection(api, agency):
         {"title": "Original", "content": {"client_preview": preview}, "campaign_id": next(iter(readers[0][1]["campaigns"]))},
     )
     path = base + "/deliverables/" + doc["id"]
-    first = doc["qa_evidence"]["content_digest"]
+    first = doc["qa_evidence"]
     api.post(path + "/submit", headers=editor["headers"]).raise_for_status()
     assert api.post(path + "/review", headers=owner["headers"], json={"decision": "approved"}).status_code == 422
     api.patch(path + "/draft", headers=editor["headers"], json={"title": "The best.", "client_preview": preview}).raise_for_status()
     revised = api.post(path + "/submit", headers=editor["headers"]).json()["qa_evidence"]
-    assert revised["content_digest"] != first
+    assert revised["content_digest"] != first["content_digest"]
     assert [(f["field"], f["claim"]) for f in revised["findings"]] == [("title", "The best.")]
     for decision in ("approved", "rejected"):
-        assert api.post(path + "/review", headers=owner["headers"], json={"decision": decision, "expected_content_digest": first}).status_code == 412
-    approved = api.post(path + "/review", headers=owner["headers"], json={"decision": "approved", "expected_content_digest": revised["content_digest"]})
+        assert (
+            api.post(
+                path + "/review",
+                headers=owner["headers"],
+                json={"decision": decision, "expected_content_digest": first["content_digest"], "expected_qa_revision": first["qa_revision"]},
+            ).status_code
+            == 412
+        )
+    approved = api.post(
+        path + "/review",
+        headers=owner["headers"],
+        json={"decision": "approved", "expected_qa_revision": revised["qa_revision"], "expected_content_digest": revised["content_digest"]},
+    )
     assert approved.json()["qa_approved_digest"] == revised["content_digest"]
     trail = api.get(base + "/audit", params={"subject_id": doc["id"]}, headers=owner["headers"]).json()
     events = [e for e in trail if e["subject_id"] == doc["id"]]
-    assert {e["details"]["content_digest"] for e in events if e["event"] == "deliverable.qa_evaluated"} == {first, revised["content_digest"]}
+    assert {e["details"]["content_digest"] for e in events if e["event"] == "deliverable.qa_evaluated"} == {first["content_digest"], revised["content_digest"]}
     decision = next(e for e in events if e["event"] == "deliverable.reviewed")
     assert decision["user_id"] == owner["id"] and decision["details"] == {
         "content_digest": revised["content_digest"],
+        "qa_revision": revised["qa_revision"],
         "ruleset_version": revised["ruleset_version"],
         "decision": "approved",
     }
@@ -90,12 +102,16 @@ def test_concurrent_staff_decisions_and_sharing(api, agency):
     path = base + "/deliverables/" + doc["id"]
     api.post(path + "/submit", headers=editor["headers"]).raise_for_status()
 
-    def approve(digest):
-        return api.post(path + "/review", headers=owner["headers"], json={"decision": "approved", "expected_content_digest": digest})
+    def approve(report):
+        return api.post(
+            path + "/review",
+            headers=owner["headers"],
+            json={"decision": "approved", "expected_content_digest": report["content_digest"], "expected_qa_revision": report["qa_revision"]},
+        )
 
     with ThreadPoolExecutor(2) as pool:
         edit = pool.submit(api.patch, path + "/draft", headers=editor["headers"], json={"title": "Next", "client_preview": "B"})
-        vote = pool.submit(approve, doc["qa_evidence"]["content_digest"])
+        vote = pool.submit(approve, doc["qa_evidence"])
     assert edit.result().status_code == 200 and vote.result().status_code in (200, 412)
     current = api.get(path, headers=owner["headers"]).json()
     assert current["status"] == "draft" and current["qa_approved_digest"] is None
@@ -107,10 +123,15 @@ def test_concurrent_staff_decisions_and_sharing(api, agency):
 
     with ThreadPoolExecutor(2) as pool:
         snapshot = pool.submit(share)
-        vote = pool.submit(approve, digest)
+        vote = pool.submit(approve, current["qa_evidence"])
     assert vote.result().status_code == 200 and snapshot.result().status_code in (201, 409)
     shared = snapshot.result() if snapshot.result().status_code == 201 else share()
     assert shared.json()["digest"] == digest and shared.json()["preview"] == "B"
+    with ThreadPoolExecutor(2) as pool:
+        edits = [pool.submit(api.patch, path + "/draft", headers=editor["headers"], json={"title": "Next", "client_preview": copy}) for copy in ("C", "D")]
+    assert all(result.result().is_success for result in edits)
+    final = api.get(path, headers=owner["headers"]).json()
+    assert final["qa_revision"] == current["qa_revision"] + 2 == final["qa_evidence"]["qa_revision"]
 
 
 @pytest.mark.parametrize(
@@ -168,7 +189,18 @@ def test_legacy_approval_requires_a_fresh_report_and_human_decision(api, agency)
     assert evaluated["findings"][0]["status"] == "needs_evidence"
     assert api.post(path + "/share", headers=owner["headers"], json=expiry).status_code == 409
     api.post(
-        path + "/review", headers=owner["headers"], json={"decision": "approved", "expected_content_digest": evaluated["content_digest"]}
+        path + "/review",
+        headers=owner["headers"],
+        json={"decision": "approved", "expected_qa_revision": evaluated["qa_revision"], "expected_content_digest": evaluated["content_digest"]},
+    ).raise_for_status()
+    # A matching digest alone cannot authorize sharing when the approval revision is absent.
+    with psycopg.connect(os.environ["AMC_MIGRATION_DSN"]) as db:
+        db.execute("UPDATE deliverables SET qa_approved_revision=NULL WHERE id=%s", (doc["id"],))
+    assert api.post(path + "/share", headers=owner["headers"], json=expiry).status_code == 409
+    api.post(
+        path + "/review",
+        headers=owner["headers"],
+        json={"decision": "approved", "expected_qa_revision": evaluated["qa_revision"], "expected_content_digest": evaluated["content_digest"]},
     ).raise_for_status()
     shared = create(api, path + "/share", owner, expiry)
     assert shared["digest"] == evaluated["content_digest"]
@@ -182,6 +214,8 @@ def test_sqlite_upgrades_legacy_columns_without_trusting_content():
     bind = create_engine("sqlite://")
     Base.metadata.create_all(bind)
     with bind.begin() as conn:
+        conn.exec_driver_sql("ALTER TABLE deliverables DROP COLUMN qa_revision")
+        conn.exec_driver_sql("ALTER TABLE deliverables DROP COLUMN qa_approved_revision")
         conn.exec_driver_sql("ALTER TABLE deliverables DROP COLUMN qa_evidence")
         conn.exec_driver_sql("ALTER TABLE deliverables DROP COLUMN qa_approved_digest")
         conn.exec_driver_sql("""INSERT INTO deliverables(id,tenant_id,campaign_id,title,content,status,created_by)
@@ -190,5 +224,51 @@ def test_sqlite_upgrades_legacy_columns_without_trusting_content():
     prepare_database(bind)
     with bind.connect() as conn:
         assert {"qa_evidence", "qa_approved_digest"} <= {c["name"] for c in inspect(conn).get_columns("deliverables")}
+        assert conn.exec_driver_sql("SELECT qa_revision,qa_approved_revision FROM deliverables WHERE id='old'").one() == (1, None)
         assert conn.exec_driver_sql("SELECT qa_evidence,qa_approved_digest FROM deliverables WHERE id='old'").one() == (None, None)
     bind.dispose()
+
+
+def test_restored_copy_requires_a_new_qa_decision(api, agency):
+    owner, base, readers = agency
+    editor = account(api, "RevisionEditor")
+    create(api, base + "/members", owner, {"email": editor["email"], "role": "editor"})
+    original = {"title": "Spring offer", "client_preview": "Original copy."}
+    doc = create(
+        api,
+        base + "/deliverables",
+        editor,
+        {"campaign_id": next(iter(readers[0][1]["campaigns"])), "title": original["title"], "content": {"client_preview": original["client_preview"]}},
+    )
+    path = base + "/deliverables/" + doc["id"]
+    first = api.post(path + "/submit", headers=editor["headers"]).json()
+    vote = {"decision": "approved", "expected_content_digest": first["qa_evidence"]["content_digest"], "expected_qa_revision": first["qa_revision"]}
+    for copy in ({**original, "client_preview": "Changed copy."}, original):
+        api.patch(path + "/draft", headers=editor["headers"], json=copy).raise_for_status()
+    restored = api.post(path + "/submit", headers=editor["headers"]).json()
+    assert restored["qa_evidence"]["content_digest"] == vote["expected_content_digest"]
+    for decision in ("approved", "rejected"):
+        response = api.post(path + "/review", headers=owner["headers"], json={**vote, "decision": decision})
+        assert response.status_code == 412
+    assert restored["qa_revision"] == first["qa_revision"] + 2
+    assert (
+        api.post(
+            path + "/review", headers=owner["headers"], json={"decision": "approved", "expected_content_digest": vote["expected_content_digest"]}
+        ).status_code
+        == 422
+    )
+    invalid_hash = {**vote, "expected_qa_revision": restored["qa_revision"], "expected_content_digest": "0" * 64}
+    assert api.post(path + "/review", headers=owner["headers"], json=invalid_hash).status_code == 412
+    vote["expected_qa_revision"] = restored["qa_revision"]
+    approved = api.post(path + "/review", headers=owner["headers"], json=vote).raise_for_status().json()
+    assert approved["qa_approved_revision"] == restored["qa_revision"]
+    assert approved["qa_approved_digest"] == vote["expected_content_digest"]
+    expiry = {"expires_at": (utcnow() + timedelta(days=1)).isoformat()}
+    # Even saving the exact same copy starts the next review cycle.
+    api.patch(path + "/draft", headers=editor["headers"], json=original).raise_for_status()
+    assert api.post(path + "/share", headers=owner["headers"], json=expiry).status_code == 409
+    next_copy = api.post(path + "/submit", headers=editor["headers"]).json()
+    assert next_copy["qa_revision"] == restored["qa_revision"] + 1 and next_copy["qa_approved_revision"] is None
+    assert api.post(path + "/review", headers=owner["headers"], json=vote).status_code == 412
+    events = api.get(base + "/audit", headers=owner["headers"], params={"subject_id": doc["id"]}).json()
+    assert [e["details"]["qa_revision"] for e in events if e["event"] == "deliverable.reviewed"] == [restored["qa_revision"]]

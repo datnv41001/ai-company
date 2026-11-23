@@ -134,13 +134,13 @@ def test_brief_worker_and_approved_asset(api, workforce):
     assert revised["content_digest"] != initial and revised["state"] == "current"
     assert [f["claim"] for f in revised["findings"]] == ["Sản phẩm tốt nhất thị trường."]
     assert revised["findings"][0]["status"] == "needs_evidence"
-    assert api.post(path + "/review", headers=owner["headers"], json={"decision": "approved", "expected_content_digest": initial}).status_code == 412
+    assert api.post(path + "/review", headers=owner["headers"], json={"decision": "approved", "expected_qa_revision": draft["qa_revision"], "expected_content_digest": initial}).status_code == 412
     history = api.get(root + "/runs/" + rid, headers=owner["headers"]).json()["checkpoints"]
     assert any(f["claim"] == "Giá phải chăng." for f in history[-1]["quality"]["claims"])
     expiry = {"expires_at": (utcnow() + timedelta(days=1)).isoformat()}
     assert api.post(path + "/share", headers=owner["headers"], json=expiry).status_code == 409
     assert (
-        api.post(path + "/review", headers=owner["headers"], json={"decision": "approved", "expected_content_digest": revised["content_digest"]}).status_code
+        api.post(path + "/review", headers=owner["headers"], json={"decision": "approved", "expected_qa_revision": revised["qa_revision"], "expected_content_digest": revised["content_digest"]}).status_code
         == 200
     )
     v = create(api, path + "/share", owner, expiry)

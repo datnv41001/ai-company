@@ -48,6 +48,10 @@ def prepare_database(bind):
                     conn.exec_driver_sql(f"CREATE UNIQUE INDEX uq_delivery_{table} ON {table} ({columns})")
             if inspector.has_table("deliverables"):
                 columns = {col["name"] for col in inspector.get_columns("deliverables")}
+                if "qa_revision" not in columns:
+                    conn.exec_driver_sql("ALTER TABLE deliverables ADD COLUMN qa_revision INTEGER NOT NULL DEFAULT 1")
+                if "qa_approved_revision" not in columns:
+                    conn.exec_driver_sql("ALTER TABLE deliverables ADD COLUMN qa_approved_revision INTEGER")
                 if "qa_evidence" not in columns:
                     conn.exec_driver_sql("ALTER TABLE deliverables ADD COLUMN qa_evidence JSON")
                 if "qa_approved_digest" not in columns:
@@ -77,7 +81,7 @@ def prepare_database(bind):
         enabled = set(conn.scalars(text("""SELECT relname FROM pg_class
             WHERE relnamespace='public'::regnamespace AND relrowsecurity""")))
         if not set(Base.metadata.tables).issubset(enabled) or not conn.scalar(
-            text("SELECT EXISTS (SELECT FROM public.amc_schema_versions WHERE version=7)")
+            text("SELECT EXISTS (SELECT FROM public.amc_schema_versions WHERE version=8)")
         ):
             raise RuntimeError("Apply the PostgreSQL schema migrations before starting the API")
 

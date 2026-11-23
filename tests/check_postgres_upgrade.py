@@ -15,7 +15,8 @@ MIGRATIONS = Path(__file__).resolve().parents[1] / "migrations"
 
 
 def verify():
-    from_v6 = "--from-v6" in sys.argv
+    from_v7 = "--from-v7" in sys.argv
+    from_v6 = "--from-v6" in sys.argv or from_v7
     from_v5 = "--from-v5" in sys.argv or from_v6
     from_v4 = "--from-v4" in sys.argv or from_v5
     from_v3 = "--from-v3" in sys.argv or from_v4
@@ -52,7 +53,8 @@ def verify():
                          'Title','Preview',encode(sha256(convert_to('{"preview":"Preview","title":"Title"}','UTF8')),'hex'),
                          'alice','alice',now(),now()+interval '1 day')""")
             conn.execute("""INSERT INTO review_entries(id,tenant_id,review_id,digest,actor_id,kind,note,request_key,created_at)
-                         SELECT 'entry','agency','rv',digest,'external','rejected','','legacy-key',now() FROM client_reviews WHERE id='rv'""")
+                         SELECT 'entry','agency','rv',digest,'external',%s,'','legacy-key',now() FROM client_reviews WHERE id='rv'""",
+                         ('approved' if from_v7 else 'rejected',))
         if from_v4:
             conn.execute((MIGRATIONS/"004_review_operations.sql").read_text(encoding="utf-8"))
             conn.execute("INSERT INTO amc_schema_versions VALUES (4)")
@@ -71,6 +73,11 @@ def verify():
             conn.execute("INSERT INTO amc_schema_versions VALUES (6)")
             conn.execute("""UPDATE deliverables SET status='approved',reviewed_by='alice',
                          content='{"client_preview":"Legacy","qa_evidence":{"state":"current"},"qa_claims":[]}' WHERE id='doc'""")
+        if from_v7:
+            conn.execute((MIGRATIONS/"007_revision_qa.sql").read_text(encoding="utf-8"))
+            conn.execute("INSERT INTO amc_schema_versions VALUES (7)")
+            conn.execute("""UPDATE deliverables SET qa_approved_digest=repeat('a',64),
+                         qa_evidence='{"ruleset_version":"old"}' WHERE id='doc'""")
     migrate(dsn, os.environ.get("AMC_RUNTIME_PASSWORD"))
     migrate(dsn)
     prepare_database(runtime)
@@ -88,7 +95,7 @@ def verify():
             owner.execute("UPDATE memberships SET role='client_viewer',client_id='a' WHERE user_id='alice'")
         identify()
         assert set(c.scalars(text("SELECT id FROM clients"))) == {"a"}
-        assert set(c.scalars(text("SELECT version FROM amc_schema_versions"))) == {2,3,4,5,6,7}
+        assert set(c.scalars(text("SELECT version FROM amc_schema_versions"))) == {2,3,4,5,6,7,8}
         if "--from-v2" in sys.argv or from_v3:
             c.rollback()
             c.execute(text("SELECT set_config('amc.user_id','external',true),set_config('amc.tenant_id','agency',true)"))
@@ -100,7 +107,12 @@ def verify():
                 assert c.execute(text("SELECT kind,note FROM review_entries")).one() == ("rejected", "")
             with psycopg.connect(dsn) as owner:
                 if from_v6:
-                    assert owner.execute("SELECT qa_evidence,qa_approved_digest FROM deliverables WHERE id='doc'").fetchone() == (None,None)
+                    expected_qa = ({"ruleset_version":"old"}, "a"*64) if from_v7 else (None,None)
+                    assert owner.execute("SELECT qa_evidence,qa_approved_digest FROM deliverables WHERE id='doc'").fetchone() == expected_qa
+                    assert owner.execute("SELECT qa_revision,qa_approved_revision FROM deliverables WHERE id='doc'").fetchone() == (1,None)
+                    if from_v7:
+                        assert owner.execute("SELECT kind,digest FROM review_entries WHERE id='entry'").fetchone() == (
+                            "approved", hashlib.sha256(b'{"preview":"Preview","title":"Title"}').hexdigest())
                     assert owner.execute("SELECT version,title,preview,digest FROM client_reviews WHERE id='rv'").fetchone() == (
                         1, "Title", "Preview", hashlib.sha256(b'{"preview":"Preview","title":"Title"}').hexdigest())
                 if from_v5:
@@ -108,8 +120,8 @@ def verify():
                     assert owner.execute("SELECT count(*) FROM audit_events WHERE event='workforce.recipient_revoked'").fetchone() == (1,)
                 assert owner.execute("SELECT title FROM deliverables WHERE id='doc'").fetchone() == ("Internal",)
     runtime.dispose()
-    baseline = "v6" if from_v6 else "v5" if from_v5 else "v4" if from_v4 else "v3" if from_v3 else "v2" if "--from-v2" in sys.argv else "v1"
-    print(f"PASS: populated {baseline} to v7, repeated migration, privileged API login refused, client isolated")
+    baseline = "v7" if from_v7 else "v6" if from_v6 else "v5" if from_v5 else "v4" if from_v4 else "v3" if from_v3 else "v2" if "--from-v2" in sys.argv else "v1"
+    print(f"PASS: populated {baseline} to v8, repeated migration, privileged API login refused, client isolated")
 
 
 if __name__ == "__main__":

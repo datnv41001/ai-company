@@ -86,7 +86,7 @@ def exercise():
         # Synthetic identities exercise the acceptance mechanism. Copy quality needs separate human review.
         assessment = request("GET", doc, admin)["qa_evidence"]
         assert assessment["state"] == "current"
-        request("POST", doc + "/review", admin, {"decision": "approved", "expected_content_digest": assessment["content_digest"], "note": "Synthetic end-to-end acceptance"})
+        request("POST", doc + "/review", admin, {"decision": "approved", "expected_qa_revision": assessment["qa_revision"], "expected_content_digest": assessment["content_digest"], "note": "Synthetic end-to-end acceptance"})
         shared = request("POST", doc + "/share", admin, {"expires_at": (datetime.now(timezone.utc) + timedelta(hours=1)).isoformat()})
         request("POST", base + "/reviews/" + shared["id"] + "/events", client, {"kind": "approved", "digest": shared["digest"], "request_key": uuid4().hex})
         assert shared["digest"] == assessment["content_digest"]

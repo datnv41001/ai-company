@@ -105,9 +105,9 @@ def test_deliverable_review_and_cross_tenant_boundary(client):
     assert artifact.status_code == 201
     aid = artifact.json()["id"]
     assert client.post(f"/api/tenants/{tid}/deliverables/{aid}/submit", headers=headers(owner)).status_code == 200
-    assert client.post(f"/api/tenants/{tid}/deliverables/{aid}/review", headers=headers(owner), json={"expected_content_digest": artifact.json()["qa_evidence"]["content_digest"], "decision": "approved"}).status_code == 403
-    assert client.post(f"/api/tenants/{tid}/deliverables/{aid}/review", headers=headers(outsider), json={"expected_content_digest": artifact.json()["qa_evidence"]["content_digest"], "decision": "approved"}).status_code == 404
-    r = client.post(f"/api/tenants/{tid}/deliverables/{aid}/review", headers=headers(reviewer), json={"expected_content_digest": artifact.json()["qa_evidence"]["content_digest"], "decision": "approved", "note": "Reviewed"})
+    assert client.post(f"/api/tenants/{tid}/deliverables/{aid}/review", headers=headers(owner), json={"expected_qa_revision": artifact.json()["qa_evidence"]["qa_revision"], "expected_content_digest": artifact.json()["qa_evidence"]["content_digest"], "decision": "approved"}).status_code == 403
+    assert client.post(f"/api/tenants/{tid}/deliverables/{aid}/review", headers=headers(outsider), json={"expected_qa_revision": artifact.json()["qa_evidence"]["qa_revision"], "expected_content_digest": artifact.json()["qa_evidence"]["content_digest"], "decision": "approved"}).status_code == 404
+    r = client.post(f"/api/tenants/{tid}/deliverables/{aid}/review", headers=headers(reviewer), json={"expected_qa_revision": artifact.json()["qa_evidence"]["qa_revision"], "expected_content_digest": artifact.json()["qa_evidence"]["content_digest"], "decision": "approved", "note": "Reviewed"})
     assert r.status_code == 200 and r.json()["status"] == "approved"
 
 

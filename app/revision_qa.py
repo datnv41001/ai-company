@@ -29,6 +29,7 @@ def evaluate(db, doc, actor):
     sections = {"title": doc.title, "client_preview": preview}
     result = assess({"sections": sections, "source_ids": sorted(cited)}, sources)
     report = {
+        "qa_revision": doc.qa_revision,
         "content_digest": content_digest(doc.title, preview),
         "ruleset_version": RULESET,
         "evaluated_at": utcnow().isoformat(),

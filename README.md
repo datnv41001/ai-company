@@ -2,7 +2,7 @@
 
 **[Chạy bằng Docker và tiếp quản trên máy mới → HANDOFF.md](HANDOFF.md)**
 
-**QA theo phiên bản.** Khi sửa tiêu đề hoặc nội dung gửi khách, hệ thống đánh giá lại claim và yêu cầu người QA duyệt đúng SHA-256 của bản đang xem. [Hợp đồng API, nâng cấp v7 và phục hồi](docs/ADR-007-QA-EVIDENCE-REVISION.md).
+**QA theo phiên bản.** Khi sửa tiêu đề hoặc nội dung gửi khách, hệ thống đánh giá lại claim và yêu cầu người QA duyệt đúng số lần lưu và SHA-256 của bản đang xem. [Hợp đồng API, nâng cấp v8 và phục hồi](docs/ADR-007-QA-EVIDENCE-REVISION.md).
 
 **AI Workforce nội bộ.** Luồng brief → Director → Research → Strategy → Content tạo bộ tài sản chờ QA. [Chạy worker và model](HANDOFF.md#chạy-ai-workforce-trên-máy-mới) · [Thiết kế và bằng chứng](docs/ADR-005-AI-WORKFORCE.md).
 

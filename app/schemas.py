@@ -61,6 +61,7 @@ class ReviewIn(BaseModel):
 
 
 class DeliverableReviewIn(ReviewIn):
+    expected_qa_revision: int = Field(ge=1, strict=True)
     expected_content_digest: str = Field(pattern=r'^[0-9a-f]{64}$')
 
 

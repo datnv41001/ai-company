@@ -103,6 +103,8 @@ class WorkTask(Base):
 
 
 class Deliverable(Base):
+    qa_revision: Mapped[int] = mapped_column(default=1, server_default="1")
+    qa_approved_revision: Mapped[int | None] = mapped_column(nullable=True)
     qa_evidence: Mapped[dict | None] = mapped_column(JSON, nullable=True)
     qa_approved_digest: Mapped[str | None] = mapped_column(String(64), nullable=True)
     last_editor_id: Mapped[str | None] = mapped_column(ForeignKey("users.id"), nullable=True)

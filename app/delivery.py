@@ -203,6 +203,9 @@ def edit_draft(tenant_id: str, did: str, body: Edit, user: User = Depends(curren
         # The document lock also guards decisions. A decision committed first stays final.
         append(db, previous, user.id, "cancelled", "Agency bắt đầu sửa bản làm việc.", str(uuid4()))
     doc.title, doc.content = body.title, {**doc.content, "client_preview": body.client_preview}
+    # The same bytes can recur after multiple edits. Only this save owns the new revision.
+    doc.qa_revision += 1
+    doc.qa_approved_revision = None
     doc.qa_approved_digest = None
     evaluate(db, doc, user.id)
     doc.last_editor_id, doc.status, doc.reviewed_by, doc.review_note = user.id, "draft", None, None
@@ -227,7 +230,14 @@ def share(tenant_id: str, did: str, body: Share, user: User = Depends(current_us
         raise HTTPException(422, "Provide a client preview and complete QA before sharing")
     digest = content_digest(doc.title, preview)
     report = doc.qa_evidence or {}
-    if doc.qa_approved_digest != digest or report.get("content_digest") != digest or report.get("ruleset_version") != RULESET:
+    if (
+        doc.qa_approved_revision != doc.qa_revision
+        or report.get("qa_revision") != doc.qa_revision
+        or doc.qa_approved_digest != digest
+        or report.get("content_digest") != digest
+        or report.get("ruleset_version") != RULESET
+        or report.get("state") not in {"current", "source_unavailable"}
+    ):
         raise HTTPException(409, "Independent QA must review this revision before sharing")
     if body.expires_at <= utcnow():
         raise HTTPException(422, "Deadline must be in the future")
@@ -255,7 +265,7 @@ def share(tenant_id: str, did: str, body: Share, user: User = Depends(current_us
     doc.status = "shared"
     db.add(
         AuditEvent(
-            tenant_id=tenant_id, user_id=user.id, subject_id=review.id, event="review.shared", details={"digest": review.digest, "version": review.version}
+            tenant_id=tenant_id, user_id=user.id, subject_id=review.id, event="review.shared", details={"digest": review.digest, "version": review.version, "qa_revision": doc.qa_approved_revision}
         )
     )
     db.commit()

@@ -27,7 +27,7 @@ def exercise():
             return reg["access_token"], reg["tenant_id"], reg["user_id"], email, password
 
         token, tenant, _, admin_email, admin_password = user("Agency")
-        edit, _, _, editor_email, _ = user("Editor")
+        edit, _, _, editor_email, editor_password = user("Editor")
         _, _, uid, email, password = user("Reader")
         base = "/api/tenants/" + tenant
         client = post(base + "/clients", {"name": "UI Client"}, token)
@@ -52,7 +52,7 @@ def exercise():
             )
             path = base + "/deliverables/" + draft["id"]
             post(path + "/submit", {}, edit)
-            post(path + "/review", {"decision": "approved", "note": "internal QA", "expected_content_digest": draft["qa_evidence"]["content_digest"]}, token)
+            post(path + "/review", {"decision": "approved", "note": "internal QA", "expected_qa_revision": draft["qa_evidence"]["qa_revision"], "expected_content_digest": draft["qa_evidence"]["content_digest"]}, token)
             return post(path + "/share", {"expires_at": (datetime.now(timezone.utc) + timedelta(seconds=seconds)).isoformat()}, token)
 
         browser = pw.chromium.launch(executable_path=os.getenv("AMC_BROWSER_EXECUTABLE") or None)
@@ -119,7 +119,26 @@ def exercise():
                     base + "/deliverables", {"title": "Initial price", "campaign_id": camp["id"], "content": {"client_preview": "Giá phải chăng."}}, edit
                 )
                 doc_path = base + "/deliverables/" + draft["id"]
-                post(doc_path + "/submit", {}, edit)
+                editor_page = login_page(editor_email, editor_password, {"width": width, "height": height})
+                editor_page.locator("#workspace-select").select_option(tenant)
+                form = editor_page.locator("#review-panel")
+                form.get_by_text("Soạn và bàn giao cho khách", exact=True).click()
+                form.get_by_label("Bản làm việc").select_option(draft["id"])
+                submit = form.get_by_role("button", name="Gửi QA", exact=True)
+                title = form.get_by_label("Tiêu đề gửi khách")
+                preview = form.get_by_label("Nội dung khách sẽ xem")
+                title.fill("Unsaved title")
+                expect(submit).to_be_disabled()
+                expect(form.get_by_text("Hãy lưu thay đổi", exact=False)).to_be_visible()
+                title.fill(draft["title"])
+                expect(submit).to_be_enabled()
+                preview.fill("Giá phải chăng. Nội dung bổ sung.")
+                expect(submit).to_be_disabled()
+                form.get_by_role("button", name="Lưu bản sửa").click()
+                expect(submit).to_be_enabled()
+                submit.click()
+                expect(submit).to_have_count(0)
+                editor_page.close()
                 qa_page = login_page(admin_email, admin_password, {"width": width, "height": height})
                 pane = qa_page.locator("#review-panel")
                 pane.get_by_text("Soạn và bàn giao cho khách", exact=True).click()
@@ -136,10 +155,23 @@ def exercise():
                 expect(pane.get_by_text("Cần bổ sung bằng chứng · Nội dung · The best.")).to_be_visible()
                 expect(pane.get_by_text("Giá phải chăng.", exact=False)).to_have_count(0)
                 expect(pane.get_by_text("SHA-256 " + revised["qa_evidence"]["content_digest"][:12], exact=False)).to_be_visible()
+                for copy in ("Temporary revision.", "The best."):
+                    api.patch(
+                        doc_path + "/draft", headers={"Authorization": "Bearer " + edit}, json={"title": "Revised", "client_preview": copy}
+                    ).raise_for_status()
+                restored = post(doc_path + "/submit", {}, edit)
+                assert restored["qa_evidence"]["content_digest"] == revised["qa_evidence"]["content_digest"]
+                with qa_page.expect_response(lambda r: r.url.endswith(doc_path + "/review")) as decision:
+                    pane.get_by_role("button", name="QA duyệt", exact=True).click()
+                assert decision.value.status == 412
+                qa_page.locator("#refresh").click()
+                expect(pane.get_by_text(f"Lần lưu {restored['qa_revision']} ·", exact=False)).to_be_visible()
                 pane.get_by_role("button", name="QA duyệt", exact=True).click()
                 expect(pane.get_by_role("button", name="Chia sẻ phiên bản đã duyệt")).to_be_visible()
                 qa_page.close()
-                print(f"PASS browser {width}x{height}: revision-specific findings, stale decision, reload and independent QA")
+                print(
+                    f"PASS browser {width}x{height}: unsaved edits blocked, revision-specific findings, A-B-A stale decision refused and fresh decision accepted"
+                )
 
             _, _, _, invited_email, invited_password = user("InvitedReviewer")
             owner_page = login_page(admin_email, admin_password, {"width": 1280, "height": 850})

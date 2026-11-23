@@ -299,7 +299,7 @@ def get_working_deliverable(tenant_id: str, deliverable_id: str, user: User = De
 def create_deliverable(tenant_id: str, body: DeliverableIn, user: User = Depends(current_user), db: Session = Depends(get_db)):
     member(db, user, tenant_id, "editor")
     campaign_of(db, tenant_id, body.campaign_id)
-    reserved = {'qa_claims', 'qa_evidence', 'workforce_run_id', 'source_ids', 'qa_approved_digest'}
+    reserved = {'qa_claims', 'qa_evidence', 'workforce_run_id', 'source_ids', 'qa_approved_digest', 'qa_revision', 'qa_approved_revision'}
     content = {key: value for key, value in body.content.items() if key not in reserved}
     item = Deliverable(tenant_id=tenant_id, campaign_id=body.campaign_id, title=body.title, content=content, created_by=user.id)
     db.add(item)
@@ -315,7 +315,7 @@ def submit_deliverable(tenant_id: str, deliverable_id: str, user: User = Depends
     item = working_copy(db, tenant_id, deliverable_id)
     if item.status != "draft":
         raise HTTPException(409, "Only draft deliverables may be submitted")
-    if not item.qa_evidence:
+    if (item.qa_evidence or {}).get("qa_revision") != item.qa_revision:
         evaluate(db, item, user.id)
     item.status = "submitted"
     audit(db, tenant_id, user.id, "deliverable.submitted", item.id)
@@ -328,7 +328,8 @@ def assess_working_copy(tenant_id: str, deliverable_id: str, user: User = Depend
     item = working_copy(db, tenant_id, deliverable_id)
     previous = item.qa_evidence or {}
     report = evaluate(db, item, user.id)
-    if any(previous.get(k) != report[k] for k in ("content_digest", "ruleset_version", "state", "findings")):
+    if any(previous.get(k) != report[k] for k in ("qa_revision", "content_digest", "ruleset_version", "state", "findings")):
+        item.qa_approved_revision = None
         item.qa_approved_digest = None
     return done(db, item)
 
@@ -340,18 +341,21 @@ def review_deliverable(tenant_id: str, deliverable_id: str, body: DeliverableRev
     report = item.qa_evidence or {}
     digest = content_digest(item.title, item.content.get("client_preview", ""))
     if (
-        digest != body.expected_content_digest
+        body.expected_qa_revision != item.qa_revision
+        or report.get("qa_revision") != item.qa_revision
+        or digest != body.expected_content_digest
         or report.get("content_digest") != digest
         or report.get("ruleset_version") != RULESET
         or report.get("state") not in {"current", "source_unavailable"}
     ):
         raise HTTPException(412, "Content changed or assessment is stale. Reload and reassess before deciding.")
-    legacy_approval = item.status == "approved" and item.qa_approved_digest is None
+    legacy_approval = item.status == "approved" and item.qa_approved_revision is None
     if item.status != "submitted" and not legacy_approval:
         raise HTTPException(409, "Deliverable is not awaiting review")
     if user.id in (item.created_by, item.last_editor_id):
         raise HTTPException(403, "Self-approval is forbidden")
     item.status, item.reviewed_by, item.review_note = body.decision, user.id, body.note
+    item.qa_approved_revision = item.qa_revision if body.decision == "approved" else None
     item.qa_approved_digest = digest if body.decision == "approved" else None
     audit(
         db,
@@ -359,7 +363,7 @@ def review_deliverable(tenant_id: str, deliverable_id: str, body: DeliverableRev
         user.id,
         "deliverable.reviewed",
         item.id,
-        {"decision": body.decision, "content_digest": digest, "ruleset_version": report["ruleset_version"]},
+        {"decision": body.decision, "qa_revision": item.qa_revision, "content_digest": digest, "ruleset_version": report["ruleset_version"]},
     )
     return done(db, item)
 

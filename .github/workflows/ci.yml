@@ -58,7 +58,11 @@ jobs:
           docker compose -p amc-acceptance config -q
           trap 'docker compose -p amc-acceptance down' EXIT
           docker compose -p amc-acceptance up -d --build
-          curl --fail --retry 30 --retry-connrefused --retry-delay 1 http://127.0.0.1:8000/api/health
+          # Docker can accept the TCP connection while Uvicorn is still starting.
+          if ! curl --fail --retry 30 --retry-all-errors --retry-delay 1 --max-time 4 http://127.0.0.1:8000/api/health; then
+            docker compose -p amc-acceptance logs --tail 40 api migrate
+            exit 1
+          fi
           docker compose -p amc-acceptance exec -T api python -m pip freeze > compose-versions.txt
           docker compose -p amc-acceptance images >> compose-versions.txt
           docker image inspect postgres:16.6-alpine --format '{{json .RepoDigests}}' >> compose-versions.txt

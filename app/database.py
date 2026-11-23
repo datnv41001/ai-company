@@ -1,10 +1,13 @@
 import os
 from collections.abc import Generator
-from dotenv import load_dotenv
+from dotenv import dotenv_values
 from sqlalchemy import create_engine, event, inspect, text
 from sqlalchemy.orm import DeclarativeBase, Session
 
-load_dotenv()
+# Only shared application settings cross the native API startup boundary.
+for name, value in dotenv_values().items():
+    if value is not None and name in ("DATABASE_URL", "APP_ENV", "JWT_SECRET", "JWT_ISSUER"):
+        os.environ.setdefault(name, value)
 
 DATABASE_URL = os.getenv("DATABASE_URL", "sqlite:///./amc_local.db")
 APP_ENV = os.getenv("APP_ENV", "local")
@@ -43,7 +46,10 @@ def prepare_database(bind):
                 for table, columns in (("memberships","tenant_id,user_id,client_id"), ("brands","tenant_id,client_id,id"),
                                        ("campaigns","tenant_id,brand_id,id"), ("deliverables","tenant_id,campaign_id,id")):
                     conn.exec_driver_sql(f"CREATE UNIQUE INDEX uq_delivery_{table} ON {table} ({columns})")
+            from .workforce_authority import install_sqlite
             Base.metadata.create_all(conn)
+            if not conn.exec_driver_sql("SELECT 1 FROM sqlite_master WHERE type='trigger' AND name='workforce_check_intake'").scalar():
+                install_sqlite(conn)
             for index in Base.metadata.tables["client_reviews"].indexes:
                 index.create(conn, checkfirst=True)
             if first_delivery_upgrade:
@@ -63,7 +69,7 @@ def prepare_database(bind):
         enabled = set(conn.scalars(text("""SELECT relname FROM pg_class
             WHERE relnamespace='public'::regnamespace AND relrowsecurity""")))
         if not set(Base.metadata.tables).issubset(enabled) or not conn.scalar(
-            text("SELECT EXISTS (SELECT FROM public.amc_schema_versions WHERE version=5)")
+            text("SELECT EXISTS (SELECT FROM public.amc_schema_versions WHERE version=6)")
         ):
             raise RuntimeError("Apply the PostgreSQL schema migrations before starting the API")
 

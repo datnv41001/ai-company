@@ -120,7 +120,7 @@ def test_inhouse_mode_and_missing_llm_configuration(client, monkeypatch):
     brand = client.post(f"/api/tenants/{tid}/brands", headers=headers(who), json={"name": "Brand In House", "client_id": clients[0]["id"]}).json()
     campaign = client.post(f"/api/tenants/{tid}/campaigns", headers=headers(who), json={"brand_id": brand["id"], "name": "Brand Launch", "brief": "Create an accurate launch plan with verified claims.", "objective": "Plan a marketing campaign"}).json()
     r = client.post(f"/api/tenants/{tid}/campaigns/{campaign['id']}/strategy", headers=headers(who))
-    assert r.status_code == 503
+    assert r.status_code == 410
     assert client.get(f"/api/tenants/{tid}/deliverables", headers=headers(who)).json() == []
 
 
@@ -153,18 +153,18 @@ def test_auth_validation_keeps_submitted_credentials_out_of_response(client):
         assert isinstance(result.json()["detail"], list)
 
 
-def test_ai_strategy_api_persists_a_draft_only_with_mocked_provider(client, monkeypatch):
-    from app.schemas import StrategyDraft
+def test_retired_strategy_never_calls_provider_with_key_present(client, monkeypatch):
+    import httpx
     owner = sign_up(client, "strategist")
     _, _, campaign = setup_campaign(client, owner)
-    def provider(*_args):
-        return StrategyDraft(positioning="Verified product positioning", target_audiences=["Customers"], recommended_channels=["Website"], kpis=["Qualified leads"], proposed_actions=["Draft content"], assumptions_and_missing_data=["No market research source provided"], risks_to_review=["Brand approval required"])
-    monkeypatch.setattr("app.main.generate_strategy", provider)
-    r = client.post(f"/api/tenants/{owner['tenant_id']}/campaigns/{campaign['id']}/strategy", headers=headers(owner))
-    assert r.status_code == 201
-    assert r.json()["status"] == "draft"
-    assert r.json()["content"]["assumptions_and_missing_data"]
-    assert r.json()["reviewed_by"] is None
+    monkeypatch.setenv("OPENAI_API_KEY","synthetic-regression-marker")
+    def forbid_network(*args, **kwargs):
+        raise AssertionError("Legacy endpoint attempted an outbound HTTP call")
+    monkeypatch.setattr(httpx.HTTPTransport, "handle_request", forbid_network)
+    base = f"/api/tenants/{owner['tenant_id']}"
+    for _ in range(2):
+        assert client.post(base + f"/campaigns/{campaign['id']}/strategy",headers=headers(owner)).status_code == 410
+    assert client.get(base+"/deliverables",headers=headers(owner)).json() == []
 
 
 def test_role_and_workflow_spec_catalogs_are_not_claimed_implemented(client):

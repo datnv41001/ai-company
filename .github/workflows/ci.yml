@@ -49,6 +49,10 @@ jobs:
           export AMC_MIGRATION_DSN="${AMC_MIGRATION_DSN%/*}/amc_test_populated_v4"
           export DATABASE_URL="${DATABASE_URL%/*}/amc_test_populated_v4"
           python tests/check_postgres_upgrade.py --from-v4
+          docker exec amc-test-pg createdb -U postgres amc_test_populated_v5
+          export AMC_MIGRATION_DSN="${AMC_MIGRATION_DSN%/*}/amc_test_populated_v5"
+          export DATABASE_URL="${DATABASE_URL%/*}/amc_test_populated_v5"
+          python tests/check_postgres_upgrade.py --from-v5
   compose-browser:
     runs-on: ubuntu-latest
     steps:
@@ -64,6 +68,13 @@ jobs:
           set -euo pipefail
           python scripts/init_env.py
           docker compose -p amc-acceptance config -q
+          OPENAI_API_KEY=synthetic-only docker compose -p amc-acceptance --profile workforce config --format json | python -c "import json,sys
+          services=json.load(sys.stdin)['services']
+          for name,service in services.items():
+              env=service.get('environment',{})
+              assert 'OPENAI_API_KEY' not in env
+              assert ('AMC_WORKER_KEY_FILE' in env)==(name=='worker')
+              assert any(v.get('target')=='/run/amc-worker-secrets' and v.get('read_only') for v in service.get('volumes',[]))==(name=='worker')"
           trap 'docker compose -p amc-acceptance down' EXIT
           docker compose -p amc-acceptance up -d --build
           # Docker can accept the TCP connection while Uvicorn is still starting.

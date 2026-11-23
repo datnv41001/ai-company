@@ -2,11 +2,14 @@
 
 import json
 import os
+from pathlib import Path
 import re
 from dataclasses import dataclass
 from urllib.parse import urlsplit
 
 import httpx
+
+from .workforce_evidence import assess
 
 PROMPT_VERSION = "marketing-workforce-2"
 SKILLS = {
@@ -59,7 +62,7 @@ class Gateway:
             if addr.scheme not in ("http", "https") or addr.hostname not in ("localhost", "127.0.0.1", "::1", "host.docker.internal", "model"):
                 raise ValueError("Local inference requires a local model endpoint")
             return cls(provider, os.getenv("AMC_WORKFORCE_MODEL", "amc-local"), url.rstrip("/"), 0, 0, timeout)
-        if provider == "openai" and os.getenv("OPENAI_API_KEY"):
+        if provider == "openai" and os.getenv("AMC_WORKER_KEY_FILE"):
             rates = [int(os.environ[k]) for k in ("AMC_INPUT_RATE_MICROUSD", "AMC_OUTPUT_RATE_MICROUSD")]
             if min(rates) <= 0:
                 raise ValueError("Configure positive rates per million tokens for this model")
@@ -101,12 +104,20 @@ def request_body(run, model):
 
 
 def reserve_tokens(body):
-    # UTF-8 byte count deliberately overestimates tokenized input; allowance covers protocol overhead.
+    # UTF-8 length plus a margin is a reservation heuristic. Provider overhead and billing can differ.
     return len(json.dumps(body, ensure_ascii=False).encode()) + 512
 
 
 def infer(config, body):
-    headers = {"Authorization": "Bearer " + os.environ["OPENAI_API_KEY"]} if config.provider == "openai" else {}
+    headers = {}
+    if config.provider == "openai":
+        try:
+            key = Path(os.environ["AMC_WORKER_KEY_FILE"]).read_text(encoding="utf-8").strip()
+        except (OSError, KeyError):
+            raise GatewayError("worker_key_unavailable") from None
+        if not key:
+            raise GatewayError("worker_key_unavailable")
+        headers["Authorization"] = "Bearer " + key
     try:
         with httpx.Client(timeout=config.timeout, trust_env=False) as client:
             res = client.post(config.url + "/chat/completions", json=body, headers=headers)
@@ -156,4 +167,5 @@ def quality(output, sources):
         "numeric_claims": len(claims),
         "matched_numeric_claims": len(claims & known),
         "numbers_for_qa": sorted(claims - known),
+        **assess(output, sources),
     }

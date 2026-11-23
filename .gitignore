@@ -16,3 +16,5 @@ htmlcov/
 
 # Downloaded local inference weights
 /models/
+
+.worker-secrets/

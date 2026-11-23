@@ -32,8 +32,6 @@ services:
       DATABASE_URL: postgresql+psycopg://amc_runtime:${AMC_RUNTIME_PASSWORD}@db:5432/amc
       JWT_SECRET: ${JWT_SECRET:?set JWT_SECRET in .env}
       JWT_ISSUER: amc-development
-      OPENAI_API_KEY: ${OPENAI_API_KEY:-}
-      OPENAI_MODEL: ${OPENAI_MODEL:-gpt-4.1-mini}
     healthcheck:
       test: ["CMD", "python", "-c", "from urllib.request import urlopen; urlopen('http://127.0.0.1:8000/api/health', timeout=2).close()"]
       interval: 5s
@@ -65,7 +63,9 @@ services:
       AMC_MODEL_TIMEOUT: ${AMC_MODEL_TIMEOUT:-90}
       AMC_INPUT_RATE_MICROUSD: ${AMC_INPUT_RATE_MICROUSD:-0}
       AMC_OUTPUT_RATE_MICROUSD: ${AMC_OUTPUT_RATE_MICROUSD:-0}
-      OPENAI_API_KEY: ${OPENAI_API_KEY:-}
+      AMC_WORKER_KEY_FILE: /run/amc-worker-secrets/openai_key
+    volumes:
+      - ${AMC_WORKER_SECRET_DIR:-./.worker-secrets}:/run/amc-worker-secrets:ro
 
   model:
     profiles: ["local-model"]

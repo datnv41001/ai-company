@@ -172,7 +172,11 @@ def finish(db, scope, config, task, result, error):
                 tenant_id=run.tenant_id,
                 campaign_id=run.campaign_id,
                 title=run.knowledge["title"],
-                content={"client_preview": preview, "workforce_run_id": run.id},
+                content={
+                    "client_preview": preview,
+                    "workforce_run_id": run.id,
+                    "qa_claims": [finding for p in run.checkpoints if p["skill"] != "director" for finding in p["quality"].get("claims", [])],
+                },
                 created_by=scope.operator,
                 status="submitted",
             )
@@ -191,6 +195,14 @@ def process_one(bind, scope, config, call=bounded_call):
         task = claim(db, scope, config)
     if not task:
         return False
+    with Session(bind) as db:
+        active = db.scalar(
+            authorized_queue(db, scope).where(
+                WorkforceRun.id == task[0], WorkforceRun.state == "running", WorkforceRun.lease == task[1], WorkforceRun.ready_at > utcnow()
+            )
+        )
+        if active is None:
+            return False
     result, error = None, None
     try:
         result = call(config, task[2])
@@ -205,6 +217,14 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--once", action="store_true", help="Process at most one specialist checkpoint")
     args = parser.parse_args()
+    from dotenv import dotenv_values
+
+    for name, value in dotenv_values().items():
+        if value is not None and (
+            name.startswith(("AMC_WORKER_", "AMC_WORKFORCE_"))
+            or name in {"AMC_MODEL_TIMEOUT", "AMC_LOCAL_MODEL_URL", "AMC_INPUT_RATE_MICROUSD", "AMC_OUTPUT_RATE_MICROUSD"}
+        ):
+            os.environ.setdefault(name, value)
     scope, config = Scope.configured(), Gateway.configured()
     # Load the full model inventory before checking migration readiness.
     from .main import app  # noqa: F401

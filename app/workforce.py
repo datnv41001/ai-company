@@ -15,6 +15,7 @@ from .delivery_models import ClientReview, PortalGrant, ReviewEntry
 from .models import AuditEvent, Brand, Campaign, User
 from .security import current_user, require_tenant
 from .workforce_gateway import CORE, EXTRA, PROMPT_VERSION
+from . import workforce_authority  # noqa: F401 - install SQLite triggers on fresh schema
 from .workforce_models import WorkforceBrief, WorkforceRun
 
 router = APIRouter(prefix="/api/tenants/{tenant_id}/workforce", tags=["Marketing workforce"])
@@ -172,8 +173,11 @@ def start(tenant_id: str, bid: str, body: Start, user: User = Depends(current_us
             )
         )
         db.commit()
-    except IntegrityError:
+    except IntegrityError as exc:
         db.rollback()
+        name = getattr(getattr(exc.orig, "diag", None), "constraint_name", None)
+        if name == "workforce_recipient_required" or "workforce_recipient_required" in str(exc.orig):
+            raise HTTPException(409, "Brief recipient access was withdrawn") from None
         raise HTTPException(409, "Brief already queued; refresh") from None
     return {"id": run.id, "state": run.state}
 

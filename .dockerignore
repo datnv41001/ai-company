@@ -11,3 +11,5 @@
 *.log
 
 models/
+
+.worker-secrets/

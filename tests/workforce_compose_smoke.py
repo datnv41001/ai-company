@@ -79,6 +79,7 @@ def exercise():
         assert report["state"] == "awaiting_qa", (report["state"], report["last_error"], [(j["skill"], j["outcome"]) for j in report["journal"]])
         assert [p["skill"] for p in report["checkpoints"]] == ["director", "research", "strategy", "content"]
         assert all(j["provider"] == "local" for j in report["journal"])
+        assert all(p["quality"]["ruleset"] == "marketing-evidence-1" for p in report["checkpoints"])
         assert report["reserved_microusd"] == 0 and all(p["output"]["source_ids"] for p in report["checkpoints"])
         doc = base + "/deliverables/" + report["deliverable_id"]
         assert request("GET", base + "/reviews", client) == []

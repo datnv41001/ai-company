@@ -80,9 +80,12 @@ function createWorkforce(root, api, notify) {
         const info=node(row,'div');action(row,'Xem kết quả và chi phí',async()=>{
           const v=await api(base+'/runs/'+r.id);if(ticket!==revision)return;
           info.replaceChildren();node(info,'p',v.journal.length+' lượt xử lý · Chi phí đã tính hoặc giữ chỗ: '+(v.reserved_microusd/1000000).toFixed(6)+' USD');
-          if(v.last_error)node(info,'p','Lỗi: '+v.last_error);
+          if(v.last_error)node(info,'p',v.last_error==='recipient_revoked'?'Đã hủy do thu hồi quyền của người giao brief.':'Lỗi: '+v.last_error);
           v.checkpoints.forEach(p=>{node(info,'h4',labels[p.skill]);node(info,'p',p.output.text);
             node(info,'p','Nguồn: '+p.output.source_ids.map(k=>v.source_registry?.[k]?.label||k).join(', '));
+            for(const f of p.quality?.claims||[]) {
+              node(info,'p',(f.status==='needs_evidence'?'Cần bằng chứng':'Có câu trùng nguồn '+f.matching_ids.join(', '))+' · '+f.claim);
+            }
             if(p.quality?.numbers_for_qa.length)node(info,'p','Số liệu cần QA đối chiếu: '+p.quality.numbers_for_qa.join(', '));});
           if(v.deliverable_id)node(info,'p','Mở mục Bàn giao và duyệt nội dung để kiểm tra bộ tài sản.');
           v.approved_assets.forEach(a=>{const link=node(info,'a','Mở bộ tài sản đã duyệt · v'+a.version);link.href='?workspace='+encodeURIComponent(tenant)+'&review='+encodeURIComponent(a.id);});

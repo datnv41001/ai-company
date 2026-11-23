@@ -66,6 +66,7 @@ def exercise():
                 form.locator("button").click()
                 pane = page.locator("#review-panel")
                 expect(pane.get_by_role("heading", name="Bàn giao và duyệt nội dung")).to_be_visible()
+                expect(page.locator("#operations-panel")).to_be_hidden()
                 if width == 1280:
                     expect(pane.get_by_text("Chưa có phiên bản nào được chia sẻ.")).to_be_visible()
                 title = f"Brief {width}"
@@ -140,6 +141,11 @@ def exercise():
                 expect(submit).to_have_count(0)
                 editor_page.close()
                 qa_page = login_page(admin_email, admin_password, {"width": width, "height": height})
+                ops = qa_page.locator("#operations-panel")
+                expect(ops).to_be_visible()
+                ops.get_by_role("button", name="Cập nhật số liệu").click()
+                expect(ops.get_by_text("Đang giữ (micro-USD)")).to_be_visible()
+                assert ops.evaluate("(e) => e.scrollWidth <= e.clientWidth + 1")
                 pane = qa_page.locator("#review-panel")
                 pane.get_by_text("Soạn và bàn giao cho khách", exact=True).click()
                 pane.get_by_label("Bản làm việc").select_option(draft["id"])

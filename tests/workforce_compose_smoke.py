@@ -12,7 +12,7 @@ import httpx
 
 def exercise():
     project = "amc-workforce-test"
-    compose = ["docker", "compose", "-p", project]
+    compose = ["docker", "compose", "-p", project, "-f", "compose.yaml", "-f", "tests/compose_pool_database.yaml"]
     with httpx.Client(base_url="http://127.0.0.1:8000", timeout=15, trust_env=False) as api:
 
         def request(method, path, user=None, body=None):
@@ -76,6 +76,13 @@ def exercise():
             if report["state"] in ("failed", "awaiting_qa"):
                 break
             time.sleep(2)
+        journal = report["journal"]
+        first = [j for j in journal if j["attempt"] == 1]
+        print("Qwen single-campaign measurements", {
+            "state": report["state"], "first_ok": sum(j["outcome"] == "ok" for j in first),
+            "first_total": len(first), "attempts": len(journal),
+            "stages": [(j["skill"], j["outcome"], j.get("input_tokens"), j.get("output_tokens")) for j in journal],
+        }, flush=True)
         assert report["state"] == "awaiting_qa", (report["state"], report["last_error"], [(j["skill"], j["outcome"]) for j in report["journal"]])
         assert [p["skill"] for p in report["checkpoints"]] == ["director", "research", "strategy", "content"]
         assert all(j["provider"] == "local" for j in report["journal"])

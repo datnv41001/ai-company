@@ -1,7 +1,7 @@
 """Public intake and private worker checkpoints have separate database policies."""
 
 from datetime import datetime
-from sqlalchemy import CheckConstraint, DateTime, ForeignKey, ForeignKeyConstraint, Index, JSON, String, UniqueConstraint, text
+from sqlalchemy import BigInteger, CheckConstraint, DateTime, ForeignKey, ForeignKeyConstraint, Index, JSON, String, UniqueConstraint, text
 from sqlalchemy.orm import Mapped, mapped_column
 from .models import Base, new_id, utcnow
 
@@ -54,6 +54,6 @@ class WorkforceRun(Base):
     ready_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), default=utcnow)
     attempts: Mapped[int] = mapped_column(default=0)
     budget_microusd: Mapped[int]
-    reserved_microusd: Mapped[int] = mapped_column(default=0)
+    reserved_microusd: Mapped[int] = mapped_column(BigInteger, default=0)
     last_error: Mapped[str | None] = mapped_column(String(40))
     created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), default=utcnow)

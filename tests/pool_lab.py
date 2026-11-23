@@ -40,7 +40,8 @@ class Worker:
 
 
 class Lab:
-    def __init__(self, api, dsn):
+    def __init__(self, api, dsn, workflow="linear"):
+        self.workflow = workflow
         self.api, self.dsn = api, dsn
         self.owner = psycopg.connect(dsn, autocommit=True)
         assert self.owner.info.dbname.startswith("amc_test")
@@ -94,7 +95,7 @@ class Lab:
             headers=reader["headers"],
             json={**DATA, "sources": [{"label": "Product card", "excerpt": "Notebook reference for client " + label}]},
         ).raise_for_status()
-        response = self.api.post(path + "/run", headers=admin["headers"], json={"budget_microusd": 10000})
+        response = self.api.post(path + "/run", headers=admin["headers"], json={"budget_microusd": 10000, **({"workflow": self.workflow} if self.workflow != "linear" else {})})
         response.raise_for_status()
         self.runs.append(response.json()["id"])
         self.cases.append((base, admin, reader, client, campaign))

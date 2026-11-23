@@ -61,7 +61,7 @@ function createRecipientPanel(root, api, notify, enterInvitedWorkspace) {
     return {client, rights:() => ({brand_id:brand.value || null, campaign_id:campaign.value || null,
       can_comment:comment.checked, can_decide:decide.checked})};
   }
-  async function show(tenant, role, clients, brands, campaigns, expanded = false) {
+  async function show(tenant, role, clients, brands, campaigns, expanded = Boolean(root.querySelector(":scope > details[open]"))) {
     const ticket = ++revision;
     root.replaceChildren();
     const base = '/api/tenants/'+encodeURIComponent(tenant);

@@ -14,6 +14,9 @@ MIGRATIONS = Path(__file__).resolve().parents[1] / "migrations"
 
 
 def verify():
+    from_v5 = "--from-v5" in sys.argv
+    from_v4 = "--from-v4" in sys.argv or from_v5
+    from_v3 = "--from-v3" in sys.argv or from_v4
     dsn = os.environ["AMC_MIGRATION_DSN"]
     runtime = create_engine(os.environ["DATABASE_URL"])
     with psycopg.connect(dsn) as conn:
@@ -26,7 +29,7 @@ def verify():
         conn.execute("INSERT INTO users VALUES ('alice','synthetic@example.com','unused',now())")
         conn.execute("INSERT INTO memberships VALUES ('agency','alice','viewer')")
         conn.execute("INSERT INTO clients VALUES ('a','agency','Client A','Retail'), ('b','agency','Client B','Retail')")
-        if "--from-v2" in sys.argv or "--from-v3" in sys.argv:
+        if "--from-v2" in sys.argv or from_v3:
             conn.execute((MIGRATIONS / "002_client_isolation.sql").read_text(encoding="utf-8"))
             conn.execute("CREATE TABLE amc_schema_versions(version int PRIMARY KEY)")
             conn.execute("INSERT INTO amc_schema_versions VALUES (2)")
@@ -37,7 +40,7 @@ def verify():
             conn.execute("INSERT INTO campaigns(id,tenant_id,brand_id,name,brief,objective,status) VALUES('ca','agency','br','Name','Brief','Goal','draft')")
             conn.execute("""INSERT INTO deliverables(id,tenant_id,campaign_id,title,content,status,created_by)
                          VALUES('doc','agency','ca','Internal','{}','draft','alice')""")
-        if "--from-v3" in sys.argv:
+        if from_v3:
             for file in ("003_delivery_tables.sql", "003_delivery_policies.sql"):
                 conn.execute((MIGRATIONS / file).read_text(encoding="utf-8"))
             conn.execute("INSERT INTO amc_schema_versions VALUES(3)")
@@ -48,6 +51,19 @@ def verify():
                          'alice','alice',now(),now()+interval '1 day')""")
             conn.execute("""INSERT INTO review_entries(id,tenant_id,review_id,digest,actor_id,kind,note,request_key,created_at)
                          SELECT 'entry','agency','rv',digest,'external','rejected','','legacy-key',now() FROM client_reviews WHERE id='rv'""")
+        if from_v4:
+            conn.execute((MIGRATIONS/"004_review_operations.sql").read_text(encoding="utf-8"))
+            conn.execute("INSERT INTO amc_schema_versions VALUES (4)")
+        if from_v5:
+            conn.execute((MIGRATIONS/"005_workforce.sql").read_text(encoding="utf-8"))
+            conn.execute("INSERT INTO amc_schema_versions VALUES (5)")
+            conn.execute("""INSERT INTO workforce_briefs(id,tenant_id,client_id,brand_id,campaign_id,recipient_id,title,created_at)
+                VALUES('old-brief','agency','a','br','ca','external','Existing brief',now())""")
+            conn.execute("""INSERT INTO workforce_runs(id,tenant_id,client_id,brand_id,campaign_id,brief_id,knowledge,plan,
+                checkpoints,journal,state,ready_at,attempts,budget_microusd,reserved_microusd,created_at)
+                VALUES ('old-run','agency','a','br','ca','old-brief','{}','[]','[]','[{"outcome":"running"}]',
+                        'running',now(),1,1000,100,now())""")
+            conn.execute("DELETE FROM portal_grants WHERE user_id='external'")
     migrate(dsn, os.environ.get("AMC_RUNTIME_PASSWORD"))
     migrate(dsn)
     prepare_database(runtime)
@@ -65,21 +81,24 @@ def verify():
             owner.execute("UPDATE memberships SET role='client_viewer',client_id='a' WHERE user_id='alice'")
         identify()
         assert set(c.scalars(text("SELECT id FROM clients"))) == {"a"}
-        assert set(c.scalars(text("SELECT version FROM amc_schema_versions"))) == {2,3,4}
-        if "--from-v2" in sys.argv or "--from-v3" in sys.argv:
+        assert set(c.scalars(text("SELECT version FROM amc_schema_versions"))) == {2,3,4,5,6}
+        if "--from-v2" in sys.argv or from_v3:
             c.rollback()
             c.execute(text("SELECT set_config('amc.user_id','external',true),set_config('amc.tenant_id','agency',true)"))
-            assert c.execute(text("SELECT client_id,can_comment,can_decide FROM portal_grants")).one() == ("a",False,False)
+            assert c.execute(text("SELECT client_id,can_comment,can_decide FROM portal_grants")).one_or_none() == (None if from_v5 else ("a",False,False))
             for table in ("client_reviews","review_entries","deliverables"):
-                expected = int("--from-v3" in sys.argv and table in ("client_reviews", "review_entries"))
+                expected = int(from_v3 and not from_v5 and table in ("client_reviews", "review_entries"))
                 assert c.scalar(text(f"SELECT count(*) FROM {table}")) == expected
-            if "--from-v3" in sys.argv:
+            if from_v3 and not from_v5:
                 assert c.execute(text("SELECT kind,note FROM review_entries")).one() == ("rejected", "")
             with psycopg.connect(dsn) as owner:
+                if from_v5:
+                    assert owner.execute("SELECT state,last_error,reserved_microusd FROM workforce_runs").fetchone() == ("failed","recipient_revoked",100)
+                    assert owner.execute("SELECT count(*) FROM audit_events WHERE event='workforce.recipient_revoked'").fetchone() == (1,)
                 assert owner.execute("SELECT title FROM deliverables WHERE id='doc'").fetchone() == ("Internal",)
     runtime.dispose()
-    baseline = "v3" if "--from-v3" in sys.argv else "v2" if "--from-v2" in sys.argv else "v1"
-    print(f"PASS: populated {baseline} to v4, repeated migration, privileged API login refused, client isolated")
+    baseline = "v5" if from_v5 else "v4" if from_v4 else "v3" if from_v3 else "v2" if "--from-v2" in sys.argv else "v1"
+    print(f"PASS: populated {baseline} to v6, repeated migration, privileged API login refused, client isolated")
 
 
 if __name__ == "__main__":

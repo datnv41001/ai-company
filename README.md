@@ -2,6 +2,8 @@
 
 **[Chạy bằng Docker và tiếp quản trên máy mới → HANDOFF.md](HANDOFF.md)**
 
+**AI Workforce nội bộ.** Luồng brief → Director → Research → Strategy → Content tạo bộ tài sản chờ QA. [Chạy worker và model](HANDOFF.md#chạy-ai-workforce-trên-máy-mới) · [Thiết kế và bằng chứng](docs/ADR-005-AI-WORKFORCE.md).
+
 
 ## Chạy cục bộ với PostgreSQL trên Windows
 
@@ -23,7 +25,7 @@ The completed product must support Agency Mode + In-house Mode, 49 product modul
 - Persist clients, brands, campaigns, workflow skeleton tasks, deliverables, action approvals and audit events.
 - Scope API resources by tenant and client. Each external membership belongs to one client per agency. It can read that client profile and explicitly shared snapshots. Commenting and deciding require separate grants. PostgreSQL enforces row policies in addition to the API checks. Internal `viewer` members retain agency-wide read access.
 - Create an idempotent **deterministic** 7-task marketing campaign plan (NOT an LLM-generated plan).
-- If the operator configures a model API key, request a real structured strategy **draft** from an OpenAI-compatible chat API. Draft always needs review; it does not perform actions.
+- Agency staff queue a sourced brief through Workforce. Model credentials and provider calls belong to the budgeted worker.
 - Independent human review of deliverables and external-action proposals; self-approval is forbidden.
 - External publishing, ad spending, emailing, CRM writes and deletes are **hard-disabled**, even after approval, pending official connectors and policy checks.
 - Simple responsive UI at `/` plus interactive API docs at `/docs`.
@@ -42,7 +44,7 @@ py -3.12 -m venv .venv
 .venv\Scripts\Activate.ps1
 python -m pip install -r requirements-dev.txt
 Copy-Item .env.example .env
-# Edit .env: set a unique random JWT_SECRET; leave OPENAI_API_KEY blank initially
+# Edit .env: set a unique random JWT_SECRET
 python -m pytest -q
 python -m uvicorn app.main:app --reload --host 127.0.0.1 --port 8000
 ```
@@ -56,7 +58,7 @@ python3.12 -m venv .venv
 source .venv/bin/activate
 python -m pip install -r requirements-dev.txt
 cp .env.example .env
-# Set a strong JWT_SECRET. Leave OPENAI_API_KEY blank for no model calls.
+# Set a strong JWT_SECRET.
 python -m pytest -q
 python -m uvicorn app.main:app --reload --host 127.0.0.1 --port 8000
 ```
@@ -80,7 +82,7 @@ Bound to localhost only: http://127.0.0.1:8000. **Development use only.** Harden
 3. Create a Brand; record brand rules and verified product facts.
 4. Create a Campaign with objective and a meaningful brief.
 5. Click **Phân rã việc**. Exactly seven deterministic task records are created; repeat is idempotent.
-6. Optionally configure `OPENAI_API_KEY` and `OPENAI_MODEL`, then click **AI chiến lược** to request a real LLM draft. Do not use private customer data until vendor contracts and data controls are approved.
+6. Use **Điều phối Marketing AI** to request a brief, select specialist skills and authorize a budget for the worker.
 7. Review API endpoints for deliverables and external actions; they always require independent approval and the actual side effect is disabled.
 
 ## Product decisions and collaboration

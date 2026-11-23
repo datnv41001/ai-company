@@ -31,7 +31,7 @@ def exercise():
         _, _, uid, email, password = user("Reader")
         base = "/api/tenants/" + tenant
         client = post(base + "/clients", {"name": "UI Client"}, token)
-        brand = post(base + "/brands", {"client_id": client["id"], "name": "UI Brand"}, token)
+        brand = post(base + "/brands", {"client_id": client["id"], "name": "UI Brand", "product_truth":"Blue A5 notebook"}, token)
         camp = post(
             base + "/campaigns", {"brand_id": brand["id"], "name": "UI campaign", "brief": "Synthetic brief for QA", "objective": "Review content"}, token
         )
@@ -129,6 +129,30 @@ def exercise():
             reader.get_by_role("button", name="Chấp nhận lời mời").click()
             expect(reader.locator("#workspace-select")).to_have_value(tenant)
             expect(reader.get_by_text("Quản lý người nhận và lời mời", exact=True)).to_have_count(0)
+            # Fresh grant now exists. Request the brief from the named recipient only.
+            owner_page.locator("#refresh").click()
+            ops = owner_page.locator("#workforce-panel")
+            expect(ops.get_by_label("Người giao brief").locator("option").filter(has_text=invited_email.lower())).to_have_count(1)
+            ops.get_by_text("Điều phối Marketing AI", exact=True).click()
+            ops.get_by_label("Tên bộ tài sản").fill("Notebook launch")
+            ops.get_by_label("Chiến dịch nhận brief").select_option(camp["id"])
+            ops.get_by_label("Người giao brief").select_option(label=invited_email.lower())
+            ops.get_by_role("button",name="Yêu cầu khách gửi brief").click()
+            expect(ops.get_by_text("Notebook launch · Chờ brief")).to_be_visible()
+            reader.locator("#refresh").click()
+            intake = reader.locator("#workforce-panel")
+            intake.get_by_text("Brief Marketing của bạn").click()
+            intake.get_by_text("Notebook launch · Chờ brief").click()
+            for name,value in [("Mục tiêu","Launch our notebook"),("Khách hàng mục tiêu","Students"),("Sản phẩm và đề nghị","A5 notebook"),
+                               ("Tên nguồn","Brand card"),("Trích dẫn từ nguồn","Notebook with blue cover")]:
+                intake.get_by_label(name,exact=True).fill(value)
+            intake.get_by_role("button",name="Gửi brief").click()
+            expect(intake.get_by_text("Notebook launch · Đã nhận brief")).to_be_visible()
+            ops.get_by_role("button",name="Cập nhật tiến độ").click()
+            ops.get_by_text("Notebook launch · Đã nhận brief").click()
+            ops.get_by_role("button",name="Giao việc cho AI Director").click()
+            expect(ops.get_by_text("Notebook launch · Đang chờ worker")).to_be_visible()
+            print("PASS browser: named client submitted sourced brief; agency queued local inference")
             first = share("Review operations")
             for n in range(25):
                 share(f"Later {n}")

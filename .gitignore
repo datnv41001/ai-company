@@ -13,3 +13,8 @@ coverage.xml
 htmlcov/
 .DS_Store
 .local/
+
+# Downloaded local inference weights
+/models/
+
+.worker-secrets/

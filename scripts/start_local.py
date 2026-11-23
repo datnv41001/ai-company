@@ -97,9 +97,9 @@ def main():
                    and parts[4] == expected_pid for parts in map(str.split, listing.splitlines())):
             raise RuntimeError("Port 8000 is already in use by another service")
     else:
-        api_env = dict(os.environ, APP_ENV="development", JWT_SECRET=keys["jwt"], OPENAI_API_KEY="",
+        api_env = dict(os.environ, APP_ENV="development", JWT_SECRET=keys["jwt"],
                        DATABASE_URL=f"postgresql+psycopg://amc_runtime:{keys['runtime']}@{HOST}:{DB_PORT}/amc_local")
-        for name in ("AMC_MIGRATION_DSN", "POSTGRES_PASSWORD", "AMC_RUNTIME_PASSWORD"):
+        for name in ("AMC_MIGRATION_DSN", "POSTGRES_PASSWORD", "AMC_RUNTIME_PASSWORD", "OPENAI_API_KEY", "AMC_WORKER_KEY_FILE"):
             api_env.pop(name, None)
         # python.exe from a Windows venv can be a redirector. The server records its actual PID.
         hidden_process([sys.executable, str(Path(__file__).resolve()), "--serve", str(pidfile)], state / "api.log", api_env)

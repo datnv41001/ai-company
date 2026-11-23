@@ -9,3 +9,7 @@
 .ruff_cache
 *.db
 *.log
+
+models/
+
+.worker-secrets/

@@ -8,11 +8,24 @@ _CONTEXT = text("""SELECT set_config('amc.user_id',:actor,true),
     set_config('amc.tenant_id',:tenant,true), set_config('amc.lookup_email',:email,true)""")
 
 
+_WORKER = text("""SELECT set_config('amc.worker_client',:client,true),set_config('amc.worker_brand',:brand,true),
+    set_config('amc.worker_campaign',:campaign,true)""")
+
+
+def set_worker_scope(db, client, brand, campaign):
+    values = {"client":client,"brand":brand,"campaign":campaign}
+    db.info["amc_worker_scope"] = values
+    if db.get_bind().dialect.name == "postgresql":
+        db.execute(_WORKER, values)
+
+
 @event.listens_for(Session, "after_begin")
 def restore_context(session, transaction, connection):
     context = session.info.get("amc_context")
     if connection.dialect.name == "postgresql" and context is not None:
         connection.execute(_CONTEXT, context)
+        if "amc_worker_scope" in session.info:
+            connection.execute(_WORKER, session.info["amc_worker_scope"])
 
 
 def set_context(db, *, actor="", tenant="", email=""):

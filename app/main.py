@@ -14,6 +14,7 @@ from sqlalchemy.inspection import inspect
 from sqlalchemy.orm import Session
 
 from .delivery import router as delivery_router, working_copy
+from .workforce import router as workforce_router
 from .recipients import router as recipients_router, revoke_pending
 from .delivery_models import PortalGrant
 from .access import set_context, visible
@@ -22,7 +23,6 @@ from .models import User, Tenant, Membership, Client, Brand, Campaign, WorkTask,
 from .schemas import RegisterIn, LoginIn, ClientIn, BrandIn, CampaignIn, AddMemberIn, DeliverableIn, ReviewIn, ActionIn, ClientScopeIn
 from .security import hash_password, check_password, make_token, current_user, require_tenant
 from .services.marketing import WORKFLOW_STEPS
-from .services.llm import generate_strategy
 
 ROOT = Path(__file__).resolve().parent
 
@@ -39,6 +39,7 @@ async def lifespan(_app: FastAPI):
 app = FastAPI(title="AI Marketing Company - Engineering Bootstrap", version="0.1.0", lifespan=lifespan)
 app.include_router(delivery_router)
 app.include_router(recipients_router)
+app.include_router(workforce_router)
 app.mount("/static", StaticFiles(directory=ROOT / "static"), name="static")
 
 
@@ -327,17 +328,12 @@ def review_deliverable(tenant_id: str, deliverable_id: str, body: ReviewIn, user
     return done(db, item)
 
 
-@app.post("/api/tenants/{tenant_id}/campaigns/{campaign_id}/strategy", status_code=201)
+@app.post("/api/tenants/{tenant_id}/campaigns/{campaign_id}/strategy", deprecated=True)
 def ai_strategy(tenant_id: str, campaign_id: str, user: User = Depends(current_user), db: Session = Depends(get_db)):
     member(db, user, tenant_id, "editor")
-    campaign = campaign_of(db, tenant_id, campaign_id)
-    brand = target(db, Brand, tenant_id, campaign.brand_id)
-    draft = generate_strategy(brand.name, brand.brand_guidelines, brand.product_truth, campaign.brief, campaign.objective)
-    item = Deliverable(tenant_id=tenant_id, campaign_id=campaign_id, title="AI Strategy Draft - review required", content=draft.model_dump(), created_by=user.id)
-    db.add(item)
-    db.flush()
-    audit(db, tenant_id, user.id, "ai.strategy_draft_created", item.id, {"review_required": True})
-    return done(db, item)
+    campaign_of(db, tenant_id, campaign_id)
+    raise HTTPException(410, "Use the budgeted Workforce brief and run workflow.")
+
 
 
 @app.get("/api/tenants/{tenant_id}/actions")

@@ -108,6 +108,13 @@ function createReviewPanel(root, api, notify) {
         return doc?update('deliverables/'+doc.id+'/draft','PATCH',{title:title.value,client_preview:preview.value})
           :update('deliverables','POST',{title:title.value,campaign_id:campaign.value,content:{client_preview:preview.value}});
       });
+      const claims=doc?.content?.qa_claims;
+      if(Array.isArray(claims) && claims.length) el('p','Các câu cần đối chiếu từ bản nháp AI ban đầu',form);
+      for(const finding of Array.isArray(claims)?claims:[]) {
+        if(typeof finding?.claim!=='string' || !Array.isArray(finding.matching_ids)) continue;
+        const source=finding.matching_ids.length?'Trùng câu trong nguồn '+finding.matching_ids.join(', '):'Cần bổ sung bằng chứng';
+        el('p',source+' · '+finding.claim,form);
+      }
       if(!doc)return;
       const path='deliverables/'+doc.id;
       if(doc.status==='draft') button(form,'Gửi QA',()=>update(path+'/submit','POST'));

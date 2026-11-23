@@ -32,8 +32,6 @@ services:
       DATABASE_URL: postgresql+psycopg://amc_runtime:${AMC_RUNTIME_PASSWORD}@db:5432/amc
       JWT_SECRET: ${JWT_SECRET:?set JWT_SECRET in .env}
       JWT_ISSUER: amc-development
-      OPENAI_API_KEY: ${OPENAI_API_KEY:-}
-      OPENAI_MODEL: ${OPENAI_MODEL:-gpt-4.1-mini}
     healthcheck:
       test: ["CMD", "python", "-c", "from urllib.request import urlopen; urlopen('http://127.0.0.1:8000/api/health', timeout=2).close()"]
       interval: 5s
@@ -41,5 +39,40 @@ services:
       retries: 12
     ports:
       - "127.0.0.1:${AMC_HTTP_PORT:-8000}:8000"
+  worker:
+    profiles: ["workforce"]
+    build: .
+    command: ["python", "-m", "app.workforce_worker"]
+    depends_on:
+      migrate:
+        condition: service_completed_successfully
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    environment:
+      APP_ENV: development
+      DATABASE_URL: postgresql+psycopg://amc_runtime:${AMC_RUNTIME_PASSWORD}@db:5432/amc
+      JWT_SECRET: ${JWT_SECRET}
+      AMC_WORKER_TENANT: ${AMC_WORKER_TENANT:-}
+      AMC_WORKER_CLIENT: ${AMC_WORKER_CLIENT:-}
+      AMC_WORKER_BRAND: ${AMC_WORKER_BRAND:-}
+      AMC_WORKER_CAMPAIGN: ${AMC_WORKER_CAMPAIGN:-}
+      AMC_WORKER_OPERATOR: ${AMC_WORKER_OPERATOR:-}
+      AMC_WORKFORCE_PROVIDER: ${AMC_WORKFORCE_PROVIDER:-local}
+      AMC_WORKFORCE_MODEL: ${AMC_WORKFORCE_MODEL:-amc-local}
+      AMC_LOCAL_MODEL_URL: ${AMC_LOCAL_MODEL_URL:-http://model:8080/v1}
+      AMC_MODEL_TIMEOUT: ${AMC_MODEL_TIMEOUT:-90}
+      AMC_INPUT_RATE_MICROUSD: ${AMC_INPUT_RATE_MICROUSD:-0}
+      AMC_OUTPUT_RATE_MICROUSD: ${AMC_OUTPUT_RATE_MICROUSD:-0}
+      AMC_WORKER_KEY_FILE: /run/amc-worker-secrets/openai_key
+    volumes:
+      - ${AMC_WORKER_SECRET_DIR:-./.worker-secrets}:/run/amc-worker-secrets:ro
+
+  model:
+    profiles: ["local-model"]
+    image: ghcr.io/ggml-org/llama.cpp:server@sha256:20db01dc9a92bff54a5b9fe4078caa52be6a0c1fa73859c6449e25b9cb67f998
+    command: ["-m", "/models/workforce.gguf", "--alias", "amc-local", "--host", "0.0.0.0", "--port", "8080", "-c", "8192", "-np", "1"]
+    volumes:
+      - ./models:/models:ro
+
 volumes:
   postgres_data:

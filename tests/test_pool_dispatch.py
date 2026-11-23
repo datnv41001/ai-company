@@ -54,6 +54,7 @@ def pool_lab():
     with TestClient(app) as api:
         lab = Lab(api, os.environ["AMC_MIGRATION_DSN"])
         try:
+            assert all(w.take() is None for w in lab.workers)
             yield lab
         finally:
             lab.close()
@@ -99,3 +100,19 @@ def test_duplicate_completion_and_measured_invalid_plan(pool_lab):
     assert lab.consume()
     assert lab.owner.execute("select outcome from amc_ops.attempts where id=%s", (job["id"],)).fetchone() == ("invalid_plan",)
     assert lab.owner.execute("select count(*) from amc_ops.ledger where id=%s and event='usage'", (job["id"],)).fetchone() == (1,)
+
+
+def test_offline_worker_and_cutover(pool_lab):
+    lab = pool_lab
+    offline = lab.workers[0].conn.info.user
+    lab.owner.execute("update amc_ops.readiness set polled=now()-interval '1 minute' where worker=%s", (offline,))
+    assert lab.dispatch()
+    assert lab.workers[0].take() is None
+    assert lab.workers[1].take() is not None
+    lab.configure(lab.y, 10000, False)
+    lab.seed("D", lab.y)
+    response = lab.api.put(
+        "/api/tenants/" + lab.y["tenant"] + "/operations/budget", headers=lab.y["headers"], json={"enabled": True, "capacity": 2, "ceiling": 1000}
+    )
+    assert response.status_code == 409
+    assert lab.owner.execute("select execution_mode from workforce_runs where id=%s", (lab.runs[-1],)).fetchone() == ("legacy",)

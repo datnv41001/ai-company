@@ -24,6 +24,7 @@ CREATE SEQUENCE amc_ops.turn;
 CREATE TABLE amc_ops.periods(
  tenant text REFERENCES amc_ops.agencies, month date NOT NULL, ceiling bigint NOT NULL CHECK(ceiling>=0),
  PRIMARY KEY(tenant,month));
+CREATE TABLE amc_ops.readiness(worker name PRIMARY KEY, polled timestamptz NOT NULL);
 CREATE TABLE amc_ops.routes(
  worker name NOT NULL, tenant text NOT NULL REFERENCES amc_ops.agencies, client text NOT NULL, brand text NOT NULL,
  campaign text NOT NULL, operator text NOT NULL,
@@ -44,6 +45,7 @@ CREATE TABLE amc_ops.attempts(
  tenant text NOT NULL, month date NOT NULL, deadline timestamptz NOT NULL,
  body jsonb NOT NULL, result jsonb, error text, status text NOT NULL DEFAULT 'offered'
  CHECK(status IN ('offered','sent','reported','closed')), reserved bigint NOT NULL CHECK(reserved>=0),
+ ordinal int NOT NULL CHECK(ordinal BETWEEN 1 AND 3), input_tokens int, output_tokens int,
  input_rate bigint NOT NULL, output_rate bigint NOT NULL, outcome text, started timestamptz NOT NULL DEFAULT now(),
  FOREIGN KEY(run,step,tenant) REFERENCES amc_ops.tasks(run,step,tenant), FOREIGN KEY(tenant,month) REFERENCES amc_ops.periods,
  UNIQUE(id,tenant,month));
@@ -86,6 +88,7 @@ LANGUAGE sql SECURITY DEFINER SET search_path=pg_catalog AS $$
  SELECT d.worker,d.tenant,d.client,d.brand,d.campaign,d.operator,t.run,t.step
  FROM amc_ops.tasks t JOIN amc_ops.routes d USING(tenant,client,brand,campaign)
  JOIN amc_ops.agencies a USING(tenant) JOIN public.workforce_runs r ON r.id=t.run
+ JOIN amc_ops.readiness w ON w.worker=d.worker AND w.polled>clock_timestamp()-interval '10 seconds'
  WHERE EXISTS (SELECT FROM public.memberships m WHERE (m.tenant_id,m.user_id)=(d.tenant,d.operator) AND m.role='editor')
  AND a.enabled AND r.state='queued' AND r.ready_at<=clock_timestamp() AND NOT t.done
  AND (t.step=0 OR EXISTS(SELECT FROM amc_ops.tasks p WHERE p.run=t.run AND p.step=t.step-1 AND p.done))
@@ -105,6 +108,8 @@ CREATE POLICY pool_owner_members ON public.memberships FOR SELECT TO CURRENT_USE
 CREATE FUNCTION amc_ops.take() RETURNS jsonb LANGUAGE plpgsql SECURITY DEFINER SET search_path=pg_catalog AS $$
 DECLARE j jsonb;
 BEGIN
+ INSERT INTO amc_ops.readiness VALUES(session_user,clock_timestamp())
+ ON CONFLICT(worker) DO UPDATE SET polled=excluded.polled;
  UPDATE amc_ops.attempts x SET status='sent' WHERE x.worker=session_user AND x.status='offered' AND amc_ops.live(x.id)
  RETURNING jsonb_build_object('id',x.id,'run',x.run,'body',x.body) INTO j;
  RETURN j;
@@ -124,16 +129,20 @@ GRANT SELECT ON ALL TABLES IN SCHEMA amc_ops TO amc_dispatch;
 GRANT UPDATE(served) ON amc_ops.agencies TO amc_dispatch;
 GRANT UPDATE(ceiling) ON amc_ops.periods TO amc_dispatch;
 GRANT UPDATE(done) ON amc_ops.tasks TO amc_dispatch;
-GRANT INSERT,UPDATE(status,outcome,result,body) ON amc_ops.attempts TO amc_dispatch;
+GRANT INSERT,UPDATE(status,outcome,result,body,input_tokens,output_tokens) ON amc_ops.attempts TO amc_dispatch;
 GRANT INSERT ON amc_ops.ledger TO amc_dispatch;
 GRANT USAGE ON ALL SEQUENCES IN SCHEMA amc_ops TO amc_dispatch;
 
 CREATE FUNCTION amc_ops.retire(i uuid) RETURNS text LANGUAGE plpgsql SECURITY DEFINER SET search_path=pg_catalog AS $$
 BEGIN
- UPDATE public.workforce_runs r SET state=CASE WHEN r.attempts>=3 THEN 'failed' ELSE 'queued' END,
+ UPDATE public.workforce_runs r SET state=CASE WHEN r.attempts>=3 AND a.status<>'offered' THEN 'failed' ELSE 'queued' END,
+ attempts=r.attempts-CASE WHEN a.status='offered' THEN 1 ELSE 0 END,
  last_error='lease_expired',lease=NULL,ready_at=clock_timestamp(),
  journal=jsonb_set(r.journal::jsonb,'{-1}',(r.journal::jsonb->-1)||jsonb_build_object('outcome','lease_expired','finished_at',clock_timestamp()))::json
  FROM amc_ops.attempts a WHERE a.id=i AND r.id=a.run AND r.lease=i::text AND NOT amc_ops.live(i);
+ -- An uncollected offer never crossed the inference boundary, including one cancelled by revocation.
+ UPDATE public.workforce_runs r SET reserved_microusd=r.reserved_microusd-a.reserved
+ FROM amc_ops.attempts a WHERE a.run=r.id AND a.id=i AND a.status='offered';
  RETURN (SELECT coalesce(r.last_error,'lease_expired') FROM public.workforce_runs r JOIN amc_ops.attempts a ON a.run=r.id WHERE a.id=i);
 END $$;
 CREATE TABLE amc_ops.policy_history(
@@ -179,6 +188,11 @@ BEGIN
  'held',coalesce((SELECT sum(held) FROM amc_ops.ledger WHERE tenant=t AND month=m),0),
  'spent',coalesce((SELECT sum(spent) FROM amc_ops.ledger WHERE tenant=t AND month=m),0),
  'attempts',(SELECT count(*) FROM amc_ops.attempts WHERE tenant=t AND month=m),
+ 'input_tokens',(SELECT coalesce(sum(input_tokens),0) FROM amc_ops.attempts WHERE tenant=t AND month=m),
+ 'output_tokens',(SELECT coalesce(sum(output_tokens),0) FROM amc_ops.attempts WHERE tenant=t AND month=m),
+ 'director_first_ok',(SELECT count(*) FROM amc_ops.attempts WHERE tenant=t AND month=m AND step=0 AND ordinal=1 AND outcome='ok'),
+ 'director_first_total',(SELECT count(*) FROM amc_ops.attempts WHERE tenant=t AND month=m AND step=0 AND ordinal=1 AND status='closed' AND NOT EXISTS
+ (SELECT FROM amc_ops.ledger l WHERE l.id=amc_ops.attempts.id AND l.event='unsent')),
  'active',(SELECT count(*) FROM amc_ops.attempts WHERE tenant=t AND status<>'closed'),
  'outcomes',coalesce((SELECT jsonb_object_agg(k,n) FROM (SELECT coalesce(outcome,status) k,count(*) n
  FROM amc_ops.attempts WHERE tenant=t AND month=m GROUP BY 1) q),'{}'::jsonb)) INTO result

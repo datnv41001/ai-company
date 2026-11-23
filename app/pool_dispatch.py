@@ -54,8 +54,8 @@ def dispatch(bind, config):
                 query(
                     db,
                     """
-                    insert into amc_ops.attempts(id,run,step,worker,operator,tenant,month,deadline,body,reserved,input_rate,output_rate)
-                    values(:id,:run,:step,:worker,:operator,:tenant,:month,:deadline,cast(:body as jsonb),:hold,:ir,:orr)
+                    insert into amc_ops.attempts(id,run,step,worker,operator,tenant,month,deadline,body,reserved,input_rate,output_rate,ordinal)
+                    values(:id,:run,:step,:worker,:operator,:tenant,:month,:deadline,cast(:body as jsonb),:hold,:ir,:orr,:ordinal)
                 """,
                     **route,
                     id=token,
@@ -65,6 +65,7 @@ def dispatch(bind, config):
                     hold=hold,
                     ir=config.input_rate,
                     orr=config.output_rate,
+                    ordinal=run.attempts,
                 )
                 query(
                     db,
@@ -100,6 +101,7 @@ def consume(bind, config):
         token = str(row["id"])
         scope = Scope(*(row[k] for k in ("tenant", "client", "brand", "campaign", "operator")))
         outcome, event, cost = "lease_expired", None, 0
+        inputs = outputs = None
         if row["status"] == "offered":
             event = "unsent"
         if row["status"] == "reported" and query(db, "select amc_ops.fence(:id)", id=token).scalar():
@@ -115,6 +117,7 @@ def consume(bind, config):
                 outcome = entry["outcome"]
                 if "estimated_microusd" in entry:
                     event, cost = "usage", entry["estimated_microusd"]
+                    inputs, outputs = entry["input_tokens"], entry["output_tokens"]
                 if outcome == "ok":
                     query(db, "update amc_ops.tasks set done=true where run=:run and step=:step", run=row["run"], step=row["step"])
         if outcome == "lease_expired":
@@ -131,7 +134,14 @@ def consume(bind, config):
                 delta=-row["reserved"],
                 cost=cost,
             )
-        query(db, "update amc_ops.attempts set status='closed',outcome=:o,body='{}',result=null where id=:id", o=outcome, id=token)
+        query(
+            db,
+            "update amc_ops.attempts set status='closed',outcome=:o,input_tokens=:inputs,output_tokens=:outputs,body='{}',result=null where id=:id",
+            o=outcome,
+            inputs=inputs,
+            outputs=outputs,
+            id=token,
+        )
         return True
 
 

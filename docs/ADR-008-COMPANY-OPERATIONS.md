@@ -19,3 +19,5 @@ Hold integer micro-USD against the agency's UTC calendar month before exposing a
 ## Director and release gates
 
 Retain the three-attempt ceiling. Distinguish truncation, assignment shape, bad source references and timeout. Rebuild each prompt from the frozen evidence and current error. Monitor first-attempt checkpoint success, error counts, known tokens and attempts without confirmed usage. Keep deterministic interleaving and accounting tests separate from pinned local Qwen acceptance. PostgreSQL is required for pool mode. SQLite retains its original single-campaign development path.
+
+The dispatcher offers work only to logins that polled their mailbox within the previous ten seconds. A worker can collect an offer once. An offer that expires before collection releases both limits and does not consume a provider retry. A sent request with uncertain usage retains its hold. Enrollment and run creation share the scheduler lock so a concurrent legacy enqueue cannot straddle cutover.

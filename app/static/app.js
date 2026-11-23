@@ -26,6 +26,8 @@
     $('operations-month').textContent = 'Kỳ UTC ' + data.month + (data.enabled ? ' · Đang điều phối' : ' · Chưa bật pool');
     const labels = {'Hạn mức (micro-USD)':data.ceiling ?? 'Chưa thiết lập','Đang giữ (micro-USD)':data.held,
       'Đã ghi chi (micro-USD)':data.spent,'Lượt xử lý':data.attempts,'Đang xử lý':data.active};
+    if (data.director_first_total) labels['Director đạt lần đầu'] = data.director_first_ok + '/' + data.director_first_total;
+    if (data.input_tokens || data.output_tokens) labels['Token đầu vào / đầu ra'] = data.input_tokens + ' / ' + data.output_tokens;
     if (data.ceiling != null && data.held + data.spent >= data.ceiling) labels['Ngân sách'] = 'Đã chạm hạn mức';
     for (const [key,count] of Object.entries(data.outcomes || {})) labels[key] = count;
     $('operations-values').replaceChildren(...Object.entries(labels).flatMap(([label,value]) => {

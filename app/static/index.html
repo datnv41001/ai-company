@@ -6,6 +6,7 @@
   <meta name="color-scheme" content="dark">
   <title>AMC | AI Marketing Company</title>
   <link rel="stylesheet" href="/static/style.css">
+  <script src="/static/recipients.js" defer></script>
   <script src="/static/reviews.js" defer></script>
   <script src="/static/app.js" defer></script>
 </head>
@@ -36,6 +37,7 @@
       <section id="workspace" class="hidden">
         <label id="workspace-choice" class="hidden">Không gian làm việc<select id="workspace-select"></select></label>
         <p id="client-scope" class="hidden"></p>
+        <section id="recipient-panel" aria-label="Quyền khách hàng"></section>
         <section id="review-panel" class="panel"></section>
         <div class="metric-grid"><div class="metric"><span>Khách hàng</span><strong id="client-count">0</strong><small>Đang quản lý</small></div><div class="metric"><span>Thương hiệu</span><strong id="brand-count">0</strong><small>Brand Kit và hồ sơ</small></div><div class="metric"><span>Chiến dịch</span><strong id="campaign-count">0</strong><small>Dự án đang lưu</small></div><div class="metric"><span>AI Roles</span><strong id="role-count">37</strong><small>Thông số vai trò, chưa kích hoạt toàn bộ</small></div></div>
         <div class="section-head"><div><small>OPERATIONS</small><h3>Thiết lập nghiệp vụ</h3></div><button id="refresh" class="secondary">Làm mới</button></div>
@@ -49,7 +51,7 @@
         <div class="section-head"><div><small>GOVERNANCE</small><h3>Thao tác nhạy cảm & bản thảo</h3></div></div>
         <div class="two-col"><div class="panel"><h4>Yêu cầu thực thi bên ngoài</h4><p>Thiết kế để yêu cầu duyệt trước khi đăng bài, gửi email, thay đổi ngân sách. Gọi API thực tế chưa được bật.</p><div id="actions-list" class="empty">Chưa có yêu cầu hành động.</div></div><div class="panel"><h4>Tài liệu bàn giao</h4><p>Các bản nháp và kết quả AI cần được kiểm duyệt trước khi sử dụng.</p><div id="deliverables-list" class="empty">Chưa có tài liệu.</div></div></div>
       </section>
-      <footer>AMC Engineering Bootstrap · 2026 · Bản khởi tạo chưa có xác thực email, RLS production, billing hoặc connectors.</footer>
+      <footer>AMC Engineering Bootstrap · 2026 · Môi trường phát triển nội bộ.</footer>
     </main>
   </div>
 </body>

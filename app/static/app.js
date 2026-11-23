@@ -3,13 +3,20 @@
   const $ = id => document.getElementById(id);
   const esc = v => String(v ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
   const msg = (text, error=false) => { $('notice').textContent = text; $('notice').className = error ? 'error' : 'ok'; };
-  const api = async (path, method='GET', body=null) => {
+  const api = async (path, method='GET', body=null, withCursor=false) => {
     const response = await fetch(path, {method, headers: {'Content-Type':'application/json', ...(state.token ? {'Authorization':`Bearer ${state.token}`} : {})}, ...(body ? {body: JSON.stringify(body)} : {})});
     const result = await response.json().catch(() => ({}));
     if(!response.ok) throw new Error(typeof result.detail === 'string' ? result.detail : `HTTP ${response.status}`);
-    return result;
+    return withCursor ? {items:result, next:response.headers.get("X-Next-Cursor")} : result;
   };
   const portal = createReviewPanel($('review-panel'),api,msg);
+  const accessPanel = createRecipientPanel($('recipient-panel'), api, msg, async tenantId => {
+    const me = await api('/api/me');
+    state.memberships = me.tenants;
+    $('workspace-select').replaceChildren(...me.tenants.map(m => new Option(m.organization_name, m.tenant_id)));
+    $('workspace-choice').classList.toggle('hidden', me.tenants.length < 2);
+    await enter(state.token, me.tenants.find(m => m.tenant_id === tenantId), me.email);
+  });
   const tenantPath = name => `/api/tenants/${state.tenantId}/${name}`;
   const fromForm = form => Object.fromEntries(new FormData(form).entries());
   const process = (form, handler) => form.addEventListener('submit', async event => { event.preventDefault(); try { await handler(fromForm(form)); } catch (e) { msg(e.message, true); } });
@@ -17,6 +24,8 @@
     const tenantId = membership.tenant_id;
     state.token = token; state.tenantId = tenantId; state.mode = membership.mode; state.email = email;
     portal.setContext({tenant:tenantId,role:membership.role});
+    accessPanel.reset();
+    state.role = membership.role;
     state.readOnly = ['viewer', 'client_viewer'].includes(membership.role);
     $('workspace-select').value = tenantId;
     $('workspace-forms').classList.toggle('hidden', state.readOnly);
@@ -80,11 +89,13 @@
       );
       if (tenantId !== state.tenantId) return;
       state.clients=clients;state.brands=brands;state.campaigns=campaigns;render(actions,deliverables);
-      await portal.show(deliverables,campaigns,refresh);
+      await Promise.all([portal.show(deliverables,campaigns,refresh),
+        accessPanel.show(tenantId, state.role, clients, brands, campaigns)]);
     } catch (error) {
       if (tenantId !== state.tenantId) return;
       state.clients = []; state.brands = []; state.campaigns = [];
       render([], []);
+      accessPanel.reset();
       $('review-panel').replaceChildren();
       throw error;
     }

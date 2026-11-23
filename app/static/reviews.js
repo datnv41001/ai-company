@@ -65,6 +65,7 @@ function createReviewPanel(root, api, notify) {
     }
     if (item.status !== 'pending' || !(item.can_decide || item.can_comment || item.can_cancel)) return;
     const note=field(parent,'Ý kiến của bạn','textarea');
+    if (item.can_decide) el('p','Khi từ chối hoặc yêu cầu sửa, ghi lý do cụ thể (ít nhất 5 ký tự).',parent);
     note.maxLength=2000;
     const actions=el('div',null,parent); actions.className='review-buttons';
     // Retrying an identical form after a lost response reuses the original key.
@@ -72,6 +73,10 @@ function createReviewPanel(root, api, notify) {
     for (const [kind,label,allowed] of [['comment','Gửi bình luận',item.can_comment],['approved','Duyệt phiên bản này',item.can_decide],
       ['changes_requested','Yêu cầu sửa',item.can_decide],['rejected','Từ chối',item.can_decide],['cancelled','Hủy yêu cầu',item.can_cancel]]) {
       if (allowed) button(actions,label,async()=>{
+        if (['changes_requested','rejected'].includes(kind) && Array.from(note.value.trim()).length < 5) {
+          note.focus();
+          throw new Error('Vui lòng ghi lý do cụ thể (ít nhất 5 ký tự).');
+        }
         const bodyKey=JSON.stringify([kind,note.value]);
         if (!keys.has(bodyKey)) keys.set(bodyKey,crypto.randomUUID());
         await write(ctx,'reviews/'+item.id+'/events','POST',{kind,note:note.value,digest:item.digest,request_key:keys.get(bodyKey)});
@@ -97,6 +102,7 @@ function createReviewPanel(root, api, notify) {
         await write(ctx,path,method,body);
         if(context===ctx) await reload();
       };
+      if(doc?.status==='shared') el('p','Lưu bản sửa sẽ hủy yêu cầu đang chờ của phiên bản đã chia sẻ.',form);
       button(form,doc?'Lưu bản sửa':'Tạo bản nháp',()=>{
         if(!title.value.trim() || !preview.value.trim() || !campaign.value) throw new Error('Chọn chiến dịch, nhập tiêu đề và nội dung.');
         return doc?update('deliverables/'+doc.id+'/draft','PATCH',{title:title.value,client_preview:preview.value})
@@ -127,7 +133,7 @@ function createReviewPanel(root, api, notify) {
     const heading=el('h3','Bàn giao và duyệt nội dung',root);
     const content=el('div',null,root);
     let rows;
-    try {rows=await api(url(ctx,'reviews'));} catch(error) {
+    try {rows=await api(url(ctx,'reviews'),'GET',null,true);} catch(error) {
       if(context!==ctx || generation!==ticket)return;
       el('p','Không tải được danh sách bản bàn giao.',content);
       button(content,'Thử lại',()=>reload(selected));return;
@@ -137,8 +143,21 @@ function createReviewPanel(root, api, notify) {
     if(['owner','admin','editor'].includes(ctx.role))staff(ctx,content,docs,campaigns);
     const list=el('div',null,content); list.className='review-buttons';
     const body=el('article',null,content); body.setAttribute('aria-live','polite');
-    if(!rows.length)el('p','Chưa có phiên bản nào được chia sẻ.',list);
-    for(const row of rows) button(list,row.title+' · v'+row.version+' · '+labels[row.status],()=>detail(ctx,row.id,body));
+    const addRows = items => {
+      for (const row of items) button(list,row.title+' · v'+row.version+' · '+labels[row.status],()=>detail(ctx,row.id,body));
+    };
+    if (!rows.items.length) el('p','Chưa có phiên bản nào được chia sẻ.',list);
+    addRows(rows.items);
+    let cursor=rows.next;
+    if (cursor) {
+      const more=button(content,'Xem thêm bản bàn giao',async()=>{
+        const page=await api(url(ctx,'reviews?cursor='+encodeURIComponent(cursor)),'GET',null,true);
+        if (context!==ctx || !content.isConnected) return;
+        addRows(page.items);
+        cursor=page.next;
+        if (!cursor) more.remove();
+      });
+    }
     if(selected)await detail(ctx,selected,body);
   }
   return {setContext, show:async(docs,campaigns,refresh)=>{

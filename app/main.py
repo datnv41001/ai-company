@@ -14,6 +14,7 @@ from sqlalchemy.inspection import inspect
 from sqlalchemy.orm import Session
 
 from .delivery import router as delivery_router, working_copy
+from .recipients import router as recipients_router, revoke_pending
 from .delivery_models import PortalGrant
 from .access import set_context, visible
 from .database import APP_ENV, engine, get_db, prepare_database
@@ -37,6 +38,7 @@ async def lifespan(_app: FastAPI):
 
 app = FastAPI(title="AI Marketing Company - Engineering Bootstrap", version="0.1.0", lifespan=lifespan)
 app.include_router(delivery_router)
+app.include_router(recipients_router)
 app.mount("/static", StaticFiles(directory=ROOT / "static"), name="static")
 
 
@@ -149,6 +151,7 @@ def add_member(tenant_id: str, body: AddMemberIn, user: User = Depends(current_u
         raise HTTPException(404, "User must register before dev workspace membership can be assigned")
     if db.get(Membership, {"tenant_id": tenant_id, "user_id": found.id}):
         raise HTTPException(409, "User is already a member")
+    revoke_pending(db, tenant_id, found.id)
     record = Membership(tenant_id=tenant_id, user_id=found.id, role=body.role, client_id=body.client_id)
     db.add(record)
     if body.role == "client_viewer":
@@ -187,6 +190,7 @@ def revoke_client_scope(tenant_id: str, member_id: str, user: User = Depends(cur
     if record is None or record.role != "client_viewer":
         raise HTTPException(404, "Client membership not found")
     audit(db, tenant_id, user.id, "member.client_scope_revoked", member_id, {"client_id": record.client_id})
+    revoke_pending(db, tenant_id, member_id)
     db.delete(record)
     db.commit()
 

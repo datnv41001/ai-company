@@ -12,3 +12,9 @@
   .topbar { flex-wrap: wrap; gap: 8px; }
   .top-pill { max-width: 100%; }
 }
+
+#recipient-panel { overflow-wrap: anywhere; }
+#recipient-panel summary { cursor: pointer; }
+#recipient-panel h4 { margin-top: 20px; }
+#recipient-panel input[type=checkbox] { display: inline-block; margin: 0 0 0 8px; width: auto; }
+#recipient-panel details details { padding: 8px 0; }

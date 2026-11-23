@@ -2,13 +2,13 @@
 
 ## 1. Lấy đúng mã trên máy mới
 
-Repo chính là [datnv41001/ai-company](https://github.com/datnv41001/ai-company). PR #3 đã vào main tại `47cdc585`. Nhánh QA đang review là `feature/qa-evidence-revision`. Sau khi PR được merge, dùng `main`. Để hai máy chạy chính xác cùng mã, sao chép SHA đầy đủ từ máy bàn giao và đối chiếu sau khi checkout.
+[PR #4](https://github.com/datnv41001/ai-company/pull/4) đã vào `main` tại `45e5c701132a5e7a6baa6fd6bf8cbacee3d5330f`, gồm bản đã review `4653dd77be67f3df6c95cd96f57ef668eaa09828`. Mốc này dùng schema 8. Trên máy mới, lấy `main` và dùng `git rev-parse HEAD` để ghi SHA khi bàn giao. CI trên chính commit merge đạt 3/3 job, 76/76 bài SQLite/PostgreSQL và 7/7 đường nâng cấp lên v8. [Log trên main](https://github.com/datnv41001/ai-company/actions/runs/45141376697).
 
 ~~~sh
 git clone https://github.com/datnv41001/ai-company.git
 cd ai-company
 git fetch origin --prune
-git switch feature/qa-evidence-revision
+git switch main
 git pull --ff-only
 git rev-parse HEAD
 git status --short --branch
@@ -105,4 +105,4 @@ Người hoặc AI sửa mã cập nhật **cùng PR** phần hợp đồng tư�
 
 Ghi vào PR: hành vi cũ → mới, đường vào API/UI, files chính, phiên bản schema, lệnh kiểm thử, kết quả đạt/skip, link CI, dữ liệu cần chuyển và điểm còn mở. Người nhận chạy lại thay đổi từ SHA của PR và lấy dữ liệu mẫu qua fixture. Chưa merge thì nêu tên nhánh. Khi hoàn tất một work package, cập nhật mục tiếp theo và mốc xác minh. Mẫu có ở [pull request template](.github/pull_request_template.md).
 
-**Trạng thái kế tiếp.** Cổng duyệt cần chủ sản phẩm nghiệm thu cách chia sẻ theo nhóm client/brand. Sau đó là brief và Brand Kit có phiên bản. Xác minh danh tính thật, xác minh email, rate limiting và connector ghi ra ngoài là các hạng mục còn mở trước khi phục vụ khách thật.
+**Công việc tiếp theo.** [Kế hoạch kiến trúc và nghiệm thu PR #5](docs/PR5-AI-COMPANY-OPERATIONS.md) mô tả AI Director đa dự án, dispatcher và pool theo phạm vi được cấp, ngân sách agency và đối soát từng attempt. Bộ thử đồng thời dùng hai khách trong cùng agency và một agency khác. Đây là kế hoạch triển khai cho vòng phát triển nội bộ tiếp theo.

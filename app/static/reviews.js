@@ -89,6 +89,7 @@ function createReviewPanel(root, api, notify) {
     const pick=field(box,'Bản làm việc','select');
     pick.add(new Option('Tạo bản mới',''));
     docs.forEach(d=>pick.add(new Option(d.title+' · '+(d.status==='approved'?'QA đã duyệt':labels[d.status]||d.status),d.id)));
+    if(ctx.draftId && docs.some(d=>d.id===ctx.draftId)){pick.value=ctx.draftId;box.open=true;}
     const form=el('div',null,box);
     function draw() {
       form.replaceChildren();
@@ -99,7 +100,8 @@ function createReviewPanel(root, api, notify) {
       const title=field(form,'Tiêu đề gửi khách','input',doc?.title||'');
       const preview=field(form,'Nội dung khách sẽ xem','textarea',doc?.content?.client_preview||'');
       const update=async(path,method,body)=>{
-        await write(ctx,path,method,body);
+        const saved=await write(ctx,path,method,body);
+        ctx.draftId=doc?.id || saved?.id;
         if(context===ctx) await reload();
       };
       if(doc?.status==='shared') el('p','Lưu bản sửa sẽ hủy yêu cầu đang chờ của phiên bản đã chia sẻ.',form);
@@ -108,31 +110,63 @@ function createReviewPanel(root, api, notify) {
         return doc?update('deliverables/'+doc.id+'/draft','PATCH',{title:title.value,client_preview:preview.value})
           :update('deliverables','POST',{title:title.value,campaign_id:campaign.value,content:{client_preview:preview.value}});
       });
-      const claims=doc?.content?.qa_claims;
-      if(Array.isArray(claims) && claims.length) el('p','Các câu cần đối chiếu từ bản nháp AI ban đầu',form);
-      for(const finding of Array.isArray(claims)?claims:[]) {
-        if(typeof finding?.claim!=='string' || !Array.isArray(finding.matching_ids)) continue;
-        const source=finding.matching_ids.length?'Trùng câu trong nguồn '+finding.matching_ids.join(', '):'Cần bổ sung bằng chứng';
-        el('p',source+' · '+finding.claim,form);
-      }
       if(!doc)return;
       const path='deliverables/'+doc.id;
-      if(doc.status==='draft') button(form,'Gửi QA',()=>update(path+'/submit','POST'));
+      const report=doc.qa_evidence?.qa_revision===doc.qa_revision ? doc.qa_evidence : null;
+      const evidence=el('section',null,form);
+      el('h4','Kiểm tra phiên bản đang xem',evidence);
+      if(!report){
+        el('p','Phiên bản cũ chưa được đánh giá.',evidence);
+        button(evidence,'Đánh giá phiên bản này',()=>update(path+'/assessment','POST',{}));
+      }else{
+        el('p','Lần lưu '+doc.qa_revision+' · SHA-256 '+report.content_digest.slice(0,12)+' · '+report.ruleset_version,evidence);
+        el('p',report.state==='current'?'Đã đối chiếu với nguồn của Workforce.':'Chưa có nguồn liên kết để đối chiếu.',evidence);
+        for(const f of report.findings){
+          const status=f.status==='needs_evidence'?'Cần bổ sung bằng chứng':'Trùng câu trong nguồn '+f.matching_ids.join(', ');
+          el('p',status+' · '+(f.field==='title'?'Tiêu đề':'Nội dung')+' · '+f.claim,evidence);
+        }
+        el('p','Người QA chịu trách nhiệm kiểm tra nguồn và ngữ cảnh.',evidence);
+      }
+      const originalTitle=title.value, originalPreview=preview.value;
+      const modified=()=>title.value!==originalTitle || preview.value!==originalPreview;
+      const dirty=el('p','Hãy lưu thay đổi trước khi gửi hoặc duyệt bản này.',form);
+      dirty.hidden=true;
+      const submit=doc.status==='draft' ? button(form,'Gửi QA',()=>{
+        if(modified()) throw new Error(dirty.textContent);
+        return update(path+'/submit','POST');
+      }) : null;
+      const updateDisplay=()=>{
+        const unsaved=modified();
+        dirty.hidden=!unsaved;
+        evidence.hidden=unsaved;
+        if(submit) submit.disabled=unsaved;
+      };
+      title.addEventListener('input',updateDisplay);
+      preview.addEventListener('input',updateDisplay);
       if(!['owner','admin'].includes(ctx.role))return;
-      if(doc.status==='submitted'){
+      if(report && (doc.status==='submitted' || (doc.status==='approved' && !doc.qa_approved_revision))){
         const note=field(form,'Ghi chú QA nội bộ','textarea');
         for(const [kind,label] of [['approved','QA duyệt'],['rejected','Trả lại để sửa']])
-          button(form,label,()=>update(path+'/review','POST',{decision:kind,note:note.value}));
+          button(form,label,async()=>{
+            if(modified()) throw new Error('Hãy lưu thay đổi rồi xem lại phiên bản trước khi duyệt.');
+            try {
+              await update(path+'/review','POST',{decision:kind,note:note.value,expected_content_digest:report.content_digest,expected_qa_revision:report.qa_revision});
+            } catch(error) {
+              if([409,412].includes(error.status)) throw new Error('Nội dung đã thay đổi. Hãy tải lại trước khi quyết định.');
+              throw error;
+            }
+          });
       }
-      if(doc.status==='approved'){
+      if(doc.status==='approved' && doc.qa_approved_revision===doc.qa_revision && doc.qa_approved_digest){
         const deadline=field(form,'Hạn phản hồi (giờ địa phương)','input'); deadline.type='datetime-local';
         button(form,'Chia sẻ phiên bản đã duyệt',()=>{
+          if(modified()) throw new Error('Hãy lưu và duyệt nội dung đã sửa trước khi chia sẻ.');
           if(!deadline.value) throw new Error('Chọn hạn phản hồi.');
           return update(path+'/share','POST',{expires_at:new Date(deadline.value).toISOString()});
         });
       }
     }
-    pick.onchange=draw;draw();
+    pick.onchange=()=>{ctx.draftId=pick.value;draw();};draw();
   }
   async function load(ctx,docs,campaigns,selected=null) {
     const ticket=++generation;

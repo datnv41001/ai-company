@@ -79,14 +79,17 @@ def exercise():
         assert report["state"] == "awaiting_qa", (report["state"], report["last_error"], [(j["skill"], j["outcome"]) for j in report["journal"]])
         assert [p["skill"] for p in report["checkpoints"]] == ["director", "research", "strategy", "content"]
         assert all(j["provider"] == "local" for j in report["journal"])
-        assert all(p["quality"]["ruleset"] == "marketing-evidence-1" for p in report["checkpoints"])
+        assert all(p["quality"]["ruleset"] == "marketing-evidence-2" for p in report["checkpoints"])
         assert report["reserved_microusd"] == 0 and all(p["output"]["source_ids"] for p in report["checkpoints"])
         doc = base + "/deliverables/" + report["deliverable_id"]
         assert request("GET", base + "/reviews", client) == []
         # Synthetic identities exercise the acceptance mechanism. Copy quality needs separate human review.
-        request("POST", doc + "/review", admin, {"decision": "approved", "note": "Synthetic end-to-end acceptance"})
+        assessment = request("GET", doc, admin)["qa_evidence"]
+        assert assessment["state"] == "current"
+        request("POST", doc + "/review", admin, {"decision": "approved", "expected_qa_revision": assessment["qa_revision"], "expected_content_digest": assessment["content_digest"], "note": "Synthetic end-to-end acceptance"})
         shared = request("POST", doc + "/share", admin, {"expires_at": (datetime.now(timezone.utc) + timedelta(hours=1)).isoformat()})
         request("POST", base + "/reviews/" + shared["id"] + "/events", client, {"kind": "approved", "digest": shared["digest"], "request_key": uuid4().hex})
+        assert shared["digest"] == assessment["content_digest"]
         archive = request("GET", root + "/runs/" + run["id"], admin)["approved_assets"]
         assert archive == [{"id": shared["id"], "version": 1, "digest": shared["digest"]}]
         print("PASS real local model: brief, 4 specialist checkpoints, independent QA, exact client-approved archive; attempts:", len(report["journal"]))

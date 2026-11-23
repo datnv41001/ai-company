@@ -14,6 +14,7 @@ from sqlalchemy.orm import Session
 from .access import set_context, set_worker_scope
 from .database import engine, prepare_database
 from .delivery import as_utc
+from .revision_qa import evaluate
 from .models import AuditEvent, Deliverable, Membership, utcnow
 from .workforce_gateway import Gateway, GatewayError, MAX_OUTPUT, PROMPT_VERSION, infer, quality, request_body, reserve_tokens, validate_output
 from .workforce_models import WorkforceRun
@@ -172,17 +173,15 @@ def finish(db, scope, config, task, result, error):
                 tenant_id=run.tenant_id,
                 campaign_id=run.campaign_id,
                 title=run.knowledge["title"],
-                content={
-                    "client_preview": preview,
-                    "workforce_run_id": run.id,
-                    "qa_claims": [finding for p in run.checkpoints if p["skill"] != "director" for finding in p["quality"].get("claims", [])],
-                },
+                content={"client_preview": preview, "workforce_run_id": run.id},
                 created_by=scope.operator,
                 status="submitted",
             )
             db.add(doc)
             db.flush()
             run.deliverable_id, run.state = doc.id, "awaiting_qa"
+            db.flush()  # The evidence lookup follows the persisted worker-to-draft link.
+            evaluate(db, doc, scope.operator)
             db.add(
                 AuditEvent(tenant_id=run.tenant_id, user_id=scope.operator, subject_id=doc.id, event="workforce.submitted_to_qa", details={"run_id": run.id})
             )

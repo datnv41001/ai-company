@@ -90,10 +90,59 @@ def test_brief_worker_and_approved_asset(api, workforce):
     assert api.get(base + "/reviews", headers=alice["headers"]).json() == []
     path = base + "/deliverables/" + detail["deliverable_id"]
     draft = api.get(path, headers=owner["headers"]).json()
-    assert any(f["claim"] == "Giá phải chăng." and f["status"] == "needs_evidence" for f in draft["content"]["qa_claims"])
+    assert any(f["claim"] == "Giá phải chăng." and f["status"] == "needs_evidence" for f in draft["qa_evidence"]["findings"])
+    outsiders = (alice, bob, account(api, "OtherTenant"))
+    for actor in outsiders:
+        assert api.get(path, headers=actor["headers"]).status_code == 404
+        assert api.get(root + "/runs/" + rid, headers=actor["headers"]).status_code == 404
+        if bind.dialect.name == "postgresql":
+            with bind.connect() as conn:
+                conn.execute(text("SELECT set_config('amc.user_id',:u,true),set_config('amc.tenant_id',:t,true)"), {"u": actor["id"], "t": owner["tenant"]})
+                assert not conn.execute(text("SELECT qa_evidence FROM deliverables WHERE id=:d"), {"d": draft["id"]}).first()
+                assert not conn.execute(text("SELECT knowledge FROM workforce_runs WHERE id=:r"), {"r": rid}).first()
+    other = outsiders[-1]
+    foreign_base = "/api/tenants/" + other["tenant"]
+    client = create(api, foreign_base + "/clients", other, {"name": "Other client"})
+    brand = create(api, foreign_base + "/brands", other, {"client_id": client["id"], "name": "Other brand"})
+    campaign = create(
+        api,
+        foreign_base + "/campaigns",
+        other,
+        {"brand_id": brand["id"], "name": "Other campaign", "brief": "Synthetic campaign brief", "objective": "Internal QA"},
+    )
+    imitation = create(
+        api,
+        foreign_base + "/deliverables",
+        other,
+        {
+            "title": "Copy",
+            "campaign_id": campaign["id"],
+            "content": {"client_preview": "Giá phải chăng.", "workforce_run_id": rid, "source_ids": ["S1"], "qa_evidence": draft["qa_evidence"]},
+        },
+    )
+    assert imitation["qa_evidence"]["state"] == "source_unavailable"
+    assert imitation["qa_evidence"]["findings"][0]["cited_ids"] == []
+    initial = draft["qa_evidence"]["content_digest"]
+    assert draft["qa_evidence"]["state"] == "current"
+    # Manual edits derive their sources from the database-linked run. Checkpoints stay historical.
+    edited = {"title": draft["title"], "client_preview": "CONTENT\nSản phẩm tốt nhất thị trường."}
+    editor = account(api, "CopyEditor")
+    create(api, base + "/members", owner, {"email": editor["email"], "role": "editor"})
+    api.patch(path + "/draft", headers=editor["headers"], json=edited).raise_for_status()
+    api.post(path + "/submit", headers=editor["headers"]).raise_for_status()
+    revised = api.get(path, headers=owner["headers"]).json()["qa_evidence"]
+    assert revised["content_digest"] != initial and revised["state"] == "current"
+    assert [f["claim"] for f in revised["findings"]] == ["Sản phẩm tốt nhất thị trường."]
+    assert revised["findings"][0]["status"] == "needs_evidence"
+    assert api.post(path + "/review", headers=owner["headers"], json={"decision": "approved", "expected_qa_revision": draft["qa_revision"], "expected_content_digest": initial}).status_code == 412
+    history = api.get(root + "/runs/" + rid, headers=owner["headers"]).json()["checkpoints"]
+    assert any(f["claim"] == "Giá phải chăng." for f in history[-1]["quality"]["claims"])
     expiry = {"expires_at": (utcnow() + timedelta(days=1)).isoformat()}
     assert api.post(path + "/share", headers=owner["headers"], json=expiry).status_code == 409
-    assert api.post(path + "/review", headers=owner["headers"], json={"decision": "approved"}).status_code == 200
+    assert (
+        api.post(path + "/review", headers=owner["headers"], json={"decision": "approved", "expected_qa_revision": revised["qa_revision"], "expected_content_digest": revised["content_digest"]}).status_code
+        == 200
+    )
     v = create(api, path + "/share", owner, expiry)
     customer_view = api.get(base + "/reviews/" + v["id"], headers=alice["headers"]).json()
     assert customer_view["digest"] == v["digest"] and "qa_claims" not in str(customer_view)

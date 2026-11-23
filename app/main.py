@@ -4,7 +4,7 @@ from contextlib import asynccontextmanager
 from pathlib import Path
 from typing import Any
 
-from fastapi import Depends, FastAPI, HTTPException, Request
+from fastapi import Depends, FastAPI, HTTPException, Query, Request
 from fastapi.exception_handlers import request_validation_exception_handler
 from fastapi.exceptions import RequestValidationError
 from fastapi.responses import FileResponse, JSONResponse
@@ -13,6 +13,8 @@ from sqlalchemy import select, text
 from sqlalchemy.inspection import inspect
 from sqlalchemy.orm import Session
 
+from .revision_qa import content_digest, evaluate
+from .workforce_evidence import RULESET
 from .delivery import router as delivery_router, working_copy
 from .workforce import router as workforce_router
 from .recipients import router as recipients_router, revoke_pending
@@ -20,7 +22,7 @@ from .delivery_models import PortalGrant
 from .access import set_context, visible
 from .database import APP_ENV, engine, get_db, prepare_database
 from .models import User, Tenant, Membership, Client, Brand, Campaign, WorkTask, Deliverable, ActionRequest, AuditEvent, new_id
-from .schemas import RegisterIn, LoginIn, ClientIn, BrandIn, CampaignIn, AddMemberIn, DeliverableIn, ReviewIn, ActionIn, ClientScopeIn
+from .schemas import RegisterIn, LoginIn, ClientIn, BrandIn, CampaignIn, AddMemberIn, DeliverableIn, DeliverableReviewIn, ReviewIn, ActionIn, ClientScopeIn
 from .security import hash_password, check_password, make_token, current_user, require_tenant
 from .services.marketing import WORKFLOW_STEPS
 
@@ -297,9 +299,12 @@ def get_working_deliverable(tenant_id: str, deliverable_id: str, user: User = De
 def create_deliverable(tenant_id: str, body: DeliverableIn, user: User = Depends(current_user), db: Session = Depends(get_db)):
     member(db, user, tenant_id, "editor")
     campaign_of(db, tenant_id, body.campaign_id)
-    item = Deliverable(tenant_id=tenant_id, campaign_id=body.campaign_id, title=body.title, content=body.content, created_by=user.id)
+    reserved = {'qa_claims', 'qa_evidence', 'workforce_run_id', 'source_ids', 'qa_approved_digest', 'qa_revision', 'qa_approved_revision'}
+    content = {key: value for key, value in body.content.items() if key not in reserved}
+    item = Deliverable(tenant_id=tenant_id, campaign_id=body.campaign_id, title=body.title, content=content, created_by=user.id)
     db.add(item)
     db.flush()
+    evaluate(db, item, user.id)
     audit(db, tenant_id, user.id, "deliverable.created", item.id)
     return done(db, item)
 
@@ -310,21 +315,56 @@ def submit_deliverable(tenant_id: str, deliverable_id: str, user: User = Depends
     item = working_copy(db, tenant_id, deliverable_id)
     if item.status != "draft":
         raise HTTPException(409, "Only draft deliverables may be submitted")
+    if (item.qa_evidence or {}).get("qa_revision") != item.qa_revision:
+        evaluate(db, item, user.id)
     item.status = "submitted"
     audit(db, tenant_id, user.id, "deliverable.submitted", item.id)
     return done(db, item)
 
 
+@app.post("/api/tenants/{tenant_id}/deliverables/{deliverable_id}/assessment")
+def assess_working_copy(tenant_id: str, deliverable_id: str, user: User = Depends(current_user), db: Session = Depends(get_db)):
+    member(db, user, tenant_id, "editor")
+    item = working_copy(db, tenant_id, deliverable_id)
+    previous = item.qa_evidence or {}
+    report = evaluate(db, item, user.id)
+    if any(previous.get(k) != report[k] for k in ("qa_revision", "content_digest", "ruleset_version", "state", "findings")):
+        item.qa_approved_revision = None
+        item.qa_approved_digest = None
+    return done(db, item)
+
+
 @app.post("/api/tenants/{tenant_id}/deliverables/{deliverable_id}/review")
-def review_deliverable(tenant_id: str, deliverable_id: str, body: ReviewIn, user: User = Depends(current_user), db: Session = Depends(get_db)):
+def review_deliverable(tenant_id: str, deliverable_id: str, body: DeliverableReviewIn, user: User = Depends(current_user), db: Session = Depends(get_db)):
     member(db, user, tenant_id, "admin")
     item = working_copy(db, tenant_id, deliverable_id)
-    if item.status != "submitted":
+    report = item.qa_evidence or {}
+    digest = content_digest(item.title, item.content.get("client_preview", ""))
+    if (
+        body.expected_qa_revision != item.qa_revision
+        or report.get("qa_revision") != item.qa_revision
+        or digest != body.expected_content_digest
+        or report.get("content_digest") != digest
+        or report.get("ruleset_version") != RULESET
+        or report.get("state") not in {"current", "source_unavailable"}
+    ):
+        raise HTTPException(412, "Content changed or assessment is stale. Reload and reassess before deciding.")
+    legacy_approval = item.status == "approved" and item.qa_approved_revision is None
+    if item.status != "submitted" and not legacy_approval:
         raise HTTPException(409, "Deliverable is not awaiting review")
     if user.id in (item.created_by, item.last_editor_id):
         raise HTTPException(403, "Self-approval is forbidden")
     item.status, item.reviewed_by, item.review_note = body.decision, user.id, body.note
-    audit(db, tenant_id, user.id, "deliverable.reviewed", item.id, {"decision": body.decision})
+    item.qa_approved_revision = item.qa_revision if body.decision == "approved" else None
+    item.qa_approved_digest = digest if body.decision == "approved" else None
+    audit(
+        db,
+        tenant_id,
+        user.id,
+        "deliverable.reviewed",
+        item.id,
+        {"decision": body.decision, "qa_revision": item.qa_revision, "content_digest": digest, "ruleset_version": report["ruleset_version"]},
+    )
     return done(db, item)
 
 
@@ -374,9 +414,13 @@ def execute_action_disabled(tenant_id: str, action_id: str, user: User = Depends
 
 
 @app.get("/api/tenants/{tenant_id}/audit")
-def audit_events(tenant_id: str, user: User = Depends(current_user), db: Session = Depends(get_db)):
+def audit_events(tenant_id: str, subject_id: str | None = None, offset: int = Query(0, ge=0),
+                 user: User = Depends(current_user), db: Session = Depends(get_db)):
     member(db, user, tenant_id, "admin")
-    return [data(i) for i in db.scalars(select(AuditEvent).where(AuditEvent.tenant_id == tenant_id).order_by(AuditEvent.occurred_at.desc()).limit(100)).all()]
+    query = select(AuditEvent).where(AuditEvent.tenant_id == tenant_id)
+    if subject_id:
+        query = query.where(AuditEvent.subject_id == subject_id)
+    return [data(i) for i in db.scalars(query.order_by(AuditEvent.occurred_at.desc(), AuditEvent.id.desc()).offset(offset).limit(100))]
 
 
 @app.get("/api/catalog/roles")

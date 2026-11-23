@@ -1,7 +1,5 @@
 """Client delivery API. Snapshots and their journal are append-only."""
 
-import hashlib
-import json
 from datetime import timezone
 from typing import Literal
 from uuid import uuid4
@@ -12,6 +10,8 @@ from sqlalchemy import and_, select, text, tuple_
 from sqlalchemy.exc import IntegrityError
 from sqlalchemy.orm import Session
 
+from .revision_qa import content_digest, evaluate
+from .workforce_evidence import RULESET
 from .database import get_db
 from .delivery_models import ClientReview, PortalGrant, ReviewEntry
 from .models import AuditEvent, Brand, Campaign, Deliverable, Membership, User, utcnow
@@ -203,6 +203,11 @@ def edit_draft(tenant_id: str, did: str, body: Edit, user: User = Depends(curren
         # The document lock also guards decisions. A decision committed first stays final.
         append(db, previous, user.id, "cancelled", "Agency bắt đầu sửa bản làm việc.", str(uuid4()))
     doc.title, doc.content = body.title, {**doc.content, "client_preview": body.client_preview}
+    # The same bytes can recur after multiple edits. Only this save owns the new revision.
+    doc.qa_revision += 1
+    doc.qa_approved_revision = None
+    doc.qa_approved_digest = None
+    evaluate(db, doc, user.id)
     doc.last_editor_id, doc.status, doc.reviewed_by, doc.review_note = user.id, "draft", None, None
     db.add(AuditEvent(tenant_id=tenant_id, user_id=user.id, subject_id=did, event="deliverable.edited", details={}))
     db.commit()
@@ -223,6 +228,17 @@ def share(tenant_id: str, did: str, body: Share, user: User = Depends(current_us
     preview = doc.content.get("client_preview")
     if not isinstance(preview, str) or not preview.strip() or len(preview) > 30000:
         raise HTTPException(422, "Provide a client preview and complete QA before sharing")
+    digest = content_digest(doc.title, preview)
+    report = doc.qa_evidence or {}
+    if (
+        doc.qa_approved_revision != doc.qa_revision
+        or report.get("qa_revision") != doc.qa_revision
+        or doc.qa_approved_digest != digest
+        or report.get("content_digest") != digest
+        or report.get("ruleset_version") != RULESET
+        or report.get("state") not in {"current", "source_unavailable"}
+    ):
+        raise HTTPException(409, "Independent QA must review this revision before sharing")
     if body.expires_at <= utcnow():
         raise HTTPException(422, "Deadline must be in the future")
     campaign = db.get(Campaign, doc.campaign_id)
@@ -230,7 +246,6 @@ def share(tenant_id: str, did: str, body: Share, user: User = Depends(current_us
     previous = db.scalar(select(ClientReview).where(ClientReview.deliverable_id == did).order_by(ClientReview.version.desc()).limit(1))
     if previous and status(previous, event_list(db, previous)) in ("pending", "expired"):
         append(db, previous, user.id, "superseded", "", str(uuid4()))
-    payload = json.dumps({"title": doc.title, "preview": preview}, sort_keys=True, ensure_ascii=False, separators=(",", ":"))
     review = ClientReview(
         tenant_id=tenant_id,
         client_id=brand.client_id,
@@ -238,7 +253,7 @@ def share(tenant_id: str, did: str, body: Share, user: User = Depends(current_us
         campaign_id=campaign.id,
         deliverable_id=did,
         version=previous.version + 1 if previous else 1,
-        digest=hashlib.sha256(payload.encode()).hexdigest(),
+        digest=digest,
         title=doc.title,
         preview=preview,
         qa_by=doc.reviewed_by,
@@ -250,7 +265,7 @@ def share(tenant_id: str, did: str, body: Share, user: User = Depends(current_us
     doc.status = "shared"
     db.add(
         AuditEvent(
-            tenant_id=tenant_id, user_id=user.id, subject_id=review.id, event="review.shared", details={"digest": review.digest, "version": review.version}
+            tenant_id=tenant_id, user_id=user.id, subject_id=review.id, event="review.shared", details={"digest": review.digest, "version": review.version, "qa_revision": doc.qa_approved_revision}
         )
     )
     db.commit()

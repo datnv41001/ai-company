@@ -45,6 +45,10 @@ jobs:
           export AMC_MIGRATION_DSN="${AMC_MIGRATION_DSN%/*}/amc_test_populated_v3"
           export DATABASE_URL="${DATABASE_URL%/*}/amc_test_populated_v3"
           python tests/check_postgres_upgrade.py --from-v3
+          docker exec amc-test-pg createdb -U postgres amc_test_populated_v4
+          export AMC_MIGRATION_DSN="${AMC_MIGRATION_DSN%/*}/amc_test_populated_v4"
+          export DATABASE_URL="${DATABASE_URL%/*}/amc_test_populated_v4"
+          python tests/check_postgres_upgrade.py --from-v4
   compose-browser:
     runs-on: ubuntu-latest
     steps:
@@ -75,3 +79,31 @@ jobs:
         with:
           name: compose-versions
           path: compose-versions.txt
+
+  workforce-model:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python -m pip install -r requirements-dev.txt
+      - name: Verify real local inference and client-approved delivery
+        shell: bash
+        run: |
+          set -euo pipefail
+          python scripts/init_env.py
+          python scripts/fetch_workforce_model.py
+          compose=(docker compose -p amc-workforce-test --profile local-model)
+          trap 'docker compose -p amc-workforce-test --profile workforce --profile local-model down' EXIT
+          "${compose[@]}" up -d --build db migrate api model
+          curl --fail --retry 30 --retry-all-errors --retry-delay 1 http://127.0.0.1:8000/api/health
+          "${compose[@]}" exec -T api python -c "import urllib.request,time
+          for _ in range(90):
+              try:
+                  urllib.request.urlopen('http://model:8080/health',timeout=2).close()
+                  break
+              except OSError: time.sleep(2)
+          else: raise RuntimeError('Model failed to start')"
+          python tests/workforce_compose_smoke.py

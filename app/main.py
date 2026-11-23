@@ -14,6 +14,7 @@ from sqlalchemy.inspection import inspect
 from sqlalchemy.orm import Session
 
 from .delivery import router as delivery_router, working_copy
+from .workforce import router as workforce_router
 from .recipients import router as recipients_router, revoke_pending
 from .delivery_models import PortalGrant
 from .access import set_context, visible
@@ -39,6 +40,7 @@ async def lifespan(_app: FastAPI):
 app = FastAPI(title="AI Marketing Company - Engineering Bootstrap", version="0.1.0", lifespan=lifespan)
 app.include_router(delivery_router)
 app.include_router(recipients_router)
+app.include_router(workforce_router)
 app.mount("/static", StaticFiles(directory=ROOT / "static"), name="static")
 
 

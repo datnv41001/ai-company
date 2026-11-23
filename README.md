@@ -2,6 +2,8 @@
 
 **[Chạy bằng Docker và tiếp quản trên máy mới → HANDOFF.md](HANDOFF.md)**
 
+**AI Workforce nội bộ.** Luồng brief → Director → Research → Strategy → Content tạo bộ tài sản chờ QA. [Chạy worker và model](HANDOFF.md#chạy-ai-workforce-trên-máy-mới) · [Thiết kế và bằng chứng](docs/ADR-005-AI-WORKFORCE.md).
+
 
 ## Chạy cục bộ với PostgreSQL trên Windows
 

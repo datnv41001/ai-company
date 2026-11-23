@@ -2,13 +2,13 @@
 
 ## 1. Lấy đúng mã trên máy mới
 
-Repo chính là [datnv41001/ai-company](https://github.com/datnv41001/ai-company). PR #1 đã vào main tại `81e4791`. Nhánh đang đánh giá phần vận hành cổng duyệt là `feature/review-operations`, bắt đầu từ commit này. Sau khi PR được merge, dùng `main`. Để hai máy chạy chính xác cùng mã, sao chép SHA đầy đủ từ máy bàn giao và đối chiếu sau khi checkout.
+Repo chính là [datnv41001/ai-company](https://github.com/datnv41001/ai-company). PR #2 đã vào main tại `47a5718`. Nhánh runtime đang review là `feature/ai-workforce-runtime`. Sau khi PR được merge, dùng `main`. Để hai máy chạy chính xác cùng mã, sao chép SHA đầy đủ từ máy bàn giao và đối chiếu sau khi checkout.
 
 ~~~sh
 git clone https://github.com/datnv41001/ai-company.git
 cd ai-company
 git fetch origin --prune
-git switch feature/review-operations
+git switch feature/ai-workforce-runtime
 git pull --ff-only
 git rev-parse HEAD
 git status --short --branch
@@ -36,7 +36,38 @@ Mở [giao diện](http://127.0.0.1:8000), [health](http://127.0.0.1:8000/api/he
 - Dừng bằng `docker compose -p amc-dev stop`. Khởi động lại cùng dữ liệu bằng `docker compose -p amc-dev up -d`. Giữ nguyên project name và volume. Khi đổi commit, dùng lại `up -d --build` để chạy migration tương ứng. Không dùng tùy chọn xóa volume cho DB cần giữ.
 - Khi chuyển cả dữ liệu, sao lưu bằng công cụ PostgreSQL, truyền bản sao và bí mật qua kênh riêng được phép, phục hồi trên DB riêng và kiểm tra quyền bằng tài khoản runtime. Không push dữ liệu hay khóa vào Git. Cùng commit giúp đồng bộ logic; phiên bản dependency nằm trong khoảng cho phép có thể đổi khi build lại. CI ghi lại các phiên bản và image thực dùng.
 
-## 3. Hợp đồng nghiệp vụ hiện tại · schema 4
+## Chạy AI Workforce trên máy mới
+
+Cần Git, Docker Compose v2 và khoảng 0,5 GB cho trọng số ngoài dung lượng Docker images. Sau khi tạo .env theo phần trên, cài model mẫu có checksum bằng một trong hai lệnh dưới đây từ thư mục repo.
+
+~~~sh
+# Python có sẵn (đã cài requirements.txt)
+python scripts/fetch_workforce_model.py
+# Hoặc dùng Docker, không cần Python trên host
+docker run --rm -v "${PWD}:/src" -w /src python:3.12-slim sh -c "pip -q install httpx && python scripts/fetch_workforce_model.py"
+~~~
+
+Khởi động web, DB và model nội bộ. Model đọc models/workforce.gguf và chỉ lắng nghe trong mạng Compose.
+
+~~~sh
+docker compose -p amc-dev --profile local-model up -d --build db migrate api model
+~~~
+
+1. Trong agency tạo client, Brand Kit có dữ kiện sản phẩm, campaign và người nhận có grant đúng phạm vi. Dùng một tài khoản đăng ký riêng làm editor cho worker. Owner/admin mở **Điều phối Marketing AI**, chọn campaign và người giao brief. Khách đăng nhập, mở **Brief Marketing của bạn** và gửi mục tiêu, đối tượng, đề nghị cùng nguồn.
+2. Thêm năm UUID vào .env: `AMC_WORKER_TENANT`, `AMC_WORKER_CLIENT`, `AMC_WORKER_BRAND`, `AMC_WORKER_CAMPAIGN`, `AMC_WORKER_OPERATOR`. Lấy qua API docs: /api/me của editor trả user ID và workspace; GET clients, brands, campaigns bằng tài khoản nội bộ trả các ID còn lại. Dùng đúng một campaign trên mỗi worker. Tài khoản editor này không được duyệt QA nội bộ.
+3. Đặt `AMC_WORKFORCE_PROVIDER=local`, `AMC_WORKFORCE_MODEL=amc-local`. Với model trong Compose, dùng `AMC_LOCAL_MODEL_URL=http://model:8080/v1`. Với worker và llama.cpp cùng chạy native, dùng http://127.0.0.1:18084/v1. Có thể chạy worker native bằng `python -m app.workforce_worker` sau khi khai báo DATABASE_URL, JWT_SECRET và các biến trên. Dùng `--once` để xử lý tối đa một bước.
+4. Khởi động worker khi model đã sẵn sàng. Trong giao diện, agency mở brief đã nhận, chọn thêm chuyên môn nếu cần, giữ ngân sách 0 cho local rồi chọn **Giao việc cho AI Director**. Nút **Cập nhật tiến độ** hiện trạng thái, nguồn, lượt gọi và chi phí. Các bản đã tạo chờ QA ở mục bàn giao. Sau khi QA và khách duyệt, mở chi tiết run để xem đúng bộ tài sản đã duyệt.
+
+~~~sh
+docker compose -p amc-dev --profile workforce up -d --build worker
+docker compose -p amc-dev logs --tail=50 worker model
+~~~
+
+OpenAI là lựa chọn chủ động. Cấu hình `AMC_WORKFORCE_PROVIDER=openai`, model hỗ trợ structured output, OPENAI_API_KEY và giá `AMC_INPUT_RATE_MICROUSD`, `AMC_OUTPUT_RATE_MICROUSD` theo **micro-USD trên một triệu token**. Ví dụ 0,50 USD/triệu token tương ứng 500000. Tạo run có ngân sách dương phù hợp. Chỉ dùng nguồn đã được phép gửi tới nhà cung cấp. Các lần kiểm thử tự động dùng model local hoặc gateway thử.
+
+[ADR-005](docs/ADR-005-AI-WORKFORCE.md) ghi ranh giới quyền, lease, retry, prompt, cách đọc chi phí, hạn chế chất lượng, bằng chứng demo và rollback schema 5. [CI](.github/workflows/ci.yml) ghi lệnh chạy suite, bốn đường nâng cấp và nghiệm thu model thật bằng Compose trên database thử riêng.
+
+## 3. Hợp đồng nghiệp vụ cổng duyệt · schema 4–5
 
 | Quy tắc | Nơi sửa khi thay đổi | Bằng chứng phải chạy |
 |---|---|---|

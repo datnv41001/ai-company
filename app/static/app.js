@@ -9,6 +9,7 @@
     if(!response.ok) throw new Error(typeof result.detail === 'string' ? result.detail : `HTTP ${response.status}`);
     return withCursor ? {items:result, next:response.headers.get("X-Next-Cursor")} : result;
   };
+  const workforce = createWorkforce($('workforce-panel'),api,msg);
   const portal = createReviewPanel($('review-panel'),api,msg);
   const accessPanel = createRecipientPanel($('recipient-panel'), api, msg, async tenantId => {
     const me = await api('/api/me');
@@ -24,7 +25,7 @@
     const tenantId = membership.tenant_id;
     state.token = token; state.tenantId = tenantId; state.mode = membership.mode; state.email = email;
     portal.setContext({tenant:tenantId,role:membership.role});
-    accessPanel.reset();
+    accessPanel.reset(); workforce.reset();
     state.role = membership.role;
     state.readOnly = ['viewer', 'client_viewer'].includes(membership.role);
     $('workspace-select').value = tenantId;
@@ -81,6 +82,7 @@
     $('deliverables-list').innerHTML = deliverables.length ? deliverables.map(a=>`<div class="item"><div><strong>${esc(a.title)}</strong><small>${esc(a.status)} · ${esc(a.id.slice(0,8))}</small></div><span class="tag">${esc(a.status)}</span></div>`).join('') : '<div class="empty">Chưa có tài liệu.</div>';
   };
   const refresh = async (selected=null) => {
+    workforce.pause();
     portal.select(selected);
     const tenantId = state.tenantId;
     try {
@@ -89,13 +91,13 @@
       );
       if (tenantId !== state.tenantId) return;
       state.clients=clients;state.brands=brands;state.campaigns=campaigns;render(actions,deliverables);
-      await Promise.all([portal.show(deliverables,campaigns,refresh),
+      await Promise.all([workforce.show(tenantId,state.role,campaigns.map(c=>({...c,client_id:brands.find(b=>b.id===c.brand_id)?.client_id}))),portal.show(deliverables,campaigns,refresh),
         accessPanel.show(tenantId, state.role, clients, brands, campaigns)]);
     } catch (error) {
       if (tenantId !== state.tenantId) return;
       state.clients = []; state.brands = []; state.campaigns = [];
       render([], []);
-      accessPanel.reset();
+      accessPanel.reset(); workforce.reset();
       $('review-panel').replaceChildren();
       throw error;
     }

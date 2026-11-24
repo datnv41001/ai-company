@@ -1,5 +1,9 @@
 # Bắt đầu ở đây khi tiếp quản AI Marketing Company
 
+## Business Profile C1 · backend v22 đang review nội bộ
+
+Nhánh `feature/business-profile-knowledge-v22` tích hợp main `16fea3d45`. Staff có thể ghi hồ sơ, SKU, offer và chứng cứ, tự duyệt dữ kiện thông thường hoặc yêu cầu người thứ hai đủ quyền. API tạo snapshot và cấp receipt nội bộ cho queue/QA/share. Local PostgreSQL 16.16 và SQLite đã đạt 27 ca C1, gồm tranh chấp thật, hết hạn, idempotency và quyền đọc nguồn. Mốc tiếp là giao diện C2, adapter WF-03/WF-13 C3 và nghiệm thu nghiệp vụ. Commercial GA giữ NO-GO. [Lệnh Docker, API, ma trận nghiệm thu và rollback](docs/business-profile/C1-RUNBOOK.md) · [SHA và CI của các mốc đã hợp nhất](docs/business-profile/INTEGRATION-BASE.md)
+
 ## AIRC · Kiểm định chất lượng v2 và runtime
 
 Từ main `bdc2441914478b918ea96e861aeb21f2d61655cd` (schema AMC v20), công cụ dùng kế hoạch pin, bằng chứng ký và đối chứng năm cấu hình. Trên máy mới chạy `python -m unittest discover -s engineering/airc500 -p "test_*.py" -v` trong venv engineering. [Phép đo và cách replay](engineering/airc500/QUALITY-EVALUATION.md) · [Kết quả và public pins](engineering/airc500/evidence/quality-v2/README.md) · [So hai checkpoint local](engineering/airc500/stronger/README.md) · [Giới hạn trust và intake](engineering/airc500/RUNTIME-HARDENING.md) · [Docker probe Linux](engineering/airc500/SANDBOX-CONTAINER.md). Commercial GA NO-GO, nguồn repository thực tiếp tục HOLD.

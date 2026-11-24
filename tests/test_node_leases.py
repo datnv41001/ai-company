@@ -70,6 +70,8 @@ def test_overlapping_calls_and_atomic_join(parallel):
     jobs = [w.take() for w in lab.workers]
     assert not lab.workers[0].complete(jobs[1]) and not lab.workers[1].complete(jobs[0])
     base, _, _, *_ = lab.cases[0]
+    status = lab.api.get(base + "/workforce/runs/" + lab.runs[0], headers=lab.x["headers"]).json()
+    assert status["state"] == "running" and sum(n["status"] == "running" for n in status["graph"]["nodes"]) == 2
     for actor in (lab.cases[1][2], lab.y):
         assert lab.api.get(base + "/workforce/runs/" + lab.runs[0], headers=actor["headers"]).status_code == 404
     gate = Barrier(2)

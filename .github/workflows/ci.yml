@@ -189,4 +189,5 @@ jobs:
             parallel-measurements.json
             registry-measurements.json
             registry-rollout.json
+            role-qa-measurements.json
           if-no-files-found: ignore

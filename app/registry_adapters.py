@@ -9,7 +9,7 @@ from typing import Callable
 
 from migrations.registry_release import adapter_digest
 from migrations.runtime_bundle import approved_adapter_digests
-from . import dynamic_plan, registry_seo_v2, workforce_gateway as gateway
+from . import dynamic_plan, landing_qa, registry_seo_v2, workforce_gateway as gateway
 
 V1_DIGEST = "c64cf3e0e691a1bad191b954b07d06a28c7cd8675bb5fe8328ee0ae0e620880a"
 ROLES = {
@@ -25,6 +25,13 @@ ROLES = {
 def seo_v2_digest():
     extension = Path(registry_seo_v2.__file__).read_text(encoding="utf-8")
     return sha256((adapter_digest() + "\n" + extension).encode()).hexdigest()
+
+
+@lru_cache(maxsize=2)
+def role_qa_digest(skill):
+    previous = {"content": V1_DIGEST, "seo": seo_v2_digest()}[skill]
+    rules = Path(landing_qa.__file__).read_text(encoding="utf-8")
+    return sha256((skill + "\n" + previous + "\n" + rules).encode()).hexdigest()
 
 
 @dataclass(frozen=True)
@@ -44,6 +51,8 @@ def runtimes():
         return {}
     adapters = {s + "@1": Adapter(s, 1, V1_DIGEST, gateway.request_body, gateway.validate_output) for s in ROLES}
     adapters["seo@2"] = Adapter("seo", 2, seo_v2_digest(), registry_seo_v2.request, registry_seo_v2.validate)
+    adapters["content@2"] = Adapter("content", 2, role_qa_digest("content"), gateway.request_body, landing_qa.validate)
+    adapters["seo@3"] = Adapter("seo", 3, role_qa_digest("seo"), registry_seo_v2.request, landing_qa.validate)
     return {name: adapter for name, adapter in adapters.items() if adapter.digest in approved}
 
 

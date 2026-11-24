@@ -40,6 +40,9 @@ def evaluate(db, doc, actor):
         report["workflow"] = {"template": run.knowledge["workflow"], "revision": run.knowledge["workflow_revision"]}
         if run.knowledge["workflow"] == "dynamic-v1":
             report["workflow"]["plan_digest"] = run.checkpoints[0]["output"]["plan_digest"]
+    if run and any(step.get("quality", {}).get("role_qa", {}).get("scope") == "node_checkpoint" for step in run.checkpoints):
+        # Free-form editor text has its own assessment. Original node findings stay on the run.
+        report["scope"] = "delivery_revision"
     doc.qa_evidence = report
     db.add(AuditEvent(tenant_id=doc.tenant_id, user_id=actor, subject_id=doc.id, event="deliverable.qa_evaluated", details=report))
     return report

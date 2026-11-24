@@ -10,6 +10,10 @@ Nếu gặp `missing migration 015` trên DB dev đã chạy v16 riêng, dừng 
 
 Trên PostgreSQL tổng hợp với cùng môi trường như job `api-tests`, chạy `python -m pytest -q tests/test_wait_diagnostics.py tests/test_wf03_budget.py`. Đặt `AMC_WF03_HOLD_EVIDENCE` thành thư mục đích để lưu hai biên ngân sách và dòng ledger thật. Mỗi lệnh `python tests/check_postgres_upgrade.py --from-v14`, `--from-v15` hoặc `--from-isolated-v16` cần một database kiểm thử trống riêng. CI cũng diễn tập lại từ v1–v13. Job `workforce-model` ghi snapshot chẩn đoán cho WF-13 và WF-03 khi chạy Qwen local. Xem các artifact `wf03-director-ledger` và `pool-model-measurements` trên chính run tương ứng với head của PR.
 
+### Kết quả ngưỡng ngân sách WF-03
+
+Ở commit tích hợp RED `8bed9cb`, chẩn đoán dùng planner cũ để tính 385 micro-USD, trong khi PostgreSQL cấp offer và ghi một khoản giữ 264 cho request của `director@2`. Trên fixture giá tổng hợp, thử ba trần 263, 264, 265 micro-USD. Trần 263 phải trả `budget_insufficient`, có 0 offer và giữ 0. Ở 264 và 265, scheduler phải cấp một offer và ledger ghi `held=264`, `spent=0`. Bài test cũng so toàn bộ JSON của request đã cấp với request do adapter đã ghim tạo ra. Các con số này mô tả fixture dùng kiểm thử.
+
 ## Review Scheduler Wait Diagnostics
 
 Schema 16 bổ sung inventory, heartbeat và snapshot chẩn đoán sau migration 015 của WF-03.

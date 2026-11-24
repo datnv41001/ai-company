@@ -4,8 +4,7 @@ import json
 from types import SimpleNamespace
 from sqlalchemy import text
 from migrations.runtime_bundle import runtime_fingerprint, APPROVAL
-from .registry_adapters import runtimes, resolve, specialist_request
-from . import dynamic_plan
+from .registry_adapters import node_request, resolve, runtimes
 from .workforce_gateway import Gateway, reserve_tokens, PROMPT_VERSION
 
 
@@ -31,14 +30,11 @@ def worker_heartbeat(conn, config):
 
 def estimate(run, node, parents, caps):
     config = Gateway(caps["provider"], caps["model"], "", caps["input_rate"], caps["output_rate"], caps["timeout"])
-    if node.template == "dynamic-v1" and node.skill == "director":
-        body = dynamic_plan.planner_body(run, config.model)
-    else:
-        earlier = {p["id"]: p["checkpoint"]["output"]["text"][:1400] for p in parents if p["id"] != "director"}
-        assignment = node.assignment or ""
-        if node.template != "dynamic-v1" and node.id != "director":
-            assignment = run.checkpoints[0]["output"]["assignments"][node.id]
-        body = specialist_request(run, config.model, node=node, predecessors=earlier, assignment=assignment)
+    earlier = {p["id"]: p["checkpoint"]["output"]["text"][:1400] for p in parents if p["id"] != "director"}
+    assignment = node.assignment or ""
+    if node.template != "dynamic-v1" and node.id != "director":
+        assignment = run.checkpoints[0]["output"]["assignments"][node.id]
+    body = node_request(run, config.model, node=node, predecessors=earlier, assignment=assignment)
     return config.price(reserve_tokens(body), body["max_tokens"])
 
 

@@ -67,10 +67,12 @@ def test_wf03_director_budget_boundary_matches_ledger(pool, margin):
                  where a.run=%s order by l.seq""",
         (rid,),
     ).fetchall()
-    node, status, envelope, reserved, event, ledger_held, spent, run_total = rows[0]
-    assert len(rows) == 1 and envelope == body
+    (record,) = rows
+    node, status, envelope, reserved, event, ledger_held, spent, run_total = record
+    assert envelope == body
     assert (node, status, reserved, event, ledger_held, spent, run_total) == ("director", "offered", hold, "hold", hold, 0, hold)
     evidence = {
+        "checkout_sha": os.getenv("GITHUB_SHA"),
         "adapter": "director@2",
         "workflow": run.knowledge["registry"]["workflow"],
         "manifest_digest": run.knowledge["registry"]["manifest_digest"],

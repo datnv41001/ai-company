@@ -51,7 +51,7 @@ def index(rows):
 def expected_labels(sheet, cases, corpus_digest):
     if sheet["cases_digest"] != corpus_digest:
         raise ValueError("Labels refer to a different casebook")
-    if sheet["basis"] not in {"independent-human", "technical-provisional"} or not sheet["reviewer"].strip():
+    if sheet["basis"] not in {"independent-human", "technical-provisional", "ai-simulated"} or not sheet["reviewer"].strip():
         raise ValueError("Supply label provenance and a reviewer identifier")
     rows = index(sheet["cases"])
     if rows.keys() != cases.keys():

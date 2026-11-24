@@ -1,0 +1,331 @@
+{
+  "cases_digest": "4a9c1b5377c194ab33d65bcf6f9081e6c04ac84af67271a94465de7541717da6",
+  "basis": "ai-simulated",
+  "reviewer": "AI-Adjudicator",
+  "cases": [
+    {
+      "id": "L01",
+      "reviewed": true,
+      "findings": [
+        {
+          "field": "body_copy",
+          "rule": "claim_evidence"
+        }
+      ],
+      "note": "Brief cho phép giới thiệu túi đi làm và câu mời xem mẫu có hành động rõ. Bằng chứng “The seam is waterproof” chỉ xác nhận đường may. Khách đọc phần thân sẽ hiểu cả chiếc túi chống nước."
+    },
+    {
+      "id": "L02",
+      "reviewed": true,
+      "findings": [
+        {
+          "field": "body_copy",
+          "rule": "brand_instruction"
+        },
+        {
+          "field": "body_copy",
+          "rule": "claim_evidence"
+        }
+      ],
+      "note": "Hãng yêu cầu bỏ từ “indestructible” khỏi nội dung gửi khách. Câu này còn khẳng định túi không thể hỏng, vượt quá thông tin trong nguồn về baga và đường may. CTA chỉ tới hướng dẫn lắp."
+    },
+    {
+      "id": "L03",
+      "reviewed": true,
+      "findings": [
+        {
+          "field": "call_to_action",
+          "rule": "cta_action"
+        }
+      ],
+      "note": "S1 xác nhận đúng dung tích 12 lít ở cả hai vị trí. Đặt lại câu thông số vào ô CTA khiến người mua không biết bước tiếp theo."
+    },
+    {
+      "id": "L04",
+      "reviewed": true,
+      "findings": [
+        {
+          "field": "meta_description",
+          "rule": "claim_evidence"
+        }
+      ],
+      "note": "Title, meta và nhu cầu tìm túi đi làm khớp trang tiếng Việt L01. Meta giới thiệu chiếc túi chống nước trong khi nguồn chỉ kiểm chứng đường may. Cụm tìm kiếm ghi nhu cầu của khách, không đưa ra lời bảo đảm cho sản phẩm."
+    },
+    {
+      "id": "L05",
+      "reviewed": true,
+      "findings": [
+        {
+          "field": "page_title",
+          "rule": "page_alignment"
+        },
+        {
+          "field": "meta_description",
+          "rule": "page_alignment"
+        },
+        {
+          "field": "search_intent",
+          "rule": "intent_alignment"
+        }
+      ],
+      "note": "L02 chỉ nói túi gắn vào baga rồi mời xem hướng dẫn ở bước tiếp theo. Title lại hứa chính trang sẽ hướng dẫn lắp. Meta mô tả bài so sánh thiết bị pha espresso và truy vấn tìm máy xay, đều dẫn tới nhu cầu ngoài L02."
+    },
+    {
+      "id": "L06",
+      "reviewed": true,
+      "findings": [
+        {
+          "field": "page_title",
+          "rule": "metadata_length"
+        },
+        {
+          "field": "meta_description",
+          "rule": "metadata_length"
+        },
+        {
+          "field": "meta_description",
+          "rule": "duplicate_metadata"
+        }
+      ],
+      "note": "Mỗi trường metadata có 7 ký tự, dưới mức tối thiểu tương ứng 12 và 30. Meta chỉ chép lại tên loại túi, trong khi L03 có thông tin dung tích để bổ sung. Từ khóa phù hợp người đi làm."
+    },
+    {
+      "id": "C01",
+      "reviewed": true,
+      "findings": [],
+      "note": "Lịch cuối tuần và nhóm mới học khớp brief. Bàn xoay và người hướng dẫn có trong Brand Kit. “Giữ chỗ” là hành động đăng ký dễ hiểu."
+    },
+    {
+      "id": "C02",
+      "reviewed": true,
+      "findings": [],
+      "note": "“Không cam kết” chi phối cả cụm “hiệu quả 100%”. Người đọc không được hứa một tỷ lệ thành công. Nội dung lớp cuối tuần và lời mời đăng ký vẫn đúng brief."
+    },
+    {
+      "id": "C03",
+      "reviewed": true,
+      "findings": [
+        {
+          "field": "headline",
+          "rule": "brand_instruction"
+        }
+      ],
+      "note": "Quy định tránh “thần kỳ” áp dụng trực tiếp cho tiêu đề. Phần thân nêu đúng việc người mới học với người hướng dẫn, còn CTA chỉ rõ việc đọc lịch."
+    },
+    {
+      "id": "C04",
+      "reviewed": true,
+      "findings": [
+        {
+          "field": "meta_description",
+          "rule": "page_alignment"
+        },
+        {
+          "field": "meta_description",
+          "rule": "claim_evidence"
+        }
+      ],
+      "note": "C01 chỉ giới thiệu việc làm quen với bàn xoay. Meta khiến học viên kỳ vọng buổi đó có bài làm chiếc bát đầu tiên. Brand Kit đã dẫn xác nhận người hướng dẫn và bàn xoay nhưng chưa xác nhận bài tập hay thành phẩm này. Title và truy vấn đều phù hợp lớp nhập môn."
+    },
+    {
+      "id": "C05",
+      "reviewed": true,
+      "findings": [
+        {
+          "field": "page_title",
+          "rule": "page_alignment"
+        },
+        {
+          "field": "meta_description",
+          "rule": "page_alignment"
+        },
+        {
+          "field": "search_intent",
+          "rule": "intent_alignment"
+        },
+        {
+          "field": "page_title",
+          "rule": "claim_evidence"
+        },
+        {
+          "field": "meta_description",
+          "rule": "claim_evidence"
+        }
+      ],
+      "note": "C01 mời đăng ký học gốm. Cả title, meta lẫn truy vấn lại hướng tới giao dịch mua máy công nghiệp. Bổ sung hai cặp cả hai phiếu bỏ sót. Chọn page_title/claim_evidence vì “đã qua sử dụng” xác quyết tình trạng máy. Chọn meta_description/claim_evidence vì “máy công nghiệp thanh lý” thông báo một nguồn hàng cụ thể có thể mua. Brand Kit chỉ mô tả bàn xoay chung của lớp và không xác nhận hai điều đó. Truy vấn chỉ thể hiện ý muốn của người mua."
+    },
+    {
+      "id": "C06",
+      "reviewed": true,
+      "findings": [
+        {
+          "field": "meta_description",
+          "rule": "page_alignment"
+        },
+        {
+          "field": "meta_description",
+          "rule": "claim_evidence"
+        }
+      ],
+      "note": "C03 giới thiệu trải nghiệm học gốm và lịch học. Meta dành toàn bộ câu cho độ phổ biến trên công cụ tìm kiếm. Brand Kit không có dữ liệu cho con số 900 lượt mỗi ngày."
+    },
+    {
+      "id": "B01",
+      "reviewed": true,
+      "findings": [],
+      "note": "Brand Kit xác nhận bộ lọc thép dùng lại và S1 nêu cách rửa sau khi pha. Lời mời so sánh hình dáng phù hợp với mục tiêu giúp người pha ở nhà chọn bộ lọc."
+    },
+    {
+      "id": "B02",
+      "reviewed": true,
+      "findings": [
+        {
+          "field": "headline",
+          "rule": "claim_evidence"
+        },
+        {
+          "field": "body_copy",
+          "rule": "quote_context"
+        },
+        {
+          "field": "call_to_action",
+          "rule": "claim_evidence"
+        }
+      ],
+      "note": "Giữ headline/claim_evidence của Campaign vì “reusable” là thuộc tính sử dụng nhiều lần và S2 không xác nhận. Giữ call_to_action/claim_evidence của Campaign vì “steel” xác định chất liệu và S2 cũng không xác nhận. Brief nêu đề nghị dùng lại và Brand Kit có cả hai thuộc tính, nhưng node chỉ dẫn S2. Giữ body_copy/quote_context mà cả hai phiếu đã chọn vì S2 có nguyên câu khen và nói rõ đó là sở thích của một khách đối với hạt cà phê. Đặt dưới tiêu đề bộ lọc đã làm đổi đối tượng được khen. CTA vẫn nêu hành động rõ."
+    },
+    {
+      "id": "B03",
+      "reviewed": true,
+      "findings": [
+        {
+          "field": "body_copy",
+          "rule": "brief_alignment"
+        },
+        {
+          "field": "body_copy",
+          "rule": "audience_alignment"
+        },
+        {
+          "field": "body_copy",
+          "rule": "offer_alignment"
+        },
+        {
+          "field": "body_copy",
+          "rule": "brand_alignment"
+        },
+        {
+          "field": "body_copy",
+          "rule": "claim_evidence"
+        },
+        {
+          "field": "headline",
+          "rule": "claim_evidence"
+        }
+      ],
+      "note": "Bài hướng fan nhạc tới vé lễ hội thay cho việc giúp người pha tại nhà chọn bộ lọc. Cả mục tiêu, người đọc, đề nghị và sản phẩm mô tả trong Brand Kit đều lệch. Phần thân giới thiệu việc giữ ghế tại lễ hội jazz ngoài trời mà nguồn không xác nhận. Bổ sung headline/claim_evidence cả hai phiếu bỏ sót vì “Summer tickets” còn gắn vé với mùa hè. Đó là thông tin thời vụ có thể kiểm tra riêng và không xuất hiện ở nguồn. “Book a seat” vẫn rõ hành động."
+    },
+    {
+      "id": "B04",
+      "reviewed": true,
+      "findings": [
+        {
+          "field": "meta_description",
+          "rule": "duplicate_metadata"
+        }
+      ],
+      "note": "Hai trường đều có 32 ký tự, đủ độ dài và đúng chủ đề B01. Meta lặp nguyên văn title nên người tìm không biết thêm chi tiết nào về cách dùng hoặc vệ sinh bộ lọc."
+    },
+    {
+      "id": "B05",
+      "reviewed": true,
+      "findings": [
+        {
+          "field": "meta_description",
+          "rule": "page_alignment"
+        }
+      ],
+      "note": "B01 chỉ cách rửa bộ lọc sau khi pha, phù hợp title và ý định tìm kiếm về vệ sinh. Meta chuyển sang khả năng giữ cặn mà B01 không đề cập. Cấu trúc “no guarantee of 100%” phủ định cam kết về mức lọc, nên không phát sinh nhãn bằng chứng cho hiệu suất 100%."
+    },
+    {
+      "id": "B06",
+      "reviewed": true,
+      "findings": [
+        {
+          "field": "page_title",
+          "rule": "page_alignment"
+        }
+      ],
+      "note": "“Cách pha cà phê” hứa một bài hướng dẫn pha trong khi B01 giới thiệu bộ lọc và cách rửa. Nguồn có nêu bộ lọc bằng thép dùng với phễu hình nón. Meta và truy vấn tiếng Việt diễn đạt đúng nhu cầu dùng bộ lọc có thể rửa và tái sử dụng."
+    },
+    {
+      "id": "G01",
+      "reviewed": true,
+      "findings": [],
+      "note": "Tên tour, buổi tối và nhóm gia đình theo đúng đề nghị trong brief. S1 cho phép trẻ chạm bản sao thấu kính và phần thân giữ đúng hiện vật đó. Người đọc có thể thực hiện CTA đặt chuyến."
+    },
+    {
+      "id": "G02",
+      "reviewed": true,
+      "findings": [
+        {
+          "field": "body_copy",
+          "rule": "claim_evidence"
+        }
+      ],
+      "note": "S1 phân biệt hai hiện vật. Khách được chạm bản sao còn bản gốc nằm sau kính. Lời mời chạm bản gốc vì thế trái với nguồn đã dẫn. Brand Kit mô tả tuyến tham quan nhưng không quy định việc chạm hiện vật."
+    },
+    {
+      "id": "G03",
+      "reviewed": true,
+      "findings": [
+        {
+          "field": "body_copy",
+          "rule": "brief_alignment"
+        },
+        {
+          "field": "body_copy",
+          "rule": "audience_alignment"
+        },
+        {
+          "field": "body_copy",
+          "rule": "claim_evidence"
+        }
+      ],
+      "note": "Bản viết vẫn mời đặt tour hải đăng buổi tối, nhưng đã đổi đối tượng sang quản lý thu mua và đổi mục đích tham quan thành bàn hợp đồng. Nguồn chỉ xác nhận gia đình thăm phòng trưng bày với hướng dẫn viên. Việc có chương trình thảo luận hợp đồng là chi tiết cần dẫn chứng."
+    },
+    {
+      "id": "G04",
+      "reviewed": true,
+      "findings": [
+        {
+          "field": "meta_description",
+          "rule": "claim_evidence"
+        }
+      ],
+      "note": "Giữ meta_description/claim_evidence của Editorial. Campaign chấp nhận “after dusk” như cách gọi buổi tối, nhưng một tour buổi tối có thể bắt đầu trước khi trời tối hẳn. Meta khẳng định mốc sau chạng vạng có thể ảnh hưởng giờ đến của gia đình. Brand Kit chỉ xác nhận nơi tham quan và người hướng dẫn. Chủ đề vẫn đúng G01."
+    },
+    {
+      "id": "G05",
+      "reviewed": true,
+      "findings": [
+        {
+          "field": "meta_description",
+          "rule": "claim_evidence"
+        }
+      ],
+      "note": "S2 nói một người thích phòng trưng bày phía dưới và không có khảo sát xếp hạng. Meta lại xếp hải đăng đứng đầu thị trấn cho gia đình. S2 không có câu khẳng định này để xét như một trích dẫn. Title “Night at the lighthouse gallery” gọi tên trải nghiệm tối theo nghĩa thông thường, không hứa giờ đón khách cụ thể."
+    },
+    {
+      "id": "G06",
+      "reviewed": true,
+      "findings": [
+        {
+          "field": "search_intent",
+          "rule": "intent_alignment"
+        }
+      ],
+      "note": "Title và meta giới thiệu tour gia đình trên G01. Meta thêm địa điểm phòng trưng bày. Người tìm nhà để mua gần hải đăng có mục đích giao dịch bất động sản nên chuyến tham quan không đáp ứng truy vấn."
+    }
+  ]
+}

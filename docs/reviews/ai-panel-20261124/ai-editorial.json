@@ -1,0 +1,311 @@
+{
+  "cases_digest": "4a9c1b5377c194ab33d65bcf6f9081e6c04ac84af67271a94465de7541717da6",
+  "basis": "ai-simulated",
+  "reviewer": "AI-Editorial",
+  "cases": [
+    {
+      "id": "L01",
+      "reviewed": true,
+      "findings": [
+        {
+          "field": "body_copy",
+          "rule": "claim_evidence"
+        }
+      ],
+      "note": "Cách gọi người đạp xe đến văn phòng và CTA xem mẫu đều phù hợp. Brief gọi đây là túi chống nước, nhưng nguồn mà node dẫn chỉ xác nhận đường may chống nước. Cần căn cứ cho thuộc tính của cả túi."
+    },
+    {
+      "id": "L02",
+      "reviewed": true,
+      "findings": [
+        {
+          "field": "body_copy",
+          "rule": "brand_instruction"
+        },
+        {
+          "field": "body_copy",
+          "rule": "claim_evidence"
+        }
+      ],
+      "note": "Brand Kit yêu cầu bỏ từ “indestructible”. Cách mô tả túi không thể hỏng cũng là một khẳng định tuyệt đối, trong khi nguồn chỉ xác nhận cách gắn túi và đặc tính của đường may."
+    },
+    {
+      "id": "L03",
+      "reviewed": true,
+      "findings": [
+        {
+          "field": "call_to_action",
+          "rule": "cta_action"
+        }
+      ],
+      "note": "S1 xác nhận sức chứa 12 lít. CTA lặp nguyên câu mô tả dung tích và không cho người đọc biết có thể làm gì tiếp theo."
+    },
+    {
+      "id": "L04",
+      "reviewed": true,
+      "findings": [
+        {
+          "field": "meta_description",
+          "rule": "claim_evidence"
+        }
+      ],
+      "note": "Cách diễn đạt tiếng Anh giữ đúng đối tượng và sản phẩm của L01. Meta tiếp tục gọi cả túi là “waterproof”, trong khi Brand Kit được dẫn chỉ xác nhận khả năng chống nước của đường may."
+    },
+    {
+      "id": "L05",
+      "reviewed": true,
+      "findings": [
+        {
+          "field": "page_title",
+          "rule": "page_alignment"
+        },
+        {
+          "field": "meta_description",
+          "rule": "page_alignment"
+        },
+        {
+          "field": "search_intent",
+          "rule": "intent_alignment"
+        }
+      ],
+      "note": "L02 chỉ giới thiệu túi, cho biết túi gắn vào baga rồi mời người đọc xem hướng dẫn. Title khiến người tìm tưởng chính trang này có hướng dẫn lắp. Meta và truy vấn lại nói về máy espresso và máy xay."
+    },
+    {
+      "id": "L06",
+      "reviewed": true,
+      "findings": [
+        {
+          "field": "page_title",
+          "rule": "metadata_length"
+        },
+        {
+          "field": "meta_description",
+          "rule": "metadata_length"
+        },
+        {
+          "field": "meta_description",
+          "rule": "duplicate_metadata"
+        }
+      ],
+      "note": "Cả title lẫn meta chỉ có 7 ký tự và cùng ghi “Pannier”. Chủ đề và truy vấn vẫn khớp L03, nhưng meta không bổ sung chi tiết nào dù trang có nêu dung tích."
+    },
+    {
+      "id": "C01",
+      "reviewed": true,
+      "findings": [],
+      "note": "Tiêu đề gợi việc xoay đất cuối tuần. Phần thân gọi đúng người mới, mô tả đúng bàn xoay và người hướng dẫn. CTA giữ chỗ cho biết ngay hành động cần thực hiện."
+    },
+    {
+      "id": "C02",
+      "reviewed": true,
+      "findings": [],
+      "note": "Lớp cuối tuần, đối tượng mới học và CTA đăng ký đều đúng brief. Cụm “không cam kết” phủ định rõ lời bảo đảm hiệu quả 100%."
+    },
+    {
+      "id": "C03",
+      "reviewed": true,
+      "findings": [
+        {
+          "field": "headline",
+          "rule": "brand_instruction"
+        }
+      ],
+      "note": "“Thần kỳ” xuất hiện ngay trong tiêu đề và là từ thương hiệu yêu cầu tránh. Phần thân và CTA đọc lịch học vẫn phù hợp với lớp cho người mới."
+    },
+    {
+      "id": "C04",
+      "reviewed": true,
+      "findings": [
+        {
+          "field": "meta_description",
+          "rule": "page_alignment"
+        },
+        {
+          "field": "meta_description",
+          "rule": "claim_evidence"
+        }
+      ],
+      "note": "Title và truy vấn diễn đạt đúng lớp nhập môn. Meta lại hứa người học sẽ tạo được chiếc bát đầu tiên. C01 chỉ nói làm quen với bàn xoay, còn nguồn dẫn không nêu bài tập làm bát hay thành phẩm cụ thể."
+    },
+    {
+      "id": "C05",
+      "reviewed": true,
+      "findings": [
+        {
+          "field": "page_title",
+          "rule": "page_alignment"
+        },
+        {
+          "field": "meta_description",
+          "rule": "page_alignment"
+        },
+        {
+          "field": "search_intent",
+          "rule": "intent_alignment"
+        }
+      ],
+      "note": "“Bàn xoay” trên C01 là dụng cụ học làm gốm. Cả title, meta lẫn truy vấn đều chuyển sang mua máy công nghiệp thanh lý cho nhà xưởng."
+    },
+    {
+      "id": "C06",
+      "reviewed": true,
+      "findings": [
+        {
+          "field": "meta_description",
+          "rule": "claim_evidence"
+        },
+        {
+          "field": "meta_description",
+          "rule": "page_alignment"
+        }
+      ],
+      "note": "Meta chỉ nói về lượng tìm kiếm. Trang C03 giới thiệu lớp và dẫn đến lịch học, còn Brand Kit không có số liệu để xác nhận 900 lượt tìm kiếm mỗi ngày."
+    },
+    {
+      "id": "B01",
+      "reviewed": true,
+      "findings": [],
+      "note": "Tiêu đề nhắm đúng người pha cà phê tại nhà. Brand Kit xác nhận bộ lọc thép, S1 hướng dẫn rửa sau khi pha và CTA so sánh hình dáng giúp người đọc chọn bộ lọc."
+    },
+    {
+      "id": "B02",
+      "reviewed": true,
+      "findings": [
+        {
+          "field": "body_copy",
+          "rule": "quote_context"
+        }
+      ],
+      "note": "“The best coffee” xuất hiện nguyên văn trong S2 nhưng là sở thích cá nhân của khách khi nói về hạt cà phê của quán. Đặt riêng câu này dưới tiêu đề bộ lọc làm người đọc dễ gán lời khen cho bộ lọc."
+    },
+    {
+      "id": "B03",
+      "reviewed": true,
+      "findings": [
+        {
+          "field": "body_copy",
+          "rule": "brief_alignment"
+        },
+        {
+          "field": "body_copy",
+          "rule": "audience_alignment"
+        },
+        {
+          "field": "body_copy",
+          "rule": "offer_alignment"
+        },
+        {
+          "field": "body_copy",
+          "rule": "brand_alignment"
+        },
+        {
+          "field": "body_copy",
+          "rule": "claim_evidence"
+        }
+      ],
+      "note": "Bài đổi từ chọn bộ lọc cà phê tại nhà sang đặt vé cho người hâm mộ nhạc jazz, lệch mục tiêu, đối tượng, sản phẩm và mô tả trong Brand Kit. Lời khẳng định có thể giữ ghế tại lễ hội cũng thiếu căn cứ từ nguồn đã dẫn. “Book a seat” là hành động rõ."
+    },
+    {
+      "id": "B04",
+      "reviewed": true,
+      "findings": [
+        {
+          "field": "meta_description",
+          "rule": "duplicate_metadata"
+        }
+      ],
+      "note": "Title và meta đều dài 32 ký tự, nằm trong khoảng cho phép, nhưng meta chép lại toàn bộ title. Sản phẩm, người dùng và truy vấn đều khớp B01."
+    },
+    {
+      "id": "B05",
+      "reviewed": true,
+      "findings": [
+        {
+          "field": "meta_description",
+          "rule": "page_alignment"
+        }
+      ],
+      "note": "B01 có nói đến rửa bộ lọc nên title và nhu cầu tìm hướng dẫn vệ sinh có cơ sở. Meta chuyển sang khả năng lọc cặn mà trang không đề cập. Câu có phủ định rõ, không hứa lọc sạch 100%."
+    },
+    {
+      "id": "B06",
+      "reviewed": true,
+      "findings": [
+        {
+          "field": "page_title",
+          "rule": "page_alignment"
+        }
+      ],
+      "note": "Meta và truy vấn tiếng Việt khớp bộ lọc dùng lại và cách rửa trong B01. Title hứa chỉ cách pha cà phê, nhưng trang chỉ giới thiệu bộ lọc, cách rửa và hành động so sánh kiểu dáng."
+    },
+    {
+      "id": "G01",
+      "reviewed": true,
+      "findings": [],
+      "note": "Nội dung giới thiệu đúng chuyến tham quan buổi tối cho gia đình. S1 cho phép trẻ chạm bản sao thấu kính và câu chữ giữ đúng chi tiết bản sao. CTA đặt chuyến rõ ràng."
+    },
+    {
+      "id": "G02",
+      "reviewed": true,
+      "findings": [
+        {
+          "field": "body_copy",
+          "rule": "claim_evidence"
+        }
+      ],
+      "note": "S1 nói khách có thể chạm bản sao, còn thấu kính gốc nằm sau kính. Câu khẳng định được chạm hiện vật gốc trái trực tiếp với nguồn, dù địa điểm và chuyến tham quan đúng brief."
+    },
+    {
+      "id": "G03",
+      "reviewed": true,
+      "findings": [
+        {
+          "field": "body_copy",
+          "rule": "audience_alignment"
+        },
+        {
+          "field": "body_copy",
+          "rule": "brief_alignment"
+        },
+        {
+          "field": "body_copy",
+          "rule": "claim_evidence"
+        }
+      ],
+      "note": "Chuyến tham quan buổi tối vẫn là sản phẩm được nêu, nhưng bài nhắm đến quản lý thu mua và biến mục đích buổi tham quan thành bàn hợp đồng. Nguồn chỉ mô tả gia đình thăm phòng trưng bày với hướng dẫn viên."
+    },
+    {
+      "id": "G04",
+      "reviewed": true,
+      "findings": [
+        {
+          "field": "meta_description",
+          "rule": "claim_evidence"
+        }
+      ],
+      "note": "Title, truy vấn và việc có hướng dẫn viên phù hợp với G01 và Brand Kit. “After dusk” xác định chuyến đi diễn ra sau khi trời tối, chi tiết hẹp hơn “evening” và có thể ảnh hưởng kế hoạch của gia đình. Nguồn dẫn không xác nhận mốc ấy."
+    },
+    {
+      "id": "G05",
+      "reviewed": true,
+      "findings": [
+        {
+          "field": "meta_description",
+          "rule": "claim_evidence"
+        }
+      ],
+      "note": "S2 chỉ ghi một khách thích phòng trưng bày phía dưới và xác nhận chưa có khảo sát xếp hạng. Meta tự nâng thành xếp hạng tốt nhất thị trấn cho gia đình, không phải câu trích từ S2."
+    },
+    {
+      "id": "G06",
+      "reviewed": true,
+      "findings": [
+        {
+          "field": "search_intent",
+          "rule": "intent_alignment"
+        }
+      ],
+      "note": "Title và meta mô tả đúng chuyến tham quan hải đăng của G01. Người tìm bất động sản gia đình gần hải đăng đang tìm nhà để mua, nên hành động đặt tour không đáp ứng nhu cầu đó."
+    }
+  ]
+}

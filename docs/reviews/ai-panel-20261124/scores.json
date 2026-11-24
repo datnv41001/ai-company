@@ -1,0 +1,2026 @@
+{
+  "basis": "ai-simulated",
+  "cases_digest": "4a9c1b5377c194ab33d65bcf6f9081e6c04ac84af67271a94465de7541717da6",
+  "manifest_digest": "f47ddd7984fc1aa9d4fe3ba325ce917b49e8cfa4d504debd1ad8d7bb58003c9a",
+  "runtime_fingerprint": "d300bafe3f36ed9948565d206899786d0b0e74d1273ad01435ca7907649d60ef",
+  "ballot_digests": {
+    "ai-editorial": "72aad0b2c0a90efde1a3d7447e75c3f3220a25f04342f6b2e31629bf45c15f9b",
+    "ai-campaign": "11648d2eaf672688930b8c8838e306b2232de238454268f59b248d00e41eba7f",
+    "ai-consensus": "b1e9f5520cc9e925174cad00ed3273dc6b4eb47b4370c5d6be8b46a312e629a8"
+  },
+  "panel_ballots": 216,
+  "panel_model": {
+    "checkpoint": "qwen2.5-0.5b-instruct",
+    "gguf_sha256": "74a4da8c9fdbcd15bd1f6d01d621410d31c6fc00986f5eb687824e7b93d7a9db",
+    "llama_cpp_build": "b12649-1f8baae28",
+    "model_alias": "amc-local",
+    "quantization": "Q4_K - Medium"
+  },
+  "specialists_agreed_cases": 22,
+  "qa_against_adjudication": {
+    "tp": 18,
+    "fp": 15,
+    "fn": 22,
+    "precision": 0.5455,
+    "recall": 0.45
+  },
+  "qa_against_each_specialist": {
+    "ai-editorial": {
+      "tp": 18,
+      "fp": 15,
+      "fn": 17,
+      "precision": 0.5455,
+      "recall": 0.5143
+    },
+    "ai-campaign": {
+      "tp": 18,
+      "fp": 15,
+      "fn": 18,
+      "precision": 0.5455,
+      "recall": 0.5
+    }
+  },
+  "qa_by_role": {
+    "content": {
+      "tp": 8,
+      "fp": 9,
+      "fn": 10,
+      "precision": 0.4706,
+      "recall": 0.4444
+    },
+    "seo": {
+      "tp": 10,
+      "fp": 6,
+      "fn": 12,
+      "precision": 0.625,
+      "recall": 0.4545
+    }
+  },
+  "exact_qa_cases": 5,
+  "cases_with_reference_findings": 20,
+  "cases_with_any_correct_warning": 12,
+  "panel_majority_against_adjudication": {
+    "tp": 0,
+    "fp": 15,
+    "fn": 40,
+    "precision": 0.0,
+    "recall": 0.0
+  },
+  "panel_by_discipline_against_adjudication": {
+    "Audience": {
+      "tp": 2,
+      "fp": 24,
+      "fn": 38,
+      "precision": 0.0769,
+      "recall": 0.05
+    },
+    "Brand": {
+      "tp": 11,
+      "fp": 33,
+      "fn": 29,
+      "precision": 0.25,
+      "recall": 0.275
+    },
+    "Campaign": {
+      "tp": 6,
+      "fp": 77,
+      "fn": 34,
+      "precision": 0.0723,
+      "recall": 0.15
+    },
+    "Conversion": {
+      "tp": 2,
+      "fp": 52,
+      "fn": 38,
+      "precision": 0.037,
+      "recall": 0.05
+    },
+    "Editorial": {
+      "tp": 4,
+      "fp": 53,
+      "fn": 36,
+      "precision": 0.0702,
+      "recall": 0.1
+    },
+    "Evidence": {
+      "tp": 12,
+      "fp": 67,
+      "fn": 28,
+      "precision": 0.1519,
+      "recall": 0.3
+    },
+    "Localization": {
+      "tp": 4,
+      "fp": 59,
+      "fn": 36,
+      "precision": 0.0635,
+      "recall": 0.1
+    },
+    "Product": {
+      "tp": 7,
+      "fp": 58,
+      "fn": 33,
+      "precision": 0.1077,
+      "recall": 0.175
+    },
+    "Search": {
+      "tp": 12,
+      "fp": 46,
+      "fn": 28,
+      "precision": 0.2069,
+      "recall": 0.3
+    }
+  },
+  "panel_nonempty_ballots": 98,
+  "panel_selecting_every_allowed_pair": 5,
+  "panel_distinct_personas": 216,
+  "panel_distinct_models": 1,
+  "panel_majority_total_findings": 15,
+  "cases": {
+    "L01": {
+      "consensus": [
+        [
+          "body_copy",
+          "claim_evidence"
+        ]
+      ],
+      "qa": [
+        [
+          "body_copy",
+          "audience_alignment"
+        ],
+        [
+          "body_copy",
+          "brand_alignment"
+        ],
+        [
+          "body_copy",
+          "brief_alignment"
+        ],
+        [
+          "body_copy",
+          "offer_alignment"
+        ]
+      ],
+      "qa_extra": [
+        [
+          "body_copy",
+          "audience_alignment"
+        ],
+        [
+          "body_copy",
+          "brand_alignment"
+        ],
+        [
+          "body_copy",
+          "brief_alignment"
+        ],
+        [
+          "body_copy",
+          "offer_alignment"
+        ]
+      ],
+      "qa_missed": [
+        [
+          "body_copy",
+          "claim_evidence"
+        ]
+      ],
+      "local_votes": [
+        {
+          "field": "body_copy",
+          "rule": "audience_alignment",
+          "votes": 2
+        },
+        {
+          "field": "body_copy",
+          "rule": "brand_alignment",
+          "votes": 1
+        },
+        {
+          "field": "body_copy",
+          "rule": "brand_instruction",
+          "votes": 2
+        },
+        {
+          "field": "body_copy",
+          "rule": "brief_alignment",
+          "votes": 2
+        },
+        {
+          "field": "body_copy",
+          "rule": "claim_evidence",
+          "votes": 4
+        },
+        {
+          "field": "body_copy",
+          "rule": "offer_alignment",
+          "votes": 3
+        },
+        {
+          "field": "body_copy",
+          "rule": "quote_context",
+          "votes": 3
+        },
+        {
+          "field": "call_to_action",
+          "rule": "brand_instruction",
+          "votes": 1
+        },
+        {
+          "field": "call_to_action",
+          "rule": "claim_evidence",
+          "votes": 2
+        },
+        {
+          "field": "call_to_action",
+          "rule": "cta_action",
+          "votes": 4
+        },
+        {
+          "field": "call_to_action",
+          "rule": "quote_context",
+          "votes": 3
+        },
+        {
+          "field": "headline",
+          "rule": "brand_instruction",
+          "votes": 4
+        },
+        {
+          "field": "headline",
+          "rule": "claim_evidence",
+          "votes": 5
+        },
+        {
+          "field": "headline",
+          "rule": "quote_context",
+          "votes": 5
+        }
+      ],
+      "distinct_local_ballots": 7,
+      "specialists_agreed": true
+    },
+    "L02": {
+      "consensus": [
+        [
+          "body_copy",
+          "brand_instruction"
+        ],
+        [
+          "body_copy",
+          "claim_evidence"
+        ]
+      ],
+      "qa": [],
+      "qa_extra": [],
+      "qa_missed": [
+        [
+          "body_copy",
+          "brand_instruction"
+        ],
+        [
+          "body_copy",
+          "claim_evidence"
+        ]
+      ],
+      "local_votes": [
+        {
+          "field": "body_copy",
+          "rule": "audience_alignment",
+          "votes": 3
+        },
+        {
+          "field": "body_copy",
+          "rule": "brand_alignment",
+          "votes": 1
+        },
+        {
+          "field": "body_copy",
+          "rule": "brand_instruction",
+          "votes": 1
+        },
+        {
+          "field": "body_copy",
+          "rule": "brief_alignment",
+          "votes": 1
+        },
+        {
+          "field": "body_copy",
+          "rule": "claim_evidence",
+          "votes": 3
+        },
+        {
+          "field": "body_copy",
+          "rule": "offer_alignment",
+          "votes": 4
+        },
+        {
+          "field": "body_copy",
+          "rule": "quote_context",
+          "votes": 4
+        },
+        {
+          "field": "call_to_action",
+          "rule": "brand_instruction",
+          "votes": 2
+        },
+        {
+          "field": "call_to_action",
+          "rule": "cta_action",
+          "votes": 3
+        },
+        {
+          "field": "call_to_action",
+          "rule": "quote_context",
+          "votes": 3
+        },
+        {
+          "field": "headline",
+          "rule": "brand_instruction",
+          "votes": 4
+        },
+        {
+          "field": "headline",
+          "rule": "claim_evidence",
+          "votes": 4
+        },
+        {
+          "field": "headline",
+          "rule": "quote_context",
+          "votes": 4
+        }
+      ],
+      "distinct_local_ballots": 8,
+      "specialists_agreed": true
+    },
+    "L03": {
+      "consensus": [
+        [
+          "call_to_action",
+          "cta_action"
+        ]
+      ],
+      "qa": [
+        [
+          "body_copy",
+          "quote_context"
+        ],
+        [
+          "call_to_action",
+          "cta_action"
+        ],
+        [
+          "call_to_action",
+          "quote_context"
+        ]
+      ],
+      "qa_extra": [
+        [
+          "body_copy",
+          "quote_context"
+        ],
+        [
+          "call_to_action",
+          "quote_context"
+        ]
+      ],
+      "qa_missed": [],
+      "local_votes": [
+        {
+          "field": "body_copy",
+          "rule": "brief_alignment",
+          "votes": 1
+        },
+        {
+          "field": "body_copy",
+          "rule": "claim_evidence",
+          "votes": 1
+        },
+        {
+          "field": "body_copy",
+          "rule": "offer_alignment",
+          "votes": 1
+        },
+        {
+          "field": "body_copy",
+          "rule": "quote_context",
+          "votes": 1
+        },
+        {
+          "field": "call_to_action",
+          "rule": "brand_instruction",
+          "votes": 1
+        },
+        {
+          "field": "call_to_action",
+          "rule": "cta_action",
+          "votes": 1
+        },
+        {
+          "field": "call_to_action",
+          "rule": "quote_context",
+          "votes": 2
+        },
+        {
+          "field": "headline",
+          "rule": "brand_instruction",
+          "votes": 3
+        },
+        {
+          "field": "headline",
+          "rule": "claim_evidence",
+          "votes": 3
+        },
+        {
+          "field": "headline",
+          "rule": "quote_context",
+          "votes": 4
+        }
+      ],
+      "distinct_local_ballots": 4,
+      "specialists_agreed": true
+    },
+    "L04": {
+      "consensus": [
+        [
+          "meta_description",
+          "claim_evidence"
+        ]
+      ],
+      "qa": [
+        [
+          "meta_description",
+          "page_alignment"
+        ],
+        [
+          "page_title",
+          "page_alignment"
+        ],
+        [
+          "search_intent",
+          "intent_alignment"
+        ]
+      ],
+      "qa_extra": [
+        [
+          "meta_description",
+          "page_alignment"
+        ],
+        [
+          "page_title",
+          "page_alignment"
+        ],
+        [
+          "search_intent",
+          "intent_alignment"
+        ]
+      ],
+      "qa_missed": [
+        [
+          "meta_description",
+          "claim_evidence"
+        ]
+      ],
+      "local_votes": [
+        {
+          "field": "meta_description",
+          "rule": "claim_evidence",
+          "votes": 1
+        },
+        {
+          "field": "meta_description",
+          "rule": "duplicate_metadata",
+          "votes": 1
+        },
+        {
+          "field": "page_title",
+          "rule": "claim_evidence",
+          "votes": 4
+        },
+        {
+          "field": "page_title",
+          "rule": "metadata_length",
+          "votes": 1
+        },
+        {
+          "field": "page_title",
+          "rule": "page_alignment",
+          "votes": 2
+        },
+        {
+          "field": "page_title",
+          "rule": "quote_context",
+          "votes": 2
+        },
+        {
+          "field": "search_intent",
+          "rule": "claim_evidence",
+          "votes": 3
+        },
+        {
+          "field": "search_intent",
+          "rule": "intent_alignment",
+          "votes": 3
+        },
+        {
+          "field": "search_intent",
+          "rule": "quote_context",
+          "votes": 3
+        }
+      ],
+      "distinct_local_ballots": 5,
+      "specialists_agreed": true
+    },
+    "L05": {
+      "consensus": [
+        [
+          "meta_description",
+          "page_alignment"
+        ],
+        [
+          "page_title",
+          "page_alignment"
+        ],
+        [
+          "search_intent",
+          "intent_alignment"
+        ]
+      ],
+      "qa": [
+        [
+          "meta_description",
+          "page_alignment"
+        ],
+        [
+          "search_intent",
+          "intent_alignment"
+        ]
+      ],
+      "qa_extra": [],
+      "qa_missed": [
+        [
+          "page_title",
+          "page_alignment"
+        ]
+      ],
+      "local_votes": [
+        {
+          "field": "meta_description",
+          "rule": "claim_evidence",
+          "votes": 1
+        },
+        {
+          "field": "page_title",
+          "rule": "claim_evidence",
+          "votes": 3
+        },
+        {
+          "field": "page_title",
+          "rule": "metadata_length",
+          "votes": 2
+        },
+        {
+          "field": "page_title",
+          "rule": "page_alignment",
+          "votes": 1
+        },
+        {
+          "field": "page_title",
+          "rule": "quote_context",
+          "votes": 3
+        },
+        {
+          "field": "search_intent",
+          "rule": "claim_evidence",
+          "votes": 4
+        },
+        {
+          "field": "search_intent",
+          "rule": "intent_alignment",
+          "votes": 2
+        },
+        {
+          "field": "search_intent",
+          "rule": "quote_context",
+          "votes": 2
+        }
+      ],
+      "distinct_local_ballots": 5,
+      "specialists_agreed": true
+    },
+    "L06": {
+      "consensus": [
+        [
+          "meta_description",
+          "duplicate_metadata"
+        ],
+        [
+          "meta_description",
+          "metadata_length"
+        ],
+        [
+          "page_title",
+          "metadata_length"
+        ]
+      ],
+      "qa": [
+        [
+          "meta_description",
+          "duplicate_metadata"
+        ],
+        [
+          "meta_description",
+          "metadata_length"
+        ],
+        [
+          "page_title",
+          "metadata_length"
+        ]
+      ],
+      "qa_extra": [],
+      "qa_missed": [],
+      "local_votes": [
+        {
+          "field": "page_title",
+          "rule": "claim_evidence",
+          "votes": 6
+        },
+        {
+          "field": "page_title",
+          "rule": "metadata_length",
+          "votes": 4
+        },
+        {
+          "field": "page_title",
+          "rule": "page_alignment",
+          "votes": 4
+        },
+        {
+          "field": "page_title",
+          "rule": "quote_context",
+          "votes": 6
+        },
+        {
+          "field": "search_intent",
+          "rule": "claim_evidence",
+          "votes": 7
+        },
+        {
+          "field": "search_intent",
+          "rule": "intent_alignment",
+          "votes": 7
+        },
+        {
+          "field": "search_intent",
+          "rule": "quote_context",
+          "votes": 7
+        }
+      ],
+      "distinct_local_ballots": 6,
+      "specialists_agreed": true
+    },
+    "C01": {
+      "consensus": [],
+      "qa": [
+        [
+          "call_to_action",
+          "cta_action"
+        ]
+      ],
+      "qa_extra": [
+        [
+          "call_to_action",
+          "cta_action"
+        ]
+      ],
+      "qa_missed": [],
+      "local_votes": [
+        {
+          "field": "body_copy",
+          "rule": "audience_alignment",
+          "votes": 2
+        },
+        {
+          "field": "body_copy",
+          "rule": "brief_alignment",
+          "votes": 2
+        },
+        {
+          "field": "body_copy",
+          "rule": "claim_evidence",
+          "votes": 2
+        },
+        {
+          "field": "body_copy",
+          "rule": "offer_alignment",
+          "votes": 3
+        },
+        {
+          "field": "body_copy",
+          "rule": "quote_context",
+          "votes": 3
+        },
+        {
+          "field": "call_to_action",
+          "rule": "brand_instruction",
+          "votes": 2
+        },
+        {
+          "field": "call_to_action",
+          "rule": "claim_evidence",
+          "votes": 1
+        },
+        {
+          "field": "call_to_action",
+          "rule": "cta_action",
+          "votes": 3
+        },
+        {
+          "field": "call_to_action",
+          "rule": "quote_context",
+          "votes": 4
+        },
+        {
+          "field": "headline",
+          "rule": "brand_instruction",
+          "votes": 4
+        },
+        {
+          "field": "headline",
+          "rule": "claim_evidence",
+          "votes": 5
+        },
+        {
+          "field": "headline",
+          "rule": "quote_context",
+          "votes": 5
+        }
+      ],
+      "distinct_local_ballots": 7,
+      "specialists_agreed": true
+    },
+    "C02": {
+      "consensus": [],
+      "qa": [
+        [
+          "body_copy",
+          "claim_evidence"
+        ]
+      ],
+      "qa_extra": [
+        [
+          "body_copy",
+          "claim_evidence"
+        ]
+      ],
+      "qa_missed": [],
+      "local_votes": [
+        {
+          "field": "body_copy",
+          "rule": "audience_alignment",
+          "votes": 1
+        },
+        {
+          "field": "body_copy",
+          "rule": "brand_alignment",
+          "votes": 1
+        },
+        {
+          "field": "call_to_action",
+          "rule": "brand_instruction",
+          "votes": 1
+        },
+        {
+          "field": "call_to_action",
+          "rule": "claim_evidence",
+          "votes": 1
+        },
+        {
+          "field": "call_to_action",
+          "rule": "cta_action",
+          "votes": 1
+        },
+        {
+          "field": "call_to_action",
+          "rule": "quote_context",
+          "votes": 1
+        },
+        {
+          "field": "headline",
+          "rule": "brand_instruction",
+          "votes": 2
+        },
+        {
+          "field": "headline",
+          "rule": "claim_evidence",
+          "votes": 2
+        },
+        {
+          "field": "headline",
+          "rule": "quote_context",
+          "votes": 2
+        }
+      ],
+      "distinct_local_ballots": 4,
+      "specialists_agreed": true
+    },
+    "C03": {
+      "consensus": [
+        [
+          "headline",
+          "brand_instruction"
+        ]
+      ],
+      "qa": [
+        [
+          "headline",
+          "brand_instruction"
+        ]
+      ],
+      "qa_extra": [],
+      "qa_missed": [],
+      "local_votes": [
+        {
+          "field": "body_copy",
+          "rule": "claim_evidence",
+          "votes": 2
+        },
+        {
+          "field": "body_copy",
+          "rule": "offer_alignment",
+          "votes": 1
+        },
+        {
+          "field": "body_copy",
+          "rule": "quote_context",
+          "votes": 1
+        },
+        {
+          "field": "call_to_action",
+          "rule": "cta_action",
+          "votes": 1
+        },
+        {
+          "field": "call_to_action",
+          "rule": "quote_context",
+          "votes": 2
+        },
+        {
+          "field": "headline",
+          "rule": "brand_instruction",
+          "votes": 1
+        },
+        {
+          "field": "headline",
+          "rule": "claim_evidence",
+          "votes": 3
+        },
+        {
+          "field": "headline",
+          "rule": "quote_context",
+          "votes": 3
+        }
+      ],
+      "distinct_local_ballots": 6,
+      "specialists_agreed": true
+    },
+    "C04": {
+      "consensus": [
+        [
+          "meta_description",
+          "claim_evidence"
+        ],
+        [
+          "meta_description",
+          "page_alignment"
+        ]
+      ],
+      "qa": [],
+      "qa_extra": [],
+      "qa_missed": [
+        [
+          "meta_description",
+          "claim_evidence"
+        ],
+        [
+          "meta_description",
+          "page_alignment"
+        ]
+      ],
+      "local_votes": [
+        {
+          "field": "page_title",
+          "rule": "claim_evidence",
+          "votes": 2
+        },
+        {
+          "field": "page_title",
+          "rule": "metadata_length",
+          "votes": 2
+        },
+        {
+          "field": "page_title",
+          "rule": "quote_context",
+          "votes": 1
+        },
+        {
+          "field": "search_intent",
+          "rule": "claim_evidence",
+          "votes": 1
+        },
+        {
+          "field": "search_intent",
+          "rule": "intent_alignment",
+          "votes": 1
+        },
+        {
+          "field": "search_intent",
+          "rule": "quote_context",
+          "votes": 1
+        }
+      ],
+      "distinct_local_ballots": 3,
+      "specialists_agreed": true
+    },
+    "C05": {
+      "consensus": [
+        [
+          "meta_description",
+          "claim_evidence"
+        ],
+        [
+          "meta_description",
+          "page_alignment"
+        ],
+        [
+          "page_title",
+          "claim_evidence"
+        ],
+        [
+          "page_title",
+          "page_alignment"
+        ],
+        [
+          "search_intent",
+          "intent_alignment"
+        ]
+      ],
+      "qa": [
+        [
+          "meta_description",
+          "page_alignment"
+        ]
+      ],
+      "qa_extra": [],
+      "qa_missed": [
+        [
+          "meta_description",
+          "claim_evidence"
+        ],
+        [
+          "page_title",
+          "claim_evidence"
+        ],
+        [
+          "page_title",
+          "page_alignment"
+        ],
+        [
+          "search_intent",
+          "intent_alignment"
+        ]
+      ],
+      "local_votes": [
+        {
+          "field": "meta_description",
+          "rule": "claim_evidence",
+          "votes": 1
+        },
+        {
+          "field": "meta_description",
+          "rule": "duplicate_metadata",
+          "votes": 3
+        },
+        {
+          "field": "meta_description",
+          "rule": "page_alignment",
+          "votes": 2
+        },
+        {
+          "field": "meta_description",
+          "rule": "quote_context",
+          "votes": 2
+        },
+        {
+          "field": "page_title",
+          "rule": "claim_evidence",
+          "votes": 4
+        },
+        {
+          "field": "page_title",
+          "rule": "metadata_length",
+          "votes": 1
+        },
+        {
+          "field": "page_title",
+          "rule": "page_alignment",
+          "votes": 2
+        },
+        {
+          "field": "page_title",
+          "rule": "quote_context",
+          "votes": 3
+        },
+        {
+          "field": "search_intent",
+          "rule": "claim_evidence",
+          "votes": 2
+        },
+        {
+          "field": "search_intent",
+          "rule": "intent_alignment",
+          "votes": 2
+        },
+        {
+          "field": "search_intent",
+          "rule": "quote_context",
+          "votes": 2
+        }
+      ],
+      "distinct_local_ballots": 6,
+      "specialists_agreed": true
+    },
+    "C06": {
+      "consensus": [
+        [
+          "meta_description",
+          "claim_evidence"
+        ],
+        [
+          "meta_description",
+          "page_alignment"
+        ]
+      ],
+      "qa": [
+        [
+          "meta_description",
+          "claim_evidence"
+        ]
+      ],
+      "qa_extra": [],
+      "qa_missed": [
+        [
+          "meta_description",
+          "page_alignment"
+        ]
+      ],
+      "local_votes": [
+        {
+          "field": "meta_description",
+          "rule": "claim_evidence",
+          "votes": 2
+        },
+        {
+          "field": "meta_description",
+          "rule": "duplicate_metadata",
+          "votes": 2
+        },
+        {
+          "field": "meta_description",
+          "rule": "page_alignment",
+          "votes": 2
+        },
+        {
+          "field": "meta_description",
+          "rule": "quote_context",
+          "votes": 3
+        },
+        {
+          "field": "page_title",
+          "rule": "claim_evidence",
+          "votes": 5
+        },
+        {
+          "field": "page_title",
+          "rule": "metadata_length",
+          "votes": 5
+        },
+        {
+          "field": "page_title",
+          "rule": "page_alignment",
+          "votes": 5
+        },
+        {
+          "field": "page_title",
+          "rule": "quote_context",
+          "votes": 5
+        },
+        {
+          "field": "search_intent",
+          "rule": "claim_evidence",
+          "votes": 6
+        },
+        {
+          "field": "search_intent",
+          "rule": "intent_alignment",
+          "votes": 5
+        },
+        {
+          "field": "search_intent",
+          "rule": "quote_context",
+          "votes": 4
+        }
+      ],
+      "distinct_local_ballots": 6,
+      "specialists_agreed": true
+    },
+    "B01": {
+      "consensus": [],
+      "qa": [],
+      "qa_extra": [],
+      "qa_missed": [],
+      "local_votes": [
+        {
+          "field": "body_copy",
+          "rule": "audience_alignment",
+          "votes": 3
+        },
+        {
+          "field": "body_copy",
+          "rule": "brand_alignment",
+          "votes": 3
+        },
+        {
+          "field": "body_copy",
+          "rule": "brand_instruction",
+          "votes": 3
+        },
+        {
+          "field": "body_copy",
+          "rule": "brief_alignment",
+          "votes": 2
+        },
+        {
+          "field": "body_copy",
+          "rule": "claim_evidence",
+          "votes": 3
+        },
+        {
+          "field": "body_copy",
+          "rule": "offer_alignment",
+          "votes": 3
+        },
+        {
+          "field": "body_copy",
+          "rule": "quote_context",
+          "votes": 3
+        },
+        {
+          "field": "call_to_action",
+          "rule": "brand_instruction",
+          "votes": 3
+        },
+        {
+          "field": "call_to_action",
+          "rule": "claim_evidence",
+          "votes": 3
+        },
+        {
+          "field": "call_to_action",
+          "rule": "cta_action",
+          "votes": 3
+        },
+        {
+          "field": "call_to_action",
+          "rule": "quote_context",
+          "votes": 3
+        },
+        {
+          "field": "headline",
+          "rule": "brand_instruction",
+          "votes": 3
+        },
+        {
+          "field": "headline",
+          "rule": "claim_evidence",
+          "votes": 3
+        },
+        {
+          "field": "headline",
+          "rule": "quote_context",
+          "votes": 3
+        }
+      ],
+      "distinct_local_ballots": 5,
+      "specialists_agreed": true
+    },
+    "B02": {
+      "consensus": [
+        [
+          "body_copy",
+          "quote_context"
+        ],
+        [
+          "call_to_action",
+          "claim_evidence"
+        ],
+        [
+          "headline",
+          "claim_evidence"
+        ]
+      ],
+      "qa": [
+        [
+          "body_copy",
+          "quote_context"
+        ]
+      ],
+      "qa_extra": [],
+      "qa_missed": [
+        [
+          "call_to_action",
+          "claim_evidence"
+        ],
+        [
+          "headline",
+          "claim_evidence"
+        ]
+      ],
+      "local_votes": [
+        {
+          "field": "body_copy",
+          "rule": "audience_alignment",
+          "votes": 2
+        },
+        {
+          "field": "body_copy",
+          "rule": "brand_alignment",
+          "votes": 2
+        },
+        {
+          "field": "body_copy",
+          "rule": "brand_instruction",
+          "votes": 2
+        },
+        {
+          "field": "body_copy",
+          "rule": "brief_alignment",
+          "votes": 2
+        },
+        {
+          "field": "body_copy",
+          "rule": "claim_evidence",
+          "votes": 2
+        },
+        {
+          "field": "body_copy",
+          "rule": "offer_alignment",
+          "votes": 2
+        },
+        {
+          "field": "body_copy",
+          "rule": "quote_context",
+          "votes": 2
+        },
+        {
+          "field": "call_to_action",
+          "rule": "brand_instruction",
+          "votes": 2
+        },
+        {
+          "field": "call_to_action",
+          "rule": "claim_evidence",
+          "votes": 2
+        },
+        {
+          "field": "call_to_action",
+          "rule": "cta_action",
+          "votes": 2
+        },
+        {
+          "field": "call_to_action",
+          "rule": "quote_context",
+          "votes": 2
+        },
+        {
+          "field": "headline",
+          "rule": "brand_instruction",
+          "votes": 3
+        },
+        {
+          "field": "headline",
+          "rule": "claim_evidence",
+          "votes": 3
+        },
+        {
+          "field": "headline",
+          "rule": "quote_context",
+          "votes": 3
+        }
+      ],
+      "distinct_local_ballots": 3,
+      "specialists_agreed": false
+    },
+    "B03": {
+      "consensus": [
+        [
+          "body_copy",
+          "audience_alignment"
+        ],
+        [
+          "body_copy",
+          "brand_alignment"
+        ],
+        [
+          "body_copy",
+          "brief_alignment"
+        ],
+        [
+          "body_copy",
+          "claim_evidence"
+        ],
+        [
+          "body_copy",
+          "offer_alignment"
+        ],
+        [
+          "headline",
+          "claim_evidence"
+        ]
+      ],
+      "qa": [
+        [
+          "body_copy",
+          "audience_alignment"
+        ],
+        [
+          "body_copy",
+          "brand_alignment"
+        ],
+        [
+          "body_copy",
+          "brief_alignment"
+        ],
+        [
+          "body_copy",
+          "offer_alignment"
+        ]
+      ],
+      "qa_extra": [],
+      "qa_missed": [
+        [
+          "body_copy",
+          "claim_evidence"
+        ],
+        [
+          "headline",
+          "claim_evidence"
+        ]
+      ],
+      "local_votes": [
+        {
+          "field": "body_copy",
+          "rule": "audience_alignment",
+          "votes": 3
+        },
+        {
+          "field": "body_copy",
+          "rule": "brand_alignment",
+          "votes": 1
+        },
+        {
+          "field": "body_copy",
+          "rule": "brand_instruction",
+          "votes": 1
+        },
+        {
+          "field": "body_copy",
+          "rule": "claim_evidence",
+          "votes": 3
+        },
+        {
+          "field": "body_copy",
+          "rule": "offer_alignment",
+          "votes": 2
+        },
+        {
+          "field": "body_copy",
+          "rule": "quote_context",
+          "votes": 2
+        },
+        {
+          "field": "headline",
+          "rule": "brand_instruction",
+          "votes": 1
+        },
+        {
+          "field": "headline",
+          "rule": "claim_evidence",
+          "votes": 2
+        },
+        {
+          "field": "headline",
+          "rule": "quote_context",
+          "votes": 2
+        }
+      ],
+      "distinct_local_ballots": 4,
+      "specialists_agreed": true
+    },
+    "B04": {
+      "consensus": [
+        [
+          "meta_description",
+          "duplicate_metadata"
+        ]
+      ],
+      "qa": [
+        [
+          "meta_description",
+          "duplicate_metadata"
+        ]
+      ],
+      "qa_extra": [],
+      "qa_missed": [],
+      "local_votes": [
+        {
+          "field": "meta_description",
+          "rule": "claim_evidence",
+          "votes": 1
+        },
+        {
+          "field": "meta_description",
+          "rule": "duplicate_metadata",
+          "votes": 1
+        },
+        {
+          "field": "meta_description",
+          "rule": "page_alignment",
+          "votes": 1
+        },
+        {
+          "field": "meta_description",
+          "rule": "quote_context",
+          "votes": 1
+        },
+        {
+          "field": "page_title",
+          "rule": "claim_evidence",
+          "votes": 3
+        },
+        {
+          "field": "page_title",
+          "rule": "metadata_length",
+          "votes": 2
+        },
+        {
+          "field": "page_title",
+          "rule": "page_alignment",
+          "votes": 2
+        },
+        {
+          "field": "page_title",
+          "rule": "quote_context",
+          "votes": 3
+        },
+        {
+          "field": "search_intent",
+          "rule": "claim_evidence",
+          "votes": 3
+        },
+        {
+          "field": "search_intent",
+          "rule": "intent_alignment",
+          "votes": 2
+        },
+        {
+          "field": "search_intent",
+          "rule": "quote_context",
+          "votes": 3
+        }
+      ],
+      "distinct_local_ballots": 4,
+      "specialists_agreed": true
+    },
+    "B05": {
+      "consensus": [
+        [
+          "meta_description",
+          "page_alignment"
+        ]
+      ],
+      "qa": [
+        [
+          "meta_description",
+          "claim_evidence"
+        ]
+      ],
+      "qa_extra": [
+        [
+          "meta_description",
+          "claim_evidence"
+        ]
+      ],
+      "qa_missed": [
+        [
+          "meta_description",
+          "page_alignment"
+        ]
+      ],
+      "local_votes": [
+        {
+          "field": "page_title",
+          "rule": "claim_evidence",
+          "votes": 2
+        },
+        {
+          "field": "page_title",
+          "rule": "metadata_length",
+          "votes": 1
+        },
+        {
+          "field": "page_title",
+          "rule": "page_alignment",
+          "votes": 2
+        },
+        {
+          "field": "page_title",
+          "rule": "quote_context",
+          "votes": 1
+        },
+        {
+          "field": "search_intent",
+          "rule": "claim_evidence",
+          "votes": 1
+        },
+        {
+          "field": "search_intent",
+          "rule": "intent_alignment",
+          "votes": 1
+        },
+        {
+          "field": "search_intent",
+          "rule": "quote_context",
+          "votes": 1
+        }
+      ],
+      "distinct_local_ballots": 3,
+      "specialists_agreed": true
+    },
+    "B06": {
+      "consensus": [
+        [
+          "page_title",
+          "page_alignment"
+        ]
+      ],
+      "qa": [
+        [
+          "meta_description",
+          "page_alignment"
+        ],
+        [
+          "page_title",
+          "page_alignment"
+        ],
+        [
+          "search_intent",
+          "intent_alignment"
+        ]
+      ],
+      "qa_extra": [
+        [
+          "meta_description",
+          "page_alignment"
+        ],
+        [
+          "search_intent",
+          "intent_alignment"
+        ]
+      ],
+      "qa_missed": [],
+      "local_votes": [
+        {
+          "field": "meta_description",
+          "rule": "claim_evidence",
+          "votes": 1
+        },
+        {
+          "field": "meta_description",
+          "rule": "quote_context",
+          "votes": 1
+        },
+        {
+          "field": "page_title",
+          "rule": "claim_evidence",
+          "votes": 3
+        },
+        {
+          "field": "page_title",
+          "rule": "metadata_length",
+          "votes": 4
+        },
+        {
+          "field": "page_title",
+          "rule": "page_alignment",
+          "votes": 3
+        },
+        {
+          "field": "page_title",
+          "rule": "quote_context",
+          "votes": 2
+        },
+        {
+          "field": "search_intent",
+          "rule": "claim_evidence",
+          "votes": 4
+        },
+        {
+          "field": "search_intent",
+          "rule": "intent_alignment",
+          "votes": 3
+        },
+        {
+          "field": "search_intent",
+          "rule": "quote_context",
+          "votes": 3
+        }
+      ],
+      "distinct_local_ballots": 6,
+      "specialists_agreed": true
+    },
+    "G01": {
+      "consensus": [],
+      "qa": [
+        [
+          "call_to_action",
+          "cta_action"
+        ]
+      ],
+      "qa_extra": [
+        [
+          "call_to_action",
+          "cta_action"
+        ]
+      ],
+      "qa_missed": [],
+      "local_votes": [
+        {
+          "field": "body_copy",
+          "rule": "audience_alignment",
+          "votes": 1
+        },
+        {
+          "field": "body_copy",
+          "rule": "brand_alignment",
+          "votes": 1
+        },
+        {
+          "field": "body_copy",
+          "rule": "brand_instruction",
+          "votes": 1
+        },
+        {
+          "field": "body_copy",
+          "rule": "brief_alignment",
+          "votes": 1
+        },
+        {
+          "field": "body_copy",
+          "rule": "claim_evidence",
+          "votes": 1
+        },
+        {
+          "field": "headline",
+          "rule": "claim_evidence",
+          "votes": 1
+        },
+        {
+          "field": "headline",
+          "rule": "quote_context",
+          "votes": 1
+        }
+      ],
+      "distinct_local_ballots": 3,
+      "specialists_agreed": true
+    },
+    "G02": {
+      "consensus": [
+        [
+          "body_copy",
+          "claim_evidence"
+        ]
+      ],
+      "qa": [],
+      "qa_extra": [],
+      "qa_missed": [
+        [
+          "body_copy",
+          "claim_evidence"
+        ]
+      ],
+      "local_votes": [
+        {
+          "field": "body_copy",
+          "rule": "audience_alignment",
+          "votes": 1
+        },
+        {
+          "field": "body_copy",
+          "rule": "brand_alignment",
+          "votes": 1
+        },
+        {
+          "field": "body_copy",
+          "rule": "brand_instruction",
+          "votes": 1
+        },
+        {
+          "field": "body_copy",
+          "rule": "claim_evidence",
+          "votes": 1
+        },
+        {
+          "field": "body_copy",
+          "rule": "offer_alignment",
+          "votes": 1
+        },
+        {
+          "field": "body_copy",
+          "rule": "quote_context",
+          "votes": 1
+        },
+        {
+          "field": "call_to_action",
+          "rule": "brand_instruction",
+          "votes": 1
+        },
+        {
+          "field": "call_to_action",
+          "rule": "claim_evidence",
+          "votes": 2
+        },
+        {
+          "field": "call_to_action",
+          "rule": "cta_action",
+          "votes": 2
+        },
+        {
+          "field": "call_to_action",
+          "rule": "quote_context",
+          "votes": 3
+        },
+        {
+          "field": "headline",
+          "rule": "brand_instruction",
+          "votes": 2
+        },
+        {
+          "field": "headline",
+          "rule": "claim_evidence",
+          "votes": 3
+        },
+        {
+          "field": "headline",
+          "rule": "quote_context",
+          "votes": 3
+        }
+      ],
+      "distinct_local_ballots": 5,
+      "specialists_agreed": true
+    },
+    "G03": {
+      "consensus": [
+        [
+          "body_copy",
+          "audience_alignment"
+        ],
+        [
+          "body_copy",
+          "brief_alignment"
+        ],
+        [
+          "body_copy",
+          "claim_evidence"
+        ]
+      ],
+      "qa": [
+        [
+          "body_copy",
+          "audience_alignment"
+        ]
+      ],
+      "qa_extra": [],
+      "qa_missed": [
+        [
+          "body_copy",
+          "brief_alignment"
+        ],
+        [
+          "body_copy",
+          "claim_evidence"
+        ]
+      ],
+      "local_votes": [
+        {
+          "field": "body_copy",
+          "rule": "audience_alignment",
+          "votes": 1
+        },
+        {
+          "field": "body_copy",
+          "rule": "brand_alignment",
+          "votes": 1
+        },
+        {
+          "field": "body_copy",
+          "rule": "brand_instruction",
+          "votes": 1
+        },
+        {
+          "field": "body_copy",
+          "rule": "brief_alignment",
+          "votes": 1
+        },
+        {
+          "field": "body_copy",
+          "rule": "claim_evidence",
+          "votes": 1
+        },
+        {
+          "field": "body_copy",
+          "rule": "offer_alignment",
+          "votes": 1
+        },
+        {
+          "field": "body_copy",
+          "rule": "quote_context",
+          "votes": 1
+        },
+        {
+          "field": "call_to_action",
+          "rule": "brand_instruction",
+          "votes": 1
+        },
+        {
+          "field": "call_to_action",
+          "rule": "claim_evidence",
+          "votes": 1
+        },
+        {
+          "field": "call_to_action",
+          "rule": "cta_action",
+          "votes": 1
+        },
+        {
+          "field": "call_to_action",
+          "rule": "quote_context",
+          "votes": 2
+        },
+        {
+          "field": "headline",
+          "rule": "brand_instruction",
+          "votes": 1
+        },
+        {
+          "field": "headline",
+          "rule": "claim_evidence",
+          "votes": 2
+        },
+        {
+          "field": "headline",
+          "rule": "quote_context",
+          "votes": 2
+        }
+      ],
+      "distinct_local_ballots": 3,
+      "specialists_agreed": true
+    },
+    "G04": {
+      "consensus": [
+        [
+          "meta_description",
+          "claim_evidence"
+        ]
+      ],
+      "qa": [],
+      "qa_extra": [],
+      "qa_missed": [
+        [
+          "meta_description",
+          "claim_evidence"
+        ]
+      ],
+      "local_votes": [
+        {
+          "field": "page_title",
+          "rule": "claim_evidence",
+          "votes": 3
+        },
+        {
+          "field": "page_title",
+          "rule": "metadata_length",
+          "votes": 3
+        },
+        {
+          "field": "page_title",
+          "rule": "page_alignment",
+          "votes": 1
+        },
+        {
+          "field": "page_title",
+          "rule": "quote_context",
+          "votes": 2
+        },
+        {
+          "field": "search_intent",
+          "rule": "claim_evidence",
+          "votes": 2
+        },
+        {
+          "field": "search_intent",
+          "rule": "intent_alignment",
+          "votes": 2
+        },
+        {
+          "field": "search_intent",
+          "rule": "quote_context",
+          "votes": 4
+        }
+      ],
+      "distinct_local_ballots": 5,
+      "specialists_agreed": false
+    },
+    "G05": {
+      "consensus": [
+        [
+          "meta_description",
+          "claim_evidence"
+        ]
+      ],
+      "qa": [
+        [
+          "meta_description",
+          "claim_evidence"
+        ]
+      ],
+      "qa_extra": [],
+      "qa_missed": [],
+      "local_votes": [
+        {
+          "field": "page_title",
+          "rule": "claim_evidence",
+          "votes": 1
+        },
+        {
+          "field": "search_intent",
+          "rule": "claim_evidence",
+          "votes": 1
+        },
+        {
+          "field": "search_intent",
+          "rule": "intent_alignment",
+          "votes": 1
+        },
+        {
+          "field": "search_intent",
+          "rule": "quote_context",
+          "votes": 2
+        }
+      ],
+      "distinct_local_ballots": 3,
+      "specialists_agreed": true
+    },
+    "G06": {
+      "consensus": [
+        [
+          "search_intent",
+          "intent_alignment"
+        ]
+      ],
+      "qa": [],
+      "qa_extra": [],
+      "qa_missed": [
+        [
+          "search_intent",
+          "intent_alignment"
+        ]
+      ],
+      "local_votes": [
+        {
+          "field": "search_intent",
+          "rule": "intent_alignment",
+          "votes": 1
+        },
+        {
+          "field": "search_intent",
+          "rule": "quote_context",
+          "votes": 3
+        }
+      ],
+      "distinct_local_ballots": 3,
+      "specialists_agreed": true
+    }
+  }
+}

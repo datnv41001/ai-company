@@ -1,0 +1,15 @@
+{
+  "type": "checkpoint.v1",
+  "run_id": "synthetic-baseline-9d48279c90134089bf823781389a4e3e",
+  "base_sha": "6f23449c5a3467ddcb5e8e773c40768837d5bbc5",
+  "head_sha": "a381db60e8b539b3cdd06c0bee343b3348f204c4",
+  "sequence": 26,
+  "previous_digest": "2f2facf592b8d6624a92bf086188d158fe68bead315680e579bc58fc929c8749",
+  "event_root": "04c7fc631d3b223838e76fed4f7b75cc6615acf9e62081d8848b7cf4107b1bf4",
+  "reservation_root": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+  "open_reservations": [],
+  "run_epoch": 1,
+  "deadline_utc": "2026-11-24T15:04:19.436954+00:00",
+  "blind_seal_digest": "d6fd8adc66b238a50865c47837b3e984a602b4fda1a5082b642db22e7c50cb3d",
+  "cancelled": false
+}

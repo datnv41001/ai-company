@@ -1,0 +1,30 @@
+{
+  "type": "run.v1",
+  "base_sha": "6f23449c5a3467ddcb5e8e773c40768837d5bbc5",
+  "head_sha": "a381db60e8b539b3cdd06c0bee343b3348f204c4",
+  "run_id": "synthetic-targeted-76ffd291bfad4804a77113bf43c0d29f",
+  "repository": "fixture/marketing-exhibition",
+  "pr_number": 1,
+  "merge_base": "6f23449c5a3467ddcb5e8e773c40768837d5bbc5",
+  "integration_sha": null,
+  "mode": "targeted",
+  "risk": "medium",
+  "source_manifest_digest": "56434cab75a62cc68ff468f9db3eb86b2d7d6cdbcc275ead7c4c83bc63a31d27",
+  "catalog_digest": "13682e00ca2a19d0ae36c7add059fe3aacb874cdabba54cc7c4bea58b8fc8a67",
+  "policy_digest": "bd89c567806afe97d18616205a5e912621649311fa1d4e471a4e39edcc07a99f",
+  "dependency_map_digest": "1ffb10a92452d9a98e609915768d8d88fb23283d0fd0193ee9d44b45bdfe1d71",
+  "implementer_principals": [
+    "synthetic-fixture-author"
+  ],
+  "budget": {
+    "max_concurrency": 1,
+    "max_tokens": 88000,
+    "max_cost_microusd": 0,
+    "deadline_utc": "2026-11-24T15:02:14.591120+00:00",
+    "attempt_timeout_seconds": 90,
+    "max_retries": 1,
+    "max_debate_rounds": 2,
+    "paid_approval_id": null,
+    "tariff_digest": null
+  }
+}

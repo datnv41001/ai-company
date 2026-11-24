@@ -1,0 +1,958 @@
+[
+  {
+    "id": "PM",
+    "name": "Product & Market",
+    "count": 50,
+    "sources": [
+      "charter",
+      "journey"
+    ],
+    "subjects": [
+      [
+        "Agency onboarding",
+        "First agency reaches a verified workspace",
+        "Time registration to first usable brief with a synthetic owner"
+      ],
+      [
+        "In-house onboarding",
+        "Brand owner completes the internal route",
+        "Trace the first campaign without requiring an agency client"
+      ],
+      [
+        "Client approval",
+        "External approver understands what was shared",
+        "Compare preview, permission summary and accepted snapshot"
+      ],
+      [
+        "Buyer positioning",
+        "A stated benefit maps to a shipped capability",
+        "Join a positioning claim to a demonstrated workflow"
+      ],
+      [
+        "Campaign activation",
+        "Activation requires a meaningful work unit",
+        "Separate created campaigns from accepted deliveries"
+      ],
+      [
+        "Portfolio prioritization",
+        "Competing campaigns receive explainable priority",
+        "Compare two briefs with conflicting deadlines"
+      ],
+      [
+        "Account expansion",
+        "Additional seats have an attributable benefit",
+        "Trace one invited collaborator to a completed handoff"
+      ],
+      [
+        "Product discovery",
+        "Research distinguishes buyers from operators",
+        "Map each interview assumption to persona and source"
+      ],
+      [
+        "Retention value",
+        "Repeat workflows deliver repeatable benefit",
+        "Compare time and rework over two equivalent briefs"
+      ],
+      [
+        "Launch readiness",
+        "A V1 promise has a release gate owner",
+        "Match a charter promise to a test and an outstanding gate"
+      ]
+    ],
+    "lenses": [
+      [
+        "Journey analyst",
+        "reconstruct the shortest complete buyer path",
+        "journey_map"
+      ],
+      [
+        "Value analyst",
+        "identify the measurable before and after outcome",
+        "outcome_comparison"
+      ],
+      [
+        "Scope challenger",
+        "find a counterexample in the other supported operating mode",
+        "mode_counterexample"
+      ],
+      [
+        "Dependency analyst",
+        "locate the earliest unmet prerequisite",
+        "prerequisite_trace"
+      ],
+      [
+        "Readiness assessor",
+        "distinguish demonstrated value from an untested promise",
+        "promise_evidence_matrix"
+      ]
+    ]
+  },
+  {
+    "id": "MK",
+    "name": "Marketing Domain",
+    "count": 100,
+    "sources": [
+      "charter",
+      "marketing"
+    ],
+    "subjects": [
+      [
+        "Audience segmentation",
+        "Audience claims require sourced attributes",
+        "Compare declared audience with evidence in brief"
+      ],
+      [
+        "Positioning",
+        "Differentiators have a defensible comparison set",
+        "Trace a comparative headline to its stated basis"
+      ],
+      [
+        "Brand voice",
+        "Tone follows client-approved voice constraints",
+        "Contrast two brand guides on the same proposition"
+      ],
+      [
+        "Brief quality",
+        "Inputs identify goal audience and constraints",
+        "Trace a missing objective to downstream creative choices"
+      ],
+      [
+        "Editorial claims",
+        "Copy stays within supplied product facts",
+        "Compare a statement about the original item with evidence about its replica"
+      ],
+      [
+        "Landing conversion",
+        "CTA and destination promise the same action",
+        "Follow the message from headline through CTA to synthetic destination"
+      ],
+      [
+        "Technical SEO",
+        "Indexing intent matches page metadata",
+        "Compare canonical and robots declarations on a synthetic landing page"
+      ],
+      [
+        "Search intent",
+        "Page answers the query audience actually asks",
+        "Pair a query with the answer visible above the fold"
+      ],
+      [
+        "Keyword mapping",
+        "Competing pages target distinct intents",
+        "Inspect a two-page keyword and intent map"
+      ],
+      [
+        "Content planning",
+        "Calendar supports campaign goals at feasible cadence",
+        "Match proposed slots to production and approval lead times"
+      ],
+      [
+        "Offer terms",
+        "A promotion conveys eligibility and expiry",
+        "Compare offer copy with the synthetic offer sheet"
+      ],
+      [
+        "Paid search creative",
+        "Ad copy aligns with the landing promise",
+        "Reconcile price qualifier across creative and landing copy"
+      ],
+      [
+        "Social creative",
+        "Social copy fits channel and asset constraints",
+        "Match creative spec to the rendered preview"
+      ],
+      [
+        "Email lifecycle",
+        "Trigger and audience match the journey stage",
+        "Trace welcome versus reactivation copy on fixture timelines"
+      ],
+      [
+        "Attribution",
+        "Report distinguishes observation from attribution",
+        "Compare channel assignment with a two-touch journey"
+      ],
+      [
+        "Experiment design",
+        "A proposed test names a measurable primary outcome",
+        "Trace sample unit and decision window to the hypothesis"
+      ],
+      [
+        "Funnel measurement",
+        "Denominators and time windows survive aggregation",
+        "Recalculate conversion from a fixture event cohort"
+      ],
+      [
+        "Localisation",
+        "Locale changes preserve material qualifiers",
+        "Compare paired copy across currencies and languages"
+      ],
+      [
+        "Accessibility of content",
+        "Essential offer details survive a text-only rendering",
+        "Read the fixture without its hero image"
+      ],
+      [
+        "Strategy KPIs",
+        "Objective metric and time window agree",
+        "Trace one KPI from brief through strategy and report"
+      ]
+    ],
+    "lenses": [
+      [
+        "Brief strategist",
+        "map the proposed asset to the stated goal and audience",
+        "brief_alignment"
+      ],
+      [
+        "Source editor",
+        "distinguish quoted facts from unsupported interpretation",
+        "claim_source_pairs"
+      ],
+      [
+        "Channel practitioner",
+        "inspect a concrete rendition at the point of consumption",
+        "rendition_annotation"
+      ],
+      [
+        "Measurement analyst",
+        "specify an observable success signal and denominator",
+        "measurement_card"
+      ],
+      [
+        "Creative challenger",
+        "compare an alternative reading by a different audience segment",
+        "competing_interpretation"
+      ]
+    ]
+  },
+  {
+    "id": "SE",
+    "name": "Software Engineering",
+    "count": 70,
+    "sources": [
+      "source",
+      "test"
+    ],
+    "subjects": [
+      [
+        "API compatibility",
+        "Existing consumers retain contract meaning",
+        "Compare representative old request and new response"
+      ],
+      [
+        "Transaction boundaries",
+        "An interrupted write leaves a consistent business state",
+        "Identify the commit boundary in a synthetic failure trace"
+      ],
+      [
+        "Idempotency",
+        "Repeated requests create one intended effect",
+        "Compare receipts for two identical synthetic requests"
+      ],
+      [
+        "Schema evolution",
+        "A populated previous schema upgrades repeatably",
+        "Inspect before and after fixture inventories"
+      ],
+      [
+        "Concurrency",
+        "Concurrent decisions resolve against the intended version",
+        "Compare two controlled edit and decision timelines"
+      ],
+      [
+        "Error semantics",
+        "Clients can distinguish recoverable and final errors",
+        "Compare response contract with UI retry behavior"
+      ],
+      [
+        "Serialization",
+        "Round trips preserve nulls identifiers and units",
+        "Trace a fixture through serialization and parsing"
+      ],
+      [
+        "Time handling",
+        "Zone boundaries preserve instant and local date",
+        "Compare a boundary timestamp in storage and display"
+      ],
+      [
+        "Dependency direction",
+        "Product runtime stays independent of engineering tooling",
+        "Inspect imports across a changed module boundary"
+      ],
+      [
+        "Persistence parity",
+        "Supported storage engines preserve business outcomes",
+        "Compare the same fixture on SQLite and PostgreSQL"
+      ],
+      [
+        "Pagination",
+        "Stable cursors avoid repeated or missing rows",
+        "Compare adjacent pages with equal sort keys"
+      ],
+      [
+        "State transitions",
+        "Only eligible prior states accept a command",
+        "Build a transition table from code and fixture traces"
+      ],
+      [
+        "Configuration",
+        "Startup selects explicit safe defaults",
+        "Compare absent and explicitly set fixture configuration"
+      ],
+      [
+        "Backward reads",
+        "Old artifacts retain their historical meaning",
+        "Read an earlier artifact with the current decoder"
+      ]
+    ],
+    "lenses": [
+      [
+        "Interface maintainer",
+        "trace the observable behavior at a supported entry point",
+        "caller_contract"
+      ],
+      [
+        "Invariant analyst",
+        "identify the state that must survive an interrupted operation",
+        "invariant_trace"
+      ],
+      [
+        "Compatibility reviewer",
+        "compare historical and current representations",
+        "compatibility_pair"
+      ],
+      [
+        "Boundary reviewer",
+        "examine an empty or boundary fixture within the contract",
+        "boundary_table"
+      ],
+      [
+        "Change impact reviewer",
+        "trace the first downstream consumer affected by a change",
+        "dependency_edge"
+      ]
+    ]
+  },
+  {
+    "id": "AI",
+    "name": "AI & Multi-Agent",
+    "count": 50,
+    "sources": [
+      "registry",
+      "workflow"
+    ],
+    "subjects": [
+      [
+        "Role contracts",
+        "Role output names and types match the consumer",
+        "Join an output record to the downstream input contract"
+      ],
+      [
+        "Workflow DAG",
+        "Dependencies complete before child work starts",
+        "Inspect a fork and join event trace"
+      ],
+      [
+        "Tool selection",
+        "A task receives only declared capabilities",
+        "Compare task manifest and broker allowlist"
+      ],
+      [
+        "Prompt provenance",
+        "A run pins template inputs and model revision",
+        "Resolve the workload fingerprint from a fixture manifest"
+      ],
+      [
+        "Grounding",
+        "Factual assertions link to supplied source spans",
+        "Inspect the smallest passage supporting one generated claim"
+      ],
+      [
+        "Model diversity",
+        "Correlated checkpoints stay visibly grouped",
+        "Compare provider family and immutable model digests"
+      ],
+      [
+        "Context boundaries",
+        "Assigned context excludes blind peers and answer keys",
+        "Inspect the per-role context manifest"
+      ],
+      [
+        "Generation limits",
+        "Long responses stop at the contract ceiling",
+        "Compare emitted tokens and reserved output allowance"
+      ],
+      [
+        "Recovery",
+        "Resume distinguishes completed and uncertain calls",
+        "Trace a lost acknowledgement through checkpoint replay"
+      ],
+      [
+        "Calibration",
+        "Uncertain model findings reach evidence review",
+        "Compare confidence text with independently observed truth"
+      ]
+    ],
+    "lenses": [
+      [
+        "Contract auditor",
+        "align declared inputs outputs and observed transitions",
+        "contract_alignment"
+      ],
+      [
+        "Context assessor",
+        "trace which information was available at decision time",
+        "context_provenance"
+      ],
+      [
+        "Behavior evaluator",
+        "test the claim against a held-out synthetic example",
+        "behavior_observation"
+      ],
+      [
+        "Recovery analyst",
+        "reconstruct the result after an interrupted stage",
+        "replay_trace"
+      ],
+      [
+        "Epistemic challenger",
+        "identify a plausible alternative explanation or shared model bias",
+        "counterevidence_note"
+      ]
+    ]
+  },
+  {
+    "id": "SP",
+    "name": "Security & Privacy",
+    "count": 50,
+    "sources": [
+      "policy",
+      "test"
+    ],
+    "subjects": [
+      [
+        "Tenant isolation",
+        "Scope is bound before reading business records",
+        "Inspect the synthetic two-tenant policy matrix"
+      ],
+      [
+        "Client isolation",
+        "Two clients in one agency see their own shared records",
+        "Match each fixture grant to expected result rows"
+      ],
+      [
+        "Identity proof",
+        "Principal and proof refer to the same active identity",
+        "Compare synthetic identity state with authorization policy"
+      ],
+      [
+        "Least privilege",
+        "Worker capabilities match the assigned operation",
+        "Reconcile declared privileges with required resource reads"
+      ],
+      [
+        "Secret handling",
+        "Logs and review bundles omit protected values",
+        "Inspect redaction attestations on seeded dummy markers"
+      ],
+      [
+        "Consent scope",
+        "An invitation discloses the granted scope",
+        "Compare invitation terms to fixture membership"
+      ],
+      [
+        "Retention",
+        "Artifacts respect their retention class",
+        "Trace expiry and deletion markers in a synthetic inventory"
+      ],
+      [
+        "Audit integrity",
+        "Decisions link to attributable immutable events",
+        "Trace one approval to its event chain and actor"
+      ],
+      [
+        "Data minimization",
+        "Review inputs contain only needed fields",
+        "Compare fixture columns with the declared task purpose"
+      ],
+      [
+        "Key lifecycle",
+        "Receipts resolve to a trusted key valid at issue time",
+        "Compare rotation schedule with signed fixture metadata"
+      ]
+    ],
+    "lenses": [
+      [
+        "Policy analyst",
+        "map expected access to the declared subject and purpose",
+        "access_matrix"
+      ],
+      [
+        "Boundary assessor",
+        "compare a permitted with a restricted synthetic case",
+        "paired_policy_observation"
+      ],
+      [
+        "Provenance auditor",
+        "follow the decision to its trusted issuer and pinned input",
+        "provenance_chain"
+      ],
+      [
+        "Lifecycle reviewer",
+        "compare creation expiry and revocation in fixture records",
+        "lifecycle_timeline"
+      ],
+      [
+        "Disclosure reviewer",
+        "inspect the minimum fields visible in the authorized output",
+        "disclosure_inventory"
+      ]
+    ]
+  },
+  {
+    "id": "UX",
+    "name": "UX/UI & Usability",
+    "count": 40,
+    "sources": [
+      "journey",
+      "render"
+    ],
+    "subjects": [
+      [
+        "First-run orientation",
+        "A new owner can identify the next required action",
+        "Walk a synthetic fresh workspace from first screen"
+      ],
+      [
+        "Mobile layout",
+        "Core controls remain reachable at 390 CSS pixels",
+        "Inspect the provided narrow viewport recording"
+      ],
+      [
+        "Keyboard flow",
+        "Primary tasks have logical focus order",
+        "Follow recorded focus sequence through approval"
+      ],
+      [
+        "Error recovery",
+        "Validation explains how to complete the task",
+        "Trace a failed submission to a successful correction"
+      ],
+      [
+        "State visibility",
+        "Saved and pending content are distinguishable",
+        "Compare edit state just before and after save"
+      ],
+      [
+        "Permission disclosure",
+        "Invitees can predict what they can see and decide",
+        "Compare visible grant summary with acceptance outcome"
+      ],
+      [
+        "Assistive semantics",
+        "Control names identify action and target",
+        "Inspect the accessibility tree for the fixture screen"
+      ],
+      [
+        "Information architecture",
+        "Users can locate campaign and client-specific assets",
+        "Trace two navigation tasks with similarly named records"
+      ]
+    ],
+    "lenses": [
+      [
+        "Task observer",
+        "record the first point where the fixture user loses context",
+        "task_observation"
+      ],
+      [
+        "Inclusive design reviewer",
+        "repeat the journey with the supplied accessibility evidence",
+        "accessibility_observation"
+      ],
+      [
+        "Viewport reviewer",
+        "compare narrow and wide renditions of the same task",
+        "viewport_pair"
+      ],
+      [
+        "Recovery observer",
+        "follow a mistake through correction and restored state",
+        "recovery_journey"
+      ],
+      [
+        "Language reviewer",
+        "compare the visible instruction with the action outcome",
+        "copy_outcome_pair"
+      ]
+    ]
+  },
+  {
+    "id": "QT",
+    "name": "QA & Testing",
+    "count": 40,
+    "sources": [
+      "test",
+      "workflow"
+    ],
+    "subjects": [
+      [
+        "Boundary partitions",
+        "Tests exercise valid edges and first invalid values",
+        "Compare tested boundaries with the domain range"
+      ],
+      [
+        "Interleavings",
+        "A regression distinguishes two conflicting orders",
+        "Inspect repeatable synchronization points in the fixture"
+      ],
+      [
+        "Migration rehearsal",
+        "Historical seeded data survives upgrade and rerun",
+        "Compare checksums for approved historical rows"
+      ],
+      [
+        "Contract tests",
+        "Producer and consumer agree on required fields",
+        "Trace an omitted fixture field to the expected rejection"
+      ],
+      [
+        "Flake diagnosis",
+        "Timing-dependent tests have reproducible observations",
+        "Compare repeated fixture outcomes and timing variance"
+      ],
+      [
+        "Coverage mapping",
+        "Important invariants have meaningful assertions",
+        "Match each high-risk change to an observable expectation"
+      ],
+      [
+        "Oracle quality",
+        "Expected results are independent of code under test",
+        "Trace the expected value to a labeled source"
+      ],
+      [
+        "Fixture realism",
+        "Synthetic input reflects genuine business constraints",
+        "Compare a fixture journey with the approved product flow"
+      ]
+    ],
+    "lenses": [
+      [
+        "Test designer",
+        "select a minimal distinguishing input and reliable oracle",
+        "distinguishing_fixture"
+      ],
+      [
+        "Regression analyst",
+        "contrast a known bad and a corrected artifact",
+        "regression_pair"
+      ],
+      [
+        "Test isolation reviewer",
+        "identify state or time shared across cases",
+        "isolation_record"
+      ],
+      [
+        "Evidence reviewer",
+        "inspect whether assertions observe the product outcome",
+        "assertion_trace"
+      ],
+      [
+        "Coverage challenger",
+        "identify an untested equivalence class and why it matters",
+        "partition_gap"
+      ]
+    ]
+  },
+  {
+    "id": "BF",
+    "name": "Business & Finance",
+    "count": 30,
+    "sources": [
+      "finance",
+      "charter"
+    ],
+    "subjects": [
+      [
+        "Agency budget",
+        "Combined work respects the agency ceiling",
+        "Reconcile concurrent reservations to available balance"
+      ],
+      [
+        "Cost attribution",
+        "Each metered unit is attributed once to a campaign",
+        "Rebuild campaign subtotals from synthetic usage rows"
+      ],
+      [
+        "Unit economics",
+        "Cost per accepted work unit includes rework",
+        "Recalculate margin with rejected output and retries"
+      ],
+      [
+        "Billing boundaries",
+        "AI cost and advertising spend stay in distinct ledgers",
+        "Follow one item of each cost type through reconciliation"
+      ],
+      [
+        "Forecast accuracy",
+        "Currency precision and usage ranges survive forecasting",
+        "Compare conservative estimate to capped fixture consumption"
+      ],
+      [
+        "Commercial packaging",
+        "Entitlements align with a measurable customer outcome",
+        "Trace a plan claim to a delivered and accepted unit"
+      ]
+    ],
+    "lenses": [
+      [
+        "Ledger reconciler",
+        "reconstruct balances from individual synthetic entries",
+        "reconciliation"
+      ],
+      [
+        "Unit analyst",
+        "recompute with explicit units precision and rounding",
+        "unit_calculation"
+      ],
+      [
+        "Exposure reviewer",
+        "bound worst-case liability including outstanding commitments",
+        "exposure_bound"
+      ],
+      [
+        "Commercial analyst",
+        "quantify the impact on one accepted customer work unit",
+        "work_unit_cost"
+      ],
+      [
+        "Sensitivity reviewer",
+        "vary one cost or volume assumption and recompute",
+        "sensitivity_pair"
+      ]
+    ]
+  },
+  {
+    "id": "LC",
+    "name": "Legal & Compliance",
+    "count": 20,
+    "sources": [
+      "policy",
+      "approved_reference"
+    ],
+    "subjects": [
+      [
+        "Content rights",
+        "Asset reuse has a documented rights basis",
+        "Match each fixture asset to license scope and attribution"
+      ],
+      [
+        "Privacy purpose",
+        "Processing purpose matches declared data categories",
+        "Compare synthetic data flow and retention declaration"
+      ],
+      [
+        "Promotional disclosure",
+        "Material terms appear with the claim",
+        "Compare offer constraints with the synthetic customer-facing copy"
+      ],
+      [
+        "Processor records",
+        "Each data recipient has an identified review owner",
+        "Map transfer points to the approved source inventory"
+      ]
+    ],
+    "lenses": [
+      [
+        "Obligation mapper",
+        "identify territory purpose effective date and accountable owner",
+        "obligation_map"
+      ],
+      [
+        "Rights evidence reviewer",
+        "match the stated permission to its bounded evidence excerpt",
+        "permission_basis"
+      ],
+      [
+        "Lifecycle assessor",
+        "trace the obligation across collection use and expiry",
+        "obligation_timeline"
+      ],
+      [
+        "Disclosure examiner",
+        "compare internal commitments with visible user-facing terms",
+        "disclosure_comparison"
+      ],
+      [
+        "Escalation reviewer",
+        "separate documented obligations from questions needing counsel",
+        "counsel_referral"
+      ]
+    ]
+  },
+  {
+    "id": "IO",
+    "name": "Infrastructure & Operations",
+    "count": 25,
+    "sources": [
+      "workflow",
+      "test"
+    ],
+    "subjects": [
+      [
+        "Queue fairness",
+        "One busy agency cannot monopolize capacity",
+        "Compare wait distributions across synthetic tenants"
+      ],
+      [
+        "Recovery rehearsal",
+        "Restored artifacts retain referential integrity",
+        "Match backup manifest to restored fixture counts and hashes"
+      ],
+      [
+        "Observability",
+        "A stalled stage exposes an actionable cause",
+        "Trace scheduler state to safe diagnostic events"
+      ],
+      [
+        "Resource capacity",
+        "Bounded concurrency fits local compute limits",
+        "Compare peak active workers with configured limits"
+      ],
+      [
+        "Safe rollout",
+        "A version mismatch fails before accepting work",
+        "Trace compatibility check and rollback with pinned fixtures"
+      ]
+    ],
+    "lenses": [
+      [
+        "On-call analyst",
+        "reconstruct a diagnostic timeline from redacted events",
+        "incident_timeline"
+      ],
+      [
+        "Capacity planner",
+        "bound throughput and the resource limiting it",
+        "capacity_bound"
+      ],
+      [
+        "Resilience reviewer",
+        "inspect a synthetic interruption and recovery observation",
+        "restoration_record"
+      ],
+      [
+        "Change operator",
+        "compare pre-change and post-change operational signals",
+        "rollout_comparison"
+      ],
+      [
+        "Service owner",
+        "derive one actionable indicator with threshold and owner",
+        "service_indicator"
+      ]
+    ]
+  },
+  {
+    "id": "ID",
+    "name": "Integration & Data",
+    "count": 15,
+    "sources": [
+      "source",
+      "registry"
+    ],
+    "subjects": [
+      [
+        "Event identity",
+        "Duplicate events reconcile to a stable business key",
+        "Compare replayed fixture events and resulting totals"
+      ],
+      [
+        "Mapping fidelity",
+        "Field lineage preserves units and nullable semantics",
+        "Trace one source row to its normalized output"
+      ],
+      [
+        "Connector contracts",
+        "Adapter reads declare scope and schema version",
+        "Compare recorded synthetic response with the adapter contract"
+      ]
+    ],
+    "lenses": [
+      [
+        "Schema steward",
+        "compare source and target types cardinality and invariants",
+        "schema_mapping"
+      ],
+      [
+        "Lineage reviewer",
+        "trace a record through transformations with stable references",
+        "lineage_trace"
+      ],
+      [
+        "Replay assessor",
+        "compare first delivery with repeated and late arrival",
+        "replay_comparison"
+      ],
+      [
+        "Completeness reviewer",
+        "reconcile expected and observed set membership",
+        "completeness_delta"
+      ],
+      [
+        "Consumer advocate",
+        "check the downstream interpretation using a realistic fixture",
+        "consumer_observation"
+      ]
+    ]
+  },
+  {
+    "id": "AR",
+    "name": "Independent Final Arbitration",
+    "count": 10,
+    "sources": [
+      "sealed_case",
+      "policy"
+    ],
+    "subjects": [
+      [
+        "Conflicting evidence",
+        "Competing interpretations refer to the same pinned behavior",
+        "Align disputed observations by SHA scope and evidence origin"
+      ],
+      [
+        "Release disposition",
+        "A release recommendation accounts for uncovered material risk",
+        "Reconcile unresolved high-severity items with the gate owner"
+      ]
+    ],
+    "lenses": [
+      [
+        "Scope referee",
+        "exclude evidence belonging to a different artifact or revision",
+        "admissibility_ruling"
+      ],
+      [
+        "Evidence referee",
+        "weigh competing evidence by provenance and reproducibility",
+        "evidence_ruling"
+      ],
+      [
+        "Dissent recorder",
+        "preserve the strongest minority objection and its falsifier",
+        "dissent_opinion"
+      ],
+      [
+        "Remediation referee",
+        "determine the smallest observation that would resolve the dispute",
+        "verification_order"
+      ],
+      [
+        "Decision editor",
+        "state the bounded decision uncertainty and human gate owner",
+        "disposition_record"
+      ]
+    ]
+  }
+]

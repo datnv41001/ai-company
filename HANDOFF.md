@@ -1,5 +1,11 @@
 # Bắt đầu ở đây khi tiếp quản AI Marketing Company
 
+## AIRC-500 · Thiết kế công cụ review nội bộ
+
+Từ mốc `ece8ecc84b4938900821ff85403bb5b8243534c6`, catalog engineering có 500 hồ sơ và 12 discipline. Trên máy mới chạy `python engineering/airc500/catalog.py` từ gốc repo. [Đề xuất kiến trúc, hợp đồng, lệnh kiểm thử và backlog pilot](engineering/airc500/README.md). Mốc thiết kế ban đầu là `c1eda054`; commercial GA giữ NO-GO. Runtime AMC vẫn dùng schema v18 tại mốc trên.
+
+**Pilot kế tiếp trên cùng nhánh.** [Quy trình chạy lại Qwen và kiểm chữ ký](engineering/airc500/PILOT.md) · [Hồ sơ thực thi và quality metrics](engineering/airc500/evidence/qwen-marketing-01/REPORT.md). Chỉ dùng Git fixture Marketing tổng hợp. PR #16 đã merge tại `49cbc0709388101c4ff6254d901e62e70a17a512` (tree `dbff352337ee9ded2721af712da3e290dba5d7be` trùng integration đã duyệt, schema v20). [CI sau merge #16](https://github.com/datnv41001/ai-company/actions/runs/45419903493). Phạm vi PR #17 là công cụ engineering thử nghiệm trên fixture tổng hợp. Giai đoạn tiếp theo cần đánh giá chất lượng theo từng vòng, kế hoạch coverage bất biến và giới hạn hạ tầng trước khi mở rộng.
+
 ## PR #16 · Tạo tài khoản và tham gia qua lời mời
 
 PR #15 đã merge vào main tại `ece8ecc84b4938900821ff85403bb5b8243534c6`, CI sau merge đạt 3/3 job. [CI của main](https://github.com/datnv41001/ai-company/actions/runs/45363202327).

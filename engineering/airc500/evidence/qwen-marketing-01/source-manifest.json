@@ -1,0 +1,27 @@
+{
+  "repository": "fixture/marketing-exhibition",
+  "pr_number": 1,
+  "base_sha": "6f23449c5a3467ddcb5e8e773c40768837d5bbc5",
+  "head_sha": "a381db60e8b539b3cdd06c0bee343b3348f204c4",
+  "changed_files": [
+    "campaign/published-copy.jsonl"
+  ],
+  "blobs": {
+    "6f23449c5a3467ddcb5e8e773c40768837d5bbc5:brand/approved-facts.jsonl": {
+      "git_oid": "682c28a68b605cc5d95a42765301858d826a9e07",
+      "sha256": "e2a752c07e96f87980a96b2ba19fcc29375fb57902dfe7159fca0bcefdbb711a"
+    },
+    "6f23449c5a3467ddcb5e8e773c40768837d5bbc5:campaign/published-copy.jsonl": {
+      "git_oid": "682c28a68b605cc5d95a42765301858d826a9e07",
+      "sha256": "e2a752c07e96f87980a96b2ba19fcc29375fb57902dfe7159fca0bcefdbb711a"
+    },
+    "a381db60e8b539b3cdd06c0bee343b3348f204c4:brand/approved-facts.jsonl": {
+      "git_oid": "682c28a68b605cc5d95a42765301858d826a9e07",
+      "sha256": "e2a752c07e96f87980a96b2ba19fcc29375fb57902dfe7159fca0bcefdbb711a"
+    },
+    "a381db60e8b539b3cdd06c0bee343b3348f204c4:campaign/published-copy.jsonl": {
+      "git_oid": "c9f9be41ad6ccfa258f8f906326fe74fe2256523",
+      "sha256": "f2dd555fe2458800e951c66af0d98f6a0124b9afd98a4ff278ab259501b4a134"
+    }
+  }
+}

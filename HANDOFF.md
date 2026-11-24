@@ -2,7 +2,9 @@
 
 ## PR #15 · Xác minh email và nhận lời mời workspace
 
-Nhánh `feature/verified-workspace-invitations` phát triển từ `d81df0be`. Bản trên nhánh sử dụng PostgreSQL v17 cho môi trường tổng hợp. Commercial GA vẫn NO-GO. Xem [hướng dẫn chạy Docker, đọc hộp thư riêng, chính sách tài khoản cũ, kiểm thử và khôi phục](docs/PR15-IDENTITY.md) và [CI của PR #15](https://github.com/datnv41001/ai-company/pull/15/checks).
+Nhánh `feature/verified-workspace-invitations` phát triển từ `d81df0be`. Compose chạy PostgreSQL **16.6**. Schema ứng dụng **v18** bổ sung tên thương hiệu và chiến dịch vào lời mời. Khi dùng bản v17 đã review tại `df48ef26`, chạy migrator để nâng cấp trước khi khởi động API mới. Commercial GA vẫn NO-GO. Xem [hướng dẫn vận hành và nghiệm thu](docs/PR15-IDENTITY.md) và [CI trên head và bản tích hợp thử](https://github.com/datnv41001/ai-company/pull/15/checks).
+
+Trước khi chấp nhận, người nhận thấy tên và mã phạm vi, quyền bình luận, quyền quyết định và thời hạn. Đường nâng từ v16 hỗ trợ cả database đã cài pgcrypto trong schema khác. Có thể chạy lại các ca phân xử tranh khóa và kiểm tra chữ ký bằng `python -m pytest -q tests/test_verified_identity.py` trong môi trường PostgreSQL tổng hợp được cấu hình như job `api-tests`.
 
 Người tiếp quản dùng cùng `JWT_SECRET` cho migrator và API. Chủ workspace mới xác minh email trước khi có quyền. Owner/Admin mời người dùng qua mục **Quản lý người nhận và lời mời**. Mỗi người nhận đăng nhập, xác minh và tự chấp nhận. Ca kiểm thử phải thực hiện đủ các bước này. Trên ba pool cũ vẫn dùng đúng binary và schema v10/v11/v13 của từng pool.
 

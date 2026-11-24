@@ -51,6 +51,8 @@ def summary(i):
                 "client_id",
                 "workspace_name",
                 "client_name",
+                "brand_name",
+                "campaign_name",
                 "brand_id",
                 "campaign_id",
                 "can_comment",
@@ -104,12 +106,12 @@ def invite(tenant_id: str, body: Invite, user: User = Depends(current_user), db:
     issuer = require_tenant(db, user, tenant_id, "admin")
     if user.verified_at is None or (body.role == "admin" and issuer.role != "owner"):
         raise HTTPException(403, "Verified issuer with sufficient authority required")
-    client = None
+    client = brand = campaign = None
     if body.client_id is not None:
         client = db.get(Client, body.client_id)
         if client is None or client.tenant_id != tenant_id:
             raise HTTPException(404, "Client unavailable")
-        validate_scope(db, tenant_id, client.id, body)
+        brand, campaign = validate_scope(db, tenant_id, client.id, body)
     email = str(body.email).lower().strip()
     set_context(db, actor=user.id, tenant=tenant_id, email=email)
     recipient = db.scalar(select(User).where(User.email == email))
@@ -134,6 +136,8 @@ def invite(tenant_id: str, body: Invite, user: User = Depends(current_user), db:
         email=email,
         workspace_name=db.get(Tenant, tenant_id).name,
         client_name=client.name if client else None,
+        brand_name=brand.name if brand else None,
+        campaign_name=campaign.name if campaign else None,
         expires_at=utcnow() + timedelta(days=7),
         **body.model_dump(exclude={"email"}),
     )

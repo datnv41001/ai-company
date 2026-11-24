@@ -36,6 +36,94 @@ def accept(api, identity, invitation, **kwargs):
     return api.post("/api/me/invitations/" + invitation + "/accept", headers=identity, **kwargs)
 
 
+def wait_for_lock(monitor, locker_pid):
+    deadline = time.monotonic() + 6
+    while not monitor.execute(
+        "select exists(select from pg_stat_activity where datname=current_database() and wait_event_type='Lock' and %s=any(pg_blocking_pids(pid)))",
+        (locker_pid,),
+    ).fetchone()[0]:
+        assert time.monotonic() < deadline, "Second transaction did not contend for the lock"
+        time.sleep(0.02)
+
+
+def check_acceptance_rows(monitor, tenant, recipient, iid, accepted):
+    expected = int(accepted)
+    for table in ("memberships", "portal_grants"):
+        assert monitor.execute(f"select count(*) from {table} where tenant_id=%s and user_id=%s", (tenant, recipient)).fetchone() == (expected,)
+    assert monitor.execute("select count(*) from audit_events where subject_id=%s and event='portal.invitation_accepted'", (iid,)).fetchone() == (expected,)
+    return monitor.execute("select state from portal_invitations where id=%s", (iid,)).fetchone()[0]
+
+
+@pytest.mark.parametrize("api", ["postgres"], indirect=True)
+@pytest.mark.parametrize("proof", ["missing", "incorrect", "prior_transaction"])
+def test_runtime_proof_required_to_accept(api, agency, proof):
+    owner, base, ((_, data), _) = agency
+    reader = account(api, "ProofBoundary")
+    iid = create(api, base + "/invitations", owner, {"email": reader["email"], "client_id": next(iter(data["clients"]))})["id"]
+    with engine.connect() as conn, Session(conn) as db:
+        # Use a dedicated physical session. Keep the old proof inside PostgreSQL.
+        conn.detach()
+        assert db.scalar(text("SELECT current_user")) == "amc_runtime"
+        if proof == "prior_transaction":
+            set_context(db, actor=reader["id"], tenant=owner["tenant"])
+            sign_actor(db, reader["id"])
+            assert db.scalar(text("SELECT amc_acl.authenticated_actor()")) is True
+            tx = db.scalar(text("SELECT txid_current()"))
+            db.execute(text("SELECT set_config('amc.identity_proof',current_setting('amc.identity_proof'),false) IS NOT NULL"))
+            db.commit()
+            assert db.scalar(text("SELECT txid_current()")) != tx
+            assert db.scalar(text("SELECT length(current_setting('amc.identity_proof'))")) == 64
+        set_context(db, actor=reader["id"], tenant=owner["tenant"])
+        if proof == "incorrect":
+            db.execute(text("SELECT set_config('amc.identity_proof',repeat('0',64),true)"))
+        assert db.scalar(text("SELECT amc_acl.authenticated_actor()")) is False
+        assert db.scalar(text("SELECT amc_acl.accept_portal_invitation(:iid)"), {"iid": iid}) is False
+        db.commit()
+    with psycopg.connect(os.environ["AMC_MIGRATION_DSN"], autocommit=True) as monitor:
+        assert check_acceptance_rows(monitor, owner["tenant"], reader["id"], iid, False) == "pending"
+        assert accept(api, reader["headers"], iid).status_code == 204
+        assert check_acceptance_rows(monitor, owner["tenant"], reader["id"], iid, True) == "accepted"
+
+
+@pytest.mark.parametrize("api", ["postgres"], indirect=True)
+@pytest.mark.parametrize("first", ["demote", "accept"])
+def test_issuer_demotion_serializes_with_accept(api, agency, first):
+    owner, base, ((_, data), _) = agency
+    issuer, reader = account(api, "IssuingAdmin"), account(api, "ScopeReader")
+    first_invite = create(api, base + "/invitations", owner, {"email": issuer["email"], "role": "admin"})
+    assert accept(api, issuer["headers"], first_invite["id"]).status_code == 204
+    iid = create(api, base + "/invitations", issuer, {"email": reader["email"], "client_id": next(iter(data["clients"]))})["id"]
+    dsn = os.environ["AMC_MIGRATION_DSN"]
+
+    def demote(db):
+        assert (
+            db.execute("update memberships set role='viewer' where tenant_id=%s and user_id=%s and role='admin'", (owner["tenant"], issuer["id"])).rowcount == 1
+        )
+
+    def demote_and_commit():
+        with psycopg.connect(dsn) as db:
+            demote(db)
+
+    with psycopg.connect(dsn, autocommit=True) as monitor, ThreadPoolExecutor(1) as pool:
+        if first == "demote":
+            with psycopg.connect(dsn) as db:
+                demote(db)
+                second = pool.submit(accept, api, reader["headers"], iid)
+                wait_for_lock(monitor, db.info.backend_pid)
+            assert second.result(timeout=8).status_code == 404
+        else:
+            with engine.begin() as conn, Session(conn, join_transaction_mode="create_savepoint") as session:
+                set_context(session, actor=reader["id"])
+                sign_actor(session, reader["id"])
+                accept_route(iid, None, session.get(User, reader["id"]), session)
+                second = pool.submit(demote_and_commit)
+                wait_for_lock(monitor, conn.scalar(text("SELECT pg_backend_pid()")))
+            second.result(timeout=8)
+        accepted = first == "accept"
+        assert check_acceptance_rows(monitor, owner["tenant"], reader["id"], iid, accepted) == ("accepted" if accepted else "pending")
+        assert monitor.execute("select role from memberships where tenant_id=%s and user_id=%s", (owner["tenant"], issuer["id"])).fetchone() == ("viewer",)
+
+
 def test_new_owner_requires_private_single_use_proof(api):
     email, registration, headers = register(api, "inhouse")
 
@@ -155,12 +243,7 @@ def test_accept_and_revoke_lock_order(api, agency, first):
             with ThreadPoolExecutor(1) as pool:
                 waiting = pool.submit(second)
                 try:
-                    timeout = time.monotonic() + 6
-                    while not monitor.execute(
-                        "select exists(select from pg_stat_activity where datname=current_database() and %s=any(pg_blocking_pids(pid)))", (pid,)
-                    ).fetchone()[0]:
-                        assert time.monotonic() < timeout, "Second transaction did not contend for the row"
-                        time.sleep(0.02)
+                    wait_for_lock(monitor, pid)
                 finally:
                     transaction.commit()
                 assert waiting.result(timeout=8).status_code == 404

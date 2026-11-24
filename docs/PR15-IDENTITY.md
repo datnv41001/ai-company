@@ -1,6 +1,18 @@
 # SAA-02 · Verified identity and workspace invitations
 
-This release is for local development with synthetic accounts. Use the PR's head or merge it after independent review. The base schema is v16 at `d81df0bee0d381007acfd0cf0b786a7f56e38719`. The target schema is v17.
+This release is for local development with synthetic accounts. The base schema is v16 at `d81df0bee0d381007acfd0cf0b786a7f56e38719`. The target application schema is v18. Compose uses PostgreSQL 16.6. The previously reviewed head `df48ef265f14cdc049dec8125c271c8390416c4a` used application schema v17.
+
+## Independent review follow-up
+
+Migration 017 installs a new pgcrypto extension in a private schema when needed. For an existing installation it identifies the extension-owned HMAC overload and binds the SQL function to it at definition time. The migration preserves the extension namespace, OID and version. Upgrade tests cover fresh databases, an installation in public and an installation in a quoted custom schema. Each path verifies the runtime signer. [PostgreSQL function definitions](https://www.postgresql.org/docs/16/sql-createfunction.html)
+
+Migration 018 stores two display labels on the existing invitation. New labels come from the same server-validated brand and campaign as the scope IDs. Pending legacy invitations acquire the names available at upgrade. Existing grants and accepted records keep their authority and history. The inbox displays scope IDs alongside available names. An absent label falls back to the stored ID. An absent scope ID displays the applicable full scope. Both decision and comment rights are explicit.
+
+With an isolated synthetic PostgreSQL test configuration, run `python -m pytest -q tests/test_verified_identity.py tests/test_recipients.py`. The runtime proof cases use an otherwise acceptable invitation, commit each denied operation, check its pending state and count membership, grant and audit rows. The same invitation then succeeds for the authenticated recipient. The issuer-demotion cases hold each real database lock in turn and inspect the blocked backend before allowing the first transaction to commit.
+
+The migration fixture now covers v1–v17 to v18. The v17 path executes the historical migrator from the reviewed head and exercises rollback before retrying. For a rollback of the review installation, retain a verified v17 backup, reconcile new invitations and decisions and reconnect its matching binary to that backup. The development pools at v10/v11/v13 stay on their existing versions.
+
+Push CI uses the branch commit. PR CI runs the API/migration suite, Compose browser and Qwen for both the branch commit and GitHub's prospective merge commit. Integration artifacts have the suffix `-integration`; each Qwen report records the SHA actually checked out. The PR check list and its description link to the exact runs.
 
 ## Run on another machine
 

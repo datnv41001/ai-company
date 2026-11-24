@@ -1,14 +1,33 @@
 -- The runtime LOGIN cannot sign an authenticated request. Bind its identity proof
 -- to the current database transaction so another connection cannot reuse it.
-CREATE SCHEMA amc_crypto;
-CREATE EXTENSION pgcrypto WITH SCHEMA amc_crypto;
 CREATE TABLE amc_acl.identity_key (singleton boolean PRIMARY KEY CHECK(singleton), secret bytea NOT NULL);
-CREATE FUNCTION amc_acl.authenticated_actor() RETURNS boolean
-LANGUAGE sql STABLE SECURITY DEFINER SET search_path=pg_catalog AS $$
- SELECT coalesce(current_setting('amc.identity_proof',true)=encode(amc_crypto.hmac(
-    convert_to(current_setting('amc.user_id',true)||':'||txid_current()::text,'UTF8'), secret, 'sha256'),'hex'),false)
- FROM amc_acl.identity_key WHERE singleton
-$$;
+DO $install$
+DECLARE crypto_schema name;
+BEGIN
+ IF NOT EXISTS (SELECT FROM pg_catalog.pg_extension WHERE extname='pgcrypto') THEN
+    CREATE SCHEMA amc_crypto;
+    CREATE EXTENSION pgcrypto WITH SCHEMA amc_crypto;
+ END IF;
+ -- Resolve the extension's own bytea overload, even if previously installed
+ -- under a quoted schema name. The SQL body binds to its OID at definition.
+ SELECT n.nspname INTO STRICT crypto_schema
+ FROM pg_catalog.pg_extension e
+ JOIN pg_catalog.pg_namespace n ON n.oid=e.extnamespace
+ JOIN pg_catalog.pg_depend d ON d.refclassid='pg_catalog.pg_extension'::regclass
+     AND d.refobjid=e.oid AND d.deptype='e' AND d.classid='pg_catalog.pg_proc'::regclass
+ WHERE e.extname='pgcrypto' AND d.objid=pg_catalog.to_regprocedure(
+     pg_catalog.format('%I.hmac(pg_catalog.bytea,pg_catalog.bytea,pg_catalog.text)',n.nspname));
+ EXECUTE pg_catalog.format($definition$
+   CREATE FUNCTION amc_acl.authenticated_actor() RETURNS boolean
+   LANGUAGE sql STABLE SECURITY DEFINER SET search_path=pg_catalog
+   BEGIN ATOMIC
+     SELECT coalesce(current_setting('amc.identity_proof',true)=encode(%I.hmac(
+       convert_to(current_setting('amc.user_id',true)||':'||txid_current()::text,'UTF8'),
+       secret,'sha256'::text),'hex'),false)
+     FROM amc_acl.identity_key WHERE singleton;
+   END
+ $definition$,crypto_schema);
+END $install$;
 REVOKE ALL ON FUNCTION amc_acl.authenticated_actor() FROM PUBLIC;
 GRANT EXECUTE ON FUNCTION amc_acl.authenticated_actor() TO amc_runtime;
 

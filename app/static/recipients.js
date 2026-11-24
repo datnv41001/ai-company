@@ -83,7 +83,25 @@ function createRecipientPanel(root, api, notify, enterInvitedWorkspace) {
       const box = node(root, 'section');
       box.className = 'panel';
       node(box, 'h4', 'Lời mời từ '+i.workspace_name);
-      node(box, 'p', (i.client_name || roles[i.role])+' · Hết hạn '+new Date(i.expires_at).toLocaleString('vi-VN'));
+      const terms = node(box, 'dl');
+      terms.style.overflowWrap = 'anywhere';
+      function term(label, value) {
+        node(terms, 'dt', label);
+        node(terms, 'dd', value);
+      }
+      function scopeLabel(name, id, all) {
+        if (!id) return all;
+        return name ? name+' ('+id+')' : id;
+      }
+      term('Vai trò', roles[i.role]);
+      if (i.role === 'client_viewer') {
+        term('Khách hàng', scopeLabel(i.client_name, i.client_id));
+        term('Thương hiệu', scopeLabel(i.brand_name, i.brand_id, 'Tất cả thương hiệu của khách hàng'));
+        term('Chiến dịch', scopeLabel(i.campaign_name, i.campaign_id, 'Tất cả chiến dịch trong phạm vi trên'));
+        term('Bình luận', i.can_comment ? 'Được phép' : 'Không được phép');
+        term('Duyệt, từ chối hoặc yêu cầu sửa', i.can_decide ? 'Được phép' : 'Không được phép');
+      }
+      term('Hết hạn', new Date(i.expires_at).toLocaleString('vi-VN'));
       action(box, 'Chấp nhận lời mời', async () => {
         await api('/api/me/invitations/'+i.id+'/accept', 'POST');
         if (ticket === revision) await enterInvitedWorkspace(i.tenant_id);

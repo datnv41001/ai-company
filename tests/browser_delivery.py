@@ -207,10 +207,34 @@ def exercise():
             invitation_form.get_by_label("Email tài khoản đã đăng ký").fill(invited_email)
             invitation_form.get_by_label("Khách hàng", exact=True).select_option(client["id"])
             invitation_form.get_by_label("Thương hiệu", exact=True).select_option(brand["id"])
+            invitation_form.get_by_label("Chiến dịch", exact=True).select_option(camp["id"])
             invitation_form.get_by_label("Cho phép duyệt, từ chối hoặc yêu cầu sửa").check()
             invitation_form.get_by_role("button", name="Tạo lời mời trong ứng dụng").click()
             expect(admin_panel.get_by_text(invited_email.lower(), exact=False)).to_be_visible()
-            reader = login_page(invited_email, invited_password, {"width":390,"height":844})
+            _, _, _, broad_email, broad_password = user("ClientWide")
+            post(base + "/invitations", {"email": broad_email, "client_id":client["id"], "can_comment":True}, token)
+
+            def preview(page, brand_scope, campaign_scope, comment, decide):
+                box = page.locator("#recipient-panel > section").filter(has=page.get_by_role("button", name="Chấp nhận lời mời"))
+                for label, value in (
+                    ("Vai trò", "Khách hàng"), ("Khách hàng", f"{client['name']} ({client['id']})"),
+                    ("Thương hiệu", brand_scope), ("Chiến dịch", campaign_scope),
+                    ("Bình luận", comment), ("Duyệt, từ chối hoặc yêu cầu sửa", decide),
+                ):
+                    field = box.locator("dt").and_(box.get_by_text(label, exact=True))
+                    expect(field.locator("xpath=following-sibling::dd[1]")).to_have_text(value)
+                expect(box.get_by_role("button", name="Chấp nhận lời mời")).to_be_enabled()
+
+            for width in (1280,390):
+                viewport = {"width":width,"height":844}
+                wide = login_page(broad_email, broad_password, viewport)
+                preview(wide, "Tất cả thương hiệu của khách hàng", "Tất cả chiến dịch trong phạm vi trên", "Được phép", "Không được phép")
+                wide.close()
+                reader = login_page(invited_email, invited_password, viewport)
+                preview(reader, f"{brand['name']} ({brand['id']})", f"{camp['name']} ({camp['id']})", "Không được phép", "Được phép")
+                print(f"PASS invitation terms before acceptance at {width}px: named and unrestricted scope, comment and decision rights")
+                if width == 1280:
+                    reader.close()
             reader.get_by_role("button", name="Chấp nhận lời mời").click()
             expect(reader.locator("#workspace-select")).to_have_value(tenant)
             expect(reader.get_by_text("Quản lý người nhận và lời mời", exact=True)).to_have_count(0)

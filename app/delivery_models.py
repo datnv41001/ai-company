@@ -95,6 +95,8 @@ class PortalInvitation(Base):
     email: Mapped[str] = mapped_column(String(320))
     workspace_name: Mapped[str] = mapped_column(String(150))
     client_name: Mapped[str | None] = mapped_column(String(160))
+    brand_name: Mapped[str | None] = mapped_column(String(160))
+    campaign_name: Mapped[str | None] = mapped_column(String(160))
     brand_id: Mapped[str | None] = mapped_column(String(36))
     campaign_id: Mapped[str | None] = mapped_column(String(36))
     can_comment: Mapped[bool] = mapped_column(Boolean)

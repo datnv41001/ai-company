@@ -6,13 +6,16 @@ def test_recipient_invitations_and_revocation(api, agency):
     new = account(api, "Invitee")
     client_id = next(iter(a["clients"]))
     brand_id = next(iter(a["brands"]))
-    payload = {"email": new["email"], "client_id": client_id, "brand_id": brand_id, "can_decide": True, "can_comment": False}
+    brand = next(b for b in api.get(base + "/brands", headers=admin["headers"]).json() if b["id"] == brand_id)
+    campaign = next(c for c in api.get(base + "/campaigns", headers=admin["headers"]).json() if c["brand_id"] == brand_id)
+    payload = {"email": new["email"], "client_id": client_id, "brand_id": brand_id, "campaign_id": campaign["id"], "can_decide": True, "can_comment": False}
     invitations = base + "/invitations"
     for outsider in (alice, new):
         for suffix in ("/invitations", "/recipients"):
             assert api.get(base + suffix, headers=outsider["headers"]).status_code == 404
         assert api.post(invitations, headers=outsider["headers"], json=payload).status_code == 404
     assert api.post(invitations, headers=admin["headers"], json={**payload, "brand_id": next(iter(b["brands"]))}).status_code == 404
+    assert api.post(invitations, headers=admin["headers"], json={**payload, "campaign_id": next(iter(b["campaigns"]))}).status_code == 404
     assert api.post(invitations, headers=admin["headers"], json={**payload, "email": alice["email"]}).status_code == 409
 
     def issue():
@@ -23,13 +26,17 @@ def test_recipient_invitations_and_revocation(api, agency):
 
     invite = issue()
     assert api.post(invitations, headers=admin["headers"], json=payload).status_code == 409
-    assert api.get(base + "/clients", headers=new["headers"]).status_code == 404
+    for catalog in ("/clients", "/brands", "/campaigns"):
+        assert api.get(base + catalog, headers=new["headers"]).status_code == 404
     assert api.get("/api/me/invitations", headers=bob["headers"]).json() == []
     assert accept(bob, invite).status_code == 404
     assert api.delete(invitations + "/" + invite, headers=admin["headers"]).status_code == 204
     assert accept(new, invite).status_code == 404
     invite = issue()
-    assert [i["id"] for i in api.get("/api/me/invitations", headers=new["headers"]).json()] == [invite]
+    [terms] = api.get("/api/me/invitations", headers=new["headers"]).json()
+    expected = {"id": invite, "client_name": "Client A", "brand_name": brand["name"], "campaign_name": campaign["name"],
+                "client_id": client_id, "brand_id": brand_id, "campaign_id": campaign["id"], "can_comment": False, "can_decide": True}
+    assert {key: terms[key] for key in expected} == expected
     assert accept(new, invite).status_code == 204
     assert accept(new, invite).status_code == 404
     grants = api.get(base + "/recipients", headers=admin["headers"]).json()
@@ -39,7 +46,7 @@ def test_recipient_invitations_and_revocation(api, agency):
         "user_id": new["id"],
         "client_id": client_id,
         "brand_id": brand_id,
-        "campaign_id": None,
+        "campaign_id": campaign["id"],
         "can_comment": False,
         "can_decide": True,
     }

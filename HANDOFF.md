@@ -1,8 +1,12 @@
 # Bắt đầu ở đây khi tiếp quản AI Marketing Company
 
-## Nhánh PR #6 · Workflow có đồ thị phụ thuộc
+## Mốc nội bộ sau PR #6 · Schema v11
 
-Nhánh này nâng PostgreSQL lên v11 bằng migration 011. Với agency đã bật pool và cấp route, chọn **Mẫu workflow → Content và SEO sau Strategy (diamond-v1)** khi giao một brief mới. API nhận `{"workflow":"diamond-v1","budget_microusd":0}` tại endpoint tạo run hiện có. Mặc định `linear` tiếp tục xử lý các brief khác. Template DAG yêu cầu PostgreSQL và gồm đúng năm bước gọi model. Director viết phân công. Join là bước tổng hợp trong giao dịch, không gọi model.
+Ngày 24/11/2026, [PR #6](https://github.com/datnv41001/ai-company/pull/6) đã vào `main` tại [`4bfa8cf15ee0f654f779442debb75007d74f8ec2`](https://github.com/datnv41001/ai-company/commit/4bfa8cf15ee0f654f779442debb75007d74f8ec2). Git tree của commit merge trùng với head đã kiểm toán `08178ef7afb36bc244d32fac9c536696fdf20622`.
+
+CI trên chính commit merge đạt 3/3 job. Ruff và 102/102 bài kiểm thử đạt. Cả 10 đường nâng PostgreSQL từ v1–v10 lên v11 đều đạt khi chạy lặp lại trên dữ liệu mẫu có kiểm tra cô lập khách hàng. Chromium đạt ở 1280 × 850 và 390 × 844. Với Qwen local và workflow diamond, A dừng khi thu hồi quyền, còn một lượt chưa xác nhận usage. B và C mỗi campaign hoàn thành 5/5 node ngay lần đầu. Mười lượt có usage ghi nhận tổng 2.814 token vào và 1.047 token ra. Phạm vi nghiệm thu là phát triển nội bộ trên dữ liệu tổng hợp. [CI của commit merge](https://github.com/datnv41001/ai-company/actions/runs/45301277947).
+
+Migration 011 nâng PostgreSQL lên v11. Với agency đã bật pool và cấp route, chọn **Mẫu workflow → Content và SEO sau Strategy (diamond-v1)** khi giao một brief mới. API nhận `{"workflow":"diamond-v1","budget_microusd":0}` tại endpoint tạo run hiện có. Mặc định `linear` tiếp tục xử lý các brief khác. Template DAG yêu cầu PostgreSQL và gồm đúng năm bước gọi model. Director viết phân công. Join là bước tổng hợp trong giao dịch, không gọi model.
 
 Mở **Xem kết quả và chi phí** để thấy revision, node sẵn sàng, dependency còn thiếu, số lượt và khoản giữ/chi. Hai nhánh dùng chung Strategy và nhận riêng phân công của mình. Trong mỗi run có tối đa một lease đang mở. Preview được tổng hợp theo thứ tự của template; cùng nội dung node sẽ có cùng digest khi đảo thứ tự hoàn tất. Kết quả văn bản do Qwen sinh vẫn có thể thay đổi giữa các lần chạy.
 
@@ -125,4 +129,4 @@ Người hoặc AI sửa mã cập nhật **cùng PR** phần hợp đồng tư�
 
 Ghi vào PR: hành vi cũ → mới, đường vào API/UI, files chính, phiên bản schema, lệnh kiểm thử, kết quả đạt/skip, link CI, dữ liệu cần chuyển và điểm còn mở. Người nhận chạy lại thay đổi từ SHA của PR và lấy dữ liệu mẫu qua fixture. Chưa merge thì nêu tên nhánh. Khi hoàn tất một work package, cập nhật mục tiếp theo và mốc xác minh. Mẫu có ở [pull request template](.github/pull_request_template.md).
 
-**Công việc tiếp theo.** [Kế hoạch AI Director và workflow có đồ thị phụ thuộc](docs/PR6-DIRECTOR-WORKFLOW-DAG.md) mô tả hợp đồng node/cạnh, thứ tự chuyển đổi, điều kiện nghiệm thu và rollback. PR #6 triển khai mẫu cố định trên nhánh riêng. Lần review này cần đối chiếu đầu vào của Content/SEO, tính nguyên tử của Join và lịch sử số dư khi thu hồi hoặc retry.
+**Công việc tiếp theo.** Review [thiết kế PR #7 cho DAG động và điều phối theo node](docs/PR7-DYNAMIC-DAG.md). Bước đầu tiên là kiểm chứng đầu ra của Director và đóng băng kế hoạch với giới hạn một lease mỗi run. Trước khi thử hai lease, phải có bằng chứng PostgreSQL về tranh ngân sách run/agency, lease hết hạn, thu hồi quyền, retry độc lập và Join đúng một lần khi hai worker hoàn tất đồng thời.

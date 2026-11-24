@@ -8,7 +8,7 @@ from dataclasses import replace
 from sqlalchemy import create_engine, text
 from sqlalchemy.orm import Session
 
-from migrations.registry_release import adapter_digest
+from .registry_adapters import resolve
 
 from . import node_attempts
 from .workforce_gateway import Gateway
@@ -41,9 +41,8 @@ def dispatch(bind, config):
                             continue
                         if binding := run.knowledge.get("registry"):
                             contract = binding["contracts"][node.skill]
-                            if (contract["adapter_digest"] != adapter_digest() or config.provider != contract["model"]
-                                    or config.timeout > contract["timeout_seconds"]):
-                                run.state, run.last_error = "failed", "registry_adapter_unavailable"
+                            if not resolve(contract) or config.provider != contract["model"] or config.timeout > contract["timeout_seconds"]:
+                                # A compatible dispatcher may still claim this node during rollout.
                                 continue
                     if node and node.parallel:
                         offer = node_attempts.claim(db, scope, config, route["run"], node)
@@ -113,30 +112,44 @@ def dispatch(bind, config):
     return False
 
 
+def pending_reports(db):
+    # Usually the oldest report is compatible. Fetch another only when a peer
+    # owns its adapter; avoid locking or reading every queued model response.
+    after = None
+    while True:
+        cursor = "and (a.started,a.id) > (:started,cast(:id as uuid))" if after else ""
+        row = query(db, f"""
+            select a.*,t.client,t.brand,t.campaign,t.skill from amc_ops.attempts a join amc_ops.tasks t using(run,step)
+            where a.status<>'closed' and (a.status='reported' or not amc_ops.live(a.id)) {cursor}
+            order by a.started,a.id limit 1 for update of a
+        """, **(after or {})).mappings().first()
+        if row is None:
+            return
+        yield row
+        after = {"started":row["started"], "id":str(row["id"])}
+
+
 def consume(bind, config):
     with Session(bind) as db, db.begin():
         lock_scheduler(db)
-        row = (
-            query(
-                db,
-                """
-            select a.*,t.client,t.brand,t.campaign from amc_ops.attempts a join amc_ops.tasks t using(run,step)
-            where a.status<>'closed' and (a.status='reported' or not amc_ops.live(a.id))
-            order by a.started limit 1 for update of a
-        """,
-            )
-            .mappings()
-            .first()
-        )
-        if not row:
+        for row in pending_reports(db):
+            token = str(row["id"])
+            scope = Scope(*(row[k] for k in ("tenant", "client", "brand", "campaign", "operator")))
+            live_report = row["status"] == "reported" and query(db, "select amc_ops.fence(:id)", id=token).scalar()
+            if live_report and row["node_id"]:
+                run = db.scalar(authorized_queue(db, scope).where(WorkforceRun.id == row["run"]))
+                binding = run.knowledge.get("registry")
+                if binding and not resolve(binding["contracts"][row["skill"]]):
+                    # Preserve the reported output for a peer that owns this version's validator and QA.
+                    continue
+            break
+        else:
             return False
-        token = str(row["id"])
-        scope = Scope(*(row[k] for k in ("tenant", "client", "brand", "campaign", "operator")))
         outcome, event, cost = "lease_expired", None, 0
         inputs = outputs = None
         if row["status"] == "offered":
             event = "unsent"
-        if row["status"] == "reported" and query(db, "select amc_ops.fence(:id)", id=token).scalar():
+        if live_report:
             result, error = row["result"], row["error"]
             if result is not None and (not isinstance(result, list) or len(result) != 3):
                 result, error = None, "invalid_usage"

@@ -7,8 +7,9 @@ from uuid import uuid4
 from sqlalchemy import text
 
 from . import workflow_dag
+from .registry_adapters import specialist_request, validate_output
 from .models import utcnow
-from .workforce_gateway import GatewayError, PROMPT_VERSION, measured_cost, request_body, reserve_tokens, validate_output
+from .workforce_gateway import GatewayError, PROMPT_VERSION, measured_cost, reserve_tokens
 from .workforce_models import WorkforceRun
 from .workforce_worker import MAX_TRIES, authorized_queue, save_checkpoint
 
@@ -28,7 +29,7 @@ def claim(db, scope, config, rid, node):
     if not run:
         return
     earlier, assignment = workflow_dag.inputs(db, rid, node)
-    body = request_body(run, config.model, node=node, predecessors=earlier, assignment=assignment)
+    body = specialist_request(run, config.model, node=node, predecessors=earlier, assignment=assignment)
     hold = config.price(reserve_tokens(body), body["max_tokens"])
     if node.attempts >= MAX_TRIES or run.knowledge["prompt_version"] != PROMPT_VERSION or hold > run.budget_microusd:
         run.state = "failed"

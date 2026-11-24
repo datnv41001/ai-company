@@ -5,6 +5,7 @@ import json
 import os
 from pathlib import Path
 import time
+import subprocess
 
 from fastapi.testclient import TestClient
 from app.main import app
@@ -13,6 +14,48 @@ from app.pool_worker import report
 from pool_lab import Lab
 from pool_model_smoke import receipts
 from test_registry import policy, registry_brief
+from test_adapter_rollout import second_release
+from dispatcher_build import turn
+from app.registry_adapters import V1_DIGEST, seo_v2_digest
+from migrations.apply import publish_registry
+
+
+def drive(lab, rid, config, *, old_checkout=None, after_content=None, seo_v2=False):
+    deadline = time.monotonic() + 360
+    switch = None
+    while time.monotonic() < deadline and lab.states()[0] in ("queued", "running"):
+        for worker in lab.workers:
+            job = worker.take()
+            if job:
+                assert job["run"] == rid
+                if job["body"]["response_format"]["json_schema"]["name"] == "seo":
+                    assert ("literal search query" in job["body"]["messages"][0]["content"]) == seo_v2
+                try:
+                    result = infer(config, job["body"])
+                    assert report(worker.conn, job, list(result))
+                except GatewayError as exc:
+                    assert report(worker.conn, job, result=exc.usage, error=str(exc))
+        if old_checkout and switch is None:
+            probe = turn(old_checkout, lab, "consume")
+            assert probe["digest"] == V1_DIGEST
+            details = read_run(lab, rid)
+            if any(cp["skill"] == "content" for cp in details["checkpoints"]):
+                assert details["state"] == "queued" and not details["deliverable_id"]
+                switch = {k: details["registry"][k] for k in ("workflow", "plan_digest", "manifest_digest")}
+                after_content()
+            else:
+                turn(old_checkout, lab, "dispatch")
+        elif not lab.consume() and not lab.dispatch():
+            time.sleep(0.1)
+    assert lab.states() == ["awaiting_qa"]
+    if old_checkout:
+        assert switch is not None
+        assert all(read_run(lab, rid)["registry"][k] == v for k, v in switch.items())
+    return switch
+
+
+def read_run(lab, rid):
+    return lab.api.get(lab.cases[0][0] + "/workforce/runs/" + rid, headers=lab.x["headers"]).json()
 
 
 def verify():
@@ -27,19 +70,21 @@ def verify():
             rid = queued.json()["id"]
             lab.runs = [rid]
             config = replace(lab.config, url=os.environ["AMC_LOCAL_MODEL_URL"])
-            deadline = time.monotonic() + 360
-            while time.monotonic() < deadline and lab.states()[0] in ("queued", "running"):
-                for w in lab.workers:
-                    job = w.take()
-                    if job:
-                        assert job["run"] == rid
-                        try:
-                            raw, inputs, outputs = infer(config, job["body"])
-                            assert report(w.conn, job, [raw, inputs, outputs])
-                        except GatewayError as exc:
-                            assert report(w.conn, job, result=exc.usage, error=str(exc))
-                if not lab.consume() and not lab.dispatch():
-                    time.sleep(0.1)
+            old = os.getenv("AMC_V1_SOURCE")
+            if old:
+                prior_sha = subprocess.check_output(["git", "rev-parse", "HEAD"], cwd=old, text=True).strip()
+                assert prior_sha == "bae0ddeb1df5a922c82f6d5c9a2b09e46eeee728"
+            release2 = second_release(version=2)
+
+            def deploy():
+                with lab.owner.transaction():
+                    publish_registry(lab.owner, release2)
+                endpoint = lab.cases[0][0] + "/workforce/registry/" + lab.cases[0][-1]
+                api.put(
+                    endpoint, headers=lab.x["headers"], json={"workflow": release2["workflow_id"] + "@2", "skills": release2["required"], "action": "activate"}
+                ).raise_for_status()
+
+            switch = drive(lab, rid, config, old_checkout=old, after_content=deploy)
             results = receipts(lab, [(rid, lab.cases[0], "Registry")])
             Path("registry-measurements.json").write_text(json.dumps(results, indent=2), encoding="utf-8")
             assert lab.states() == ["awaiting_qa"]
@@ -47,6 +92,32 @@ def verify():
             assert details["approved_assets"] and details["registry"]["plan_digest"] == details["graph"]["digest"]
             assert {"director", "content", "seo"} == {n["skill_id"] for n in details["registry"]["nodes"]}
             assert all(n["attempt_ids"] for n in details["registry"]["nodes"])
+            if old:
+                path, terms = registry_brief(lab)
+                queued = api.post(path, json={**terms, "registry_workflow": release2["workflow_id"] + "@2"}, headers=lab.x["headers"])
+                queued.raise_for_status()
+                new = queued.json()["id"]
+                lab.runs = [new]
+                drive(lab, new, config, seo_v2=True)
+                new_receipt = receipts(lab, [(new, lab.cases[0], "Registry v2")])
+                current = read_run(lab, new)
+                assert current["approved_assets"] and current["deliverable_id"] != details["deliverable_id"]
+                evidence = {
+                    "source_before": prior_sha,
+                    "source_after": os.environ["AMC_SOURCE_SHA"],
+                    "cutover_after": "content",
+                    "before": switch,
+                    "v1_runtime": "seo@1",
+                    "v2_runtime": "seo@2",
+                    "v1_adapter_digest": V1_DIGEST,
+                    "v2_adapter_digest": seo_v2_digest(),
+                    "v1_completed": details["registry"],
+                    "v1_snapshots": details["approved_assets"],
+                    "v2_completed": current["registry"],
+                    "v2_snapshots": current["approved_assets"],
+                    "v2_receipt": new_receipt,
+                }
+                Path("registry-rollout.json").write_text(json.dumps(evidence, indent=2), encoding="utf-8")
         finally:
             lab.close()
 

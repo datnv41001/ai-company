@@ -128,6 +128,12 @@ jobs:
     timeout-minutes: 45
     steps:
       - uses: actions/checkout@v4
+      - name: Check out the previously reviewed dispatcher for the rolling upgrade
+        uses: actions/checkout@v4
+        with:
+          ref: bae0ddeb1df5a922c82f6d5c9a2b09e46eeee728
+          path: .ci/adapter-v1
+          persist-credentials: false
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
@@ -169,7 +175,8 @@ jobs:
           model_port="$("${parallel_compose[@]}" port model 8080 | cut -d: -f2)"
           curl --fail --retry 60 --retry-all-errors --retry-delay 1 "http://127.0.0.1:$model_port/health"
           AMC_LOCAL_MODEL_URL="http://127.0.0.1:$model_port/v1" AMC_PARALLEL_REPORT=parallel-measurements.json python tests/parallel_model_smoke.py
-          AMC_LOCAL_MODEL_URL="http://127.0.0.1:$model_port/v1" python tests/registry_model_smoke.py
+          AMC_V1_SOURCE="$PWD/.ci/adapter-v1" AMC_SOURCE_SHA="${{ github.event.pull_request.head.sha || github.sha }}" \
+            AMC_LOCAL_MODEL_URL="http://127.0.0.1:$model_port/v1" python tests/registry_model_smoke.py
           test "$single_result" -eq 0 && test "$pool_result" -eq 0
       - uses: actions/upload-artifact@v4
         if: always()
@@ -181,4 +188,5 @@ jobs:
             dynamic-measurements.json
             parallel-measurements.json
             registry-measurements.json
+            registry-rollout.json
           if-no-files-found: ignore

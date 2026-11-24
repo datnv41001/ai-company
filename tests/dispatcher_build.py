@@ -1,4 +1,5 @@
 """Run one scheduler turn from a separate checkout with only its dispatcher login."""
+
 import json
 import os
 import subprocess
@@ -23,10 +24,17 @@ finally:
 
 
 def turn(path, lab, mode):
-    env = {k:v for k,v in os.environ.items() if k.upper() in {"SYSTEMROOT","WINDIR","PATH","TEMP","TMP","HOME","LOCALAPPDATA"}}
-    env.update(PYTHONUTF8="1",APP_ENV="local")
-    completed = subprocess.run([sys.executable,"-c",PROGRAM],cwd=path,env=env,
-        input=json.dumps([lab.logins[0][1],mode,vars(lab.config)]),text=True,capture_output=True,timeout=25)
+    env = {k: v for k, v in os.environ.items() if k.upper() in {"SYSTEMROOT", "WINDIR", "PATH", "TEMP", "TMP", "HOME", "LOCALAPPDATA"}}
+    env.update(PYTHONUTF8="1", APP_ENV="local")
+    completed = subprocess.run(
+        [sys.executable, "-c", PROGRAM],
+        cwd=path,
+        env=env,
+        input=json.dumps([lab.logins[0][1], mode, vars(lab.config)]),
+        text=True,
+        capture_output=True,
+        timeout=25,
+    )
     if completed.returncode:
         raise AssertionError(completed.stderr)
     return json.loads(completed.stdout)

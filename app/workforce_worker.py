@@ -15,8 +15,9 @@ from .access import set_context, set_worker_scope
 from .database import engine, prepare_database
 from .delivery import as_utc
 from .revision_qa import evaluate
+from .registry_adapters import specialist_request, validate_output
 from .models import AuditEvent, Deliverable, Membership, utcnow
-from .workforce_gateway import Gateway, GatewayError, PROMPT_VERSION, infer, measured_cost, quality, request_body, reserve_tokens, validate_output
+from .workforce_gateway import Gateway, GatewayError, PROMPT_VERSION, infer, measured_cost, quality, request_body, reserve_tokens
 from .workforce_models import WorkforceRun
 from . import dynamic_plan, workflow_dag
 
@@ -81,7 +82,7 @@ def claim(db, scope, config, *, run_id=None, node=None, commit=True):
         if node.template == 'dynamic-v1' and stage == 'director':
             body = dynamic_plan.planner_body(run, config.model)
         else:
-            body = request_body(run, config.model, node=node, predecessors=earlier, assignment=assignment)
+            body = specialist_request(run, config.model, node=node, predecessors=earlier, assignment=assignment)
     else:
         stage = run.plan[len(run.checkpoints)]
         body = request_body(run, config.model)

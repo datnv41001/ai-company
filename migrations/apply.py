@@ -2,6 +2,7 @@
 import hashlib
 import json
 import os
+import sys
 
 from psycopg.types.json import Jsonb
 from pathlib import Path
@@ -9,10 +10,10 @@ from pathlib import Path
 import psycopg
 from psycopg import sql
 
-if __package__:
-    from .registry_release import adapter_digest
-else:
-    from registry_release import adapter_digest
+# Also support the Docker entry point: python migrations/apply.py.
+if not __package__:
+    sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
+from app.registry_compatibility import validate_manifest  # noqa: E402
 
 HERE = Path(__file__).resolve().parent
 BASE = {"tenants", "users", "memberships", "clients", "brands", "campaigns",
@@ -26,22 +27,8 @@ def publish_registry(conn, manifest):
 
 
 def _publish_registry(conn, manifest):
-    contracts = manifest["contracts"]
-    if (set(manifest["required"]) != {"director", "content", "seo"}
-            or not set(manifest["required"]) <= contracts.keys() or manifest["mode"] != "dynamic-v1"
-            or manifest["workflow_id"] != "WF-13/landing-seo-draft" or type(manifest["workflow_version"]) is not int
-            or manifest["workflow_version"] < 1):
-        raise ValueError("Unsupported workflow contract")
-    roles = {item["id"] for item in json.loads((HERE.parent/"catalog/agent_roles.json").read_text(encoding="utf-8"))}
-    for skill, contract in contracts.items():
-        if (contract.get("adapter_digest") != adapter_digest() or skill not in {"director", "research", "strategy", "content", "seo"}
-                or contract["skill_id"] != skill or contract["role_id"] not in roles
-                or any(type(contract[k]) is not int or contract[k] < 1 for k in ("skill_version","contract_version"))
-                or contract["approval"] != "revision_qa_and_client_snapshot"
-                or contract["adapter"] != skill+"@1" or contract["qa_policy"] != skill+"@1"
-                or contract["tools"] or contract["model"] != "local" or contract["node_cap"] < 0
-                or contract["max_attempts"] != 3 or contract["timeout_seconds"] != 300):
-            raise ValueError("Unsupported registry adapter or execution policy")
+    validate_manifest(manifest)
+    for contract in manifest["contracts"].values():
         for kind, key, version in (("role", "role_id", "contract_version"), ("skill", "skill_id", "skill_version")):
             identity = (kind, contract[key], contract[version])
             definition = contract if kind == "skill" else {k:v for k,v in contract.items() if k not in ("adapter","skill_id","skill_version","adapter_digest")}

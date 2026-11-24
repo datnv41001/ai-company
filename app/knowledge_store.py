@@ -103,6 +103,8 @@ class Store:
             )
             if duplicate and table is m.KnowledgeRevision:
                 conflict("Revision changed or subject has another type")
+            if duplicate and table is m.KnowledgeCommand:
+                conflict("Command key already used with different inputs")
             raise
         return table(**values)
 
@@ -150,13 +152,15 @@ class Store:
             qualification_id=qualification,
         )
 
-    def command(self, operation, payload, action, target=None):
+    def command(self, operation, payload, action, target=None, prepare=None):
         fingerprint = digest(canonical([operation, target, payload.model_dump(mode="json")]))
         old = self.db.scalar(self.query(m.KnowledgeCommand).filter_by(actor=self.actor, key=payload.key))
         if old:
             if old.request_digest != fingerprint:
                 conflict("Command key already used with different inputs")
             return old.result
+        if prepare:
+            prepare()
         at = self.now()
         result, visibility, snapshot = action(at)
         queued = self.now() if operation == "queue" else None

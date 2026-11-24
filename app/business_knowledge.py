@@ -1,6 +1,7 @@
 """Internal C1 commands. Durable authorization receipts never enqueue, publish or bill."""
 
 from datetime import timedelta
+import json
 
 from fastapi import APIRouter, Depends, HTTPException, Query
 from sqlalchemy.orm import Session
@@ -8,7 +9,8 @@ from sqlalchemy.orm import Session
 from . import knowledge_models as m
 from .database import get_db
 from .knowledge_authority import change_state, check_assertion, eligible, invalid, new_revision
-from .knowledge_contracts import AuthorizeIn, Command, EventIn, Kind, PreviewIn, RevisionIn
+from .knowledge_contracts import AuthorizeIn, Command, EventIn, Kind, PreviewIn, RevisionIn, Target
+from .knowledge_target import describe
 from .knowledge_store import Store, aware, canonical, conflict, digest, missing, restrictive, stamp
 from .security import current_user
 
@@ -133,11 +135,13 @@ def resolved(s, claims, at):
 
 @router.post("/previews", status_code=201)
 def preview(body: PreviewIn, s=Depends(writer)):
+    target = {}
+
     def materialize(at):
         if len(set(body.claims)) != len(body.claims):
             invalid("Duplicate claim revision")
         deps, claims = resolved(s, body.claims, at)
-        canonical_text = canonical({"version": 1, "scope": s.scope, "snapshot_as_of": stamp(at), "claims": claims})
+        canonical_text = canonical({"version": 1, "scope": s.scope, "target": target, "snapshot_as_of": stamp(at), "claims": claims})
         created = s.now()
         vis = restrictive(*(r.visibility for r in deps.values()))
         snap = s.insert(
@@ -148,12 +152,14 @@ def preview(body: PreviewIn, s=Depends(writer)):
             snapshot_as_of=at,
             preview_created_at=created,
             expires_at=created + timedelta(seconds=body.ttl_seconds),
+            campaign_id=body.target.campaign_id if body.target else None,
+            brief_id=body.target.brief_id if body.target else None,
         )
         for row in deps.values():
             s.insert(m.KnowledgeDependency, vis, snapshot_id=snap.id, revision_id=row.id)
         return snapshot_view(snap), vis, snap.id
 
-    return s.command("preview", body, materialize)
+    return s.command("preview", body, materialize, prepare=lambda: target.update(describe(s, body.target, lock=True)))
 
 
 def snapshot_view(snap):
@@ -164,18 +170,17 @@ def snapshot_view(snap):
         snapshot_as_of=stamp(snap.snapshot_as_of),
         preview_created_at=stamp(snap.preview_created_at),
         expires_at=stamp(snap.expires_at),
+        target=json.loads(snap.canonical)["target"],
     )
 
 
-def check_snapshot(s, snap, at):
-    import json
-
+def check_snapshot(s, snap, at, target):
     if digest(snap.canonical) != snap.digest:
         conflict("Snapshot integrity check failed")
     payload = json.loads(snap.canonical)
     deps, claims = resolved(s, [r["claim_revision"] for r in payload["claims"]], at)
     recorded = s.db.scalars(s.query(m.KnowledgeDependency).filter_by(snapshot_id=snap.id)).all()
-    if claims != payload["claims"] or payload["scope"] != s.scope or {r.revision_id for r in recorded} != deps.keys():
+    if target != payload["target"] or claims != payload["claims"] or payload["scope"] != s.scope or {r.revision_id for r in recorded} != deps.keys():
         conflict("Knowledge dependencies changed")
 
 
@@ -184,7 +189,8 @@ def snapshot(snapshot_id: str, s=Depends(reader)):
     snap = s.get(m.KnowledgeSnapshot, snapshot_id)
     problem = None
     try:
-        check_snapshot(s, snap, s.now())
+        target = Target(campaign_id=snap.campaign_id, brief_id=snap.brief_id) if snap.brief_id else None
+        check_snapshot(s, snap, s.now(), describe(s, target, lock=False))
     except HTTPException as exc:
         if exc.status_code != 409:
             raise
@@ -197,8 +203,14 @@ def authorize(body: AuthorizeIn, s=Depends(writer)):
     if body.operation in ("qa", "share") and not s.approver:
         missing()
 
+    snap = s.get(m.KnowledgeSnapshot, body.snapshot_id)
+    expected = (snap.campaign_id, snap.brief_id)
+    supplied = (body.target.campaign_id, body.target.brief_id) if body.target else (None, None)
+    if expected != supplied:
+        conflict("Snapshot target differs; a brand foundation receipt cannot authorize campaign work")
+    target = {}
+
     def command(at):
-        snap = s.get(m.KnowledgeSnapshot, body.snapshot_id)
         if snap.digest != body.digest:
             conflict("Digest changed")
         previous = {"qa": "queue", "share": "qa"}.get(body.operation)
@@ -210,10 +222,16 @@ def authorize(body: AuthorizeIn, s=Depends(writer)):
                 conflict("Prior receipt covers a different operation or snapshot")
         elif body.previous_receipt or at >= aware(snap.expires_at):
             conflict("Invalid or expired queue preview")
-        check_snapshot(s, snap, at)
-        return dict(operation=body.operation, snapshot_id=snap.id, digest=snap.digest, previous_receipt=body.previous_receipt), snap.visibility, snap.id
+        check_snapshot(s, snap, at, target)
+        if body.target and not target["submitted"]:
+            conflict("Brief has not been submitted")
+        return (
+            dict(operation=body.operation, snapshot_id=snap.id, digest=snap.digest, target=target, previous_receipt=body.previous_receipt),
+            snap.visibility,
+            snap.id,
+        )
 
-    return s.command(body.operation, body, command)
+    return s.command(body.operation, body, command, prepare=lambda: target.update(describe(s, body.target, lock=True)))
 
 
 @router.get("/receipts/{receipt_id}")

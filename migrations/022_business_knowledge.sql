@@ -22,6 +22,11 @@ CREATE TABLE knowledge_revisions (
 );
 
 CREATE TABLE knowledge_snapshots (
+    campaign_id VARCHAR(36),
+    brief_id VARCHAR(36),
+    CHECK ((campaign_id IS NULL) = (brief_id IS NULL)),
+    FOREIGN KEY(tenant_id,client_id,brand_id,campaign_id,brief_id)
+      REFERENCES workforce_briefs(tenant_id,client_id,brand_id,campaign_id,id),
 	canonical TEXT NOT NULL,
 	digest VARCHAR(64) NOT NULL,
 	snapshot_as_of TIMESTAMP WITH TIME ZONE NOT NULL,
@@ -150,6 +155,55 @@ BEGIN
 END $$;
 REVOKE ALL ON FUNCTION amc_acl.lock_knowledge(text,text,text) FROM PUBLIC;
 GRANT EXECUTE ON FUNCTION amc_acl.lock_knowledge(text,text,text) TO amc_runtime;
+
+-- Lock current recipient entitlement before campaign/brief facts, to order
+-- target authorization against a grant change or a concurrent submission.
+CREATE FUNCTION amc_acl.lock_knowledge_target(t text,c text,b text,k text,i text) RETURNS boolean
+LANGUAGE plpgsql VOLATILE SECURITY DEFINER SET search_path=pg_catalog AS $$
+DECLARE recipient text;
+BEGIN
+ PERFORM amc_acl.lock_knowledge(t,c,b);
+ SELECT recipient_id INTO recipient FROM public.workforce_briefs WHERE (tenant_id,client_id,brand_id,campaign_id,id)=(t,c,b,k,i);
+ IF NOT FOUND THEN RETURN false; END IF;
+ PERFORM 1 FROM public.memberships WHERE tenant_id=t AND user_id=recipient AND role='client_viewer' AND client_id=c FOR SHARE;
+ IF NOT FOUND THEN RETURN false; END IF;
+ PERFORM 1 FROM public.portal_grants WHERE tenant_id=t AND user_id=recipient AND client_id=c
+ AND (brand_id IS NULL OR brand_id=b) AND (campaign_id IS NULL OR campaign_id=k) FOR SHARE;
+ IF NOT FOUND THEN RETURN false; END IF;
+ PERFORM 1 FROM public.campaigns WHERE (tenant_id,brand_id,id)=(t,b,k) FOR SHARE;
+ IF NOT FOUND THEN RETURN false; END IF;
+ PERFORM 1 FROM public.workforce_briefs WHERE (tenant_id,client_id,brand_id,campaign_id,id,recipient_id)=(t,c,b,k,i,recipient) FOR SHARE;
+ RETURN FOUND;
+END $$;
+REVOKE ALL ON FUNCTION amc_acl.lock_knowledge_target(text,text,text,text,text) FROM PUBLIC;
+GRANT EXECUTE ON FUNCTION amc_acl.lock_knowledge_target(text,text,text,text,text) TO amc_runtime;
+
+-- Track edits on the pre-existing mutable target independently of identical
+-- A → B → A content. Logical dump/restore preserves this auxiliary counter.
+CREATE TABLE amc_acl.knowledge_target_epochs(kind text NOT NULL,id text NOT NULL,epoch bigint NOT NULL,PRIMARY KEY(kind,id));
+REVOKE ALL ON amc_acl.knowledge_target_epochs FROM PUBLIC, amc_runtime;
+CREATE FUNCTION amc_acl.bump_knowledge_target_epoch() RETURNS trigger
+LANGUAGE plpgsql SECURITY DEFINER SET search_path=pg_catalog AS $$
+BEGIN
+ INSERT INTO amc_acl.knowledge_target_epochs VALUES(TG_ARGV[0],NEW.id,1)
+ ON CONFLICT(kind,id) DO UPDATE SET epoch=knowledge_target_epochs.epoch+1;
+ RETURN NULL;
+END $$;
+REVOKE ALL ON FUNCTION amc_acl.bump_knowledge_target_epoch() FROM PUBLIC, amc_runtime;
+CREATE TRIGGER knowledge_epoch_campaign AFTER UPDATE OF tenant_id,brand_id,name,brief,objective,status ON public.campaigns
+ FOR EACH ROW EXECUTE FUNCTION amc_acl.bump_knowledge_target_epoch('campaign');
+CREATE TRIGGER knowledge_epoch_brief AFTER UPDATE OF tenant_id,client_id,brand_id,campaign_id,recipient_id,title,payload ON public.workforce_briefs
+ FOR EACH ROW EXECUTE FUNCTION amc_acl.bump_knowledge_target_epoch('brief');
+
+CREATE FUNCTION amc_acl.knowledge_target_epoch(t text,c text,b text,k text,i text) RETURNS bigint[]
+LANGUAGE sql STABLE SECURITY DEFINER SET search_path=pg_catalog AS $$
+ SELECT ARRAY[coalesce((SELECT epoch FROM amc_acl.knowledge_target_epochs WHERE kind='campaign' AND id=k),0),
+              coalesce((SELECT epoch FROM amc_acl.knowledge_target_epochs WHERE kind='brief' AND id=i),0)]
+ WHERE amc_acl.knowledge_read(t,'internal') AND EXISTS(SELECT FROM public.workforce_briefs
+ WHERE (tenant_id,client_id,brand_id,campaign_id,id)=(t,c,b,k,i));
+$$;
+REVOKE ALL ON FUNCTION amc_acl.knowledge_target_epoch(text,text,text,text,text) FROM PUBLIC;
+GRANT EXECUTE ON FUNCTION amc_acl.knowledge_target_epoch(text,text,text,text,text) TO amc_runtime;
 
 DO $install$
 DECLARE n name; rel name;

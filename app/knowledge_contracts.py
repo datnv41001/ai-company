@@ -318,12 +318,19 @@ class EventIn(Command):
     qualification_revision: Ref | None = None
 
 
+class Target(Input):
+    campaign_id: Ref
+    brief_id: Ref
+
+
 class PreviewIn(Command):
+    target: Target | None = None
     claims: Annotated[list[Ref], Field(min_length=1, max_length=24)]
     ttl_seconds: Annotated[int, Field(ge=1, le=900)] = 300
 
 
 class AuthorizeIn(Command):
+    target: Target | None = None
     operation: Literal["queue", "qa", "share"]
     snapshot_id: Ref
     digest: Annotated[str, Field(pattern=r"^[0-9a-f]{64}$")]

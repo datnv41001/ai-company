@@ -70,7 +70,12 @@ class KnowledgeEvent(ScopedKnowledge, Base):
 
 class KnowledgeSnapshot(ScopedKnowledge, Base):
     __tablename__ = "knowledge_snapshots"
-    __table_args__ = boundaries()
+    __table_args__ = boundaries(
+        CheckConstraint("(campaign_id IS NULL) = (brief_id IS NULL)"),
+        ForeignKeyConstraint([*SCOPE, "campaign_id", "brief_id"], [f"workforce_briefs.{k}" for k in (*SCOPE, "campaign_id", "id")]),
+    )
+    campaign_id: Mapped[str | None] = mapped_column(String(36), nullable=True)
+    brief_id: Mapped[str | None] = mapped_column(String(36), nullable=True)
     # Exact UTF-8 representation is served from this stored string, including snapshot_as_of.
     canonical: Mapped[str] = mapped_column(Text)
     digest: Mapped[str] = mapped_column(String(64))

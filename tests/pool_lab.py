@@ -10,6 +10,7 @@ from psycopg.conninfo import make_conninfo
 from sqlalchemy import create_engine
 
 from agency_fixtures import account, create
+from identity_fixtures import invite_member
 from app.pool_dispatch import consume, dispatch
 from app.pool_worker import report, take
 from app.workforce_gateway import Gateway
@@ -85,8 +86,8 @@ class Lab:
             admin,
             {"brand_id": brand, "name": "Campaign " + label, "brief": "Synthetic campaign acceptance", "objective": "Reach students"},
         )["id"]
-        create(self.api, base + "/members", admin, {"email": reader["email"], "role": "client_viewer", "client_id": client})
-        create(self.api, base + "/members", admin, {"email": editor["email"], "role": "editor"})
+        invite_member(self.api, base, admin["headers"], reader["headers"], email=reader["email"], role="client_viewer", client_id=client)
+        invite_member(self.api, base, admin["headers"], editor["headers"], email=editor["email"], role="editor")
         for worker, _ in self.logins[1:]:
             route(self.owner, worker, tenant, client, brand, campaign, editor["id"])
         brief = create(self.api, base + "/workforce/briefs", admin, {"campaign_id": campaign, "recipient_id": reader["id"], "title": "Notebook " + label})
@@ -160,7 +161,7 @@ class Lab:
         base, admin, reader, client, _ = self.cases[0]
         path = base + "/members/" + reader["id"] + "/client-scope"
         self.api.delete(path, headers=admin["headers"]).raise_for_status()
-        create(self.api, base + "/members", admin, {"email": reader["email"], "role": "client_viewer", "client_id": client})
+        invite_member(self.api, base, admin["headers"], reader["headers"], email=reader["email"], role="client_viewer", client_id=client)
 
     def verify_assets_and_dependencies(self, *runs):
         for rid in runs:

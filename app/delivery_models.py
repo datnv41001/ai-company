@@ -79,18 +79,24 @@ class PortalInvitation(Base):
         ForeignKeyConstraint(["tenant_id", "client_id", "brand_id"], ["brands.tenant_id", "brands.client_id", "brands.id"]),
         ForeignKeyConstraint(["tenant_id", "brand_id", "campaign_id"], ["campaigns.tenant_id", "campaigns.brand_id", "campaigns.id"]),
         CheckConstraint("campaign_id IS NULL OR brand_id IS NOT NULL"),
+        CheckConstraint("(role='client_viewer' AND client_id IS NOT NULL AND client_name IS NOT NULL) OR "
+                        "(role IN ('viewer','editor','admin') AND client_id IS NULL AND client_name IS NULL "
+                        "AND brand_id IS NULL AND campaign_id IS NULL AND NOT can_comment AND NOT can_decide)"),
         CheckConstraint("state IN ('pending','accepted','revoked')"),
         Index("uq_pending_portal_invite", "tenant_id", "user_id", unique=True,
               sqlite_where=text("state='pending'"), postgresql_where=text("state='pending'")),
     )
     id: Mapped[str] = mapped_column(String(36), primary_key=True, default=new_id)
-    tenant_id: Mapped[str] = mapped_column(String(36), index=True)
-    client_id: Mapped[str] = mapped_column(String(36))
+    tenant_id: Mapped[str] = mapped_column(ForeignKey("tenants.id"), index=True)
+    role: Mapped[str] = mapped_column(String(16), server_default=text("'client_viewer'"))
+    client_id: Mapped[str | None] = mapped_column(String(36))
     user_id: Mapped[str] = mapped_column(ForeignKey("users.id"), index=True)
     invited_by: Mapped[str] = mapped_column(ForeignKey("users.id"))
     email: Mapped[str] = mapped_column(String(320))
     workspace_name: Mapped[str] = mapped_column(String(150))
-    client_name: Mapped[str] = mapped_column(String(160))
+    client_name: Mapped[str | None] = mapped_column(String(160))
+    brand_name: Mapped[str | None] = mapped_column(String(160))
+    campaign_name: Mapped[str | None] = mapped_column(String(160))
     brand_id: Mapped[str | None] = mapped_column(String(36))
     campaign_id: Mapped[str | None] = mapped_column(String(36))
     can_comment: Mapped[bool] = mapped_column(Boolean)

@@ -167,6 +167,7 @@ def view_review(tenant_id: str, rid: str, user: User = Depends(current_user), db
 
 
 def validate_scope(db, tenant_id, client_id, body):
+    brand = campaign = None
     if body.brand_id:
         brand = db.get(Brand, body.brand_id)
         if not brand or (brand.tenant_id, brand.client_id) != (tenant_id, client_id):
@@ -175,6 +176,7 @@ def validate_scope(db, tenant_id, client_id, body):
         campaign = db.get(Campaign, body.campaign_id)
         if not body.brand_id or not campaign or (campaign.tenant_id, campaign.brand_id) != (tenant_id, body.brand_id):
             raise not_found()
+    return brand, campaign
 
 
 @router.put("/members/{uid}/review-rights")

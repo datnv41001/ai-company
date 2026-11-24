@@ -4,9 +4,16 @@ on:
   pull_request:
 jobs:
   api-tests:
+    strategy: &revision_strategy
+      fail-fast: false
+      matrix:
+        revision: ${{ fromJSON(github.event_name == 'pull_request' && '["head","integration"]' || '["head"]') }}
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+        with:
+          ref: &tested_revision ${{ matrix.revision == 'integration' && github.sha || github.event.pull_request.head.sha || github.sha }}
+          fetch-depth: 0
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12.16'
@@ -93,19 +100,30 @@ jobs:
           export AMC_MIGRATION_DSN="${AMC_MIGRATION_DSN%/*}/amc_test_populated_v15"
           export DATABASE_URL="${DATABASE_URL%/*}/amc_test_populated_v15"
           python tests/check_postgres_upgrade.py --from-v15
+          docker exec amc-test-pg createdb -U postgres amc_test_populated_v16
+          export AMC_MIGRATION_DSN="${AMC_MIGRATION_DSN%/*}/amc_test_populated_v16"
+          export DATABASE_URL="${DATABASE_URL%/*}/amc_test_populated_v16"
+          AMC_UPGRADE_BACKUP_CONTAINER=amc-test-pg python tests/check_postgres_upgrade.py --from-v16
+          docker exec amc-test-pg createdb -U postgres amc_test_populated_v17
+          export AMC_MIGRATION_DSN="${AMC_MIGRATION_DSN%/*}/amc_test_populated_v17"
+          export DATABASE_URL="${DATABASE_URL%/*}/amc_test_populated_v17"
+          python tests/check_postgres_upgrade.py --from-v17
           docker exec amc-test-pg createdb -U postgres amc_test_isolated_v16
           export AMC_MIGRATION_DSN="${AMC_MIGRATION_DSN%/*}/amc_test_isolated_v16"
           export DATABASE_URL="${DATABASE_URL%/*}/amc_test_isolated_v16"
           python tests/check_postgres_upgrade.py --from-isolated-v16
       - uses: actions/upload-artifact@v4
         with:
-          name: wf03-director-ledger
+          name: wf03-director-ledger${{ matrix.revision == 'integration' && '-integration' || '' }}
           path: ${{ runner.temp }}/wf03-holds/*.json
           if-no-files-found: error
   compose-browser:
+    strategy: *revision_strategy
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+        with:
+          ref: *tested_revision
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12.16'
@@ -135,17 +153,20 @@ jobs:
           docker compose -p amc-acceptance images >> compose-versions.txt
           docker image inspect postgres:16.6-alpine --format '{{json .RepoDigests}}' >> compose-versions.txt
           docker compose -p amc-acceptance run --rm migrate python migrations/apply.py --publish-registry catalog/research-strategy-v1.json
-          AMC_BROWSER_TEST_URL=http://127.0.0.1:8000 python tests/browser_delivery.py
+          AMC_BROWSER_MAILBOX_PROJECT=amc-acceptance AMC_BROWSER_TEST_URL=http://127.0.0.1:8000 python tests/browser_delivery.py
       - uses: actions/upload-artifact@v4
         with:
-          name: compose-versions
+          name: compose-versions${{ matrix.revision == 'integration' && '-integration' || '' }}
           path: compose-versions.txt
 
   workforce-model:
+    strategy: *revision_strategy
     runs-on: ubuntu-latest
     timeout-minutes: 45
     steps:
       - uses: actions/checkout@v4
+        with:
+          ref: *tested_revision
       - name: Check out the previously reviewed dispatcher for the rolling upgrade
         uses: actions/checkout@v4
         with:
@@ -193,13 +214,13 @@ jobs:
           model_port="$("${parallel_compose[@]}" port model 8080 | cut -d: -f2)"
           curl --fail --retry 60 --retry-all-errors --retry-delay 1 "http://127.0.0.1:$model_port/health"
           AMC_LOCAL_MODEL_URL="http://127.0.0.1:$model_port/v1" AMC_PARALLEL_REPORT=parallel-measurements.json python tests/parallel_model_smoke.py
-          AMC_V1_SOURCE="$PWD/.ci/adapter-v1" AMC_SOURCE_SHA="${{ github.event.pull_request.head.sha || github.sha }}" \
+          AMC_V1_SOURCE="$PWD/.ci/adapter-v1" AMC_SOURCE_SHA="$(git rev-parse HEAD)" \
             AMC_LOCAL_MODEL_URL="http://127.0.0.1:$model_port/v1" python tests/registry_model_smoke.py
           test "$single_result" -eq 0 && test "$pool_result" -eq 0
       - uses: actions/upload-artifact@v4
         if: always()
         with:
-          name: pool-model-measurements
+          name: pool-model-measurements${{ matrix.revision == 'integration' && '-integration' || '' }}
           path: |
             pool-measurements.json
             diamond-measurements.json

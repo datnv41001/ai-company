@@ -7,6 +7,7 @@ import time
 from datetime import datetime, timedelta, timezone
 from uuid import uuid4
 
+from identity_fixtures import verify_registration, invite_member
 import httpx
 
 
@@ -22,12 +23,15 @@ def exercise():
 
         def account(name):
             email = f"{name}-{uuid4().hex}@example.com"
-            return {
+            registration = {
                 **request(
                     "POST", "/api/auth/register", body={"email": email, "password": secrets.token_urlsafe(24), "organization_name": name, "mode": "agency"}
                 ),
                 "email": email,
             }
+
+            verify_registration(api,email,registration,project)
+            return registration
 
         admin, worker, client = [account(s) for s in ("Agency", "Worker", "Client")]
         t = admin["tenant_id"]
@@ -40,8 +44,8 @@ def exercise():
             admin,
             {"brand_id": b["id"], "name": "Notebook launch", "brief": "Invite students to visit the store.", "objective": "Store visits"},
         )
-        request("POST", base + "/members", admin, {"email": worker["email"], "role": "editor"})
-        request("POST", base + "/members", admin, {"email": client["email"], "role": "client_viewer", "client_id": c["id"]})
+        invite_member(api, base, {"Authorization":"Bearer "+admin["access_token"]}, {"Authorization":"Bearer "+worker["access_token"]}, **{"email": worker["email"], "role": "editor"})
+        invite_member(api, base, {"Authorization":"Bearer "+admin["access_token"]}, {"Authorization":"Bearer "+client["access_token"]}, **{"email": client["email"], "role": "client_viewer", "client_id": c["id"]})
         request("PUT", base + "/members/" + client["user_id"] + "/review-rights", admin, {"can_comment": True, "can_decide": True})
         root = base + "/workforce"
         brief = request("POST", root + "/briefs", admin, {"campaign_id": campaign["id"], "recipient_id": client["user_id"], "title": "Notebook launch"})

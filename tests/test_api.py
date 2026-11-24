@@ -1,3 +1,4 @@
+from identity_fixtures import verify_registration, invite_member
 from uuid import uuid4
 
 
@@ -6,6 +7,7 @@ def sign_up(client, label, mode="agency"):
         "email": f"{label}@example.com", "password": "AtLeast12Chars!", "organization_name": label, "mode": mode
     })
     assert response.status_code == 201, response.text
+    verify_registration(client, f"{label}@example.com", response.json())
     return response.json()
 
 
@@ -77,9 +79,7 @@ def test_approval_requires_separate_human_and_is_tenant_scoped(client):
     other = sign_up(client, "other")
     _, _, campaign = setup_campaign(client, owner)
     tid = owner["tenant_id"]
-    # Development membership bootstrap only; real product requires consent-based invitations.
-    grant = client.post(f"/api/tenants/{tid}/members", headers=headers(owner), json={"email": "reviewer@example.com", "role": "admin"})
-    assert grant.status_code == 201
+    invite_member(client, f"/api/tenants/{tid}", headers(owner), headers(reviewer), email="reviewer@example.com", role="admin")
     proposal = client.post(f"/api/tenants/{tid}/actions", headers=headers(owner), json={"campaign_id": campaign["id"], "action_kind": "adjust_ads_budget", "payload": {"amount": 250, "currency": "USD"}})
     assert proposal.status_code == 201
     action_id = proposal.json()["id"]
@@ -100,7 +100,7 @@ def test_deliverable_review_and_cross_tenant_boundary(client):
     outsider = sign_up(client, "stranger")
     _, _, campaign = setup_campaign(client, owner)
     tid = owner["tenant_id"]
-    client.post(f"/api/tenants/{tid}/members", headers=headers(owner), json={"email": "clara@example.com", "role": "admin"})
+    invite_member(client, f"/api/tenants/{tid}", headers(owner), headers(reviewer), email="clara@example.com", role="admin")
     artifact = client.post(f"/api/tenants/{tid}/deliverables", headers=headers(owner), json={"campaign_id": campaign["id"], "title": "Campaign brief", "content": {"summary": "Draft", "source": "Owner brief"}})
     assert artifact.status_code == 201
     aid = artifact.json()["id"]
@@ -133,7 +133,7 @@ def test_viewer_cannot_write_but_can_read(client):
     owner = sign_up(client, "editorowner")
     viewer = sign_up(client, "readonly")
     tid = owner["tenant_id"]
-    client.post(f"/api/tenants/{tid}/members", headers=headers(owner), json={"email": "readonly@example.com", "role": "viewer"})
+    invite_member(client, f"/api/tenants/{tid}", headers(owner), headers(viewer), email="readonly@example.com", role="viewer")
     assert client.get(f"/api/tenants/{tid}/clients", headers=headers(viewer)).status_code == 200
     assert client.post(f"/api/tenants/{tid}/clients", headers=headers(viewer), json={"name": "Should Fail"}).status_code == 404
     assert client.get(f"/api/tenants/{tid}/audit", headers=headers(viewer)).status_code == 404

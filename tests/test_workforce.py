@@ -9,6 +9,7 @@ from sqlalchemy import select, text
 from sqlalchemy.orm import Session
 
 from agency_fixtures import account, create
+from identity_fixtures import invite_member
 from app.database import engine, get_db
 from app.main import app
 from app.models import utcnow
@@ -29,7 +30,7 @@ DATA = {
 def workforce(api, agency):
     owner, base, ((alice, a), (bob, b)) = agency
     staff = account(api, "WorkforceEditor")
-    create(api, base + "/members", owner, {"email": staff["email"], "role": "editor"})
+    invite_member(api, base, owner["headers"], staff["headers"], email=staff["email"], role="editor")
     client_id = next(iter(a["clients"]))
     brand = create(api, base + "/brands", owner, {"client_id": client_id, "name": "Paper Street", "product_truth": "80 lined pages"})
     campaign = create(
@@ -127,7 +128,7 @@ def test_brief_worker_and_approved_asset(api, workforce):
     # Manual edits derive their sources from the database-linked run. Checkpoints stay historical.
     edited = {"title": draft["title"], "client_preview": "CONTENT\nSản phẩm tốt nhất thị trường."}
     editor = account(api, "CopyEditor")
-    create(api, base + "/members", owner, {"email": editor["email"], "role": "editor"})
+    invite_member(api, base, owner["headers"], editor["headers"], email=editor["email"], role="editor")
     api.patch(path + "/draft", headers=editor["headers"], json=edited).raise_for_status()
     api.post(path + "/submit", headers=editor["headers"]).raise_for_status()
     revised = api.get(path, headers=owner["headers"]).json()["qa_evidence"]
@@ -237,9 +238,7 @@ def test_withdraw_during_provider_call_fences_result_and_retries(api, workforce,
     def inflight(config, body):
         if withdrawal == "remove":
             api.delete(base + f"/members/{alice['id']}/client-scope", headers=owner["headers"]).raise_for_status()
-            api.post(
-                base + "/members", headers=owner["headers"], json={"email": alice["email"], "role": "client_viewer", "client_id": scope.client}
-            ).raise_for_status()
+            invite_member(api, base, owner["headers"], alice["headers"], email=alice["email"], role="client_viewer", client_id=scope.client)
         else:
             other = create(api, base + "/brands", owner, {"client_id": scope.client, "name": "Second scope"})
             rights = base + f"/members/{alice['id']}/review-rights"

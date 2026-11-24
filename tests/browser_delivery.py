@@ -6,6 +6,7 @@ from datetime import datetime, timedelta, timezone
 from urllib.parse import urlsplit
 from uuid import uuid4
 
+from identity_fixtures import capture, verify_registration, invite_member
 import httpx
 from playwright.sync_api import expect, sync_playwright
 
@@ -24,19 +25,20 @@ def exercise():
         def user(label):
             email, password = f"{label}-{uuid4().hex}@example.com", uuid4().hex
             reg = post("/api/auth/register", dict(email=email, password=password, organization_name=label, mode="agency"))
+            verify_registration(api,email,reg,os.getenv("AMC_BROWSER_MAILBOX_PROJECT"))
             return reg["access_token"], reg["tenant_id"], reg["user_id"], email, password
 
         token, tenant, _, admin_email, admin_password = user("Agency")
         edit, _, _, editor_email, editor_password = user("Editor")
-        _, _, uid, email, password = user("Reader")
+        reader_token, _, uid, email, password = user("Reader")
         base = "/api/tenants/" + tenant
         client = post(base + "/clients", {"name": "UI Client"}, token)
         brand = post(base + "/brands", {"client_id": client["id"], "name": "UI Brand", "product_truth":"Blue A5 notebook"}, token)
         camp = post(
             base + "/campaigns", {"brand_id": brand["id"], "name": "UI campaign", "brief": "Synthetic brief for QA", "objective": "Review content"}, token
         )
-        post(base + "/members", dict(email=editor_email, role="editor"), token)
-        post(base + "/members", dict(email=email, role="client_viewer", client_id=client["id"]), token)
+        invite_member(api, base, {"Authorization":"Bearer "+token}, {"Authorization":"Bearer "+edit}, email=editor_email, role="editor")
+        invite_member(api, base, {"Authorization":"Bearer "+token}, {"Authorization":"Bearer "+reader_token}, email=email, role="client_viewer", client_id=client["id"])
         assert (
             api.put(
                 base + f"/members/{uid}/review-rights", headers={"Authorization": "Bearer " + token}, json={"can_comment": True, "can_decide": True}
@@ -58,6 +60,23 @@ def exercise():
         browser = pw.chromium.launch(executable_path=os.getenv("AMC_BROWSER_EXECUTABLE") or None)
         try:
             for width, height in [(1280, 850), (390, 844)]:
+                onboarding = browser.new_page(viewport={"width": width, "height": height})
+                onboarding.goto(origin)
+                registration = onboarding.locator("#register-form")
+                address = f"identity-{uuid4().hex}@example.com"
+                registration.locator('[name="email"]').fill(address)
+                registration.locator('[name="password"]').fill(uuid4().hex)
+                registration.locator('[name="organization_name"]').fill("Synthetic workspace")
+                registration.locator('[name="mode"]').select_option("inhouse")
+                registration.locator("button").click()
+                verify = onboarding.locator("#verify-form")
+                expect(verify).to_be_visible()
+                expect(onboarding.locator("#workspace")).to_be_hidden()
+                verify.locator('[name="token"]').fill(capture(address, os.getenv("AMC_BROWSER_MAILBOX_PROJECT")))
+                verify.locator('[type="submit"]').click()
+                expect(onboarding.locator("#workspace")).to_be_visible()
+                expect(verify).to_be_hidden()
+                onboarding.close()
                 page = browser.new_page(viewport={"width": width, "height": height})
                 page.goto(origin + "/?workspace=" + tenant)
                 form = page.locator("#login-form")
@@ -188,10 +207,34 @@ def exercise():
             invitation_form.get_by_label("Email tài khoản đã đăng ký").fill(invited_email)
             invitation_form.get_by_label("Khách hàng", exact=True).select_option(client["id"])
             invitation_form.get_by_label("Thương hiệu", exact=True).select_option(brand["id"])
+            invitation_form.get_by_label("Chiến dịch", exact=True).select_option(camp["id"])
             invitation_form.get_by_label("Cho phép duyệt, từ chối hoặc yêu cầu sửa").check()
             invitation_form.get_by_role("button", name="Tạo lời mời trong ứng dụng").click()
             expect(admin_panel.get_by_text(invited_email.lower(), exact=False)).to_be_visible()
-            reader = login_page(invited_email, invited_password, {"width":390,"height":844})
+            _, _, _, broad_email, broad_password = user("ClientWide")
+            post(base + "/invitations", {"email": broad_email, "client_id":client["id"], "can_comment":True}, token)
+
+            def preview(page, brand_scope, campaign_scope, comment, decide):
+                box = page.locator("#recipient-panel > section").filter(has=page.get_by_role("button", name="Chấp nhận lời mời"))
+                for label, value in (
+                    ("Vai trò", "Khách hàng"), ("Khách hàng", f"{client['name']} ({client['id']})"),
+                    ("Thương hiệu", brand_scope), ("Chiến dịch", campaign_scope),
+                    ("Bình luận", comment), ("Duyệt, từ chối hoặc yêu cầu sửa", decide),
+                ):
+                    field = box.locator("dt").and_(box.get_by_text(label, exact=True))
+                    expect(field.locator("xpath=following-sibling::dd[1]")).to_have_text(value)
+                expect(box.get_by_role("button", name="Chấp nhận lời mời")).to_be_enabled()
+
+            for width in (1280,390):
+                viewport = {"width":width,"height":844}
+                wide = login_page(broad_email, broad_password, viewport)
+                preview(wide, "Tất cả thương hiệu của khách hàng", "Tất cả chiến dịch trong phạm vi trên", "Được phép", "Không được phép")
+                wide.close()
+                reader = login_page(invited_email, invited_password, viewport)
+                preview(reader, f"{brand['name']} ({brand['id']})", f"{camp['name']} ({camp['id']})", "Không được phép", "Được phép")
+                print(f"PASS invitation terms before acceptance at {width}px: named and unrestricted scope, comment and decision rights")
+                if width == 1280:
+                    reader.close()
             reader.get_by_role("button", name="Chấp nhận lời mời").click()
             expect(reader.locator("#workspace-select")).to_have_value(tenant)
             expect(reader.get_by_text("Quản lý người nhận và lời mời", exact=True)).to_have_count(0)

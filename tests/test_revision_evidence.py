@@ -5,6 +5,7 @@ import pytest
 from sqlalchemy import text
 
 from agency_fixtures import account, create
+from identity_fixtures import invite_member
 from app.database import engine
 from app.models import utcnow
 
@@ -48,7 +49,7 @@ def test_manual_report_is_internal_and_metadata_cannot_supply_evidence(api, agen
 def test_title_only_revision_rejects_old_approval_and_rejection(api, agency):
     owner, base, readers = agency
     editor = account(api, "Editor")
-    create(api, base + "/members", owner, {"email": editor["email"], "role": "editor"})
+    invite_member(api, base, owner["headers"], editor["headers"], email=editor["email"], role="editor")
     preview = "Copy stays unchanged."
     doc = create(
         api,
@@ -95,7 +96,7 @@ def test_title_only_revision_rejects_old_approval_and_rejection(api, agency):
 def test_concurrent_staff_decisions_and_sharing(api, agency):
     owner, base, readers = agency
     editor = account(api, "RaceEditor")
-    create(api, base + "/members", owner, {"email": editor["email"], "role": "editor"})
+    invite_member(api, base, owner["headers"], editor["headers"], email=editor["email"], role="editor")
     doc = create(
         api, base + "/deliverables", editor, {"title": "Original", "content": {"client_preview": "A"}, "campaign_id": next(iter(readers[0][1]["campaigns"]))}
     )
@@ -165,7 +166,7 @@ def test_legacy_approval_requires_a_fresh_report_and_human_decision(api, agency)
 
     owner, base, readers = agency
     editor = account(api, "LegacyEditor")
-    create(api, base + "/members", owner, {"email": editor["email"], "role": "editor"})
+    invite_member(api, base, owner["headers"], editor["headers"], email=editor["email"], role="editor")
     doc = create(
         api,
         base + "/deliverables",
@@ -232,7 +233,7 @@ def test_sqlite_upgrades_legacy_columns_without_trusting_content():
 def test_restored_copy_requires_a_new_qa_decision(api, agency):
     owner, base, readers = agency
     editor = account(api, "RevisionEditor")
-    create(api, base + "/members", owner, {"email": editor["email"], "role": "editor"})
+    invite_member(api, base, owner["headers"], editor["headers"], email=editor["email"], role="editor")
     original = {"title": "Spring offer", "client_preview": "Original copy."}
     doc = create(
         api,

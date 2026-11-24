@@ -2,6 +2,8 @@
 
 **[Chạy bằng Docker và tiếp quản trên máy mới → HANDOFF.md](HANDOFF.md)**
 
+Đăng ký tài khoản, mở mã trong hộp thư phát triển riêng rồi xác minh để tạo workspace. Chủ workspace có thể mời nhân viên hoặc khách hàng đã đăng ký. [Hướng dẫn Docker, hộp thư và lời mời](docs/PR15-IDENTITY.md).
+
 **QA theo phiên bản.** Khi sửa tiêu đề hoặc nội dung gửi khách, hệ thống đánh giá lại claim và yêu cầu người QA duyệt đúng số lần lưu và SHA-256 của bản đang xem. [Hợp đồng API, nâng cấp v8 và phục hồi](docs/ADR-007-QA-EVIDENCE-REVISION.md).
 
 **AI Workforce nội bộ.** Luồng brief → Director → Research → Strategy → Content tạo bộ tài sản chờ QA. [Chạy worker và model](HANDOFF.md#chạy-ai-workforce-trên-máy-mới) · [Thiết kế và bằng chứng](docs/ADR-005-AI-WORKFORCE.md).
@@ -35,7 +37,7 @@ The completed product must support Agency Mode + In-house Mode, 49 product modul
 
 ## What's not implemented yet (must not be represented as production-ready)
 
-All remaining full-scope modules (billing, invitations, SSO/MFA, full RLS, distributed execution, LangGraph/Temporal worker runtime, connectors, object storage, data quality, complete 37-agent contracts, 24 end-to-end workflows, brand-level policy, app reviews, queue and disaster recovery) still need development, tests and deployment qualification. See `docs/PRODUCT_SPEC_V1.md` and `docs/SECURITY_AND_GA_BLOCKERS.md`.
+All remaining full-scope modules (billing, production email delivery, SSO/MFA, full RLS, distributed execution, LangGraph/Temporal worker runtime, connectors, object storage, data quality, complete 37-agent contracts, 24 end-to-end workflows, brand-level policy, app reviews, queue and disaster recovery) still need development, tests and deployment qualification. See `docs/PRODUCT_SPEC_V1.md` and `docs/SECURITY_AND_GA_BLOCKERS.md`.
 
 ## Run locally (Windows PowerShell)
 

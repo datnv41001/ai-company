@@ -9,6 +9,8 @@ import pytest
 import httpx
 import uvicorn
 
+from identity_fixtures import verify_registration
+from identity_fixtures import invite_member
 from app.database import engine
 from app.main import app
 
@@ -51,6 +53,7 @@ def account(api, label):
     result = api.post("/api/auth/register", json=body)
     assert result.status_code == 201, result.status_code
     info = result.json()
+    verify_registration(api,email,info)
     login = api.post("/api/auth/login", json={"email": email, "password": body["password"]})
     assert login.status_code == 200
     return dict(id=info["user_id"], tenant=info["tenant_id"], email=email,
@@ -96,5 +99,5 @@ def agency(api):
     a = make_client_data(api, base, owner, "A")
     b = make_client_data(api, base, owner, "B")
     for actor, data in ((alice, a), (bob, b)):
-        create(api, base + "/members", owner, {"email": actor["email"], "role": "client_viewer", "client_id": next(iter(data["clients"]))})
+        invite_member(api, base, owner["headers"], actor["headers"], email=actor["email"], role="client_viewer", client_id=next(iter(data["clients"])))
     return owner, base, ((alice, a), (bob, b))

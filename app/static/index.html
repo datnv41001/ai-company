@@ -32,9 +32,13 @@
         <div class="section-head"><div><small>GET STARTED</small><h3>Đăng ký workspace hoặc đăng nhập</h3></div></div>
         <div class="auth-grid">
           <form id="register-form" class="panel"><h4>Tạo tổ chức</h4><label>Email<input name="email" type="email" required placeholder="name@company.com"></label><label>Mật khẩu (≥12 ký tự)<input name="password" type="password" minlength="12" required></label><label>Tên tổ chức<input name="organization_name" required minlength="2" placeholder="Marketing Agency"></label><label>Chế độ<select name="mode"><option value="agency">Agency Mode</option><option value="inhouse">In-house Mode</option></select></label><button type="submit">Tạo tổ chức →</button></form>
-          <form id="login-form" class="panel"><h4>Đăng nhập</h4><label>Email<input name="email" type="email" required></label><label>Mật khẩu<input name="password" type="password" required></label><button type="submit">Đăng nhập →</button><p class="muted">Tài khoản và dữ liệu nằm trên máy chủ riêng của bạn. Chưa hỗ trợ quên mật khẩu hay xác minh email.</p></form>
+          <form id="login-form" class="panel"><h4>Đăng nhập</h4><label>Email<input name="email" type="email" required></label><label>Mật khẩu<input name="password" type="password" required></label><button type="submit">Đăng nhập →</button></form>
         </div>
       </section>
+      <form id="verify-form" class="panel hidden"><h3>Xác minh email</h3><p id="verify-address"></p>
+        <label>Mã từ hộp thư phát triển<input name="token" type="password" autocomplete="one-time-code" required maxlength="128"></label>
+        <button type="submit">Xác minh email</button><button id="resend-proof" type="button">Gửi mã mới</button>
+      </form>
       <section id="workspace" class="hidden">
         <label id="workspace-choice" class="hidden">Không gian làm việc<select id="workspace-select"></select></label>
         <p id="client-scope" class="hidden"></p>

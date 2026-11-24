@@ -1,10 +1,16 @@
 """Exercise upgrading a populated starter. Requires an empty local amc_test* database."""
 import hashlib
+import io
 import os
+import subprocess
 import sys
+import tarfile
+import tempfile
 from pathlib import Path
+from uuid import uuid4
 
 import psycopg
+from psycopg.conninfo import make_conninfo
 import pytest
 from sqlalchemy import create_engine, text
 
@@ -12,10 +18,53 @@ from app.database import prepare_database
 from migrations.apply import migrate
 
 MIGRATIONS = Path(__file__).resolve().parents[1] / "migrations"
+V16_BASE = "d81df0bee0d381007acfd0cf0b786a7f56e38719"
+V17_REVIEWED = "df48ef265f14cdc049dec8125c271c8390416c4a"
+
+
+def migrate_historical_fixture(revision):
+    # Each historical binary writes its own genuine markers and schema.
+    archive = subprocess.check_output(["git","archive",revision,"app","migrations","catalog","requirements.txt","requirements-registry.txt"],
+                                      cwd=MIGRATIONS.parent)
+    with tempfile.TemporaryDirectory() as checkout, tarfile.open(fileobj=io.BytesIO(archive)) as sources:
+        sources.extractall(checkout, filter="data")
+        env = os.environ.copy()
+        env.pop("PYTHONPATH", None)
+        subprocess.run([sys.executable, "migrations/apply.py"], cwd=checkout, env=env, check=True)
+
+
+def rehearse_archive(dsn, container):
+    """Round-trip the populated v16 fixture through matching PostgreSQL client tools."""
+    tables = ("amc_schema_versions", "users", "memberships", "portal_grants", "portal_invitations",
+              "client_reviews", "review_entries", "workforce_runs", "amc_ops.attempts", "amc_ops.ledger",
+              "amc_ops.registry_releases", "amc_ops.registry_versions", "amc_ops.dag_nodes")
+
+    def snapshot(conn):
+        return [conn.execute(f"SELECT to_jsonb(t) FROM {table} t ORDER BY to_jsonb(t)").fetchall()
+                for table in tables]
+
+    with psycopg.connect(dsn) as source:
+        assert source.info.host in ("localhost", "127.0.0.1", "::1") and source.info.dbname.startswith("amc_test")
+        assert source.execute("SELECT max(version) FROM amc_schema_versions").fetchone() == (16,)
+        db, owner = source.info.dbname, source.info.user
+        before = snapshot(source)
+    assert all(before)
+    # Both the archive and restore are inside this disposable CI container.
+    target = "amc_test_restore_" + uuid4().hex
+    archive = "/tmp/" + target + ".dump"
+    command = ["docker", "exec", container]
+    subprocess.run([*command, "pg_dump", "-U", owner, "-Fc", "-f", archive, db], check=True)
+    subprocess.run([*command, "createdb", "-U", owner, target], check=True)
+    subprocess.run([*command, "pg_restore", "-U", owner, "--single-transaction", "--exit-on-error", "-d", target, archive], check=True)
+    with psycopg.connect(make_conninfo(dsn, dbname=target)) as restored:
+        assert snapshot(restored) == before
+    print(f"PASS: pg_dump/pg_restore v16 into a separate database; identical rows in {len(tables)} tables")
 
 
 def verify():
-    from_v15 = '--from-v15' in sys.argv
+    from_v17 = '--from-v17' in sys.argv
+    from_v16 = '--from-v16' in sys.argv or from_v17
+    from_v15 = '--from-v15' in sys.argv or from_v16
     orphan_v16 = '--from-isolated-v16' in sys.argv
     from_v14 = '--from-v14' in sys.argv or from_v15 or orphan_v16
     from_v13 = '--from-v13' in sys.argv or from_v14
@@ -174,6 +223,10 @@ def verify():
                 # Reproduce the real independent branch schema (DDL and marker), before 015 ever ran.
                 conn.execute((MIGRATIONS/"016_scheduler_diagnostics.sql").read_text(encoding="utf-8"))
                 conn.execute("INSERT INTO amc_schema_versions VALUES (16)")
+            if from_v16:
+                conn.execute("""insert into portal_invitations(id,tenant_id,client_id,user_id,invited_by,email,workspace_name,client_name,
+                    brand_id,campaign_id,can_comment,can_decide,expires_at,state) select 'legacy-invite','agency','a',id,'v15-owner',email,
+                    'Existing agency','Client A','br','ca',true,false,now()+interval '1 day','pending' from users where id='external'""")
             # Record the actual marker insert order, including the second migration invocation.
             conn.execute("create table upgrade_marker_probe(seq bigint generated always as identity primary key,version int)")
             conn.execute("""create function observe_upgrade_marker() returns trigger language plpgsql as $$
@@ -193,9 +246,45 @@ def verify():
         runtime.dispose()
         print("PASS: isolated v16 without 015 refused by migrator and API; ledger, leases and approved snapshot preserved")
         return
+    ext_before = None
+    extension = "select oid,extnamespace::regnamespace::text,extversion from pg_extension where extname='pgcrypto'"
+    if from_v15 and not from_v17:
+        with psycopg.connect(dsn) as owner:
+            if from_v16:
+                owner.execute('CREATE SCHEMA "Existing Crypto"')
+                owner.execute('CREATE EXTENSION pgcrypto WITH SCHEMA "Existing Crypto"')
+            else:
+                owner.execute("CREATE EXTENSION pgcrypto WITH SCHEMA public")
+            ext_before = owner.execute(extension).fetchone()
+    if from_v16:
+        migrate_historical_fixture(V16_BASE)
+        if os.getenv("AMC_UPGRADE_BACKUP_CONTAINER"):
+            rehearse_archive(dsn, os.environ["AMC_UPGRADE_BACKUP_CONTAINER"])
+        if from_v17:
+            migrate_historical_fixture(V17_REVIEWED)
+        prior_version = 17 if from_v17 else 16
+        # Fail at the next genuine marker and verify atomic rollback.
+        with psycopg.connect(dsn) as owner:
+            owner.execute(f"alter table upgrade_marker_probe add constraint synthetic_failure check (version <= {prior_version})")
+        with pytest.raises(psycopg.errors.CheckViolation):
+            migrate(dsn)
+        with psycopg.connect(dsn) as owner:
+            owner.execute("alter table upgrade_marker_probe drop constraint synthetic_failure")
+            assert owner.execute("select max(version) from amc_schema_versions").fetchone() == (prior_version,)
+            assert owner.execute("select count(*) from information_schema.columns where table_schema='public' and table_name='portal_invitations' and column_name='brand_name'").fetchone() == (0,)
+            if not from_v17:
+                assert owner.execute("select to_regclass('identity_challenges')").fetchone() == (None,)
+            assert registry_upgrade_fixture.snapshot(owner) == v13_snapshot
+            legacy = owner.execute("select id,email,password_hash,created_at from users order by id").fetchall()
+            memberships = owner.execute("select * from memberships order by tenant_id,user_id").fetchall()
+            grants = owner.execute("select * from portal_grants order by tenant_id,user_id").fetchall()
     migrate(dsn, os.environ.get("AMC_RUNTIME_PASSWORD"))
     migrate(dsn)
     prepare_database(runtime)
+    if ext_before:
+        with psycopg.connect(dsn) as owner:
+            assert owner.execute(extension).fetchone() == ext_before
+        print(f"PASS: preinstalled pgcrypto in {ext_before[1]} retained its OID, namespace and version; runtime signer verified")
     privileged = create_engine("postgresql+psycopg://", creator=lambda: psycopg.connect(dsn))
     with pytest.raises(RuntimeError, match="unprivileged"):
         prepare_database(privileged)
@@ -203,7 +292,13 @@ def verify():
     with runtime.connect() as c:
         if from_v14:
             with psycopg.connect(dsn) as owner:
-                assert owner.execute("select version from upgrade_marker_probe order by seq").fetchall() == ([(16,)] if from_v15 else [(15,),(16,)])
+                assert owner.execute("select version from upgrade_marker_probe order by seq").fetchall() == [(v,) for v in range(16 if from_v15 else 15, 19)]
+                if from_v16:
+                    assert owner.execute("select state,role,client_id,can_comment,can_decide from portal_invitations where id='legacy-invite'").fetchone() == ("pending","client_viewer","a",True,False)
+                    assert owner.execute("select brand_name,campaign_name from portal_invitations where id='legacy-invite'").fetchone() == ("Brand","Name")
+                    assert owner.execute("select id,email,password_hash,created_at from users where verified_at is null order by id").fetchall() == legacy
+                    assert owner.execute("select * from memberships order by tenant_id,user_id").fetchall() == memberships
+                    assert owner.execute("select * from portal_grants order by tenant_id,user_id").fetchall() == grants
             assert c.execute(text("select workflow,digest,manifest from amc_ops.registry_releases order by workflow")).fetchall() == before_release
         def identify():
             c.execute(text("SELECT set_config('amc.user_id','alice',true),set_config('amc.tenant_id','agency',true)"))
@@ -214,7 +309,7 @@ def verify():
             owner.execute("UPDATE memberships SET role='client_viewer',client_id='a' WHERE user_id='alice'")
         identify()
         assert set(c.scalars(text("SELECT id FROM clients"))) == {"a"}
-        assert set(c.scalars(text("SELECT version FROM amc_schema_versions"))) == {2,3,4,5,6,7,8,9,10,11,12,13,14,15,16}
+        assert set(c.scalars(text("SELECT version FROM amc_schema_versions"))) == set(range(2,19))
         if "--from-v2" in sys.argv or from_v3:
             c.rollback()
             c.execute(text("SELECT set_config('amc.user_id','external',true),set_config('amc.tenant_id','agency',true)"))
@@ -256,7 +351,7 @@ def verify():
                 assert owner.execute("SELECT title FROM deliverables WHERE id='doc'").fetchone() == ("Internal",)
     runtime.dispose()
     baseline = "v13" if from_v13 else "v12" if from_v12 else "v11" if from_v11 else "v10" if from_v10 else "v9" if from_v9 else "v8" if from_v8 else "v7" if from_v7 else "v6" if from_v6 else "v5" if from_v5 else "v4" if from_v4 else "v3" if from_v3 else "v2" if "--from-v2" in sys.argv else "v1"
-    print(f"PASS: populated {'v15' if from_v15 else 'v14' if from_v14 else baseline} to v16, repeated migration, privileged API login refused, client isolated")
+    print(f"PASS: populated {'v17' if from_v17 else 'v16' if from_v16 else 'v15' if from_v15 else 'v14' if from_v14 else baseline} to v18, repeated migration, privileged API login refused, client isolated")
 
 
 if __name__ == "__main__":

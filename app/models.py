@@ -1,7 +1,7 @@
 from __future__ import annotations
 import uuid
 from datetime import datetime, timezone
-from sqlalchemy import CheckConstraint, DateTime, ForeignKey, ForeignKeyConstraint, String, Text, UniqueConstraint, JSON
+from sqlalchemy import CheckConstraint, DateTime, ForeignKey, ForeignKeyConstraint, String, Text, UniqueConstraint, JSON, text
 from sqlalchemy.orm import Mapped, mapped_column
 from .database import Base
 
@@ -18,8 +18,19 @@ class User(Base):
     __tablename__ = "users"
     id: Mapped[str] = mapped_column(String(36), primary_key=True, default=new_id)
     email: Mapped[str] = mapped_column(String(320), unique=True, index=True)
+    verified_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True), server_default=text("NULL"))
     password_hash: Mapped[str] = mapped_column(String(255))
     created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), default=utcnow)
+
+
+class IdentityChallenge(Base):
+    __tablename__ = "identity_challenges"
+    user_id: Mapped[str] = mapped_column(ForeignKey("users.id"), primary_key=True)
+    digest: Mapped[str] = mapped_column(String(64))
+    expires_at: Mapped[datetime] = mapped_column(DateTime(timezone=True))
+    workspace_id: Mapped[str | None] = mapped_column(String(36), unique=True)
+    organization_name: Mapped[str | None] = mapped_column(String(150))
+    mode: Mapped[str | None] = mapped_column(String(12))
 
 
 class Tenant(Base):

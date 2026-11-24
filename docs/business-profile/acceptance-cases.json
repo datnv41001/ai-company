@@ -1,0 +1,537 @@
+[
+  {
+    "id": "seller",
+    "persona": "Cửa hàng trực tuyến nhỏ",
+    "objective": "20 đơn đủ điều kiện/tháng",
+    "scope": {
+      "tenant": "fixture-seller",
+      "client": "client-one",
+      "brand": "brand-one",
+      "campaign": "launch"
+    },
+    "product": {
+      "id": "rain-shell",
+      "variant": "blue-L",
+      "kind": "product"
+    },
+    "offer": {
+      "ref": "offer-1@3",
+      "currency": "VND",
+      "price_minor": 120000,
+      "quantity_min": 1,
+      "valid_from": "2026-11-01T00:00:00Z",
+      "valid_until": "2026-11-30T00:00:00Z",
+      "product": "rain-shell",
+      "variant": "blue-L",
+      "market": "VN",
+      "channel": "web",
+      "locale": "vi-VN",
+      "commercial_policy": "conditions@1",
+      "availability": "stock@1"
+    },
+    "policy": {
+      "warranty": "đổi lỗi trong 30 ngày",
+      "delivery": "nội thành",
+      "qualifiers": "giao nội thành",
+      "ref": "conditions@1"
+    },
+    "availability": {
+      "market": "VN",
+      "location": "fixture zone VN",
+      "status": "available",
+      "observed_at": "2026-11-20T00:00:00Z",
+      "valid_until": "2026-11-30T00:00:00Z",
+      "ref": "stock@1"
+    },
+    "source": {
+      "id": "terms",
+      "revision": 3,
+      "product": "rain-shell",
+      "variant": "blue-L",
+      "market": "VN",
+      "locale": "vi-VN",
+      "channel": "web",
+      "offer": "offer-1@3",
+      "locator": "fixture://seller/terms/v3#sale"
+    },
+    "requested": {
+      "tenant": "fixture-seller",
+      "client": "client-one",
+      "brand": "brand-one",
+      "campaign": "launch",
+      "source_revision": 3,
+      "product": "rain-shell",
+      "variant": "blue-L",
+      "market": "VN",
+      "locale": "vi-VN",
+      "channel": "web",
+      "price_minor": 120000,
+      "currency": "VND",
+      "quantity": 1,
+      "qualifiers": "giao nội thành",
+      "at": "2026-11-24T09:05:00Z",
+      "source_id": "terms",
+      "locator": "fixture://seller/terms/v3#sale",
+      "offer": "offer-1@3",
+      "warranty": "đổi lỗi trong 30 ngày",
+      "delivery": "nội thành",
+      "location": "fixture zone VN"
+    },
+    "probes": [
+      {
+        "label": "eligible",
+        "change": {},
+        "expect": "eligible"
+      },
+      {
+        "label": "wrong size",
+        "change": {
+          "variant": "blue-M"
+        },
+        "expect": "wrong_subject_or_use"
+      },
+      {
+        "label": "currency mismatch",
+        "change": {
+          "currency": "USD"
+        },
+        "expect": "incorrect_price"
+      }
+    ]
+  },
+  {
+    "id": "b2b",
+    "persona": "Nhà cung cấp vật liệu B2B",
+    "objective": "30 yêu cầu báo giá/tháng",
+    "scope": {
+      "tenant": "fixture-b2b",
+      "client": "client-one",
+      "brand": "brand-one",
+      "campaign": "launch"
+    },
+    "product": {
+      "id": "roof-sheet",
+      "variant": "0.5mm",
+      "kind": "product"
+    },
+    "offer": {
+      "ref": "offer-1@3",
+      "currency": "VND",
+      "price_minor": 18000,
+      "quantity_min": 200,
+      "valid_from": "2026-11-01T00:00:00Z",
+      "valid_until": "2026-12-31T00:00:00Z",
+      "product": "roof-sheet",
+      "variant": "0.5mm",
+      "market": "VN",
+      "channel": "quotation",
+      "locale": "vi-VN",
+      "commercial_policy": "conditions@1",
+      "availability": "stock@1"
+    },
+    "policy": {
+      "warranty": "12 tháng khi lắp đúng hướng dẫn",
+      "delivery": "giao công trình đã xác nhận",
+      "qualifiers": "từ 200 tấm",
+      "ref": "conditions@1"
+    },
+    "availability": {
+      "market": "VN",
+      "location": "fixture zone VN",
+      "status": "available",
+      "observed_at": "2026-11-20T00:00:00Z",
+      "valid_until": "2026-12-31T00:00:00Z",
+      "ref": "stock@1"
+    },
+    "source": {
+      "id": "terms",
+      "revision": 3,
+      "product": "roof-sheet",
+      "variant": "0.5mm",
+      "market": "VN",
+      "locale": "vi-VN",
+      "channel": "quotation",
+      "offer": "offer-1@3",
+      "locator": "fixture://b2b/terms/v3#sale"
+    },
+    "requested": {
+      "tenant": "fixture-b2b",
+      "client": "client-one",
+      "brand": "brand-one",
+      "campaign": "launch",
+      "source_revision": 3,
+      "product": "roof-sheet",
+      "variant": "0.5mm",
+      "market": "VN",
+      "locale": "vi-VN",
+      "channel": "quotation",
+      "price_minor": 18000,
+      "currency": "VND",
+      "quantity": 200,
+      "qualifiers": "từ 200 tấm",
+      "at": "2026-11-24T09:05:00Z",
+      "source_id": "terms",
+      "locator": "fixture://b2b/terms/v3#sale",
+      "offer": "offer-1@3",
+      "warranty": "12 tháng khi lắp đúng hướng dẫn",
+      "delivery": "giao công trình đã xác nhận",
+      "location": "fixture zone VN"
+    },
+    "probes": [
+      {
+        "label": "eligible",
+        "change": {},
+        "expect": "eligible"
+      },
+      {
+        "label": "below MOQ",
+        "change": {
+          "quantity": 199
+        },
+        "expect": "quantity_below_minimum"
+      },
+      {
+        "label": "qualifier omitted",
+        "change": {
+          "qualifiers": ""
+        },
+        "expect": "qualifier_missing"
+      },
+      {
+        "label": "wrong warranty",
+        "change": {
+          "warranty": "lifetime"
+        },
+        "expect": "incorrect_policy"
+      },
+      {
+        "label": "outside delivery terms",
+        "change": {
+          "delivery": "any address"
+        },
+        "expect": "incorrect_policy"
+      }
+    ]
+  },
+  {
+    "id": "service",
+    "persona": "Doanh nghiệp dịch vụ",
+    "objective": "12 qualified bookings in 30 days",
+    "scope": {
+      "tenant": "fixture-service",
+      "client": "client-one",
+      "brand": "brand-one",
+      "campaign": "launch"
+    },
+    "product": {
+      "id": "maintenance",
+      "variant": "on-site",
+      "kind": "service"
+    },
+    "offer": {
+      "ref": "offer-1@3",
+      "currency": "SGD",
+      "price_minor": 18000,
+      "quantity_min": 1,
+      "valid_from": "2026-11-01T00:00:00Z",
+      "valid_until": "2026-11-28T00:00:00Z",
+      "product": "maintenance",
+      "variant": "on-site",
+      "market": "SG",
+      "channel": "landing",
+      "locale": "en-SG",
+      "commercial_policy": "conditions@1",
+      "availability": "stock@1"
+    },
+    "policy": {
+      "warranty": "30 days for workmanship",
+      "delivery": "within Jurong",
+      "qualifiers": "Jurong appointments only",
+      "ref": "conditions@1"
+    },
+    "availability": {
+      "market": "SG",
+      "location": "fixture zone SG",
+      "status": "available",
+      "observed_at": "2026-11-20T00:00:00Z",
+      "valid_until": "2026-11-28T00:00:00Z",
+      "ref": "stock@1"
+    },
+    "source": {
+      "id": "terms",
+      "revision": 3,
+      "product": "maintenance",
+      "variant": "on-site",
+      "market": "SG",
+      "locale": "en-SG",
+      "channel": "landing",
+      "offer": "offer-1@3",
+      "locator": "fixture://service/terms/v3#sale"
+    },
+    "requested": {
+      "tenant": "fixture-service",
+      "client": "client-one",
+      "brand": "brand-one",
+      "campaign": "launch",
+      "source_revision": 3,
+      "product": "maintenance",
+      "variant": "on-site",
+      "market": "SG",
+      "locale": "en-SG",
+      "channel": "landing",
+      "price_minor": 18000,
+      "currency": "SGD",
+      "quantity": 1,
+      "qualifiers": "Jurong appointments only",
+      "at": "2026-11-24T09:05:00Z",
+      "source_id": "terms",
+      "locator": "fixture://service/terms/v3#sale",
+      "offer": "offer-1@3",
+      "warranty": "30 days for workmanship",
+      "delivery": "within Jurong",
+      "location": "fixture zone SG"
+    },
+    "probes": [
+      {
+        "label": "eligible",
+        "change": {},
+        "expect": "eligible"
+      },
+      {
+        "label": "different market",
+        "change": {
+          "market": "VN"
+        },
+        "expect": "wrong_subject_or_use"
+      },
+      {
+        "label": "scope of service omitted",
+        "change": {
+          "qualifiers": "any location"
+        },
+        "expect": "qualifier_missing"
+      },
+      {
+        "label": "outside area",
+        "change": {
+          "location": "different area"
+        },
+        "expect": "offer_or_availability_ineligible"
+      }
+    ]
+  },
+  {
+    "id": "agency",
+    "persona": "Agency nhiều khách",
+    "objective": "40 qualified leads for client one",
+    "scope": {
+      "tenant": "fixture-agency",
+      "client": "client-one",
+      "brand": "brand-one",
+      "campaign": "launch"
+    },
+    "product": {
+      "id": "notebook",
+      "variant": "A5",
+      "kind": "product"
+    },
+    "offer": {
+      "ref": "offer-1@3",
+      "currency": "VND",
+      "price_minor": 45000,
+      "quantity_min": 10,
+      "valid_from": "2026-11-01T00:00:00Z",
+      "valid_until": "2026-12-20T00:00:00Z",
+      "product": "notebook",
+      "variant": "A5",
+      "market": "VN",
+      "channel": "landing",
+      "locale": "vi-VN",
+      "commercial_policy": "conditions@1",
+      "availability": "stock@1"
+    },
+    "policy": {
+      "warranty": "đổi sản phẩm lỗi",
+      "delivery": "giao theo khu vực",
+      "qualifiers": "tối thiểu 10 quyển",
+      "ref": "conditions@1"
+    },
+    "availability": {
+      "market": "VN",
+      "location": "fixture zone VN",
+      "status": "available",
+      "observed_at": "2026-11-20T00:00:00Z",
+      "valid_until": "2026-12-20T00:00:00Z",
+      "ref": "stock@1"
+    },
+    "source": {
+      "id": "terms",
+      "revision": 3,
+      "product": "notebook",
+      "variant": "A5",
+      "market": "VN",
+      "locale": "vi-VN",
+      "channel": "landing",
+      "offer": "offer-1@3",
+      "locator": "fixture://agency/terms/v3#sale"
+    },
+    "requested": {
+      "tenant": "fixture-agency",
+      "client": "client-one",
+      "brand": "brand-one",
+      "campaign": "launch",
+      "source_revision": 3,
+      "product": "notebook",
+      "variant": "A5",
+      "market": "VN",
+      "locale": "vi-VN",
+      "channel": "landing",
+      "price_minor": 45000,
+      "currency": "VND",
+      "quantity": 10,
+      "qualifiers": "tối thiểu 10 quyển",
+      "at": "2026-11-24T09:05:00Z",
+      "source_id": "terms",
+      "locator": "fixture://agency/terms/v3#sale",
+      "offer": "offer-1@3",
+      "warranty": "đổi sản phẩm lỗi",
+      "delivery": "giao theo khu vực",
+      "location": "fixture zone VN"
+    },
+    "probes": [
+      {
+        "label": "eligible",
+        "change": {},
+        "expect": "eligible"
+      },
+      {
+        "label": "other client in same agency",
+        "change": {
+          "client": "client-two"
+        },
+        "expect": "wrong_scope"
+      },
+      {
+        "label": "other SKU same brand",
+        "change": {
+          "product": "sketchbook"
+        },
+        "expect": "wrong_subject_or_use"
+      },
+      {
+        "label": "source changed",
+        "change": {
+          "source_revision": 2
+        },
+        "expect": "wrong_subject_or_use"
+      }
+    ]
+  },
+  {
+    "id": "inhouse",
+    "persona": "Phòng Marketing in-house",
+    "objective": "100 qualified subscriptions in December",
+    "scope": {
+      "tenant": "fixture-inhouse",
+      "client": "client-one",
+      "brand": "brand-one",
+      "campaign": "launch"
+    },
+    "product": {
+      "id": "travel-kit",
+      "variant": "student",
+      "kind": "product"
+    },
+    "offer": {
+      "ref": "offer-1@3",
+      "currency": "USD",
+      "price_minor": 1800,
+      "quantity_min": 1,
+      "valid_from": "2026-11-01T00:00:00Z",
+      "valid_until": "2026-11-25T00:00:00Z",
+      "product": "travel-kit",
+      "variant": "student",
+      "market": "US",
+      "channel": "email",
+      "locale": "en-US",
+      "commercial_policy": "conditions@1",
+      "availability": "stock@1"
+    },
+    "policy": {
+      "warranty": "replacement within 90 days",
+      "delivery": "US addresses",
+      "qualifiers": "student offer only",
+      "ref": "conditions@1"
+    },
+    "availability": {
+      "market": "US",
+      "location": "fixture zone US",
+      "status": "available",
+      "observed_at": "2026-11-20T00:00:00Z",
+      "valid_until": "2026-11-25T00:00:00Z",
+      "ref": "stock@1"
+    },
+    "source": {
+      "id": "terms",
+      "revision": 3,
+      "product": "travel-kit",
+      "variant": "student",
+      "market": "US",
+      "locale": "en-US",
+      "channel": "email",
+      "offer": "offer-1@3",
+      "locator": "fixture://inhouse/terms/v3#sale"
+    },
+    "requested": {
+      "tenant": "fixture-inhouse",
+      "client": "client-one",
+      "brand": "brand-one",
+      "campaign": "launch",
+      "source_revision": 3,
+      "product": "travel-kit",
+      "variant": "student",
+      "market": "US",
+      "locale": "en-US",
+      "channel": "email",
+      "price_minor": 1800,
+      "currency": "USD",
+      "quantity": 1,
+      "qualifiers": "student offer only",
+      "at": "2026-11-24T09:05:00Z",
+      "source_id": "terms",
+      "locator": "fixture://inhouse/terms/v3#sale",
+      "offer": "offer-1@3",
+      "warranty": "replacement within 90 days",
+      "delivery": "US addresses",
+      "location": "fixture zone US"
+    },
+    "probes": [
+      {
+        "label": "eligible",
+        "change": {},
+        "expect": "eligible"
+      },
+      {
+        "label": "expired at boundary",
+        "change": {
+          "at": "2026-11-25T00:00:00Z"
+        },
+        "expect": "offer_or_availability_ineligible"
+      },
+      {
+        "label": "cross-channel offer",
+        "change": {
+          "channel": "landing"
+        },
+        "expect": "wrong_subject_or_use"
+      },
+      {
+        "label": "observed vs approved price",
+        "change": {
+          "price_minor": 1200
+        },
+        "expect": "incorrect_price"
+      }
+    ]
+  }
+]

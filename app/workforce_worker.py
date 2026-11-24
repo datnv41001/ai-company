@@ -19,7 +19,7 @@ from .registry_adapters import specialist_request, validate_output
 from .models import AuditEvent, Deliverable, Membership, utcnow
 from .workforce_gateway import Gateway, GatewayError, PROMPT_VERSION, infer, measured_cost, quality, request_body, reserve_tokens
 from .workforce_models import WorkforceRun
-from . import dynamic_plan, workflow_dag
+from . import dynamic_plan, landing_qa, workflow_dag
 
 MAX_TRIES = 3
 
@@ -171,7 +171,11 @@ def save_checkpoint(db, scope, run, stage, output, node):
     record = {"skill": stage, "output": output, "quality": quality(output, run.knowledge["sources"])}
     if binding := run.knowledge.get("registry"):
         from .registry_qa import assess_role
-        record["quality"]["role_qa"] = assess_role(stage, output, run.knowledge["sources"], binding["contracts"][stage])
+        contract = binding["contracts"][stage]
+        if contract["adapter"] in landing_qa.ROLE_POLICY:
+            record["quality"]["role_qa"] = landing_qa.evaluate_node(db, run, node, output)
+        else:
+            record["quality"]["role_qa"] = assess_role(stage, output, run.knowledge["sources"], contract)
     if node:
         record.update(node_id=node.id, plan_revision=node.revision)
         joined = workflow_dag.checkpoint(db, run, node, record)

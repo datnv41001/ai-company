@@ -1,6 +1,6 @@
 """Check executable release contracts before the publisher writes any definition."""
 
-from . import dynamic_plan
+from . import dynamic_plan, landing_qa
 from .registry_adapters import ROLES, output_schema, resolve
 
 FIELDS = {
@@ -11,6 +11,7 @@ FIELDS = {
     "adapter",
     "adapter_digest",
     "qa_policy",
+    "qa_limits",
     "model",
     "inputs",
     "outputs",
@@ -62,7 +63,8 @@ def check_workflow(manifest):
             or contract["skill_id"] != skill
             or contract["role_id"] != ROLES[skill]
             or any(type(contract[k]) is not int or contract[k] != adapter.version for k in ("skill_version", "contract_version"))
-            or contract["qa_policy"] != skill + "@1"
+            or contract["qa_policy"] != landing_qa.ROLE_POLICY.get(contract["adapter"], skill + "@1")
+            or not landing_qa.valid_limits(contract)
         ):
             raise ValueError(f"Unsupported adapter, role or skill version for {skill}")
         schema = output_schema(adapter)

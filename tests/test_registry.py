@@ -68,10 +68,10 @@ def registry_brief(lab, idx=0):
     return path + "/run", {"workflow": "dynamic-v1", "registry_workflow": WORKFLOW, "budget_microusd": 10000, "max_parallel_nodes": 2}
 
 
-def policy(lab, mode, idx=0, actor=None, skills=("director", "content", "seo")):
+def policy(lab, mode, idx=0, actor=None, skills=("director", "content", "seo"), workflow=WORKFLOW):
     base, admin, _, _, campaign = lab.cases[idx]
     return lab.api.put(
-        base + "/workforce/registry/" + campaign, headers=(actor or admin)["headers"], json={"workflow": WORKFLOW, "action": mode, "skills": list(skills)}
+        base + "/workforce/registry/" + campaign, headers=(actor or admin)["headers"], json={"workflow": workflow, "action": mode, "skills": list(skills)}
     )
 
 
@@ -107,14 +107,14 @@ def test_activation_scope_disable_revoke_and_legacy_trace(pool):
     assert report(run)["state"] == "failed"
 
 
-def frozen_run(lab):
+def frozen_run(lab, workflow=WORKFLOW):
     from app.pool_worker import report
     from test_diamond import take_node
 
     lab.owner.execute("update workforce_runs set ready_at=now()+interval '1 day' where id=any(%s)", (lab.runs,))
     policy(lab, "activate").raise_for_status()
     path, terms = registry_brief(lab)
-    rid = lab.api.post(path, headers=lab.x["headers"], json=terms).json()["id"]
+    rid = lab.api.post(path, headers=lab.x["headers"], json={**terms, "registry_workflow": workflow}).json()["id"]
     w, j = take_node(lab)
     assert j["run"] == rid
     assert report(w.conn, j, [{"nodes": [node("copy", "content"), node("meta", "seo", ["copy"])]}, 100, 30]) and lab.consume()
@@ -147,14 +147,20 @@ def test_node_budget_receipt_refund_and_trace(pool):
 
 @PG
 @pytest.mark.parametrize("revoke_first", [True, False])
-def test_revoke_checkpoint_commit_order(pool, monkeypatch, revoke_first):
+@pytest.mark.parametrize("qa2", [False, True])
+def test_revoke_checkpoint_commit_order(pool, monkeypatch, revoke_first, qa2):
     from concurrent.futures import ThreadPoolExecutor
     from threading import Event
     from app import pool_dispatch
     from test_diamond import take_node
 
     lab = pool
-    rid = frozen_run(lab)
+    workflow = WORKFLOW
+    if qa2:
+        from test_role_qa_rollout import WORKFLOW as qa_workflow, activate_qa
+        activate_qa(lab)
+        workflow = qa_workflow
+    rid = frozen_run(lab, workflow)
     w, j = take_node(lab)
     from app.pool_worker import report
 
@@ -175,11 +181,23 @@ def test_revoke_checkpoint_commit_order(pool, monkeypatch, revoke_first):
             entered.set()
             assert release.wait(10)
 
-    monkeypatch.setattr(pool_dispatch, "lock_scheduler", hold)
+    if qa2 and not revoke_first:
+        from app import landing_qa
+        assess_node = landing_qa.evaluate_node
+
+        def pause_after_qa(*args):
+            result = assess_node(*args)
+            entered.set()
+            assert release.wait(10)
+            return result
+
+        monkeypatch.setattr(landing_qa, "evaluate_node", pause_after_qa)
+    else:
+        monkeypatch.setattr(pool_dispatch, "lock_scheduler", hold)
     with ThreadPoolExecutor(max_workers=2) as executor:
         cp = executor.submit(lab.consume)
         assert entered.wait(10)
-        rv = executor.submit(policy, lab, "revoke")
+        rv = executor.submit(policy, lab, "revoke", workflow=workflow)
         if revoke_first:
             rv.result(10).raise_for_status()
         release.set()

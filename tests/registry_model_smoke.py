@@ -16,6 +16,8 @@ from pool_model_smoke import receipts
 from test_registry import policy, registry_brief
 from test_adapter_rollout import second_release
 from dispatcher_build import turn
+from test_role_qa_rollout import activate_qa, WORKFLOW as QA_WORKFLOW
+from migrations.runtime_bundle import canonical_hash
 from app.registry_adapters import V1_DIGEST, seo_v2_digest
 from migrations.apply import publish_registry
 from migrations.runtime_bundle import reviewed_runtime, runtime_fingerprint, runtime_identity
@@ -122,6 +124,25 @@ def verify():
                     "v2_receipt": new_receipt,
                 }
                 Path("registry-rollout.json").write_text(json.dumps(evidence, indent=2), encoding="utf-8")
+                activate_qa(lab)
+                path, terms = registry_brief(lab)
+                queued = api.post(path, headers=lab.x["headers"], json={**terms, "registry_workflow": QA_WORKFLOW})
+                queued.raise_for_status()
+                qa_run = queued.json()["id"]
+                lab.runs = [qa_run]
+                drive(lab, qa_run, config, seo_v2=True)
+                usage = receipts(lab, [(qa_run, lab.cases[0], "Landing role QA")])[0]
+                run = read_run(lab, qa_run)
+                nodes = [p for p in run["checkpoints"] if p["skill"] in ("content", "seo")]
+                assert {p["skill"] for p in nodes} == {"content","seo"} and len(run["approved_assets"]) == 1
+                for p in nodes:
+                    qa = p["quality"]["role_qa"]
+                    assert qa["node_id"] == p["node_id"] and qa["policy"] == p["skill"] + "-qa@2"
+                    assert qa["plan_digest"] == run["graph"]["digest"] and qa["output_digest"] == canonical_hash(p["output"])
+                role_evidence = {"sha": evidence["source_after"], "runtime_fingerprint": runtime_fingerprint(),
+                                 "manifest_digest": run["registry"]["manifest_digest"], "usage": usage,
+                                 "reports": [p["quality"]["role_qa"] for p in nodes], "approved": run["approved_assets"]}
+                Path("role-qa-measurements.json").write_text(json.dumps(role_evidence, indent=2), encoding="utf-8")
         finally:
             lab.close()
 

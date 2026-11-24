@@ -252,6 +252,33 @@ def exercise():
                         expect(graph.get_by_text(registry+" · Manifest",exact=False)).to_be_visible()
                     assert graph.evaluate("(e) => e.scrollWidth <= e.clientWidth + 1")
                 print(f"PASS {template} graph in Chromium at 1280px and 390px")
+                if template == registry:
+                    # The API suite covers real guarded commits. Inject one labelled report here
+                    # to check its presentation at both widths without requiring a model in this job.
+                    pattern = "**/workforce/runs/*"
+                    def with_role_finding(route):
+                        response = route.fetch()
+                        data = response.json()
+                        data["checkpoints"] = [{"skill":"content","output":{"text":"Student notebook","source_ids":["brand"]},
+                            "quality":{"numbers_for_qa":[],"role_qa":{"scope":"node_checkpoint","node_id":"n01",
+                            "policy":"content-qa@2","output_digest":"a"*64,"findings":[{"field":"call_to_action",
+                            "rule_id":"cta_action","rule_version":2,"severity":"warning","source_ids":["brand"],
+                            "evidence":{"text":"Student notebook"}}]}}}]
+                        route.fulfill(response=response, json=data)
+                    owner_page.route(pattern, with_role_finding)
+                    try:
+                        card.get_by_role("button",name="Xem kết quả và chi phí").click()
+                        for width,height in ((1280,850),(390,844)):
+                            owner_page.set_viewport_size({"width":width,"height":height})
+                            expect(card.get_by_text("QA đầu ra AI · n01 · content-qa@2")).to_be_visible()
+                            finding=card.get_by_text("call_to_action · Kiểm tra lời kêu gọi hành động",exact=True)
+                            finding.click()
+                            expect(card.get_by_text("Cần kiểm tra · cta_action@2")).to_be_visible()
+                            expect(card.get_by_text("Nguồn đã dẫn: brand")).to_be_visible()
+                            finding.click()
+                        print("PASS original checkpoint QA finding and evidence in Chromium at 1280px and 390px")
+                    finally:
+                        owner_page.unroute(pattern, with_role_finding)
 
             first = share("Review operations")
             for n in range(25):

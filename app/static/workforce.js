@@ -17,6 +17,12 @@ function createWorkforce(root, api, notify) {
     b.onclick=async()=>{ b.disabled=true; try {await run();} catch(e){notify(e.message,true);} finally{b.disabled=false;} };
   }
   const labels={director:'Director',research:'Research',strategy:'Strategy',content:'Content',seo:'SEO',creative:'Creative',ads:'Ads',analytics:'Analytics'};
+  const qaRules={cta_action:'Kiểm tra lời kêu gọi hành động',brief_alignment:'Đối chiếu mục tiêu brief',
+    brand_alignment:'Đối chiếu thông tin sản phẩm trong Brand Kit',audience_alignment:'Đối chiếu đối tượng',
+    offer_alignment:'Đối chiếu sản phẩm và đề nghị',brand_instruction:'Đối chiếu từ ngữ Brand Kit yêu cầu tránh',
+    page_alignment:'So sánh với nội dung trang',intent_alignment:'Đối chiếu ý định tìm kiếm với trang',
+    metadata_length:'Độ dài ngoài khoảng gợi ý',duplicate_metadata:'Meta trùng tiêu đề',
+    claim_evidence:'Kiểm tra nguồn của nhận định',quote_context:'Có câu trùng nguồn, cần kiểm tra ngữ cảnh'};
   const graphStates={waiting:'Đang chờ',ready:'Sẵn sàng',running:'Đang xử lý',succeeded:'Hoàn tất',failed:'Thất bại',blocked:'Bị chặn',retry_wait:'Chờ thử lại'};
   function showGraph(info,graph) {
     const view=node(info,'section');view.setAttribute('aria-label','Trạng thái workflow');
@@ -149,7 +155,26 @@ function createWorkforce(root, api, notify) {
           if(v.last_error)node(info,'p',v.last_error==='recipient_revoked'?'Đã hủy do thu hồi quyền của người giao brief.':'Lỗi: '+v.last_error);
           v.checkpoints.forEach(p=>{node(info,'h4',labels[p.skill]);node(info,'p',p.output.text);
             node(info,'p','Nguồn: '+p.output.source_ids.map(k=>v.source_registry?.[k]?.label||k).join(', '));
-            for(const f of p.quality?.role_qa?.findings||[])node(info,'p',f.field+' · '+f.rule+' · '+f.claim);
+            const qa=p.quality?.role_qa;
+            if(qa?.scope==='node_checkpoint'){
+              node(info,'h5','QA đầu ra AI · '+qa.node_id+' · '+qa.policy);
+              node(info,'p','SHA-256 đầu ra '+qa.output_digest.slice(0,12));
+              for(const f of qa.findings){
+                const finding=node(info,'details');
+                node(finding,'summary',f.field+' · '+(qaRules[f.rule_id]||f.rule_id));
+                const ev=f.evidence;
+                node(finding,'p',(f.severity==='info'?'Gợi ý đối chiếu':'Cần kiểm tra')+' · '+f.rule_id+'@'+f.rule_version);
+                if(ev.text||ev.claim)node(finding,'p',ev.text||ev.claim);
+                if(ev.range)node(finding,'p',ev.length+' ký tự · ngưỡng gợi ý '+ev.range.join('–'));
+                if(ev.reference)node(finding,'p','Đối chiếu: '+[ev.reference].flat().join(' · '));
+                if(ev.avoid)node(finding,'p','Từ ngữ cần tránh: '+ev.avoid);
+                if(ev.content_parents)node(finding,'p','Node Content tiền nhiệm: '+ev.content_parents.join(', '));
+                if(ev.matching_ids?.length)node(finding,'p','Nguồn có câu trùng: '+ev.matching_ids.join(', '));
+                node(finding,'p','Nguồn đã dẫn: '+f.source_ids.join(', '));
+              }
+            }else{
+              for(const f of qa?.findings||[])node(info,'p',f.field+' · '+f.rule+' · '+f.claim);
+            }
             for(const f of p.quality?.claims||[]) {
               node(info,'p',(f.status==='needs_evidence'?'Cần bằng chứng':'Có câu trùng nguồn '+f.matching_ids.join(', '))+' · '+f.claim);
             }

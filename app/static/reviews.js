@@ -119,6 +119,7 @@ function createReviewPanel(root, api, notify) {
         el('p','Phiên bản cũ chưa được đánh giá.',evidence);
         button(evidence,'Đánh giá phiên bản này',()=>update(path+'/assessment','POST',{}));
       }else{
+        if(report.scope==='delivery_revision')el('p','Đánh giá tiêu đề và nội dung đang gửi khách. QA đầu ra AI được lưu ở từng checkpoint trong báo cáo run.',evidence);
         el('p','Lần lưu '+doc.qa_revision+' · SHA-256 '+report.content_digest.slice(0,12)+' · '+report.ruleset_version,evidence);
         el('p',report.state==='current'?'Đã đối chiếu với nguồn của Workforce.':'Chưa có nguồn liên kết để đối chiếu.',evidence);
         for(const f of report.findings){

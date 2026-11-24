@@ -15,7 +15,7 @@ def test_waits_are_scoped_read_only_and_coverage_is_explicit(pool):
     for actor in (reader, lab.cases[1][2], lab.y):
         assert lab.api.get(path, headers=actor["headers"]).status_code == 404
     def snapshot():
-        return tuple(lab.owner.execute("select * from amc_ops." + table + " order by 1").fetchall()
+        return tuple(lab.owner.execute("select to_jsonb(t)::text from amc_ops." + table + " t order by 1").fetchall()
                      for table in ("attempts","ledger","readiness","dag_nodes"))
     before = snapshot()
     def get():

@@ -21,11 +21,23 @@ BASE = {"tenants", "users", "memberships", "clients", "brands", "campaigns",
 
 def publish_registry(conn, manifest):
     """The migration publisher owns definitions. Identical imports may be replayed."""
+    with conn.transaction():
+        _publish_registry(conn, manifest)
+
+
+def _publish_registry(conn, manifest):
     contracts = manifest["contracts"]
-    if not set(manifest["required"]) <= contracts.keys() or manifest["mode"] != "dynamic-v1":
+    if (set(manifest["required"]) != {"director", "content", "seo"}
+            or not set(manifest["required"]) <= contracts.keys() or manifest["mode"] != "dynamic-v1"
+            or manifest["workflow_id"] != "WF-13/landing-seo-draft" or type(manifest["workflow_version"]) is not int
+            or manifest["workflow_version"] < 1):
         raise ValueError("Unsupported workflow contract")
+    roles = {item["id"] for item in json.loads((HERE.parent/"catalog/agent_roles.json").read_text(encoding="utf-8"))}
     for skill, contract in contracts.items():
         if (contract.get("adapter_digest") != adapter_digest() or skill not in {"director", "research", "strategy", "content", "seo"}
+                or contract["skill_id"] != skill or contract["role_id"] not in roles
+                or any(type(contract[k]) is not int or contract[k] < 1 for k in ("skill_version","contract_version"))
+                or contract["approval"] != "revision_qa_and_client_snapshot"
                 or contract["adapter"] != skill+"@1" or contract["qa_policy"] != skill+"@1"
                 or contract["tools"] or contract["model"] != "local" or contract["node_cap"] < 0
                 or contract["max_attempts"] != 3 or contract["timeout_seconds"] != 300):
@@ -119,5 +131,14 @@ def migrate(dsn: str, runtime_password: str | None = None):
 
 
 if __name__ == "__main__":
-    migrate(os.environ["AMC_MIGRATION_DSN"], os.getenv("AMC_RUNTIME_PASSWORD"))
+    import argparse
+
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--publish-registry", type=Path, help="Import a reviewed release using the migration identity")
+    args = parser.parse_args()
+    if args.publish_registry:
+        with psycopg.connect(os.environ["AMC_MIGRATION_DSN"]) as conn:
+            publish_registry(conn, json.loads(args.publish_registry.read_text(encoding="utf-8")))
+    else:
+        migrate(os.environ["AMC_MIGRATION_DSN"], os.getenv("AMC_RUNTIME_PASSWORD"))
     print("AMC schema version 14 ready")

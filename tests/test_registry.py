@@ -219,3 +219,30 @@ def test_specialist_policy_and_closed_outputs(skill, field, bad, good):
         validate_output({**raw, "unexpected": True}, skill, [], sources, {"contracts": {skill: contract}})
     with pytest.raises(GatewayError):
         validate_output({**raw, "source_ids": ["foreign"]}, skill, [], sources, {"contracts": {skill: contract}})
+
+
+@PG
+def test_publishing_second_release_preserves_running_version(pool):
+    from migrations.apply import publish_registry
+    from app.registry import release
+
+    lab = pool
+    rid = frozen_run(lab)
+    base, admin, _, _, campaign = lab.cases[0]
+    report_path = base + "/workforce/runs/" + rid
+    before = lab.api.get(report_path, headers=admin["headers"]).json()["registry"]
+    second = release()
+    second["workflow_version"] = 2
+    with lab.owner.transaction():
+        publish_registry(lab.owner, second)
+    ref = second["workflow_id"] + "@2"
+    lab.api.put(
+        base + "/workforce/registry/" + campaign, headers=admin["headers"], json={"workflow": ref, "action": "activate", "skills": second["required"]}
+    ).raise_for_status()
+    path, terms = registry_brief(lab)
+    started = lab.api.post(path, headers=admin["headers"], json={**terms, "registry_workflow": ref})
+    started.raise_for_status()
+    after = lab.api.get(base + "/workforce/runs/" + started.json()["id"], headers=admin["headers"]).json()["registry"]
+    assert before["workflow_version"] == 1 and after["workflow_version"] == 2
+    assert before["manifest_digest"] != after["manifest_digest"]
+    assert lab.api.get(report_path, headers=admin["headers"]).json()["registry"] == before

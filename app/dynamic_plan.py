@@ -48,6 +48,12 @@ def compile_plan(raw, required, binding=None):
         parents = {by_key[key].skill_type for key in task.parents}
         if len(set(task.parents)) != len(task.parents) or not parents.issubset(PARENTS[task.skill_type]):
             raise InvalidPlan("invalid predecessor types or duplicate edge")
+        if binding and binding.get("contracts"):
+            contract = binding["contracts"][task.skill_type]
+            if not parents.issubset(contract["predecessors"]):
+                raise InvalidPlan("predecessor outside skill contract")
+            if task.skill_type == "seo" and "content" not in parents:
+                raise InvalidPlan("landing metadata needs a direct content predecessor")
         if task.skill_type == "strategy" and not parents:
             raise InvalidPlan("strategy needs a research predecessor")
         if task.key not in used and task.skill_type not in required:
@@ -110,6 +116,8 @@ def planner_body(run, model):
         'key=copy skill_type=content parents=[]; key=seo skill_type=seo parents=["copy"]. Write your own short assignments '
         'for this specific objective. The number of nodes depends on the required outputs.'
     )
+    if run.knowledge.get("registry"):
+        prompt += " For this landing page workflow SEO must depend directly on the copy node. Only select skills present in the schema."
     previous = run.journal[-1] if run.journal else {}
     if previous.get("plan_error"):
         prompt += " Previous proposal rejected: " + previous["plan_error"] + ". Correct that issue."

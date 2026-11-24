@@ -10,9 +10,10 @@ CREATE TRIGGER immutable BEFORE UPDATE OR DELETE OR TRUNCATE ON amc_ops.registry
  FOR EACH STATEMENT EXECUTE FUNCTION amc_ops.immutable();
 GRANT SELECT ON amc_ops.registry_releases TO amc_runtime;
 CREATE TABLE amc_ops.registry_grants(
- tenant text NOT NULL, campaign text NOT NULL, workflow text REFERENCES amc_ops.registry_releases,
+ tenant text NOT NULL, client text NOT NULL, brand text NOT NULL, campaign text NOT NULL, workflow text REFERENCES amc_ops.registry_releases,
  skill text, mode text NOT NULL CHECK(mode IN ('activate','disable','revoke')),
- PRIMARY KEY(tenant,campaign,workflow,skill), FOREIGN KEY(tenant,campaign) REFERENCES public.campaigns(tenant_id,id));
+ PRIMARY KEY(tenant,campaign,workflow,skill), FOREIGN KEY(tenant,brand,campaign) REFERENCES public.campaigns(tenant_id,brand_id,id),
+ FOREIGN KEY(tenant,client,brand) REFERENCES public.brands(tenant_id,client_id,id));
 ALTER TABLE amc_ops.registry_grants ENABLE ROW LEVEL SECURITY;
 CREATE POLICY registry_reader ON amc_ops.registry_grants FOR SELECT TO amc_runtime
  USING(amc_acl.member_role(tenant) IN ('owner','admin','editor','viewer') AND EXISTS
@@ -32,7 +33,9 @@ BEGIN
  OR NOT EXISTS(SELECT FROM public.campaigns WHERE tenant_id=t AND id=c)
  OR EXISTS(SELECT FROM unnest(s) k WHERE k IS NULL OR NOT ((manifest->'contracts') ? k))
  THEN RETURN false; END IF;
- INSERT INTO amc_ops.registry_grants SELECT t,c,w,k,m FROM (SELECT DISTINCT unnest(s) k) x ORDER BY k
+ INSERT INTO amc_ops.registry_grants(tenant,client,brand,campaign,workflow,skill,mode)
+ SELECT t,b.client_id,b.id,c,w,k,m FROM public.campaigns ca JOIN public.brands b ON (b.tenant_id,b.id)=(ca.tenant_id,ca.brand_id)
+ CROSS JOIN (SELECT DISTINCT unnest(s) k) skills WHERE (ca.tenant_id,ca.id)=(t,c) ORDER BY k
  ON CONFLICT(tenant,campaign,workflow,skill) DO UPDATE SET mode=excluded.mode;
  INSERT INTO amc_ops.registry_history(tenant,campaign,workflow,skills,mode,actor) VALUES(t,c,w,s,m,current_setting('amc.user_id'));
  IF m='revoke' THEN

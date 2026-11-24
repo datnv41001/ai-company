@@ -14,7 +14,7 @@ from . import node_attempts
 from .workforce_gateway import Gateway
 from .workforce_models import WorkforceRun
 from .workflow_dag import node_for_slot
-from .workforce_worker import Scope, claim, finish
+from .workforce_worker import Scope, authorized_queue, claim, finish
 
 
 def query(db, sql, **params):
@@ -34,6 +34,17 @@ def dispatch(bind, config):
             with db.begin_nested() as change:
                 try:
                     node = node_for_slot(db, route["run"], route["step"])
+                    contract = None
+                    if node:
+                        run = db.scalar(authorized_queue(db, scope).where(WorkforceRun.id == route["run"]).with_for_update())
+                        if run is None:
+                            continue
+                        if binding := run.knowledge.get("registry"):
+                            contract = binding["contracts"][node.skill]
+                            if (contract["adapter_digest"] != adapter_digest() or config.provider != contract["model"]
+                                    or config.timeout > contract["timeout_seconds"]):
+                                run.state, run.last_error = "failed", "registry_adapter_unavailable"
+                                continue
                     if node and node.parallel:
                         offer = node_attempts.claim(db, scope, config, route["run"], node)
                     else:
@@ -48,19 +59,12 @@ def dispatch(bind, config):
                 if not offer:
                     continue
                 token, body, hold = offer.token, offer.body, offer.hold
-                run = db.get(WorkforceRun, offer.run)
-                binding = run.knowledge.get("registry")
-                if binding:
-                    contract = binding["contracts"][node.skill]
-                    if contract["adapter_digest"] != adapter_digest():
-                        change.rollback()
-                        run.state, run.last_error = "failed", "registry_adapter_unavailable"
-                        continue
+                if contract:
                     # Receipt, revoke and checkpoint take this same scheduler lock.
                     exposure = query(db, """select coalesce(sum(l.held+l.spent),0)
                         from amc_ops.attempts a join amc_ops.ledger l on l.id=a.id
                         where a.run=:r and a.node_id=:n""", r=run.id,n=node.id).scalar_one()
-                    if exposure + hold > contract["node_cap"] or config.provider != contract["model"] or config.timeout > contract["timeout_seconds"]:
+                    if exposure + hold > contract["node_cap"]:
                         change.rollback()
                         continue
                 period = query(

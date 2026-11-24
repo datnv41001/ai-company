@@ -30,7 +30,7 @@
       "max_attempts": 3,
       "timeout_seconds": 300,
       "approval": "revision_qa_and_client_snapshot",
-      "adapter_digest": "0473056dd603eecc69a6de9c683816e96493c4844ac357939c59168474ef7a94",
+      "adapter_digest": "c64cf3e0e691a1bad191b954b07d06a28c7cd8675bb5fe8328ee0ae0e620880a",
       "owner": "agency marketing lead",
       "objective": "Plan a scoped DAG",
       "success_criteria": [
@@ -68,7 +68,7 @@
       "max_attempts": 3,
       "timeout_seconds": 300,
       "approval": "revision_qa_and_client_snapshot",
-      "adapter_digest": "0473056dd603eecc69a6de9c683816e96493c4844ac357939c59168474ef7a94",
+      "adapter_digest": "c64cf3e0e691a1bad191b954b07d06a28c7cd8675bb5fe8328ee0ae0e620880a",
       "owner": "agency marketing lead",
       "objective": "Separate facts from audience hypotheses",
       "success_criteria": [
@@ -111,7 +111,7 @@
       "max_attempts": 3,
       "timeout_seconds": 300,
       "approval": "revision_qa_and_client_snapshot",
-      "adapter_digest": "0473056dd603eecc69a6de9c683816e96493c4844ac357939c59168474ef7a94",
+      "adapter_digest": "c64cf3e0e691a1bad191b954b07d06a28c7cd8675bb5fe8328ee0ae0e620880a",
       "owner": "agency marketing lead",
       "objective": "Propose measurable positioning",
       "success_criteria": [
@@ -155,7 +155,7 @@
       "max_attempts": 3,
       "timeout_seconds": 300,
       "approval": "revision_qa_and_client_snapshot",
-      "adapter_digest": "0473056dd603eecc69a6de9c683816e96493c4844ac357939c59168474ef7a94",
+      "adapter_digest": "c64cf3e0e691a1bad191b954b07d06a28c7cd8675bb5fe8328ee0ae0e620880a",
       "owner": "agency marketing lead",
       "objective": "Draft landing page copy",
       "success_criteria": [
@@ -200,7 +200,7 @@
       "max_attempts": 3,
       "timeout_seconds": 300,
       "approval": "revision_qa_and_client_snapshot",
-      "adapter_digest": "0473056dd603eecc69a6de9c683816e96493c4844ac357939c59168474ef7a94",
+      "adapter_digest": "c64cf3e0e691a1bad191b954b07d06a28c7cd8675bb5fe8328ee0ae0e620880a",
       "owner": "agency marketing lead",
       "objective": "Draft sourced landing metadata",
       "success_criteria": [

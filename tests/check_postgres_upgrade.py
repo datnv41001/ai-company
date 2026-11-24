@@ -1,10 +1,16 @@
 """Exercise upgrading a populated starter. Requires an empty local amc_test* database."""
 import hashlib
+import io
 import os
+import subprocess
 import sys
+import tarfile
+import tempfile
 from pathlib import Path
+from uuid import uuid4
 
 import psycopg
+from psycopg.conninfo import make_conninfo
 import pytest
 from sqlalchemy import create_engine, text
 
@@ -12,6 +18,47 @@ from app.database import prepare_database
 from migrations.apply import migrate
 
 MIGRATIONS = Path(__file__).resolve().parents[1] / "migrations"
+V16_BASE = "d81df0bee0d381007acfd0cf0b786a7f56e38719"
+
+
+def finish_v16_fixture():
+    # Use the reviewed binary to advance the populated v15 fixture to v16.
+    # This exercises the original migration transaction and its genuine marker.
+    archive = subprocess.check_output(["git","archive",V16_BASE,"app","migrations","catalog","requirements.txt","requirements-registry.txt"],
+                                      cwd=MIGRATIONS.parent)
+    with tempfile.TemporaryDirectory() as checkout, tarfile.open(fileobj=io.BytesIO(archive)) as sources:
+        sources.extractall(checkout, filter="data")
+        env = os.environ.copy()
+        env.pop("PYTHONPATH", None)
+        subprocess.run([sys.executable, "migrations/apply.py"], cwd=checkout, env=env, check=True)
+
+
+def rehearse_archive(dsn, container):
+    """Round-trip the populated v16 fixture through matching PostgreSQL client tools."""
+    tables = ("amc_schema_versions", "users", "memberships", "portal_grants", "portal_invitations",
+              "client_reviews", "review_entries", "workforce_runs", "amc_ops.attempts", "amc_ops.ledger",
+              "amc_ops.registry_releases", "amc_ops.registry_versions", "amc_ops.dag_nodes")
+
+    def snapshot(conn):
+        return [conn.execute(f"SELECT to_jsonb(t) FROM {table} t ORDER BY to_jsonb(t)").fetchall()
+                for table in tables]
+
+    with psycopg.connect(dsn) as source:
+        assert source.info.host in ("localhost", "127.0.0.1", "::1") and source.info.dbname.startswith("amc_test")
+        assert source.execute("SELECT max(version) FROM amc_schema_versions").fetchone() == (16,)
+        db, owner = source.info.dbname, source.info.user
+        before = snapshot(source)
+    assert all(before)
+    # Both the archive and restore are inside this disposable CI container.
+    target = "amc_test_restore_" + uuid4().hex
+    archive = "/tmp/" + target + ".dump"
+    command = ["docker", "exec", container]
+    subprocess.run([*command, "pg_dump", "-U", owner, "-Fc", "-f", archive, db], check=True)
+    subprocess.run([*command, "createdb", "-U", owner, target], check=True)
+    subprocess.run([*command, "pg_restore", "-U", owner, "--single-transaction", "--exit-on-error", "-d", target, archive], check=True)
+    with psycopg.connect(make_conninfo(dsn, dbname=target)) as restored:
+        assert snapshot(restored) == before
+    print(f"PASS: pg_dump/pg_restore v16 into a separate database; identical rows in {len(tables)} tables")
 
 
 def verify():
@@ -171,7 +218,7 @@ def verify():
                     '["director"]','[]','[]','queued',now(),0,1000,0,now())""",(workflow,))
                 frozen = conn.execute("select id,checkpoints::text,journal::text,ready_at from workforce_runs order by id").fetchall()
                 v13_snapshot = registry_upgrade_fixture.snapshot(conn)
-            if from_v16 or orphan_v16:
+            if orphan_v16:
                 # Reproduce the real independent branch schema (DDL and marker), before 015 ever ran.
                 conn.execute((MIGRATIONS/"016_scheduler_diagnostics.sql").read_text(encoding="utf-8"))
                 conn.execute("INSERT INTO amc_schema_versions VALUES (16)")
@@ -199,6 +246,9 @@ def verify():
         print("PASS: isolated v16 without 015 refused by migrator and API; ledger, leases and approved snapshot preserved")
         return
     if from_v16:
+        finish_v16_fixture()
+        if os.getenv("AMC_UPGRADE_BACKUP_CONTAINER"):
+            rehearse_archive(dsn, os.environ["AMC_UPGRADE_BACKUP_CONTAINER"])
         # Exercise transaction rollback before running the valid v17 migration.
         with psycopg.connect(dsn) as owner:
             owner.execute("alter table upgrade_marker_probe add constraint synthetic_failure check (version < 17)")
@@ -222,7 +272,7 @@ def verify():
     with runtime.connect() as c:
         if from_v14:
             with psycopg.connect(dsn) as owner:
-                assert owner.execute("select version from upgrade_marker_probe order by seq").fetchall() == [(v,) for v in range(17 if from_v16 else 16 if from_v15 else 15, 18)]
+                assert owner.execute("select version from upgrade_marker_probe order by seq").fetchall() == [(v,) for v in range(16 if from_v15 else 15, 18)]
                 if from_v16:
                     assert owner.execute("select state,role,client_id,can_comment,can_decide from portal_invitations where id='legacy-invite'").fetchone() == ("pending","client_viewer","a",True,False)
                     assert owner.execute("select id,email,password_hash,created_at from users where verified_at is null order by id").fetchall() == legacy

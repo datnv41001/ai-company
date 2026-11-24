@@ -30,12 +30,12 @@ Khi đưa hàng vào `in_review`, thay mã tham chiếu hoặc bổ sung một b
 | SAA-05 | Subscription & Billing | not_started | — | Hóa đơn, gia hạn, hoàn tiền và đối soát PSP | mở |
 | SAA-06 | Usage & Cost | in_progress | L | Phân bổ đủ loại compute, storage, tool và phí nhà cung cấp | mở |
 | SAA-07 | Marketplace nội bộ | not_started | — | Phát hành, quyền cài và rollback gói nội bộ | mở |
-| SAA-08 | Workspace / Team | in_progress | I | Vòng đời thành viên và thiết lập workspace | mở |
+| SAA-08 | Workspace / Team | in_progress | I · [Mời và nhận vai trò trong workspace](PR15-IDENTITY.md) | Các bước còn lại trong vòng đời thành viên và thiết lập workspace | mở |
 | SAA-09 | Support/Admin | not_started | — | Quy trình support, incident, SLA | mở |
 | AGY-01 | Client CRM | in_progress | I | Danh bạ, lead và lịch sử dịch vụ | mở |
 | AGY-02 | Discovery & Brief | in_progress | B | Khảo sát, yêu cầu tài sản và nguồn brief có phiên bản | mở |
 | AGY-03 | Commercial | not_started | — | Phê duyệt SOW, giá và hợp đồng | mở |
-| AGY-04 | Client Portal | in_progress | Q | Toàn bộ hành trình portal và phạm vi tài liệu chia sẻ | mở |
+| AGY-04 | Client Portal | in_progress | Q · [Lời mời cho đúng client](../tests/test_recipients.py) | Toàn bộ hành trình portal và phạm vi tài liệu chia sẻ | mở |
 | AGY-05 | Project/PMO | in_progress | D | Mốc dự án, SLA và năng lực nguồn lực | mở |
 | AGY-06 | Account Operations | not_started | — | Vận hành inbox, health score và handoff khách | mở |
 | AGY-07 | Service Finance | not_started | — | Invoice phí dịch vụ và biên lợi nhuận | mở |
@@ -69,7 +69,7 @@ Khi đưa hàng vào `in_review`, thay mã tham chiếu hoặc bổ sung một b
 | AIO-07 | Human-in-the-loop | in_progress | Q | Chính sách duyệt đầy đủ theo vai trò và tác động | mở |
 | AIO-08 | Artifact/Version | in_progress | Q | Version, lineage, export và quyền trên từng loại tài sản | mở |
 | AIO-09 | Evals & QA | in_progress | Q | Bộ eval theo role có gold fixture và reviewer nghiệp vụ | mở |
-| AIO-10 | Security & Audit | in_progress | I,L | Kiểm định toàn bộ ranh giới và phục hồi audit | mở |
+| AIO-10 | Security & Audit | in_progress | I,L · [Audit khi hai giao dịch tranh cùng lời mời](../tests/test_verified_identity.py) | Kiểm định toàn bộ ranh giới và phục hồi audit | mở |
 | AIO-11 | Scheduling & Incident | in_progress | L | Diễn tập sự cố, restore và tải có bằng chứng | mở |
 | AIO-12 | Usage Economics | in_progress | L | Chi phí ngoài inference, quota và economics thực đo | mở |
 

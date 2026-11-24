@@ -1,4 +1,8 @@
-"""User-visible identity contracts, including the runtime LOGIN and independent transactions."""
+"""User-visible identity contracts, including the runtime LOGIN and independent transactions.
+
+PYTEST_DONT_REWRITE
+Proofs and credentials must stay out of assertion diagnostics, even on a failing test.
+"""
 
 from concurrent.futures import ThreadPoolExecutor
 import os

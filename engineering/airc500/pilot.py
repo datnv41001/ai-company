@@ -133,7 +133,13 @@ def run_group(mode, adapter, info, manifest, rows, out, signer, trust):
             "tariff_digest": None,
         },
     }
-    j.start(run, trust)
+    from pilot_fixture import admission
+    from review_plan import EvidenceSigner, plan_digest
+
+    frozen = admission(rows, mode)
+    plan_hash = plan_digest(frozen)
+    verifier = EvidenceSigner.generate()
+    j.start_planned(run, trust, frozen, verifier.public_key)
     save(out / "run.json", run)
     archive = out / "calls.jsonl"
     records = []
@@ -224,6 +230,16 @@ def run_group(mode, adapter, info, manifest, rows, out, signer, trust):
                 continue
             raise RuntimeError(f"Assignment {aid} did not yield an admissible review ({state}/{outcome})")
         accepted_attempts.append(receipt)
+        supported = {}
+        for u in units:
+            expected = "matches" if u["source"] == u["observed"] else "conflict"
+            reply = ans[u["id"]]
+            supported[u["id"]] = reply["status"] == expected and reply["approved_line"] == reply["copy_line"] == u["line"]
+        checks = supported if phase == "blind" else {("cross-" + domain if phase == "cross" else "arbitration"): all(supported.values())}
+        for oid, valid in checks.items():
+            j.record_evidence(
+                verifier.attest(rid, plan_hash, aid, oid, receipt["output_digest"], run["source_manifest_digest"], "verified" if valid else "insufficient")
+            )
         records.append({"assignment_id": aid, "attempt_id": attempt, "reviewer_id": reviewer, "phase": phase, "answer": ans})
         print(mode, aid, reviewer, phase, usage["prompt_tokens"], usage["completion_tokens"], flush=True)
 
@@ -254,8 +270,8 @@ def run_group(mode, adapter, info, manifest, rows, out, signer, trust):
             invoke(
                 "AR-002", "evidence arbitration", selected, "arbitration", packet, "Assess competing explanations. Weight verifiable observations, not votes."
             )
-        if j.coverage(rid, intended) != "complete":
-            raise ValueError("Incomplete mandatory coverage")
+        if j.coverage_report(rid)["execution"]["missing"]:
+            raise ValueError("Incomplete mandatory execution")
         save(out / "checkpoint.json", j.checkpoint(rid))
     except Exception as exc:
         # A dispatched attempt with no trustworthy provider response stays uncertain.

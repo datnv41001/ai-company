@@ -15,6 +15,7 @@ import uuid
 import rfc8785
 
 from receipt_auth import BINDINGS, Signer, digest, instant, validate, verify_signature
+import review_plan
 
 __all__ = ["Journal", "Signer", "verify_signature"]
 
@@ -36,10 +37,16 @@ class State:
     sequence: int = 0
     previous: str | None = None
     root: str | None = None
+    plan: dict | None = None
+    verifier_key: str | None = None
+    observations: dict = field(default_factory=dict)
 
     def apply(self, kind, data):
         if kind == "start":
             self.manifest, self.trust = data["run"], data["trust"]
+            self.plan, self.verifier_key = data.get("plan"), data.get("verifier_key")
+        elif kind == "evidence":
+            self.observations[data["assignment_id"], data["obligation_id"]] = data
         elif kind == "reserved":
             self.attempts[data["attempt_id"]] = {**data, "state": "reserved"}
         elif kind == "dispatched":
@@ -133,7 +140,14 @@ class Journal:
         state.apply(kind, data)
         state.sequence, state.previous, state.root = seq, state.root, event_hash
 
+    def start_planned(self, run_record, trust, plan, verifier_key):
+        review_plan.validate_plan(run_record, plan, verifier_key, trust)
+        self._start(run_record, trust, {"plan": plan, "verifier_key": verifier_key})
+
     def start(self, run_record, trust):
+        raise ValueError("A frozen plan and separate evidence verifier are required at admission")
+
+    def _start(self, run_record, trust, planning):
         validate("run", run_record)
         budget = run_record["budget"]
         if budget["max_cost_microusd"] or budget["max_concurrency"] > 2:
@@ -147,10 +161,15 @@ class Journal:
         with self.transaction() as db:
             if db.execute("SELECT 1 FROM events WHERE run=?", (rid,)).fetchone():
                 current = self.load(db, rid)
-                if current.manifest != run_record or current.trust != trust:
+                if (
+                    current.manifest != run_record
+                    or current.trust != trust
+                    or current.plan != planning.get("plan")
+                    or current.verifier_key != planning.get("verifier_key")
+                ):
                     raise ValueError("cannot change pinned manifest or trust")
                 return
-            self.append(db, State(), rid, "start", {"run": run_record, "trust": trust})
+            self.append(db, State(), rid, "start", {"run": run_record, "trust": trust, **planning})
 
     @staticmethod
     def runnable(state, now):
@@ -160,6 +179,8 @@ class Journal:
     @staticmethod
     def _admit(state, ass, key_id):
         validate("assignment", ass)
+        if state.plan:
+            review_plan.planned_job(state.plan, ass)
         budget = state.manifest["budget"]
         if (
             key_id not in state.trust
@@ -190,6 +211,8 @@ class Journal:
         rid = ass["run_id"]
         with self.transaction() as db:
             state = self.load(db, rid)
+            if not state.plan:
+                raise ValueError("historical unplanned run is read-only")
             now = self.clock()
             self.runnable(state, now)
             budget = state.manifest["budget"]
@@ -228,6 +251,8 @@ class Journal:
     def dispatch(self, attempt_id):
         with self.transaction() as db:
             rid, state, a = self.find(db, attempt_id)
+            if not state.plan:
+                raise ValueError("historical unplanned run is read-only")
             now = self.clock()
             self.runnable(state, now)
             if a["state"] != "reserved" or now >= instant(a["expires_utc"]):
@@ -422,12 +447,28 @@ class Journal:
             **state.ledger(),
         }
 
-    def coverage(self, run_id, required_assignment_ids):
+    def record_evidence(self, observation):
+        rid = observation["run_id"]
+        with self.transaction() as db:
+            state = self.load(db, rid)
+            if not state.plan:
+                raise ValueError("no admitted evidence plan")
+            review_plan.verify_evidence(state, observation)
+            self.append(db, state, rid, "evidence", observation)
+
+    def coverage_report(self, run_id):
+        with self.connection() as db:
+            return review_plan.coverage_report(self.load(db, run_id))
+
+    def coverage(self, run_id, required_assignment_ids=None):
+        """Compatibility view. A caller cannot grant coverage by supplying a subset."""
         with self.connection() as db:
             state = self.load(db, run_id)
-            accepted = {a["assignment"]["assignment_id"] for a in state.attempts.values() if a["state"] == "accepted"}
-            required = set(required_assignment_ids)
-            return "complete" if (required and required <= accepted and state.seal and not state.cancelled and not state.overspent) else "inconclusive"
+            if not state.plan or (
+                required_assignment_ids is not None and set(required_assignment_ids) != {j["assignment_id"] for j in state.plan["assignments"]}
+            ):
+                return "inconclusive"
+            return "complete" if review_plan.coverage_report(state)["decision"] == "covered" else "inconclusive"
 
     def export_events(self, run_id):
         with self.transaction() as db:
@@ -438,7 +479,7 @@ class Journal:
             ]
 
     @classmethod
-    def verify_events(cls, run_id, events, checkpoint, trust):
+    def verify_events(cls, run_id, events, checkpoint, trust, *, expected_plan_digest=None, verifier_key=None):
         """Replay exported bytes offline. Pin the checkpoint or bundle digest out of band."""
         state = State()
         for event in events:
@@ -448,6 +489,12 @@ class Journal:
                 raise ValueError("invalid portable journal chain")
             if kind == "start":
                 validate("run", data["run"])
+                if "plan" in data:
+                    if expected_plan_digest != review_plan.plan_digest(data["plan"]) or verifier_key != data.get("verifier_key"):
+                        raise ValueError("portable plan or verifier differs from trusted admission")
+                    review_plan.validate_plan(data["run"], data["plan"], verifier_key, trust)
+                elif expected_plan_digest is not None or verifier_key is not None:
+                    raise ValueError("missing pinned admission plan")
                 if (
                     seq != 1
                     or data["run"]["run_id"] != run_id
@@ -458,6 +505,10 @@ class Journal:
                     raise ValueError("invalid portable run manifest")
             elif not state.manifest:
                 raise ValueError("missing initial manifest")
+            elif kind == "evidence":
+                if not state.plan:
+                    raise ValueError("observation without admission")
+                review_plan.verify_evidence(state, data)
             elif kind == "reserved":
                 cls._admit(state, data["assignment"], data["key_id"])
                 budget = state.manifest["budget"]
@@ -528,6 +579,7 @@ class Journal:
             raise ValueError("portable checkpoint differs from journal")
         return {
             **cls._summary(state),
+            **({"coverage_report": review_plan.coverage_report(state)} if state.plan else {}),
             "run": state.manifest,
             "accepted_attempts": {k: {"receipt": a["receipt"], "assignment": a["assignment"]} for k, a in state.attempts.items() if a["state"] == "accepted"},
         }

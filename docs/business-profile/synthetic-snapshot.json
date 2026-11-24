@@ -1,0 +1,131 @@
+{
+  "contract": "brand_knowledge.snapshot.v1",
+  "scope": {
+    "tenant_id": "fixture-agency",
+    "client_id": "fixture-gallery",
+    "brand_id": "fixture-museum",
+    "campaign_id": "fixture-summer"
+  },
+  "profile_revision": 3,
+  "claims_revision": 2,
+  "brief_revision": "fixture-brief-1",
+  "as_of": "2026-11-24T09:00:00Z",
+  "company": {
+    "display_name": "Phòng trưng bày Sao",
+    "category": "dịch vụ trải nghiệm",
+    "owner_id": "fixture-account-lead"
+  },
+  "products": [
+    {
+      "id": "tactile-tour",
+      "kind": "service",
+      "name": "Tham quan bản sao xúc giác",
+      "market": "VN",
+      "locale": "vi-VN",
+      "availability": "by appointment",
+      "source_ids": [
+        "catalog-2"
+      ],
+      "owner_id": "fixture-product-lead"
+    }
+  ],
+  "target_markets": [
+    {
+      "country": "VN",
+      "language": "vi",
+      "channel": "landing"
+    }
+  ],
+  "segments": [
+    {
+      "id": "education-groups",
+      "description": "Nhóm giáo viên tổ chức ngoại khóa",
+      "basis": "hypothesis",
+      "evidence_ids": []
+    }
+  ],
+  "objectives": [
+    {
+      "id": "qualified-visits",
+      "metric": "lượt đăng ký tham quan đủ điều kiện",
+      "unit": "đăng ký",
+      "baseline": null,
+      "target": 30,
+      "window": "30 ngày",
+      "owner_role": "campaign lead",
+      "basis": "target",
+      "method": "Count completed registrations accepted by the campaign lead."
+    }
+  ],
+  "guidelines": {
+    "tone": "thân thiện, rõ đối tượng chạm",
+    "required_qualifiers": [
+      "bản sao"
+    ],
+    "prohibited": [
+      "mời khách chạm bản gốc"
+    ],
+    "cta": "Đăng ký lịch tham quan",
+    "source_ids": [
+      "guide-3"
+    ]
+  },
+  "claims": [
+    {
+      "id": "tactile-01",
+      "revision": 2,
+      "approved_wording": "Khách được chạm bản sao; hiện vật gốc được trưng bày sau kính.",
+      "required_qualifiers": [
+        "bản sao"
+      ],
+      "source_ids": [
+        "catalog-2"
+      ],
+      "approved_by_role": "brand owner",
+      "approved_at": "2026-11-22T08:30:00Z",
+      "use_scope": {
+        "market": "VN",
+        "locale": "vi-VN",
+        "channels": [
+          "landing",
+          "strategy"
+        ]
+      },
+      "valid_from": "2026-11-22T00:00:00Z",
+      "valid_until": "2027-01-01T00:00:00Z",
+      "approved_by": "fixture-brand-approver"
+    }
+  ],
+  "sources": [
+    {
+      "id": "catalog-2",
+      "revision": 2,
+      "publisher": "Phòng trưng bày Sao (fixture)",
+      "locator": "fixture://catalog/v2#touch",
+      "excerpt": "Khách được chạm bản sao. Hiện vật gốc được trưng bày sau kính.",
+      "observed_at": "2026-11-22T08:00:00Z",
+      "valid_until": "2027-01-01T00:00:00Z",
+      "access": "brand-internal",
+      "owner_id": "fixture-source-steward",
+      "source_kind": "synthetic-document",
+      "usage_basis": "synthetic fixture",
+      "review_on": "2027-01-01T00:00:00Z",
+      "content_digest": "dd9ee3221e15632d0dea914e803d7f98f8c4ff06a92742c3769b2878ef4299d1"
+    },
+    {
+      "id": "guide-3",
+      "revision": 3,
+      "publisher": "Nhóm thương hiệu Sao (fixture)",
+      "locator": "fixture://brand-guide/v3#voice",
+      "excerpt": "Nhắc rõ bản sao và dùng lời mời đăng ký lịch tham quan.",
+      "observed_at": "2026-11-23T10:00:00Z",
+      "valid_until": "2027-02-01T00:00:00Z",
+      "access": "brand-internal",
+      "owner_id": "fixture-source-steward",
+      "source_kind": "synthetic-document",
+      "usage_basis": "synthetic fixture",
+      "review_on": "2027-02-01T00:00:00Z",
+      "content_digest": "2bb00ea9e1ed998195cf262690975cd3cfe4b5c057bf189b5313018abbf22da7"
+    }
+  ]
+}

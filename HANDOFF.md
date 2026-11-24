@@ -2,7 +2,7 @@
 
 ## AIRC · Kiểm định chất lượng v2 và runtime
 
-Từ main `bdc2441914478b918ea96e861aeb21f2d61655cd` (schema AMC v20), công cụ dùng kế hoạch pin, bằng chứng ký và đối chứng năm cấu hình. Trên máy mới chạy `python -m unittest discover -s engineering/airc500 -p "test_*.py" -v` trong venv engineering. [Phép đo và cách replay](engineering/airc500/QUALITY-EVALUATION.md) · [Kết quả và public pins](engineering/airc500/evidence/quality-v2/README.md) · [Giới hạn trust và intake](engineering/airc500/RUNTIME-HARDENING.md). Commercial GA NO-GO, nguồn repository thực tiếp tục HOLD.
+Từ main `bdc2441914478b918ea96e861aeb21f2d61655cd` (schema AMC v20), công cụ dùng kế hoạch pin, bằng chứng ký và đối chứng năm cấu hình. Trên máy mới chạy `python -m unittest discover -s engineering/airc500 -p "test_*.py" -v` trong venv engineering. [Phép đo và cách replay](engineering/airc500/QUALITY-EVALUATION.md) · [Kết quả và public pins](engineering/airc500/evidence/quality-v2/README.md) · [So hai checkpoint local](engineering/airc500/stronger/README.md) · [Giới hạn trust và intake](engineering/airc500/RUNTIME-HARDENING.md) · [Docker probe Linux](engineering/airc500/SANDBOX-CONTAINER.md). Commercial GA NO-GO, nguồn repository thực tiếp tục HOLD.
 
 ## AIRC-500 · Thiết kế công cụ review nội bộ
 

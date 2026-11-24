@@ -481,4 +481,4 @@ Từ **Điều phối Marketing AI → Quyền workflow của chiến dịch**, 
 
 ## Business Profile & Brand Intelligence · increment Marketing đề xuất
 
-Từ main `ece8ecc8`, [đặc tả, fixture và tiêu chí nghiệm thu WF-03/WF-13](docs/business-profile/README.md) bàn giao công việc C1–C4. Bước tiếp theo là thiết kế migration additive trên main sau khi nhận các thay đổi onboarding, rồi kiểm scope tenant/client/brand trước khi bật release cho campaign thử nghiệm. Trạng thái commercial GA vẫn NO-GO.
+Sau khi đồng bộ schema v20 từ `49cbc070`, C0 có [sáu quyết định, snapshot ví dụ và lệnh kiểm tra](docs/business-profile/README.md), [kế hoạch C1](docs/business-profile/C1-PLAN.md) và [năm tình huống C2/C4](docs/business-profile/C2-C4-ACCEPTANCE.md). Từ thư mục gốc chạy `python -m unittest discover -s docs/business-profile -p test_c0.py -v`. Chờ review độc lập C0 trước PR C1. Kiểm số migration còn trống trên main khi chuẩn bị tích hợp, kể cả nhánh Identity đang đề xuất. Commercial GA vẫn NO-GO.

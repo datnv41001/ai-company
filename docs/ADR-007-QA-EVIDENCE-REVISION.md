@@ -30,3 +30,7 @@ Dừng API và worker của phiên bản trước, sao lưu DB phát triển, ch
 [Workflow nghiệm thu](../.github/workflows/ci.yml) chạy bảy đường nâng DB v1–v7, lặp migration, test vai trò, thử các giao dịch cạnh tranh, giao diện desktop/mobile và Qwen thật trong Compose. Khi xem giao diện, chọn **Soạn và bàn giao cho khách** và một bản làm việc. Khu **Kiểm tra phiên bản đang xem** hiển thị đầu của SHA-256, ruleset, trạng thái nguồn và từng câu cần đối chiếu. Khi gõ sửa, báo cáo đã lưu được ẩn. Sau khi lưu, màn hình tải lại bản và kết quả của server.
 
 Nếu cần rollback, dừng các tiến trình v8, giữ bản sao DB v8 để đối chiếu audit và phục hồi bản mã tương ứng cùng backup trước migration vào DB riêng. Kiểm tra các quyền bị thu hồi, quyết định và snapshot phát sinh sau mốc backup trước khi cho phép tiếp tục nội bộ. Các bản trước v8 dùng hợp đồng duyệt cũ; chỉ mở lại luồng duyệt khi đã chấp nhận rủi ro này hoặc đã có bản sửa tương thích.
+
+## Đề xuất từ Business Profile C0
+
+Khi tích hợp phiên bản Workforce mới, QA/share phải kiểm đồng thời revision/digest nội dung đã duyệt và quyền dùng từng claim/source ở thời điểm giao dịch. C0 đề xuất authority guard, immutable source revision và lịch sử invalidation. Mã nghiệp vụ hiện tại sẽ chỉ nhận thay đổi sau khi C1/C3 được review. [Thứ tự thu hồi, QA và share](business-profile/C1-PLAN.md#thu-hồi-qa-và-share)

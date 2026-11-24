@@ -1,5 +1,49 @@
 # Bắt đầu ở đây khi tiếp quản AI Marketing Company
 
+## Main sau PR #11 · QA Content và SEO cho bản nháp landing
+
+Ngày 24/11/2026, [PR #11](https://github.com/datnv41001/ai-company/pull/11) đã merge tại [`576b81798de148b75a6e74dd584551049dc5be9f`](https://github.com/datnv41001/ai-company/commit/576b81798de148b75a6e74dd584551049dc5be9f). Hai parent là base `4c588d8cbadc6e83da7a33e7977d12815673f663` và head đã review `a982b1efff9b323b3b0c6fed8d9138f5475f6a2c`. Cả merge và head có cùng Git tree `21a810d5e20b735936fcb62ce93b2c21346311ca`. Phạm vi phát hành là phát triển nội bộ trên dữ liệu tổng hợp. PostgreSQL dùng schema v14.
+
+| Kiểm tra trên chính commit merge | Kết quả |
+| --- | --- |
+| [API và nâng PostgreSQL](https://github.com/datnv41001/ai-company/actions/runs/45326058065/job/138215820740) | Ruff đạt. 178/178 bài kiểm thử đạt, gồm phân quyền khách A/B cùng agency và RLS. Cả 13 đường nâng v1–v13 có dữ liệu lên v14, chạy lặp và kiểm tra cô lập khách đều đạt. |
+| [Compose và Chromium](https://github.com/datnv41001/ai-company/actions/runs/45326058065/job/138215820324) | Mở được finding trên desktop 1280 px và mobile 390 px. Cả hai chặn phê duyệt cũ sau A → B → A. |
+| [Qwen local](https://github.com/datnv41001/ai-company/actions/runs/45326058065/job/138215820774) | Director, Content và SEO thành công ngay lượt đầu (3/3). Tổng 1.032 token vào, 320 ra, 0 lượt chưa xác nhận usage, 0 micro-USD đang giữ hoặc ước tính. Một snapshot được khách mẫu duyệt. |
+
+Artifact `role-qa-measurements.json` ghi 2 finding Content và 1 finding SEO. Digest của Content tiền nhiệm trong report SEO khớp digest đầu ra của node Content. Người QA vẫn phải duyệt đúng revision và digest trước khi chia sẻ, kể cả khi một node có 0 finding. Quyết định của khách gắn với snapshot đã chia sẻ. [Artifact trên commit merge](https://github.com/datnv41001/ai-company/actions/runs/45326058065/artifacts/14890391288) · [CI 3/3](https://github.com/datnv41001/ai-company/actions/runs/45326058065).
+
+### Manifest, kiểm kê và rollback
+
+[Manifest](catalog/landing-seo-v4.json) là `WF-13/landing-seo-draft@4`, có digest `f47ddd7984fc1aa9d4fe3ba325ce917b49e8cfa4d504debd1ad8d7bb58003c9a`. Ba adapter bắt buộc là `director@1`, `content@2` và `seo@3`. Hai adapter tùy chọn là `research@1` và `strategy@1`. QA của hai node mới lần lượt là `content-qa@2` và `seo-qa@2`.
+
+| Runtime đã đo | Fingerprint trong danh sách cấp phép |
+| --- | --- |
+| Linux CPython 3.12.16, job Qwen của bản merge | `ac80f043fbb40efd0463a64f90db6d7829af99d64ecc5971dfd3d71c38a164a3` |
+| Windows CPython 3.12.14, checkout bản merge | `dc3fae426d39398508787d5ddb74fad2612bd4bafa901485abc48b1f1a1c1d9a` |
+
+Trên checkout Windows, đối chiếu cả 5 hợp đồng với runtime đã cấp phép thành công. Digest tương ứng là `c64cf3e0…` cho ba vai trò phiên bản 1, `033be980…` cho Content 2 và `8bf22c4a…` cho SEO 3. Runtime còn nhận các hợp đồng Content/SEO lịch sử, trong đó `seo@2` ghim `3ab7030b…`. [Fingerprint và digest đầy đủ](migrations/registry-runtime.lock.json).
+
+Kiểm kê chỉ đọc trên ba DB dev tổng hợp `amc_company_pool_dev` (v10), `amc_diamond_dev` (v11) và `amc_parallel_dev` (v13) cho kết quả mỗi DB có 0 run pool hoạt động, 0 adapter ghim cho run hoạt động và 0 attempt mở. Lần chạy @4 được xác minh trong DB thử riêng của CI. Ba DB dev cũ vẫn ở phiên bản nêu trên.
+
+1. Trước khi bật `@4` ở một pool khác, kiểm tra schema v14. Chạy lại truy vấn kiểm kê và lệnh Compose trong [quy trình kiểm tra từng replica](#trước-khi-kích-hoạt-một-phiên-bản-adapter) trên đúng pool. Đối chiếu adapter **và** digest cho toàn bộ run/report còn việc, kể cả run cũ, với fingerprint và adapter thực tế của các dispatcher. Kiểm tra worker và route cho campaign. Nếu thiếu replica tương thích, khôi phục image đã duyệt rồi chạy brief tổng hợp trước khi cấp grant `@4`.
+2. Khi rút tính năng, chọn **Ngừng cấp mới** cho `@4` và giao brief tiếp theo qua phiên bản `@1` được campaign cấp phép. Giữ dispatcher và worker tương thích với từng phiên bản đang chạy cho tới khi run hoàn tất, report đã tiêu thụ, lease đã đóng và hold/receipt đã đối soát. Giữ các policy ghim, checkpoint, ledger và snapshot lịch sử để tiếp tục truy vết. [Công cụ xuất bản manifest trên DB thử](migrations/registry_release.py).
+
+### Đánh giá nghiệp vụ và công việc tiếp theo
+
+Bộ chấm mù gồm 4 brief giả lập mới với 12 ca Content và 12 ca SEO, độc lập với 16 fixture hồi quy. Có ca diễn đạt lại, phủ định, chỉ dẫn thương hiệu trong văn xuôi, trích dẫn thiếu ngữ cảnh và đối chiếu Anh–Việt. Người điều phối chỉ chuyển ZIP do lệnh đầu tạo cho reviewer. Reviewer đọc `REVIEWER.md`, ghi nhãn, rồi trả phiếu đã chốt trước khi xem báo cáo. Lệnh tạo ZIP chỉ dùng thư viện chuẩn Python.
+
+```sh
+python docs/reviews/landing-qa-eval/evaluate.py --packet --output landing-qa-blind.zip
+python -m pip install -r requirements.txt
+python docs/reviews/landing-qa-eval/evaluate.py --labels completed-labels.json --output independent-report.md
+```
+
+Khi tính điểm, dùng checkout này với Python 3.12.14 hoặc 3.12.16 và các dependency đã ghim tương ứng với fingerprint trong bảng. Dùng tên tệp đầu ra mới ở mỗi lần chạy. Mỗi bộ ba (ca, trường, rule) tính một lần. Báo cáo ghi TP, FP, FN, precision và recall theo role/rule cùng danh sách bất đồng. Mẫu số bằng 0 hiển thị `n/a`.
+
+Hiện chưa có nhãn độc lập của reviewer nghiệp vụ. Theo nhãn kỹ thuật tạm của Codex, có 19 cảnh báo khớp, 14 cảnh báo thừa và 7 bị bỏ sót, tương ứng micro-precision 57,6% và micro-recall 73,1%. Ví dụ C02 là cảnh báo thừa trên một câu phủ định. B06 có ba cảnh báo thừa khi SEO tiếng Việt khớp nghĩa với bản Content tiếng Anh. Quy tắc `quote_context` của SEO chưa có ca dương theo nhãn tạm. Để nghiệm thu thương mại còn cần nhãn độc lập và đủ số ca dương cho các rule cần kết luận. [Báo cáo kỹ thuật theo rule](docs/reviews/landing-qa-eval/technical-report.md) · [Rubric chấm mù](docs/reviews/landing-qa-eval/REVIEWER.md).
+
+Hai thiết kế kế tiếp có điều kiện nghiệm thu và rollback riêng. Một PR bổ sung tiểu quy trình Research → Strategy của WF-03. PR khác giúp vận hành phân biệt node chờ predecessor, runtime, worker, capacity hay budget. [Thiết kế và các tình huống kiểm thử](docs/POST-PR11-WORKFLOWS.md).
+
 ## Main sau PR #10 · Registry v14
 
 [PR #10](https://github.com/datnv41001/ai-company/pull/10) đã merge vào `main` ngày 24/11/2026 tại [`d98533154ebe3f65dab3f7fb249115bc83420824`](https://github.com/datnv41001/ai-company/commit/d98533154ebe3f65dab3f7fb249115bc83420824). Hai parent lần lượt là `f283c6e9eef7054ec11d1aac20ed6971fa891499` và head được duyệt `a998ac65d8859c35642b5d678bc010bf095542ae`. Cây Git của bản merge và head trùng nhau tại `f7d2e31c6f0f450802399e0759a3721de18f2115`. Phạm vi nghiệm thu là phát triển nội bộ với PostgreSQL schema 14 và dữ liệu tổng hợp.

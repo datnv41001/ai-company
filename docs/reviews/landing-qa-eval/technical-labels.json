@@ -1,0 +1,269 @@
+{
+  "cases_digest": "4a9c1b5377c194ab33d65bcf6f9081e6c04ac84af67271a94465de7541717da6",
+  "basis": "technical-provisional",
+  "reviewer": "Codex (technical baseline)",
+  "cases": [
+    {
+      "id": "L01",
+      "reviewed": true,
+      "findings": [],
+      "note": "Bản tiếng Việt diễn đạt đúng brief tiếng Anh."
+    },
+    {
+      "id": "L02",
+      "reviewed": true,
+      "findings": [
+        {
+          "field": "body_copy",
+          "rule": "brand_instruction"
+        },
+        {
+          "field": "body_copy",
+          "rule": "claim_evidence"
+        }
+      ],
+      "note": "Brand Kit yêu cầu bỏ indestructible; độ bền tuyệt đối cũng thiếu căn cứ."
+    },
+    {
+      "id": "L03",
+      "reviewed": true,
+      "findings": [
+        {
+          "field": "call_to_action",
+          "rule": "cta_action"
+        },
+        {
+          "field": "body_copy",
+          "rule": "quote_context"
+        },
+        {
+          "field": "call_to_action",
+          "rule": "quote_context"
+        }
+      ],
+      "note": "Câu thông số trích nguyên văn ở hai trường; CTA lặp thông tin."
+    },
+    {
+      "id": "L04",
+      "reviewed": true,
+      "findings": [],
+      "note": "Các từ tiếng Anh diễn đạt lại trang tiếng Việt."
+    },
+    {
+      "id": "L05",
+      "reviewed": true,
+      "findings": [
+        {
+          "field": "meta_description",
+          "rule": "page_alignment"
+        },
+        {
+          "field": "search_intent",
+          "rule": "intent_alignment"
+        }
+      ],
+      "note": "Meta và intent chuyển sang cà phê."
+    },
+    {
+      "id": "L06",
+      "reviewed": true,
+      "findings": [
+        {
+          "field": "page_title",
+          "rule": "metadata_length"
+        },
+        {
+          "field": "meta_description",
+          "rule": "metadata_length"
+        },
+        {
+          "field": "meta_description",
+          "rule": "duplicate_metadata"
+        }
+      ],
+      "note": "Hai trường ngắn hơn khoảng trong manifest và trùng nguyên văn."
+    },
+    {
+      "id": "C01",
+      "reviewed": true,
+      "findings": [],
+      "note": "Giữ chỗ là lời kêu gọi hành động cụ thể."
+    },
+    {
+      "id": "C02",
+      "reviewed": true,
+      "findings": [],
+      "note": "Câu phủ định loại trừ lời hứa."
+    },
+    {
+      "id": "C03",
+      "reviewed": true,
+      "findings": [
+        {
+          "field": "headline",
+          "rule": "brand_instruction"
+        }
+      ],
+      "note": "Từ cấm nằm ở headline."
+    },
+    {
+      "id": "C04",
+      "reviewed": true,
+      "findings": [],
+      "note": "Diễn đạt lại trang cùng ý định tìm lớp cho người mới."
+    },
+    {
+      "id": "C05",
+      "reviewed": true,
+      "findings": [
+        {
+          "field": "page_title",
+          "rule": "page_alignment"
+        },
+        {
+          "field": "meta_description",
+          "rule": "page_alignment"
+        },
+        {
+          "field": "search_intent",
+          "rule": "intent_alignment"
+        }
+      ],
+      "note": "Cùng từ bàn xoay, nhưng mục đích mua máy khác lớp học."
+    },
+    {
+      "id": "C06",
+      "reviewed": true,
+      "findings": [
+        {
+          "field": "meta_description",
+          "rule": "claim_evidence"
+        }
+      ],
+      "note": "Không có nguồn cho volume 900."
+    },
+    {
+      "id": "B01",
+      "reviewed": true,
+      "findings": [],
+      "note": "Sản phẩm và cách sử dụng khớp với nguồn."
+    },
+    {
+      "id": "B02",
+      "reviewed": true,
+      "findings": [
+        {
+          "field": "body_copy",
+          "rule": "quote_context"
+        }
+      ],
+      "note": "Trích dẫn có thật nhưng nói về hạt ở quán, không phải bộ lọc."
+    },
+    {
+      "id": "B03",
+      "reviewed": true,
+      "findings": [
+        {
+          "field": "body_copy",
+          "rule": "brief_alignment"
+        },
+        {
+          "field": "body_copy",
+          "rule": "audience_alignment"
+        },
+        {
+          "field": "body_copy",
+          "rule": "offer_alignment"
+        },
+        {
+          "field": "body_copy",
+          "rule": "brand_alignment"
+        }
+      ],
+      "note": "Nội dung hoàn toàn khác chiến dịch bộ lọc."
+    },
+    {
+      "id": "B04",
+      "reviewed": true,
+      "findings": [
+        {
+          "field": "meta_description",
+          "rule": "duplicate_metadata"
+        }
+      ],
+      "note": "Hai trường trùng, cho dù đạt khoảng độ dài."
+    },
+    {
+      "id": "B05",
+      "reviewed": true,
+      "findings": [],
+      "note": "Giới hạn của lời hứa, không quảng cáo hiệu quả tuyệt đối."
+    },
+    {
+      "id": "B06",
+      "reviewed": true,
+      "findings": [],
+      "note": "Paraphrase đa ngôn ngữ cho cùng một trang."
+    },
+    {
+      "id": "G01",
+      "reviewed": true,
+      "findings": [],
+      "note": "Reserve là CTA rõ và thông tin có nguồn."
+    },
+    {
+      "id": "G02",
+      "reviewed": true,
+      "findings": [
+        {
+          "field": "body_copy",
+          "rule": "claim_evidence"
+        }
+      ],
+      "note": "Nguồn cho chạm bản sao, nói rõ bản gốc ở sau kính."
+    },
+    {
+      "id": "G03",
+      "reviewed": true,
+      "findings": [
+        {
+          "field": "body_copy",
+          "rule": "audience_alignment"
+        },
+        {
+          "field": "body_copy",
+          "rule": "claim_evidence"
+        }
+      ],
+      "note": "Đổi đối tượng và tự thêm nội dung cuộc thảo luận."
+    },
+    {
+      "id": "G04",
+      "reviewed": true,
+      "findings": [],
+      "note": "Cùng nội dung và đúng ý định."
+    },
+    {
+      "id": "G05",
+      "reviewed": true,
+      "findings": [
+        {
+          "field": "meta_description",
+          "rule": "claim_evidence"
+        }
+      ],
+      "note": "Một lời khen cá nhân không chứng minh vị trí dẫn đầu."
+    },
+    {
+      "id": "G06",
+      "reviewed": true,
+      "findings": [
+        {
+          "field": "search_intent",
+          "rule": "intent_alignment"
+        }
+      ],
+      "note": "Dùng chung từ family/lighthouse nhưng truy vấn mua bất động sản."
+    }
+  ]
+}

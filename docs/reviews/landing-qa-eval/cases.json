@@ -1,0 +1,417 @@
+{
+  "version": "landing-holdout-1",
+  "workflow": "WF-13/landing-seo-draft@4",
+  "briefs": {
+    "LOOM": {
+      "objective": "Introduce a waterproof pannier for commuters cycling to work.",
+      "audience": "bicycle commuters",
+      "offer": "waterproof pannier",
+      "brand_rules": "Our voice is calm and practical. Calling the bag indestructible would contradict the repair guide; leave that word out of customer copy.",
+      "sources": {
+        "brand": {
+          "label": "Brand Kit",
+          "excerpt": "The pannier attaches to a bicycle rack. The seam is waterproof."
+        },
+        "S1": {
+          "label": "Thông tin sản phẩm mẫu",
+          "excerpt": "The bag holds 12 litres."
+        },
+        "S2": {
+          "label": "Lời nhận xét mẫu",
+          "excerpt": "In a fictional rider survey, one person wrote: “The best bag.” The survey tested no competing models."
+        }
+      }
+    },
+    "CLAY": {
+      "objective": "Mời người mới đến lớp làm gốm cuối tuần.",
+      "audience": "người mới học gốm",
+      "offer": "lớp làm gốm có người hướng dẫn",
+      "brand_rules": "Tránh: thần kỳ. Viết gần gũi, tôn trọng tốc độ học riêng của mỗi người.",
+      "sources": {
+        "brand": {
+          "label": "Brand Kit",
+          "excerpt": "Lớp gốm có người hướng dẫn và bàn xoay dùng chung."
+        },
+        "S1": {
+          "label": "Thông tin sản phẩm mẫu",
+          "excerpt": "Buổi thực hành kéo dài 90 phút."
+        },
+        "S2": {
+          "label": "Lời nhận xét mẫu",
+          "excerpt": "Một học viên mô tả cảm nhận cá nhân. Lớp không tổ chức đánh giá tốc độ tiến bộ."
+        }
+      }
+    },
+    "BEAN": {
+      "objective": "Help home brewers choose a reusable coffee filter.",
+      "audience": "home coffee brewers",
+      "offer": "reusable coffee filter",
+      "brand_rules": "Avoid: flawless. Use everyday language.",
+      "sources": {
+        "brand": {
+          "label": "Brand Kit",
+          "excerpt": "The reusable steel coffee filter fits a cone dripper."
+        },
+        "S1": {
+          "label": "Thông tin sản phẩm mẫu",
+          "excerpt": "Rinse the filter after brewing."
+        },
+        "S2": {
+          "label": "Lời nhận xét mẫu",
+          "excerpt": "One guest shared a preference. The best coffee. The comment was about the café's beans, not this filter."
+        }
+      }
+    },
+    "GLOW": {
+      "objective": "Present an evening tour of an imaginary lighthouse for families.",
+      "audience": "families with children",
+      "offer": "evening lighthouse tour",
+      "brand_rules": "Describe the tower through sounds and textures. Our editors leave out claims about being the best in town.",
+      "sources": {
+        "brand": {
+          "label": "Brand Kit",
+          "excerpt": "Families visit the lighthouse gallery with a guide. The route ends in the lower gallery."
+        },
+        "S1": {
+          "label": "Thông tin sản phẩm mẫu",
+          "excerpt": "Children can touch the replica lens. The original lens is behind glass."
+        },
+        "S2": {
+          "label": "Lời nhận xét mẫu",
+          "excerpt": "One visitor preferred the lower gallery. No ranking or popularity survey exists."
+        }
+      }
+    }
+  },
+  "cases": [
+    {
+      "id": "L01",
+      "brief": "LOOM",
+      "role": "content",
+      "sections": {
+        "headline": "Túi treo xe đạp đi làm",
+        "body_copy": "Người đạp xe đến văn phòng có thể gắn túi chống nước vào baga.",
+        "call_to_action": "Xem mẫu túi"
+      },
+      "source_ids": [
+        "brand"
+      ]
+    },
+    {
+      "id": "L02",
+      "brief": "LOOM",
+      "role": "content",
+      "sections": {
+        "headline": "Pannier for bicycle commuters",
+        "body_copy": "This indestructible pannier clips onto a bicycle rack.",
+        "call_to_action": "See the fitting guide"
+      },
+      "source_ids": [
+        "brand"
+      ]
+    },
+    {
+      "id": "L03",
+      "brief": "LOOM",
+      "role": "content",
+      "sections": {
+        "headline": "Pannier for bicycle commuters",
+        "body_copy": "The bag holds 12 litres.",
+        "call_to_action": "The bag holds 12 litres."
+      },
+      "source_ids": [
+        "S1"
+      ]
+    },
+    {
+      "id": "L04",
+      "brief": "LOOM",
+      "role": "seo",
+      "sections": {
+        "page_title": "Bicycle bags for the ride to work",
+        "meta_description": "Choose a waterproof cycle bag for the daily trip to the office.",
+        "search_intent": "waterproof rack bag for commuters"
+      },
+      "source_ids": [
+        "brand"
+      ],
+      "parent": "L01"
+    },
+    {
+      "id": "L05",
+      "brief": "LOOM",
+      "role": "seo",
+      "sections": {
+        "page_title": "Bicycle pannier fitting guide",
+        "meta_description": "Compare espresso machines and grinders in this home brewing guide.",
+        "search_intent": "which grinder for espresso"
+      },
+      "source_ids": [
+        "brand"
+      ],
+      "parent": "L02"
+    },
+    {
+      "id": "L06",
+      "brief": "LOOM",
+      "role": "seo",
+      "sections": {
+        "page_title": "Pannier",
+        "meta_description": "Pannier",
+        "search_intent": "commuter pannier"
+      },
+      "source_ids": [
+        "brand"
+      ],
+      "parent": "L03"
+    },
+    {
+      "id": "C01",
+      "brief": "CLAY",
+      "role": "content",
+      "sections": {
+        "headline": "Xoay đất cuối tuần",
+        "body_copy": "Người mới học gốm làm quen với bàn xoay cùng người hướng dẫn.",
+        "call_to_action": "Giữ chỗ cho buổi học"
+      },
+      "source_ids": [
+        "brand"
+      ]
+    },
+    {
+      "id": "C02",
+      "brief": "CLAY",
+      "role": "content",
+      "sections": {
+        "headline": "Lớp gốm cuối tuần",
+        "body_copy": "Lớp gốm dành cho người mới. Chúng tôi không cam kết hiệu quả 100%.",
+        "call_to_action": "Đăng ký lớp gốm"
+      },
+      "source_ids": [
+        "brand"
+      ]
+    },
+    {
+      "id": "C03",
+      "brief": "CLAY",
+      "role": "content",
+      "sections": {
+        "headline": "Thần kỳ với bàn xoay",
+        "body_copy": "Người mới học gốm được hướng dẫn tại bàn xoay.",
+        "call_to_action": "Đọc lịch học"
+      },
+      "source_ids": [
+        "brand"
+      ]
+    },
+    {
+      "id": "C04",
+      "brief": "CLAY",
+      "role": "seo",
+      "sections": {
+        "page_title": "Buổi tập nặn đất cho người bắt đầu",
+        "meta_description": "Tự tay tạo chiếc bát đầu tiên trong buổi học có người hướng dẫn.",
+        "search_intent": "lớp làm gốm cho người mới"
+      },
+      "source_ids": [
+        "brand"
+      ],
+      "parent": "C01"
+    },
+    {
+      "id": "C05",
+      "brief": "CLAY",
+      "role": "seo",
+      "sections": {
+        "page_title": "Bàn xoay công nghiệp đã qua sử dụng",
+        "meta_description": "Mua máy công nghiệp thanh lý cho nhà xưởng đang tăng sản lượng.",
+        "search_intent": "mua máy bàn xoay công nghiệp"
+      },
+      "source_ids": [
+        "brand"
+      ],
+      "parent": "C01"
+    },
+    {
+      "id": "C06",
+      "brief": "CLAY",
+      "role": "seo",
+      "sections": {
+        "page_title": "Lớp gốm cuối tuần cho người mới",
+        "meta_description": "Lớp gốm này thu hút 900 lượt tìm kiếm mỗi ngày.",
+        "search_intent": "lớp gốm có người hướng dẫn"
+      },
+      "source_ids": [
+        "brand"
+      ],
+      "parent": "C03"
+    },
+    {
+      "id": "B01",
+      "brief": "BEAN",
+      "role": "content",
+      "sections": {
+        "headline": "Reusable coffee filter for home brewers",
+        "body_copy": "A steel coffee filter can be rinsed after brewing.",
+        "call_to_action": "Compare filter shapes"
+      },
+      "source_ids": [
+        "brand",
+        "S1"
+      ]
+    },
+    {
+      "id": "B02",
+      "brief": "BEAN",
+      "role": "content",
+      "sections": {
+        "headline": "Reusable coffee filter for home brewers",
+        "body_copy": "The best coffee.",
+        "call_to_action": "See the steel filter"
+      },
+      "source_ids": [
+        "S2"
+      ]
+    },
+    {
+      "id": "B03",
+      "brief": "BEAN",
+      "role": "content",
+      "sections": {
+        "headline": "Summer tickets for concert fans",
+        "body_copy": "Concert fans can reserve a seat at the outdoor jazz festival.",
+        "call_to_action": "Book a seat"
+      },
+      "source_ids": [
+        "brand"
+      ]
+    },
+    {
+      "id": "B04",
+      "brief": "BEAN",
+      "role": "seo",
+      "sections": {
+        "page_title": "Reusable coffee filters for home",
+        "meta_description": "Reusable coffee filters for home",
+        "search_intent": "reusable coffee filter"
+      },
+      "source_ids": [
+        "brand"
+      ],
+      "parent": "B01"
+    },
+    {
+      "id": "B05",
+      "brief": "BEAN",
+      "role": "seo",
+      "sections": {
+        "page_title": "Coffee filter care for home brewers",
+        "meta_description": "There is no guarantee of 100% sediment removal when brewing at home.",
+        "search_intent": "how to clean a reusable coffee filter"
+      },
+      "source_ids": [
+        "brand",
+        "S1"
+      ],
+      "parent": "B01"
+    },
+    {
+      "id": "B06",
+      "brief": "BEAN",
+      "role": "seo",
+      "sections": {
+        "page_title": "Cách pha cà phê bằng phễu lọc thép",
+        "meta_description": "Chọn bộ lọc tái sử dụng để pha cà phê tại nhà và rửa sau mỗi lần pha.",
+        "search_intent": "bộ lọc kim loại dùng lại cho cà phê"
+      },
+      "source_ids": [
+        "brand",
+        "S1"
+      ],
+      "parent": "B01"
+    },
+    {
+      "id": "G01",
+      "brief": "GLOW",
+      "role": "content",
+      "sections": {
+        "headline": "Evening lighthouse tour for families",
+        "body_copy": "Families can feel the replica lens in the lighthouse gallery.",
+        "call_to_action": "Reserve your family visit"
+      },
+      "source_ids": [
+        "brand",
+        "S1"
+      ]
+    },
+    {
+      "id": "G02",
+      "brief": "GLOW",
+      "role": "content",
+      "sections": {
+        "headline": "Evening lighthouse tour for families",
+        "body_copy": "Families can touch the original lens in the lighthouse gallery.",
+        "call_to_action": "Book an evening tour"
+      },
+      "source_ids": [
+        "S1",
+        "brand"
+      ]
+    },
+    {
+      "id": "G03",
+      "brief": "GLOW",
+      "role": "content",
+      "sections": {
+        "headline": "A lighthouse evening for procurement teams",
+        "body_copy": "Procurement managers join the evening lighthouse tour to discuss supply contracts.",
+        "call_to_action": "Book an evening tour"
+      },
+      "source_ids": [
+        "brand"
+      ]
+    },
+    {
+      "id": "G04",
+      "brief": "GLOW",
+      "role": "seo",
+      "sections": {
+        "page_title": "Evening lighthouse tour for families",
+        "meta_description": "Families visit the lighthouse gallery with a guide after dusk.",
+        "search_intent": "lighthouse evening tour with children"
+      },
+      "source_ids": [
+        "brand"
+      ],
+      "parent": "G01"
+    },
+    {
+      "id": "G05",
+      "brief": "GLOW",
+      "role": "seo",
+      "sections": {
+        "page_title": "Night at the lighthouse gallery",
+        "meta_description": "The best lighthouse in town for family visits.",
+        "search_intent": "evening lighthouse tour for families"
+      },
+      "source_ids": [
+        "S2"
+      ],
+      "parent": "G01"
+    },
+    {
+      "id": "G06",
+      "brief": "GLOW",
+      "role": "seo",
+      "sections": {
+        "page_title": "Evening lighthouse tour for families",
+        "meta_description": "Families can visit the lighthouse gallery on an evening tour.",
+        "search_intent": "family property for sale near a lighthouse"
+      },
+      "source_ids": [
+        "brand"
+      ],
+      "parent": "G01"
+    }
+  ]
+}

@@ -1,0 +1,151 @@
+{
+  "cases_digest": "4a9c1b5377c194ab33d65bcf6f9081e6c04ac84af67271a94465de7541717da6",
+  "basis": "independent-human",
+  "reviewer": "",
+  "cases": [
+    {
+      "id": "L01",
+      "reviewed": false,
+      "findings": [],
+      "note": ""
+    },
+    {
+      "id": "L02",
+      "reviewed": false,
+      "findings": [],
+      "note": ""
+    },
+    {
+      "id": "L03",
+      "reviewed": false,
+      "findings": [],
+      "note": ""
+    },
+    {
+      "id": "L04",
+      "reviewed": false,
+      "findings": [],
+      "note": ""
+    },
+    {
+      "id": "L05",
+      "reviewed": false,
+      "findings": [],
+      "note": ""
+    },
+    {
+      "id": "L06",
+      "reviewed": false,
+      "findings": [],
+      "note": ""
+    },
+    {
+      "id": "C01",
+      "reviewed": false,
+      "findings": [],
+      "note": ""
+    },
+    {
+      "id": "C02",
+      "reviewed": false,
+      "findings": [],
+      "note": ""
+    },
+    {
+      "id": "C03",
+      "reviewed": false,
+      "findings": [],
+      "note": ""
+    },
+    {
+      "id": "C04",
+      "reviewed": false,
+      "findings": [],
+      "note": ""
+    },
+    {
+      "id": "C05",
+      "reviewed": false,
+      "findings": [],
+      "note": ""
+    },
+    {
+      "id": "C06",
+      "reviewed": false,
+      "findings": [],
+      "note": ""
+    },
+    {
+      "id": "B01",
+      "reviewed": false,
+      "findings": [],
+      "note": ""
+    },
+    {
+      "id": "B02",
+      "reviewed": false,
+      "findings": [],
+      "note": ""
+    },
+    {
+      "id": "B03",
+      "reviewed": false,
+      "findings": [],
+      "note": ""
+    },
+    {
+      "id": "B04",
+      "reviewed": false,
+      "findings": [],
+      "note": ""
+    },
+    {
+      "id": "B05",
+      "reviewed": false,
+      "findings": [],
+      "note": ""
+    },
+    {
+      "id": "B06",
+      "reviewed": false,
+      "findings": [],
+      "note": ""
+    },
+    {
+      "id": "G01",
+      "reviewed": false,
+      "findings": [],
+      "note": ""
+    },
+    {
+      "id": "G02",
+      "reviewed": false,
+      "findings": [],
+      "note": ""
+    },
+    {
+      "id": "G03",
+      "reviewed": false,
+      "findings": [],
+      "note": ""
+    },
+    {
+      "id": "G04",
+      "reviewed": false,
+      "findings": [],
+      "note": ""
+    },
+    {
+      "id": "G05",
+      "reviewed": false,
+      "findings": [],
+      "note": ""
+    },
+    {
+      "id": "G06",
+      "reviewed": false,
+      "findings": [],
+      "note": ""
+    }
+  ]
+}

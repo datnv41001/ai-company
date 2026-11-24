@@ -6,7 +6,7 @@ from pathlib import Path
 import subprocess
 
 
-def capture(email, project=None):
+def capture(email, project=None, invitation_id=None):
     address = hashlib.sha256(email.strip().lower().encode()).hexdigest()
     if project:
         # The Compose API and the host test runner use different UIDs. Read the
@@ -23,8 +23,9 @@ def capture(email, project=None):
                 "python",
                 "-c",
                 "import os,sys; from pathlib import Path; d=Path(os.environ['AMC_DEV_MAILBOX_DIR'])/sys.argv[1]; "
-                "sys.stdout.write(max(d.glob('*.txt'),key=lambda p:p.stat().st_mtime_ns).read_text())",
-                address,
+                "p=d/'invitations'/(sys.argv[2]+'.txt') if sys.argv[2] else max(d.glob('*.txt'),key=lambda p:p.stat().st_mtime_ns); "
+                "sys.stdout.write(p.read_text())",
+                address, invitation_id or "",
             ],
             check=True,
             capture_output=True,
@@ -32,6 +33,8 @@ def capture(email, project=None):
         )
         return result.stdout.strip()
     directory = Path(os.getenv("AMC_DEV_MAILBOX_DIR", ".dev-mailbox")) / address
+    if invitation_id:
+        return (directory / "invitations" / (invitation_id + ".txt")).read_text().strip()
     return max(directory.glob("*.txt"), key=lambda p: p.stat().st_mtime_ns).read_text().strip()
 
 

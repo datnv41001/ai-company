@@ -2,7 +2,7 @@
 
 **[Chạy bằng Docker và tiếp quản trên máy mới → HANDOFF.md](HANDOFF.md)**
 
-Đăng ký tài khoản, mở mã trong hộp thư phát triển riêng rồi xác minh để tạo workspace. Chủ workspace có thể mời nhân viên hoặc khách hàng đã đăng ký. [Hướng dẫn Docker, hộp thư và lời mời](docs/PR15-IDENTITY.md).
+Đăng ký tài khoản, xác minh email rồi chọn tạo workspace hoặc nhận lời mời vào workspace hiện hữu. [Onboarding và lời mời trên máy mới](docs/PR16-ONBOARDING.md). Chủ workspace có thể mời nhân viên hoặc khách hàng đã đăng ký. [Hướng dẫn Docker, hộp thư và lời mời](docs/PR15-IDENTITY.md).
 
 **QA theo phiên bản.** Khi sửa tiêu đề hoặc nội dung gửi khách, hệ thống đánh giá lại claim và yêu cầu người QA duyệt đúng số lần lưu và SHA-256 của bản đang xem. [Hợp đồng API, nâng cấp v8 và phục hồi](docs/ADR-007-QA-EVIDENCE-REVISION.md).
 

@@ -55,7 +55,7 @@ def rehearse_archive(dsn, container, version=16):
         tables += ("amc_acl.identity_windows", "amc_acl.quota_policy")
     knowledge = ("knowledge_revisions", "knowledge_links", "knowledge_events", "knowledge_snapshots", "knowledge_dependencies", "knowledge_commands")
     if version >= 22:
-        tables += knowledge
+        tables += knowledge + ("amc_acl.knowledge_target_epochs",)
 
     def snapshot(conn):
         return [conn.execute(f"SELECT to_jsonb(t) FROM {table} t ORDER BY to_jsonb(t)").fetchall()
@@ -66,7 +66,7 @@ def rehearse_archive(dsn, container, version=16):
         assert source.execute("SELECT max(version) FROM amc_schema_versions").fetchone() == (version,)
         db, owner = source.info.dbname, source.info.user
         before = snapshot(source)
-    required = before[-len(knowledge):] if version == 22 else before
+    required = before[-(len(knowledge) + 1):] if version == 22 else before
     assert all(required), "Restore rehearsal requires populated fixture tables"
     # Both the archive and restore are inside this disposable CI container.
     target = "amc_test_restore_" + uuid4().hex

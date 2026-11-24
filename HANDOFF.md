@@ -1,5 +1,15 @@
 # Bắt đầu ở đây khi tiếp quản AI Marketing Company
 
+## Nhánh tiếp nối PR #7 · Hai lease theo node
+
+Nhánh `feature/node-attempt-leases` dựa trên `feature/dynamic-director-dag@677a086`. Migration 013 nâng PostgreSQL lên v13. Với brief mới, chọn **Director lập kế hoạch** rồi chọn **Số node tối đa cùng chạy → 2**. API nhận `{"workflow":"dynamic-v1","max_parallel_nodes":2,"budget_microusd":0}`. Cần hai worker LOGIN có route tới cùng campaign, capacity agency ít nhất 2 và đủ ngân sách. Mặc định một lease. Graph hiển thị node đang chạy hoặc chờ retry. Hai node trở nên đủ điều kiện cùng lúc khi đã có đủ checkpoint của từng predecessor.
+
+Để diễn tập trên máy khác, dùng Docker theo [runbook pool](docs/POOL-RUNBOOK.md). Chạy bài cạnh tranh trên DB thử với `python -m pytest -q tests/test_node_leases.py`. Trên DB sạch khác, chạy đủ mười hai đường nâng v1–v12 lên v13 và lặp migration. Job `workforce-model` dùng [Compose model hai slot](tests/compose_parallel_model.yaml) và [bài đo Qwen](tests/parallel_model_smoke.py). Xem lệnh dựng DB, model và cổng loopback động trong [workflow CI](.github/workflows/ci.yml). Artifact `parallel-measurements.json` chứa số lần lấy mẫu cả hai slot, thời gian chồng lấn lease và request, token thật, chi phí và số snapshot khách duyệt.
+
+Trên máy local, 359 mẫu thấy cả hai slot Qwen xử lý cùng run, trải dài 13,55 giây. Hai lease chồng lấn 14,69 giây. Hai lượt Content dùng 518 token vào và 188 ra, đạt ngay lần đầu với chi phí local 0 micro-USD, tạo một snapshot được khách thử duyệt. Phép đo dùng proposal hai nhánh xác định trước để cô lập tính đồng thời. Phép thử Director thật và hai đồ thị do model đề xuất thuộc PR #7. Bài fake provider ban đầu dùng đồng hồ độ phân giải thấp nên báo overlap 0 trên Windows. Bài cuối dùng đồng hồ hiệu năng và barrier có độ trễ xác định.
+
+Khi dừng thử hai lease, tạo brief mới với một lease, dừng cấp offer, hoàn tất hoặc thu hồi từng run còn mở, đối soát hold của các lượt đã gửi, rồi giữ schema v13 để tra lịch sử. [ADR-011](docs/ADR-011-NODE-ATTEMPTS.md).
+
 ## PR #7 · Director lập kế hoạch động với một lease
 
 Nhánh `feature/dynamic-director-dag` bắt đầu từ `main@bf1fa7e`. Dừng dispatcher và luồng ghi, sao lưu DB nội bộ, chạy migration 012, rồi khởi động API và worker từ cùng commit theo [runbook Docker](docs/POOL-RUNBOOK.md). PostgreSQL v12 giữ nguyên kế hoạch diamond và lịch sử của run cũ. Để quay lại, chọn linear/diamond cho brief mới, xử lý hết hoặc thu hồi các run động đang mở rồi đối soát hold. Giữ schema v12 để đọc lịch sử.

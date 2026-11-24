@@ -16,6 +16,17 @@ docker compose -p amc-dev --env-file .env --env-file .env.pool -f compose.yaml -
 
 Script init_pool ghi ba mật khẩu riêng vào .env.pool và cấp LOGIN bằng service migrate. Chuyển mã và tài liệu qua Git. Khi di chuyển cả volume, khôi phục database, role PostgreSQL và tệp bí mật tương ứng qua kênh riêng. Với database mới, tạo bộ mật khẩu mới. Gateway pool dùng Qwen trên mạng nội bộ Compose. Mỗi worker chỉ nhận DSN của chính nó.
 
+## Hai slot Qwen trên máy nội bộ (schema v13)
+
+Sau bước khởi động trên, chờ các lượt inference đang chạy kết thúc rồi dùng cấu hình hai slot cho service model. Các lệnh dưới đây dùng cùng project, volume và hai worker LOGIN. Cổng model được ánh xạ ngẫu nhiên trên loopback của máy chạy Docker.
+
+```sh
+docker compose -p amc-dev --env-file .env --env-file .env.pool -f compose.yaml -f compose.pool.yaml -f tests/compose_parallel_model.yaml --profile local-model up -d model dispatcher worker-one worker-two
+docker compose -p amc-dev -f compose.yaml -f tests/compose_parallel_model.yaml --profile local-model port model 8080
+```
+
+Mở `http://127.0.0.1:<cổng vừa in>/slots` để kiểm tra hai slot riêng. Hoàn tất cấp route dưới đây cho cả hai LOGIN, đặt capacity agency từ 2, chọn dynamic-v1 và hai node cho một brief mới. Với kế hoạch có hai nhánh cùng sẵn sàng, xem trạng thái từng node dưới **Xem kết quả và chi phí**. Để tái lập phép đo có barrier, ghi nhận token và đồng thời đối chiếu bản giao được khách mẫu duyệt, chạy job `workforce-model` trong [workflow CI](../.github/workflows/ci.yml). Job dùng database riêng có tên bắt đầu bằng `amc_test`.
+
 ## Đưa agency vào pool
 
 1. Tạm dừng gửi brief mới trong agency. Chờ worker v8 xử lý hết các run queued và running. Gọi `PUT /api/tenants/{tenant}/operations/budget` bằng tài khoản owner/admin với `{"ceiling":1000,"capacity":2,"enabled":true}`. Xem các endpoint và đăng nhập thử tại `/docs`. Mức tiền dùng micro-USD. Mỗi tháng UTC cần đặt hạn mức cho kỳ mới. API trả 409 khi agency còn run legacy đang hoạt động.

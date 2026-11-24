@@ -229,6 +229,8 @@ def exercise():
                 panel.get_by_text(title+" · Đã nhận brief").click()
                 brief_form=panel.get_by_text(title+" · Đã nhận brief",exact=True).locator("..")
                 brief_form.get_by_label("Mẫu workflow").select_option(template)
+                if template == "dynamic-v1":
+                    brief_form.get_by_label("Số node tối đa cùng chạy").select_option("2")
                 brief_form.get_by_role("button",name="Giao việc cho AI Director").click()
                 card=panel.get_by_role("heading",name=title+" · Đang chờ worker").locator("..")
                 card.get_by_role("button",name="Xem kết quả và chi phí").click()
@@ -241,6 +243,7 @@ def exercise():
                         expect(graph.locator('[data-node="join"]')).to_contain_text("Content, SEO")
                     else:
                         expect(graph.get_by_text("Đang lập kế hoạch",exact=True)).to_be_visible()
+                        expect(graph.get_by_text("Tối đa 2 node đồng thời",exact=True)).to_be_visible()
                         expect(graph.locator("li")).to_have_count(1)
                     assert graph.evaluate("(e) => e.scrollWidth <= e.clientWidth + 1")
                 print(f"PASS {template} graph in Chromium at 1280px and 390px")

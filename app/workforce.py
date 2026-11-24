@@ -46,6 +46,7 @@ class BriefData(Input):
 
 
 class Start(Input):
+    max_parallel_nodes: Literal[1, 2] = 1
     workflow: Literal["linear", "diamond-v1", "dynamic-v1"] = "linear"
     extra_skills: list[Literal["seo", "creative", "ads", "analytics"]] = Field(default_factory=list, max_length=4)
     budget_microusd: int = Field(default=0, ge=0, le=1_000_000)
@@ -127,6 +128,8 @@ def start(tenant_id: str, bid: str, body: Start, user: User = Depends(current_us
     b = db.scalar(brief_query(db, m).where(WorkforceBrief.id == bid))
     if not b:
         raise HTTPException(404, "Brief unavailable")
+    if body.max_parallel_nodes == 2 and body.workflow != 'dynamic-v1':
+        raise HTTPException(422, 'Two leases require a dynamic workflow')
     plan = CORE + [s for s in EXTRA if s in body.extra_skills]
     if body.workflow == "diamond-v1":
         if body.extra_skills:
@@ -144,7 +147,7 @@ def start(tenant_id: str, bid: str, body: Start, user: User = Depends(current_us
     prior = db.scalar(select(WorkforceRun).where(WorkforceRun.brief_id == bid, WorkforceRun.tenant_id == tenant_id))
     if prior:
         same_plan = prior.knowledge.get("required_outputs") == required if body.workflow == "dynamic-v1" else prior.plan == plan
-        if prior.knowledge.get("workflow", "linear") != body.workflow or not same_plan or prior.budget_microusd != body.budget_microusd:
+        if prior.knowledge.get("workflow", "linear") != body.workflow or prior.knowledge.get('max_parallel_nodes', 1) != body.max_parallel_nodes or not same_plan or prior.budget_microusd != body.budget_microusd:
             raise HTTPException(409, "Brief already queued with different terms")
         return {"id": prior.id, "state": prior.state}
     if not b.payload:
@@ -167,6 +170,8 @@ def start(tenant_id: str, bid: str, body: Start, user: User = Depends(current_us
     }
     if body.workflow == "dynamic-v1":
         knowledge["required_outputs"] = required
+        if body.max_parallel_nodes == 2:
+            knowledge["max_parallel_nodes"] = 2
     if body.workflow != "linear":
         knowledge["workflow"] = body.workflow
         knowledge["workflow_revision"] = 1
@@ -204,31 +209,39 @@ def start(tenant_id: str, bid: str, body: Start, user: User = Depends(current_us
     return {"id": run.id, "state": run.state}
 
 
+def display_state(run, graph):
+    if run.state == "queued" and graph and any(n["status"] == "running" for n in graph["nodes"]):
+        return "running"
+    return run.state
+
+
+def display_plan(run, graph):
+    if graph and graph.get("contract"):
+        return ["director", *(n["skill_type"] for n in graph["contract"]["nodes"])]
+    return run.plan
+
+
 @router.get("/runs")
 def runs(tenant_id: str, user: User = Depends(current_user), db: Session = Depends(get_db)):
     m = require_tenant(db, user, tenant_id)
     if m.role == "client_viewer":
         raise HTTPException(404, "Runs unavailable")
     rows = db.scalars(select(WorkforceRun).where(WorkforceRun.tenant_id == tenant_id).order_by(WorkforceRun.created_at.desc()).limit(100))
-    def skills(r):
+    summaries = []
+    for r in rows:
+        graph = None
         if r.knowledge.get("workflow") == "dynamic-v1":
             graph = db.scalar(text("select amc_ops.dag_report(:t,:r)"), {"t": tenant_id, "r": r.id})
-            if graph["contract"]:
-                return ["director", *(n["skill_type"] for n in graph["contract"]["nodes"])]
-        return r.plan
-
-    return [
-        {
+        summaries.append({
             "id": r.id,
             "brief_id": r.brief_id,
             "title": r.knowledge["title"],
-            "state": r.state,
+            "state": display_state(r, graph),
             "done": len(r.checkpoints),
-            "skills": skills(r),
+            "skills": display_plan(r, graph),
             "workflow": r.knowledge.get("workflow", "linear"),
-        }
-        for r in rows
-    ]
+        })
+    return summaries
 
 
 @router.get("/runs/{rid}")
@@ -252,13 +265,16 @@ def report(tenant_id: str, rid: str, user: User = Depends(current_user), db: Ses
         else []
     )
     graph = db.scalar(text("select amc_ops.dag_report(:t,:r)"), {"t": tenant_id, "r": rid}) if run.knowledge.get("workflow") in ("diamond-v1", "dynamic-v1") else None
+    if graph and run.knowledge.get("max_parallel_nodes") == 2:
+        graph["max_parallel_nodes"] = 2
     return {
         **{
             k: getattr(run, k)
             for k in ("id", "state", "plan", "journal", "last_error", "budget_microusd", "reserved_microusd", "deliverable_id", "checkpoints")
         },
         "graph": graph,
-        "plan": ["director", *(n["skill_type"] for n in graph["contract"]["nodes"])] if graph and graph.get("contract") else run.plan,
+        "plan": display_plan(run, graph),
+        "state": display_state(run, graph),
         "source_registry": run.knowledge["sources"],
         "approved_assets": archived,
     }

@@ -8,6 +8,7 @@ from dataclasses import replace
 from sqlalchemy import create_engine, text
 from sqlalchemy.orm import Session
 
+from . import node_attempts
 from .workforce_gateway import Gateway
 from .workforce_models import WorkforceRun
 from .workflow_dag import node_for_slot
@@ -31,14 +32,20 @@ def dispatch(bind, config):
             with db.begin_nested() as change:
                 try:
                     node = node_for_slot(db, route["run"], route["step"])
-                    task = claim(db, scope, config, run_id=route["run"], node=node, commit=False)
+                    if node and node.parallel:
+                        offer = node_attempts.claim(db, scope, config, route["run"], node)
+                    else:
+                        task = claim(db, scope, config, run_id=route["run"], node=node, commit=False)
+                        offer = None
+                        if task:
+                            rid, token, body = task
+                            run = db.get(WorkforceRun, rid)
+                            offer = node_attempts.Offer(rid, token, body, run.journal[-1]["reserved_microusd"], run.ready_at, run.attempts)
                 except PermissionError:
                     continue
-                if not task:
+                if not offer:
                     continue
-                rid, token, body = task
-                run = db.get(WorkforceRun, rid)
-                hold = run.journal[-1]["reserved_microusd"]
+                token, body, hold = offer.token, offer.body, offer.hold
                 period = query(
                     db,
                     """
@@ -62,12 +69,12 @@ def dispatch(bind, config):
                     **route,
                     id=token,
                     month=period,
-                    deadline=run.ready_at,
+                    deadline=offer.deadline,
                     body=json.dumps(body),
                     hold=hold,
                     ir=config.input_rate,
                     orr=config.output_rate,
-                    ordinal=run.attempts,
+                    ordinal=offer.ordinal,
                     node=node.id if node else None,
                     rev=node.revision if node else None,
                 )
@@ -116,9 +123,13 @@ def consume(bind, config):
             priced = replace(config, input_rate=row["input_rate"], output_rate=row["output_rate"])
             task = (row["run"], token, row["body"])
             node = node_for_slot(db, row["run"], row["step"]) if row["node_id"] else None
-            if finish(db, scope, priced, task, result, error, node=node, commit=False):
+            entry = None
+            if row['parallel']:
+                entry = node_attempts.finish(db, scope, priced, row, node, result, error)
+            elif finish(db, scope, priced, task, result, error, node=node, commit=False):
                 run = db.get(WorkforceRun, row["run"])
                 entry = run.journal[-1]
+            if entry:
                 outcome = entry["outcome"]
                 if "estimated_microusd" in entry:
                     event, cost = "usage", entry["estimated_microusd"]

@@ -5,7 +5,7 @@ from pydantic import BaseModel, EmailStr, Field, model_validator
 class RegisterIn(BaseModel):
     email: EmailStr
     password: str = Field(min_length=12, max_length=128)
-    organization_name: str = Field(min_length=2, max_length=150)
+    organization_name: str | None = Field(default=None, min_length=2, max_length=150)
     mode: Literal["agency", "inhouse"] = "agency"
 
 

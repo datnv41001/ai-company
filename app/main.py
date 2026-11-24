@@ -9,7 +9,7 @@ from fastapi.exception_handlers import request_validation_exception_handler
 from fastapi.exceptions import RequestValidationError
 from fastapi.responses import FileResponse, JSONResponse
 from fastapi.staticfiles import StaticFiles
-from sqlalchemy import select
+from sqlalchemy import select, text
 from sqlalchemy.exc import IntegrityError
 from sqlalchemy.inspection import inspect
 from sqlalchemy.orm import Session
@@ -21,7 +21,7 @@ from .delivery import router as delivery_router, working_copy
 from .operations import router as operations_router
 from .registry import router as registry_router
 from .workforce import router as workforce_router
-from .recipients import router as recipients_router, revoke_pending
+from .recipients import router as recipients_router, lock_recipient, revoke_pending, preview_link, accept_link
 from .delivery_models import PortalGrant
 from .access import set_context, visible
 from .database import APP_ENV, engine, get_db, prepare_database
@@ -113,8 +113,8 @@ def register(payload: RegisterIn, db: Session = Depends(get_db)):
     if db.scalar(select(User).where(User.email == email)):
         raise HTTPException(status_code=409, detail="Account already exists")
     user = User(id=new_id(), email=email, password_hash=hash_password(payload.password))
-    tenant_id = new_id()
-    set_context(db, actor=user.id, tenant=tenant_id)
+    tenant_id = new_id() if payload.organization_name else None
+    set_context(db, actor=user.id, tenant=tenant_id or "")
     sign_actor(db, user.id)
     db.add(user)
     try:
@@ -122,7 +122,7 @@ def register(payload: RegisterIn, db: Session = Depends(get_db)):
     except IntegrityError:
         db.rollback()
         raise HTTPException(409, "Account already exists") from None
-    issue(db, user, workspace_id=tenant_id, organization_name=payload.organization_name, mode=payload.mode)
+    issue(db, user, **({"workspace_id": tenant_id, "organization_name": payload.organization_name, "mode": payload.mode} if tenant_id else {}))
     db.commit()
     return {"access_token": make_token(user), "token_type": "bearer", "tenant_id": tenant_id, "user_id": user.id, "mode": payload.mode}
 
@@ -175,12 +175,18 @@ def change_client_scope(tenant_id: str, member_id: str, body: ClientScopeIn, use
 @app.delete("/api/tenants/{tenant_id}/members/{member_id}/client-scope", status_code=204)
 def revoke_client_scope(tenant_id: str, member_id: str, user: User = Depends(current_user), db: Session = Depends(get_db)):
     member(db, user, tenant_id, "admin")
-    record = db.get(Membership, (tenant_id, member_id), with_for_update=True)
-    if record is None or record.role != "client_viewer":
-        raise HTTPException(404, "Client membership not found")
-    audit(db, tenant_id, user.id, "member.client_scope_revoked", member_id, {"client_id": record.client_id})
-    revoke_pending(db, tenant_id, member_id)
-    db.delete(record)
+    if db.get_bind().dialect.name == "postgresql":
+        removed = db.scalar(text("SELECT amc_acl.revoke_client_member(:t,:u)"), {"t":tenant_id,"u":member_id})
+        if not removed:
+            raise HTTPException(404, "Client membership not found")
+    else:
+        lock_recipient(db, tenant_id, member_id)
+        record = db.get(Membership, (tenant_id, member_id), populate_existing=True)
+        if record is None or record.role != "client_viewer":
+            raise HTTPException(404, "Client membership not found")
+        audit(db, tenant_id, user.id, "member.client_scope_revoked", member_id, {"client_id": record.client_id})
+        revoke_pending(db, tenant_id, member_id, db.get(User, member_id).email)
+        db.delete(record)
     db.commit()
 
 
@@ -417,11 +423,11 @@ def role_catalog(user: User = Depends(current_user)):
 
 @app.exception_handler(RequestValidationError)
 async def validation_error(request: Request, exc: RequestValidationError):
-    if request.scope.get("endpoint") not in (register, login, verify_email):
+    if request.scope.get("endpoint") not in (register, login, verify_email, preview_link, accept_link):
         return await request_validation_exception_handler(request, exc)
     # Validation inputs can contain a password or the entire submitted body.
     errors = [
-        {"loc": error["loc"], "type": error["type"], "msg": "Invalid authentication input"}
+        {"loc": ["body"], "type": error["type"], "msg": "Invalid authentication input"}
         for error in exc.errors()
     ]
     return JSONResponse(status_code=422, content={"detail": errors})

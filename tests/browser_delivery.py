@@ -2,10 +2,12 @@
 
 import os
 import time
+from pathlib import Path
 from datetime import datetime, timedelta, timezone
 from urllib.parse import urlsplit
 from uuid import uuid4
 
+from browser_stale_invitation import exercise_stale
 from identity_fixtures import capture, verify_registration, invite_member
 import httpx
 from playwright.sync_api import expect, sync_playwright
@@ -60,23 +62,76 @@ def exercise():
         browser = pw.chromium.launch(executable_path=os.getenv("AMC_BROWSER_EXECUTABLE") or None)
         try:
             for width, height in [(1280, 850), (390, 844)]:
+                exercise_stale(browser, origin, {"width":width, "height":height}, user, token, tenant, client, brand, camp)
+                print(f"PASS stale screen, replacement scope and pre-existing workspace at {width}px")
                 onboarding = browser.new_page(viewport={"width": width, "height": height})
                 onboarding.goto(origin)
                 registration = onboarding.locator("#register-form")
                 address = f"identity-{uuid4().hex}@example.com"
                 registration.locator('[name="email"]').fill(address)
                 registration.locator('[name="password"]').fill(uuid4().hex)
-                registration.locator('[name="organization_name"]').fill("Synthetic workspace")
-                registration.locator('[name="mode"]').select_option("inhouse")
                 registration.locator("button").click()
                 verify = onboarding.locator("#verify-form")
                 expect(verify).to_be_visible()
                 expect(onboarding.locator("#workspace")).to_be_hidden()
                 verify.locator('[name="token"]').fill(capture(address, os.getenv("AMC_BROWSER_MAILBOX_PROJECT")))
                 verify.locator('[type="submit"]').click()
-                expect(onboarding.locator("#workspace")).to_be_visible()
+                expect(onboarding.get_by_text("Bạn chưa tham gia workspace nào")).to_be_visible()
                 expect(verify).to_be_hidden()
+                new_org = onboarding.locator("#new-workspace")
+                new_org.locator("summary").click()
+                new_org.get_by_label("Tên tổ chức").fill("Synthetic workspace")
+                new_org.get_by_label("Chế độ").select_option("inhouse")
+                new_org.get_by_role("button").click()
+                expect(onboarding.locator("#workspace")).to_be_visible()
                 onboarding.close()
+
+                # A new client opens the private link before registering. The browser
+                # must show consent even after a wrong-account login and account switch.
+                address = f"onb-{uuid4().hex}@example.com"
+                offer = post(base + "/invitations", {"email": address, "client_id":client["id"],
+                             "brand_id":brand["id"],"campaign_id":camp["id"],"can_comment":True}, token)
+                letter = capture(address, os.getenv("AMC_BROWSER_MAILBOX_PROJECT"), offer["id"])
+                visitor = browser.new_page(viewport={"width":width,"height":height})
+                visitor.goto(origin + "/#" + urlsplit(letter).fragment)
+                expect(visitor.locator("#link-hint")).to_be_visible()
+                assert not urlsplit(visitor.url).fragment
+                wrong = visitor.locator("#login-form")
+                wrong.get_by_label("Email").fill(admin_email)
+                wrong.get_by_label("Mật khẩu").fill(admin_password)
+                wrong.get_by_role("button").click()
+                expect(visitor.locator("#link-hint")).to_contain_text("email khác")
+                visitor.locator("#switch-account").click()
+                registration = visitor.locator("#register-form")
+                registration.get_by_label("Email").fill(address)
+                registration.get_by_label("Mật khẩu", exact=False).fill(uuid4().hex)
+                registration.get_by_role("button").click()
+                verify = visitor.locator("#verify-form")
+                expect(verify).to_be_visible()
+                verify.locator('[name="token"]').fill(capture(address,os.getenv("AMC_BROWSER_MAILBOX_PROJECT")))
+                verify.locator('[type="submit"]').click()
+                consent = visitor.locator("#recipient-panel > section")
+                expect(consent).to_contain_text(camp["name"])
+                expect(consent.get_by_role("button",name="Chấp nhận lời mời")).to_be_enabled()
+                if os.getenv("AMC_ONBOARDING_SCREENSHOTS"):
+                    directory = Path(os.environ["AMC_ONBOARDING_SCREENSHOTS"])
+                    directory.mkdir(parents=True, exist_ok=True)
+                    consent.scroll_into_view_if_needed()
+                    visitor.screenshot(path=str(directory/f"invitation-{width}.png"))
+                consent.get_by_role("button").click()
+                expect(visitor.locator("#workspace-select")).to_have_value(tenant)
+                expect(visitor.locator("#workspace-select option")).to_have_count(1)
+                expect(visitor.locator("#workspace-forms")).to_be_hidden()
+                new_org = visitor.locator("#new-workspace")
+                new_org.locator("summary").click()
+                new_org.get_by_label("Tên tổ chức").fill("Second workspace")
+                new_org.get_by_role("button").click()
+                expect(visitor.locator("#workspace-select option")).to_have_count(2)
+                expect(visitor.locator("#workspace-forms")).to_be_visible()
+                visitor.locator("#workspace-select").select_option(tenant)
+                expect(visitor.locator("#workspace-forms")).to_be_hidden()
+                visitor.close()
+                print(f"PASS invitation-first onboarding, explicit workspace and switching at {width}px")
                 page = browser.new_page(viewport={"width": width, "height": height})
                 page.goto(origin + "/?workspace=" + tenant)
                 form = page.locator("#login-form")
@@ -204,7 +259,7 @@ def exercise():
             admin_panel = owner_page.locator("#recipient-panel")
             admin_panel.get_by_text("Quản lý người nhận và lời mời", exact=True).click()
             invitation_form = admin_panel.locator("form")
-            invitation_form.get_by_label("Email tài khoản đã đăng ký").fill(invited_email)
+            invitation_form.get_by_label("Email người nhận").fill(invited_email)
             invitation_form.get_by_label("Khách hàng", exact=True).select_option(client["id"])
             invitation_form.get_by_label("Thương hiệu", exact=True).select_option(brand["id"])
             invitation_form.get_by_label("Chiến dịch", exact=True).select_option(camp["id"])

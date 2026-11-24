@@ -12,13 +12,16 @@ class Node:
     revision: int
     attempts: int
     last_error: str | None
+    skill: str
+    template: str
+    assignment: str | None
 
 
 def node_for_slot(db, run, slot):
     row = db.execute(
         text("""
-        select n.node_id,n.revision,h.tries,h.last_error
-        from amc_ops.dag_nodes n cross join lateral (
+        select n.node_id,n.revision,h.tries,h.last_error,coalesce(n.skill_type,n.node_id),g.template,n.assignment
+        from amc_ops.dag_nodes n join amc_ops.dag_plans g using(run) cross join lateral (
             select count(*) tries,(array_agg(a.outcome order by a.started desc))[1] last_error
             from amc_ops.attempts a where a.run=n.run and a.node_id=n.node_id and a.status='closed'
             and not exists(select from amc_ops.ledger l where l.id=a.id and l.event='unsent')
@@ -39,11 +42,18 @@ def inputs(db, run, node):
         {"run": run, "node": node.id},
     )
     earlier = {skill: checkpoint["output"]["text"][:1400] for skill, checkpoint in rows if skill != "director"}
+    if node.template == "dynamic-v1":
+        return earlier, node.assignment or ""
     assignment = ""
     if node.id != "director":
         director = db.scalar(text("select checkpoint from amc_ops.dag_nodes where run=:r and node_id='director'"), {"r": run})
         assignment = director["output"]["assignments"][node.id]
     return earlier, assignment
+
+
+def freeze(db, token, contract, digest):
+    db.execute(text("select amc_ops.freeze_dynamic(:token,cast(:contract as jsonb),:digest)"),
+               {"token": token, "contract": json.dumps(contract, ensure_ascii=False), "digest": digest})
 
 
 def checkpoint(db, run, node, record):

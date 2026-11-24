@@ -3,7 +3,7 @@
 #review-panel{margin:16px 0} #review-panel details{margin:12px 0} #review-panel summary{cursor:pointer} #review-panel code,.review-preview{overflow-wrap:anywhere;white-space:pre-wrap}.review-preview{font:inherit;line-height:1.6;padding:14px;background:#101c30;border-radius:8px}.review-buttons{display:flex;flex-wrap:wrap;gap:8px;margin:14px 0}#review-panel a{color:#a4c5ff}#review-panel textarea{min-height:80px}
 
 /* Account emails, client titles and comments may contain long unbroken words. */
-.top-pill, #review-panel, #client-scope {
+.top-pill, #review-panel, #client-scope, #workforce-panel {
   min-width: 0;
   overflow-wrap: anywhere;
 }

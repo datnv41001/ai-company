@@ -78,7 +78,7 @@ class Gateway:
 
 
 def request_body(run, model, *, node=None, predecessors=None, assignment=None):
-    stage = node.id if node else run.plan[len(run.checkpoints)]
+    stage = node.skill if node else run.plan[len(run.checkpoints)]
     sources = run.knowledge["sources"]
     error = node.last_error if node else getattr(run, "last_error", None)
     attempt = node.attempts if node else getattr(run, "attempts", 0)
@@ -140,6 +140,11 @@ def infer(config, body):
     try:
         with httpx.Client(timeout=config.timeout, trust_env=False) as client:
             payload = {**body, "seed": 42} if config.provider == "local" else body
+            if body["response_format"]["json_schema"]["name"] == "planner":
+                # PostgreSQL jsonb sorts object keys. Local grammar decoding emits
+                # properties in order; generate identity and skill before parents.
+                item = body["response_format"]["json_schema"]["schema"]["properties"]["nodes"]["items"]
+                item["properties"] = {key: item["properties"][key] for key in item["required"]}
             res = client.post(config.url + "/chat/completions", json=payload, headers=headers)
             res.raise_for_status()
             message = res.json()

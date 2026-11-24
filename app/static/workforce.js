@@ -20,12 +20,16 @@ function createWorkforce(root, api, notify) {
   const graphStates={waiting:'Đang chờ',ready:'Sẵn sàng',running:'Đang xử lý',succeeded:'Hoàn tất',failed:'Thất bại',blocked:'Bị chặn',retry_wait:'Chờ thử lại'};
   function showGraph(info,graph) {
     const view=node(info,'section');view.setAttribute('aria-label','Trạng thái workflow');
-    node(view,'h4','Mẫu diamond-v1 · Phiên bản '+graph.revision);
+    node(view,'h4','Mẫu '+graph.template+' · Phiên bản '+graph.revision);
+    const skills=Object.fromEntries((graph.contract?.nodes||[]).map(n=>[n.node_id,n.skill_type]));
+    const caption=id=>skills[id]?labels[skills[id]]+' ('+id+')':(labels[id]||id);
+    if(graph.phase)node(view,'p',({planning:'Đang lập kế hoạch',validating:'Đang kiểm tra kế hoạch',frozen:'Đã chốt kế hoạch',executing:'Đang thực thi'})[graph.phase]);
+    if(graph.digest)node(view,'p','SHA-256: '+graph.digest);
     const list=node(view,'ul');
     for(const n of graph.nodes) {
       const item=node(list,'li');item.dataset.node=n.node_id;
-      node(item,'strong',(labels[n.node_id]||'Join')+' · '+graphStates[n.status]);
-      if(n.missing.length)node(item,'p','Chờ đầu ra: '+n.missing.map(k=>labels[k]).join(', '));
+      node(item,'strong',(n.node_id==='join'?'Join':caption(n.node_id))+' · '+graphStates[n.status]);
+      if(n.missing.length)node(item,'p','Chờ đầu ra: '+n.missing.map(caption).join(', '));
       if(n.error && n.error!=='ok')node(item,'p','Lỗi gần nhất: '+n.error);
       if(n.node_id!=='join')node(item,'p',n.attempts+' lượt · giữ '+n.held+' · đã chi '+n.spent+' micro-USD');
     }
@@ -80,9 +84,12 @@ function createWorkforce(root, api, notify) {
       } else if (!external && role!=='viewer' && b.submitted && !runs.some(r=>r.brief_id===b.id)) {
         const workflow=field(row,'Mẫu workflow','select');
         workflow.add(new Option('Tuyến tính','linear'));workflow.add(new Option('Content và SEO sau Strategy (diamond-v1)','diamond-v1'));
+        workflow.add(new Option('Director lập kế hoạch (dynamic-v1)','dynamic-v1'));
         const select=field(row,'Chuyên môn bổ sung','select');select.multiple=true;
         ['seo','creative','ads','analytics'].forEach(s=>select.add(new Option(labels[s],s)));
-        workflow.onchange=()=>{select.disabled=workflow.value==='diamond-v1';};
+        workflow.onchange=()=>{select.disabled=workflow.value==='diamond-v1';
+          for(const option of select.options){option.disabled=workflow.value==='dynamic-v1' && option.value!=='seo';if(option.disabled)option.selected=false;}
+        };
         const budget=field(row,'Ngân sách model (USD, 0 cho local)','input');budget.type='number';budget.step='0.01';budget.min=0;budget.max=1;budget.value=0;
         action(row,'Giao việc cho AI Director',async()=>{await api(base+'/briefs/'+b.id+'/run','POST',{
           workflow:workflow.value,extra_skills:select.disabled?[]:Array.from(select.selectedOptions,o=>o.value),budget_microusd:Math.round(Number(budget.value)*1000000)});await reload();});

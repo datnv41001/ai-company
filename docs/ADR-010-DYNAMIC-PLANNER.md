@@ -1,0 +1,13 @@
+# ADR-010 · Metered proposal and atomic execution plan
+
+Internal development on main bf1fa7e, PostgreSQL v11. Milestone one keeps the existing run lease and ledger serialization. Opt in at enqueue with dynamic-v1. Linear and diamond runs retain their contracts.
+
+Planning starts with one Director mailbox task at slot zero. A received proposal enters validating inside the result transaction. A strict closed schema allows only local keys, catalog skill types, assignment text and direct parent keys. The server owns all scope, sources, prices, worker routes and Join. All briefs require a content asset. Additional requested outputs are frozen at intake. Research produces findings, Strategy consumes research, Content can use research or strategy, and SEO can use research, strategy or content. Research can start from the brief. Content and SEO can also start from the brief. Intermediate work must feed a requested output. No external actions are registered.
+
+Validate before materializing specialist tasks. Bound the proposal to 8 specialist nodes, 16 proposal edges and depth 5. Reject unknown fields, unknown references, duplicate keys/edges, incompatible types, missing outputs, orphan work and cycles. Topological layers and lexicographic proposal keys determine stable server IDs. Hash the canonical UTF-8 JSON containing catalog version, execution inputs, assignments, required outputs and Join order. Scope and run identify the plan separately. Revision 1 is immutable. The same skill may occupy several separately billed nodes.
+
+Freeze, planner settlement, checkpoint, graph rows and specialist task creation commit together. Failure before commit leaves the reported planner result available for replay. Invalid model output is metered with its actual usage, then retried within the planner attempt budget. Frozen becomes executing on the first specialist offer. Join consumes checkpoints in canonical order and uses the existing QA and snapshot transaction.
+
+For the subsequent concurrency milestone, persist deadlines, backoff and ownership by node/attempt; serialize reservation and reconciliation using the existing scheduler lock. Terminal failure or revocation fences all sibling leases. Keep uncertain sent holds until receipt, release unsent offers, and reject late output. Prove actual overlap with independent worker connections and timed provider calls, run and agency admission under contention, simultaneous completion and exactly-once Join before enabling two leases.
+
+Rollback intake by selecting linear or diamond for new briefs. Drain or explicitly revoke existing dynamic runs and reconcile open holds. Preserve the upgraded DB, frozen plans, ledger and snapshots. Restore an older binary only against a compatible rehearsed backup.

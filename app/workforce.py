@@ -46,7 +46,7 @@ class BriefData(Input):
 
 
 class Start(Input):
-    workflow: Literal["linear", "diamond-v1"] = "linear"
+    workflow: Literal["linear", "diamond-v1", "dynamic-v1"] = "linear"
     extra_skills: list[Literal["seo", "creative", "ads", "analytics"]] = Field(default_factory=list, max_length=4)
     budget_microusd: int = Field(default=0, ge=0, le=1_000_000)
 
@@ -134,9 +134,17 @@ def start(tenant_id: str, bid: str, body: Start, user: User = Depends(current_us
         if db.get_bind().dialect.name != "postgresql":
             raise HTTPException(409, "Diamond requires the PostgreSQL worker pool")
         plan = [*CORE, "seo"]
+    required = sorted({'content', *body.extra_skills})
+    if body.workflow == 'dynamic-v1':
+        if db.get_bind().dialect.name != 'postgresql':
+            raise HTTPException(409, 'Dynamic planning requires the PostgreSQL worker pool')
+        if set(required) - {'content', 'seo'}:
+            raise HTTPException(422, 'Dynamic catalog v1 supports Content and SEO assets')
+        plan = ['director']
     prior = db.scalar(select(WorkforceRun).where(WorkforceRun.brief_id == bid, WorkforceRun.tenant_id == tenant_id))
     if prior:
-        if prior.knowledge.get("workflow", "linear") != body.workflow or prior.plan != plan or prior.budget_microusd != body.budget_microusd:
+        same_plan = prior.knowledge.get("required_outputs") == required if body.workflow == "dynamic-v1" else prior.plan == plan
+        if prior.knowledge.get("workflow", "linear") != body.workflow or not same_plan or prior.budget_microusd != body.budget_microusd:
             raise HTTPException(409, "Brief already queued with different terms")
         return {"id": prior.id, "state": prior.state}
     if not b.payload:
@@ -157,6 +165,8 @@ def start(tenant_id: str, bid: str, body: Start, user: User = Depends(current_us
         "sources": facts,
         "prompt_version": PROMPT_VERSION,
     }
+    if body.workflow == "dynamic-v1":
+        knowledge["required_outputs"] = required
     if body.workflow != "linear":
         knowledge["workflow"] = body.workflow
         knowledge["workflow_revision"] = 1
@@ -200,6 +210,13 @@ def runs(tenant_id: str, user: User = Depends(current_user), db: Session = Depen
     if m.role == "client_viewer":
         raise HTTPException(404, "Runs unavailable")
     rows = db.scalars(select(WorkforceRun).where(WorkforceRun.tenant_id == tenant_id).order_by(WorkforceRun.created_at.desc()).limit(100))
+    def skills(r):
+        if r.knowledge.get("workflow") == "dynamic-v1":
+            graph = db.scalar(text("select amc_ops.dag_report(:t,:r)"), {"t": tenant_id, "r": r.id})
+            if graph["contract"]:
+                return ["director", *(n["skill_type"] for n in graph["contract"]["nodes"])]
+        return r.plan
+
     return [
         {
             "id": r.id,
@@ -207,7 +224,7 @@ def runs(tenant_id: str, user: User = Depends(current_user), db: Session = Depen
             "title": r.knowledge["title"],
             "state": r.state,
             "done": len(r.checkpoints),
-            "skills": r.plan,
+            "skills": skills(r),
             "workflow": r.knowledge.get("workflow", "linear"),
         }
         for r in rows
@@ -234,12 +251,14 @@ def report(tenant_id: str, rid: str, user: User = Depends(current_user), db: Ses
         if run.deliverable_id
         else []
     )
+    graph = db.scalar(text("select amc_ops.dag_report(:t,:r)"), {"t": tenant_id, "r": rid}) if run.knowledge.get("workflow") in ("diamond-v1", "dynamic-v1") else None
     return {
         **{
             k: getattr(run, k)
             for k in ("id", "state", "plan", "journal", "last_error", "budget_microusd", "reserved_microusd", "deliverable_id", "checkpoints")
         },
-        "graph": db.scalar(text("select amc_ops.dag_report(:t,:r)"), {"t": tenant_id, "r": rid}) if run.knowledge.get("workflow") == "diamond-v1" else None,
+        "graph": graph,
+        "plan": ["director", *(n["skill_type"] for n in graph["contract"]["nodes"])] if graph and graph.get("contract") else run.plan,
         "source_registry": run.knowledge["sources"],
         "approved_assets": archived,
     }

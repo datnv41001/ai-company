@@ -1,5 +1,9 @@
 # Bắt đầu ở đây khi tiếp quản AI Marketing Company
 
+## Giới hạn đăng ký, đăng nhập, xác minh và lời mời · Đang review nội bộ
+
+Nhánh `feature/identity-abuse-prevention` tách từ main sau PR #17 (`bdc24419`). Schema đề xuất v21 bổ sung policy và bộ đếm theo cửa sổ. API đăng ký trả 202; ứng dụng đăng nhập riêng trước bước xác minh. [Hợp đồng, quota, chạy lại và khôi phục](docs/IDENTITY-ADMISSION.md). Đợt diễn tập dùng database tổng hợp riêng. PR #16 và #17 đã hợp nhất trên main v20. [CI main sau #17](https://github.com/datnv41001/ai-company/actions/runs/45421423514).
+
 ## AIRC-500 · Thiết kế công cụ review nội bộ
 
 Từ mốc `ece8ecc84b4938900821ff85403bb5b8243534c6`, catalog engineering có 500 hồ sơ và 12 discipline. Trên máy mới chạy `python engineering/airc500/catalog.py` từ gốc repo. [Đề xuất kiến trúc, hợp đồng, lệnh kiểm thử và backlog pilot](engineering/airc500/README.md). Mốc thiết kế ban đầu là `c1eda054`; commercial GA giữ NO-GO. Runtime AMC vẫn dùng schema v18 tại mốc trên.

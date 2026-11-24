@@ -1,5 +1,6 @@
 """AMC bootstrap API: real persistence + tenant authorization, NOT production GA."""
 import json
+import logging
 from contextlib import asynccontextmanager
 from pathlib import Path
 from typing import Any
@@ -14,7 +15,8 @@ from sqlalchemy.exc import IntegrityError
 from sqlalchemy.inspection import inspect
 from sqlalchemy.orm import Session
 
-from .identity import issue, router as identity_router, verify_email
+from .identity_quota import admit
+from .identity import MailboxConfigurationError, issue, router as identity_router, verify_email
 from .revision_qa import content_digest, evaluate
 from .workforce_evidence import RULESET
 from .delivery import router as delivery_router, working_copy
@@ -25,9 +27,9 @@ from .recipients import router as recipients_router, lock_recipient, revoke_pend
 from .delivery_models import PortalGrant
 from .access import set_context, visible
 from .database import APP_ENV, engine, get_db, prepare_database
-from .models import User, Tenant, Membership, Client, Brand, Campaign, WorkTask, Deliverable, ActionRequest, AuditEvent, new_id
+from .models import IdentityChallenge, User, Tenant, Membership, Client, Brand, Campaign, WorkTask, Deliverable, ActionRequest, AuditEvent, new_id
 from .schemas import RegisterIn, LoginIn, ClientIn, BrandIn, CampaignIn, AddMemberIn, DeliverableIn, DeliverableReviewIn, ReviewIn, ActionIn, ClientScopeIn
-from .security import sign_actor, hash_password, check_password, make_token, current_user, require_tenant
+from .security import DUMMY_HASH, sign_actor, hash_password, check_password, make_token, current_user, require_tenant
 from .services.marketing import WORKFLOW_STEPS
 
 ROOT = Path(__file__).resolve().parent
@@ -106,13 +108,16 @@ def health():
     return {"status": "ok", "stage": "engineering_bootstrap", "environment": APP_ENV, "production_ready": False}
 
 
-@app.post("/api/auth/register", status_code=201)
-def register(payload: RegisterIn, db: Session = Depends(get_db)):
+@app.post("/api/auth/register", status_code=202)
+def register(payload: RegisterIn, request: Request, db: Session = Depends(get_db)):
     email = str(payload.email).strip().lower()
+    admit(db, request, "register", address=email)
+    password_hash = hash_password(payload.password)
+    acknowledgement = {"status": "accepted"}
     set_context(db, email=email)
     if db.scalar(select(User).where(User.email == email)):
-        raise HTTPException(status_code=409, detail="Account already exists")
-    user = User(id=new_id(), email=email, password_hash=hash_password(payload.password))
+        return acknowledgement
+    user = User(id=new_id(), email=email, password_hash=password_hash)
     tenant_id = new_id() if payload.organization_name else None
     set_context(db, actor=user.id, tenant=tenant_id or "")
     sign_actor(db, user.id)
@@ -121,21 +126,41 @@ def register(payload: RegisterIn, db: Session = Depends(get_db)):
         db.flush()
     except IntegrityError:
         db.rollback()
-        raise HTTPException(409, "Account already exists") from None
-    issue(db, user, **({"workspace_id": tenant_id, "organization_name": payload.organization_name, "mode": payload.mode} if tenant_id else {}))
+        set_context(db, email=email)
+        if db.scalar(select(User.id).where(User.email == email)):
+            return acknowledgement
+        raise
+    reservation = {"workspace_id": tenant_id, "organization_name": payload.organization_name, "mode": payload.mode} if tenant_id else {}
+    try:
+        issue(db, user, **reservation)
+    except (OSError, MailboxConfigurationError):
+        db.rollback()
+        logging.getLogger("amc.identity_limits").error("identity_delivery_unavailable action=register")
+        return acknowledgement
     db.commit()
-    return {"access_token": make_token(user), "token_type": "bearer", "tenant_id": tenant_id, "user_id": user.id, "mode": payload.mode}
+    return acknowledgement
 
 
 @app.post("/api/auth/login")
-def login(payload: LoginIn, db: Session = Depends(get_db)):
+def login(payload: LoginIn, request: Request, db: Session = Depends(get_db)):
     email = str(payload.email).lower().strip()
+    admit(db, request, "login", address=email)
     set_context(db, email=email)
     user = db.scalar(select(User).where(User.email == email))
-    if user is None or not check_password(payload.password, user.password_hash):
+    password_ok = check_password(payload.password, user.password_hash if user else DUMMY_HASH)
+    if not password_ok or user is None:
         raise HTTPException(status_code=401, detail="Incorrect email or password")
     set_context(db, actor=user.id)
-    return {"access_token": make_token(user), "token_type": "bearer", "email_verified": user.verified_at is not None, "tenants": workspaces(db, user)}
+    sign_actor(db, user.id)
+    pending = db.get(IdentityChallenge, user.id) if user.verified_at is None else None
+    return {
+        "access_token": make_token(user),
+        "token_type": "bearer",
+        "user_id": user.id,
+        "pending_workspace_id": pending.workspace_id if pending else None,
+        "email_verified": user.verified_at is not None,
+        "tenants": workspaces(db, user),
+    }
 
 
 @app.get("/api/me")

@@ -18,15 +18,14 @@ from app.database import engine
 from app.security import sign_actor
 
 from agency_fixtures import account, create
-from identity_fixtures import capture
+from identity_fixtures import start_registration, capture
 
 
 def identity(api, email=None):
     email = email or f"onb-{uuid4().hex}@example.com"
-    response = api.post("/api/auth/register", json={"email": email, "password": uuid4().hex})
-    assert response.status_code == 201
-    assert response.json()["tenant_id"] is None
-    return {"email": email, "headers": {"Authorization": "Bearer " + response.json()["access_token"]}}
+    reg = start_registration(api,email,uuid4().hex)
+    assert reg["tenant_id"] is None
+    return {"email":email,"headers":{"Authorization":"Bearer "+reg["access_token"]}}
 
 
 def verify(api, actor):

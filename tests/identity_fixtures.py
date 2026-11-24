@@ -38,6 +38,16 @@ def capture(email, project=None, invitation_id=None):
     return max(directory.glob("*.txt"), key=lambda p: p.stat().st_mtime_ns).read_text().strip()
 
 
+def start_registration(api, email, password, **workspace):
+    body = {"email": email, "password": password}
+    registered = api.post("/api/auth/register", json={**body, **workspace})
+    assert registered.status_code == 202 and registered.json() == {"status": "accepted"}
+    login = api.post("/api/auth/login", json=body)
+    assert login.status_code == 200
+    authenticated = login.json()
+    return {**authenticated, "tenant_id": authenticated["pending_workspace_id"]}
+
+
 def verify_registration(api, email, registration, project=None):
     headers = {"Authorization": "Bearer " + registration["access_token"]}
     status = api.post("/api/auth/verify-email", headers=headers, json={"token": capture(email, project)}).status_code

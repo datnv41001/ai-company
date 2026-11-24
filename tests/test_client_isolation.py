@@ -3,7 +3,7 @@ from uuid import uuid4
 import pytest
 from sqlalchemy import text
 from sqlalchemy.exc import ProgrammingError
-from identity_fixtures import invite_member, verify_registration
+from identity_fixtures import start_registration, invite_member, verify_registration
 from app.database import engine
 from agency_fixtures import account, create
 
@@ -108,16 +108,15 @@ def test_concurrent_client_sessions(api, agency):
 @pytest.mark.parametrize("api", ["postgres"], indirect=True)
 def test_pg_registration_and_workspace_choices(api):
     email, password = f"inhouse-{uuid4().hex}@example.com", uuid4().hex
-    result = api.post("/api/auth/register", json=dict(email=email, password=password, organization_name="In-house", mode="inhouse"))
-    assert result.status_code == 201
+    registration = start_registration(api,email,password,organization_name="In-house",mode="inhouse")
     owner = account(api, "AgencySecond")
     base = "/api/tenants/" + owner["tenant"]
     client = create(api, base + "/clients", owner, {"name": "Named client"})
-    verify_registration(api,email,result.json())
-    invite_member(api, base, owner["headers"], {"Authorization":"Bearer "+result.json()["access_token"]}, email=email, role="client_viewer", client_id=client["id"])
+    verify_registration(api,email,registration)
+    invite_member(api, base, owner["headers"], {"Authorization":"Bearer "+registration["access_token"]}, email=email, role="client_viewer", client_id=client["id"])
     login = api.post("/api/auth/login", json={"email": email, "password": password}).json()
     assert {(m["organization_name"], m["mode"], m["role"]) for m in login["tenants"]} == {
         ("In-house","inhouse","owner"), ("AgencySecond","agency","client_viewer")}
-    own = api.get(f"/api/tenants/{result.json()['tenant_id']}/clients",
+    own = api.get(f"/api/tenants/{registration['tenant_id']}/clients",
                   headers={"Authorization": "Bearer " + login["access_token"]})
     assert [c["name"] for c in own.json()] == ["Internal Marketing"]

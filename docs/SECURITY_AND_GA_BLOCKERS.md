@@ -6,7 +6,7 @@ Schema 3 enforces PostgreSQL row policies for client delivery and includes popul
 
 ## Stop-ship (P0) before ANY public deployment
 
-- [ ] Auth: verified email, invitation acceptance, rate limits, account lockout/abuse protection, password reset, MFA and optional SSO; secure cookie/session strategy and CSRF policy; JWT signing key rotation and explicit revocation.
+- [ ] Auth: verified email, invitation acceptance, rate limits, time-limited abuse protection, password reset, MFA and optional SSO; secure cookie/session strategy and CSRF policy; JWT signing key rotation and explicit revocation.
 - [ ] Tenant isolation: Postgres row-level security with session-scoped tenant identity, enforced default-deny RLS policies on ALL business tables; tenant/brand/client relationship constraints; regression tests on IDOR at API/DB/file/vector/cache/queue/logs.
 - [ ] Replace `Base.metadata.create_all()` with reviewed Alembic migrations; automatically block incompatible migrations and test rollback/restore.
 - [ ] Worker runtime: durable persistent run state, retries with upper bounds, timeout, idempotency keys, DLQ, cancellation and checkpoint; secure job runner with task-scoped credentials and policy snapshot.
@@ -22,7 +22,7 @@ Schema 3 enforces PostgreSQL row policies for client delivery and includes popul
 
 - SQLite for local smoke testing; only application-level tenant checks, not Postgres RLS.
 - SAA-02 verifies addresses through a private synthetic mailbox and requires acceptance for invited members. Production email delivery, abuse protection and account recovery remain open. See the [verified identity handoff](PR15-IDENTITY.md) and [v19 onboarding threat model and backlog](PR16-ONBOARDING.md).
-- API requests have no rate limiting; registration can be abused if publicly reachable.
+- The v21 candidate limits registration, login, email verification and invitation delivery. Public ingress quotas, abuse monitoring and NAT threshold tuning still need operational acceptance.
 - JWT bearer token is held only in frontend memory; refresh requires re-login. Production session UX needs redesign.
 - No connector credentials are stored by this starter. All actual side effects are disabled.
 - LLM draft has no confirmed external factual evidence; do not present output as research or final recommendations without human review.
@@ -46,3 +46,7 @@ Schema 3 enforces PostgreSQL row policies for client delivery and includes popul
 ## Completion evidence standard
 
 Each product module and each of the 24 workflows needs: scenario ID, code commit, fixture, inputs, expected output, automated tests, recorded run artifact, negative tests, reviewer identity, and decision. All 49 modules and 24 workflows must be GA-approved for the single complete V1.0.
+
+## Giới hạn thao tác danh tính đang review nội bộ
+
+Schema đề xuất v21 cho đăng ký, đăng nhập, xác minh và cấp/gửi lại lời mời. Hồ sơ nghiệm thu tiếp tục theo dõi ngưỡng NAT, telemetry, ranh giới proxy, email vận hành, vòng đời session, phục hồi mật khẩu, MFA/SSO và chuyển quyền owner. [Thiết kế, nghiệm thu và rollback](IDENTITY-ADMISSION.md).

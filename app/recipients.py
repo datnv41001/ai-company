@@ -4,13 +4,14 @@ from datetime import timedelta
 import hashlib
 import secrets
 
-from fastapi import APIRouter, Depends, HTTPException
+from fastapi import APIRouter, Depends, HTTPException, Request
 from typing import Literal
 from pydantic import EmailStr, SecretStr, Field, model_validator
 from sqlalchemy import func, select, text, update
 from sqlalchemy.exc import IntegrityError
 from sqlalchemy.orm import Session
 
+from .identity_quota import admit
 from .identity import deliver_invitation
 from .access import set_context
 from .database import get_db
@@ -127,7 +128,13 @@ def outgoing(tenant_id: str, user: User = Depends(current_user), db: Session = D
 
 
 @router.post("/tenants/{tenant_id}/invitations", status_code=201)
-def invite(tenant_id: str, body: Invite, user: User = Depends(current_user), db: Session = Depends(get_db)):
+def invite(tenant_id: str, body: Invite, request: Request, user: User = Depends(current_user), db: Session = Depends(get_db)):
+    require_tenant(db, user, tenant_id, "admin")
+    admit(db, request, "invitation", actor=user.id, tenant=tenant_id, address=str(body.email).strip().lower())
+    return issue_invitation(tenant_id, body, user, db)
+
+
+def issue_invitation(tenant_id, body, user, db):
     issuer = require_tenant(db, user, tenant_id, "admin")
     if user.verified_at is None or (body.role == "admin" and issuer.role != "owner"):
         raise HTTPException(403, "Verified issuer with sufficient authority required")
@@ -239,7 +246,16 @@ def accept(iid: str, body: Acceptance | None = None, user: User = Depends(curren
 
 
 @router.post("/tenants/{tenant_id}/invitations/{iid}/resend", status_code=201)
-def resend(tenant_id: str, iid: str, user: User = Depends(current_user), db: Session = Depends(get_db)):
+def resend(tenant_id: str, iid: str, request: Request, user: User = Depends(current_user), db: Session = Depends(get_db)):
+    require_tenant(db, user, tenant_id, "admin")
+    email = db.scalar(select(PortalInvitation.email).where(PortalInvitation.tenant_id == tenant_id, PortalInvitation.id == iid))
+    if email is None:
+        raise HTTPException(404, "Lời mời không còn hiệu lực.")
+    admit(db, request, "invitation", actor=user.id, tenant=tenant_id, address=email.strip().lower())
+    return replace_invitation(tenant_id, iid, user, db)
+
+
+def replace_invitation(tenant_id, iid, user, db):
     require_tenant(db, user, tenant_id, "admin")
     lock_offer_recipient(db, tenant_id, iid)
     old = db.scalar(select(PortalInvitation).where(PortalInvitation.id == iid, PortalInvitation.tenant_id == tenant_id,
@@ -251,7 +267,7 @@ def resend(tenant_id: str, iid: str, user: User = Depends(current_user), db: Ses
     db.flush()
     db.add(AuditEvent(tenant_id=tenant_id, user_id=user.id, event="portal.invitation_revoked", subject_id=iid, details={"reason":"resend"}))
     # Issuance rechecks the current sender and scope. A failure rolls back revocation as well.
-    return invite(tenant_id, terms, user, db)
+    return issue_invitation(tenant_id, terms, user, db)
 
 
 def addressed_link(body, user, db):

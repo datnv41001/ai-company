@@ -1,14 +1,12 @@
-from identity_fixtures import verify_registration, invite_member
+from identity_fixtures import start_registration, verify_registration, invite_member
 from uuid import uuid4
 
 
 def sign_up(client, label, mode="agency"):
-    response = client.post("/api/auth/register", json={
-        "email": f"{label}@example.com", "password": "AtLeast12Chars!", "organization_name": label, "mode": mode
-    })
-    assert response.status_code == 201, response.text
-    verify_registration(client, f"{label}@example.com", response.json())
-    return response.json()
+    email = f"{label}@example.com"
+    reg = start_registration(client,email,"AtLeast12Chars!",organization_name=label,mode=mode)
+    verify_registration(client,email,reg)
+    return reg
 
 
 def headers(identity):

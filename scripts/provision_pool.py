@@ -46,18 +46,34 @@ def route(conn, worker, tenant, client, brand, campaign, operator):
     )
 
 
+def inventory(conn, names):
+    if not names or len(set(names)) != len(names):
+        raise ValueError("List one dedicated dispatcher login per replica")
+    for name in names:
+        if not conn.execute("""select r.rolcanlogin and exists(select from pg_auth_members m
+            where m.member=r.oid and m.roleid='amc_dispatch'::regrole) from pg_roles r where r.rolname=%s""",(name,)).fetchone() == (True,):
+            raise ValueError("Unknown dispatcher login")
+    conn.execute("""insert into amc_ops.dispatcher_inventory(singleton,expected) values(true,%s::name[])
+        on conflict(singleton) do update set expected=excluded.expected,recorded_at=clock_timestamp()""",(names,))
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     sub = parser.add_subparsers(dest="mode", required=True)
     logins = sub.add_parser("login")
     logins.add_argument("name")
     logins.add_argument("group", choices=["amc_pool_worker", "amc_dispatch"])
+    roster = sub.add_parser("inventory", help="Declare the complete dispatcher roster for this database")
+    roster.add_argument("names", nargs="+")
     routes = sub.add_parser("route")
     for key in ("worker", "tenant", "client", "brand", "campaign", "operator"):
         routes.add_argument(key)
     args = vars(parser.parse_args())
     with psycopg.connect(os.environ["AMC_MIGRATION_DSN"]) as conn:
-        if args.pop("mode") == "login":
+        mode = args.pop("mode")
+        if mode == "inventory":
+            inventory(conn,args["names"])
+        elif mode == "login":
             provision(conn, **args, password=os.environ["AMC_POOL_PASSWORD"])
         else:
             route(conn, **args)

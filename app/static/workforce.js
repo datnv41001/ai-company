@@ -52,6 +52,26 @@ function createWorkforce(root, api, notify) {
       if(n.node_id!=='join')node(item,'p',n.attempts+' lượt · giữ '+n.held+' · đã chi '+n.spent+' micro-USD');
     }
   }
+  const waitLabels={dependency_pending:'Chờ checkpoint tiền nhiệm',retry_backoff:'Đang chờ tới lượt thử lại',
+    adapter_unavailable:'Thiếu dispatcher tương thích',report_waiting_adapter:'Report chờ dispatcher tương thích',
+    telemetry_unknown:'Chưa đủ dữ liệu từ các replica',worker_unavailable:'Chưa có worker sẵn sàng',
+    worker_busy:'Worker phù hợp đang bận',capacity_full:'Agency đã dùng hết slot',budget_insufficient:'Ngân sách còn lại chưa đủ',
+    agency_disabled:'Pool của agency đang dừng',run_slot_busy:'Run còn lease giữ slot',
+    attempt_limit:'Đã hết lượt thử',prompt_version:'Cần kiểm tra phiên bản prompt'};
+  function showWaits(parent,data){
+    parent.replaceChildren();
+    node(parent,'p','Thời điểm quan sát '+new Date(data.observed_at).toLocaleString());
+    for(const item of data.nodes){
+      if(!item.wait_reasons.length && !['lease_active','awaiting_reconciliation','report'].includes(item.phase))continue;
+      const row=node(parent,'div');
+      node(row,'strong',item.node_id);
+      for(const reason of item.wait_reasons)node(row,'p',waitLabels[reason]||reason);
+      if(item.phase==='lease_active')node(row,'p','Lease đang hoạt động');
+      if(item.phase==='awaiting_reconciliation')node(row,'p','Chờ đối soát lease');
+      if(item.phase==='report' && !item.wait_reasons.length)node(row,'p','Report đang chờ xử lý');
+      if(item.retry_at)node(row,'p','Có thể thử lại từ '+new Date(item.retry_at).toLocaleString());
+    }
+  }
   const states={queued:'Đang chờ worker',running:'Đang xử lý',failed:'Đã dừng',awaiting_qa:'Đã chuyển sang QA'};
   async function show(tenant,role,campaigns,expanded) {
     const ticket=++revision; root.inert=true;
@@ -152,6 +172,13 @@ function createWorkforce(root, api, notify) {
           info.replaceChildren();node(info,'p',v.journal.length+' lượt xử lý · Chi phí đã tính hoặc giữ chỗ: '+(v.reserved_microusd/1000000).toFixed(6)+' USD');
           if(v.registry?.status==='legacy_v13')node(info,'p','Lịch sử thực thi · legacy_v13');
           if(v.graph)showGraph(info,v.graph);
+          if(v.graph && ['owner','admin'].includes(role)){
+            const panel=node(info,'section');
+            action(info,'Xem lý do node chờ',async()=>{
+              const data=await api(base+'/runs/'+r.id+'/wait-diagnostics');
+              if(ticket===revision)showWaits(panel,data);
+            });
+          }
           if(v.last_error)node(info,'p',v.last_error==='recipient_revoked'?'Đã hủy do thu hồi quyền của người giao brief.':'Lỗi: '+v.last_error);
           v.checkpoints.forEach(p=>{node(info,'h4',labels[p.skill]);node(info,'p',p.output.text);
             node(info,'p','Nguồn: '+p.output.source_ids.map(k=>v.source_registry?.[k]?.label||k).join(', '));

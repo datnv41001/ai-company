@@ -1,5 +1,21 @@
 # Bắt đầu ở đây khi tiếp quản AI Marketing Company
 
+## Review Scheduler Wait Diagnostics
+
+Nhánh xuất phát từ `3af08b75b661e1d1681a5825939f7ce8656746b8`. Nhánh độc lập này dành số migration 16 cho chẩn đoán và chạy trực tiếp từ v14. PR WF-03 dành số 15. Trước lần merge thứ hai cần hợp nhất thứ tự migration, kiểm tra nâng từ cả hai trạng thái đang triển khai và cập nhật fingerprint cho cây mã kết hợp.
+
+Trong DB dev, khởi động Compose và cấp các LOGIN riêng theo [runbook pool](docs/POOL-RUNBOOK.md). Khai báo danh sách đầy đủ dispatcher của **database này** bằng tài khoản migrate. Với cấu hình mẫu có đúng một dispatcher, chạy lệnh sau sau khi đã tạo LOGIN.
+
+```sh
+docker compose run --rm migrate python scripts/provision_pool.py inventory amc_ops_dispatch
+```
+
+Mỗi replica dùng LOGIN riêng. Truyền tên của tất cả replica vào lệnh inventory khi thay đổi pool. Dispatcher và worker tự báo heartbeat khoảng 3 giây/lần cùng fingerprint và capability. Dữ liệu tối đa 15 giây tuổi mới được dùng để kết luận thiếu adapter. Phiên dispatcher còn kết nối nhưng thiếu heartbeat, LOGIN dự kiến vắng mặt hoặc chưa khai báo danh sách cho kết quả `telemetry_unknown`. Worker bận được nhận diện qua lease dù không poll trong lúc suy luận. Khi bộ dựng yêu cầu của dispatcher khác fingerprint với API, phép tính ngân sách được đánh dấu chưa đủ dữ liệu.
+
+Owner/admin mở **Điều phối Marketing AI → Xem kết quả và chi phí → Xem lý do node chờ**. API `GET /api/tenants/{tenant}/workforce/runs/{run}/wait-diagnostics` đọc một snapshot PostgreSQL cho các node cùng run/revision. Trường `candidate` đối chiếu tập ứng viên SQL của scheduler. Bước cấp offer còn đối chiếu runtime, ngân sách node/run/agency và lease dưới khóa scheduler. Một report có thể chờ adapter sau khi worker đã gửi. Giao diện trả thời điểm quan sát để nhận biết dữ liệu đã cũ. Client A/B và tài khoản tenant khác không có quyền đọc chẩn đoán.
+
+RED tại `47f47cd` cho thấy API trả 404 cho quản trị viên. Chạy `python -m pytest -q tests/test_wait_diagnostics.py` với DB tổng hợp và môi trường PostgreSQL trong CI. Có ca READ ONLY, so ứng viên với offer thực, heartbeat hết hạn, report còn giữ, nhiều lý do đồng thời và thu hồi quyền qua suite chung. Job model ghi `wait-diagnostics-measurements.json` trong lần chạy Qwen có snapshot khách mẫu duyệt. Khi rút, tắt truy cập vào chẩn đoán và trả về image tương thích sau khi drain. Giữ bảng telemetry trong schema 16 để tiếp tục đối chiếu. Thay đổi inventory và heartbeat chỉ ghi bảng vận hành riêng.
+
 ## Main sau PR #11 · QA Content và SEO cho bản nháp landing
 
 Ngày 24/11/2026, [PR #11](https://github.com/datnv41001/ai-company/pull/11) đã merge tại [`576b81798de148b75a6e74dd584551049dc5be9f`](https://github.com/datnv41001/ai-company/commit/576b81798de148b75a6e74dd584551049dc5be9f). Hai parent là base `4c588d8cbadc6e83da7a33e7977d12815673f663` và head đã review `a982b1efff9b323b3b0c6fed8d9138f5475f6a2c`. Cả merge và head có cùng Git tree `21a810d5e20b735936fcb62ce93b2c21346311ca`. Phạm vi phát hành là phát triển nội bộ trên dữ liệu tổng hợp. PostgreSQL dùng schema v14.

@@ -15,7 +15,8 @@ MIGRATIONS = Path(__file__).resolve().parents[1] / "migrations"
 
 
 def verify():
-    from_v13 = '--from-v13' in sys.argv
+    from_v14 = '--from-v14' in sys.argv
+    from_v13 = '--from-v13' in sys.argv or from_v14
     from_v12 = '--from-v12' in sys.argv or from_v13
     from_v11 = '--from-v11' in sys.argv or from_v12
     from_v10 = "--from-v10" in sys.argv or from_v11
@@ -143,6 +144,13 @@ def verify():
             registry_upgrade_fixture.seed(conn)
             v13_snapshot = registry_upgrade_fixture.snapshot(conn)
             original = original[0], conn.execute("select * from amc_ops.ledger order by seq").fetchall()
+        if from_v14:
+            from migrations.apply import publish_registry
+            import json
+            conn.execute((MIGRATIONS/"014_workflow_registry.sql").read_text(encoding="utf-8"))
+            publish_registry(conn,json.loads((MIGRATIONS.parent/"catalog/landing-seo-v1.json").read_text(encoding="utf-8")))
+            conn.execute("insert into amc_schema_versions values (14)")
+            before_release = conn.execute("select workflow,digest,manifest from amc_ops.registry_releases order by workflow").fetchall()
     migrate(dsn, os.environ.get("AMC_RUNTIME_PASSWORD"))
     migrate(dsn)
     prepare_database(runtime)
@@ -151,6 +159,8 @@ def verify():
         prepare_database(privileged)
     privileged.dispose()
     with runtime.connect() as c:
+        if from_v14:
+            assert c.execute(text("select workflow,digest,manifest from amc_ops.registry_releases order by workflow")).fetchall() == before_release
         def identify():
             c.execute(text("SELECT set_config('amc.user_id','alice',true),set_config('amc.tenant_id','agency',true)"))
         identify()
@@ -160,7 +170,7 @@ def verify():
             owner.execute("UPDATE memberships SET role='client_viewer',client_id='a' WHERE user_id='alice'")
         identify()
         assert set(c.scalars(text("SELECT id FROM clients"))) == {"a"}
-        assert set(c.scalars(text("SELECT version FROM amc_schema_versions"))) == {2,3,4,5,6,7,8,9,10,11,12,13,14}
+        assert set(c.scalars(text("SELECT version FROM amc_schema_versions"))) == {2,3,4,5,6,7,8,9,10,11,12,13,14,16}
         if "--from-v2" in sys.argv or from_v3:
             c.rollback()
             c.execute(text("SELECT set_config('amc.user_id','external',true),set_config('amc.tenant_id','agency',true)"))
@@ -202,7 +212,7 @@ def verify():
                 assert owner.execute("SELECT title FROM deliverables WHERE id='doc'").fetchone() == ("Internal",)
     runtime.dispose()
     baseline = "v13" if from_v13 else "v12" if from_v12 else "v11" if from_v11 else "v10" if from_v10 else "v9" if from_v9 else "v8" if from_v8 else "v7" if from_v7 else "v6" if from_v6 else "v5" if from_v5 else "v4" if from_v4 else "v3" if from_v3 else "v2" if "--from-v2" in sys.argv else "v1"
-    print(f"PASS: populated {baseline} to v14, repeated migration, privileged API login refused, client isolated")
+    print(f"PASS: populated {'v14' if from_v14 else baseline} to v16, repeated migration, privileged API login refused, client isolated")
 
 
 if __name__ == "__main__":

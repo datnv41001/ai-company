@@ -9,6 +9,7 @@ from psycopg.types.json import Jsonb
 from migrations.runtime_bundle import reviewed_runtime
 from .workforce_gateway import Gateway, GatewayError
 from .workforce_worker import bounded_call
+from .scheduler_telemetry import worker_heartbeat
 
 
 def take(conn):
@@ -28,7 +29,11 @@ def main():
     if config.provider != "local":
         raise ValueError("Pool supports local inference only")
     with psycopg.connect(os.environ["AMC_POOL_DSN"], autocommit=True) as conn:
+        next_heartbeat = 0.0
         while True:
+            if time.monotonic() >= next_heartbeat:
+                worker_heartbeat(conn,config)
+                next_heartbeat = time.monotonic()+3
             job = take(conn)
             if job is None:
                 time.sleep(0.5)

@@ -33,6 +33,15 @@ def migrate_historical_fixture(revision):
         subprocess.run([sys.executable, "migrations/apply.py"], cwd=checkout, env=env, check=True)
 
 
+def tenant_state_before_c1(conn):
+    # These are populated fixtures in an isolated database. Compare underlying
+    # rows, including approval payloads and charges, across the additive migration.
+    tables = ("deliverables", "client_reviews", "review_entries", "workforce_runs",
+              "amc_ops.attempts", "amc_ops.ledger", "amc_ops.registry_releases",
+              "amc_acl.quota_policy", "amc_acl.identity_windows")
+    return {table: conn.execute(f"SELECT to_jsonb(t) FROM {table} t ORDER BY to_jsonb(t)").fetchall() for table in tables}
+
+
 def rehearse_archive(dsn, container, version=16):
     """Round-trip the populated v16 fixture through matching PostgreSQL client tools."""
     tables = ("amc_schema_versions", "users", "memberships", "portal_grants", "portal_invitations",
@@ -41,6 +50,12 @@ def rehearse_archive(dsn, container, version=16):
 
     if version >= 18:
         tables += ("identity_challenges", "amc_acl.identity_key")
+
+    if version >= 21:
+        tables += ("amc_acl.identity_windows", "amc_acl.quota_policy")
+    knowledge = ("knowledge_revisions", "knowledge_links", "knowledge_events", "knowledge_snapshots", "knowledge_dependencies", "knowledge_commands")
+    if version >= 22:
+        tables += knowledge
 
     def snapshot(conn):
         return [conn.execute(f"SELECT to_jsonb(t) FROM {table} t ORDER BY to_jsonb(t)").fetchall()
@@ -51,7 +66,8 @@ def rehearse_archive(dsn, container, version=16):
         assert source.execute("SELECT max(version) FROM amc_schema_versions").fetchone() == (version,)
         db, owner = source.info.dbname, source.info.user
         before = snapshot(source)
-    assert all(before)
+    required = before[-len(knowledge):] if version == 22 else before
+    assert all(required), "Restore rehearsal requires populated fixture tables"
     # Both the archive and restore are inside this disposable CI container.
     target = "amc_test_restore_" + uuid4().hex
     archive = "/tmp/" + target + ".dump"
@@ -65,7 +81,8 @@ def rehearse_archive(dsn, container, version=16):
 
 
 def verify():
-    from_v20 = "--from-v20" in sys.argv
+    from_v21 = "--from-v21" in sys.argv
+    from_v20 = "--from-v20" in sys.argv or from_v21
     from_v19 = "--from-v19" in sys.argv or from_v20
     from_v18 = "--from-v18" in sys.argv or from_v19
     from_v17 = '--from-v17' in sys.argv or from_v18
@@ -285,9 +302,17 @@ def verify():
                 with psycopg.connect(dsn) as observer:
                     assert observer.execute("select to_regprocedure('amc_acl.consume_identity_quota(text,jsonb)')").fetchone() == (None,)
                     print("RED v20: no durable admission function")
+            if from_v21:
+                migrate_historical_fixture("040ddd8c5e3184fb5768b57971568368d3287811")
+                with psycopg.connect(dsn) as observer:
+                    assert observer.execute("select to_regclass('public.knowledge_revisions')").fetchone() == (None,)
+                    observer.execute("select amc_acl.consume_identity_quota('register',jsonb_build_object('origin',repeat('1',64),'address',repeat('2',64)))")
+                    existing_v21 = tenant_state_before_c1(observer)
+                    assert all(existing_v21.values())
+                    print("RED v21: knowledge tables absent; populated identity admission windows")
             if os.getenv("AMC_UPGRADE_BACKUP_CONTAINER"):
-                rehearse_archive(dsn, os.environ["AMC_UPGRADE_BACKUP_CONTAINER"], 20 if from_v20 else 19 if from_v19 else 18)
-        prior_version = 20 if from_v20 else 19 if from_v19 else 18 if from_v18 else 17 if from_v17 else 16
+                rehearse_archive(dsn, os.environ["AMC_UPGRADE_BACKUP_CONTAINER"], 21 if from_v21 else 20 if from_v20 else 19 if from_v19 else 18)
+        prior_version = 21 if from_v21 else 20 if from_v20 else 19 if from_v19 else 18 if from_v18 else 17 if from_v17 else 16
         # Fail at the next genuine marker and verify atomic rollback.
         with psycopg.connect(dsn) as owner:
             owner.execute(f"alter table upgrade_marker_probe add constraint synthetic_failure check (version <= {prior_version})")
@@ -307,6 +332,10 @@ def verify():
     migrate(dsn, os.environ.get("AMC_RUNTIME_PASSWORD"))
     migrate(dsn)
     prepare_database(runtime)
+    if from_v21:
+        with psycopg.connect(dsn) as observer:
+            assert tenant_state_before_c1(observer) == existing_v21
+            print("GREEN v22: existing deliverables, reviews, runs, attempts, ledger, releases and quotas preserved")
     if from_v19:
         with runtime.connect() as observer:
             assert observer.scalar(text("select to_regprocedure('amc_acl.lock_recipient(text,text)') is not null"))
@@ -329,7 +358,7 @@ def verify():
     with runtime.connect() as c:
         if from_v14:
             with psycopg.connect(dsn) as owner:
-                assert owner.execute("select version from upgrade_marker_probe order by seq").fetchall() == [(v,) for v in range(16 if from_v15 else 15, 22)]
+                assert owner.execute("select version from upgrade_marker_probe order by seq").fetchall() == [(v,) for v in range(16 if from_v15 else 15, 23)]
                 if from_v16:
                     assert owner.execute("select state,role,client_id,can_comment,can_decide from portal_invitations where id='legacy-invite'").fetchone() == ("pending","client_viewer","a",True,False)
                     assert owner.execute("select brand_name,campaign_name from portal_invitations where id='legacy-invite'").fetchone() == ("Brand","Name")
@@ -352,7 +381,7 @@ def verify():
             owner.execute("UPDATE memberships SET role='client_viewer',client_id='a' WHERE user_id='alice'")
         identify()
         assert set(c.scalars(text("SELECT id FROM clients"))) == {"a"}
-        assert set(c.scalars(text("SELECT version FROM amc_schema_versions"))) == set(range(2,22))
+        assert set(c.scalars(text("SELECT version FROM amc_schema_versions"))) == set(range(2,23))
         if "--from-v2" in sys.argv or from_v3:
             c.rollback()
             c.execute(text("SELECT set_config('amc.user_id','external',true),set_config('amc.tenant_id','agency',true)"))
@@ -394,7 +423,7 @@ def verify():
                 assert owner.execute("SELECT title FROM deliverables WHERE id='doc'").fetchone() == ("Internal",)
     runtime.dispose()
     baseline = "v13" if from_v13 else "v12" if from_v12 else "v11" if from_v11 else "v10" if from_v10 else "v9" if from_v9 else "v8" if from_v8 else "v7" if from_v7 else "v6" if from_v6 else "v5" if from_v5 else "v4" if from_v4 else "v3" if from_v3 else "v2" if "--from-v2" in sys.argv else "v1"
-    print(f"PASS: populated {'v20' if from_v20 else 'v19' if from_v19 else 'v18' if from_v18 else 'v17' if from_v17 else 'v16' if from_v16 else 'v15' if from_v15 else 'v14' if from_v14 else baseline} to v21, repeated migration, privileged API login refused, client isolated")
+    print(f"PASS: populated {'v21' if from_v21 else 'v20' if from_v20 else 'v19' if from_v19 else 'v18' if from_v18 else 'v17' if from_v17 else 'v16' if from_v16 else 'v15' if from_v15 else 'v14' if from_v14 else baseline} to v22, repeated migration, privileged API login refused, client isolated")
 
 
 if __name__ == "__main__":

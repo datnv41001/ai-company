@@ -101,7 +101,7 @@ def prepare_database(bind):
         versions = set(conn.scalars(text("SELECT version FROM public.amc_schema_versions")))
         if 16 in versions and 15 not in versions:
             raise RuntimeError("Isolated schema v16 is missing migration 015; restore a pre-016 backup before upgrading")
-        if versions != set(range(2, 22)):
+        if versions != set(range(2, 23)):
             raise RuntimeError("Apply the PostgreSQL schema migrations before starting the API")
         from .access import set_context
         from .security import sign_actor

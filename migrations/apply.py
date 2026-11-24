@@ -63,13 +63,13 @@ def migrate(dsn: str, runtime_password: str | None = None):
             raise ValueError("amc_runtime must be an unprivileged role without inherited roles")
         conn.execute("CREATE TABLE IF NOT EXISTS amc_schema_versions (version int PRIMARY KEY)")
         versions = {row[0] for row in conn.execute("SELECT version FROM amc_schema_versions")}
-        if versions - set(range(2, 22)):
+        if versions - set(range(2, 23)):
             raise ValueError("Unknown schema version; use its matching application revision")
         if 16 in versions and 15 not in versions:
             raise ValueError("Isolated schema v16 is missing migration 015; restore a pre-016 backup before upgrading")
         if versions and versions != set(range(2, max(versions) + 1)):
             raise ValueError("Incomplete migration history; restore a consistent backup before upgrading")
-        if 21 in versions:
+        if 22 in versions:
             return
         if 2 not in versions:
             tables = {row[0] for row in conn.execute(
@@ -143,12 +143,15 @@ def migrate(dsn: str, runtime_password: str | None = None):
         if 20 not in versions:
             conn.execute((HERE / "020_recipient_lifecycle.sql").read_text(encoding="utf-8"))
             conn.execute("INSERT INTO amc_schema_versions VALUES (20)")
-        conn.execute((HERE / "021_identity_quotas.sql").read_text(encoding="utf-8"))
-        rules = json.loads((HERE / "021_quota_policy.json").read_text(encoding="utf-8"))
-        for action, dimensions in rules.items():
-            for dimension, (capacity, seconds) in dimensions.items():
-                conn.execute("INSERT INTO amc_acl.quota_policy VALUES(%s,%s,%s,%s)",(action,dimension,capacity,seconds))
-        conn.execute("INSERT INTO amc_schema_versions VALUES (21)")
+        if 21 not in versions:
+            conn.execute((HERE / "021_identity_quotas.sql").read_text(encoding="utf-8"))
+            rules = json.loads((HERE / "021_quota_policy.json").read_text(encoding="utf-8"))
+            for action, dimensions in rules.items():
+                for dimension, (capacity, seconds) in dimensions.items():
+                    conn.execute("INSERT INTO amc_acl.quota_policy VALUES(%s,%s,%s,%s)",(action,dimension,capacity,seconds))
+            conn.execute("INSERT INTO amc_schema_versions VALUES (21)")
+        conn.execute((HERE / "022_business_knowledge.sql").read_text(encoding="utf-8"))
+        conn.execute("INSERT INTO amc_schema_versions VALUES (22)")
 
 
 
@@ -163,4 +166,4 @@ if __name__ == "__main__":
             publish_registry(conn, json.loads(args.publish_registry.read_text(encoding="utf-8")))
     else:
         migrate(os.environ["AMC_MIGRATION_DSN"], os.getenv("AMC_RUNTIME_PASSWORD"))
-    print("AMC schema version 21 ready")
+    print("AMC schema version 22 ready")

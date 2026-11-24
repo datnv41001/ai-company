@@ -1,5 +1,15 @@
 # Bắt đầu ở đây khi tiếp quản AI Marketing Company
 
+## PR #7 · Director lập kế hoạch động với một lease
+
+Nhánh `feature/dynamic-director-dag` bắt đầu từ `main@bf1fa7e`. Dừng dispatcher và luồng ghi, sao lưu DB nội bộ, chạy migration 012, rồi khởi động API và worker từ cùng commit theo [runbook Docker](docs/POOL-RUNBOOK.md). PostgreSQL v12 giữ nguyên kế hoạch diamond và lịch sử của run cũ. Để quay lại, chọn linear/diamond cho brief mới, xử lý hết hoặc thu hồi các run động đang mở rồi đối soát hold. Giữ schema v12 để đọc lịch sử.
+
+Trên agency có pool và route, chọn **Director lập kế hoạch (dynamic-v1)** khi giao brief. Với API, gửi `{"workflow":"dynamic-v1","extra_skills":["seo"],"budget_microusd":0}` để yêu cầu Content và SEO hoặc bỏ SEO nếu brief chỉ cần Content. Mở **Xem kết quả và chi phí** để xem phase, digest và dependency theo node. Planner chỉ có một task khi enqueue. Sau khi báo kết quả, server kiểm tra trước khi tạo task chuyên môn. Mỗi node có ID riêng trong run. Lý do bị từ chối và usage đã biết nằm trong journal. Khi kiểm tra nguồn cho bản giao, dùng revision và digest của QA; digest đồ thị dùng để truy lại kế hoạch.
+
+Chạy Ruff và pytest theo mục kiểm thử bên dưới. Thêm `--from-v11` khi diễn tập nâng trên DB mẫu thứ mười một. Job Docker `workforce-model` chạy thêm `python tests/pool_model_smoke.py --docker --workflow dynamic-v1` và lưu artifact `dynamic-measurements.json`. Hai lượt thử native đầu đều từ chối 3/3 proposal ở mỗi campaign B/C. Lượt thứ nhất có 1.578 token vào và 698 ra được đo, lượt thứ hai có 2.076 vào và 747 ra. Sau khi giữ thứ tự trường schema qua mailbox JSONB, B sinh một node Content, C sinh hai node độc lập Content và SEO. Năm lượt có usage ở B/C đạt ngay lần đầu với 1.450 token vào và 352 ra. A bị thu hồi ở mỗi lượt và usage chưa xác nhận. Các thử nghiệm dùng Qwen local, chi phí 0 micro-USD. Trong brief C, phân công của model lặp lại câu mẫu cho email dù brief yêu cầu landing page. Cần QA nội dung độc lập.
+
+Ranh giới mốc review này là một lease/run. Mức chồng lấn giữa hai lease cùng run bằng 0 theo unique index PostgreSQL. Việc mở hai lease và đo overlap sẽ theo ma trận ngân sách, fencing, retry và Join trong [thiết kế PR #7](docs/PR7-DYNAMIC-DAG.md). [ADR-010](docs/ADR-010-DYNAMIC-PLANNER.md) · [Kiểm thử freeze và replay](tests/test_dynamic_execution.py).
+
 ## Mốc nội bộ sau PR #6 · Schema v11
 
 Ngày 24/11/2026, [PR #6](https://github.com/datnv41001/ai-company/pull/6) đã vào `main` tại [`4bfa8cf15ee0f654f779442debb75007d74f8ec2`](https://github.com/datnv41001/ai-company/commit/4bfa8cf15ee0f654f779442debb75007d74f8ec2). Git tree của commit merge trùng với head đã kiểm toán `08178ef7afb36bc244d32fac9c536696fdf20622`.
@@ -129,4 +139,4 @@ Người hoặc AI sửa mã cập nhật **cùng PR** phần hợp đồng tư�
 
 Ghi vào PR: hành vi cũ → mới, đường vào API/UI, files chính, phiên bản schema, lệnh kiểm thử, kết quả đạt/skip, link CI, dữ liệu cần chuyển và điểm còn mở. Người nhận chạy lại thay đổi từ SHA của PR và lấy dữ liệu mẫu qua fixture. Chưa merge thì nêu tên nhánh. Khi hoàn tất một work package, cập nhật mục tiếp theo và mốc xác minh. Mẫu có ở [pull request template](.github/pull_request_template.md).
 
-**Công việc tiếp theo.** Review [thiết kế PR #7 cho DAG động và điều phối theo node](docs/PR7-DYNAMIC-DAG.md). Bước đầu tiên là kiểm chứng đầu ra của Director và đóng băng kế hoạch với giới hạn một lease mỗi run. Trước khi thử hai lease, phải có bằng chứng PostgreSQL về tranh ngân sách run/agency, lease hết hạn, thu hồi quyền, retry độc lập và Join đúng một lần khi hai worker hoàn tất đồng thời.
+**Kế hoạch được duyệt trước PR #7.** Review [thiết kế PR #7 cho DAG động và điều phối theo node](docs/PR7-DYNAMIC-DAG.md). Bước đầu tiên là kiểm chứng đầu ra của Director và đóng băng kế hoạch với giới hạn một lease mỗi run. Trước khi thử hai lease, phải có bằng chứng PostgreSQL về tranh ngân sách run/agency, lease hết hạn, thu hồi quyền, retry độc lập và Join đúng một lần khi hai worker hoàn tất đồng thời.

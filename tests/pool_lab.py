@@ -90,12 +90,17 @@ class Lab:
             route(self.owner, worker, tenant, client, brand, campaign, editor["id"])
         brief = create(self.api, base + "/workforce/briefs", admin, {"campaign_id": campaign, "recipient_id": reader["id"], "title": "Notebook " + label})
         path = base + "/workforce/briefs/" + brief["id"]
+        brief_data = dict(DATA)
+        terms = {}
+        if self.workflow == "dynamic-v1":
+            brief_data["objective"] = "Write one short notebook email for students." if label != "C" else "Write a notebook landing page and SEO metadata based on the page."
+            terms["extra_skills"] = ["seo"] if label == "C" else []
         self.api.put(
             path + "/submission",
             headers=reader["headers"],
-            json={**DATA, "sources": [{"label": "Product card", "excerpt": "Notebook reference for client " + label}]},
+            json={**brief_data, "sources": [{"label": "Product card", "excerpt": "Notebook reference for client " + label}]},
         ).raise_for_status()
-        response = self.api.post(path + "/run", headers=admin["headers"], json={"budget_microusd": 10000, **({"workflow": self.workflow} if self.workflow != "linear" else {})})
+        response = self.api.post(path + "/run", headers=admin["headers"], json={"budget_microusd": 10000, **terms, **({"workflow": self.workflow} if self.workflow != "linear" else {})})
         response.raise_for_status()
         self.runs.append(response.json()["id"])
         self.cases.append((base, admin, reader, client, campaign))
@@ -162,6 +167,10 @@ class Lab:
             if self.workflow == "diamond-v1":
                 skills.append("seo")
                 assert self.owner.execute("select deliverable from amc_ops.dag_plans where run=%s",(rid,)).fetchone() == (row[1],)
+            if self.workflow == "dynamic-v1":
+                contract, linked = self.owner.execute("select contract,deliverable from amc_ops.dag_plans where run=%s",(rid,)).fetchone()
+                assert linked == row[1]
+                skills = ["director", *(n["skill_type"] for n in contract["nodes"])]
             assert [c["skill"] for c in row[0]] == skills
             assert self.owner.execute("select tenant_id,campaign_id from deliverables where id=%s", (row[1],)).fetchone() == row[2:]
             assert self.owner.execute("select count(*) from amc_ops.tasks where run=%s and done", (rid,)).fetchone() == (len(skills),)

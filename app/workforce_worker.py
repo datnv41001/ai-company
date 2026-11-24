@@ -18,7 +18,7 @@ from .revision_qa import evaluate
 from .models import AuditEvent, Deliverable, Membership, utcnow
 from .workforce_gateway import Gateway, GatewayError, PROMPT_VERSION, infer, quality, request_body, reserve_tokens, validate_output
 from .workforce_models import WorkforceRun
-from . import workflow_dag
+from . import dynamic_plan, workflow_dag
 
 MAX_TRIES = 3
 
@@ -73,12 +73,15 @@ def claim(db, scope, config, *, run_id=None, node=None, commit=True):
         return
     if run.state == "running":
         close_attempt(run, outcome="lease_expired")
-    if run.knowledge.get("workflow") == "diamond-v1" and node is None:
+    if run.knowledge.get("workflow") in ("diamond-v1", "dynamic-v1") and node is None:
         raise RuntimeError("Missing frozen node for pool dispatch")
     if node is not None:
-        stage = node.id
+        stage = node.skill
         earlier, assignment = workflow_dag.inputs(db, run.id, node)
-        body = request_body(run, config.model, node=node, predecessors=earlier, assignment=assignment)
+        if node.template == 'dynamic-v1' and stage == 'director':
+            body = dynamic_plan.planner_body(run, config.model)
+        else:
+            body = request_body(run, config.model, node=node, predecessors=earlier, assignment=assignment)
     else:
         stage = run.plan[len(run.checkpoints)]
         body = request_body(run, config.model)
@@ -168,7 +171,7 @@ def finish(db, scope, config, task, result, error, *, node=None, commit=True):
     run = db.scalar(authorized_queue(db, scope).where(WorkforceRun.id == rid).with_for_update())
     if not run or run.state != "running" or run.lease != token or as_utc(run.ready_at) <= utcnow():
         return False  # A stale worker must never append a second checkpoint or artifact.
-    stage = node.id if node else run.plan[len(run.checkpoints)]
+    stage = node.skill if node else run.plan[len(run.checkpoints)]
     metrics = {}
     if result is not None:
         raw, inputs, outputs = result
@@ -179,9 +182,16 @@ def finish(db, scope, config, task, result, error, *, node=None, commit=True):
             run.reserved_microusd += cost - run.journal[-1]["reserved_microusd"]
             metrics = {"input_tokens": inputs, "output_tokens": outputs, "estimated_microusd": cost}
             if not error:
-                output = validate_output(raw, stage, run.plan, run.knowledge["sources"])
+                if node and node.template == "dynamic-v1" and stage == "director":
+                    contract, digest = dynamic_plan.compile_plan(raw, run.knowledge["required_outputs"])
+                    workflow_dag.freeze(db, token, contract, digest)
+                    output = {"text": digest, "sections": {}, "source_ids": [], "plan_digest": digest}
+                else:
+                    output = validate_output(raw, stage, run.plan, run.knowledge["sources"])
         except GatewayError as exc:
             error = str(exc)
+            if isinstance(exc, dynamic_plan.InvalidPlan):
+                metrics["plan_error"] = exc.reason
     run.lease = None
     if error:
         close_attempt(run, outcome=error, **metrics)

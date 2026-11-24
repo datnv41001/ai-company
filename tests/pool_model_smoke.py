@@ -57,6 +57,9 @@ def receipts(lab):
                 "unconfirmed_usage": sum("input_tokens" not in j for j in journal),
             }
         )
+        if lab.workflow == "dynamic-v1":
+            reports[-1]["graph"] = report["graph"]
+            reports[-1]["estimated_or_held_microusd"] = report["reserved_microusd"]
         if report["state"] == "awaiting_qa":
             doc = base + "/deliverables/" + report["deliverable_id"]
             draft = lab.api.get(doc, headers=admin["headers"]).json()
@@ -129,6 +132,9 @@ def exercise(docker, workflow):
                 )
             assert revoked and lab.states() == ["failed", "awaiting_qa", "awaiting_qa"]
             assert len(assignments) == 2 and max(r[1] for r in assignments) >= 2
+            if workflow == "dynamic-v1":
+                structures = [[(n["skill_type"], n["parents"]) for n in case["graph"]["contract"]["nodes"]] for case in stats[1:]]
+                assert structures[0] != structures[1], "Different briefs must produce different graphs"
             lab.verify_assets_and_dependencies(*lab.runs[1:])
         finally:
             if docker:
@@ -142,6 +148,6 @@ def exercise(docker, workflow):
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--docker", action="store_true")
-    parser.add_argument("--workflow",choices=("linear","diamond-v1"),default="linear")
+    parser.add_argument("--workflow",choices=("linear","diamond-v1","dynamic-v1"),default="linear")
     args=parser.parse_args()
     exercise(args.docker,args.workflow)

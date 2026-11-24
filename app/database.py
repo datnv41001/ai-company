@@ -81,7 +81,7 @@ def prepare_database(bind):
         enabled = set(conn.scalars(text("""SELECT relname FROM pg_class
             WHERE relnamespace='public'::regnamespace AND relrowsecurity""")))
         if not set(Base.metadata.tables).issubset(enabled) or not conn.scalar(
-            text("SELECT EXISTS (SELECT FROM public.amc_schema_versions WHERE version=10)")
+            text("SELECT EXISTS (SELECT FROM public.amc_schema_versions WHERE version=11)")
         ):
             raise RuntimeError("Apply the PostgreSQL schema migrations before starting the API")
 

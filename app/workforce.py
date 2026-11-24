@@ -5,7 +5,7 @@ from typing import Literal
 from fastapi import APIRouter, Depends, HTTPException
 from pydantic import BaseModel, ConfigDict, Field, StringConstraints
 from typing_extensions import Annotated
-from sqlalchemy import select
+from sqlalchemy import select, text
 from sqlalchemy.exc import IntegrityError
 from sqlalchemy.orm import Session
 
@@ -46,6 +46,7 @@ class BriefData(Input):
 
 
 class Start(Input):
+    workflow: Literal["linear", "diamond-v1"] = "linear"
     extra_skills: list[Literal["seo", "creative", "ads", "analytics"]] = Field(default_factory=list, max_length=4)
     budget_microusd: int = Field(default=0, ge=0, le=1_000_000)
 
@@ -127,9 +128,15 @@ def start(tenant_id: str, bid: str, body: Start, user: User = Depends(current_us
     if not b:
         raise HTTPException(404, "Brief unavailable")
     plan = CORE + [s for s in EXTRA if s in body.extra_skills]
+    if body.workflow == "diamond-v1":
+        if body.extra_skills:
+            raise HTTPException(422, "Diamond template fixes its specialist set")
+        if db.get_bind().dialect.name != "postgresql":
+            raise HTTPException(409, "Diamond requires the PostgreSQL worker pool")
+        plan = [*CORE, "seo"]
     prior = db.scalar(select(WorkforceRun).where(WorkforceRun.brief_id == bid, WorkforceRun.tenant_id == tenant_id))
     if prior:
-        if prior.plan != plan or prior.budget_microusd != body.budget_microusd:
+        if prior.knowledge.get("workflow", "linear") != body.workflow or prior.plan != plan or prior.budget_microusd != body.budget_microusd:
             raise HTTPException(409, "Brief already queued with different terms")
         return {"id": prior.id, "state": prior.state}
     if not b.payload:
@@ -150,6 +157,9 @@ def start(tenant_id: str, bid: str, body: Start, user: User = Depends(current_us
         "sources": facts,
         "prompt_version": PROMPT_VERSION,
     }
+    if body.workflow != "linear":
+        knowledge["workflow"] = body.workflow
+        knowledge["workflow_revision"] = 1
     run = WorkforceRun(
         tenant_id=tenant_id,
         client_id=b.client_id,
@@ -176,6 +186,8 @@ def start(tenant_id: str, bid: str, body: Start, user: User = Depends(current_us
     except IntegrityError as exc:
         db.rollback()
         name = getattr(getattr(exc.orig, "diag", None), "constraint_name", None)
+        if name == "dag_requires_pool":
+            raise HTTPException(409, "Enroll this agency in the worker pool first") from None
         if name == "workforce_recipient_required" or "workforce_recipient_required" in str(exc.orig):
             raise HTTPException(409, "Brief recipient access was withdrawn") from None
         raise HTTPException(409, "Brief already queued; refresh") from None
@@ -188,7 +200,18 @@ def runs(tenant_id: str, user: User = Depends(current_user), db: Session = Depen
     if m.role == "client_viewer":
         raise HTTPException(404, "Runs unavailable")
     rows = db.scalars(select(WorkforceRun).where(WorkforceRun.tenant_id == tenant_id).order_by(WorkforceRun.created_at.desc()).limit(100))
-    return [{"id": r.id, "brief_id": r.brief_id, "title": r.knowledge["title"], "state": r.state, "done": len(r.checkpoints), "skills": r.plan} for r in rows]
+    return [
+        {
+            "id": r.id,
+            "brief_id": r.brief_id,
+            "title": r.knowledge["title"],
+            "state": r.state,
+            "done": len(r.checkpoints),
+            "skills": r.plan,
+            "workflow": r.knowledge.get("workflow", "linear"),
+        }
+        for r in rows
+    ]
 
 
 @router.get("/runs/{rid}")
@@ -216,6 +239,7 @@ def report(tenant_id: str, rid: str, user: User = Depends(current_user), db: Ses
             k: getattr(run, k)
             for k in ("id", "state", "plan", "journal", "last_error", "budget_microusd", "reserved_microusd", "deliverable_id", "checkpoints")
         },
+        "graph": db.scalar(text("select amc_ops.dag_report(:t,:r)"), {"t": tenant_id, "r": rid}) if run.knowledge.get("workflow") == "diamond-v1" else None,
         "source_registry": run.knowledge["sources"],
         "approved_assets": archived,
     }

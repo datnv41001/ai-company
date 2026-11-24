@@ -36,6 +36,8 @@ def evaluate(db, doc, actor):
         "state": "current" if cited else "source_unavailable",
         "findings": result["claims"],
     }
+    if run and run.knowledge.get("workflow") == "diamond-v1":
+        report["workflow"] = {"template": run.knowledge["workflow"], "revision": run.knowledge["workflow_revision"]}
     doc.qa_evidence = report
     db.add(AuditEvent(tenant_id=doc.tenant_id, user_id=actor, subject_id=doc.id, event="deliverable.qa_evaluated", details=report))
     return report

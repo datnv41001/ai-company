@@ -10,6 +10,7 @@ from sqlalchemy.orm import Session
 
 from .workforce_gateway import Gateway
 from .workforce_models import WorkforceRun
+from .workflow_dag import node_for_slot
 from .workforce_worker import Scope, claim, finish
 
 
@@ -29,7 +30,8 @@ def dispatch(bind, config):
             scope = Scope(*(route[k] for k in ("tenant", "client", "brand", "campaign", "operator")))
             with db.begin_nested() as change:
                 try:
-                    task = claim(db, scope, config, run_id=route["run"], commit=False)
+                    node = node_for_slot(db, route["run"], route["step"])
+                    task = claim(db, scope, config, run_id=route["run"], node=node, commit=False)
                 except PermissionError:
                     continue
                 if not task:
@@ -54,8 +56,8 @@ def dispatch(bind, config):
                 query(
                     db,
                     """
-                    insert into amc_ops.attempts(id,run,step,worker,operator,tenant,month,deadline,body,reserved,input_rate,output_rate,ordinal)
-                    values(:id,:run,:step,:worker,:operator,:tenant,:month,:deadline,cast(:body as jsonb),:hold,:ir,:orr,:ordinal)
+                    insert into amc_ops.attempts(id,run,step,worker,operator,tenant,month,deadline,body,reserved,input_rate,output_rate,ordinal,node_id,plan_revision)
+                    values(:id,:run,:step,:worker,:operator,:tenant,:month,:deadline,cast(:body as jsonb),:hold,:ir,:orr,:ordinal,:node,:rev)
                 """,
                     **route,
                     id=token,
@@ -66,6 +68,8 @@ def dispatch(bind, config):
                     ir=config.input_rate,
                     orr=config.output_rate,
                     ordinal=run.attempts,
+                    node=node.id if node else None,
+                    rev=node.revision if node else None,
                 )
                 query(
                     db,
@@ -111,7 +115,8 @@ def consume(bind, config):
             # Price at the rates captured at reservation, even after a restart or a rate change.
             priced = replace(config, input_rate=row["input_rate"], output_rate=row["output_rate"])
             task = (row["run"], token, row["body"])
-            if finish(db, scope, priced, task, result, error, commit=False):
+            node = node_for_slot(db, row["run"], row["step"]) if row["node_id"] else None
+            if finish(db, scope, priced, task, result, error, node=node, commit=False):
                 run = db.get(WorkforceRun, row["run"])
                 entry = run.journal[-1]
                 outcome = entry["outcome"]

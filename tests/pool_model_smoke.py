@@ -82,9 +82,9 @@ def receipts(lab):
     return reports
 
 
-def exercise(docker):
+def exercise(docker, workflow):
     with TestClient(app) as api:
-        lab = Lab(api, os.environ["AMC_MIGRATION_DSN"])
+        lab = Lab(api, os.environ["AMC_MIGRATION_DSN"], workflow=workflow)
         settings = {
             "AMC_MODEL_TIMEOUT": "180",
             "AMC_WORKFORCE_PROVIDER": "local",
@@ -142,4 +142,6 @@ def exercise(docker):
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--docker", action="store_true")
-    exercise(parser.parse_args().docker)
+    parser.add_argument("--workflow",choices=("linear","diamond-v1"),default="linear")
+    args=parser.parse_args()
+    exercise(args.docker,args.workflow)

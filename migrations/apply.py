@@ -27,9 +27,9 @@ def migrate(dsn: str, runtime_password: str | None = None):
             raise ValueError("amc_runtime must be an unprivileged role without inherited roles")
         conn.execute("CREATE TABLE IF NOT EXISTS amc_schema_versions (version int PRIMARY KEY)")
         versions = {row[0] for row in conn.execute("SELECT version FROM amc_schema_versions")}
-        if versions - {2, 3, 4, 5, 6, 7, 8, 9, 10}:
+        if versions - {2, 3, 4, 5, 6, 7, 8, 9, 10, 11}:
             raise ValueError("Unknown schema version; use its matching application revision")
-        if 10 in versions:
+        if 11 in versions:
             return
         if 2 not in versions:
             tables = {row[0] for row in conn.execute(
@@ -64,11 +64,14 @@ def migrate(dsn: str, runtime_password: str | None = None):
         if 9 not in versions:
             conn.execute((HERE / "009_company_operations.sql").read_text(encoding="utf-8"))
             conn.execute("INSERT INTO amc_schema_versions VALUES (9)")
-        conn.execute((HERE / "010_run_reconciliation.sql").read_text(encoding="utf-8"))
-        conn.execute("INSERT INTO amc_schema_versions VALUES (10)")
+        if 10 not in versions:
+            conn.execute((HERE / "010_run_reconciliation.sql").read_text(encoding="utf-8"))
+            conn.execute("INSERT INTO amc_schema_versions VALUES (10)")
+        conn.execute((HERE / "011_workflow_dag.sql").read_text(encoding="utf-8"))
+        conn.execute("INSERT INTO amc_schema_versions VALUES (11)")
 
 
 
 if __name__ == "__main__":
     migrate(os.environ["AMC_MIGRATION_DSN"], os.getenv("AMC_RUNTIME_PASSWORD"))
-    print("AMC schema version 10 ready")
+    print("AMC schema version 11 ready")

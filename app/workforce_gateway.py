@@ -77,11 +77,11 @@ class Gateway:
         return (inputs * self.input_rate + outputs * self.output_rate + 999999) // 1000000
 
 
-def request_body(run, model):
-    stage = run.plan[len(run.checkpoints)]
+def request_body(run, model, *, node=None, predecessors=None, assignment=None):
+    stage = node.id if node else run.plan[len(run.checkpoints)]
     sources = run.knowledge["sources"]
-    error = getattr(run, "last_error", None)
-    attempt = getattr(run, "attempts", 0)
+    error = node.last_error if node else getattr(run, "last_error", None)
+    attempt = node.attempts if node else getattr(run, "attempts", 0)
     # Bound each free-text production inside the grammar. A smaller retry schema
     # leaves room for closing brackets and citations even after a verbose first call.
     field_limit = 96 if error == "incomplete_output" else 200
@@ -95,8 +95,9 @@ def request_body(run, model):
             "additionalProperties": False,
         }
     schema = {"type": "object", "properties": properties, "required": list(properties), "additionalProperties": False}
-    earlier = {p["skill"]: p["output"]["text"][:1400] for p in run.checkpoints}
-    assignment = run.checkpoints[0]["output"]["assignments"][stage] if run.checkpoints else ""
+    earlier = predecessors if predecessors is not None else {p["skill"]: p["output"]["text"][:1400] for p in run.checkpoints}
+    if assignment is None:
+        assignment = run.checkpoints[0]["output"]["assignments"][stage] if run.checkpoints else ""
     data = json.dumps({"knowledge": run.knowledge, "earlier_drafts": earlier, "assignment": assignment}, ensure_ascii=False)
     system = (
         SKILLS[stage]

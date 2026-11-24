@@ -21,13 +21,13 @@
 
 Đề xuất lưu định nghĩa trong manifest có version được review qua Git và nhập bản phát hành chỉ đọc vào PostgreSQL. Mỗi bản phát hành có digest nội dung chuẩn hóa. Cùng khóa và cùng digest cho phép nhập lại. Cùng khóa với digest khác làm giao dịch thất bại. Sửa prompt, schema, công cụ, QA hay giới hạn tạo phiên bản mới. Adapter được tìm bằng bảng ánh xạ biên dịch cùng mã. Manifest chỉ chứa ID và dữ liệu, không chứa tên module để import tùy ý, mã chạy hay credential.
 
-Tách **phiên bản định nghĩa**, **quyền kích hoạt theo campaign** và **mức nghiệm thu nghiệp vụ**. Chủ sở hữu nền tảng xuất bản phiên bản qua review. Owner/admin của agency chỉ kích hoạt phiên bản đã được phát hành cho đúng tenant/client/brand/campaign. Hai thao tác này có audit riêng. Mỗi định nghĩa đã dùng phải đọc lại được sau khi ngừng nhận run mới. Backend cần giữ adapter cũ đến khi mọi run ghim phiên bản đó đã kết thúc. Nếu worker thiếu adapter đúng version, dispatcher báo lỗi khả năng thực thi trước khi giữ tiền và chuyển cho operator xử lý.
+Chỉ danh tính phát hành của nền tảng trong pipeline Git/CI được nhập manifest vào PostgreSQL. Pipeline dùng commit đã qua review, xác minh schema, adapter và digest trước khi nhập, rồi ghi SHA, digest và danh tính phát hành vào audit. Owner/admin của agency dùng API để kích hoạt phiên bản đã phát hành trong phạm vi tenant/client/brand/campaign được cấp. API và quyền DB của agency không cho phép tạo adapter, đổi schema hoặc xuất bản manifest. Ghi riêng người kích hoạt, scope và phiên bản. Giữ lịch sử định nghĩa và giữ adapter cũ cho đến khi mọi run ghim phiên bản đó kết thúc. Nếu thiếu adapter đúng phiên bản, dispatcher dừng trước khi giữ tiền và báo operator.
 
-Ví dụ binding rút gọn dưới đây dùng dữ liệu thiết kế. Hai trường `role_id` và `skill_version` được server điền sau khi kiểm tra grant. Bộ bằng chứng nguồn và các tham số chi phí thực tế được lấy từ run và ledger.
+Ví dụ binding rút gọn dưới đây dùng dữ liệu thiết kế. Hai trường `role_id` và `skill_version` được server điền sau khi kiểm tra grant. Bộ bằng chứng nguồn và các tham số chi phí thực tế được lấy từ run và ledger. Ví dụ chỉ liệt kê các trường chọn adapter và quyền. Binding bền vững bổ sung khóa run và hai digest theo bước freeze bên dưới.
 
 ```json
 {
-  "workflow_id": "WF-11/brief-to-seo-draft", "workflow_version": 1,
+  "workflow_id": "WF-13/landing-seo-draft", "workflow_version": 1,
   "node_id": "n02", "parents": ["n01"],
   "role_id": "ai-seo-geo-specialist", "contract_version": 1,
   "skill_id": "seo", "skill_version": 1,
@@ -39,15 +39,32 @@ Ví dụ binding rút gọn dưới đây dùng dữ liệu thiết kế. Hai tr
 
 ## 3. Một brief đi qua registry như thế nào
 
-Lát cắt nội bộ đầu tiên là soạn landing page và metadata từ nguồn do khách mẫu cung cấp. Đề xuất mã workflow thực thi `WF-11/brief-to-seo-draft@1`, gắn với đặc tả mẹ `WF-11 SEO/GEO`. Danh mục hiện dùng chuỗi chứa cả ID và tên. Khi nhập, tách mã ổn định `WF-11`, giữ nguyên chuỗi cũ cho client hiện hữu. Phạm vi lát cắt kết thúc ở bản nháp được duyệt. Crawl, technical audit và cập nhật CMS vẫn là tiêu chí riêng của WF-11.
+**`WF-13/landing-seo-draft@1`** tạo bản nháp landing page và SEO metadata từ brief có nguồn và Brand Kit của cùng campaign. Workflow mẹ là **WF-13 Landing/CRO**. Phần metadata đóng góp cho **WF-11 SEO/GEO** và **MKT-11**. Giữ nguyên các ID gốc trong catalog và ma trận. Form, tracking, thử nghiệm và tối ưu của WF-13 cùng crawl, audit và cập nhật CMS của WF-11 cần nghiệm thu riêng.
+
+Director đóng băng DAG. Content viết landing copy. SEO tạo title, meta description và search intent. Khi metadata phải bám sát câu chữ của trang, DAG phải có cạnh Content → SEO để SEO đọc đúng bản copy. Join kết hợp hai đầu ra, QA duyệt revision/digest rồi khách duyệt snapshot.
 
 1. **Chọn workflow.** UI lấy danh mục hiệu lực trong campaign. Đề xuất API đọc `GET /api/tenants/{tenant}/campaigns/{campaign}/workflow-versions`. Enqueue qua endpoint brief hiện có với tham chiếu phiên bản tùy chọn. Request cũ tiếp tục chạy theo mode v13. Client viewer chỉ thấy brief và snapshot được chia sẻ theo grant hiện tại. Truy cập campaign ngoài scope trả 404.
 2. **Tính quyền.** Server lấy giao của phiên bản đã phát hành, tập skill của workflow, grant campaign còn hiệu lực và adapter triển khai được. Với template, thiếu skill bắt buộc thì dừng trước khi giữ tiền. Với dynamic, từ chối enqueue nếu không thể tạo một đường hợp lệ tới đủ đầu ra bắt buộc. Register hoặc đăng nhập được vào pool chưa đủ để được chọn skill. Worker vẫn cần LOGIN, route và quyền của người vận hành.
-3. **Ghim và freeze.** Trong giao dịch enqueue, lưu snapshot tham chiếu gồm phiên bản workflow, hợp đồng Director, tập skill/role/QA có digest và phạm vi. Planner được đề xuất khóa node cục bộ, skill, assignment và predecessor. Server gán `node_id` và tra phiên bản. Chuẩn hóa rồi băm cả topology, assignment, thứ tự Join và phiên bản/digest đã giải quyết. Publish v2 trong khi Director đang chạy vẫn giữ các phiên bản của run. Proposal không hợp lệ được tính usage Director đã phát sinh. Chỉ sau freeze thành công mới tạo task chuyên môn.
-4. **Cấp việc và nhận kết quả.** Tại freeze, trước offer và trước commit checkpoint, kiểm tra lại grant hiện hành cùng scope. Khóa hoặc kiểm tra generation của grant trong giao dịch để lệnh thu hồi có thứ tự rõ ràng với lệnh nhận kết quả. Thu hồi quyền bắt buộc làm run dừng, fence mọi lease và ghi lý do. Cấp lại quyền chỉ áp dụng cho run mới. Worker nhận brief, nguồn đã đóng băng, assignment và đầu ra của predecessor trực tiếp. Tool mặc định rỗng trong lát cắt này. Giá và route chỉ lấy từ cấu hình tin cậy.
-5. **Tính phí và bàn giao.** Đơn vị là micro-USD nguyên. Dùng giới hạn thấp nhất về số lượt, timeout và trần tính toán giữa contract với runtime. Đề xuất trần chi phí **mỗi node cho toàn bộ retry**. Tính chi ròng cộng hold còn mở của tất cả attempt của node từ ledger, rồi kiểm tra cả trần node, run, agency trong giao dịch cấp offer hiện có. Receipt muộn, refund và usage chưa rõ đi cùng attempt/kỳ gốc. Join tiếp tục tạo đúng một bản giao. QA con người duyệt đúng revision và content digest, khách duyệt snapshot theo grant.
+3. **Ghim và freeze.** Tại enqueue, lưu scope, `manifest_digest`, `workflow_id/workflow_version`, hợp đồng Director và tập role/skill/QA được phép. Tại freeze, server tra phiên bản từ snapshot này và gán `node_id`. Băm topology, assignment, thứ tự Join và các binding đã phân giải để tạo `plan_digest`. Ghi digest cùng binding của từng node trong giao dịch đóng băng graph trước khi tạo task chuyên môn. Một lần phát hành mới không đổi phiên bản của run đang chạy. Ghi nhận usage của Director kể cả khi proposal bị từ chối.
+4. **Cấp việc.** Worker nhận brief, nguồn và Brand Kit đã ghim, assignment và đầu ra của predecessor trực tiếp. Tool mặc định rỗng trong lát cắt này. Giá và route lấy từ cấu hình tin cậy. Kiểm tra quyền thực thi tại freeze, cấp offer và commit checkpoint theo quy tắc dưới đây.
+5. **Bàn giao.** Join tạo đúng một bản giao. QA duyệt revision và content digest. Khách chỉ đọc và duyệt snapshot theo quyền hiện hành.
 
-**Ví dụ truy vết cần trả được trên màn hình vận hành.** Với `n01` viết landing page, đường truy vấn bắt đầu từ snapshot → deliverable/revision → run và plan digest → `n01` → `ai-copywriter-content-strategist@1 / content@1` → attempt UUID → hold, usage và receipt. Với `n02` SEO, cùng run nhưng có `ai-seo-geo-specialist@1 / seo@1`, attempt và chi phí riêng. Nếu có thêm node Content viết email, nó có node ID mới dù dùng lại `content@1`. Digest QA tiếp tục định danh tiêu đề và nội dung; digest kế hoạch định danh hợp đồng thực thi. Artifact lịch sử thiếu liên kết registry hiển thị `legacy_v13`. Không suy đoán phiên bản từ tên skill.
+### Hiệu lực của thay đổi quyền
+
+| Thao tác trong campaign | Run mới | Run đã ghim phiên bản |
+|---|---|---|
+| Ngừng kích hoạt (`disable for new runs`) | Từ thời điểm commit, enqueue loại phiên bản khỏi tập có thể chọn. | Run đã enqueue, kể cả đang chờ freeze, tiếp tục theo quyền thực thi đã cấp. |
+| Thu hồi thực thi (`revoke active execution`) | Quyền bị loại khỏi tập có thể chọn. | Khi quyền thiết yếu mất hiệu lực, dừng toàn bộ run, fence tất cả lease và chặn offer, checkpoint, Join và bản giao mới. Cấp lại quyền chỉ áp dụng cho run mới. |
+
+Trên PostgreSQL, các đường ghi v14 dùng chung khóa giao dịch scheduler v13 trước khi lấy khóa grant và run. Enqueue, freeze, offer, checkpoint, Join và thu hồi cùng khóa các dòng grant theo thứ tự ID ổn định rồi các dòng run theo thứ tự ID. Đọc lại quyền và kiểm tra fencing token sau khi lấy khóa. Giao dịch thu hồi cập nhật hiệu lực và tăng generation, ghi trạng thái dừng và fence các lease của run bị ảnh hưởng trong cùng giao dịch. Nếu checkpoint commit trước thì giữ lịch sử của checkpoint đó. Nếu thu hồi commit trước thì checkpoint đến muộn bị từ chối. Join kiểm tra lại quyền ngay trong giao dịch tạo bản giao, kể cả khi checkpoint cuối đã commit trước lúc thu hồi. Snapshot đã duyệt được bảo toàn và tiếp tục chịu grant đọc hiện hành. Thu hồi không hủy hold đã gửi hoặc cản việc đối soát receipt.
+
+### Trần chi phí qua tất cả attempt của một node
+
+Đơn vị là micro-USD nguyên. `E_node = chi phí ròng đã xác nhận + tổng hold chưa quyết toán` của tất cả attempt thuộc cùng node, kể cả retry. Khi cấp offer, chỉ ghi hold nếu `E_node + hold_mới ≤ trần_node` và đồng thời đủ trần run, ngân sách agency trong kỳ UTC. Kiểm tra và ghi hold trong cùng giao dịch có khóa ngân sách. Settlement chuyển hold thành chi phí đã xác nhận một lần cho đúng attempt và kỳ gốc. Refund tham chiếu khoản chi gốc bằng bút toán bù.
+
+Ví dụ trần 1.000, attempt đầu đã gửi giữ 700 rồi timeout. Khi usage chưa rõ, exposure vẫn là 700 nên từ chối hold mới 400. Khi receipt quyết toán 350 và giải phóng phần dự phòng còn lại, có thể cấp 400 nếu cả ba cấp đủ ngân sách, đưa exposure lên 750. Trần này giới hạn số tiền được phép cấp. Nếu hóa đơn đến muộn xác nhận chi phí cao hơn dự phòng, ghi đủ chi phí thật, đánh dấu overage, chặn offer tiếp theo trong phạm vi bị ảnh hưởng và đưa chênh lệch vào đối soát. Giữ các bút toán gốc để truy vết.
+
+**Đường truy vết bắt buộc.** Snapshot → deliverable/revision → run → node → attempt UUID → hold, usage, receipt và refund. Từ mỗi node và mỗi lần thử phải đọc lại được `workflow_id/workflow_version`, `role_id/contract_version`, `skill_id/skill_version`, `manifest_digest` và `plan_digest` qua binding bất biến của run/node. Hai node dùng cùng skill vẫn có node ID và tập attempt riêng. QA digest định danh nội dung của bản giao. Các run v13 thiếu binding hiển thị `legacy_v13`. Để trống metadata thiếu, tuyệt đối không suy phiên bản từ tên skill.
 
 ## 4. QA theo vai trò
 
@@ -73,11 +90,16 @@ Trên DB thử, nâng từ v1–v13 có dữ liệu và chạy lại migration. 
 | Mốc | Phép thử phải qua | Bằng chứng cần đính vào PR triển khai |
 |---|---|---|
 | Contract và phiên bản | Hai Content cùng skill có ID khác nhau. Đảo thứ tự JSON cho cùng digest. Đổi QA/skill version cho digest mới. Trùng khóa khác nội dung bị từ chối. | Fixture chuẩn hóa, digest đối chiếu và test compiler. |
-| Quyền theo scope | A/B cùng agency, C khác agency. Grant A không cấp việc cho B. Thu hồi trước freeze, giữa hai lease, rồi cấp lại. | Kết quả API/PostgreSQL cho từng actor, số offer/checkpoint, lý do dừng và số dư. |
-| Ngân sách và cạnh tranh | Hai node tranh 700 khi run hoặc agency còn 1.000. Retry tranh trần node khi có hold chưa rõ. Receipt trùng, refund, chuyển kỳ UTC. | Sổ cái khớp cả ba cấp, một offer khi chỉ đủ một, một bản giao khi Join chạy lại. |
+| Phát hành và quyền theo scope | Agency admin thử tạo adapter, đổi schema, nhập manifest và kích hoạt chéo scope. A/B cùng agency, C khác agency. Disable trước/sau enqueue. | CI nhập manifest hợp lệ. API và RLS từ chối mọi ghi vượt quyền. Run cũ tiếp tục sau disable, run mới thiếu grant bị chặn. |
+| Thu hồi và checkpoint | Dùng hai kết nối PostgreSQL với barrier để buộc cả hai thứ tự commit. Thu hồi giữa hai lease, thử checkpoint/Join muộn rồi cấp lại. | Chỉ giữ checkpoint commit trước thu hồi. Chặn bản giao sau thu hồi, mọi lease bị fence, run dừng, hold đã gửi còn đối soát được, snapshot cũ vẫn chịu grant đọc. |
+| Ngân sách và cạnh tranh | Hai node cùng xin 700 khi cấp run hoặc kỳ agency còn 1.000. Hai retry cùng xin phần còn lại của trần node. | Giao dịch chỉ cấp một offer khi đủ cho một. Số dư khớp ở cả ba cấp. |
+| Usage chưa biết | Timeout sau khi gửi attempt, giữ 700 rồi xin thêm 400 trên trần 1.000. | Trước thu hồi, chặn retry vì vượt trần. Sau thu hồi, giữ hold để đối soát receipt và chặn mọi offer vì run đã dừng. |
+| Receipt muộn | Receipt 350 về sau timeout và sau ranh giới kỳ UTC, gửi lại cùng receipt. | Quyết toán đúng một lần vào kỳ gốc. Với retry hợp lệ giữ 400, exposure là 750. |
+| Refund | Gửi refund tham chiếu khoản chi của attempt cũ, sau đó phát lại sự kiện. | Một bút toán bù, giảm đúng chi phí ròng trong kỳ gốc và đọc lại được khoản chi ban đầu. |
+| Overage | Sau một hold 700, provider xác nhận 1.050 trong khi trần node là 1.000. | Ghi đúng 1.050, nhận diện chênh 350 so với dự phòng và 50 vượt trần, chặn offer, mở đối soát. |
 | QA và tích hợp | Mẫu đạt/lỗi của bốn vai trò, nguồn thiếu/sai scope, sửa A → B → A, v1 đang chạy khi v2 phát hành. | Findings theo phiên bản, snapshot QA/khách, quyết định và bộ dữ liệu tổng hợp tái lập được. |
 | Nghiệm thu cuối | Giữ 124 bài hồi quy và thêm test mới. Chạy SQLite, PostgreSQL/RLS, migration lặp, Docker/Chromium 1280/390 và Qwen local. | SHA, job CI, graph do model tạo, số lượt gồm lượt lỗi, token và chi phí đã biết/chưa rõ. Báo riêng fixture song song và graph do Director thật chọn. |
 
-**Điểm cần reviewer quyết định.** Có chấp nhận `WF-11/brief-to-seo-draft` là lát cắt đầu tiên không? Trần node qua mọi retry và quyết định dừng cả run khi mất grant bắt buộc có phù hợp vận hành agency không? Sau khi chốt các điểm này, bắt đầu bằng test phiên bản và thu hồi quyền trên PostgreSQL rồi mới viết migration.
+**Bàn giao sau review.** Ba quyết định trên là đầu vào cho PR triển khai v14 riêng sau khi PR thiết kế được duyệt và merge. Bắt đầu bằng các test RED cho phiên bản, quyền, cạnh tranh PostgreSQL và ledger, sau đó thực hiện migration 014 và cung cấp bằng chứng GREEN. Bổ sung truy vấn từ mỗi attempt về đủ hai digest và ba cặp phiên bản, cùng fixture lịch sử hiển thị `legacy_v13`.
 
 Theo dõi từng yêu cầu trong [ma trận 49 module, 37 vai trò và 24 workflow](PR9-TRACEABILITY.md). Tiêu chí phát hành thương mại về xác thực, tích hợp, thanh toán, quyền riêng tư và vận hành có quyết định nghiệm thu riêng. [Các điều kiện chặn GA](SECURITY_AND_GA_BLOCKERS.md).

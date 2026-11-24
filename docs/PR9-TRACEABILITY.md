@@ -119,7 +119,7 @@ Các liên kết D/B/Q dưới đây chỉ đến công việc runtime liên qua
 
 ## 24 workflow nghiệp vụ
 
-Cột điều kiện trích từ quy tắc duyệt và xử lý lỗi trong catalog. Nghiệm thu một hàng đòi hỏi chạy từ trigger tới kết quả cuối của workflow và ghi được quyết định người duyệt. Ví dụ, việc soạn metadata chỉ đóng góp cho một phần của WF-11.
+Cột điều kiện trích từ quy tắc duyệt và xử lý lỗi trong catalog. Nghiệm thu một hàng đòi hỏi chạy từ trigger tới kết quả cuối của workflow và ghi được quyết định người duyệt. [Thiết kế `WF-13/landing-seo-draft@1`](PR9-AGENT-CONTRACTS-WORKFLOW-REGISTRY.md) là tiểu quy trình soạn bản nháp của WF-13 Landing/CRO. Phần SEO metadata liên kết WF-11 SEO/GEO và module MKT-11. Cả hai workflow mẹ tiếp tục ở `specification_only`. Tiểu quy trình dùng mã riêng trong registry đề xuất và không thêm hàng vào 110 yêu cầu gốc.
 
 | ID | Workflow | Trạng thái catalog | Bằng chứng liên quan | Điều kiện nghiệp vụ | Duyệt |
 |---|---|---|---|---|---|

@@ -87,7 +87,7 @@ def main():
         if conn.execute("SELECT 1 FROM pg_database WHERE datname='amc_local'").fetchone() is None:
             conn.execute("CREATE DATABASE amc_local")
     migration_env = dict(os.environ, AMC_MIGRATION_DSN=make_conninfo(owner, dbname="amc_local"),
-                         AMC_RUNTIME_PASSWORD=keys["runtime"])
+                         AMC_RUNTIME_PASSWORD=keys["runtime"], JWT_SECRET=keys["jwt"])
     subprocess.run([sys.executable, "migrations/apply.py"], cwd=ROOT, env=migration_env, check=True, creationflags=flags)
     pidfile = state / "api.pid"
     if listening(API_PORT):

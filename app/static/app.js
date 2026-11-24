@@ -42,6 +42,7 @@
   const process = (form, handler) => form.addEventListener('submit', async event => { event.preventDefault(); try { await handler(fromForm(form)); } catch (e) { msg(e.message, true); } });
   const enter = async (token, membership, email='') => {
     const tenantId = membership.tenant_id;
+    $('review-panel').before($('recipient-panel'));
     state.token = token; state.tenantId = tenantId; state.mode = membership.mode; state.email = email;
     portal.setContext({tenant:tenantId,role:membership.role});
     $('operations-panel').classList.add('hidden'); $('operations-values').replaceChildren();
@@ -67,7 +68,13 @@
     $('auth').classList.add('hidden');
     if (!result.tenants.length) {
       $('workspace').classList.add('hidden');
-      msg('Hãy xác minh email để mở workspace của bạn.');
+      if (result.email_verified) {
+        $('workspace').before($('recipient-panel'));
+        await accessPanel.show(null, null, [], [], []);
+        msg('Tài khoản chưa thuộc workspace nào. Bạn có thể nhận lời mời tại đây.');
+      } else {
+        msg('Hãy xác minh email để mở workspace của bạn.');
+      }
       return;
     }
     state.memberships = result.tenants;

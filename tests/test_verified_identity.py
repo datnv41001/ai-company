@@ -105,6 +105,7 @@ def test_accept_race_single_audit_and_issuer_authority(api, agency):
 
     with ThreadPoolExecutor(2) as pool:
         assert sorted(f.result() for f in [pool.submit(receive), pool.submit(receive)]) == [204, 404]
+    assert api.post(base + "/invitations", headers=staff["headers"], json={"email": candidate["email"], "role": "admin"}).status_code == 403
     second = invite(staff, candidate, "editor")
     with psycopg.connect(os.environ["AMC_MIGRATION_DSN"]) as c:
         c.execute("UPDATE memberships SET role='viewer' WHERE tenant_id=%s AND user_id=%s", (owner["tenant"], staff["id"]))

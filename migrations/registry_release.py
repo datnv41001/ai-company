@@ -1,4 +1,4 @@
-"""The build and publisher agree on the exact executable adapter covered by a release."""
+"""Historical manifest ID algorithm. The independent runtime bundle check covers whole files."""
 
 import ast
 from functools import lru_cache

@@ -8,6 +8,7 @@ from types import SimpleNamespace
 from typing import Callable
 
 from migrations.registry_release import adapter_digest
+from migrations.runtime_bundle import approved_adapter_digests
 from . import dynamic_plan, registry_seo_v2, workforce_gateway as gateway
 
 V1_DIGEST = "c64cf3e0e691a1bad191b954b07d06a28c7cd8675bb5fe8328ee0ae0e620880a"
@@ -38,11 +39,12 @@ class Adapter:
 @lru_cache(maxsize=1)
 def runtimes():
     # Never assign a new meaning to the @1 names when deploying a changed binary.
-    if adapter_digest() != V1_DIGEST:
+    approved = approved_adapter_digests()
+    if not approved or adapter_digest() != V1_DIGEST:
         return {}
     adapters = {s + "@1": Adapter(s, 1, V1_DIGEST, gateway.request_body, gateway.validate_output) for s in ROLES}
     adapters["seo@2"] = Adapter("seo", 2, seo_v2_digest(), registry_seo_v2.request, registry_seo_v2.validate)
-    return adapters
+    return {name: adapter for name, adapter in adapters.items() if adapter.digest in approved}
 
 
 def resolve(contract):

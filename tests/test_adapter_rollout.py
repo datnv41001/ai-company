@@ -94,6 +94,8 @@ def test_changed_binary_leaves_work_for_compatible_dispatcher(pool, tmp_path):
     root = Path(__file__).resolve().parents[1]
     for name in ("app", "migrations", "catalog"):
         shutil.copytree(root / name, tmp_path / name, ignore=shutil.ignore_patterns("__pycache__"))
+    for name in ('requirements.txt', 'requirements-registry.txt'):
+        shutil.copyfile(root / name,tmp_path / name)
     gateway = tmp_path / "app/workforce_gateway.py"
     source = gateway.read_text(encoding="utf-8")
     gateway.write_text(source.replace("Avoid invented search volume.", "Use a verified source for rankings."), encoding="utf-8")

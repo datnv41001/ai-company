@@ -19,15 +19,17 @@ PROBE = """
 import json
 from types import SimpleNamespace
 from pathlib import Path
-from app.registry_adapters import resolve
+from app.registry_adapters import resolve, seo_v2_digest
 from app.workforce_gateway import request_body
 from migrations.registry_release import adapter_digest
+from migrations.runtime_bundle import runtime_fingerprint
 node=SimpleNamespace(skill='seo',last_error=None,attempts=0)
 run=SimpleNamespace(knowledge={'sources':{'brand':{'excerpt':'fact'}}},checkpoints=[],plan=[])
 contract=json.loads(Path("catalog/landing-seo-v1.json").read_text(encoding="utf-8"))["contracts"]["seo"]
 body=request_body(run,'local',node=node,predecessors={},assignment='')
 print(json.dumps(dict(max_tokens=body['max_tokens'],legacy_digest=adapter_digest(),pinned=contract['adapter_digest'],
-                      compatible=resolve(contract) is not None)))
+                      fingerprint=runtime_fingerprint(),compatible=resolve(contract) is not None,
+                      compatible_v2=resolve({"adapter":"seo@2","adapter_digest":seo_v2_digest()}) is not None)))
 """
 
 
@@ -57,6 +59,7 @@ def inspect_build(path):
         ("app/workforce_gateway.py", "MAX_OUTPUT = 640", "MAX_OUTPUT = 800"),
         ("app/dynamic_plan.py", "{0,23}", "{0,15}"),
         ("app/workforce_gateway.py", "encode()) + 512", "encode()) + 1024"),
+        ("app/workforce_gateway.py", "999999) // 1000000", "999998) // 1000000"),
         ("app/workforce_evidence.py", "re.compile(pattern, re.IGNORECASE)", "re.compile(pattern)"),
     ],
 )
@@ -69,7 +72,31 @@ def test_changed_runtime_with_same_legacy_digest_yields(tmp_path, filename, old,
     assert after["pinned"] == before["pinned"] == before["legacy_digest"] == after["legacy_digest"]
     if old == "MAX_OUTPUT = 640":
         assert after["max_tokens"] == 800
+    assert after["fingerprint"] != before["fingerprint"]
     assert not after["compatible"], (before, after)
+
+
+def test_fingerprint_is_approved_per_adapter(tmp_path):
+    checkout(tmp_path)
+    before = inspect_build(tmp_path)
+    assert before["compatible"] and before["compatible_v2"]
+    lock = tmp_path / "migrations" / "registry-runtime.lock.json"
+    release = json.loads(lock.read_text(encoding="utf-8"))
+    release["fingerprints"][before["fingerprint"]]["adapters"] = [before["pinned"]]
+    lock.write_text(json.dumps(release), encoding="utf-8")
+    after = inspect_build(tmp_path)
+    assert after["fingerprint"] == before["fingerprint"] and after["compatible"] and not after["compatible_v2"]
+
+
+def test_missing_runtime_approval_stops_worker_before_readiness(tmp_path):
+    checkout(tmp_path)
+    (tmp_path / "migrations" / "registry-runtime.lock.json").unlink()
+    assert not inspect_build(tmp_path)["compatible"]
+    result = subprocess.run(
+        [sys.executable, "-B", "-m", "app.pool_worker"], cwd=tmp_path,
+        env={k: v for k, v in os.environ.items() if k != "AMC_POOL_DSN"}, capture_output=True, text=True,
+    )
+    assert result.returncode != 0 and "Unrecognized registry runtime" in result.stderr
 
 
 @pytest.mark.skipif(os.getenv("AMC_TEST_PG") != "1", reason="requires PostgreSQL")

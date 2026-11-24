@@ -9,7 +9,7 @@ jobs:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
         with:
-          python-version: '3.12'
+          python-version: '3.12.16'
       - run: python -m pip install -r requirements-dev.txt
       - run: ruff check app tests migrations scripts
       - name: Test SQLite and PostgreSQL isolation
@@ -91,7 +91,7 @@ jobs:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
         with:
-          python-version: '3.12'
+          python-version: '3.12.16'
       - run: python -m pip install -r requirements-browser.txt -r requirements-dev.txt
       - run: python -m playwright install --with-deps chromium
       - name: Rehearse a fresh-machine handoff
@@ -136,7 +136,7 @@ jobs:
           persist-credentials: false
       - uses: actions/setup-python@v5
         with:
-          python-version: '3.12'
+          python-version: '3.12.16'
       - run: python -m pip install -r requirements-dev.txt
       - name: Verify real local inference and client-approved delivery
         shell: bash

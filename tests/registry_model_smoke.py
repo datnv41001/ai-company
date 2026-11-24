@@ -18,6 +18,7 @@ from test_adapter_rollout import second_release
 from dispatcher_build import turn
 from app.registry_adapters import V1_DIGEST, seo_v2_digest
 from migrations.apply import publish_registry
+from migrations.runtime_bundle import reviewed_runtime, runtime_fingerprint, runtime_identity
 
 
 def drive(lab, rid, config, *, old_checkout=None, after_content=None, seo_v2=False):
@@ -59,6 +60,7 @@ def read_run(lab, rid):
 
 
 def verify():
+    assert reviewed_runtime()
     with TestClient(app) as api:
         lab = Lab(api, os.environ["AMC_MIGRATION_DSN"], workflow="dynamic-v1")
         try:
@@ -105,6 +107,8 @@ def verify():
                 evidence = {
                     "source_before": prior_sha,
                     "source_after": os.environ["AMC_SOURCE_SHA"],
+                    "runtime_fingerprint": runtime_fingerprint(),
+                    "runtime_identity": runtime_identity(),
                     "cutover_after": "content",
                     "before": switch,
                     "v1_runtime": "seo@1",

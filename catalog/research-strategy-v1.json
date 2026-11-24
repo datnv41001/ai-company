@@ -1,0 +1,145 @@
+{
+  "workflow_id": "WF-03/research-strategy-draft",
+  "workflow_version": 1,
+  "mode": "dynamic-v1",
+  "required": [
+    "director",
+    "research",
+    "strategy"
+  ],
+  "contracts": {
+    "director": {
+      "role_id": "ai-managing-director",
+      "contract_version": 2,
+      "skill_id": "director",
+      "skill_version": 2,
+      "adapter": "director@2",
+      "qa_policy": "director-wf03@1",
+      "inputs": [
+        "brief",
+        "brand",
+        "sources"
+      ],
+      "predecessors": [],
+      "outputs": [
+        "nodes"
+      ],
+      "tools": [],
+      "model": "local",
+      "node_cap": 1000,
+      "max_attempts": 3,
+      "timeout_seconds": 300,
+      "approval": "revision_qa_and_client_snapshot",
+      "adapter_digest": "3c42012fe1907cdaa2518b643ba94c49ca58fda12b272bfbd8714662523419b6",
+      "owner": "agency marketing lead",
+      "objective": "Plan a scoped DAG",
+      "success_criteria": [
+        "nodes"
+      ],
+      "forbidden_actions": [
+        "external_write",
+        "publish",
+        "spend"
+      ],
+      "fallback": "agency editor"
+    },
+    "research": {
+      "role_id": "ai-market-researcher",
+      "contract_version": 2,
+      "skill_id": "research",
+      "skill_version": 2,
+      "adapter": "research@2",
+      "qa_policy": "research-wf03@1",
+      "inputs": [
+        "brief",
+        "brand",
+        "sources"
+      ],
+      "predecessors": [],
+      "outputs": [
+        "observed_fact",
+        "audience_hypothesis",
+        "knowledge_gap",
+        "source_ids"
+      ],
+      "tools": [],
+      "model": "local",
+      "node_cap": 1000,
+      "max_attempts": 3,
+      "timeout_seconds": 300,
+      "approval": "revision_qa_and_client_snapshot",
+      "adapter_digest": "3c42012fe1907cdaa2518b643ba94c49ca58fda12b272bfbd8714662523419b6",
+      "owner": "agency marketing lead",
+      "objective": "Separate facts from audience hypotheses",
+      "success_criteria": [
+        "observed_fact",
+        "audience_hypothesis",
+        "knowledge_gap",
+        "source_ids"
+      ],
+      "forbidden_actions": [
+        "external_write",
+        "publish",
+        "spend"
+      ],
+      "fallback": "agency editor"
+    },
+    "strategy": {
+      "role_id": "ai-marketing-strategist",
+      "contract_version": 2,
+      "skill_id": "strategy",
+      "skill_version": 2,
+      "adapter": "strategy@2",
+      "qa_policy": "strategy-wf03@1",
+      "inputs": [
+        "brief",
+        "brand",
+        "sources"
+      ],
+      "predecessors": [
+        "research"
+      ],
+      "outputs": [
+        "positioning",
+        "proposed_channel",
+        "success_metric",
+        "metric_kind",
+        "unit",
+        "measurement_window",
+        "measurement_method",
+        "numerator",
+        "denominator",
+        "proposed_target",
+        "baseline",
+        "baseline_source",
+        "source_ids"
+      ],
+      "tools": [],
+      "model": "local",
+      "node_cap": 1000,
+      "max_attempts": 3,
+      "timeout_seconds": 300,
+      "approval": "revision_qa_and_client_snapshot",
+      "adapter_digest": "3c42012fe1907cdaa2518b643ba94c49ca58fda12b272bfbd8714662523419b6",
+      "owner": "agency marketing lead",
+      "objective": "Propose measurable positioning",
+      "success_criteria": [
+        "positioning",
+        "success_metric",
+        "unit",
+        "measurement_method",
+        "measurement_window"
+      ],
+      "forbidden_actions": [
+        "external_write",
+        "publish",
+        "spend"
+      ],
+      "fallback": "agency editor"
+    }
+  },
+  "profile": "research-strategy",
+  "required_outputs": [
+    "strategy"
+  ]
+}

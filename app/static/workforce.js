@@ -159,6 +159,8 @@ function createWorkforce(root, api, notify) {
             if(qa?.scope==='node_checkpoint'){
               node(info,'h5','QA đầu ra AI · '+qa.node_id+' · '+qa.policy);
               node(info,'p','SHA-256 đầu ra '+qa.output_digest.slice(0,12));
+              for(const [parent,digest] of Object.entries(qa.research_parents||{}))
+                node(info,'p','Checkpoint Research '+parent+' · '+digest.slice(0,12));
               for(const f of qa.findings){
                 const finding=node(info,'details');
                 node(finding,'summary',f.field+' · '+(qaRules[f.rule_id]||f.rule_id));

@@ -222,7 +222,10 @@ def exercise():
             registry = "WF-13/landing-seo-draft@1"
             api.put(base+"/workforce/registry/"+camp["id"],headers={"Authorization":"Bearer "+token},
                     json={"workflow":registry,"action":"activate","skills":["director","content","seo"]}).raise_for_status()
-            for template,title in (("diamond-v1","Diamond browser"),("dynamic-v1","Dynamic browser"),(registry,"Registry browser")):
+            research_workflow="WF-03/research-strategy-draft@1"
+            api.put(base+"/workforce/registry/"+camp["id"],headers={"Authorization":"Bearer "+token},
+                    json={"workflow":research_workflow,"action":"activate","skills":["director","research","strategy"]}).raise_for_status()
+            for template,title in ((research_workflow,"Research browser"),("diamond-v1","Diamond browser"),("dynamic-v1","Dynamic browser"),(registry,"Registry browser")):
                 dag_brief=post(base+"/workforce/briefs",{"title":title,"campaign_id":camp["id"],"recipient_id":invite_id},token)
                 api.put(base+"/workforce/briefs/"+dag_brief["id"]+"/submission",headers={"Authorization":"Bearer "+invite_token},
                         json={"objective":"Visit the store","audience":"University students","offer":"Notebook for students",
@@ -240,7 +243,7 @@ def exercise():
                 for width,height in ((1280,850),(390,844)):
                     owner_page.set_viewport_size({"width":width,"height":height})
                     graph=card.get_by_role("region",name="Trạng thái workflow")
-                    expect(graph.get_by_text("Mẫu "+("dynamic-v1" if template==registry else template)+" · Phiên bản 1")).to_be_visible()
+                    expect(graph.get_by_text("Mẫu "+("dynamic-v1" if "@" in template else template)+" · Phiên bản 1")).to_be_visible()
                     expect(graph.locator('[data-node="director"]')).to_contain_text("Sẵn sàng")
                     if template == "diamond-v1":
                         expect(graph.locator('[data-node="join"]')).to_contain_text("Content, SEO")
@@ -248,8 +251,8 @@ def exercise():
                         expect(graph.get_by_text("Đang lập kế hoạch",exact=True)).to_be_visible()
                         expect(graph.get_by_text("Tối đa 2 node đồng thời",exact=True)).to_be_visible()
                         expect(graph.locator("li")).to_have_count(1)
-                    if template==registry:
-                        expect(graph.get_by_text(registry+" · Manifest",exact=False)).to_be_visible()
+                    if "@" in template:
+                        expect(graph.get_by_text(template+" · Manifest",exact=False)).to_be_visible()
                     assert graph.evaluate("(e) => e.scrollWidth <= e.clientWidth + 1")
                 print(f"PASS {template} graph in Chromium at 1280px and 390px")
                 if template == registry:

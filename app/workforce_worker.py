@@ -80,7 +80,11 @@ def claim(db, scope, config, *, run_id=None, node=None, commit=True):
         stage = node.skill
         earlier, assignment = workflow_dag.inputs(db, run.id, node)
         if node.template == 'dynamic-v1' and stage == 'director':
-            body = dynamic_plan.planner_body(run, config.model)
+            contract = run.knowledge.get("registry", {}).get("contracts", {}).get("director", {})
+            if contract.get("adapter") == "director@2":
+                body = specialist_request(run, config.model, node=node)
+            else:
+                body = dynamic_plan.planner_body(run, config.model)
         else:
             body = specialist_request(run, config.model, node=node, predecessors=earlier, assignment=assignment)
     else:
@@ -168,11 +172,14 @@ def bounded_call(config, body):
 
 
 def save_checkpoint(db, scope, run, stage, output, node):
+    from . import research_strategy
     record = {"skill": stage, "output": output, "quality": quality(output, run.knowledge["sources"])}
     if binding := run.knowledge.get("registry"):
         from .registry_qa import assess_role
         contract = binding["contracts"][stage]
-        if contract["adapter"] in landing_qa.ROLE_POLICY:
+        if stage in ("research","strategy") and contract["adapter"] == stage+"@2":
+            record["quality"]["role_qa"] = research_strategy.evidence(db,run,node,output)
+        elif contract["adapter"] in landing_qa.ROLE_POLICY:
             record["quality"]["role_qa"] = landing_qa.evaluate_node(db, run, node, output)
         else:
             record["quality"]["role_qa"] = assess_role(stage, output, run.knowledge["sources"], contract)
@@ -185,6 +192,8 @@ def save_checkpoint(db, scope, run, stage, output, node):
     if joined:
         # Only draft copy and specialist proposals enter QA. Director instructions, prompts and source excerpts stay private.
         preview = "\n\n".join(p["skill"].upper() + "\n" + p["output"]["text"] for p in run.checkpoints if p["skill"] != "director")
+        if binding and binding["contracts"]["director"]["adapter"] == "director@2":
+            preview = research_strategy.proposal(run.checkpoints)
         doc = Deliverable(
             tenant_id=run.tenant_id,
             campaign_id=run.campaign_id,

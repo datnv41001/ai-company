@@ -1,5 +1,15 @@
 # Bắt đầu ở đây khi tiếp quản AI Marketing Company
 
+## Review WF-03 · Research → Strategy
+
+Nhánh độc lập từ `3af08b75b661e1d1681a5825939f7ce8656746b8` bổ sung schema 15 và định nghĩa `WF-03/research-strategy-draft@1`. Ba hợp đồng bắt buộc là director, research và strategy phiên bản 2. Manifest ghim đầu ra Strategy. Backend dùng đúng checkpoint Research của cạnh trực tiếp để ghi bằng chứng. Chỉ nội dung Strategy được trình dưới dạng đề xuất. Số liệu nền cần khớp nguồn riêng đã dẫn. Người QA kiểm tra ngữ nghĩa, digest và revision trước khi chia sẻ snapshot. Các nhận xét chỉ áp dụng cho bản nháp nội bộ.
+
+Trên DB dev riêng, chạy Compose rồi nhập bản phát hành với `docker compose run --rm migrate python migrations/apply.py --publish-registry catalog/research-strategy-v1.json`. Cấp workflow theo campaign ở màn hình điều phối. Khi rút, ngừng cấp mới, giữ dispatcher tương thích đến khi hết report và đã đối soát hold. Kiểm kê trước khi gỡ image. Dùng schema 15 để truy lịch sử. Diễn tập khôi phục trên bản sao khi cần quay về binary/schema 14. PR diagnostics xuất phát cùng main và cần kiểm tra tích hợp hai migration trước lần merge thứ hai.
+
+RED có tại `8b0801d`. Chạy `python -m pytest -q tests/test_research_strategy.py` trên PostgreSQL tổng hợp với biến môi trường của CI. Job model lưu `research-strategy-measurements.json`. Workflow CI chạy Chromium ở hai kích thước và nâng lặp 14 đường từ DB có dữ liệu. Reviewer nên thử tráo nguồn và thu hồi Strategy ngay sau Research rồi kiểm tra snapshot và ledger.
+
+[Bộ ZIP nguyên bản cho hai reviewer chấm riêng](docs/reviews/landing-qa-blind-20261124.zip) có SHA-256 `0ca12b9ce5e4b044e7be869ab247fe05eab74079f13856c0f44c1b311199fe36`. Hai reviewer chỉ nhận ZIP này. Người tổng hợp lưu hai phiếu có cùng cases_digest, lập phiếu phân xử có lý do cho từng bất đồng rồi chạy công cụ tính điểm trên phiếu đã chốt. Điểm nghiệp vụ đang chờ hai phiếu.
+
 ## Main sau PR #11 · QA Content và SEO cho bản nháp landing
 
 Ngày 24/11/2026, [PR #11](https://github.com/datnv41001/ai-company/pull/11) đã merge tại [`576b81798de148b75a6e74dd584551049dc5be9f`](https://github.com/datnv41001/ai-company/commit/576b81798de148b75a6e74dd584551049dc5be9f). Hai parent là base `4c588d8cbadc6e83da7a33e7977d12815673f663` và head đã review `a982b1efff9b323b3b0c6fed8d9138f5475f6a2c`. Cả merge và head có cùng Git tree `21a810d5e20b735936fcb62ce93b2c21346311ca`. Phạm vi phát hành là phát triển nội bộ trên dữ liệu tổng hợp. PostgreSQL dùng schema v14.

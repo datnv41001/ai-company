@@ -37,10 +37,10 @@ def inputs(db, run, node):
     rows = db.execute(
         text("""
         select p.node_id,p.checkpoint from amc_ops.dag_edges e
-        join amc_ops.dag_nodes p on (p.run,p.node_id)=(e.run,e.parent)
-        where e.run=:run and e.child=:node order by p.position
+        join amc_ops.dag_nodes p on (p.run,p.revision,p.node_id)=(e.run,e.revision,e.parent)
+        where e.run=:run and e.child=:node and e.revision=:revision order by p.position
     """),
-        {"run": run, "node": node.id},
+        {"run": run, "node": node.id, "revision":node.revision},
     )
     earlier = {skill: checkpoint["output"]["text"][:1400] for skill, checkpoint in rows if skill != "director"}
     if node.template == "dynamic-v1":

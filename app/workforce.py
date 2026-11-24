@@ -138,17 +138,21 @@ def start(tenant_id: str, bid: str, body: Start, user: User = Depends(current_us
         if db.get_bind().dialect.name != "postgresql":
             raise HTTPException(409, "Diamond requires the PostgreSQL worker pool")
         plan = [*CORE, "seo"]
-    if body.registry_workflow and (body.workflow != 'dynamic-v1' or set(body.extra_skills) - {'seo'}):
-        raise HTTPException(422, 'Registry landing drafts require dynamic Content and SEO')
-    required = ['content','seo'] if body.registry_workflow else sorted({'content', *body.extra_skills})
+    if body.registry_workflow and body.workflow != 'dynamic-v1':
+        raise HTTPException(422, 'Registry workflows require dynamic planning')
+    required = sorted({'content', *body.extra_skills})
     if body.workflow == 'dynamic-v1':
         if db.get_bind().dialect.name != 'postgresql':
             raise HTTPException(409, 'Dynamic planning requires the PostgreSQL worker pool')
-        if set(required) - {'content', 'seo'}:
+        if not body.registry_workflow and set(required) - {'content', 'seo'}:
             raise HTTPException(422, 'Dynamic catalog v1 supports Content and SEO assets')
         plan = ['director']
     prior = db.scalar(select(WorkforceRun).where(WorkforceRun.brief_id == bid, WorkforceRun.tenant_id == tenant_id))
     if prior:
+        if body.registry_workflow:
+            required = prior.knowledge.get("required_outputs", [])
+            if set(body.extra_skills) - set(required):
+                raise HTTPException(409, "Extra skills differ from the pinned workflow")
         same_plan = prior.knowledge.get("required_outputs") == required if body.workflow == "dynamic-v1" else prior.plan == plan
         if prior.knowledge.get('registry', {}).get('workflow') != body.registry_workflow:
             raise HTTPException(409, 'Brief already queued with different registry terms')
@@ -175,7 +179,14 @@ def start(tenant_id: str, bid: str, body: Start, user: User = Depends(current_us
     }
     if body.registry_workflow:
         from .registry import pin
-        knowledge["registry"] = pin(db, b, body.registry_workflow)
+        from .registry_compatibility import required_outputs
+        binding = pin(db, b, body.registry_workflow)
+        manifest = db.scalar(text("select manifest from amc_ops.registry_releases where workflow=:w and digest=:d"),
+                             {"w":body.registry_workflow, "d":binding["manifest_digest"]})
+        required = required_outputs(manifest)
+        if set(body.extra_skills) - set(required):
+            raise HTTPException(422, "Extra skills differ from the selected release")
+        knowledge["registry"] = binding
     if body.workflow == "dynamic-v1":
         knowledge["required_outputs"] = required
         if body.max_parallel_nodes == 2:

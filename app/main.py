@@ -9,10 +9,12 @@ from fastapi.exception_handlers import request_validation_exception_handler
 from fastapi.exceptions import RequestValidationError
 from fastapi.responses import FileResponse, JSONResponse
 from fastapi.staticfiles import StaticFiles
-from sqlalchemy import select, text
+from sqlalchemy import select
+from sqlalchemy.exc import IntegrityError
 from sqlalchemy.inspection import inspect
 from sqlalchemy.orm import Session
 
+from .identity import issue, router as identity_router, verify_email
 from .revision_qa import content_digest, evaluate
 from .workforce_evidence import RULESET
 from .delivery import router as delivery_router, working_copy
@@ -25,7 +27,7 @@ from .access import set_context, visible
 from .database import APP_ENV, engine, get_db, prepare_database
 from .models import User, Tenant, Membership, Client, Brand, Campaign, WorkTask, Deliverable, ActionRequest, AuditEvent, new_id
 from .schemas import RegisterIn, LoginIn, ClientIn, BrandIn, CampaignIn, AddMemberIn, DeliverableIn, DeliverableReviewIn, ReviewIn, ActionIn, ClientScopeIn
-from .security import hash_password, check_password, make_token, current_user, require_tenant
+from .security import sign_actor, hash_password, check_password, make_token, current_user, require_tenant
 from .services.marketing import WORKFLOW_STEPS
 
 ROOT = Path(__file__).resolve().parent
@@ -41,6 +43,7 @@ async def lifespan(_app: FastAPI):
 
 
 app = FastAPI(title="AI Marketing Company - Engineering Bootstrap", version="0.1.0", lifespan=lifespan)
+app.include_router(identity_router)
 app.include_router(delivery_router)
 app.include_router(recipients_router)
 app.include_router(workforce_router)
@@ -112,20 +115,14 @@ def register(payload: RegisterIn, db: Session = Depends(get_db)):
     user = User(id=new_id(), email=email, password_hash=hash_password(payload.password))
     tenant_id = new_id()
     set_context(db, actor=user.id, tenant=tenant_id)
+    sign_actor(db, user.id)
     db.add(user)
-    db.flush()
-    if db.get_bind().dialect.name == "postgresql":
-        db.execute(text("SELECT amc_acl.create_workspace(:tenant, :org, :mode)"),
-                   {"tenant": tenant_id, "org": payload.organization_name, "mode": payload.mode})
-    else:
-        db.add(Tenant(id=tenant_id, name=payload.organization_name, mode=payload.mode))
+    try:
         db.flush()
-        db.add(Membership(tenant_id=tenant_id, user_id=user.id, role="owner"))
-        db.flush()
-    # In-house workspace gets its own internal client account to keep the model uniform.
-    if payload.mode == "inhouse":
-        db.add(Client(tenant_id=tenant_id, name="Internal Marketing", sector="Internal"))
-    audit(db, tenant_id, user.id, "tenant.created", tenant_id, {"mode": payload.mode})
+    except IntegrityError:
+        db.rollback()
+        raise HTTPException(409, "Account already exists") from None
+    issue(db, user, workspace_id=tenant_id, organization_name=payload.organization_name, mode=payload.mode)
     db.commit()
     return {"access_token": make_token(user), "token_type": "bearer", "tenant_id": tenant_id, "user_id": user.id, "mode": payload.mode}
 
@@ -138,34 +135,18 @@ def login(payload: LoginIn, db: Session = Depends(get_db)):
     if user is None or not check_password(payload.password, user.password_hash):
         raise HTTPException(status_code=401, detail="Incorrect email or password")
     set_context(db, actor=user.id)
-    return {"access_token": make_token(user), "token_type": "bearer", "tenants": workspaces(db, user)}
+    return {"access_token": make_token(user), "token_type": "bearer", "email_verified": user.verified_at is not None, "tenants": workspaces(db, user)}
 
 
 @app.get("/api/me")
 def me(user: User = Depends(current_user), db: Session = Depends(get_db)):
-    return {"id": user.id, "email": user.email, "tenants": workspaces(db, user)}
+    return {"id": user.id, "email": user.email, "email_verified": user.verified_at is not None, "tenants": workspaces(db, user)}
 
 
 @app.post("/api/tenants/{tenant_id}/members", status_code=201)
 def add_member(tenant_id: str, body: AddMemberIn, user: User = Depends(current_user), db: Session = Depends(get_db)):
     member(db, user, tenant_id, "admin")
-    email = str(body.email).lower().strip()
-    if body.client_id is not None:
-        target(db, Client, tenant_id, body.client_id)
-    set_context(db, actor=user.id, tenant=tenant_id, email=email)
-    found = db.scalar(select(User).where(User.email == email))
-    if found is None:
-        raise HTTPException(404, "User must register before dev workspace membership can be assigned")
-    if db.get(Membership, {"tenant_id": tenant_id, "user_id": found.id}):
-        raise HTTPException(409, "User is already a member")
-    revoke_pending(db, tenant_id, found.id)
-    record = Membership(tenant_id=tenant_id, user_id=found.id, role=body.role, client_id=body.client_id)
-    db.add(record)
-    if body.role == "client_viewer":
-        db.flush()
-        db.add(PortalGrant(tenant_id=tenant_id,user_id=found.id,client_id=body.client_id))
-    audit(db, tenant_id, user.id, "member.granted", found.id, {"role": body.role, "client_id": body.client_id})
-    return done(db, record)
+    raise HTTPException(410, "Create a workspace invitation and have the recipient accept it")
 
 
 @app.put("/api/tenants/{tenant_id}/members/{member_id}/client-scope")
@@ -184,7 +165,8 @@ def change_client_scope(tenant_id: str, member_id: str, body: ClientScopeIn, use
         db.flush()
     record.role, record.client_id = "client_viewer", body.client_id
     db.flush()
-    db.add(PortalGrant(tenant_id=tenant_id,user_id=member_id,client_id=body.client_id))
+    if db.get_bind().dialect.name != "postgresql":
+        db.add(PortalGrant(tenant_id=tenant_id,user_id=member_id,client_id=body.client_id))
     audit(db, tenant_id, user.id, "member.client_scope_changed", member_id,
           {"previous_client_id": old_scope, "client_id": body.client_id})
     return done(db, record)
@@ -435,7 +417,7 @@ def role_catalog(user: User = Depends(current_user)):
 
 @app.exception_handler(RequestValidationError)
 async def validation_error(request: Request, exc: RequestValidationError):
-    if request.scope.get("endpoint") not in (register, login):
+    if request.scope.get("endpoint") not in (register, login, verify_email):
         return await request_validation_exception_handler(request, exc)
     # Validation inputs can contain a password or the entire submitted body.
     errors = [

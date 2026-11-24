@@ -58,20 +58,38 @@
     msg('Đăng nhập thành công. Đây là môi trường phát triển, chưa dành cho khách hàng thật.');
     await refresh();
   };
-  process($('register-form'), async data => {
-    const result = await api('/api/auth/register', 'POST', data);
-    await enter(result.access_token, {...result, role:'owner'}, data.email);
-  });
-  process($('login-form'), async data => {
-    const result = await api('/api/auth/login', 'POST', data);
-    if(!result.tenants.length) throw new Error('Tài khoản không có workspace');
+  const session = async (result, email) => {
+    state.token = result.access_token;
+    state.email = email;
+    $('verify-form').reset();
+    $('verify-form').classList.toggle('hidden', Boolean(result.email_verified));
+    $('verify-address').textContent = email;
+    $('auth').classList.add('hidden');
+    if (!result.tenants.length) {
+      $('workspace').classList.add('hidden');
+      msg('Hãy xác minh email để mở workspace của bạn.');
+      return;
+    }
     state.memberships = result.tenants;
     $('workspace-select').replaceChildren(...result.tenants.map(m => new Option(m.organization_name, m.tenant_id)));
     $('workspace-choice').classList.toggle('hidden', result.tenants.length < 2);
     const linked=new URLSearchParams(location.search).get('workspace');
-    await enter(result.access_token,result.tenants.find(m=>m.tenant_id===linked)||result.tenants[0],data.email);
+    await enter(result.access_token,result.tenants.find(m=>m.tenant_id===linked)||result.tenants[0],email);
     if(linked && !result.tenants.some(m=>m.tenant_id===linked)) msg('Bạn không có quyền mở liên kết của workspace này.',true);
+  };
+  process($('register-form'), async data => {
+    const result = await api('/api/auth/register', 'POST', data);
+    await session({...result, tenants:[]}, data.email);
   });
+  process($('login-form'), async data => session(await api('/api/auth/login', 'POST', data), data.email));
+  process($('verify-form'), async data => {
+    await api('/api/auth/verify-email', 'POST', data);
+    await session({...await api('/api/me'), access_token:state.token}, state.email);
+  });
+  $('resend-proof').onclick = async () => {
+    try { await api('/api/auth/request-verification', 'POST'); msg('Đã gửi mã mới vào hộp thư phát triển.'); }
+    catch (error) { msg(error.message, true); }
+  };
   $('workspace-select').addEventListener('change', event => {
     const membership = state.memberships.find(m => m.tenant_id === event.target.value);
     if (membership) enter(state.token, membership, state.email).catch(e => msg(e.message, true));

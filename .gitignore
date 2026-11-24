@@ -18,3 +18,5 @@ htmlcov/
 /models/
 
 .worker-secrets/
+
+.dev-mailbox/

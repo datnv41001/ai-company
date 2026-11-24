@@ -24,7 +24,7 @@ Khi đưa hàng vào `in_review`, thay mã tham chiếu hoặc bổ sung một b
 | Yêu cầu | Module | Nghiệm thu | Bằng chứng | Ví dụ điều kiện còn mở | Duyệt |
 |---|---|---|---|---|---|
 | SAA-01 | Website thương mại & đăng ký | in_progress | I | Onboarding thương mại từ đăng ký đến workspace hoạt động | mở |
-| SAA-02 | Identity/Access | in_progress | I | MFA/SSO, vòng đời phiên và thu hồi | mở |
+| SAA-02 | Identity/Access | in_progress | I · [PR #15, xác minh địa chỉ và chấp nhận lời mời](PR15-IDENTITY.md) · [test PostgreSQL](../tests/test_verified_identity.py) | Chờ review độc lập phần v17. MFA/SSO, vòng đời phiên và thu hồi còn mở | mở |
 | SAA-03 | Tenant Lifecycle | in_progress | I | Suspend, phục hồi và xóa/export tenant | mở |
 | SAA-04 | Company Builder | in_progress | C | Cấu hình vai trò, version và kích hoạt đúng workspace | mở |
 | SAA-05 | Subscription & Billing | not_started | — | Hóa đơn, gia hạn, hoàn tiền và đối soát PSP | mở |

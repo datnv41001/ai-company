@@ -7,7 +7,10 @@ from uuid import uuid4
 import pytest
 from sqlalchemy import text
 from sqlalchemy.exc import DBAPIError
+from sqlalchemy.orm import Session
+from app.security import sign_actor
 
+from identity_fixtures import invite_member
 from app.database import engine
 from app.models import utcnow
 from agency_fixtures import account, create
@@ -20,9 +23,9 @@ def delivery(api, agency):
     editor = account(api, "Editor")
     reviewer = account(api, "Reviewer")
     viewer = account(api, "ReadOnly")
-    create(api, base + "/members", owner, {"email": editor["email"], "role": "editor"})
+    invite_member(api, base, owner["headers"], editor["headers"], email=editor["email"], role="editor")
     for who in (reviewer, viewer):
-        create(api, base + "/members", owner, {"email": who["email"], "role": "client_viewer", "client_id": next(iter(a_data["clients"]))})
+        invite_member(api, base, owner["headers"], who["headers"], email=who["email"], role="client_viewer", client_id=next(iter(a_data["clients"])))
     campaign = sorted(a_data["campaigns"])[0]
     draft = create(
         api,
@@ -123,6 +126,8 @@ def test_competing_decisions_and_direct_sql(api, delivery):
                 conn.execute(text("UPDATE client_reviews SET title='changed' WHERE id=:i"), {"i": v["id"]})
             conn.rollback()
         conn.execute(text("SELECT set_config('amc.user_id',:u,true),set_config('amc.tenant_id',:t,true)"), {"u": owner["id"], "t": owner["tenant"]})
+        with Session(conn) as authenticated:
+            sign_actor(authenticated, owner["id"])
         with pytest.raises(DBAPIError) as denied, conn.begin_nested():
             conn.execute(text("UPDATE portal_grants SET brand_id=:b WHERE user_id=:a"), {"b": next(iter(b["brands"])), "a": alice["id"]})
         assert denied.value.orig.sqlstate == "23503"
@@ -149,7 +154,7 @@ def test_edit_requires_new_independent_qa_and_rejection_is_final(api, delivery):
     report = api.get(path, headers=owner["headers"]).json()["qa_evidence"]
     assert api.post(path + "/review", headers=owner["headers"], json={"decision": "approved", "expected_content_digest": report["content_digest"], "expected_qa_revision": report["qa_revision"]}).status_code == 403
     qa = account(api, "SecondQA")
-    create(api, base + "/members", owner, {"email": qa["email"], "role": "admin"})
+    invite_member(api, base, owner["headers"], qa["headers"], email=qa["email"], role="admin")
     assert api.post(path + "/review", headers=qa["headers"], json={"decision": "approved", "expected_content_digest": report["content_digest"], "expected_qa_revision": report["qa_revision"]}).status_code == 200
     revised = create(api, path + "/share", owner, {"expires_at": (utcnow() + timedelta(days=1)).isoformat()})
     assert revised["title"] == title and revised["preview"] == content

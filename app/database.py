@@ -56,6 +56,16 @@ def prepare_database(bind):
                     conn.exec_driver_sql("ALTER TABLE deliverables ADD COLUMN qa_evidence JSON")
                 if "qa_approved_digest" not in columns:
                     conn.exec_driver_sql("ALTER TABLE deliverables ADD COLUMN qa_approved_digest VARCHAR(64)")
+            if inspector.has_table("users") and "verified_at" not in {c["name"] for c in inspector.get_columns("users")}:
+                conn.exec_driver_sql("ALTER TABLE users ADD COLUMN verified_at DATETIME")
+            if inspector.has_table("portal_invitations") and "role" not in {c["name"] for c in inspector.get_columns("portal_invitations")}:
+                columns = ",".join(c["name"] for c in inspector.get_columns("portal_invitations"))
+                conn.exec_driver_sql("ALTER TABLE portal_invitations RENAME TO old_portal_invitations")
+                for index in inspector.get_indexes("old_portal_invitations"):
+                    conn.exec_driver_sql("DROP INDEX " + conn.dialect.identifier_preparer.quote(index["name"]))
+                Base.metadata.tables["portal_invitations"].create(conn)
+                conn.exec_driver_sql(f"INSERT INTO portal_invitations ({columns}) SELECT {columns} FROM old_portal_invitations")
+                conn.exec_driver_sql("DROP TABLE old_portal_invitations")
             from .workforce_authority import install_sqlite
             Base.metadata.create_all(conn)
             for index in Base.metadata.tables["workforce_runs"].indexes:
@@ -85,8 +95,15 @@ def prepare_database(bind):
         versions = set(conn.scalars(text("SELECT version FROM public.amc_schema_versions")))
         if 16 in versions and 15 not in versions:
             raise RuntimeError("Isolated schema v16 is missing migration 015; restore a pre-016 backup before upgrading")
-        if versions != set(range(2, 17)):
+        if versions != set(range(2, 18)):
             raise RuntimeError("Apply the PostgreSQL schema migrations before starting the API")
+        from .access import set_context
+        from .security import sign_actor
+        with Session(conn) as session:
+            set_context(session, actor="startup")
+            sign_actor(session, "startup")
+            if not session.scalar(text("SELECT amc_acl.authenticated_actor()")):
+                raise RuntimeError("Identity signing configuration differs between migration publisher and API")
 
 
 def get_db() -> Generator[Session, None, None]:

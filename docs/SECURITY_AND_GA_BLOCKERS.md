@@ -21,7 +21,7 @@ Schema 3 enforces PostgreSQL row policies for client delivery and includes popul
 ## Current temporary compromises (not acceptable for GA)
 
 - SQLite for local smoke testing; only application-level tenant checks, not Postgres RLS.
-- Developer workspace membership grant has no invite acceptance; must be replaced before external access.
+- SAA-02 verifies addresses through a private synthetic mailbox and requires acceptance for invited members. Production email delivery, abuse protection and account recovery remain open. See the [v17 identity handoff](PR15-IDENTITY.md).
 - API requests have no rate limiting; registration can be abused if publicly reachable.
 - JWT bearer token is held only in frontend memory; refresh requires re-login. Production session UX needs redesign.
 - No connector credentials are stored by this starter. All actual side effects are disabled.

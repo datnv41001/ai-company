@@ -1,5 +1,11 @@
 # Bắt đầu ở đây khi tiếp quản AI Marketing Company
 
+## PR #15 · Xác minh email và nhận lời mời workspace
+
+Nhánh `feature/verified-workspace-invitations` phát triển từ `d81df0be`. Bản trên nhánh sử dụng PostgreSQL v17 cho môi trường tổng hợp. Commercial GA vẫn NO-GO. Xem [hướng dẫn chạy Docker, đọc hộp thư riêng, chính sách tài khoản cũ, kiểm thử và khôi phục](docs/PR15-IDENTITY.md) và [CI của PR #15](https://github.com/datnv41001/ai-company/pull/15/checks).
+
+Người tiếp quản dùng cùng `JWT_SECRET` cho migrator và API. Chủ workspace mới xác minh email trước khi có quyền. Owner/Admin mời người dùng qua mục **Quản lý người nhận và lời mời**. Mỗi người nhận đăng nhập, xác minh và tự chấp nhận. Ca kiểm thử phải thực hiện đủ các bước này. Trên ba pool cũ vẫn dùng đúng binary và schema v10/v11/v13 của từng pool.
+
 ## PR #14 trên main · 24/11/2026
 
 **Đánh giá bằng AI mô phỏng đã hoàn tất. Nghiệm thu nghiệp vụ bởi con người đang chờ. Commercial GA giữ trạng thái NO-GO.** Phạm vi đã duyệt là lưu hồ sơ đánh giá nội bộ và công cụ tính lại kết quả. [Quyết định tích hợp PR #14](https://github.com/datnv41001/ai-company/pull/14).

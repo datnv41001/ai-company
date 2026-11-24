@@ -1,10 +1,12 @@
 import os
+import hmac
 from datetime import datetime, timedelta, timezone
 import jwt
 from argon2 import PasswordHasher
 from argon2.exceptions import VerifyMismatchError, VerificationError
 from fastapi import Depends, HTTPException
 from fastapi.security import HTTPAuthorizationCredentials, HTTPBearer
+from sqlalchemy import text
 from sqlalchemy.orm import Session
 from .access import set_context
 from .database import APP_ENV, DATABASE_URL, get_db
@@ -35,6 +37,14 @@ def make_token(user: User) -> str:
     return jwt.encode({"sub": user.id, "iss": ISSUER, "aud": "amc-api", "iat": now, "exp": now + timedelta(hours=8)}, SECRET, algorithm="HS256")
 
 
+def sign_actor(db, uid):
+    if db.get_bind().dialect.name == "postgresql":
+        tx = db.scalar(text("SELECT txid_current()"))
+        key = hmac.digest(SECRET.encode(), b"amc-identity-v17", "sha256")
+        proof = hmac.new(key, f"{uid}:{tx}".encode(), "sha256").hexdigest()
+        db.execute(text("SELECT set_config('amc.identity_proof',:proof,true)"), {"proof":proof})
+
+
 def current_user(credentials: HTTPAuthorizationCredentials | None = Depends(security), db: Session = Depends(get_db)) -> User:
     if not credentials or credentials.scheme.lower() != "bearer":
         raise HTTPException(status_code=401, detail="Bearer authentication required")
@@ -46,6 +56,7 @@ def current_user(credentials: HTTPAuthorizationCredentials | None = Depends(secu
     if not isinstance(subject, str) or not subject:
         raise HTTPException(401, "Invalid token subject")
     set_context(db, actor=subject)
+    sign_actor(db, subject)
     user = db.get(User, subject)
     if user is None:
         raise HTTPException(status_code=401, detail="Account not found")

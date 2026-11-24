@@ -15,7 +15,8 @@ MIGRATIONS = Path(__file__).resolve().parents[1] / "migrations"
 
 
 def verify():
-    from_v15 = '--from-v15' in sys.argv
+    from_v16 = '--from-v16' in sys.argv
+    from_v15 = '--from-v15' in sys.argv or from_v16
     orphan_v16 = '--from-isolated-v16' in sys.argv
     from_v14 = '--from-v14' in sys.argv or from_v15 or orphan_v16
     from_v13 = '--from-v13' in sys.argv or from_v14
@@ -170,10 +171,14 @@ def verify():
                     '["director"]','[]','[]','queued',now(),0,1000,0,now())""",(workflow,))
                 frozen = conn.execute("select id,checkpoints::text,journal::text,ready_at from workforce_runs order by id").fetchall()
                 v13_snapshot = registry_upgrade_fixture.snapshot(conn)
-            if orphan_v16:
+            if from_v16 or orphan_v16:
                 # Reproduce the real independent branch schema (DDL and marker), before 015 ever ran.
                 conn.execute((MIGRATIONS/"016_scheduler_diagnostics.sql").read_text(encoding="utf-8"))
                 conn.execute("INSERT INTO amc_schema_versions VALUES (16)")
+            if from_v16:
+                conn.execute("""insert into portal_invitations(id,tenant_id,client_id,user_id,invited_by,email,workspace_name,client_name,
+                    can_comment,can_decide,expires_at,state) select 'legacy-invite','agency','a',id,'v15-owner',email,
+                    'Existing agency','Client A',true,false,now()+interval '1 day','pending' from users where id='external'""")
             # Record the actual marker insert order, including the second migration invocation.
             conn.execute("create table upgrade_marker_probe(seq bigint generated always as identity primary key,version int)")
             conn.execute("""create function observe_upgrade_marker() returns trigger language plpgsql as $$
@@ -193,6 +198,20 @@ def verify():
         runtime.dispose()
         print("PASS: isolated v16 without 015 refused by migrator and API; ledger, leases and approved snapshot preserved")
         return
+    if from_v16:
+        # Exercise transaction rollback before running the valid v17 migration.
+        with psycopg.connect(dsn) as owner:
+            owner.execute("alter table upgrade_marker_probe add constraint synthetic_failure check (version < 17)")
+        with pytest.raises(psycopg.errors.CheckViolation):
+            migrate(dsn)
+        with psycopg.connect(dsn) as owner:
+            owner.execute("alter table upgrade_marker_probe drop constraint synthetic_failure")
+            assert owner.execute("select max(version) from amc_schema_versions").fetchone() == (16,)
+            assert owner.execute("select to_regclass('identity_challenges')").fetchone() == (None,)
+            assert registry_upgrade_fixture.snapshot(owner) == v13_snapshot
+            legacy = owner.execute("select id,email,password_hash,created_at from users order by id").fetchall()
+            memberships = owner.execute("select * from memberships order by tenant_id,user_id").fetchall()
+            grants = owner.execute("select * from portal_grants order by tenant_id,user_id").fetchall()
     migrate(dsn, os.environ.get("AMC_RUNTIME_PASSWORD"))
     migrate(dsn)
     prepare_database(runtime)
@@ -203,7 +222,12 @@ def verify():
     with runtime.connect() as c:
         if from_v14:
             with psycopg.connect(dsn) as owner:
-                assert owner.execute("select version from upgrade_marker_probe order by seq").fetchall() == ([(16,)] if from_v15 else [(15,),(16,)])
+                assert owner.execute("select version from upgrade_marker_probe order by seq").fetchall() == [(v,) for v in range(17 if from_v16 else 16 if from_v15 else 15, 18)]
+                if from_v16:
+                    assert owner.execute("select state,role,client_id,can_comment,can_decide from portal_invitations where id='legacy-invite'").fetchone() == ("pending","client_viewer","a",True,False)
+                    assert owner.execute("select id,email,password_hash,created_at from users where verified_at is null order by id").fetchall() == legacy
+                    assert owner.execute("select * from memberships order by tenant_id,user_id").fetchall() == memberships
+                    assert owner.execute("select * from portal_grants order by tenant_id,user_id").fetchall() == grants
             assert c.execute(text("select workflow,digest,manifest from amc_ops.registry_releases order by workflow")).fetchall() == before_release
         def identify():
             c.execute(text("SELECT set_config('amc.user_id','alice',true),set_config('amc.tenant_id','agency',true)"))
@@ -214,7 +238,7 @@ def verify():
             owner.execute("UPDATE memberships SET role='client_viewer',client_id='a' WHERE user_id='alice'")
         identify()
         assert set(c.scalars(text("SELECT id FROM clients"))) == {"a"}
-        assert set(c.scalars(text("SELECT version FROM amc_schema_versions"))) == {2,3,4,5,6,7,8,9,10,11,12,13,14,15,16}
+        assert set(c.scalars(text("SELECT version FROM amc_schema_versions"))) == {2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17}
         if "--from-v2" in sys.argv or from_v3:
             c.rollback()
             c.execute(text("SELECT set_config('amc.user_id','external',true),set_config('amc.tenant_id','agency',true)"))
@@ -256,7 +280,7 @@ def verify():
                 assert owner.execute("SELECT title FROM deliverables WHERE id='doc'").fetchone() == ("Internal",)
     runtime.dispose()
     baseline = "v13" if from_v13 else "v12" if from_v12 else "v11" if from_v11 else "v10" if from_v10 else "v9" if from_v9 else "v8" if from_v8 else "v7" if from_v7 else "v6" if from_v6 else "v5" if from_v5 else "v4" if from_v4 else "v3" if from_v3 else "v2" if "--from-v2" in sys.argv else "v1"
-    print(f"PASS: populated {'v15' if from_v15 else 'v14' if from_v14 else baseline} to v16, repeated migration, privileged API login refused, client isolated")
+    print(f"PASS: populated {'v16' if from_v16 else 'v15' if from_v15 else 'v14' if from_v14 else baseline} to v17, repeated migration, privileged API login refused, client isolated")
 
 
 if __name__ == "__main__":

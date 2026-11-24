@@ -1,5 +1,8 @@
 # Security, Reliability and General Availability (GA) Blockers
 
+AIRC v3 chỉ được sử dụng trên fixture tổng hợp. Kiểm định độc lập theo nghĩa vụ, custody giữa các OS principal, coverage ngữ nghĩa và mở rộng reviewer vẫn là cổng riêng. [Kết quả và các ngưỡng thử nghiệm](../engineering/airc500/UNION-STUDY.md).
+
+
 Engineering review tooling remains fixture-only. Production and autonomous real-repository review are still on hold pending independent host isolation, signing-key custody, and domain-quality gates. [Runtime boundary](../engineering/airc500/RUNTIME-HARDENING.md) · [Measured fixture evaluation](../engineering/airc500/QUALITY-EVALUATION.md).
 
 **Current status: NO-GO for production.** The bootstrap is intentionally safe for local development and demonstrates scoped API behavior; it is not a commercial service.

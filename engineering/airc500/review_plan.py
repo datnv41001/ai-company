@@ -35,10 +35,14 @@ def validate_plan(run, plan, verifier_key, trust):
     if (
         catalog_digest != run["catalog_digest"]
         or set(plan) != {"version", "assignments", "required_obligations"}
-        or plan["version"] != 1
+        or plan["version"] not in (1, 2)
         or not nonempty_ids(plan["required_obligations"])
     ):
         raise ValueError("invalid plan or catalog pin")
+    if plan["version"] == 2:
+        from union_protocol import validate_enrolled_fixture
+
+        validate_enrolled_fixture(run, plan, trust)
     verifier_bytes = base64.b64decode(verifier_key, validate=True)
     Ed25519PublicKey.from_public_bytes(verifier_bytes)
     if sha256(verifier_bytes).hexdigest() in trust:
@@ -48,7 +52,10 @@ def validate_plan(run, plan, verifier_key, trust):
         raise ValueError("invalid or duplicate planned assignment")
     scoped = set()
     for j in jobs:
-        if set(j) != {"assignment_id", "reviewer_id", "phase", "artifact_kind", "obligations"}:
+        fields = {"assignment_id", "reviewer_id", "phase", "artifact_kind", "obligations"}
+        if plan["version"] == 2:
+            fields |= {"principal", "source_manifest", "tool_grant_digest", "model_key", "model_digest", "runtime_digest", "template", "peer_assignments"}
+        if set(j) != fields:
             raise ValueError("missing or unexpected plan field")
         profile = profiles.get(j["reviewer_id"])
         if (
@@ -59,6 +66,23 @@ def validate_plan(run, plan, verifier_key, trust):
             or (j["phase"] == "arbitration") != j["reviewer_id"].startswith("AR-")
         ):
             raise ValueError("invalid planned reviewer, phase, scope or deliverable")
+        if plan["version"] == 2:
+            from union_protocol import RUNTIME
+            from pilot_fixture import digest, encoded
+
+            grant = {"read_units": j["obligations"], "source_manifest": j["source_manifest"], "tools": ["read_enrolled_fixture"]}
+            if (
+                run["policy_digest"] != plan_digest(plan)
+                or j["source_manifest"] != run["source_manifest_digest"]
+                or j["model_key"] not in trust
+                or j["model_digest"] != trust[j["model_key"]]["model_digest"]
+                or j["template"]["model"] != "airc-qwen-" + j["model_digest"][:12]
+                or j["runtime_digest"] != RUNTIME
+                or j["tool_grant_digest"] != digest(encoded(grant))
+                or j["principal"] != "reviewer/" + j["reviewer_id"]
+                or set(j["template"]["response_format"]["json_schema"]["schema"]["required"]) != set(j["obligations"])
+            ):
+                raise ValueError("invalid scope, grants, model or runtime pin")
         scoped.update(j["obligations"])
     if scoped != set(plan["required_obligations"]):
         raise ValueError("obligations and assignment scopes differ")

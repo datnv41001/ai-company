@@ -1,0 +1,321 @@
+{
+  "contract": "brand_knowledge.snapshot.v2",
+  "scope": {
+    "tenant": "agency-fixture",
+    "client": "gallery",
+    "brand": "sao",
+    "campaign": "winter-visits"
+  },
+  "snapshot_as_of": "2026-11-24T09:00:00Z",
+  "profile_revision": 3,
+  "claimset_revision": 2,
+  "brief_revision": "winter@1",
+  "company": {
+    "name": "Phòng trưng bày Sao",
+    "category": "dịch vụ trải nghiệm"
+  },
+  "products": [
+    {
+      "ref": "tour@1",
+      "kind": "service",
+      "name": "Tham quan xúc giác"
+    }
+  ],
+  "variants": [
+    {
+      "ref": "tactile@2",
+      "product": "tour@1",
+      "name": "Bản sao cho nhóm trường"
+    }
+  ],
+  "markets": [
+    {
+      "id": "VN",
+      "country": "VN",
+      "locales": [
+        "vi-VN"
+      ]
+    }
+  ],
+  "offers": [
+    {
+      "ref": "class@1",
+      "product": "tour@1",
+      "variant": "tactile@2",
+      "market": "VN",
+      "channel": "landing",
+      "locale": "vi-VN",
+      "currency": "VND",
+      "price_minor": 90000,
+      "quantity_min": 10,
+      "valid_from": "2026-11-20T00:00:00Z",
+      "valid_until": "2026-12-01T00:00:00Z",
+      "policy": "advance@1",
+      "availability": "visits@1",
+      "evidence": [
+        {
+          "id": "class-rate",
+          "revision": 1,
+          "locator": "fixture://program/class-rate/v1#groups"
+        }
+      ]
+    }
+  ],
+  "availability": [
+    {
+      "ref": "visits@1",
+      "variant": "tactile@2",
+      "market": "VN",
+      "capacity": 25,
+      "unit": "places per session",
+      "area": "Hà Nội",
+      "observed_at": "2026-11-23T08:00:00Z",
+      "valid_until": "2026-12-01T00:00:00Z",
+      "evidence": [
+        {
+          "id": "class-rate",
+          "revision": 1,
+          "locator": "fixture://program/class-rate/v1#groups"
+        }
+      ]
+    }
+  ],
+  "policies": [
+    {
+      "ref": "advance@1",
+      "conditions": [
+        "Đặt trước 48 giờ"
+      ],
+      "delivery": "tại địa điểm đã xác nhận",
+      "warranty": "not_applicable",
+      "payment": "on confirmation",
+      "evidence": [
+        {
+          "id": "class-rate",
+          "revision": 1,
+          "locator": "fixture://program/class-rate/v1#groups"
+        }
+      ]
+    }
+  ],
+  "segments": [
+    {
+      "id": "student-groups",
+      "basis": "hypothesis",
+      "description": "Giáo viên tổ chức ngoại khóa",
+      "sources": []
+    }
+  ],
+  "guidelines": {
+    "tone": "thân thiện",
+    "qualifiers": [
+      "bản sao"
+    ],
+    "prohibitions": [
+      "mời chạm bản gốc"
+    ],
+    "cta": "Đăng ký lịch nhóm"
+  },
+  "objectives": [
+    {
+      "id": "revenue",
+      "level": "business",
+      "parent": null,
+      "metric": "Doanh thu dịch vụ nhóm",
+      "unit": "VND",
+      "window": "2026-12-01/2026-12-31",
+      "method": "Đối chiếu hóa đơn tổng hợp đã thu",
+      "owner": "fixture-campaign-lead",
+      "baseline": {
+        "kind": "unknown",
+        "value": null
+      },
+      "values": [
+        {
+          "kind": "target",
+          "value": "18000000",
+          "source": "fixture://approved-plan"
+        }
+      ]
+    },
+    {
+      "id": "enquiry",
+      "level": "marketing",
+      "parent": "revenue",
+      "metric": "Yêu cầu báo giá đạt điều kiện",
+      "unit": "requests",
+      "window": "2026-12-01/2026-12-31",
+      "method": "Loại thư trùng, kiểm tiêu chí nhóm",
+      "owner": "fixture-campaign-lead",
+      "baseline": {
+        "kind": "unknown",
+        "value": null
+      },
+      "values": [
+        {
+          "kind": "target",
+          "value": 50,
+          "source": "fixture://approved-plan"
+        }
+      ]
+    },
+    {
+      "id": "visit",
+      "level": "campaign",
+      "parent": "enquiry",
+      "metric": "Đăng ký đủ điều kiện",
+      "unit": "registrations",
+      "window": "2026-12-01/2026-12-31",
+      "method": "Đếm các đăng ký được quản lý chương trình xác nhận",
+      "owner": "fixture-campaign-lead",
+      "baseline": {
+        "kind": "unknown",
+        "value": null
+      },
+      "values": [
+        {
+          "kind": "target",
+          "value": 30,
+          "source": "fixture://approved-plan"
+        }
+      ]
+    },
+    {
+      "id": "approved",
+      "level": "operational",
+      "parent": "visit",
+      "metric": "Bản nháp đạt QA",
+      "unit": "outputs",
+      "window": "2026-12-01/2026-12-31",
+      "method": "Đếm asset revision đạt QA lần đầu",
+      "owner": "fixture-campaign-lead",
+      "baseline": {
+        "kind": "historical",
+        "value": 2,
+        "window": "2026-10-01/2026-10-31",
+        "source": "fixture://qa-history/v1#october"
+      },
+      "values": [
+        {
+          "kind": "target",
+          "value": 4,
+          "source": "fixture://approved-plan"
+        },
+        {
+          "kind": "observed",
+          "value": 1,
+          "window": "2026-11-01/2026-11-23",
+          "source": "fixture://qa-events/v3#november"
+        }
+      ]
+    },
+    {
+      "id": "cost",
+      "level": "efficiency",
+      "parent": "visit",
+      "metric": "Chi phí / đăng ký",
+      "unit": "VND/registration",
+      "window": "2026-12-01/2026-12-31",
+      "method": "Chi phí chiến dịch chia số đăng ký kiểm chứng",
+      "owner": "fixture-campaign-lead",
+      "baseline": {
+        "kind": "unknown",
+        "value": null
+      },
+      "values": [
+        {
+          "kind": "target",
+          "value": 25000,
+          "source": "fixture://approved-plan"
+        },
+        {
+          "kind": "hypothesis",
+          "value": 22000,
+          "source": "fixture://proposals/ai-draft-2",
+          "confidence": "unverified"
+        }
+      ]
+    }
+  ],
+  "claims": [
+    {
+      "id": "touch",
+      "revision": 2,
+      "wording": "Khách được chạm bản sao.",
+      "qualifiers": [
+        "bản sao"
+      ],
+      "use": {
+        "product": "tour@1",
+        "variant": "tactile@2",
+        "offer": "class@1",
+        "market": "VN",
+        "channel": "landing",
+        "locale": "vi-VN"
+      },
+      "state": "approved",
+      "approved_by": "fixture-curator",
+      "approved_at": "2026-11-23T09:00:00Z",
+      "valid_from": "2026-11-20T00:00:00Z",
+      "valid_until": "2026-12-01T00:00:00Z",
+      "sources": [
+        {
+          "id": "catalog",
+          "revision": 2,
+          "locator": "fixture://catalog/rev-2#objects"
+        }
+      ]
+    }
+  ],
+  "sources": [
+    {
+      "id": "catalog",
+      "revision": 2,
+      "excerpt": "Khách được chạm bản sao. Hiện vật gốc nằm sau kính.",
+      "locator": "fixture://catalog/rev-2#objects",
+      "publisher": "Phòng trưng bày Sao (synthetic)",
+      "owner": "fixture-curator",
+      "observed_at": "2026-11-20T08:00:00Z",
+      "valid_from": "2026-11-20T00:00:00Z",
+      "valid_until": "2026-12-01T00:00:00Z",
+      "use": {
+        "product": "tour@1",
+        "variant": "tactile@2",
+        "offer": "class@1",
+        "market": "VN",
+        "channel": "landing",
+        "locale": "vi-VN"
+      },
+      "qualifiers": [
+        "bản sao"
+      ],
+      "state": "approved",
+      "content_digest": "42574553fdea8b318841131f2bfc7da79c1dfe4be738cb4a0250966e283824b6"
+    },
+    {
+      "id": "class-rate",
+      "revision": 1,
+      "excerpt": "Giá 90.000 VND/người, từ 10 khách; đặt trước 48 giờ. Giới hạn 25 chỗ mỗi suất tại Hà Nội đến đầu ngày 01/12 UTC.",
+      "locator": "fixture://program/class-rate/v1#groups",
+      "publisher": "Đơn vị tổ chức Sao (synthetic)",
+      "owner": "fixture-curator",
+      "observed_at": "2026-11-20T08:00:00Z",
+      "valid_from": "2026-11-20T00:00:00Z",
+      "valid_until": "2026-12-01T00:00:00Z",
+      "use": {
+        "product": "tour@1",
+        "variant": "tactile@2",
+        "offer": "class@1",
+        "market": "VN",
+        "channel": "landing",
+        "locale": "vi-VN"
+      },
+      "qualifiers": [
+        "từ 10 khách",
+        "đặt trước 48 giờ"
+      ],
+      "state": "approved",
+      "content_digest": "62084aa2161d910f1df949f5780941306b332452ed6b10cd9d92d6d2e1cb4e40"
+    }
+  ]
+}

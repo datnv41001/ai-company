@@ -16,7 +16,7 @@ class Task(BaseModel):
     model_config = ConfigDict(extra="forbid", strict=True)
     key: Key
     skill_type: Literal["research", "strategy", "content", "seo"]
-    assignment: Annotated[str, StringConstraints(strip_whitespace=True, min_length=4, max_length=160)]
+    assignment: Annotated[str, StringConstraints(strip_whitespace=True, min_length=24, max_length=160)]
     parents: list[Key] = Field(max_length=8)
 
 
@@ -72,7 +72,7 @@ def planner_body(run, model):
     props = {
         "key": key,
         "skill_type": {"type": "string", "enum": list(PARENTS)},
-        "assignment": {"type": "string", "minLength": 4, "maxLength": 160},
+        "assignment": {"type": "string", "minLength": 24, "maxLength": 160},
         "parents": {"type": "array", "maxItems": 8, "items": key},
     }
     schema = {
@@ -98,9 +98,9 @@ def planner_body(run, model):
     )
     prompt += (
         " Use [] for a task that reads the supplied brief. Parent keys MUST identify another task in this response. "
-        "Never use the task itself, the brief, or a source as a parent. For example: "
-        '{"nodes":[{"key":"copy","skill_type":"content","assignment":"Write the requested email.","parents":[]}]} '
-        'For page and SEO include a second node with key seo, skill_type seo and parents ["copy"].'
+        'Never use the task itself, the brief, or a source as a parent. Dependency examples (no assignments shown): '
+        'key=copy skill_type=content parents=[]; key=seo skill_type=seo parents=["copy"]. Write your own short assignments '
+        'for this specific objective. The number of nodes depends on the required outputs.'
     )
     previous = run.journal[-1] if run.journal else {}
     if previous.get("plan_error"):

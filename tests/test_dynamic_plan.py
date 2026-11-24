@@ -6,7 +6,7 @@ from app.dynamic_plan import compile_plan, InvalidPlan
 
 
 def node(key, skill, parents=()):
-    return {"key": key, "skill_type": skill, "assignment": "Draft " + key, "parents": list(parents)}
+    return {"key": key, "skill_type": skill, "assignment": "Draft a sourced notebook campaign asset for " + key, "parents": list(parents)}
 
 
 def test_canonical_identity_and_repeat_skill():

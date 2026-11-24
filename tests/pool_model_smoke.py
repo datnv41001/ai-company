@@ -135,6 +135,9 @@ def exercise(docker, workflow):
             if workflow == "dynamic-v1":
                 structures = [[(n["skill_type"], n["parents"]) for n in case["graph"]["contract"]["nodes"]] for case in stats[1:]]
                 assert structures[0] != structures[1], "Different briefs must produce different graphs"
+                # Synthetic briefs ask for an email for B and a landing page for C.
+                for campaign, word in zip(stats[1:], ("email", "page"), strict=True):
+                    assert any(word in n["assignment"].lower() for n in campaign["graph"]["contract"]["nodes"] if n["skill_type"] == "content")
             lab.verify_assets_and_dependencies(*lab.runs[1:])
         finally:
             if docker:

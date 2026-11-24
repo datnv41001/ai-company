@@ -1,13 +1,48 @@
 """Apply reviewed SQL atomically on a dedicated AMC PostgreSQL database."""
+import hashlib
+import json
 import os
+import sys
+
+from psycopg.types.json import Jsonb
 from pathlib import Path
 
 import psycopg
 from psycopg import sql
 
+# Also support the Docker entry point: python migrations/apply.py.
+if not __package__:
+    sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
+from app.registry_compatibility import validate_manifest  # noqa: E402
+
 HERE = Path(__file__).resolve().parent
 BASE = {"tenants", "users", "memberships", "clients", "brands", "campaigns",
         "work_tasks", "deliverables", "action_requests", "audit_events"}
+
+
+def publish_registry(conn, manifest):
+    """The migration publisher owns definitions. Identical imports may be replayed."""
+    with conn.transaction():
+        _publish_registry(conn, manifest)
+
+
+def _publish_registry(conn, manifest):
+    validate_manifest(manifest)
+    for contract in manifest["contracts"].values():
+        for kind, key, version in (("role", "role_id", "contract_version"), ("skill", "skill_id", "skill_version")):
+            identity = (kind, contract[key], contract[version])
+            definition = contract if kind == "skill" else {k:v for k,v in contract.items() if k not in ("adapter","skill_id","skill_version","adapter_digest")}
+            conn.execute("INSERT INTO amc_ops.registry_versions VALUES(%s,%s,%s,%s) ON CONFLICT DO NOTHING", (*identity, Jsonb(definition)))
+            existing = conn.execute("SELECT definition FROM amc_ops.registry_versions WHERE (kind,id,version)=(%s,%s,%s)", identity).fetchone()[0]
+            if existing != definition:
+                raise ValueError(f"Immutable {kind} version changed")
+    key = f"{manifest['workflow_id']}@{manifest['workflow_version']}"
+    encoded = json.dumps(manifest, ensure_ascii=False, sort_keys=True, separators=(",", ":")).encode()
+    digest = hashlib.sha256(encoded).hexdigest()
+    conn.execute("INSERT INTO amc_ops.registry_releases(workflow,digest,manifest) VALUES(%s,%s,%s) ON CONFLICT DO NOTHING",
+                 (key,digest,Jsonb(manifest)))
+    if conn.execute("SELECT digest FROM amc_ops.registry_releases WHERE workflow=%s",(key,)).fetchone() != (digest,):
+        raise ValueError("Immutable workflow version changed")
 
 
 def migrate(dsn: str, runtime_password: str | None = None):
@@ -27,9 +62,9 @@ def migrate(dsn: str, runtime_password: str | None = None):
             raise ValueError("amc_runtime must be an unprivileged role without inherited roles")
         conn.execute("CREATE TABLE IF NOT EXISTS amc_schema_versions (version int PRIMARY KEY)")
         versions = {row[0] for row in conn.execute("SELECT version FROM amc_schema_versions")}
-        if versions - {2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13}:
+        if versions - {2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14}:
             raise ValueError("Unknown schema version; use its matching application revision")
-        if 13 in versions:
+        if 14 in versions:
             return
         if 2 not in versions:
             tables = {row[0] for row in conn.execute(
@@ -73,11 +108,24 @@ def migrate(dsn: str, runtime_password: str | None = None):
         if 12 not in versions:
             conn.execute((HERE / "012_dynamic_plan.sql").read_text(encoding="utf-8"))
             conn.execute("INSERT INTO amc_schema_versions VALUES (12)")
-        conn.execute((HERE / "013_node_leases.sql").read_text(encoding="utf-8"))
-        conn.execute("INSERT INTO amc_schema_versions VALUES (13)")
+        if 13 not in versions:
+            conn.execute((HERE / "013_node_leases.sql").read_text(encoding="utf-8"))
+            conn.execute("INSERT INTO amc_schema_versions VALUES (13)")
+        conn.execute((HERE / "014_workflow_registry.sql").read_text(encoding="utf-8"))
+        publish_registry(conn, json.loads((HERE.parent / "catalog/landing-seo-v1.json").read_text(encoding="utf-8")))
+        conn.execute("INSERT INTO amc_schema_versions VALUES (14)")
 
 
 
 if __name__ == "__main__":
-    migrate(os.environ["AMC_MIGRATION_DSN"], os.getenv("AMC_RUNTIME_PASSWORD"))
-    print("AMC schema version 13 ready")
+    import argparse
+
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--publish-registry", type=Path, help="Import a reviewed release using the migration identity")
+    args = parser.parse_args()
+    if args.publish_registry:
+        with psycopg.connect(os.environ["AMC_MIGRATION_DSN"]) as conn:
+            publish_registry(conn, json.loads(args.publish_registry.read_text(encoding="utf-8")))
+    else:
+        migrate(os.environ["AMC_MIGRATION_DSN"], os.getenv("AMC_RUNTIME_PASSWORD"))
+    print("AMC schema version 14 ready")

@@ -8,11 +8,13 @@ from dataclasses import replace
 from sqlalchemy import create_engine, text
 from sqlalchemy.orm import Session
 
+from .registry_adapters import resolve
+
 from . import node_attempts
 from .workforce_gateway import Gateway
 from .workforce_models import WorkforceRun
 from .workflow_dag import node_for_slot
-from .workforce_worker import Scope, claim, finish
+from .workforce_worker import Scope, authorized_queue, claim, finish
 
 
 def query(db, sql, **params):
@@ -32,6 +34,16 @@ def dispatch(bind, config):
             with db.begin_nested() as change:
                 try:
                     node = node_for_slot(db, route["run"], route["step"])
+                    contract = None
+                    if node:
+                        run = db.scalar(authorized_queue(db, scope).where(WorkforceRun.id == route["run"]).with_for_update())
+                        if run is None:
+                            continue
+                        if binding := run.knowledge.get("registry"):
+                            contract = binding["contracts"][node.skill]
+                            if not resolve(contract) or config.provider != contract["model"] or config.timeout > contract["timeout_seconds"]:
+                                # A compatible dispatcher may still claim this node during rollout.
+                                continue
                     if node and node.parallel:
                         offer = node_attempts.claim(db, scope, config, route["run"], node)
                     else:
@@ -46,6 +58,14 @@ def dispatch(bind, config):
                 if not offer:
                     continue
                 token, body, hold = offer.token, offer.body, offer.hold
+                if contract:
+                    # Receipt, revoke and checkpoint take this same scheduler lock.
+                    exposure = query(db, """select coalesce(sum(l.held+l.spent),0)
+                        from amc_ops.attempts a join amc_ops.ledger l on l.id=a.id
+                        where a.run=:r and a.node_id=:n""", r=run.id,n=node.id).scalar_one()
+                    if exposure + hold > contract["node_cap"]:
+                        change.rollback()
+                        continue
                 period = query(
                     db,
                     """
@@ -92,30 +112,44 @@ def dispatch(bind, config):
     return False
 
 
+def pending_reports(db):
+    # Usually the oldest report is compatible. Fetch another only when a peer
+    # owns its adapter; avoid locking or reading every queued model response.
+    after = None
+    while True:
+        cursor = "and (a.started,a.id) > (:started,cast(:id as uuid))" if after else ""
+        row = query(db, f"""
+            select a.*,t.client,t.brand,t.campaign,t.skill from amc_ops.attempts a join amc_ops.tasks t using(run,step)
+            where a.status<>'closed' and (a.status='reported' or not amc_ops.live(a.id)) {cursor}
+            order by a.started,a.id limit 1 for update of a
+        """, **(after or {})).mappings().first()
+        if row is None:
+            return
+        yield row
+        after = {"started":row["started"], "id":str(row["id"])}
+
+
 def consume(bind, config):
     with Session(bind) as db, db.begin():
         lock_scheduler(db)
-        row = (
-            query(
-                db,
-                """
-            select a.*,t.client,t.brand,t.campaign from amc_ops.attempts a join amc_ops.tasks t using(run,step)
-            where a.status<>'closed' and (a.status='reported' or not amc_ops.live(a.id))
-            order by a.started limit 1 for update of a
-        """,
-            )
-            .mappings()
-            .first()
-        )
-        if not row:
+        for row in pending_reports(db):
+            token = str(row["id"])
+            scope = Scope(*(row[k] for k in ("tenant", "client", "brand", "campaign", "operator")))
+            live_report = row["status"] == "reported" and query(db, "select amc_ops.fence(:id)", id=token).scalar()
+            if live_report and row["node_id"]:
+                run = db.scalar(authorized_queue(db, scope).where(WorkforceRun.id == row["run"]))
+                binding = run.knowledge.get("registry")
+                if binding and not resolve(binding["contracts"][row["skill"]]):
+                    # Preserve the reported output for a peer that owns this version's validator and QA.
+                    continue
+            break
+        else:
             return False
-        token = str(row["id"])
-        scope = Scope(*(row[k] for k in ("tenant", "client", "brand", "campaign", "operator")))
         outcome, event, cost = "lease_expired", None, 0
         inputs = outputs = None
         if row["status"] == "offered":
             event = "unsent"
-        if row["status"] == "reported" and query(db, "select amc_ops.fence(:id)", id=token).scalar():
+        if live_report:
             result, error = row["result"], row["error"]
             if result is not None and (not isinstance(result, list) or len(result) != 3):
                 result, error = None, "invalid_usage"

@@ -98,7 +98,7 @@ def request_body(run, model, *, node=None, predecessors=None, assignment=None):
     earlier = predecessors if predecessors is not None else {p["skill"]: p["output"]["text"][:1400] for p in run.checkpoints}
     if assignment is None:
         assignment = run.checkpoints[0]["output"]["assignments"][stage] if run.checkpoints else ""
-    data = json.dumps({"knowledge": run.knowledge, "earlier_drafts": earlier, "assignment": assignment}, ensure_ascii=False)
+    data = json.dumps({"knowledge": {k:v for k,v in run.knowledge.items() if k != "registry"}, "earlier_drafts": earlier, "assignment": assignment}, ensure_ascii=False)
     system = (
         SKILLS[stage]
         + " Use the language of the brief. Fill each named field with the finished work, one or two short sentences. Speak directly to the target reader in copy fields. Use at least one supplied source ID. "
@@ -171,7 +171,11 @@ def infer(config, body):
         raise GatewayError("provider_or_format") from None
 
 
-def validate_output(raw, stage, plan, sources):
+def validate_output(raw, stage, plan, sources, binding=None):
+    if binding:
+        contract = binding['contracts'].get(stage, {})
+        if contract.get('adapter') != stage+'@1' or not isinstance(raw,dict) or set(raw) != set(contract['outputs']):
+            raise GatewayError('invalid_contract_output')
     if not isinstance(raw, dict):
         raise GatewayError("invalid_output")
     refs = raw.get("source_ids")

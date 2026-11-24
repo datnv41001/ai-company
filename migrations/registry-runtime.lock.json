@@ -1,0 +1,20 @@
+{
+  "format": 1,
+  "historical_source": "65ab6c5892d46325406388a459940b2db5cef241",
+  "fingerprints": {
+    "9148f3773559f0c95c961e50db9ae8020dd3f5199cf0ae2b1de67c6a35cb112e": {
+      "python": "cpython-3.12.14",
+      "adapters": [
+        "c64cf3e0e691a1bad191b954b07d06a28c7cd8675bb5fe8328ee0ae0e620880a",
+        "3ab7030bf2a22ede6c3995821892ed91d0ac60a411a8ea89547ffb01347597e5"
+      ]
+    },
+    "b73b9c3eca164532f03dd3ee3f5508ccd172e59ab0209ca079254bc786a182e9": {
+      "python": "cpython-3.12.16",
+      "adapters": [
+        "c64cf3e0e691a1bad191b954b07d06a28c7cd8675bb5fe8328ee0ae0e620880a",
+        "3ab7030bf2a22ede6c3995821892ed91d0ac60a411a8ea89547ffb01347597e5"
+      ]
+    }
+  }
+}

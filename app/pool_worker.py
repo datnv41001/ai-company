@@ -6,6 +6,7 @@ import time
 import psycopg
 from psycopg.types.json import Jsonb
 
+from migrations.runtime_bundle import reviewed_runtime
 from .workforce_gateway import Gateway, GatewayError
 from .workforce_worker import bounded_call
 
@@ -19,6 +20,10 @@ def report(conn, job, result=None, error=None):
 
 
 def main():
+    # Pool mailboxes may contain registry envelopes. Verify transport and inference
+    # code before advertising readiness or collecting the first lease.
+    if not reviewed_runtime():
+        raise RuntimeError("Unrecognized registry runtime; worker has not registered for offers")
     config = Gateway.configured()
     if config.provider != "local":
         raise ValueError("Pool supports local inference only")

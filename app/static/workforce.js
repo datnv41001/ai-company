@@ -21,6 +21,10 @@ function createWorkforce(root, api, notify) {
   function showGraph(info,graph) {
     const view=node(info,'section');view.setAttribute('aria-label','Trạng thái workflow');
     node(view,'h4','Mẫu '+graph.template+' · Phiên bản '+graph.revision);
+    if(graph.registry) {
+      view.style.overflowWrap='anywhere';
+      node(view,'p',graph.registry.workflow+' · Manifest '+graph.registry.manifest_digest);
+    }
     const skills=Object.fromEntries((graph.contract?.nodes||[]).map(n=>[n.node_id,n.skill_type]));
     const caption=id=>skills[id]?labels[skills[id]]+' ('+id+')':(labels[id]||id);
     if(graph.phase)node(view,'p',({planning:'Đang lập kế hoạch',validating:'Đang kiểm tra kế hoạch',frozen:'Đã chốt kế hoạch',executing:'Đang thực thi'})[graph.phase]);
@@ -30,6 +34,12 @@ function createWorkforce(root, api, notify) {
     for(const n of graph.nodes) {
       const item=node(list,'li');item.dataset.node=n.node_id;
       node(item,'strong',(n.node_id==='join'?'Join':caption(n.node_id))+' · '+graphStates[n.status]);
+      const contract=graph.registry?.nodes.find(c=>c.node_id===n.node_id);
+      if(contract) {
+        node(item,'p',contract.role_id+'@'+contract.contract_version+' · '+contract.skill_id+'@'+contract.skill_version);
+        node(item,'p','Ngân sách node: '+contract.exposure+' / '+contract.node_cap+' micro-USD');
+        if(contract.overage)node(item,'p','Cần đối soát: vượt '+contract.overage+' micro-USD');
+      }
       if(n.missing.length)node(item,'p','Chờ đầu ra: '+n.missing.map(caption).join(', '));
       if(n.status==='retry_wait' && n.ready_at)node(item,'p','Thử lại từ '+new Date(n.ready_at).toLocaleTimeString());
       if(n.error && n.error!=='ok')node(item,'p','Lỗi gần nhất: '+n.error);
@@ -69,7 +79,28 @@ function createWorkforce(root, api, notify) {
           &&(!g.brand_id||g.brand_id===selected.brand_id) && g.client_id===selected.client_id)
           .forEach(g=>recipient.add(new Option(g.email||g.user_id,g.user_id)));
       };
-      campaign.onchange=fillRecipients;fillRecipients();
+      const registryInfo=node(box,'div');
+      campaign.onchange=()=>{fillRecipients();registryInfo.replaceChildren();};
+      fillRecipients();
+      action(box,'Quyền workflow của chiến dịch',async()=>{
+        const id=campaign.value;
+        if(!id)return;
+        const entries=await api(base+'/registry/'+encodeURIComponent(id));
+        if(ticket!==revision||campaign.value!==id)return;
+        registryInfo.replaceChildren();
+        if(!entries.length)node(registryInfo,'p','Chiến dịch chưa có registry PostgreSQL.');
+        for(const entry of entries) {
+          node(registryInfo,'h4',entry.workflow);
+          for(const skill of Object.keys(entry.manifest.contracts))
+            node(registryInfo,'p',(labels[skill]||skill)+' · '+({activate:'Đã cấp',disable:'Ngừng cấp mới',revoke:'Đã thu hồi'}[entry.grants[skill]]||'Chưa cấp'));
+          for(const [mode,caption] of [['activate','Cấp quyền cho workflow'],['disable','Ngừng cấp cho run mới'],['revoke','Thu hồi và dừng run đang chạy']])
+            action(registryInfo,caption,async()=>{
+              if(mode==='revoke'&&!window.confirm('Dừng các run đang dùng workflow này trong chiến dịch?'))return;
+              await api(base+'/registry/'+encodeURIComponent(id),'PUT',{workflow:entry.workflow,action:mode,skills:entry.manifest.required});
+              await reload();
+            });
+        }
+      });
       action(box,'Yêu cầu khách gửi brief',async()=>{
         if(!recipient.value||!title.value.trim())throw new Error('Chọn chiến dịch, người nhận và nhập tên bộ tài sản.');
         await api(base+'/briefs','POST',{campaign_id:campaign.value,recipient_id:recipient.value,title:title.value});await reload();
@@ -86,17 +117,23 @@ function createWorkforce(root, api, notify) {
       } else if (!external && role!=='viewer' && b.submitted && !runs.some(r=>r.brief_id===b.id)) {
         const workflow=field(row,'Mẫu workflow','select');
         workflow.add(new Option('Tuyến tính','linear'));workflow.add(new Option('Content và SEO sau Strategy (diamond-v1)','diamond-v1'));
+        const versions=await api(base+'/registry/'+encodeURIComponent(b.campaign_id));
+        if(ticket!==revision)return;
+        for(const version of versions) {
+          if(version.manifest.required.every(skill=>version.grants[skill]==='activate'))
+            workflow.add(new Option(version.workflow,version.workflow));
+        }
         workflow.add(new Option('Director lập kế hoạch (dynamic-v1)','dynamic-v1'));
         const select=field(row,'Chuyên môn bổ sung','select');select.multiple=true;
         ['seo','creative','ads','analytics'].forEach(s=>select.add(new Option(labels[s],s)));
         const parallel=field(row,'Số node tối đa cùng chạy','select');
         parallel.add(new Option('1','1'));parallel.add(new Option('2','2'));parallel.disabled=true;
-        workflow.onchange=()=>{parallel.disabled=workflow.value!=='dynamic-v1';select.disabled=workflow.value==='diamond-v1';
+        workflow.onchange=()=>{parallel.disabled=workflow.value!=='dynamic-v1'&&!workflow.value.includes('@');select.disabled=workflow.value==='diamond-v1'||workflow.value.includes('@');
           for(const option of select.options){option.disabled=workflow.value==='dynamic-v1' && option.value!=='seo';if(option.disabled)option.selected=false;}
         };
         const budget=field(row,'Ngân sách model (USD, 0 cho local)','input');budget.type='number';budget.step='0.01';budget.min=0;budget.max=1;budget.value=0;
         action(row,'Giao việc cho AI Director',async()=>{await api(base+'/briefs/'+b.id+'/run','POST',{
-          workflow:workflow.value,max_parallel_nodes:parallel.disabled?1:Number(parallel.value),extra_skills:select.disabled?[]:Array.from(select.selectedOptions,o=>o.value),budget_microusd:Math.round(Number(budget.value)*1000000)});await reload();});
+          workflow:workflow.value.includes('@')?'dynamic-v1':workflow.value,...(workflow.value.includes('@')?{registry_workflow:workflow.value}:{}),max_parallel_nodes:parallel.disabled?1:Number(parallel.value),extra_skills:select.disabled?[]:Array.from(select.selectedOptions,o=>o.value),budget_microusd:Math.round(Number(budget.value)*1000000)});await reload();});
       }
     }
     if(!external) {
@@ -107,10 +144,12 @@ function createWorkforce(root, api, notify) {
         const info=node(row,'div');action(row,'Xem kết quả và chi phí',async()=>{
           const v=await api(base+'/runs/'+r.id);if(ticket!==revision)return;
           info.replaceChildren();node(info,'p',v.journal.length+' lượt xử lý · Chi phí đã tính hoặc giữ chỗ: '+(v.reserved_microusd/1000000).toFixed(6)+' USD');
+          if(v.registry?.status==='legacy_v13')node(info,'p','Lịch sử thực thi · legacy_v13');
           if(v.graph)showGraph(info,v.graph);
           if(v.last_error)node(info,'p',v.last_error==='recipient_revoked'?'Đã hủy do thu hồi quyền của người giao brief.':'Lỗi: '+v.last_error);
           v.checkpoints.forEach(p=>{node(info,'h4',labels[p.skill]);node(info,'p',p.output.text);
             node(info,'p','Nguồn: '+p.output.source_ids.map(k=>v.source_registry?.[k]?.label||k).join(', '));
+            for(const f of p.quality?.role_qa?.findings||[])node(info,'p',f.field+' · '+f.rule+' · '+f.claim);
             for(const f of p.quality?.claims||[]) {
               node(info,'p',(f.status==='needs_evidence'?'Cần bằng chứng':'Có câu trùng nguồn '+f.matching_ids.join(', '))+' · '+f.claim);
             }

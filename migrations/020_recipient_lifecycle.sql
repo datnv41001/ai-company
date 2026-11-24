@@ -47,28 +47,37 @@ END $$;
 REVOKE ALL ON FUNCTION amc_acl.accept_portal_invitation(text) FROM PUBLIC;
 GRANT EXECUTE ON FUNCTION amc_acl.accept_portal_invitation(text) TO amc_runtime;
 
--- Obtain the address while the membership still exists. This function is also
--- used before taking its row lock, so normal commands always lock address first.
-CREATE FUNCTION amc_acl.removal_address(t text, uid text) RETURNS text
-LANGUAGE sql STABLE SECURITY DEFINER SET search_path=pg_catalog AS $$
- SELECT u.email FROM public.users u JOIN public.memberships m ON m.user_id=u.id
- WHERE m.tenant_id=t AND m.user_id=uid AND amc_acl.authenticated_actor()
- AND amc_acl.member_role(t) IN ('admin','owner')
-$$;
-REVOKE ALL ON FUNCTION amc_acl.removal_address(text,text) FROM PUBLIC;
-GRANT EXECUTE ON FUNCTION amc_acl.removal_address(text,text) TO amc_runtime;
+-- Direct DELETE would take a membership row lock before reaching a row trigger.
+-- Expose one ordered command, including cleanup and audit, to every runtime writer.
+REVOKE DELETE ON public.memberships FROM amc_runtime;
+CREATE POLICY owner_close_offer_read ON public.portal_invitations FOR SELECT TO CURRENT_USER
+ USING (amc_acl.authenticated_actor() AND amc_acl.member_role(tenant_id) IN ('admin','owner'));
+CREATE POLICY owner_close_offer_update ON public.portal_invitations FOR UPDATE TO CURRENT_USER
+ USING (state='pending' AND amc_acl.authenticated_actor() AND amc_acl.member_role(tenant_id) IN ('admin','owner'))
+ WITH CHECK (state='revoked' AND amc_acl.authenticated_actor() AND amc_acl.member_role(tenant_id) IN ('admin','owner'));
+CREATE POLICY owner_scope_revoke_audit ON public.audit_events FOR INSERT TO CURRENT_USER
+ WITH CHECK (event='member.client_scope_revoked' AND user_id=current_setting('amc.user_id',true)
+ AND amc_acl.authenticated_actor() AND amc_acl.member_role(tenant_id) IN ('admin','owner'));
 
-CREATE FUNCTION amc_acl.close_member_offers() RETURNS trigger
-LANGUAGE plpgsql SET search_path=pg_catalog AS $$
-DECLARE address text;
+CREATE FUNCTION amc_acl.revoke_client_member(t text, uid text) RETURNS boolean
+LANGUAGE plpgsql SECURITY DEFINER SET search_path=pg_catalog AS $$
+DECLARE address text; client text; actor text:=current_setting('amc.user_id',true);
 BEGIN
- SELECT amc_acl.removal_address(OLD.tenant_id,OLD.user_id) INTO address;
- IF address IS NULL THEN RAISE insufficient_privilege; END IF;
- PERFORM amc_acl.lock_recipient(OLD.tenant_id,address);
- UPDATE public.portal_invitations SET state='revoked' WHERE tenant_id=OLD.tenant_id
- AND state='pending' AND (user_id=OLD.user_id OR lower(btrim(email))=lower(btrim(address)));
- RETURN OLD;
+ IF amc_acl.authenticated_actor() IS NOT TRUE OR coalesce(amc_acl.member_role(t),'') NOT IN ('admin','owner')
+ THEN RETURN false; END IF;
+ SELECT u.email INTO address FROM public.users u JOIN public.memberships m ON m.user_id=u.id
+ WHERE m.tenant_id=t AND m.user_id=uid AND m.role='client_viewer';
+ IF NOT FOUND THEN RETURN false; END IF;
+ PERFORM amc_acl.lock_recipient(t,address);
+ PERFORM 1 FROM public.memberships WHERE tenant_id=t AND user_id=actor AND role IN ('admin','owner') FOR SHARE;
+ IF NOT FOUND THEN RETURN false; END IF;
+ DELETE FROM public.memberships WHERE tenant_id=t AND user_id=uid AND role='client_viewer' RETURNING client_id INTO client;
+ IF NOT FOUND THEN RETURN false; END IF;
+ UPDATE public.portal_invitations SET state='revoked' WHERE tenant_id=t AND state='pending'
+ AND (user_id=uid OR lower(btrim(email))=lower(btrim(address)));
+ INSERT INTO public.audit_events(id,tenant_id,user_id,event,subject_id,details,occurred_at)
+ VALUES(gen_random_uuid()::text,t,actor,'member.client_scope_revoked',uid,json_build_object('client_id',client),clock_timestamp());
+ RETURN true;
 END $$;
-REVOKE ALL ON FUNCTION amc_acl.close_member_offers() FROM PUBLIC;
-CREATE TRIGGER close_member_offers BEFORE DELETE ON public.memberships
- FOR EACH ROW WHEN (OLD.role='client_viewer') EXECUTE FUNCTION amc_acl.close_member_offers();
+REVOKE ALL ON FUNCTION amc_acl.revoke_client_member(text,text) FROM PUBLIC;
+GRANT EXECUTE ON FUNCTION amc_acl.revoke_client_member(text,text) TO amc_runtime;

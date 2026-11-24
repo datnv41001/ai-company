@@ -9,7 +9,7 @@ from fastapi.exception_handlers import request_validation_exception_handler
 from fastapi.exceptions import RequestValidationError
 from fastapi.responses import FileResponse, JSONResponse
 from fastapi.staticfiles import StaticFiles
-from sqlalchemy import select
+from sqlalchemy import select, text
 from sqlalchemy.exc import IntegrityError
 from sqlalchemy.inspection import inspect
 from sqlalchemy.orm import Session
@@ -21,7 +21,7 @@ from .delivery import router as delivery_router, working_copy
 from .operations import router as operations_router
 from .registry import router as registry_router
 from .workforce import router as workforce_router
-from .recipients import router as recipients_router, lock_member_recipient, revoke_pending, preview_link, accept_link
+from .recipients import router as recipients_router, lock_recipient, revoke_pending, preview_link, accept_link
 from .delivery_models import PortalGrant
 from .access import set_context, visible
 from .database import APP_ENV, engine, get_db, prepare_database
@@ -175,13 +175,18 @@ def change_client_scope(tenant_id: str, member_id: str, body: ClientScopeIn, use
 @app.delete("/api/tenants/{tenant_id}/members/{member_id}/client-scope", status_code=204)
 def revoke_client_scope(tenant_id: str, member_id: str, user: User = Depends(current_user), db: Session = Depends(get_db)):
     member(db, user, tenant_id, "admin")
-    email = lock_member_recipient(db, tenant_id, member_id)
-    record = db.get(Membership, (tenant_id, member_id), with_for_update=True)
-    if email is None or record is None or record.role != "client_viewer":
-        raise HTTPException(404, "Client membership not found")
-    audit(db, tenant_id, user.id, "member.client_scope_revoked", member_id, {"client_id": record.client_id})
-    revoke_pending(db, tenant_id, member_id, email)
-    db.delete(record)
+    if db.get_bind().dialect.name == "postgresql":
+        removed = db.scalar(text("SELECT amc_acl.revoke_client_member(:t,:u)"), {"t":tenant_id,"u":member_id})
+        if not removed:
+            raise HTTPException(404, "Client membership not found")
+    else:
+        lock_recipient(db, tenant_id, member_id)
+        record = db.get(Membership, (tenant_id, member_id), populate_existing=True)
+        if record is None or record.role != "client_viewer":
+            raise HTTPException(404, "Client membership not found")
+        audit(db, tenant_id, user.id, "member.client_scope_revoked", member_id, {"client_id": record.client_id})
+        revoke_pending(db, tenant_id, member_id, db.get(User, member_id).email)
+        db.delete(record)
     db.commit()
 
 

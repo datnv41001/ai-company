@@ -76,6 +76,8 @@ def test_signed_runtime_and_historical_pending_cleanup(api):
         sign_actor(db, owner["id"])
         assert db.scalar(text("select current_user")) == "amc_runtime"
         assert db.scalar(text("select amc_acl.authenticated_actor()")) is True
+        assert not db.scalar(text("select has_table_privilege(current_user,'public.memberships','DELETE')"))
+        assert db.scalar(text("select has_function_privilege(current_user,'amc_acl.revoke_client_member(text,text)','EXECUTE')"))
         with pytest.raises(IntegrityError) as conflict:
             # This trigger runs before ordinary uniqueness checks; it must reject a member.
             db.execute(text("""insert into portal_invitations
@@ -133,3 +135,25 @@ def test_sqlite_offboarding_keeps_history_and_other_workspace(tmp_path, bound):
         assert db.get(PortalInvitation, "otherpending").state == "pending"
         assert db.get(PortalInvitation, "oneaccepted").state == "accepted"
     local.dispose()
+
+
+@pytest.mark.parametrize("api", ["postgres"], indirect=True)
+def test_repeated_offboarding_takes_one_lock_order(api):
+    owner, reader = account(api, "Agency"), account(api, "Independent")
+    t = owner["tenant"]
+    base = f"/api/tenants/{t}"
+    cid = create(api, base + "/clients", owner, {"name":"Client"})["id"]
+    offer = create(api, base + "/invitations", owner, {"email":reader["email"], "client_id":cid})
+    assert api.post(f"/api/me/invitations/{offer['id']}/accept", headers=reader["headers"]).status_code == 204
+    with psycopg.connect(os.environ["AMC_MIGRATION_DSN"], autocommit=True) as monitor, ThreadPoolExecutor(1) as pool:
+        with engine.begin() as conn, Session(conn, join_transaction_mode="create_savepoint") as db:
+            set_context(db, actor=owner["id"], tenant=t)
+            sign_actor(db, owner["id"])
+            assert db.scalar(text("select amc_acl.revoke_client_member(:t,:u)"), {"t":t,"u":reader["id"]})
+            db.commit()  # Release the session savepoint while the outer transaction retains its locks.
+            second = pool.submit(api.delete, f"{base}/members/{reader['id']}/client-scope", headers=owner["headers"])
+            wait_for_lock(monitor, conn.scalar(text("select pg_backend_pid()")))
+        assert second.result(timeout=10).status_code == 404
+        assert monitor.execute("select count(*) from audit_events where tenant_id=%s and subject_id=%s and event='member.client_scope_revoked'",
+                               (t, reader["id"])).fetchone() == (1,)
+        assert monitor.execute("select count(*) from portal_grants where tenant_id=%s and user_id=%s", (t,reader["id"])).fetchone() == (0,)

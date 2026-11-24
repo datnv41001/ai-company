@@ -84,17 +84,6 @@ def lock_recipient(db, tenant_id, email):
         lock_document(db, email)  # SQLite serializes writers using BEGIN IMMEDIATE.
 
 
-def lock_member_recipient(db, tenant_id, uid):
-    if db.get_bind().dialect.name == "postgresql":
-        email = db.scalar(text("SELECT amc_acl.removal_address(:t,:u)"), {"t":tenant_id,"u":uid})
-    else:
-        user = db.get(User, uid)
-        email = user.email if user else None
-    if email:
-        lock_recipient(db, tenant_id, email)
-    return email
-
-
 def lock_offer_recipient(db, tenant_id, iid):
     email = db.scalar(select(PortalInvitation.email).where(
         PortalInvitation.id == iid, PortalInvitation.tenant_id == tenant_id))
@@ -104,12 +93,10 @@ def lock_offer_recipient(db, tenant_id, iid):
 
 
 def revoke_pending(db, tenant_id, uid, email):
-    # PostgreSQL enforces this at DELETE for every restricted writer.
-    if db.get_bind().dialect.name != "postgresql":
-        db.execute(update(PortalInvitation).where(
-            PortalInvitation.tenant_id == tenant_id, PortalInvitation.state == "pending",
-            (PortalInvitation.user_id == uid) | (func.lower(func.trim(PortalInvitation.email)) == email.strip().lower())
-        ).values(state="revoked"))
+    db.execute(update(PortalInvitation).where(
+        PortalInvitation.tenant_id == tenant_id, PortalInvitation.state == "pending",
+        (PortalInvitation.user_id == uid) | (func.lower(func.trim(PortalInvitation.email)) == email.strip().lower())
+    ).values(state="revoked"))
 
 
 @router.get("/tenants/{tenant_id}/recipients")

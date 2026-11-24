@@ -15,12 +15,13 @@ class Node:
     skill: str
     template: str
     assignment: str | None
+    parallel: bool
 
 
 def node_for_slot(db, run, slot):
     row = db.execute(
         text("""
-        select n.node_id,n.revision,h.tries,h.last_error,coalesce(n.skill_type,n.node_id),g.template,n.assignment
+        select n.node_id,n.revision,h.tries,h.last_error,coalesce(n.skill_type,n.node_id),g.template,n.assignment,amc_ops.parallel_node(n.run,n.slot)
         from amc_ops.dag_nodes n join amc_ops.dag_plans g using(run) cross join lateral (
             select count(*) tries,(array_agg(a.outcome order by a.started desc))[1] last_error
             from amc_ops.attempts a where a.run=n.run and a.node_id=n.node_id and a.status='closed'

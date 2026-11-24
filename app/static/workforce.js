@@ -24,12 +24,14 @@ function createWorkforce(root, api, notify) {
     const skills=Object.fromEntries((graph.contract?.nodes||[]).map(n=>[n.node_id,n.skill_type]));
     const caption=id=>skills[id]?labels[skills[id]]+' ('+id+')':(labels[id]||id);
     if(graph.phase)node(view,'p',({planning:'Đang lập kế hoạch',validating:'Đang kiểm tra kế hoạch',frozen:'Đã chốt kế hoạch',executing:'Đang thực thi'})[graph.phase]);
+    if(graph.max_parallel_nodes===2)node(view,'p','Tối đa 2 node đồng thời');
     if(graph.digest)node(view,'p','SHA-256: '+graph.digest);
     const list=node(view,'ul');
     for(const n of graph.nodes) {
       const item=node(list,'li');item.dataset.node=n.node_id;
       node(item,'strong',(n.node_id==='join'?'Join':caption(n.node_id))+' · '+graphStates[n.status]);
       if(n.missing.length)node(item,'p','Chờ đầu ra: '+n.missing.map(caption).join(', '));
+      if(n.status==='retry_wait' && n.ready_at)node(item,'p','Thử lại từ '+new Date(n.ready_at).toLocaleTimeString());
       if(n.error && n.error!=='ok')node(item,'p','Lỗi gần nhất: '+n.error);
       if(n.node_id!=='join')node(item,'p',n.attempts+' lượt · giữ '+n.held+' · đã chi '+n.spent+' micro-USD');
     }
@@ -87,12 +89,14 @@ function createWorkforce(root, api, notify) {
         workflow.add(new Option('Director lập kế hoạch (dynamic-v1)','dynamic-v1'));
         const select=field(row,'Chuyên môn bổ sung','select');select.multiple=true;
         ['seo','creative','ads','analytics'].forEach(s=>select.add(new Option(labels[s],s)));
-        workflow.onchange=()=>{select.disabled=workflow.value==='diamond-v1';
+        const parallel=field(row,'Số node tối đa cùng chạy','select');
+        parallel.add(new Option('1','1'));parallel.add(new Option('2','2'));parallel.disabled=true;
+        workflow.onchange=()=>{parallel.disabled=workflow.value!=='dynamic-v1';select.disabled=workflow.value==='diamond-v1';
           for(const option of select.options){option.disabled=workflow.value==='dynamic-v1' && option.value!=='seo';if(option.disabled)option.selected=false;}
         };
         const budget=field(row,'Ngân sách model (USD, 0 cho local)','input');budget.type='number';budget.step='0.01';budget.min=0;budget.max=1;budget.value=0;
         action(row,'Giao việc cho AI Director',async()=>{await api(base+'/briefs/'+b.id+'/run','POST',{
-          workflow:workflow.value,extra_skills:select.disabled?[]:Array.from(select.selectedOptions,o=>o.value),budget_microusd:Math.round(Number(budget.value)*1000000)});await reload();});
+          workflow:workflow.value,max_parallel_nodes:parallel.disabled?1:Number(parallel.value),extra_skills:select.disabled?[]:Array.from(select.selectedOptions,o=>o.value),budget_microusd:Math.round(Number(budget.value)*1000000)});await reload();});
       }
     }
     if(!external) {

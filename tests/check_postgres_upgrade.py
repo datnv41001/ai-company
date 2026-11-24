@@ -15,7 +15,8 @@ MIGRATIONS = Path(__file__).resolve().parents[1] / "migrations"
 
 
 def verify():
-    from_v11 = '--from-v11' in sys.argv
+    from_v12 = '--from-v12' in sys.argv
+    from_v11 = '--from-v11' in sys.argv or from_v12
     from_v10 = "--from-v10" in sys.argv or from_v11
     from_v9 = "--from-v9" in sys.argv or from_v10
     from_v8 = "--from-v8" in sys.argv or from_v9
@@ -124,6 +125,16 @@ def verify():
                 values('diamond-run','agency','a','br','ca','diamond-brief','{"workflow":"diamond-v1","workflow_revision":1}',
                 '["director","research","strategy","content","seo"]','[]','[]','queued',now(),0,1000,0,now())""")
             frozen=conn.execute("select id,checkpoints::text,journal::text,ready_at from workforce_runs order by id").fetchall()
+        if from_v12:
+            conn.execute((MIGRATIONS/"012_dynamic_plan.sql").read_text(encoding="utf-8"))
+            conn.execute("INSERT INTO amc_schema_versions VALUES(12)")
+            conn.execute("""insert into workforce_briefs(id,tenant_id,client_id,brand_id,campaign_id,recipient_id,title,created_at)
+                values('dynamic-brief','agency','a','br','ca','current','Existing planner',now())""")
+            conn.execute("""insert into workforce_runs(id,tenant_id,client_id,brand_id,campaign_id,brief_id,knowledge,plan,
+                checkpoints,journal,state,ready_at,attempts,budget_microusd,reserved_microusd,created_at)
+                values('dynamic-run','agency','a','br','ca','dynamic-brief','{"workflow":"dynamic-v1","required_outputs":["content"]}',
+                '["director"]','[]','[]','queued',now(),0,1000,0,now())""")
+            frozen=conn.execute("select id,checkpoints::text,journal::text,ready_at from workforce_runs order by id").fetchall()
     migrate(dsn, os.environ.get("AMC_RUNTIME_PASSWORD"))
     migrate(dsn)
     prepare_database(runtime)
@@ -141,7 +152,7 @@ def verify():
             owner.execute("UPDATE memberships SET role='client_viewer',client_id='a' WHERE user_id='alice'")
         identify()
         assert set(c.scalars(text("SELECT id FROM clients"))) == {"a"}
-        assert set(c.scalars(text("SELECT version FROM amc_schema_versions"))) == {2,3,4,5,6,7,8,9,10,11,12}
+        assert set(c.scalars(text("SELECT version FROM amc_schema_versions"))) == {2,3,4,5,6,7,8,9,10,11,12,13}
         if "--from-v2" in sys.argv or from_v3:
             c.rollback()
             c.execute(text("SELECT set_config('amc.user_id','external',true),set_config('amc.tenant_id','agency',true)"))
@@ -162,7 +173,9 @@ def verify():
                     assert owner.execute("SELECT version,title,preview,digest FROM client_reviews WHERE id='rv'").fetchone() == (
                         1, "Title", "Preview", hashlib.sha256(b'{"preview":"Preview","title":"Title"}').hexdigest())
                 if from_v10:
-                    assert owner.execute("select count(*) from amc_ops.dag_plans").fetchone()==(int(from_v11),)
+                    assert owner.execute("select count(*) from amc_ops.dag_plans").fetchone()==(int(from_v11)+int(from_v12),)
+                    if from_v12:
+                        assert owner.execute("select amc_ops.parallel_node('dynamic-run',0),contract from amc_ops.dag_plans where run='dynamic-run'").fetchone()==(False,None)
                     if from_v11:
                         assert owner.execute("select amc_ops.valid_diamond('diamond-run')").fetchone()==(True,)
                     assert owner.execute("select id,checkpoints::text,journal::text,ready_at from workforce_runs order by id").fetchall()==frozen
@@ -178,8 +191,8 @@ def verify():
                     assert owner.execute("SELECT count(*) FROM audit_events WHERE event='workforce.recipient_revoked'").fetchone() == (1,)
                 assert owner.execute("SELECT title FROM deliverables WHERE id='doc'").fetchone() == ("Internal",)
     runtime.dispose()
-    baseline = "v11" if from_v11 else "v10" if from_v10 else "v9" if from_v9 else "v8" if from_v8 else "v7" if from_v7 else "v6" if from_v6 else "v5" if from_v5 else "v4" if from_v4 else "v3" if from_v3 else "v2" if "--from-v2" in sys.argv else "v1"
-    print(f"PASS: populated {baseline} to v12, repeated migration, privileged API login refused, client isolated")
+    baseline = "v12" if from_v12 else "v11" if from_v11 else "v10" if from_v10 else "v9" if from_v9 else "v8" if from_v8 else "v7" if from_v7 else "v6" if from_v6 else "v5" if from_v5 else "v4" if from_v4 else "v3" if from_v3 else "v2" if "--from-v2" in sys.argv else "v1"
+    print(f"PASS: populated {baseline} to v13, repeated migration, privileged API login refused, client isolated")
 
 
 if __name__ == "__main__":

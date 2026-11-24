@@ -40,7 +40,8 @@ class Worker:
 
 
 class Lab:
-    def __init__(self, api, dsn, workflow="linear"):
+    def __init__(self, api, dsn, workflow="linear", parallelism=1):
+        self.parallelism = parallelism
         self.workflow = workflow
         self.api, self.dsn = api, dsn
         self.owner = psycopg.connect(dsn, autocommit=True)
@@ -94,6 +95,7 @@ class Lab:
         terms = {}
         if self.workflow == "dynamic-v1":
             brief_data["objective"] = "Write one short notebook email for students." if label != "C" else "Write a notebook landing page and SEO metadata based on the page."
+            terms["max_parallel_nodes"] = self.parallelism
             terms["extra_skills"] = ["seo"] if label == "C" else []
         self.api.put(
             path + "/submission",

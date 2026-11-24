@@ -1,0 +1,6 @@
+# Dedicated internal test. Two inference slots of 8192 tokens each.
+services:
+  model:
+    command: ["-m", "/models/workforce.gguf", "--alias", "amc-local", "--host", "0.0.0.0", "--port", "8080", "-c", "16384", "-np", "2", "--slots"]
+    ports:
+      - "127.0.0.1::8080"

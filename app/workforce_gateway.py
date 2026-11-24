@@ -127,6 +127,12 @@ def reserve_tokens(body):
     return len(json.dumps(body, ensure_ascii=False).encode()) + 512
 
 
+def measured_cost(config, body, inputs, outputs):
+    if type(inputs) is not int or type(outputs) is not int or not (0 < inputs <= reserve_tokens(body) and 0 < outputs <= body["max_tokens"]):
+        raise GatewayError("invalid_usage")
+    return config.price(inputs, outputs)
+
+
 def infer(config, body):
     headers = {}
     if config.provider == "openai":

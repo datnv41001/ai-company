@@ -77,6 +77,10 @@ jobs:
           export AMC_MIGRATION_DSN="${AMC_MIGRATION_DSN%/*}/amc_test_populated_v11"
           export DATABASE_URL="${DATABASE_URL%/*}/amc_test_populated_v11"
           python tests/check_postgres_upgrade.py --from-v11
+          docker exec amc-test-pg createdb -U postgres amc_test_populated_v12
+          export AMC_MIGRATION_DSN="${AMC_MIGRATION_DSN%/*}/amc_test_populated_v12"
+          export DATABASE_URL="${DATABASE_URL%/*}/amc_test_populated_v12"
+          python tests/check_postgres_upgrade.py --from-v12
   compose-browser:
     runs-on: ubuntu-latest
     steps:
@@ -156,6 +160,11 @@ jobs:
           python tests/pool_model_smoke.py --docker || pool_result=$?
           AMC_POOL_REPORT=diamond-measurements.json python tests/pool_model_smoke.py --docker --workflow diamond-v1
           AMC_POOL_REPORT=dynamic-measurements.json python tests/pool_model_smoke.py --docker --workflow dynamic-v1
+          parallel_compose=(docker compose -p amc-workforce-test -f compose.yaml -f tests/compose_pool_database.yaml -f tests/compose_parallel_model.yaml --profile local-model)
+          "${parallel_compose[@]}" up -d --no-deps model
+          model_port="$("${parallel_compose[@]}" port model 8080 | cut -d: -f2)"
+          curl --fail --retry 60 --retry-all-errors --retry-delay 1 "http://127.0.0.1:$model_port/health"
+          AMC_LOCAL_MODEL_URL="http://127.0.0.1:$model_port/v1" AMC_PARALLEL_REPORT=parallel-measurements.json python tests/parallel_model_smoke.py
           test "$single_result" -eq 0 && test "$pool_result" -eq 0
       - uses: actions/upload-artifact@v4
         if: always()
@@ -165,4 +174,5 @@ jobs:
             pool-measurements.json
             diamond-measurements.json
             dynamic-measurements.json
+            parallel-measurements.json
           if-no-files-found: ignore

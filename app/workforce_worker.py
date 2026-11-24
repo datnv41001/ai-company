@@ -16,7 +16,7 @@ from .database import engine, prepare_database
 from .delivery import as_utc
 from .revision_qa import evaluate
 from .models import AuditEvent, Deliverable, Membership, utcnow
-from .workforce_gateway import Gateway, GatewayError, PROMPT_VERSION, infer, quality, request_body, reserve_tokens, validate_output
+from .workforce_gateway import Gateway, GatewayError, PROMPT_VERSION, infer, measured_cost, quality, request_body, reserve_tokens, validate_output
 from .workforce_models import WorkforceRun
 from . import dynamic_plan, workflow_dag
 
@@ -166,6 +166,41 @@ def bounded_call(config, body):
             child.join()
 
 
+def save_checkpoint(db, scope, run, stage, output, node):
+    record = {"skill": stage, "output": output, "quality": quality(output, run.knowledge["sources"])}
+    if node:
+        record.update(node_id=node.id, plan_revision=node.revision)
+        joined = workflow_dag.checkpoint(db, run, node, record)
+    else:
+        run.checkpoints = [*run.checkpoints, record]
+        joined = len(run.checkpoints) == len(run.plan)
+    if joined:
+        # Only draft copy and specialist proposals enter QA. Director instructions, prompts and source excerpts stay private.
+        preview = "\n\n".join(p["skill"].upper() + "\n" + p["output"]["text"] for p in run.checkpoints if p["skill"] != "director")
+        doc = Deliverable(
+            tenant_id=run.tenant_id,
+            campaign_id=run.campaign_id,
+            title=run.knowledge["title"],
+            content={"client_preview": preview, "workforce_run_id": run.id},
+            created_by=scope.operator,
+            status="submitted",
+        )
+        db.add(doc)
+        db.flush()
+        if node:
+            db.execute(
+                text("""update amc_ops.dag_plans set deliverable=:d where run=:r and revision=:v
+                and deliverable is null returning run"""),
+                {"d": doc.id, "r": run.id, "v": node.revision},
+            ).scalar_one()
+        run.deliverable_id, run.state = doc.id, "awaiting_qa"
+        db.flush()  # The evidence lookup follows the persisted worker-to-draft link.
+        evaluate(db, doc, scope.operator)
+        db.add(
+            AuditEvent(tenant_id=run.tenant_id, user_id=scope.operator, subject_id=doc.id, event="workforce.submitted_to_qa", details={"run_id": run.id})
+        )
+
+
 def finish(db, scope, config, task, result, error, *, node=None, commit=True):
     rid, token, body = task
     run = db.scalar(authorized_queue(db, scope).where(WorkforceRun.id == rid).with_for_update())
@@ -176,9 +211,7 @@ def finish(db, scope, config, task, result, error, *, node=None, commit=True):
     if result is not None:
         raw, inputs, outputs = result
         try:
-            if type(inputs) is not int or type(outputs) is not int or not (0 < inputs <= reserve_tokens(body) and 0 < outputs <= body["max_tokens"]):
-                raise GatewayError("invalid_usage")
-            cost = config.price(inputs, outputs)
+            cost = measured_cost(config, body, inputs, outputs)
             run.reserved_microusd += cost - run.journal[-1]["reserved_microusd"]
             metrics = {"input_tokens": inputs, "output_tokens": outputs, "estimated_microusd": cost}
             if not error:
@@ -200,40 +233,9 @@ def finish(db, scope, config, task, result, error, *, node=None, commit=True):
         run.ready_at = utcnow() + timedelta(seconds=2**run.attempts)
     else:
         close_attempt(run, outcome="ok", **metrics)
-        record = {"skill": stage, "output": output, "quality": quality(output, run.knowledge["sources"])}
-        if node:
-            record.update(node_id=node.id, plan_revision=node.revision)
-            joined = workflow_dag.checkpoint(db, run, node, record)
-        else:
-            run.checkpoints = [*run.checkpoints, record]
-            joined = len(run.checkpoints) == len(run.plan)
         run.last_error, run.attempts, run.ready_at = None, 0, utcnow()
         run.state = "queued"
-        if joined:
-            # Only draft copy and specialist proposals enter QA. Director instructions, prompts and source excerpts stay private.
-            preview = "\n\n".join(p["skill"].upper() + "\n" + p["output"]["text"] for p in run.checkpoints if p["skill"] != "director")
-            doc = Deliverable(
-                tenant_id=run.tenant_id,
-                campaign_id=run.campaign_id,
-                title=run.knowledge["title"],
-                content={"client_preview": preview, "workforce_run_id": run.id},
-                created_by=scope.operator,
-                status="submitted",
-            )
-            db.add(doc)
-            db.flush()
-            if node:
-                db.execute(
-                    text("""update amc_ops.dag_plans set deliverable=:d where run=:r and revision=:v
-                    and deliverable is null returning run"""),
-                    {"d": doc.id, "r": rid, "v": node.revision},
-                ).scalar_one()
-            run.deliverable_id, run.state = doc.id, "awaiting_qa"
-            db.flush()  # The evidence lookup follows the persisted worker-to-draft link.
-            evaluate(db, doc, scope.operator)
-            db.add(
-                AuditEvent(tenant_id=run.tenant_id, user_id=scope.operator, subject_id=doc.id, event="workforce.submitted_to_qa", details={"run_id": run.id})
-            )
+        save_checkpoint(db, scope, run, stage, output, node)
     if commit:
         db.commit()
     else:

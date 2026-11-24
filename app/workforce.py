@@ -46,6 +46,7 @@ class BriefData(Input):
 
 
 class Start(Input):
+    max_parallel_nodes: Literal[1, 2] = 1
     workflow: Literal["linear", "diamond-v1", "dynamic-v1"] = "linear"
     extra_skills: list[Literal["seo", "creative", "ads", "analytics"]] = Field(default_factory=list, max_length=4)
     budget_microusd: int = Field(default=0, ge=0, le=1_000_000)
@@ -127,6 +128,8 @@ def start(tenant_id: str, bid: str, body: Start, user: User = Depends(current_us
     b = db.scalar(brief_query(db, m).where(WorkforceBrief.id == bid))
     if not b:
         raise HTTPException(404, "Brief unavailable")
+    if body.max_parallel_nodes == 2 and body.workflow != 'dynamic-v1':
+        raise HTTPException(422, 'Two leases require a dynamic workflow')
     plan = CORE + [s for s in EXTRA if s in body.extra_skills]
     if body.workflow == "diamond-v1":
         if body.extra_skills:
@@ -144,7 +147,7 @@ def start(tenant_id: str, bid: str, body: Start, user: User = Depends(current_us
     prior = db.scalar(select(WorkforceRun).where(WorkforceRun.brief_id == bid, WorkforceRun.tenant_id == tenant_id))
     if prior:
         same_plan = prior.knowledge.get("required_outputs") == required if body.workflow == "dynamic-v1" else prior.plan == plan
-        if prior.knowledge.get("workflow", "linear") != body.workflow or not same_plan or prior.budget_microusd != body.budget_microusd:
+        if prior.knowledge.get("workflow", "linear") != body.workflow or prior.knowledge.get('max_parallel_nodes', 1) != body.max_parallel_nodes or not same_plan or prior.budget_microusd != body.budget_microusd:
             raise HTTPException(409, "Brief already queued with different terms")
         return {"id": prior.id, "state": prior.state}
     if not b.payload:
@@ -167,6 +170,8 @@ def start(tenant_id: str, bid: str, body: Start, user: User = Depends(current_us
     }
     if body.workflow == "dynamic-v1":
         knowledge["required_outputs"] = required
+        if body.max_parallel_nodes == 2:
+            knowledge["max_parallel_nodes"] = 2
     if body.workflow != "linear":
         knowledge["workflow"] = body.workflow
         knowledge["workflow_revision"] = 1

@@ -168,7 +168,7 @@ def render(root):
             "Cả hai giao thức đặt verdict flag ở vị trí đầu. Hiệu ứng thứ tự lựa chọn còn chưa được kiểm soát. Thay đổi đồng thời miền và encoding ngăn suy luận kiểu trả lời nào tốt hơn từ phép so giữa hai cohort. "
             "Mỗi miền Marketing chỉ có bốn ca dương và bốn ca âm. Mẫu tổng hợp nhỏ chưa xác lập năng lực nghiệp vụ hoặc khả năng tổng quát hóa.",
             "",
-            "Trước phép đo, một dispatch dùng JSON schema không được bản llama-server hiện tại hỗ trợ. Server trả HTTP 400, 0 receipt được chấp nhận, "
+            "Trước phép đo, một dispatch với biến thể JSON schema cũ nhận HTTP 400 từ llama-server, 0 receipt được chấp nhận, "
             "1 attempt không rõ usage và 4.000 token dự phòng vẫn bị giữ. [Checkpoint đã hủy](preflight-unsupported-schema.json). "
             "Các bảng chỉ dùng lần chạy với schema đã được hỗ trợ; 100 lượt đo đều có output ký và pin riêng.",
             "",

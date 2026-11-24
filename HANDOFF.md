@@ -1,5 +1,9 @@
 # Bắt đầu ở đây khi tiếp quản AI Marketing Company
 
+## AIRC-500 · Thiết kế công cụ review nội bộ
+
+Từ mốc `ece8ecc84b4938900821ff85403bb5b8243534c6`, catalog engineering có 500 hồ sơ và 12 discipline. Trên máy mới chạy `python engineering/airc500/catalog.py` từ gốc repo. [Đề xuất kiến trúc, hợp đồng, lệnh kiểm thử và backlog pilot](engineering/airc500/README.md). Giai đoạn này mới bàn giao thiết kế; commercial GA giữ NO-GO. Runtime AMC vẫn dùng schema v18 tại mốc trên.
+
 ## PR #15 · Xác minh email và nhận lời mời workspace
 
 Nhánh `feature/verified-workspace-invitations` phát triển từ `d81df0be`. Compose chạy PostgreSQL **16.6**. Schema ứng dụng **v18** bổ sung tên thương hiệu và chiến dịch vào lời mời. Khi dùng bản v17 đã review tại `df48ef26`, chạy migrator để nâng cấp trước khi khởi động API mới. Commercial GA vẫn NO-GO. Xem [hướng dẫn vận hành và nghiệm thu](docs/PR15-IDENTITY.md) và [CI trên head và bản tích hợp thử](https://github.com/datnv41001/ai-company/pull/15/checks).

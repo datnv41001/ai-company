@@ -1,5 +1,77 @@
 # Bắt đầu ở đây khi tiếp quản AI Marketing Company
 
+## Main sau PR #10 · Registry v14
+
+[PR #10](https://github.com/datnv41001/ai-company/pull/10) đã merge vào `main` ngày 24/11/2026 tại [`d98533154ebe3f65dab3f7fb249115bc83420824`](https://github.com/datnv41001/ai-company/commit/d98533154ebe3f65dab3f7fb249115bc83420824). Hai parent lần lượt là `f283c6e9eef7054ec11d1aac20ed6971fa891499` và head được duyệt `a998ac65d8859c35642b5d678bc010bf095542ae`. Cây Git của bản merge và head trùng nhau tại `f7d2e31c6f0f450802399e0759a3721de18f2115`. Phạm vi nghiệm thu là phát triển nội bộ với PostgreSQL schema 14 và dữ liệu tổng hợp.
+
+[CI của commit merge](https://github.com/datnv41001/ai-company/actions/runs/45322008549) đạt cả 3 job. Ruff và 156/156 bài SQLite/PostgreSQL/RLS đạt. Cả 13 đường nâng v1–v13 có dữ liệu lên v14, chạy lặp và kiểm tra cô lập khách hàng đều đạt. Chromium đạt ở 1280×850 và 390×844. [Log API và migration](https://github.com/datnv41001/ai-company/actions/runs/45322008549/job/138202530487) · [Log Docker và Chromium](https://github.com/datnv41001/ai-company/actions/runs/45322008549/job/138202530780).
+
+Qwen local chuyển checkout ngay sau checkpoint Content. Run v1 tiếp tục với `seo@1`, giữ đúng manifest và plan digest đã ghim, dùng 994 token vào và 264 ra. Run v2 dùng `seo@2`, 1.007 token vào và 261 ra. Mỗi run hoàn thành ba attempt ngay lần đầu và có một snapshot được khách mẫu duyệt. [Job model](https://github.com/datnv41001/ai-company/actions/runs/45322008549/job/138202530811) · [Artifact chứa registry-rollout.json](https://github.com/datnv41001/ai-company/actions/runs/45322008549/artifacts/14887748205).
+
+| Runtime đo tại bản merge | Fingerprint SHA-256 |
+| --- | --- |
+| CPython 3.12.16 trong job Qwen | `b73b9c3eca164532f03dd3ee3f5508ccd172e59ab0209ca079254bc786a182e9` |
+| CPython 3.12.14 trên máy Windows thử | `9148f3773559f0c95c961e50db9ae8020dd3f5199cf0ae2b1de67c6a35cb112e` |
+
+Mỗi hồ sơ cho phép digest `c64cf3e0…` của adapter v1 và `3ab7030b…` của `seo@2`. Phạm vi băm bao gồm mã runtime, catalog, migration, requirements cùng phiên bản Python và thư viện. Giao diện tĩnh và một số script nằm ngoài phạm vi này. Git và CI bảo vệ hồ sơ phát hành. Chữ ký phát hành độc lập và cảnh báo tự động khi pool thiếu adapter là hai việc còn mở. [Danh sách fingerprint và digest đầy đủ](migrations/registry-runtime.lock.json) · [Phép thử nhận diện](tests/test_adapter_fingerprint.py).
+
+### Trước khi kích hoạt một phiên bản adapter
+
+1. Tạm ngừng giao brief mới cho workflow liên quan. Liệt kê các run registry đang `queued` hoặc `running` và các hợp đồng chúng đã ghim theo truy vấn dưới đây. Với run có nhiều skill, dùng graph để xác định node đang chờ, node có report chưa được tiêu thụ và các bước còn lại.
+2. Dùng [cấu hình pool nội bộ](docs/POOL-RUNBOOK.md) để thay những tiến trình cũ chưa kiểm tra fingerprint, sau khi xử lý các lease đang mở. Khởi động dispatcher và worker từ image đã kiểm thử. Kiểm tra **từng replica trên từng máy**. Ví dụ dưới đây đọc fingerprint và các adapter mà một dispatcher đang chạy có thể phân giải. Lặp lệnh với tên service và chỉ số tương ứng cho từng replica, kể cả `worker-one` và `worker-two`.
+
+   ```sh
+   docker compose -p amc-dev --env-file .env --env-file .env.pool -f compose.yaml -f compose.pool.yaml exec -T --index 1 dispatcher python -c "from migrations.runtime_bundle import runtime_fingerprint; from app.registry_adapters import runtimes; print(runtime_fingerprint(), {k:v.digest for k,v in runtimes().items()})"
+   ```
+
+3. Đối chiếu cặp `adapter` và `adapter_digest` từ run với kết quả trên và kiểm tra provider, timeout, route và worker sẵn sàng cho đúng campaign. Duy trì ít nhất một dispatcher tương thích trên pool phục vụ từng phiên bản còn việc. Chỉ kích hoạt phiên bản mới sau khi thay hết tiến trình cũ chưa có cơ chế kiểm tra và đã chạy thử một brief tổng hợp. Khi thiếu runtime, khôi phục image tương thích và tiếp tục từ checkpoint. Giữ dispatcher cũ **có cơ chế kiểm tra** đến khi run ghim nó kết thúc, report đã được tiêu thụ và hold đã được đối soát. Lần bàn giao này chỉ kích hoạt phiên bản mới bên trong fixture nghiệm thu.
+
+### Kiểm kê sau merge
+
+| Phạm vi đo riêng | Run đang chờ adapter | Khoản giữ chưa giải phóng | Snapshot khách mẫu đã duyệt |
+| --- | --- | --- | --- |
+| Ba pool dev local `amc_company_pool_dev` (v10), `amc_diamond_dev` (v11), `amc_parallel_dev` (v13) | 0 run pool đang hoạt động | 0 | 0 |
+| Database tổng hợp ngay sau khi nâng từ v13 lên v14 và chạy lặp | 3 run pool legacy đang hoạt động, 0 run ghim registry | 1 offer chưa nhận giữ 400 micro-USD, 2 attempt đã gửi giữ tổng 700 micro-USD | 1 |
+| Hai run registry trong bài Qwen của commit merge | 0, cả hai đã đến bước QA | 0 micro-USD, 0 attempt mở, usage của cả 6 lượt đã xác nhận | 2, mỗi run 1 bản |
+
+Ba pool local được kiểm kê trong transaction chỉ đọc. Fixture migration có 3 khoản giữ tổng 1.100 micro-USD trong sổ cái thử. Số run có tổng `held + spent` lệch `reserved_microusd` là 0 ở cả bốn database local. Các khoản giữ của fixture được bảo toàn qua migration. [Fixture hai lease đã gửi](tests/registry_upgrade_fixture.py) · [Fixture offer và receipt](tests/financial_upgrade_fixture.py).
+
+Để tái lập phép đo, chạy `python tests/check_postgres_upgrade.py --from-v13` trên một database thử trống riêng như trong [CI](.github/workflows/ci.yml). Chạy các truy vấn dưới đây bằng tài khoản vận hành trên DB thử, trong cùng một transaction. So danh sách hợp đồng của các run còn hoạt động với runtime và route ở bước trên. Trạng thái `queued` một mình chưa cho biết run đang chờ adapter, worker, ngân sách hay predecessor.
+
+```sql
+BEGIN TRANSACTION ISOLATION LEVEL REPEATABLE READ READ ONLY;
+SELECT r.id, r.state, r.knowledge->'registry'->>'workflow' AS workflow,
+       c.key AS skill, c.value->>'adapter' AS adapter,
+       c.value->>'adapter_digest' AS adapter_digest
+FROM workforce_runs r
+CROSS JOIN LATERAL jsonb_each((r.knowledge->'registry'->'contracts')::jsonb) AS c
+WHERE r.state IN ('queued', 'running')
+ORDER BY r.id, c.key;
+
+WITH balance AS (
+  SELECT id, sum(held) AS amount FROM amc_ops.ledger GROUP BY id
+)
+SELECT a.status, count(*) AS attempts, sum(b.amount) AS held_microusd
+FROM balance b JOIN amc_ops.attempts a USING (id)
+WHERE b.amount > 0 GROUP BY a.status ORDER BY a.status;
+
+SELECT count(*) AS approved_snapshots
+FROM client_reviews s JOIN review_entries e
+  ON (e.tenant_id, e.review_id, e.digest) = (s.tenant_id, s.id, s.digest)
+WHERE e.kind = 'approved';
+COMMIT;
+```
+
+### Đề xuất sau v14 · Workflow Marketing và QA theo vai trò
+
+| Thứ tự đề xuất | Nội dung | Điều kiện đưa ra review |
+| --- | --- | --- |
+| 1. QA cho Content và SEO của bản nháp landing | Ghim phiên bản quy tắc theo node. Content kiểm tra CTA, nội dung đúng brief và claim có nguồn. SEO đối chiếu title, meta và search intent với đúng bản Content tiền nhiệm. Finding ghi rule, vị trí và nguồn để người QA quyết định. | Với từng role, dùng mẫu đạt, mẫu lỗi và nguồn của khách B trong cùng agency. Sửa nội dung A → B → A phải yêu cầu QA đúng revision. Chạy v1 đang dở song song với bản rule mới và đối chiếu snapshot cũ. |
+| 2. Thử một tiểu quy trình của WF-03 Audit & Research | Marketing lead duyệt bộ brief tổng hợp. Research tách fact, giả thuyết và dữ liệu thiếu. Strategy nhận checkpoint Research, đề xuất KPI có đơn vị và cách đo. Director chỉ phân công các skill campaign được cấp. | Chạy một brief có đủ bằng chứng và một brief thiếu nguồn. Kiểm tra grant, thu hồi giữa hai node, retry, hold, QA người duyệt và snapshot. Ghi riêng số lượt, token và chất lượng theo rubric trên Qwen local. |
+| 3. Mở rộng WF-13 và WF-11 theo đầu ra đã được duyệt | Với WF-13, đề xuất đặc tả form, tracking và giả thuyết A/B. Với WF-11, đề xuất bản audit từ tài liệu được cấp và danh sách thay đổi để người phụ trách duyệt. | Mỗi tiểu quy trình cần manifest, fingerprint đã review và E2E độc lập. Reviewer nghiệp vụ ký cho đúng phạm vi và phiên bản dựa trên fixture, CI và artifact. |
+
+Ưu tiên vận hành đi kèm là đo thời gian chờ node/report theo phiên bản, xác định dispatcher tương thích còn hoạt động và cảnh báo khi số lượng về 0. Fixture cần phân biệt thiếu adapter với chờ ngân sách hoặc worker. Các workflow mẹ WF-13, WF-11 và bộ 37 vai trò vẫn chờ nghiệm thu thương mại theo [ma trận truy vết](docs/PR9-TRACEABILITY.md).
+
 ## Main sau PR #7 và #8 · PostgreSQL v13
 
 Ngày 24/11/2026, main nhận lần lượt hai merge commit cho phát triển nội bộ trên dữ liệu tổng hợp.

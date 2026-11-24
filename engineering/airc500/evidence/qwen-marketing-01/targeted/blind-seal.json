@@ -1,0 +1,24 @@
+{
+  "run_id": "synthetic-targeted-76ffd291bfad4804a77113bf43c0d29f",
+  "seal": "0cc27fd76037408b23086d0f225b3223996ba8ec321fc1383d5faea0ddebf9d2",
+  "assignments": [
+    "targeted-01",
+    "targeted-02",
+    "targeted-03",
+    "targeted-04",
+    "targeted-05",
+    "targeted-06",
+    "targeted-07",
+    "targeted-08"
+  ],
+  "outputs": [
+    "f52b6175978df4f04fa09f7f784bbc07f19582a05264ab08dd46cfbbc4ea301a",
+    "78cec71b28e6be4a689eeb47d5d877ac7c05df360e2d4cb5aa63260f1236b1b1",
+    "1f0917ad897de45876f8dfc70f6a9bccc49095012d730645eb1d3642a4eabb09",
+    "b4b597d62f6c730c29c55b20bb534a4295519a5a665739f32ad2bf4e0ff08a8d",
+    "57faccd742b33179cab4150f366a9c74dce9cc3be75a0de5243719c728f1857b",
+    "931fa84de09a0129c68a0a22bd377c33a9d56bbae1c564af3cc1bf8b5a27451a",
+    "0553ac66fba08122124f19e7907b1b3af54a7a1a44d310c7d3c4f2afd66d7b8f",
+    "3c323d3d8b9d2949ea2543bfca561ff0a0087fbdeab732918ab30df498194b16"
+  ]
+}

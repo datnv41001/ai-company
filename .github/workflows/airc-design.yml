@@ -21,7 +21,7 @@ jobs:
         run: |
           python engineering/airc500/catalog.py
           python -m unittest discover -s engineering/airc500 -p "test_design.py" -v
-      - name: Check wire contracts against synthetic records
+      - name: Check receipt authenticity and crash recovery on synthetic records
         run: |
-          python -m pip install "jsonschema==4.25.1"
-          python -m unittest discover -s engineering/airc500 -p "test_wire.py" -v
+          python -m pip install -r engineering/airc500/requirements-pilot.txt
+          python -m unittest discover -s engineering/airc500 -p "test_*.py" -v

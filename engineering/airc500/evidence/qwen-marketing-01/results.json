@@ -1,0 +1,2666 @@
+{
+  "manifest": {
+    "repository": "fixture/marketing-exhibition",
+    "pr_number": 1,
+    "base_sha": "6f23449c5a3467ddcb5e8e773c40768837d5bbc5",
+    "head_sha": "a381db60e8b539b3cdd06c0bee343b3348f204c4",
+    "changed_files": [
+      "campaign/published-copy.jsonl"
+    ],
+    "blobs": {
+      "6f23449c5a3467ddcb5e8e773c40768837d5bbc5:brand/approved-facts.jsonl": {
+        "git_oid": "682c28a68b605cc5d95a42765301858d826a9e07",
+        "sha256": "e2a752c07e96f87980a96b2ba19fcc29375fb57902dfe7159fca0bcefdbb711a"
+      },
+      "6f23449c5a3467ddcb5e8e773c40768837d5bbc5:campaign/published-copy.jsonl": {
+        "git_oid": "682c28a68b605cc5d95a42765301858d826a9e07",
+        "sha256": "e2a752c07e96f87980a96b2ba19fcc29375fb57902dfe7159fca0bcefdbb711a"
+      },
+      "a381db60e8b539b3cdd06c0bee343b3348f204c4:brand/approved-facts.jsonl": {
+        "git_oid": "682c28a68b605cc5d95a42765301858d826a9e07",
+        "sha256": "e2a752c07e96f87980a96b2ba19fcc29375fb57902dfe7159fca0bcefdbb711a"
+      },
+      "a381db60e8b539b3cdd06c0bee343b3348f204c4:campaign/published-copy.jsonl": {
+        "git_oid": "c9f9be41ad6ccfa258f8f906326fe74fe2256523",
+        "sha256": "f2dd555fe2458800e951c66af0d98f6a0124b9afd98a4ff278ab259501b4a134"
+      }
+    }
+  },
+  "adapter": {
+    "binary_sha256": "add03887ff7081f4bf37b7335c752edfe902520ef6d6d9faaede3a14dffa163e",
+    "model_sha256": "74a4da8c9fdbcd15bd1f6d01d621410d31c6fc00986f5eb687824e7b93d7a9db",
+    "transport": "private loopback process",
+    "max_concurrency": 1
+  },
+  "public_trust_sha256": "400f86483df5c4521ace9c26c5f83975f2e45415d56c8af1a6e684e259948ca9",
+  "targeted": {
+    "run_id": "synthetic-targeted-76ffd291bfad4804a77113bf43c0d29f",
+    "participation": {
+      "distinct_reviewers": 9,
+      "assignments": 11,
+      "attempts": 11,
+      "actual_calls": 11,
+      "dispatches": 11,
+      "accepted_receipts": 11,
+      "rejected_receipts": 0,
+      "input_tokens": 4473,
+      "output_tokens": 2419,
+      "model_family": "Qwen2.5",
+      "max_observed_concurrency": 1,
+      "paid_microusd": 0
+    },
+    "ledger": {
+      "run_id": "synthetic-targeted-76ffd291bfad4804a77113bf43c0d29f",
+      "assignments": 11,
+      "attempts": 11,
+      "dispatches": 11,
+      "accepted_receipts": 11,
+      "rejected_receipts": 0,
+      "accepted_reviewer_ids": [
+        "AR-002",
+        "MK-021",
+        "MK-022",
+        "MK-023",
+        "MK-025",
+        "MK-051",
+        "MK-052",
+        "MK-054",
+        "MK-055"
+      ],
+      "families": [
+        "Qwen2.5"
+      ],
+      "cancelled": false,
+      "over_budget": false,
+      "blind_seal_digest": "0cc27fd76037408b23086d0f225b3223996ba8ec321fc1383d5faea0ddebf9d2",
+      "input_tokens": 4473,
+      "output_tokens": 2419,
+      "settled_microusd": 0,
+      "held_tokens": 0,
+      "held_microusd": 0,
+      "uncertain_attempts": 0
+    },
+    "coverage": "complete",
+    "evaluation": {
+      "counterevidence_exercise": {
+        "kind": "authored fixture supplied after blind seal; not additional model opinions",
+        "unit": "H01",
+        "positions": [
+          {
+            "id": "briefing-A",
+            "status": "matches",
+            "message": "The offer was approved at an earlier planning meeting."
+          },
+          {
+            "id": "briefing-B",
+            "status": "matches",
+            "message": "An unsigned sales summary lists the copy as approved."
+          },
+          {
+            "id": "fact-editor",
+            "status": "conflict",
+            "message": "Compare the two committed values on line 1.",
+            "source_path": "brand/approved-facts.jsonl",
+            "copy_path": "campaign/published-copy.jsonl",
+            "line": 1
+          }
+        ],
+        "admitted_position_ids": [
+          "fact-editor"
+        ],
+        "observation": [
+          "USD 18",
+          "USD 12"
+        ],
+        "arbiter_opinion": {
+          "action": "keep",
+          "approved_line": 1,
+          "copy_line": 1,
+          "reason": "The offer fee is clearly stated to be USD 18, which matches the approved value of USD 12 and the 'weekday adult entry fee' field. The discrepancy is due to the discrepancy in the offer copy value of USD 18. The offer copy shows a higher price of USD 18 compared to the synthetic offer sheet's USD 12.",
+          "status": "insufficient"
+        },
+        "independent_disposition": "verified"
+      },
+      "oracle": "deterministic pinned typed marketing fields; no human or AI-adjudicated labels",
+      "case_count": 8,
+      "positive_count": 4,
+      "judgments": {
+        "H05": [
+          {
+            "assignment": "targeted-01",
+            "reviewer": "MK-021",
+            "status": "insufficient",
+            "note": "The replica lens is the exact authorized attribute of the product, so it matches the stated goal and audience."
+          },
+          {
+            "assignment": "targeted-02",
+            "reviewer": "MK-022",
+            "status": "insufficient",
+            "note": "Original item and replica lenses are both in the same category of items and do not conflict."
+          },
+          {
+            "assignment": "targeted-03",
+            "reviewer": "MK-023",
+            "status": "matches",
+            "note": "The original item and its replica are the same, so the statement about the original item is not a conflict."
+          },
+          {
+            "assignment": "targeted-04",
+            "reviewer": "MK-025",
+            "status": "insufficient",
+            "note": "The original item and its replica are the same, so no need to compare them."
+          }
+        ],
+        "H06": [
+          {
+            "assignment": "targeted-01",
+            "reviewer": "MK-021",
+            "status": "insufficient",
+            "note": "The Vietnamese is the exact authorized attribute of the product, so it matches the stated goal and audience."
+          },
+          {
+            "assignment": "targeted-02",
+            "reviewer": "MK-022",
+            "status": "insufficient",
+            "note": "Original item and Vietnamese are in the same category of items and do not conflict."
+          },
+          {
+            "assignment": "targeted-03",
+            "reviewer": "MK-023",
+            "status": "matches",
+            "note": "The original item and its replica are the same, so the statement about the original item is not a conflict."
+          },
+          {
+            "assignment": "targeted-04",
+            "reviewer": "MK-025",
+            "status": "insufficient",
+            "note": "The original item and its replica are the same, so no need to compare them."
+          }
+        ],
+        "H07": [
+          {
+            "assignment": "targeted-01",
+            "reviewer": "MK-021",
+            "status": "insufficient",
+            "note": "The paper marbling is the exact authorized attribute of the product, so it matches the stated goal and audience."
+          },
+          {
+            "assignment": "targeted-02",
+            "reviewer": "MK-022",
+            "status": "insufficient",
+            "note": "Original item and paper marbling are in the same category of items and do not conflict."
+          },
+          {
+            "assignment": "targeted-03",
+            "reviewer": "MK-023",
+            "status": "matches",
+            "note": "The original item and its replica are the same, so the statement about the original item is not a conflict."
+          },
+          {
+            "assignment": "targeted-04",
+            "reviewer": "MK-025",
+            "status": "insufficient",
+            "note": "The original item and its replica are the same, so no need to compare them."
+          }
+        ],
+        "H08": [
+          {
+            "assignment": "targeted-01",
+            "reviewer": "MK-021",
+            "status": "insufficient",
+            "note": "The closing time on Wednesday is the exact authorized attribute of the product, so it matches the stated goal and audience."
+          },
+          {
+            "assignment": "targeted-02",
+            "reviewer": "MK-022",
+            "status": "insufficient",
+            "note": "Original item and closing time are in the same category of items and do not conflict."
+          },
+          {
+            "assignment": "targeted-03",
+            "reviewer": "MK-023",
+            "status": "matches",
+            "note": "The original item and its replica are the same, so the statement about the original item is not a conflict."
+          },
+          {
+            "assignment": "targeted-04",
+            "reviewer": "MK-025",
+            "status": "insufficient",
+            "note": "The original item and its replica are the same, so no need to compare them."
+          }
+        ],
+        "H01": [
+          {
+            "assignment": "targeted-05",
+            "reviewer": "MK-051",
+            "status": "matches",
+            "note": "The offer copy 'USD 18' matches the approved value of 'USD 18' and the 'weekday adult entry fee' field, indicating eligibility and expiry."
+          },
+          {
+            "assignment": "targeted-06",
+            "reviewer": "MK-052",
+            "status": "insufficient",
+            "note": "The offer fee is clearly stated to be USD 18."
+          },
+          {
+            "assignment": "targeted-07",
+            "reviewer": "MK-054",
+            "status": "conflict",
+            "note": "The offer copy value of USD 18 is a conflict as it does not match the required value of USD 12."
+          },
+          {
+            "assignment": "targeted-08",
+            "reviewer": "MK-055",
+            "status": "insufficient",
+            "note": "The offer copy shows a higher price of USD 18 compared to the synthetic offer sheet's USD 12."
+          }
+        ],
+        "H02": [
+          {
+            "assignment": "targeted-05",
+            "reviewer": "MK-051",
+            "status": "matches",
+            "note": "The offer copy '16 years' matches the approved value of '16 years' and the 'minimum booking age' field, indicating eligibility and expiry."
+          },
+          {
+            "assignment": "targeted-06",
+            "reviewer": "MK-052",
+            "status": "insufficient",
+            "note": "The minimum booking age is clearly stated to be 16 years."
+          },
+          {
+            "assignment": "targeted-07",
+            "reviewer": "MK-054",
+            "status": "conflict",
+            "note": "The offer copy value of 16 years is a conflict as it does not match the required value of 16 years."
+          },
+          {
+            "assignment": "targeted-08",
+            "reviewer": "MK-055",
+            "status": "insufficient",
+            "note": "The offer copy shows a minimum booking age of 16 years compared to the synthetic offer sheet's 16 years."
+          }
+        ],
+        "H03": [
+          {
+            "assignment": "targeted-05",
+            "reviewer": "MK-051",
+            "status": "matches",
+            "note": "The offer copy '2027-04-18' matches the approved value of '2027-04-18' and the 'last day for early tickets' field, indicating eligibility and expiry."
+          },
+          {
+            "assignment": "targeted-06",
+            "reviewer": "MK-052",
+            "status": "insufficient",
+            "note": "The last day for early tickets is clearly stated to be 2027-04-18."
+          },
+          {
+            "assignment": "targeted-07",
+            "reviewer": "MK-054",
+            "status": "conflict",
+            "note": "The offer copy value of 2027-04-18 is a conflict as it does not match the required value of 2027-04-18."
+          },
+          {
+            "assignment": "targeted-08",
+            "reviewer": "MK-055",
+            "status": "insufficient",
+            "note": "The offer copy shows a last day for early tickets of 2027-04-18 compared to the synthetic offer sheet's 2027-04-18."
+          }
+        ],
+        "H04": [
+          {
+            "assignment": "targeted-05",
+            "reviewer": "MK-051",
+            "status": "matches",
+            "note": "The offer copy '4 people' matches the approved value of '6 people' and the 'guests covered by one family ticket' field, indicating eligibility and expiry."
+          },
+          {
+            "assignment": "targeted-06",
+            "reviewer": "MK-052",
+            "status": "insufficient",
+            "note": "The guest coverage is clearly stated to be 6 people."
+          },
+          {
+            "assignment": "targeted-07",
+            "reviewer": "MK-054",
+            "status": "conflict",
+            "note": "The offer copy value of 4 people is a conflict as it does not match the required value of 6 people."
+          },
+          {
+            "assignment": "targeted-08",
+            "reviewer": "MK-055",
+            "status": "insufficient",
+            "note": "The offer copy shows 4 people compared to the synthetic offer sheet's 6 people."
+          }
+        ]
+      },
+      "candidates": [
+        {
+          "unit": "H01",
+          "finding_id": "targeted-07-H01",
+          "run_id": "synthetic-targeted-76ffd291bfad4804a77113bf43c0d29f",
+          "reviewer_id": "MK-054",
+          "attempt_id": "11bc0412-cdbc-46c6-b2eb-447a1d4eabe8",
+          "model": "Qwen2.5-0.5B-Instruct-Q4_K_M",
+          "model_version": "9217f5db79a29953eb74d5343926648285ec7e67",
+          "family": "Qwen2.5",
+          "base_sha": "6f23449c5a3467ddcb5e8e773c40768837d5bbc5",
+          "head_sha": "a381db60e8b539b3cdd06c0bee343b3348f204c4",
+          "severity": "P1",
+          "location": {
+            "side": "head",
+            "path": "campaign/published-copy.jsonl",
+            "start_line": 1,
+            "end_line": 1
+          },
+          "location_note": null,
+          "submitted_evidence": [
+            {
+              "id": "approved_line-H01",
+              "kind": "pinned_blob",
+              "locator": "brand/approved-facts.jsonl#L1",
+              "digest": "e2a752c07e96f87980a96b2ba19fcc29375fb57902dfe7159fca0bcefdbb711a",
+              "excerpt_or_observation": "USD 18",
+              "provenance": "Reference as supplied by model"
+            },
+            {
+              "id": "copy_line-H01",
+              "kind": "pinned_blob",
+              "locator": "campaign/published-copy.jsonl#L1",
+              "digest": "f2dd555fe2458800e951c66af0d98f6a0124b9afd98a4ff278ab259501b4a134",
+              "excerpt_or_observation": "USD 12",
+              "provenance": "Reference as supplied by model"
+            }
+          ],
+          "expected": "USD 18",
+          "actual": "USD 12",
+          "business_impact": "Visitors rely on the published weekday adult entry fee when booking.",
+          "evidence": [
+            {
+              "id": "source-H01",
+              "kind": "pinned_blob",
+              "locator": "brand/approved-facts.jsonl#L1",
+              "digest": "e2a752c07e96f87980a96b2ba19fcc29375fb57902dfe7159fca0bcefdbb711a",
+              "excerpt_or_observation": "USD 18",
+              "provenance": "Git blob at submitted head"
+            },
+            {
+              "id": "copy-H01",
+              "kind": "pinned_blob",
+              "locator": "campaign/published-copy.jsonl#L1",
+              "digest": "f2dd555fe2458800e951c66af0d98f6a0124b9afd98a4ff278ab259501b4a134",
+              "excerpt_or_observation": "USD 12",
+              "provenance": "Git blob at submitted head"
+            }
+          ],
+          "reproduction": [
+            "Read the two cited values for the same named field at the pinned fixture head."
+          ],
+          "proposed_fix": "keep",
+          "acceptance_criteria": [
+            "The published weekday adult entry fee equals USD 18."
+          ],
+          "verification_status": "verified",
+          "verifier": "fixture-verifier/literal-marketing-fields-v1",
+          "verification_reason": "Pinned fields differ",
+          "original_model_reason": "The offer copy value of USD 18 is a conflict as it does not match the required value of USD 12.",
+          "claimed_lines": {
+            "approved": 1,
+            "copy": 1
+          },
+          "reason_explicitly_reverses_field_roles": true,
+          "evidence_valid": true,
+          "actionable": false,
+          "counterarguments": [
+            "The offer fee is clearly stated to be USD 18.",
+            "The offer fee is clearly stated to be USD 18, which matches the approved value of USD 12 and the 'weekday adult entry fee' field. The discrepancy is due to the discrepancy in the offer copy value of USD 18. The offer copy shows a higher price of USD 18 compared to the synthetic offer sheet's USD 12."
+          ],
+          "unresolved_disagreements": []
+        },
+        {
+          "unit": "H02",
+          "finding_id": "targeted-07-H02",
+          "run_id": "synthetic-targeted-76ffd291bfad4804a77113bf43c0d29f",
+          "reviewer_id": "MK-054",
+          "attempt_id": "11bc0412-cdbc-46c6-b2eb-447a1d4eabe8",
+          "model": "Qwen2.5-0.5B-Instruct-Q4_K_M",
+          "model_version": "9217f5db79a29953eb74d5343926648285ec7e67",
+          "family": "Qwen2.5",
+          "base_sha": "6f23449c5a3467ddcb5e8e773c40768837d5bbc5",
+          "head_sha": "a381db60e8b539b3cdd06c0bee343b3348f204c4",
+          "severity": "P1",
+          "location": {
+            "side": "head",
+            "path": "campaign/published-copy.jsonl",
+            "start_line": 2,
+            "end_line": 2
+          },
+          "location_note": null,
+          "submitted_evidence": [
+            {
+              "id": "approved_line-H02",
+              "kind": "pinned_blob",
+              "locator": "brand/approved-facts.jsonl#L2",
+              "digest": "e2a752c07e96f87980a96b2ba19fcc29375fb57902dfe7159fca0bcefdbb711a",
+              "excerpt_or_observation": "16 years",
+              "provenance": "Reference as supplied by model"
+            },
+            {
+              "id": "copy_line-H02",
+              "kind": "pinned_blob",
+              "locator": "campaign/published-copy.jsonl#L2",
+              "digest": "f2dd555fe2458800e951c66af0d98f6a0124b9afd98a4ff278ab259501b4a134",
+              "excerpt_or_observation": "16 years",
+              "provenance": "Reference as supplied by model"
+            }
+          ],
+          "expected": "16 years",
+          "actual": "16 years",
+          "business_impact": "Visitors rely on the published minimum booking age when booking.",
+          "evidence": [
+            {
+              "id": "source-H02",
+              "kind": "pinned_blob",
+              "locator": "brand/approved-facts.jsonl#L2",
+              "digest": "e2a752c07e96f87980a96b2ba19fcc29375fb57902dfe7159fca0bcefdbb711a",
+              "excerpt_or_observation": "16 years",
+              "provenance": "Git blob at submitted head"
+            },
+            {
+              "id": "copy-H02",
+              "kind": "pinned_blob",
+              "locator": "campaign/published-copy.jsonl#L2",
+              "digest": "f2dd555fe2458800e951c66af0d98f6a0124b9afd98a4ff278ab259501b4a134",
+              "excerpt_or_observation": "16 years",
+              "provenance": "Git blob at submitted head"
+            }
+          ],
+          "reproduction": [
+            "Read the two cited values for the same named field at the pinned fixture head."
+          ],
+          "proposed_fix": "keep",
+          "acceptance_criteria": [
+            "The published minimum booking age equals 16 years."
+          ],
+          "verification_status": "rejected",
+          "verifier": "fixture-verifier/literal-marketing-fields-v1",
+          "verification_reason": "Pinned values agree",
+          "original_model_reason": "The offer copy value of 16 years is a conflict as it does not match the required value of 16 years.",
+          "claimed_lines": {
+            "approved": 2,
+            "copy": 2
+          },
+          "reason_explicitly_reverses_field_roles": false,
+          "evidence_valid": false,
+          "actionable": false,
+          "counterarguments": [],
+          "unresolved_disagreements": []
+        },
+        {
+          "unit": "H03",
+          "finding_id": "targeted-07-H03",
+          "run_id": "synthetic-targeted-76ffd291bfad4804a77113bf43c0d29f",
+          "reviewer_id": "MK-054",
+          "attempt_id": "11bc0412-cdbc-46c6-b2eb-447a1d4eabe8",
+          "model": "Qwen2.5-0.5B-Instruct-Q4_K_M",
+          "model_version": "9217f5db79a29953eb74d5343926648285ec7e67",
+          "family": "Qwen2.5",
+          "base_sha": "6f23449c5a3467ddcb5e8e773c40768837d5bbc5",
+          "head_sha": "a381db60e8b539b3cdd06c0bee343b3348f204c4",
+          "severity": "P1",
+          "location": {
+            "side": "head",
+            "path": "campaign/published-copy.jsonl",
+            "start_line": 3,
+            "end_line": 3
+          },
+          "location_note": null,
+          "submitted_evidence": [
+            {
+              "id": "approved_line-H03",
+              "kind": "pinned_blob",
+              "locator": "brand/approved-facts.jsonl#L3",
+              "digest": "e2a752c07e96f87980a96b2ba19fcc29375fb57902dfe7159fca0bcefdbb711a",
+              "excerpt_or_observation": "2027-04-18",
+              "provenance": "Reference as supplied by model"
+            },
+            {
+              "id": "copy_line-H03",
+              "kind": "pinned_blob",
+              "locator": "campaign/published-copy.jsonl#L3",
+              "digest": "f2dd555fe2458800e951c66af0d98f6a0124b9afd98a4ff278ab259501b4a134",
+              "excerpt_or_observation": "2027-04-18",
+              "provenance": "Reference as supplied by model"
+            }
+          ],
+          "expected": "2027-04-18",
+          "actual": "2027-04-18",
+          "business_impact": "Visitors rely on the published last day for early tickets when booking.",
+          "evidence": [
+            {
+              "id": "source-H03",
+              "kind": "pinned_blob",
+              "locator": "brand/approved-facts.jsonl#L3",
+              "digest": "e2a752c07e96f87980a96b2ba19fcc29375fb57902dfe7159fca0bcefdbb711a",
+              "excerpt_or_observation": "2027-04-18",
+              "provenance": "Git blob at submitted head"
+            },
+            {
+              "id": "copy-H03",
+              "kind": "pinned_blob",
+              "locator": "campaign/published-copy.jsonl#L3",
+              "digest": "f2dd555fe2458800e951c66af0d98f6a0124b9afd98a4ff278ab259501b4a134",
+              "excerpt_or_observation": "2027-04-18",
+              "provenance": "Git blob at submitted head"
+            }
+          ],
+          "reproduction": [
+            "Read the two cited values for the same named field at the pinned fixture head."
+          ],
+          "proposed_fix": "keep",
+          "acceptance_criteria": [
+            "The published last day for early tickets equals 2027-04-18."
+          ],
+          "verification_status": "rejected",
+          "verifier": "fixture-verifier/literal-marketing-fields-v1",
+          "verification_reason": "Pinned values agree",
+          "original_model_reason": "The offer copy value of 2027-04-18 is a conflict as it does not match the required value of 2027-04-18.",
+          "claimed_lines": {
+            "approved": 3,
+            "copy": 3
+          },
+          "reason_explicitly_reverses_field_roles": false,
+          "evidence_valid": false,
+          "actionable": false,
+          "counterarguments": [],
+          "unresolved_disagreements": []
+        },
+        {
+          "unit": "H04",
+          "finding_id": "targeted-07-H04",
+          "run_id": "synthetic-targeted-76ffd291bfad4804a77113bf43c0d29f",
+          "reviewer_id": "MK-054",
+          "attempt_id": "11bc0412-cdbc-46c6-b2eb-447a1d4eabe8",
+          "model": "Qwen2.5-0.5B-Instruct-Q4_K_M",
+          "model_version": "9217f5db79a29953eb74d5343926648285ec7e67",
+          "family": "Qwen2.5",
+          "base_sha": "6f23449c5a3467ddcb5e8e773c40768837d5bbc5",
+          "head_sha": "a381db60e8b539b3cdd06c0bee343b3348f204c4",
+          "severity": "P1",
+          "location": {
+            "side": "head",
+            "path": "campaign/published-copy.jsonl",
+            "start_line": 4,
+            "end_line": 4
+          },
+          "location_note": null,
+          "submitted_evidence": [
+            {
+              "id": "approved_line-H04",
+              "kind": "pinned_blob",
+              "locator": "brand/approved-facts.jsonl#L4",
+              "digest": "e2a752c07e96f87980a96b2ba19fcc29375fb57902dfe7159fca0bcefdbb711a",
+              "excerpt_or_observation": "4 people",
+              "provenance": "Reference as supplied by model"
+            },
+            {
+              "id": "copy_line-H04",
+              "kind": "pinned_blob",
+              "locator": "campaign/published-copy.jsonl#L4",
+              "digest": "f2dd555fe2458800e951c66af0d98f6a0124b9afd98a4ff278ab259501b4a134",
+              "excerpt_or_observation": "6 people",
+              "provenance": "Reference as supplied by model"
+            }
+          ],
+          "expected": "4 people",
+          "actual": "6 people",
+          "business_impact": "Visitors rely on the published guests covered by one family ticket when booking.",
+          "evidence": [
+            {
+              "id": "source-H04",
+              "kind": "pinned_blob",
+              "locator": "brand/approved-facts.jsonl#L4",
+              "digest": "e2a752c07e96f87980a96b2ba19fcc29375fb57902dfe7159fca0bcefdbb711a",
+              "excerpt_or_observation": "4 people",
+              "provenance": "Git blob at submitted head"
+            },
+            {
+              "id": "copy-H04",
+              "kind": "pinned_blob",
+              "locator": "campaign/published-copy.jsonl#L4",
+              "digest": "f2dd555fe2458800e951c66af0d98f6a0124b9afd98a4ff278ab259501b4a134",
+              "excerpt_or_observation": "6 people",
+              "provenance": "Git blob at submitted head"
+            }
+          ],
+          "reproduction": [
+            "Read the two cited values for the same named field at the pinned fixture head."
+          ],
+          "proposed_fix": "keep",
+          "acceptance_criteria": [
+            "The published guests covered by one family ticket equals 4 people."
+          ],
+          "verification_status": "verified",
+          "verifier": "fixture-verifier/literal-marketing-fields-v1",
+          "verification_reason": "Pinned fields differ",
+          "original_model_reason": "The offer copy value of 4 people is a conflict as it does not match the required value of 6 people.",
+          "claimed_lines": {
+            "approved": 4,
+            "copy": 4
+          },
+          "reason_explicitly_reverses_field_roles": true,
+          "evidence_valid": true,
+          "actionable": false,
+          "counterarguments": [],
+          "unresolved_disagreements": []
+        }
+      ],
+      "verified_units": [
+        "H01",
+        "H04"
+      ],
+      "missed": [
+        "H05",
+        "H08"
+      ],
+      "dissent": {
+        "minority_overrules": [],
+        "cross_and_arbitration": [
+          {
+            "assignment_id": "targeted-09",
+            "attempt_id": "321ab028-82e2-4a02-a1bb-6e4ab2c49445",
+            "reviewer_id": "MK-052",
+            "phase": "cross",
+            "answer": {
+              "H05": {
+                "action": "keep",
+                "approved_line": 5,
+                "copy_line": 5,
+                "reason": "The replica lens is the exact authorized attribute of the product, so it matches the stated goal and audience.",
+                "status": "insufficient"
+              }
+            }
+          },
+          {
+            "assignment_id": "targeted-10",
+            "attempt_id": "5dba5e25-031b-4e24-b039-e4bab2439a1f",
+            "reviewer_id": "MK-022",
+            "phase": "cross",
+            "answer": {
+              "H01": {
+                "action": "keep",
+                "approved_line": 1,
+                "copy_line": 1,
+                "reason": "The offer fee is clearly stated to be USD 18.",
+                "status": "matches"
+              }
+            }
+          },
+          {
+            "assignment_id": "targeted-11",
+            "attempt_id": "9b00953d-745e-4dcb-8b0c-b49e7d270c97",
+            "reviewer_id": "AR-002",
+            "phase": "arbitration",
+            "answer": {
+              "H01": {
+                "action": "keep",
+                "approved_line": 1,
+                "copy_line": 1,
+                "reason": "The offer fee is clearly stated to be USD 18, which matches the approved value of USD 12 and the 'weekday adult entry fee' field. The discrepancy is due to the discrepancy in the offer copy value of USD 18. The offer copy shows a higher price of USD 18 compared to the synthetic offer sheet's USD 12.",
+                "status": "insufficient"
+              },
+              "H05": {
+                "action": "keep",
+                "approved_line": 5,
+                "copy_line": 5,
+                "reason": "The replica lens is the exact authorized attribute of the product, so it matches the stated goal and audience. The discrepancy is due to the discrepancy in the offer copy value of USD 18. The offer copy shows a higher price of USD 18 compared to the synthetic offer sheet's USD 12.",
+                "status": "insufficient"
+              }
+            }
+          }
+        ]
+      },
+      "raw_candidate_metrics": {
+        "TP": 2,
+        "FP": 2,
+        "FN": 2,
+        "TN": 2,
+        "precision": 0.5,
+        "recall": 0.5,
+        "false_positive_rate": 0.5,
+        "critical_detected": 2,
+        "critical_total": 3,
+        "recovered_author_misses": 2,
+        "total_author_misses": 4
+      },
+      "after_verification_metrics": {
+        "TP": 2,
+        "FP": 0,
+        "FN": 2,
+        "TN": 4,
+        "precision": 1.0,
+        "recall": 0.5,
+        "false_positive_rate": 0.0,
+        "critical_detected": 2,
+        "critical_total": 3,
+        "recovered_author_misses": 2,
+        "total_author_misses": 4
+      },
+      "evidence_validity": {
+        "numerator": 2,
+        "denominator": 4,
+        "criterion": "Both correct line locators and a binary conflict confirmed by independent lookup. Does not validate model reasoning."
+      },
+      "explicit_role_inversions": [
+        "targeted-07-H01",
+        "targeted-07-H04"
+      ],
+      "duplicate_rate": {
+        "numerator": 0,
+        "denominator": 4
+      },
+      "actionability": {
+        "numerator": 0,
+        "denominator": 2,
+        "criterion": "At least one verified proposal names the expected replacement value; criterion and owner in assignment."
+      },
+      "cost_per_verified_finding_usd": 0,
+      "claim": "insufficient sample for release or independent expertise certification"
+    },
+    "decision": "changes_requested"
+  },
+  "baseline": {
+    "run_id": "synthetic-baseline-9d48279c90134089bf823781389a4e3e",
+    "participation": {
+      "distinct_reviewers": 1,
+      "assignments": 8,
+      "attempts": 8,
+      "actual_calls": 8,
+      "dispatches": 8,
+      "accepted_receipts": 8,
+      "rejected_receipts": 0,
+      "input_tokens": 2960,
+      "output_tokens": 2025,
+      "model_family": "Qwen2.5",
+      "max_observed_concurrency": 1,
+      "paid_microusd": 0
+    },
+    "ledger": {
+      "run_id": "synthetic-baseline-9d48279c90134089bf823781389a4e3e",
+      "assignments": 8,
+      "attempts": 8,
+      "dispatches": 8,
+      "accepted_receipts": 8,
+      "rejected_receipts": 0,
+      "accepted_reviewer_ids": [
+        "MK-022"
+      ],
+      "families": [
+        "Qwen2.5"
+      ],
+      "cancelled": false,
+      "over_budget": false,
+      "blind_seal_digest": "d6fd8adc66b238a50865c47837b3e984a602b4fda1a5082b642db22e7c50cb3d",
+      "input_tokens": 2960,
+      "output_tokens": 2025,
+      "settled_microusd": 0,
+      "held_tokens": 0,
+      "held_microusd": 0,
+      "uncertain_attempts": 0
+    },
+    "coverage": "complete",
+    "evaluation": {
+      "counterevidence_exercise": null,
+      "oracle": "deterministic pinned typed marketing fields; no human or AI-adjudicated labels",
+      "case_count": 8,
+      "positive_count": 4,
+      "judgments": {
+        "H05": [
+          {
+            "assignment": "baseline-01",
+            "reviewer": "MK-022",
+            "status": "conflict",
+            "note": "The original lens is the item visitors may handle."
+          },
+          {
+            "assignment": "baseline-02",
+            "reviewer": "MK-022",
+            "status": "insufficient",
+            "note": "Original item and replica lenses are both in the same category of items and do not conflict."
+          },
+          {
+            "assignment": "baseline-03",
+            "reviewer": "MK-022",
+            "status": "conflict",
+            "note": "The statement about the original item is about the replica lens, which is the authorized attribute of the product."
+          },
+          {
+            "assignment": "baseline-04",
+            "reviewer": "MK-022",
+            "status": "conflict",
+            "note": "The original item and its replica are identical, so the discrepancy between the statement and the evidence is not a conflict."
+          }
+        ],
+        "H06": [
+          {
+            "assignment": "baseline-01",
+            "reviewer": "MK-022",
+            "status": "conflict",
+            "note": "The Vietnamese is the item visitors may handle."
+          },
+          {
+            "assignment": "baseline-02",
+            "reviewer": "MK-022",
+            "status": "insufficient",
+            "note": "Original item and Vietnamese are in the same category of items and do not conflict."
+          },
+          {
+            "assignment": "baseline-03",
+            "reviewer": "MK-022",
+            "status": "conflict",
+            "note": "The statement about the original item is about the Vietnamese language, which is the authorized attribute of the product."
+          },
+          {
+            "assignment": "baseline-04",
+            "reviewer": "MK-022",
+            "status": "conflict",
+            "note": "The original item and its replica are identical, so the discrepancy between the statement and the evidence is not a conflict."
+          }
+        ],
+        "H07": [
+          {
+            "assignment": "baseline-01",
+            "reviewer": "MK-022",
+            "status": "conflict",
+            "note": "The paper marbling is the item visitors may handle."
+          },
+          {
+            "assignment": "baseline-02",
+            "reviewer": "MK-022",
+            "status": "insufficient",
+            "note": "Original item and paper marbling are in the same category of items and do not conflict."
+          },
+          {
+            "assignment": "baseline-03",
+            "reviewer": "MK-022",
+            "status": "conflict",
+            "note": "The statement about the original item is about the paper marbling, which is the authorized attribute of the product."
+          },
+          {
+            "assignment": "baseline-04",
+            "reviewer": "MK-022",
+            "status": "conflict",
+            "note": "The original item and its replica are identical, so the discrepancy between the statement and the evidence is not a conflict."
+          }
+        ],
+        "H08": [
+          {
+            "assignment": "baseline-01",
+            "reviewer": "MK-022",
+            "status": "conflict",
+            "note": "The closing time on Wednesday is the item visitors may handle."
+          },
+          {
+            "assignment": "baseline-02",
+            "reviewer": "MK-022",
+            "status": "insufficient",
+            "note": "Original item and closing time are in the same category of items and do not conflict."
+          },
+          {
+            "assignment": "baseline-03",
+            "reviewer": "MK-022",
+            "status": "conflict",
+            "note": "The statement about the original item is about the closing time on Wednesday, which is the authorized attribute of the product."
+          },
+          {
+            "assignment": "baseline-04",
+            "reviewer": "MK-022",
+            "status": "conflict",
+            "note": "The original item and its replica are identical, so the discrepancy between the statement and the evidence is not a conflict."
+          }
+        ],
+        "H01": [
+          {
+            "assignment": "baseline-05",
+            "reviewer": "MK-022",
+            "status": "insufficient",
+            "note": "The original item's weekday adult entry fee is USD 18, and the replica's weekday adult entry fee is USD 12. These facts are in the same range and do not contradict each other."
+          },
+          {
+            "assignment": "baseline-06",
+            "reviewer": "MK-022",
+            "status": "insufficient",
+            "note": "The statement about the original item and the evidence about the replica are consistent with each other."
+          },
+          {
+            "assignment": "baseline-07",
+            "reviewer": "MK-022",
+            "status": "conflict",
+            "note": "The approved value of USD 18 matches the quote in the original item, indicating that the statement about the original item is correct."
+          },
+          {
+            "assignment": "baseline-08",
+            "reviewer": "MK-022",
+            "status": "conflict",
+            "note": "The original item and its replica are identical, so the quote about weekdays is redundant."
+          }
+        ],
+        "H02": [
+          {
+            "assignment": "baseline-05",
+            "reviewer": "MK-022",
+            "status": "insufficient",
+            "note": "The original item's minimum booking age is 16 years, and the replica's minimum booking age is 16 years. These facts are in the same range and do not contradict each other."
+          },
+          {
+            "assignment": "baseline-06",
+            "reviewer": "MK-022",
+            "status": "insufficient",
+            "note": "The statement about the original item and the evidence about the replica are consistent with each other."
+          },
+          {
+            "assignment": "baseline-07",
+            "reviewer": "MK-022",
+            "status": "conflict",
+            "note": "The approved value of 16 years matches the quote in the original item, indicating that the statement about the original item is correct."
+          },
+          {
+            "assignment": "baseline-08",
+            "reviewer": "MK-022",
+            "status": "conflict",
+            "note": "The original item and its replica are identical, so the quote about minimum booking age is redundant."
+          }
+        ],
+        "H03": [
+          {
+            "assignment": "baseline-05",
+            "reviewer": "MK-022",
+            "status": "insufficient",
+            "note": "The original item's last day for early tickets is April 18, 2027, and the replica's last day for early tickets is April 18, 2027. These facts are in the same range and do not contradict each other."
+          },
+          {
+            "assignment": "baseline-06",
+            "reviewer": "MK-022",
+            "status": "insufficient",
+            "note": "The statement about the original item and the evidence about the replica are consistent with each other."
+          },
+          {
+            "assignment": "baseline-07",
+            "reviewer": "MK-022",
+            "status": "conflict",
+            "note": "The approved value of 2027-04-18 matches the quote in the original item, indicating that the statement about the original item is correct."
+          },
+          {
+            "assignment": "baseline-08",
+            "reviewer": "MK-022",
+            "status": "conflict",
+            "note": "The original item and its replica are identical, so the quote about last day for early tickets is redundant."
+          }
+        ],
+        "H04": [
+          {
+            "assignment": "baseline-05",
+            "reviewer": "MK-022",
+            "status": "insufficient",
+            "note": "The original item's guest count is 4 people, and the replica's guest count is 6 people. These facts are in the same range and do not contradict each other."
+          },
+          {
+            "assignment": "baseline-06",
+            "reviewer": "MK-022",
+            "status": "insufficient",
+            "note": "The statement about the original item and the evidence about the replica are consistent with each other."
+          },
+          {
+            "assignment": "baseline-07",
+            "reviewer": "MK-022",
+            "status": "conflict",
+            "note": "The approved value of 6 people matches the quote in the original item, indicating that the statement about the original item is correct."
+          },
+          {
+            "assignment": "baseline-08",
+            "reviewer": "MK-022",
+            "status": "conflict",
+            "note": "The original item and its replica are identical, so the quote about guests covered by one family ticket is redundant."
+          }
+        ]
+      },
+      "candidates": [
+        {
+          "unit": "H05",
+          "finding_id": "baseline-01-H05",
+          "run_id": "synthetic-baseline-9d48279c90134089bf823781389a4e3e",
+          "reviewer_id": "MK-022",
+          "attempt_id": "26080d34-de4a-4553-8b1d-716cdf675c35",
+          "model": "Qwen2.5-0.5B-Instruct-Q4_K_M",
+          "model_version": "9217f5db79a29953eb74d5343926648285ec7e67",
+          "family": "Qwen2.5",
+          "base_sha": "6f23449c5a3467ddcb5e8e773c40768837d5bbc5",
+          "head_sha": "a381db60e8b539b3cdd06c0bee343b3348f204c4",
+          "severity": "P1",
+          "location": {
+            "side": "head",
+            "path": "campaign/published-copy.jsonl",
+            "start_line": 5,
+            "end_line": 5
+          },
+          "location_note": null,
+          "submitted_evidence": [
+            {
+              "id": "approved_line-H05",
+              "kind": "pinned_blob",
+              "locator": "brand/approved-facts.jsonl#L5",
+              "digest": "e2a752c07e96f87980a96b2ba19fcc29375fb57902dfe7159fca0bcefdbb711a",
+              "excerpt_or_observation": "replica lens",
+              "provenance": "Reference as supplied by model"
+            },
+            {
+              "id": "copy_line-H05",
+              "kind": "pinned_blob",
+              "locator": "campaign/published-copy.jsonl#L5",
+              "digest": "f2dd555fe2458800e951c66af0d98f6a0124b9afd98a4ff278ab259501b4a134",
+              "excerpt_or_observation": "original lens",
+              "provenance": "Reference as supplied by model"
+            }
+          ],
+          "expected": "replica lens",
+          "actual": "original lens",
+          "business_impact": "Visitors rely on the published item visitors may handle when booking.",
+          "evidence": [
+            {
+              "id": "source-H05",
+              "kind": "pinned_blob",
+              "locator": "brand/approved-facts.jsonl#L5",
+              "digest": "e2a752c07e96f87980a96b2ba19fcc29375fb57902dfe7159fca0bcefdbb711a",
+              "excerpt_or_observation": "replica lens",
+              "provenance": "Git blob at submitted head"
+            },
+            {
+              "id": "copy-H05",
+              "kind": "pinned_blob",
+              "locator": "campaign/published-copy.jsonl#L5",
+              "digest": "f2dd555fe2458800e951c66af0d98f6a0124b9afd98a4ff278ab259501b4a134",
+              "excerpt_or_observation": "original lens",
+              "provenance": "Git blob at submitted head"
+            }
+          ],
+          "reproduction": [
+            "Read the two cited values for the same named field at the pinned fixture head."
+          ],
+          "proposed_fix": "keep",
+          "acceptance_criteria": [
+            "The published item visitors may handle equals replica lens."
+          ],
+          "verification_status": "verified",
+          "verifier": "fixture-verifier/literal-marketing-fields-v1",
+          "verification_reason": "Pinned fields differ",
+          "original_model_reason": "The original lens is the item visitors may handle.",
+          "claimed_lines": {
+            "approved": 5,
+            "copy": 5
+          },
+          "reason_explicitly_reverses_field_roles": false,
+          "evidence_valid": true,
+          "actionable": false,
+          "counterarguments": [],
+          "unresolved_disagreements": []
+        },
+        {
+          "unit": "H06",
+          "finding_id": "baseline-01-H06",
+          "run_id": "synthetic-baseline-9d48279c90134089bf823781389a4e3e",
+          "reviewer_id": "MK-022",
+          "attempt_id": "26080d34-de4a-4553-8b1d-716cdf675c35",
+          "model": "Qwen2.5-0.5B-Instruct-Q4_K_M",
+          "model_version": "9217f5db79a29953eb74d5343926648285ec7e67",
+          "family": "Qwen2.5",
+          "base_sha": "6f23449c5a3467ddcb5e8e773c40768837d5bbc5",
+          "head_sha": "a381db60e8b539b3cdd06c0bee343b3348f204c4",
+          "severity": "P2",
+          "location": {
+            "side": "head",
+            "path": "campaign/published-copy.jsonl",
+            "start_line": 6,
+            "end_line": 6
+          },
+          "location_note": null,
+          "submitted_evidence": [
+            {
+              "id": "approved_line-H06",
+              "kind": "pinned_blob",
+              "locator": "brand/approved-facts.jsonl#L6",
+              "digest": "e2a752c07e96f87980a96b2ba19fcc29375fb57902dfe7159fca0bcefdbb711a",
+              "excerpt_or_observation": "Vietnamese",
+              "provenance": "Reference as supplied by model"
+            },
+            {
+              "id": "copy_line-H06",
+              "kind": "pinned_blob",
+              "locator": "campaign/published-copy.jsonl#L6",
+              "digest": "f2dd555fe2458800e951c66af0d98f6a0124b9afd98a4ff278ab259501b4a134",
+              "excerpt_or_observation": "Vietnamese",
+              "provenance": "Reference as supplied by model"
+            }
+          ],
+          "expected": "Vietnamese",
+          "actual": "Vietnamese",
+          "business_impact": "Visitors rely on the published guided tour language when booking.",
+          "evidence": [
+            {
+              "id": "source-H06",
+              "kind": "pinned_blob",
+              "locator": "brand/approved-facts.jsonl#L6",
+              "digest": "e2a752c07e96f87980a96b2ba19fcc29375fb57902dfe7159fca0bcefdbb711a",
+              "excerpt_or_observation": "Vietnamese",
+              "provenance": "Git blob at submitted head"
+            },
+            {
+              "id": "copy-H06",
+              "kind": "pinned_blob",
+              "locator": "campaign/published-copy.jsonl#L6",
+              "digest": "f2dd555fe2458800e951c66af0d98f6a0124b9afd98a4ff278ab259501b4a134",
+              "excerpt_or_observation": "Vietnamese",
+              "provenance": "Git blob at submitted head"
+            }
+          ],
+          "reproduction": [
+            "Read the two cited values for the same named field at the pinned fixture head."
+          ],
+          "proposed_fix": "keep",
+          "acceptance_criteria": [
+            "The published guided tour language equals Vietnamese."
+          ],
+          "verification_status": "rejected",
+          "verifier": "fixture-verifier/literal-marketing-fields-v1",
+          "verification_reason": "Pinned values agree",
+          "original_model_reason": "The Vietnamese is the item visitors may handle.",
+          "claimed_lines": {
+            "approved": 6,
+            "copy": 6
+          },
+          "reason_explicitly_reverses_field_roles": false,
+          "evidence_valid": false,
+          "actionable": false,
+          "counterarguments": [],
+          "unresolved_disagreements": []
+        },
+        {
+          "unit": "H07",
+          "finding_id": "baseline-01-H07",
+          "run_id": "synthetic-baseline-9d48279c90134089bf823781389a4e3e",
+          "reviewer_id": "MK-022",
+          "attempt_id": "26080d34-de4a-4553-8b1d-716cdf675c35",
+          "model": "Qwen2.5-0.5B-Instruct-Q4_K_M",
+          "model_version": "9217f5db79a29953eb74d5343926648285ec7e67",
+          "family": "Qwen2.5",
+          "base_sha": "6f23449c5a3467ddcb5e8e773c40768837d5bbc5",
+          "head_sha": "a381db60e8b539b3cdd06c0bee343b3348f204c4",
+          "severity": "P2",
+          "location": {
+            "side": "head",
+            "path": "campaign/published-copy.jsonl",
+            "start_line": 7,
+            "end_line": 7
+          },
+          "location_note": null,
+          "submitted_evidence": [
+            {
+              "id": "approved_line-H07",
+              "kind": "pinned_blob",
+              "locator": "brand/approved-facts.jsonl#L7",
+              "digest": "e2a752c07e96f87980a96b2ba19fcc29375fb57902dfe7159fca0bcefdbb711a",
+              "excerpt_or_observation": "paper marbling",
+              "provenance": "Reference as supplied by model"
+            },
+            {
+              "id": "copy_line-H07",
+              "kind": "pinned_blob",
+              "locator": "campaign/published-copy.jsonl#L7",
+              "digest": "f2dd555fe2458800e951c66af0d98f6a0124b9afd98a4ff278ab259501b4a134",
+              "excerpt_or_observation": "paper marbling",
+              "provenance": "Reference as supplied by model"
+            }
+          ],
+          "expected": "paper marbling",
+          "actual": "paper marbling",
+          "business_impact": "Visitors rely on the published first activity in the workshop when booking.",
+          "evidence": [
+            {
+              "id": "source-H07",
+              "kind": "pinned_blob",
+              "locator": "brand/approved-facts.jsonl#L7",
+              "digest": "e2a752c07e96f87980a96b2ba19fcc29375fb57902dfe7159fca0bcefdbb711a",
+              "excerpt_or_observation": "paper marbling",
+              "provenance": "Git blob at submitted head"
+            },
+            {
+              "id": "copy-H07",
+              "kind": "pinned_blob",
+              "locator": "campaign/published-copy.jsonl#L7",
+              "digest": "f2dd555fe2458800e951c66af0d98f6a0124b9afd98a4ff278ab259501b4a134",
+              "excerpt_or_observation": "paper marbling",
+              "provenance": "Git blob at submitted head"
+            }
+          ],
+          "reproduction": [
+            "Read the two cited values for the same named field at the pinned fixture head."
+          ],
+          "proposed_fix": "keep",
+          "acceptance_criteria": [
+            "The published first activity in the workshop equals paper marbling."
+          ],
+          "verification_status": "rejected",
+          "verifier": "fixture-verifier/literal-marketing-fields-v1",
+          "verification_reason": "Pinned values agree",
+          "original_model_reason": "The paper marbling is the item visitors may handle.",
+          "claimed_lines": {
+            "approved": 7,
+            "copy": 7
+          },
+          "reason_explicitly_reverses_field_roles": false,
+          "evidence_valid": false,
+          "actionable": false,
+          "counterarguments": [],
+          "unresolved_disagreements": []
+        },
+        {
+          "unit": "H08",
+          "finding_id": "baseline-01-H08",
+          "run_id": "synthetic-baseline-9d48279c90134089bf823781389a4e3e",
+          "reviewer_id": "MK-022",
+          "attempt_id": "26080d34-de4a-4553-8b1d-716cdf675c35",
+          "model": "Qwen2.5-0.5B-Instruct-Q4_K_M",
+          "model_version": "9217f5db79a29953eb74d5343926648285ec7e67",
+          "family": "Qwen2.5",
+          "base_sha": "6f23449c5a3467ddcb5e8e773c40768837d5bbc5",
+          "head_sha": "a381db60e8b539b3cdd06c0bee343b3348f204c4",
+          "severity": "P2",
+          "location": {
+            "side": "head",
+            "path": "campaign/published-copy.jsonl",
+            "start_line": 8,
+            "end_line": 8
+          },
+          "location_note": null,
+          "submitted_evidence": [
+            {
+              "id": "approved_line-H08",
+              "kind": "pinned_blob",
+              "locator": "brand/approved-facts.jsonl#L8",
+              "digest": "e2a752c07e96f87980a96b2ba19fcc29375fb57902dfe7159fca0bcefdbb711a",
+              "excerpt_or_observation": "18:00 local",
+              "provenance": "Reference as supplied by model"
+            },
+            {
+              "id": "copy_line-H08",
+              "kind": "pinned_blob",
+              "locator": "campaign/published-copy.jsonl#L8",
+              "digest": "f2dd555fe2458800e951c66af0d98f6a0124b9afd98a4ff278ab259501b4a134",
+              "excerpt_or_observation": "20:00 local",
+              "provenance": "Reference as supplied by model"
+            }
+          ],
+          "expected": "18:00 local",
+          "actual": "20:00 local",
+          "business_impact": "Visitors rely on the published closing time on Wednesday when booking.",
+          "evidence": [
+            {
+              "id": "source-H08",
+              "kind": "pinned_blob",
+              "locator": "brand/approved-facts.jsonl#L8",
+              "digest": "e2a752c07e96f87980a96b2ba19fcc29375fb57902dfe7159fca0bcefdbb711a",
+              "excerpt_or_observation": "18:00 local",
+              "provenance": "Git blob at submitted head"
+            },
+            {
+              "id": "copy-H08",
+              "kind": "pinned_blob",
+              "locator": "campaign/published-copy.jsonl#L8",
+              "digest": "f2dd555fe2458800e951c66af0d98f6a0124b9afd98a4ff278ab259501b4a134",
+              "excerpt_or_observation": "20:00 local",
+              "provenance": "Git blob at submitted head"
+            }
+          ],
+          "reproduction": [
+            "Read the two cited values for the same named field at the pinned fixture head."
+          ],
+          "proposed_fix": "keep",
+          "acceptance_criteria": [
+            "The published closing time on Wednesday equals 18:00 local."
+          ],
+          "verification_status": "verified",
+          "verifier": "fixture-verifier/literal-marketing-fields-v1",
+          "verification_reason": "Pinned fields differ",
+          "original_model_reason": "The closing time on Wednesday is the item visitors may handle.",
+          "claimed_lines": {
+            "approved": 8,
+            "copy": 8
+          },
+          "reason_explicitly_reverses_field_roles": false,
+          "evidence_valid": true,
+          "actionable": false,
+          "counterarguments": [],
+          "unresolved_disagreements": []
+        },
+        {
+          "unit": "H05",
+          "finding_id": "baseline-03-H05",
+          "run_id": "synthetic-baseline-9d48279c90134089bf823781389a4e3e",
+          "reviewer_id": "MK-022",
+          "attempt_id": "40bc7a5f-a87d-455a-b05b-1485b5b54ee1",
+          "model": "Qwen2.5-0.5B-Instruct-Q4_K_M",
+          "model_version": "9217f5db79a29953eb74d5343926648285ec7e67",
+          "family": "Qwen2.5",
+          "base_sha": "6f23449c5a3467ddcb5e8e773c40768837d5bbc5",
+          "head_sha": "a381db60e8b539b3cdd06c0bee343b3348f204c4",
+          "severity": "P1",
+          "location": {
+            "side": "head",
+            "path": "campaign/published-copy.jsonl",
+            "start_line": 5,
+            "end_line": 5
+          },
+          "location_note": null,
+          "submitted_evidence": [
+            {
+              "id": "approved_line-H05",
+              "kind": "pinned_blob",
+              "locator": "brand/approved-facts.jsonl#L5",
+              "digest": "e2a752c07e96f87980a96b2ba19fcc29375fb57902dfe7159fca0bcefdbb711a",
+              "excerpt_or_observation": "replica lens",
+              "provenance": "Reference as supplied by model"
+            },
+            {
+              "id": "copy_line-H05",
+              "kind": "pinned_blob",
+              "locator": "campaign/published-copy.jsonl#L5",
+              "digest": "f2dd555fe2458800e951c66af0d98f6a0124b9afd98a4ff278ab259501b4a134",
+              "excerpt_or_observation": "original lens",
+              "provenance": "Reference as supplied by model"
+            }
+          ],
+          "expected": "replica lens",
+          "actual": "original lens",
+          "business_impact": "Visitors rely on the published item visitors may handle when booking.",
+          "evidence": [
+            {
+              "id": "source-H05",
+              "kind": "pinned_blob",
+              "locator": "brand/approved-facts.jsonl#L5",
+              "digest": "e2a752c07e96f87980a96b2ba19fcc29375fb57902dfe7159fca0bcefdbb711a",
+              "excerpt_or_observation": "replica lens",
+              "provenance": "Git blob at submitted head"
+            },
+            {
+              "id": "copy-H05",
+              "kind": "pinned_blob",
+              "locator": "campaign/published-copy.jsonl#L5",
+              "digest": "f2dd555fe2458800e951c66af0d98f6a0124b9afd98a4ff278ab259501b4a134",
+              "excerpt_or_observation": "original lens",
+              "provenance": "Git blob at submitted head"
+            }
+          ],
+          "reproduction": [
+            "Read the two cited values for the same named field at the pinned fixture head."
+          ],
+          "proposed_fix": "keep",
+          "acceptance_criteria": [
+            "The published item visitors may handle equals replica lens."
+          ],
+          "verification_status": "verified",
+          "verifier": "fixture-verifier/literal-marketing-fields-v1",
+          "verification_reason": "Pinned fields differ",
+          "original_model_reason": "The statement about the original item is about the replica lens, which is the authorized attribute of the product.",
+          "claimed_lines": {
+            "approved": 5,
+            "copy": 5
+          },
+          "reason_explicitly_reverses_field_roles": false,
+          "evidence_valid": true,
+          "actionable": false,
+          "counterarguments": [],
+          "unresolved_disagreements": []
+        },
+        {
+          "unit": "H06",
+          "finding_id": "baseline-03-H06",
+          "run_id": "synthetic-baseline-9d48279c90134089bf823781389a4e3e",
+          "reviewer_id": "MK-022",
+          "attempt_id": "40bc7a5f-a87d-455a-b05b-1485b5b54ee1",
+          "model": "Qwen2.5-0.5B-Instruct-Q4_K_M",
+          "model_version": "9217f5db79a29953eb74d5343926648285ec7e67",
+          "family": "Qwen2.5",
+          "base_sha": "6f23449c5a3467ddcb5e8e773c40768837d5bbc5",
+          "head_sha": "a381db60e8b539b3cdd06c0bee343b3348f204c4",
+          "severity": "P2",
+          "location": {
+            "side": "head",
+            "path": "campaign/published-copy.jsonl",
+            "start_line": 6,
+            "end_line": 6
+          },
+          "location_note": null,
+          "submitted_evidence": [
+            {
+              "id": "approved_line-H06",
+              "kind": "pinned_blob",
+              "locator": "brand/approved-facts.jsonl#L6",
+              "digest": "e2a752c07e96f87980a96b2ba19fcc29375fb57902dfe7159fca0bcefdbb711a",
+              "excerpt_or_observation": "Vietnamese",
+              "provenance": "Reference as supplied by model"
+            },
+            {
+              "id": "copy_line-H06",
+              "kind": "pinned_blob",
+              "locator": "campaign/published-copy.jsonl#L6",
+              "digest": "f2dd555fe2458800e951c66af0d98f6a0124b9afd98a4ff278ab259501b4a134",
+              "excerpt_or_observation": "Vietnamese",
+              "provenance": "Reference as supplied by model"
+            }
+          ],
+          "expected": "Vietnamese",
+          "actual": "Vietnamese",
+          "business_impact": "Visitors rely on the published guided tour language when booking.",
+          "evidence": [
+            {
+              "id": "source-H06",
+              "kind": "pinned_blob",
+              "locator": "brand/approved-facts.jsonl#L6",
+              "digest": "e2a752c07e96f87980a96b2ba19fcc29375fb57902dfe7159fca0bcefdbb711a",
+              "excerpt_or_observation": "Vietnamese",
+              "provenance": "Git blob at submitted head"
+            },
+            {
+              "id": "copy-H06",
+              "kind": "pinned_blob",
+              "locator": "campaign/published-copy.jsonl#L6",
+              "digest": "f2dd555fe2458800e951c66af0d98f6a0124b9afd98a4ff278ab259501b4a134",
+              "excerpt_or_observation": "Vietnamese",
+              "provenance": "Git blob at submitted head"
+            }
+          ],
+          "reproduction": [
+            "Read the two cited values for the same named field at the pinned fixture head."
+          ],
+          "proposed_fix": "keep",
+          "acceptance_criteria": [
+            "The published guided tour language equals Vietnamese."
+          ],
+          "verification_status": "rejected",
+          "verifier": "fixture-verifier/literal-marketing-fields-v1",
+          "verification_reason": "Pinned values agree",
+          "original_model_reason": "The statement about the original item is about the Vietnamese language, which is the authorized attribute of the product.",
+          "claimed_lines": {
+            "approved": 6,
+            "copy": 6
+          },
+          "reason_explicitly_reverses_field_roles": false,
+          "evidence_valid": false,
+          "actionable": false,
+          "counterarguments": [],
+          "unresolved_disagreements": []
+        },
+        {
+          "unit": "H07",
+          "finding_id": "baseline-03-H07",
+          "run_id": "synthetic-baseline-9d48279c90134089bf823781389a4e3e",
+          "reviewer_id": "MK-022",
+          "attempt_id": "40bc7a5f-a87d-455a-b05b-1485b5b54ee1",
+          "model": "Qwen2.5-0.5B-Instruct-Q4_K_M",
+          "model_version": "9217f5db79a29953eb74d5343926648285ec7e67",
+          "family": "Qwen2.5",
+          "base_sha": "6f23449c5a3467ddcb5e8e773c40768837d5bbc5",
+          "head_sha": "a381db60e8b539b3cdd06c0bee343b3348f204c4",
+          "severity": "P2",
+          "location": {
+            "side": "head",
+            "path": "campaign/published-copy.jsonl",
+            "start_line": 7,
+            "end_line": 7
+          },
+          "location_note": null,
+          "submitted_evidence": [
+            {
+              "id": "approved_line-H07",
+              "kind": "pinned_blob",
+              "locator": "brand/approved-facts.jsonl#L7",
+              "digest": "e2a752c07e96f87980a96b2ba19fcc29375fb57902dfe7159fca0bcefdbb711a",
+              "excerpt_or_observation": "paper marbling",
+              "provenance": "Reference as supplied by model"
+            },
+            {
+              "id": "copy_line-H07",
+              "kind": "pinned_blob",
+              "locator": "campaign/published-copy.jsonl#L7",
+              "digest": "f2dd555fe2458800e951c66af0d98f6a0124b9afd98a4ff278ab259501b4a134",
+              "excerpt_or_observation": "paper marbling",
+              "provenance": "Reference as supplied by model"
+            }
+          ],
+          "expected": "paper marbling",
+          "actual": "paper marbling",
+          "business_impact": "Visitors rely on the published first activity in the workshop when booking.",
+          "evidence": [
+            {
+              "id": "source-H07",
+              "kind": "pinned_blob",
+              "locator": "brand/approved-facts.jsonl#L7",
+              "digest": "e2a752c07e96f87980a96b2ba19fcc29375fb57902dfe7159fca0bcefdbb711a",
+              "excerpt_or_observation": "paper marbling",
+              "provenance": "Git blob at submitted head"
+            },
+            {
+              "id": "copy-H07",
+              "kind": "pinned_blob",
+              "locator": "campaign/published-copy.jsonl#L7",
+              "digest": "f2dd555fe2458800e951c66af0d98f6a0124b9afd98a4ff278ab259501b4a134",
+              "excerpt_or_observation": "paper marbling",
+              "provenance": "Git blob at submitted head"
+            }
+          ],
+          "reproduction": [
+            "Read the two cited values for the same named field at the pinned fixture head."
+          ],
+          "proposed_fix": "keep",
+          "acceptance_criteria": [
+            "The published first activity in the workshop equals paper marbling."
+          ],
+          "verification_status": "rejected",
+          "verifier": "fixture-verifier/literal-marketing-fields-v1",
+          "verification_reason": "Pinned values agree",
+          "original_model_reason": "The statement about the original item is about the paper marbling, which is the authorized attribute of the product.",
+          "claimed_lines": {
+            "approved": 7,
+            "copy": 7
+          },
+          "reason_explicitly_reverses_field_roles": false,
+          "evidence_valid": false,
+          "actionable": false,
+          "counterarguments": [],
+          "unresolved_disagreements": []
+        },
+        {
+          "unit": "H08",
+          "finding_id": "baseline-03-H08",
+          "run_id": "synthetic-baseline-9d48279c90134089bf823781389a4e3e",
+          "reviewer_id": "MK-022",
+          "attempt_id": "40bc7a5f-a87d-455a-b05b-1485b5b54ee1",
+          "model": "Qwen2.5-0.5B-Instruct-Q4_K_M",
+          "model_version": "9217f5db79a29953eb74d5343926648285ec7e67",
+          "family": "Qwen2.5",
+          "base_sha": "6f23449c5a3467ddcb5e8e773c40768837d5bbc5",
+          "head_sha": "a381db60e8b539b3cdd06c0bee343b3348f204c4",
+          "severity": "P2",
+          "location": {
+            "side": "head",
+            "path": "campaign/published-copy.jsonl",
+            "start_line": 8,
+            "end_line": 8
+          },
+          "location_note": null,
+          "submitted_evidence": [
+            {
+              "id": "approved_line-H08",
+              "kind": "pinned_blob",
+              "locator": "brand/approved-facts.jsonl#L8",
+              "digest": "e2a752c07e96f87980a96b2ba19fcc29375fb57902dfe7159fca0bcefdbb711a",
+              "excerpt_or_observation": "18:00 local",
+              "provenance": "Reference as supplied by model"
+            },
+            {
+              "id": "copy_line-H08",
+              "kind": "pinned_blob",
+              "locator": "campaign/published-copy.jsonl#L8",
+              "digest": "f2dd555fe2458800e951c66af0d98f6a0124b9afd98a4ff278ab259501b4a134",
+              "excerpt_or_observation": "20:00 local",
+              "provenance": "Reference as supplied by model"
+            }
+          ],
+          "expected": "18:00 local",
+          "actual": "20:00 local",
+          "business_impact": "Visitors rely on the published closing time on Wednesday when booking.",
+          "evidence": [
+            {
+              "id": "source-H08",
+              "kind": "pinned_blob",
+              "locator": "brand/approved-facts.jsonl#L8",
+              "digest": "e2a752c07e96f87980a96b2ba19fcc29375fb57902dfe7159fca0bcefdbb711a",
+              "excerpt_or_observation": "18:00 local",
+              "provenance": "Git blob at submitted head"
+            },
+            {
+              "id": "copy-H08",
+              "kind": "pinned_blob",
+              "locator": "campaign/published-copy.jsonl#L8",
+              "digest": "f2dd555fe2458800e951c66af0d98f6a0124b9afd98a4ff278ab259501b4a134",
+              "excerpt_or_observation": "20:00 local",
+              "provenance": "Git blob at submitted head"
+            }
+          ],
+          "reproduction": [
+            "Read the two cited values for the same named field at the pinned fixture head."
+          ],
+          "proposed_fix": "keep",
+          "acceptance_criteria": [
+            "The published closing time on Wednesday equals 18:00 local."
+          ],
+          "verification_status": "verified",
+          "verifier": "fixture-verifier/literal-marketing-fields-v1",
+          "verification_reason": "Pinned fields differ",
+          "original_model_reason": "The statement about the original item is about the closing time on Wednesday, which is the authorized attribute of the product.",
+          "claimed_lines": {
+            "approved": 8,
+            "copy": 8
+          },
+          "reason_explicitly_reverses_field_roles": false,
+          "evidence_valid": true,
+          "actionable": false,
+          "counterarguments": [],
+          "unresolved_disagreements": []
+        },
+        {
+          "unit": "H05",
+          "finding_id": "baseline-04-H05",
+          "run_id": "synthetic-baseline-9d48279c90134089bf823781389a4e3e",
+          "reviewer_id": "MK-022",
+          "attempt_id": "00310e4e-e94a-466f-b1ce-9fae1e12231a",
+          "model": "Qwen2.5-0.5B-Instruct-Q4_K_M",
+          "model_version": "9217f5db79a29953eb74d5343926648285ec7e67",
+          "family": "Qwen2.5",
+          "base_sha": "6f23449c5a3467ddcb5e8e773c40768837d5bbc5",
+          "head_sha": "a381db60e8b539b3cdd06c0bee343b3348f204c4",
+          "severity": "P1",
+          "location": {
+            "side": "head",
+            "path": "campaign/published-copy.jsonl",
+            "start_line": 5,
+            "end_line": 5
+          },
+          "location_note": null,
+          "submitted_evidence": [
+            {
+              "id": "approved_line-H05",
+              "kind": "pinned_blob",
+              "locator": "brand/approved-facts.jsonl#L5",
+              "digest": "e2a752c07e96f87980a96b2ba19fcc29375fb57902dfe7159fca0bcefdbb711a",
+              "excerpt_or_observation": "replica lens",
+              "provenance": "Reference as supplied by model"
+            },
+            {
+              "id": "copy_line-H05",
+              "kind": "pinned_blob",
+              "locator": "campaign/published-copy.jsonl#L5",
+              "digest": "f2dd555fe2458800e951c66af0d98f6a0124b9afd98a4ff278ab259501b4a134",
+              "excerpt_or_observation": "original lens",
+              "provenance": "Reference as supplied by model"
+            }
+          ],
+          "expected": "replica lens",
+          "actual": "original lens",
+          "business_impact": "Visitors rely on the published item visitors may handle when booking.",
+          "evidence": [
+            {
+              "id": "source-H05",
+              "kind": "pinned_blob",
+              "locator": "brand/approved-facts.jsonl#L5",
+              "digest": "e2a752c07e96f87980a96b2ba19fcc29375fb57902dfe7159fca0bcefdbb711a",
+              "excerpt_or_observation": "replica lens",
+              "provenance": "Git blob at submitted head"
+            },
+            {
+              "id": "copy-H05",
+              "kind": "pinned_blob",
+              "locator": "campaign/published-copy.jsonl#L5",
+              "digest": "f2dd555fe2458800e951c66af0d98f6a0124b9afd98a4ff278ab259501b4a134",
+              "excerpt_or_observation": "original lens",
+              "provenance": "Git blob at submitted head"
+            }
+          ],
+          "reproduction": [
+            "Read the two cited values for the same named field at the pinned fixture head."
+          ],
+          "proposed_fix": "keep",
+          "acceptance_criteria": [
+            "The published item visitors may handle equals replica lens."
+          ],
+          "verification_status": "verified",
+          "verifier": "fixture-verifier/literal-marketing-fields-v1",
+          "verification_reason": "Pinned fields differ",
+          "original_model_reason": "The original item and its replica are identical, so the discrepancy between the statement and the evidence is not a conflict.",
+          "claimed_lines": {
+            "approved": 5,
+            "copy": 5
+          },
+          "reason_explicitly_reverses_field_roles": false,
+          "evidence_valid": true,
+          "actionable": false,
+          "counterarguments": [],
+          "unresolved_disagreements": []
+        },
+        {
+          "unit": "H06",
+          "finding_id": "baseline-04-H06",
+          "run_id": "synthetic-baseline-9d48279c90134089bf823781389a4e3e",
+          "reviewer_id": "MK-022",
+          "attempt_id": "00310e4e-e94a-466f-b1ce-9fae1e12231a",
+          "model": "Qwen2.5-0.5B-Instruct-Q4_K_M",
+          "model_version": "9217f5db79a29953eb74d5343926648285ec7e67",
+          "family": "Qwen2.5",
+          "base_sha": "6f23449c5a3467ddcb5e8e773c40768837d5bbc5",
+          "head_sha": "a381db60e8b539b3cdd06c0bee343b3348f204c4",
+          "severity": "P2",
+          "location": {
+            "side": "head",
+            "path": "campaign/published-copy.jsonl",
+            "start_line": 6,
+            "end_line": 6
+          },
+          "location_note": null,
+          "submitted_evidence": [
+            {
+              "id": "approved_line-H06",
+              "kind": "pinned_blob",
+              "locator": "brand/approved-facts.jsonl#L6",
+              "digest": "e2a752c07e96f87980a96b2ba19fcc29375fb57902dfe7159fca0bcefdbb711a",
+              "excerpt_or_observation": "Vietnamese",
+              "provenance": "Reference as supplied by model"
+            },
+            {
+              "id": "copy_line-H06",
+              "kind": "pinned_blob",
+              "locator": "campaign/published-copy.jsonl#L6",
+              "digest": "f2dd555fe2458800e951c66af0d98f6a0124b9afd98a4ff278ab259501b4a134",
+              "excerpt_or_observation": "Vietnamese",
+              "provenance": "Reference as supplied by model"
+            }
+          ],
+          "expected": "Vietnamese",
+          "actual": "Vietnamese",
+          "business_impact": "Visitors rely on the published guided tour language when booking.",
+          "evidence": [
+            {
+              "id": "source-H06",
+              "kind": "pinned_blob",
+              "locator": "brand/approved-facts.jsonl#L6",
+              "digest": "e2a752c07e96f87980a96b2ba19fcc29375fb57902dfe7159fca0bcefdbb711a",
+              "excerpt_or_observation": "Vietnamese",
+              "provenance": "Git blob at submitted head"
+            },
+            {
+              "id": "copy-H06",
+              "kind": "pinned_blob",
+              "locator": "campaign/published-copy.jsonl#L6",
+              "digest": "f2dd555fe2458800e951c66af0d98f6a0124b9afd98a4ff278ab259501b4a134",
+              "excerpt_or_observation": "Vietnamese",
+              "provenance": "Git blob at submitted head"
+            }
+          ],
+          "reproduction": [
+            "Read the two cited values for the same named field at the pinned fixture head."
+          ],
+          "proposed_fix": "keep",
+          "acceptance_criteria": [
+            "The published guided tour language equals Vietnamese."
+          ],
+          "verification_status": "rejected",
+          "verifier": "fixture-verifier/literal-marketing-fields-v1",
+          "verification_reason": "Pinned values agree",
+          "original_model_reason": "The original item and its replica are identical, so the discrepancy between the statement and the evidence is not a conflict.",
+          "claimed_lines": {
+            "approved": 6,
+            "copy": 6
+          },
+          "reason_explicitly_reverses_field_roles": false,
+          "evidence_valid": false,
+          "actionable": false,
+          "counterarguments": [],
+          "unresolved_disagreements": []
+        },
+        {
+          "unit": "H07",
+          "finding_id": "baseline-04-H07",
+          "run_id": "synthetic-baseline-9d48279c90134089bf823781389a4e3e",
+          "reviewer_id": "MK-022",
+          "attempt_id": "00310e4e-e94a-466f-b1ce-9fae1e12231a",
+          "model": "Qwen2.5-0.5B-Instruct-Q4_K_M",
+          "model_version": "9217f5db79a29953eb74d5343926648285ec7e67",
+          "family": "Qwen2.5",
+          "base_sha": "6f23449c5a3467ddcb5e8e773c40768837d5bbc5",
+          "head_sha": "a381db60e8b539b3cdd06c0bee343b3348f204c4",
+          "severity": "P2",
+          "location": {
+            "side": "head",
+            "path": "campaign/published-copy.jsonl",
+            "start_line": 7,
+            "end_line": 7
+          },
+          "location_note": null,
+          "submitted_evidence": [
+            {
+              "id": "approved_line-H07",
+              "kind": "pinned_blob",
+              "locator": "brand/approved-facts.jsonl#L7",
+              "digest": "e2a752c07e96f87980a96b2ba19fcc29375fb57902dfe7159fca0bcefdbb711a",
+              "excerpt_or_observation": "paper marbling",
+              "provenance": "Reference as supplied by model"
+            },
+            {
+              "id": "copy_line-H07",
+              "kind": "pinned_blob",
+              "locator": "campaign/published-copy.jsonl#L7",
+              "digest": "f2dd555fe2458800e951c66af0d98f6a0124b9afd98a4ff278ab259501b4a134",
+              "excerpt_or_observation": "paper marbling",
+              "provenance": "Reference as supplied by model"
+            }
+          ],
+          "expected": "paper marbling",
+          "actual": "paper marbling",
+          "business_impact": "Visitors rely on the published first activity in the workshop when booking.",
+          "evidence": [
+            {
+              "id": "source-H07",
+              "kind": "pinned_blob",
+              "locator": "brand/approved-facts.jsonl#L7",
+              "digest": "e2a752c07e96f87980a96b2ba19fcc29375fb57902dfe7159fca0bcefdbb711a",
+              "excerpt_or_observation": "paper marbling",
+              "provenance": "Git blob at submitted head"
+            },
+            {
+              "id": "copy-H07",
+              "kind": "pinned_blob",
+              "locator": "campaign/published-copy.jsonl#L7",
+              "digest": "f2dd555fe2458800e951c66af0d98f6a0124b9afd98a4ff278ab259501b4a134",
+              "excerpt_or_observation": "paper marbling",
+              "provenance": "Git blob at submitted head"
+            }
+          ],
+          "reproduction": [
+            "Read the two cited values for the same named field at the pinned fixture head."
+          ],
+          "proposed_fix": "keep",
+          "acceptance_criteria": [
+            "The published first activity in the workshop equals paper marbling."
+          ],
+          "verification_status": "rejected",
+          "verifier": "fixture-verifier/literal-marketing-fields-v1",
+          "verification_reason": "Pinned values agree",
+          "original_model_reason": "The original item and its replica are identical, so the discrepancy between the statement and the evidence is not a conflict.",
+          "claimed_lines": {
+            "approved": 7,
+            "copy": 7
+          },
+          "reason_explicitly_reverses_field_roles": false,
+          "evidence_valid": false,
+          "actionable": false,
+          "counterarguments": [],
+          "unresolved_disagreements": []
+        },
+        {
+          "unit": "H08",
+          "finding_id": "baseline-04-H08",
+          "run_id": "synthetic-baseline-9d48279c90134089bf823781389a4e3e",
+          "reviewer_id": "MK-022",
+          "attempt_id": "00310e4e-e94a-466f-b1ce-9fae1e12231a",
+          "model": "Qwen2.5-0.5B-Instruct-Q4_K_M",
+          "model_version": "9217f5db79a29953eb74d5343926648285ec7e67",
+          "family": "Qwen2.5",
+          "base_sha": "6f23449c5a3467ddcb5e8e773c40768837d5bbc5",
+          "head_sha": "a381db60e8b539b3cdd06c0bee343b3348f204c4",
+          "severity": "P2",
+          "location": {
+            "side": "head",
+            "path": "campaign/published-copy.jsonl",
+            "start_line": 8,
+            "end_line": 8
+          },
+          "location_note": null,
+          "submitted_evidence": [
+            {
+              "id": "approved_line-H08",
+              "kind": "pinned_blob",
+              "locator": "brand/approved-facts.jsonl#L8",
+              "digest": "e2a752c07e96f87980a96b2ba19fcc29375fb57902dfe7159fca0bcefdbb711a",
+              "excerpt_or_observation": "18:00 local",
+              "provenance": "Reference as supplied by model"
+            },
+            {
+              "id": "copy_line-H08",
+              "kind": "pinned_blob",
+              "locator": "campaign/published-copy.jsonl#L8",
+              "digest": "f2dd555fe2458800e951c66af0d98f6a0124b9afd98a4ff278ab259501b4a134",
+              "excerpt_or_observation": "20:00 local",
+              "provenance": "Reference as supplied by model"
+            }
+          ],
+          "expected": "18:00 local",
+          "actual": "20:00 local",
+          "business_impact": "Visitors rely on the published closing time on Wednesday when booking.",
+          "evidence": [
+            {
+              "id": "source-H08",
+              "kind": "pinned_blob",
+              "locator": "brand/approved-facts.jsonl#L8",
+              "digest": "e2a752c07e96f87980a96b2ba19fcc29375fb57902dfe7159fca0bcefdbb711a",
+              "excerpt_or_observation": "18:00 local",
+              "provenance": "Git blob at submitted head"
+            },
+            {
+              "id": "copy-H08",
+              "kind": "pinned_blob",
+              "locator": "campaign/published-copy.jsonl#L8",
+              "digest": "f2dd555fe2458800e951c66af0d98f6a0124b9afd98a4ff278ab259501b4a134",
+              "excerpt_or_observation": "20:00 local",
+              "provenance": "Git blob at submitted head"
+            }
+          ],
+          "reproduction": [
+            "Read the two cited values for the same named field at the pinned fixture head."
+          ],
+          "proposed_fix": "keep",
+          "acceptance_criteria": [
+            "The published closing time on Wednesday equals 18:00 local."
+          ],
+          "verification_status": "verified",
+          "verifier": "fixture-verifier/literal-marketing-fields-v1",
+          "verification_reason": "Pinned fields differ",
+          "original_model_reason": "The original item and its replica are identical, so the discrepancy between the statement and the evidence is not a conflict.",
+          "claimed_lines": {
+            "approved": 8,
+            "copy": 8
+          },
+          "reason_explicitly_reverses_field_roles": false,
+          "evidence_valid": true,
+          "actionable": false,
+          "counterarguments": [],
+          "unresolved_disagreements": []
+        },
+        {
+          "unit": "H01",
+          "finding_id": "baseline-07-H01",
+          "run_id": "synthetic-baseline-9d48279c90134089bf823781389a4e3e",
+          "reviewer_id": "MK-022",
+          "attempt_id": "fdf69f4c-57ce-4e4a-ad2b-bfd007c9c1e5",
+          "model": "Qwen2.5-0.5B-Instruct-Q4_K_M",
+          "model_version": "9217f5db79a29953eb74d5343926648285ec7e67",
+          "family": "Qwen2.5",
+          "base_sha": "6f23449c5a3467ddcb5e8e773c40768837d5bbc5",
+          "head_sha": "a381db60e8b539b3cdd06c0bee343b3348f204c4",
+          "severity": "P1",
+          "location": {
+            "side": "head",
+            "path": "campaign/published-copy.jsonl",
+            "start_line": 1,
+            "end_line": 1
+          },
+          "location_note": null,
+          "submitted_evidence": [
+            {
+              "id": "approved_line-H01",
+              "kind": "pinned_blob",
+              "locator": "brand/approved-facts.jsonl#L1",
+              "digest": "e2a752c07e96f87980a96b2ba19fcc29375fb57902dfe7159fca0bcefdbb711a",
+              "excerpt_or_observation": "USD 18",
+              "provenance": "Reference as supplied by model"
+            },
+            {
+              "id": "copy_line-H01",
+              "kind": "pinned_blob",
+              "locator": "campaign/published-copy.jsonl#L1",
+              "digest": "f2dd555fe2458800e951c66af0d98f6a0124b9afd98a4ff278ab259501b4a134",
+              "excerpt_or_observation": "USD 12",
+              "provenance": "Reference as supplied by model"
+            }
+          ],
+          "expected": "USD 18",
+          "actual": "USD 12",
+          "business_impact": "Visitors rely on the published weekday adult entry fee when booking.",
+          "evidence": [
+            {
+              "id": "source-H01",
+              "kind": "pinned_blob",
+              "locator": "brand/approved-facts.jsonl#L1",
+              "digest": "e2a752c07e96f87980a96b2ba19fcc29375fb57902dfe7159fca0bcefdbb711a",
+              "excerpt_or_observation": "USD 18",
+              "provenance": "Git blob at submitted head"
+            },
+            {
+              "id": "copy-H01",
+              "kind": "pinned_blob",
+              "locator": "campaign/published-copy.jsonl#L1",
+              "digest": "f2dd555fe2458800e951c66af0d98f6a0124b9afd98a4ff278ab259501b4a134",
+              "excerpt_or_observation": "USD 12",
+              "provenance": "Git blob at submitted head"
+            }
+          ],
+          "reproduction": [
+            "Read the two cited values for the same named field at the pinned fixture head."
+          ],
+          "proposed_fix": "keep",
+          "acceptance_criteria": [
+            "The published weekday adult entry fee equals USD 18."
+          ],
+          "verification_status": "verified",
+          "verifier": "fixture-verifier/literal-marketing-fields-v1",
+          "verification_reason": "Pinned fields differ",
+          "original_model_reason": "The approved value of USD 18 matches the quote in the original item, indicating that the statement about the original item is correct.",
+          "claimed_lines": {
+            "approved": 1,
+            "copy": 1
+          },
+          "reason_explicitly_reverses_field_roles": false,
+          "evidence_valid": true,
+          "actionable": false,
+          "counterarguments": [],
+          "unresolved_disagreements": []
+        },
+        {
+          "unit": "H02",
+          "finding_id": "baseline-07-H02",
+          "run_id": "synthetic-baseline-9d48279c90134089bf823781389a4e3e",
+          "reviewer_id": "MK-022",
+          "attempt_id": "fdf69f4c-57ce-4e4a-ad2b-bfd007c9c1e5",
+          "model": "Qwen2.5-0.5B-Instruct-Q4_K_M",
+          "model_version": "9217f5db79a29953eb74d5343926648285ec7e67",
+          "family": "Qwen2.5",
+          "base_sha": "6f23449c5a3467ddcb5e8e773c40768837d5bbc5",
+          "head_sha": "a381db60e8b539b3cdd06c0bee343b3348f204c4",
+          "severity": "P1",
+          "location": {
+            "side": "head",
+            "path": "campaign/published-copy.jsonl",
+            "start_line": 2,
+            "end_line": 2
+          },
+          "location_note": null,
+          "submitted_evidence": [
+            {
+              "id": "approved_line-H02",
+              "kind": "pinned_blob",
+              "locator": "brand/approved-facts.jsonl#L2",
+              "digest": "e2a752c07e96f87980a96b2ba19fcc29375fb57902dfe7159fca0bcefdbb711a",
+              "excerpt_or_observation": "16 years",
+              "provenance": "Reference as supplied by model"
+            },
+            {
+              "id": "copy_line-H02",
+              "kind": "pinned_blob",
+              "locator": "campaign/published-copy.jsonl#L2",
+              "digest": "f2dd555fe2458800e951c66af0d98f6a0124b9afd98a4ff278ab259501b4a134",
+              "excerpt_or_observation": "16 years",
+              "provenance": "Reference as supplied by model"
+            }
+          ],
+          "expected": "16 years",
+          "actual": "16 years",
+          "business_impact": "Visitors rely on the published minimum booking age when booking.",
+          "evidence": [
+            {
+              "id": "source-H02",
+              "kind": "pinned_blob",
+              "locator": "brand/approved-facts.jsonl#L2",
+              "digest": "e2a752c07e96f87980a96b2ba19fcc29375fb57902dfe7159fca0bcefdbb711a",
+              "excerpt_or_observation": "16 years",
+              "provenance": "Git blob at submitted head"
+            },
+            {
+              "id": "copy-H02",
+              "kind": "pinned_blob",
+              "locator": "campaign/published-copy.jsonl#L2",
+              "digest": "f2dd555fe2458800e951c66af0d98f6a0124b9afd98a4ff278ab259501b4a134",
+              "excerpt_or_observation": "16 years",
+              "provenance": "Git blob at submitted head"
+            }
+          ],
+          "reproduction": [
+            "Read the two cited values for the same named field at the pinned fixture head."
+          ],
+          "proposed_fix": "keep",
+          "acceptance_criteria": [
+            "The published minimum booking age equals 16 years."
+          ],
+          "verification_status": "rejected",
+          "verifier": "fixture-verifier/literal-marketing-fields-v1",
+          "verification_reason": "Pinned values agree",
+          "original_model_reason": "The approved value of 16 years matches the quote in the original item, indicating that the statement about the original item is correct.",
+          "claimed_lines": {
+            "approved": 2,
+            "copy": 2
+          },
+          "reason_explicitly_reverses_field_roles": false,
+          "evidence_valid": false,
+          "actionable": false,
+          "counterarguments": [],
+          "unresolved_disagreements": []
+        },
+        {
+          "unit": "H03",
+          "finding_id": "baseline-07-H03",
+          "run_id": "synthetic-baseline-9d48279c90134089bf823781389a4e3e",
+          "reviewer_id": "MK-022",
+          "attempt_id": "fdf69f4c-57ce-4e4a-ad2b-bfd007c9c1e5",
+          "model": "Qwen2.5-0.5B-Instruct-Q4_K_M",
+          "model_version": "9217f5db79a29953eb74d5343926648285ec7e67",
+          "family": "Qwen2.5",
+          "base_sha": "6f23449c5a3467ddcb5e8e773c40768837d5bbc5",
+          "head_sha": "a381db60e8b539b3cdd06c0bee343b3348f204c4",
+          "severity": "P1",
+          "location": {
+            "side": "head",
+            "path": "campaign/published-copy.jsonl",
+            "start_line": 3,
+            "end_line": 3
+          },
+          "location_note": null,
+          "submitted_evidence": [
+            {
+              "id": "approved_line-H03",
+              "kind": "pinned_blob",
+              "locator": "brand/approved-facts.jsonl#L3",
+              "digest": "e2a752c07e96f87980a96b2ba19fcc29375fb57902dfe7159fca0bcefdbb711a",
+              "excerpt_or_observation": "2027-04-18",
+              "provenance": "Reference as supplied by model"
+            },
+            {
+              "id": "copy_line-H03",
+              "kind": "pinned_blob",
+              "locator": "campaign/published-copy.jsonl#L3",
+              "digest": "f2dd555fe2458800e951c66af0d98f6a0124b9afd98a4ff278ab259501b4a134",
+              "excerpt_or_observation": "2027-04-18",
+              "provenance": "Reference as supplied by model"
+            }
+          ],
+          "expected": "2027-04-18",
+          "actual": "2027-04-18",
+          "business_impact": "Visitors rely on the published last day for early tickets when booking.",
+          "evidence": [
+            {
+              "id": "source-H03",
+              "kind": "pinned_blob",
+              "locator": "brand/approved-facts.jsonl#L3",
+              "digest": "e2a752c07e96f87980a96b2ba19fcc29375fb57902dfe7159fca0bcefdbb711a",
+              "excerpt_or_observation": "2027-04-18",
+              "provenance": "Git blob at submitted head"
+            },
+            {
+              "id": "copy-H03",
+              "kind": "pinned_blob",
+              "locator": "campaign/published-copy.jsonl#L3",
+              "digest": "f2dd555fe2458800e951c66af0d98f6a0124b9afd98a4ff278ab259501b4a134",
+              "excerpt_or_observation": "2027-04-18",
+              "provenance": "Git blob at submitted head"
+            }
+          ],
+          "reproduction": [
+            "Read the two cited values for the same named field at the pinned fixture head."
+          ],
+          "proposed_fix": "keep",
+          "acceptance_criteria": [
+            "The published last day for early tickets equals 2027-04-18."
+          ],
+          "verification_status": "rejected",
+          "verifier": "fixture-verifier/literal-marketing-fields-v1",
+          "verification_reason": "Pinned values agree",
+          "original_model_reason": "The approved value of 2027-04-18 matches the quote in the original item, indicating that the statement about the original item is correct.",
+          "claimed_lines": {
+            "approved": 3,
+            "copy": 3
+          },
+          "reason_explicitly_reverses_field_roles": false,
+          "evidence_valid": false,
+          "actionable": false,
+          "counterarguments": [],
+          "unresolved_disagreements": []
+        },
+        {
+          "unit": "H04",
+          "finding_id": "baseline-07-H04",
+          "run_id": "synthetic-baseline-9d48279c90134089bf823781389a4e3e",
+          "reviewer_id": "MK-022",
+          "attempt_id": "fdf69f4c-57ce-4e4a-ad2b-bfd007c9c1e5",
+          "model": "Qwen2.5-0.5B-Instruct-Q4_K_M",
+          "model_version": "9217f5db79a29953eb74d5343926648285ec7e67",
+          "family": "Qwen2.5",
+          "base_sha": "6f23449c5a3467ddcb5e8e773c40768837d5bbc5",
+          "head_sha": "a381db60e8b539b3cdd06c0bee343b3348f204c4",
+          "severity": "P1",
+          "location": {
+            "side": "head",
+            "path": "campaign/published-copy.jsonl",
+            "start_line": 4,
+            "end_line": 4
+          },
+          "location_note": null,
+          "submitted_evidence": [
+            {
+              "id": "approved_line-H04",
+              "kind": "pinned_blob",
+              "locator": "brand/approved-facts.jsonl#L4",
+              "digest": "e2a752c07e96f87980a96b2ba19fcc29375fb57902dfe7159fca0bcefdbb711a",
+              "excerpt_or_observation": "4 people",
+              "provenance": "Reference as supplied by model"
+            },
+            {
+              "id": "copy_line-H04",
+              "kind": "pinned_blob",
+              "locator": "campaign/published-copy.jsonl#L4",
+              "digest": "f2dd555fe2458800e951c66af0d98f6a0124b9afd98a4ff278ab259501b4a134",
+              "excerpt_or_observation": "6 people",
+              "provenance": "Reference as supplied by model"
+            }
+          ],
+          "expected": "4 people",
+          "actual": "6 people",
+          "business_impact": "Visitors rely on the published guests covered by one family ticket when booking.",
+          "evidence": [
+            {
+              "id": "source-H04",
+              "kind": "pinned_blob",
+              "locator": "brand/approved-facts.jsonl#L4",
+              "digest": "e2a752c07e96f87980a96b2ba19fcc29375fb57902dfe7159fca0bcefdbb711a",
+              "excerpt_or_observation": "4 people",
+              "provenance": "Git blob at submitted head"
+            },
+            {
+              "id": "copy-H04",
+              "kind": "pinned_blob",
+              "locator": "campaign/published-copy.jsonl#L4",
+              "digest": "f2dd555fe2458800e951c66af0d98f6a0124b9afd98a4ff278ab259501b4a134",
+              "excerpt_or_observation": "6 people",
+              "provenance": "Git blob at submitted head"
+            }
+          ],
+          "reproduction": [
+            "Read the two cited values for the same named field at the pinned fixture head."
+          ],
+          "proposed_fix": "keep",
+          "acceptance_criteria": [
+            "The published guests covered by one family ticket equals 4 people."
+          ],
+          "verification_status": "verified",
+          "verifier": "fixture-verifier/literal-marketing-fields-v1",
+          "verification_reason": "Pinned fields differ",
+          "original_model_reason": "The approved value of 6 people matches the quote in the original item, indicating that the statement about the original item is correct.",
+          "claimed_lines": {
+            "approved": 4,
+            "copy": 4
+          },
+          "reason_explicitly_reverses_field_roles": false,
+          "evidence_valid": true,
+          "actionable": false,
+          "counterarguments": [],
+          "unresolved_disagreements": []
+        },
+        {
+          "unit": "H01",
+          "finding_id": "baseline-08-H01",
+          "run_id": "synthetic-baseline-9d48279c90134089bf823781389a4e3e",
+          "reviewer_id": "MK-022",
+          "attempt_id": "f797cea5-9e92-49ab-8090-a2927b6fa026",
+          "model": "Qwen2.5-0.5B-Instruct-Q4_K_M",
+          "model_version": "9217f5db79a29953eb74d5343926648285ec7e67",
+          "family": "Qwen2.5",
+          "base_sha": "6f23449c5a3467ddcb5e8e773c40768837d5bbc5",
+          "head_sha": "a381db60e8b539b3cdd06c0bee343b3348f204c4",
+          "severity": "P1",
+          "location": {
+            "side": "head",
+            "path": "campaign/published-copy.jsonl",
+            "start_line": 1,
+            "end_line": 1
+          },
+          "location_note": null,
+          "submitted_evidence": [
+            {
+              "id": "approved_line-H01",
+              "kind": "pinned_blob",
+              "locator": "brand/approved-facts.jsonl#L1",
+              "digest": "e2a752c07e96f87980a96b2ba19fcc29375fb57902dfe7159fca0bcefdbb711a",
+              "excerpt_or_observation": "USD 18",
+              "provenance": "Reference as supplied by model"
+            },
+            {
+              "id": "copy_line-H01",
+              "kind": "pinned_blob",
+              "locator": "campaign/published-copy.jsonl#L1",
+              "digest": "f2dd555fe2458800e951c66af0d98f6a0124b9afd98a4ff278ab259501b4a134",
+              "excerpt_or_observation": "USD 12",
+              "provenance": "Reference as supplied by model"
+            }
+          ],
+          "expected": "USD 18",
+          "actual": "USD 12",
+          "business_impact": "Visitors rely on the published weekday adult entry fee when booking.",
+          "evidence": [
+            {
+              "id": "source-H01",
+              "kind": "pinned_blob",
+              "locator": "brand/approved-facts.jsonl#L1",
+              "digest": "e2a752c07e96f87980a96b2ba19fcc29375fb57902dfe7159fca0bcefdbb711a",
+              "excerpt_or_observation": "USD 18",
+              "provenance": "Git blob at submitted head"
+            },
+            {
+              "id": "copy-H01",
+              "kind": "pinned_blob",
+              "locator": "campaign/published-copy.jsonl#L1",
+              "digest": "f2dd555fe2458800e951c66af0d98f6a0124b9afd98a4ff278ab259501b4a134",
+              "excerpt_or_observation": "USD 12",
+              "provenance": "Git blob at submitted head"
+            }
+          ],
+          "reproduction": [
+            "Read the two cited values for the same named field at the pinned fixture head."
+          ],
+          "proposed_fix": "keep",
+          "acceptance_criteria": [
+            "The published weekday adult entry fee equals USD 18."
+          ],
+          "verification_status": "verified",
+          "verifier": "fixture-verifier/literal-marketing-fields-v1",
+          "verification_reason": "Pinned fields differ",
+          "original_model_reason": "The original item and its replica are identical, so the quote about weekdays is redundant.",
+          "claimed_lines": {
+            "approved": 1,
+            "copy": 1
+          },
+          "reason_explicitly_reverses_field_roles": false,
+          "evidence_valid": true,
+          "actionable": false,
+          "counterarguments": [],
+          "unresolved_disagreements": []
+        },
+        {
+          "unit": "H02",
+          "finding_id": "baseline-08-H02",
+          "run_id": "synthetic-baseline-9d48279c90134089bf823781389a4e3e",
+          "reviewer_id": "MK-022",
+          "attempt_id": "f797cea5-9e92-49ab-8090-a2927b6fa026",
+          "model": "Qwen2.5-0.5B-Instruct-Q4_K_M",
+          "model_version": "9217f5db79a29953eb74d5343926648285ec7e67",
+          "family": "Qwen2.5",
+          "base_sha": "6f23449c5a3467ddcb5e8e773c40768837d5bbc5",
+          "head_sha": "a381db60e8b539b3cdd06c0bee343b3348f204c4",
+          "severity": "P1",
+          "location": {
+            "side": "head",
+            "path": "campaign/published-copy.jsonl",
+            "start_line": 2,
+            "end_line": 2
+          },
+          "location_note": null,
+          "submitted_evidence": [
+            {
+              "id": "approved_line-H02",
+              "kind": "pinned_blob",
+              "locator": "brand/approved-facts.jsonl#L2",
+              "digest": "e2a752c07e96f87980a96b2ba19fcc29375fb57902dfe7159fca0bcefdbb711a",
+              "excerpt_or_observation": "16 years",
+              "provenance": "Reference as supplied by model"
+            },
+            {
+              "id": "copy_line-H02",
+              "kind": "pinned_blob",
+              "locator": "campaign/published-copy.jsonl#L2",
+              "digest": "f2dd555fe2458800e951c66af0d98f6a0124b9afd98a4ff278ab259501b4a134",
+              "excerpt_or_observation": "16 years",
+              "provenance": "Reference as supplied by model"
+            }
+          ],
+          "expected": "16 years",
+          "actual": "16 years",
+          "business_impact": "Visitors rely on the published minimum booking age when booking.",
+          "evidence": [
+            {
+              "id": "source-H02",
+              "kind": "pinned_blob",
+              "locator": "brand/approved-facts.jsonl#L2",
+              "digest": "e2a752c07e96f87980a96b2ba19fcc29375fb57902dfe7159fca0bcefdbb711a",
+              "excerpt_or_observation": "16 years",
+              "provenance": "Git blob at submitted head"
+            },
+            {
+              "id": "copy-H02",
+              "kind": "pinned_blob",
+              "locator": "campaign/published-copy.jsonl#L2",
+              "digest": "f2dd555fe2458800e951c66af0d98f6a0124b9afd98a4ff278ab259501b4a134",
+              "excerpt_or_observation": "16 years",
+              "provenance": "Git blob at submitted head"
+            }
+          ],
+          "reproduction": [
+            "Read the two cited values for the same named field at the pinned fixture head."
+          ],
+          "proposed_fix": "keep",
+          "acceptance_criteria": [
+            "The published minimum booking age equals 16 years."
+          ],
+          "verification_status": "rejected",
+          "verifier": "fixture-verifier/literal-marketing-fields-v1",
+          "verification_reason": "Pinned values agree",
+          "original_model_reason": "The original item and its replica are identical, so the quote about minimum booking age is redundant.",
+          "claimed_lines": {
+            "approved": 2,
+            "copy": 2
+          },
+          "reason_explicitly_reverses_field_roles": false,
+          "evidence_valid": false,
+          "actionable": false,
+          "counterarguments": [],
+          "unresolved_disagreements": []
+        },
+        {
+          "unit": "H03",
+          "finding_id": "baseline-08-H03",
+          "run_id": "synthetic-baseline-9d48279c90134089bf823781389a4e3e",
+          "reviewer_id": "MK-022",
+          "attempt_id": "f797cea5-9e92-49ab-8090-a2927b6fa026",
+          "model": "Qwen2.5-0.5B-Instruct-Q4_K_M",
+          "model_version": "9217f5db79a29953eb74d5343926648285ec7e67",
+          "family": "Qwen2.5",
+          "base_sha": "6f23449c5a3467ddcb5e8e773c40768837d5bbc5",
+          "head_sha": "a381db60e8b539b3cdd06c0bee343b3348f204c4",
+          "severity": "P1",
+          "location": {
+            "side": "head",
+            "path": "campaign/published-copy.jsonl",
+            "start_line": 3,
+            "end_line": 3
+          },
+          "location_note": null,
+          "submitted_evidence": [
+            {
+              "id": "approved_line-H03",
+              "kind": "pinned_blob",
+              "locator": "brand/approved-facts.jsonl#L3",
+              "digest": "e2a752c07e96f87980a96b2ba19fcc29375fb57902dfe7159fca0bcefdbb711a",
+              "excerpt_or_observation": "2027-04-18",
+              "provenance": "Reference as supplied by model"
+            },
+            {
+              "id": "copy_line-H03",
+              "kind": "pinned_blob",
+              "locator": "campaign/published-copy.jsonl#L3",
+              "digest": "f2dd555fe2458800e951c66af0d98f6a0124b9afd98a4ff278ab259501b4a134",
+              "excerpt_or_observation": "2027-04-18",
+              "provenance": "Reference as supplied by model"
+            }
+          ],
+          "expected": "2027-04-18",
+          "actual": "2027-04-18",
+          "business_impact": "Visitors rely on the published last day for early tickets when booking.",
+          "evidence": [
+            {
+              "id": "source-H03",
+              "kind": "pinned_blob",
+              "locator": "brand/approved-facts.jsonl#L3",
+              "digest": "e2a752c07e96f87980a96b2ba19fcc29375fb57902dfe7159fca0bcefdbb711a",
+              "excerpt_or_observation": "2027-04-18",
+              "provenance": "Git blob at submitted head"
+            },
+            {
+              "id": "copy-H03",
+              "kind": "pinned_blob",
+              "locator": "campaign/published-copy.jsonl#L3",
+              "digest": "f2dd555fe2458800e951c66af0d98f6a0124b9afd98a4ff278ab259501b4a134",
+              "excerpt_or_observation": "2027-04-18",
+              "provenance": "Git blob at submitted head"
+            }
+          ],
+          "reproduction": [
+            "Read the two cited values for the same named field at the pinned fixture head."
+          ],
+          "proposed_fix": "keep",
+          "acceptance_criteria": [
+            "The published last day for early tickets equals 2027-04-18."
+          ],
+          "verification_status": "rejected",
+          "verifier": "fixture-verifier/literal-marketing-fields-v1",
+          "verification_reason": "Pinned values agree",
+          "original_model_reason": "The original item and its replica are identical, so the quote about last day for early tickets is redundant.",
+          "claimed_lines": {
+            "approved": 3,
+            "copy": 3
+          },
+          "reason_explicitly_reverses_field_roles": false,
+          "evidence_valid": false,
+          "actionable": false,
+          "counterarguments": [],
+          "unresolved_disagreements": []
+        },
+        {
+          "unit": "H04",
+          "finding_id": "baseline-08-H04",
+          "run_id": "synthetic-baseline-9d48279c90134089bf823781389a4e3e",
+          "reviewer_id": "MK-022",
+          "attempt_id": "f797cea5-9e92-49ab-8090-a2927b6fa026",
+          "model": "Qwen2.5-0.5B-Instruct-Q4_K_M",
+          "model_version": "9217f5db79a29953eb74d5343926648285ec7e67",
+          "family": "Qwen2.5",
+          "base_sha": "6f23449c5a3467ddcb5e8e773c40768837d5bbc5",
+          "head_sha": "a381db60e8b539b3cdd06c0bee343b3348f204c4",
+          "severity": "P1",
+          "location": {
+            "side": "head",
+            "path": "campaign/published-copy.jsonl",
+            "start_line": 4,
+            "end_line": 4
+          },
+          "location_note": null,
+          "submitted_evidence": [
+            {
+              "id": "approved_line-H04",
+              "kind": "pinned_blob",
+              "locator": "brand/approved-facts.jsonl#L4",
+              "digest": "e2a752c07e96f87980a96b2ba19fcc29375fb57902dfe7159fca0bcefdbb711a",
+              "excerpt_or_observation": "4 people",
+              "provenance": "Reference as supplied by model"
+            },
+            {
+              "id": "copy_line-H04",
+              "kind": "pinned_blob",
+              "locator": "campaign/published-copy.jsonl#L4",
+              "digest": "f2dd555fe2458800e951c66af0d98f6a0124b9afd98a4ff278ab259501b4a134",
+              "excerpt_or_observation": "6 people",
+              "provenance": "Reference as supplied by model"
+            }
+          ],
+          "expected": "4 people",
+          "actual": "6 people",
+          "business_impact": "Visitors rely on the published guests covered by one family ticket when booking.",
+          "evidence": [
+            {
+              "id": "source-H04",
+              "kind": "pinned_blob",
+              "locator": "brand/approved-facts.jsonl#L4",
+              "digest": "e2a752c07e96f87980a96b2ba19fcc29375fb57902dfe7159fca0bcefdbb711a",
+              "excerpt_or_observation": "4 people",
+              "provenance": "Git blob at submitted head"
+            },
+            {
+              "id": "copy-H04",
+              "kind": "pinned_blob",
+              "locator": "campaign/published-copy.jsonl#L4",
+              "digest": "f2dd555fe2458800e951c66af0d98f6a0124b9afd98a4ff278ab259501b4a134",
+              "excerpt_or_observation": "6 people",
+              "provenance": "Git blob at submitted head"
+            }
+          ],
+          "reproduction": [
+            "Read the two cited values for the same named field at the pinned fixture head."
+          ],
+          "proposed_fix": "keep",
+          "acceptance_criteria": [
+            "The published guests covered by one family ticket equals 4 people."
+          ],
+          "verification_status": "verified",
+          "verifier": "fixture-verifier/literal-marketing-fields-v1",
+          "verification_reason": "Pinned fields differ",
+          "original_model_reason": "The original item and its replica are identical, so the quote about guests covered by one family ticket is redundant.",
+          "claimed_lines": {
+            "approved": 4,
+            "copy": 4
+          },
+          "reason_explicitly_reverses_field_roles": false,
+          "evidence_valid": true,
+          "actionable": false,
+          "counterarguments": [],
+          "unresolved_disagreements": []
+        }
+      ],
+      "verified_units": [
+        "H01",
+        "H04",
+        "H05",
+        "H08"
+      ],
+      "missed": [],
+      "dissent": {
+        "minority_overrules": [],
+        "cross_and_arbitration": []
+      },
+      "raw_candidate_metrics": {
+        "TP": 4,
+        "FP": 4,
+        "FN": 0,
+        "TN": 0,
+        "precision": 0.5,
+        "recall": 1.0,
+        "false_positive_rate": 1.0,
+        "critical_detected": 3,
+        "critical_total": 3,
+        "recovered_author_misses": 4,
+        "total_author_misses": 4
+      },
+      "after_verification_metrics": {
+        "TP": 4,
+        "FP": 0,
+        "FN": 0,
+        "TN": 4,
+        "precision": 1.0,
+        "recall": 1.0,
+        "false_positive_rate": 0.0,
+        "critical_detected": 3,
+        "critical_total": 3,
+        "recovered_author_misses": 4,
+        "total_author_misses": 4
+      },
+      "evidence_validity": {
+        "numerator": 10,
+        "denominator": 20,
+        "criterion": "Both correct line locators and a binary conflict confirmed by independent lookup. Does not validate model reasoning."
+      },
+      "explicit_role_inversions": [],
+      "duplicate_rate": {
+        "numerator": 12,
+        "denominator": 20
+      },
+      "actionability": {
+        "numerator": 0,
+        "denominator": 4,
+        "criterion": "At least one verified proposal names the expected replacement value; criterion and owner in assignment."
+      },
+      "cost_per_verified_finding_usd": 0,
+      "claim": "insufficient sample for release or independent expertise certification"
+    },
+    "decision": "changes_requested"
+  }
+}

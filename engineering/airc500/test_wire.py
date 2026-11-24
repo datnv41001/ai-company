@@ -37,7 +37,9 @@ def fixtures():
                         started_utc=stamp, ended_utc=stamp, outcome="completed", output_digest=digest,
                         usage_known=True, input_tokens=5, output_tokens=3, cost_microusd=0,
                         adapter_identity="fixture", provider_request_or_local_execution_id="fixture",
-                        signature="synthetic placeholder for shape tests"),
+                        model_digest=digest, lease_epoch=1,
+                        signature={"key_id":digest, "algorithm":"Ed25519", "signature_version":1,
+                                   "value":"A" * 86 + "=="},),
         "finding": dict(type="finding.v1", **actor, **model, attempt_id="attempt", finding_id="F",
                         severity="P1", location=None, location_note="Synthetic marketing copy",
                         expected="Describe a replica", actual="Copy describes the original",
@@ -61,7 +63,7 @@ def fixtures():
                             remaining_dissent=[], owner="copy editor", next_observation=None),
         "checkpoint": dict(type="checkpoint.v1", **run, sequence=1, previous_digest=None,
                            event_root=digest, reservation_root=digest, blind_seal_digest=None,
-                           cancelled=False),
+                           run_epoch=1, deadline_utc=stamp, open_reservations=[], cancelled=False),
     }
 
 

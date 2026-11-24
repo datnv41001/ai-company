@@ -1,0 +1,74 @@
+[
+  {
+    "id": "H01",
+    "domain": "offer",
+    "field": "weekday adult entry fee",
+    "approved": "USD 18",
+    "base": "USD 18",
+    "head": "USD 12",
+    "severity": "P1"
+  },
+  {
+    "id": "H02",
+    "domain": "offer",
+    "field": "minimum booking age",
+    "approved": "16 years",
+    "base": "16 years",
+    "head": "16 years",
+    "severity": "P1"
+  },
+  {
+    "id": "H03",
+    "domain": "offer",
+    "field": "last day for early tickets",
+    "approved": "2027-04-18",
+    "base": "2027-04-18",
+    "head": "2027-04-18",
+    "severity": "P1"
+  },
+  {
+    "id": "H04",
+    "domain": "offer",
+    "field": "guests covered by one family ticket",
+    "approved": "4 people",
+    "base": "4 people",
+    "head": "6 people",
+    "severity": "P1"
+  },
+  {
+    "id": "H05",
+    "domain": "editorial",
+    "field": "item visitors may handle",
+    "approved": "replica lens",
+    "base": "replica lens",
+    "head": "original lens",
+    "severity": "P1"
+  },
+  {
+    "id": "H06",
+    "domain": "editorial",
+    "field": "guided tour language",
+    "approved": "Vietnamese",
+    "base": "Vietnamese",
+    "head": "Vietnamese",
+    "severity": "P2"
+  },
+  {
+    "id": "H07",
+    "domain": "editorial",
+    "field": "first activity in the workshop",
+    "approved": "paper marbling",
+    "base": "paper marbling",
+    "head": "paper marbling",
+    "severity": "P2"
+  },
+  {
+    "id": "H08",
+    "domain": "editorial",
+    "field": "closing time on Wednesday",
+    "approved": "18:00 local",
+    "base": "18:00 local",
+    "head": "20:00 local",
+    "severity": "P2"
+  }
+]

@@ -1,6 +1,6 @@
 # Báo cáo hợp nhất · mẫu điền và trạng thái bàn giao thiết kế
 
-**Loại hồ sơ:** bàn giao kiến trúc, chưa chạy council trên PR. Khi vận hành, reporter sinh cùng 15 mục dưới đây từ manifest, journal và disposition. Mỗi con số có mẫu số, digest nguồn và thời điểm chốt. Trường chưa đo dùng N/A.
+**Mốc lịch sử tại commit `c1eda054`.** Hồ sơ dưới đây ghi giai đoạn kiến trúc, trước lần gọi model đầu tiên. [Kết quả pilot Qwen thực tế và giới hạn của lần đo](evidence/qwen-marketing-01/REPORT.md). Khi vận hành, reporter sinh cùng 15 mục dưới đây từ manifest, journal và disposition. Mỗi con số có mẫu số, digest nguồn và thời điểm chốt. Trường chưa đo dùng N/A.
 
 | # | Mục bắt buộc | Trạng thái bàn giao hiện tại và dữ liệu cần điền cho run thật |
 |---:|---|---|

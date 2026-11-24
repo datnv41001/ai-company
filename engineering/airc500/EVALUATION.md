@@ -1,5 +1,7 @@
 # Kế hoạch kiểm thử và hiệu chuẩn
 
+**Lần đo Qwen sau thiết kế.** [Kết quả theo candidate, verified finding, dissent và mẫu số](PILOT.md) · [Kiểm tra lại archive](PILOT-REVIEW.md).
+
 ## Các phép kiểm tra chạy được ở giai đoạn thiết kế
 
 Từ thư mục gốc, chạy hai lệnh trong [hướng dẫn tiếp quản](README.md#tiếp-quản-trên-máy-mới). Bộ unittest kiểm phân bổ, ID, rubric, quyền, hợp đồng của các reviewer và khả năng phát hiện catalog bị lệch. Bộ chấm minh họa trong [calibration.py](calibration.py) chỉ nhận bộ đơn vị đã phân xử. Có thể chạy trực tiếp `python engineering/airc500/calibration.py`. Hai tập [fixture tổng hợp](fixtures/units.json) và [đáp án cho self-test](fixtures/scoring-example.json) là dữ liệu công khai của test. Output dùng để kiểm số học; không có kết quả invocation để suy ra chất lượng hội đồng.

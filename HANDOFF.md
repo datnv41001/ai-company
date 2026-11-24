@@ -2,7 +2,9 @@
 
 ## AIRC-500 · Thiết kế công cụ review nội bộ
 
-Từ mốc `ece8ecc84b4938900821ff85403bb5b8243534c6`, catalog engineering có 500 hồ sơ và 12 discipline. Trên máy mới chạy `python engineering/airc500/catalog.py` từ gốc repo. [Đề xuất kiến trúc, hợp đồng, lệnh kiểm thử và backlog pilot](engineering/airc500/README.md). Giai đoạn này mới bàn giao thiết kế; commercial GA giữ NO-GO. Runtime AMC vẫn dùng schema v18 tại mốc trên.
+Từ mốc `ece8ecc84b4938900821ff85403bb5b8243534c6`, catalog engineering có 500 hồ sơ và 12 discipline. Trên máy mới chạy `python engineering/airc500/catalog.py` từ gốc repo. [Đề xuất kiến trúc, hợp đồng, lệnh kiểm thử và backlog pilot](engineering/airc500/README.md). Mốc thiết kế ban đầu là `c1eda054`; commercial GA giữ NO-GO. Runtime AMC vẫn dùng schema v18 tại mốc trên.
+
+**Pilot kế tiếp trên cùng nhánh.** [Quy trình chạy lại Qwen và kiểm chữ ký](engineering/airc500/PILOT.md) · [Hồ sơ thực thi và quality metrics](engineering/airc500/evidence/qwen-marketing-01/REPORT.md). Chỉ dùng Git fixture Marketing tổng hợp. Chủ nhánh giữ PR #17 ở trạng thái draft để review. Sau khi PR #16 được duyệt và merge, đồng bộ main, giữ cả hai mục HANDOFF, kiểm lại tree app/migrations theo main và chạy CI cho cả head mới lẫn bản integration trước quyết định tiếp theo.
 
 ## PR #15 · Xác minh email và nhận lời mời workspace
 

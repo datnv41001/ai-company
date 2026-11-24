@@ -1,6 +1,8 @@
 # AIRC-500 · Đề xuất hội đồng kiểm định độc lập của AMC
 
-**Trạng thái ngày 24/11/2026:** thiết kế để phản biện nội bộ. Mốc đối chiếu AMC là `ece8ecc84b4938900821ff85403bb5b8243534c6`, schema sản phẩm v18. Commercial GA giữ quyết định **NO-GO** theo [release gates](../../docs/SECURITY_AND_GA_BLOCKERS.md). PR #16 tiếp tục theo phạm vi riêng.
+**Trạng thái ngày 24/11/2026:** đã chạy pilot Qwen cục bộ trên dữ liệu Marketing tổng hợp, đang chờ phản biện nội bộ. Mốc đối chiếu AMC là `ece8ecc84b4938900821ff85403bb5b8243534c6`, schema sản phẩm v18. Commercial GA giữ quyết định **NO-GO** theo [release gates](../../docs/SECURITY_AND_GA_BLOCKERS.md). PR #16 tiếp tục theo phạm vi riêng.
+
+**Pilot Qwen nội bộ.** [Cách chạy và xác minh](PILOT.md) · [Báo cáo thực thi trên PR Marketing tổng hợp](evidence/qwen-marketing-01/REPORT.md) · [Đối chiếu độc lập 19 raw response](PILOT-REVIEW.md) · [Research Broker và vòng nhận thay đổi từ GitHub](RESEARCH-AND-REVIEW-LOOP.md). Catalog 500 ID là số vị trí chuyên môn. Báo cáo thực thi đếm riêng lượt gọi, reviewer có receipt và số model family.
 
 Hội đồng trả lời ba câu hỏi cho Product Owner: bản sửa ảnh hưởng ai, bằng chứng nào thay đổi được quyết định, và Codex cần sửa hoặc kiểm thử điều gì. Một dịch vụ điều phối của nhóm engineering sẽ tự lập lịch theo rủi ro. Product Owner giữ quyền quyết định ngân sách, phạm vi sản phẩm và phát hành.
 

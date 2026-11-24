@@ -326,7 +326,9 @@
         "cost_microusd",
         "adapter_identity",
         "provider_request_or_local_execution_id",
-        "signature"
+        "signature",
+        "model_digest",
+        "lease_epoch"
       ],
       "properties": {
         "type": {
@@ -455,8 +457,38 @@
           "minLength": 1
         },
         "signature": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "key_id",
+            "algorithm",
+            "signature_version",
+            "value"
+          ],
+          "properties": {
+            "key_id": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{64}$"
+            },
+            "algorithm": {
+              "const": "Ed25519"
+            },
+            "signature_version": {
+              "const": 1
+            },
+            "value": {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9+/]{86}==$"
+            }
+          }
+        },
+        "model_digest": {
           "type": "string",
-          "minLength": 1
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "lease_epoch": {
+          "type": "integer",
+          "minimum": 1
         }
       },
       "allOf": [
@@ -1072,7 +1104,10 @@
         "event_root",
         "reservation_root",
         "blind_seal_digest",
-        "cancelled"
+        "cancelled",
+        "run_epoch",
+        "deadline_utc",
+        "open_reservations"
       ],
       "properties": {
         "type": {
@@ -1126,6 +1161,58 @@
         },
         "cancelled": {
           "type": "boolean"
+        },
+        "run_epoch": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "deadline_utc": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "open_reservations": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "attempt_id",
+              "state",
+              "lease_epoch",
+              "expires_utc",
+              "token_reservation",
+              "cost_reservation_microusd"
+            ],
+            "properties": {
+              "attempt_id": {
+                "type": "string",
+                "minLength": 1
+              },
+              "state": {
+                "enum": [
+                  "reserved",
+                  "dispatched",
+                  "uncertain"
+                ]
+              },
+              "lease_epoch": {
+                "type": "integer",
+                "minimum": 1
+              },
+              "expires_utc": {
+                "type": "string",
+                "format": "date-time"
+              },
+              "token_reservation": {
+                "type": "integer",
+                "minimum": 1
+              },
+              "cost_reservation_microusd": {
+                "type": "integer",
+                "minimum": 0
+              }
+            }
+          }
         }
       }
     }

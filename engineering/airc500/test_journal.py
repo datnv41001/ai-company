@@ -9,6 +9,7 @@ import unittest
 from receipt_auth import digest
 from review_journal import Journal, Signer, stamp, verify_signature
 from test_wire import fixtures
+from review_plan import catalog, EvidenceSigner, plan_digest
 
 
 class JournalTests(unittest.TestCase):
@@ -33,11 +34,30 @@ class JournalTests(unittest.TestCase):
         self.run = fixtures()["run"]
         self.run["budget"]["deadline_utc"] = stamp(self.now + 600)
         self.rid = self.run["run_id"]
-        self.j.start(self.run, self.trust)
+        self.verifier = EvidenceSigner.generate()
+        self.run["catalog_digest"] = catalog()[0]
+        self.plan = {"version": 1, "required_obligations": ["unit"], "assignments": []}
+        for aid in ("assignment", "first", "second", "third", "other", "A0", "A1", "peer", "arb"):
+            reviewer = "AR-002" if aid == "arb" else "MK-022"
+            phase = "arbitration" if aid == "arb" else "cross" if aid == "peer" else "blind"
+            self.plan["assignments"].append(
+                {
+                    "assignment_id": aid,
+                    "phase": phase,
+                    "reviewer_id": reviewer,
+                    "artifact_kind": catalog()[1][reviewer]["artifact_kind"],
+                    "obligations": ["unit"],
+                }
+            )
+        self.pins = {"expected_plan_digest": plan_digest(self.plan), "verifier_key": self.verifier.public_key}
+        self.j.start_planned(self.run, self.trust, self.plan, self.verifier.public_key)
         self.ass = fixtures()["assignment"]
         self.raw = b"synthetic unit-test observation"
 
     def reserve(self, **changes):
+        profile = catalog()[1][changes.get("reviewer_id", self.ass["reviewer_id"])]
+        changes.setdefault("artifact_kind", profile["artifact_kind"])
+        changes.setdefault("output_contract", profile["contract"])
         return self.j.reserve({**self.ass, **changes}, self.key)["attempt_id"]
 
     def dispatch(self, **changes):
@@ -98,9 +118,9 @@ class JournalTests(unittest.TestCase):
         for pin in ({"not_before": stamp(self.now + 1)}, {"not_after": stamp(self.now - 1)}):
             with self.assertRaises(ValueError):
                 verify_signature(signed, {self.key: {**self.trust[self.key], **pin}})
-        self.j.start(self.run, self.trust)
+        self.j.start_planned(self.run, self.trust, self.plan, self.verifier.public_key)
         with self.assertRaises(ValueError):
-            self.j.start({**self.run, "head_sha": "f" * 40}, self.trust)
+            self.j.start_planned({**self.run, "head_sha": "f" * 40}, self.trust, self.plan, self.verifier.public_key)
         with self.assertRaises(ValueError):
             self.reserve(principal="writer")
 
@@ -113,7 +133,7 @@ class JournalTests(unittest.TestCase):
 
     def test_two_runs_share_the_host_slot_limit(self):
         other = "parallel-run"
-        self.j.start({**self.run, "run_id": other}, self.trust)
+        self.j.start_planned({**self.run, "run_id": other}, self.trust, self.plan, self.verifier.public_key)
         self.reserve(assignment_id="first")
         self.reserve(assignment_id="second")
         with self.assertRaises(ValueError):
@@ -197,7 +217,7 @@ class JournalTests(unittest.TestCase):
             self.reserve(assignment_id="late-blind")
         with self.assertRaises(ValueError):
             self.reserve(phase="cross", round=3, assignment_id="peer")
-        self.assertEqual(self.j.coverage(self.rid, [self.ass["assignment_id"]]), "complete")
+        self.assertEqual(self.j.coverage(self.rid, [self.ass["assignment_id"]]), "inconclusive")
         self.assertEqual(self.j.coverage(self.rid, ["missing"]), "inconclusive")
 
     def test_concurrent_last_reservation(self):
@@ -247,17 +267,17 @@ class JournalTests(unittest.TestCase):
         self.j.ingest(self.receipt(late), self.raw)
         cp = self.j.checkpoint(self.rid)
         events = self.j.export_events(self.rid)
-        verified = Journal.verify_events(self.rid, events, cp, self.trust)
+        verified = Journal.verify_events(self.rid, events, cp, self.trust, **self.pins)
+        self.assertEqual(verified.pop("coverage_report")["decision"], "inconclusive")
         self.assertEqual(verified.pop("run"), self.run)
         self.assertEqual(set(verified.pop("accepted_attempts")), {a})
         self.assertEqual(verified, self.j.summary(self.rid))
         for field, value in (("event_root", "f" * 64), ("cancelled", False)):
             with self.subTest(field=field), self.assertRaises(ValueError):
-                Journal.verify_events(self.rid, events, {**cp, field:value}, self.trust)
+                Journal.verify_events(self.rid, events, {**cp, field: value}, self.trust, **self.pins)
         # Rehashing unsigned events cannot turn a late signature into an accepted output.
         edited = deepcopy(events)
         edited[-1]["data"]["state"] = "accepted"
-        edited[-1]["digest"] = Journal.event_hash(self.rid, edited[-1]["sequence"], "receipt",
-                                                  edited[-1]["data"], edited[-1]["parent"])
+        edited[-1]["digest"] = Journal.event_hash(self.rid, edited[-1]["sequence"], "receipt", edited[-1]["data"], edited[-1]["parent"])
         with self.assertRaisesRegex(ValueError, "receipt acceptance"):
-            Journal.verify_events(self.rid, edited, {**cp, "event_root":edited[-1]["digest"]}, self.trust)
+            Journal.verify_events(self.rid, edited, {**cp, "event_root": edited[-1]["digest"]}, self.trust, **self.pins)

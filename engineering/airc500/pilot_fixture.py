@@ -75,6 +75,8 @@ def synthetic_pr():
 
 def import_pr(repo, base, head):
     # This pilot accepts only the fixture file allowlist. It never executes PR code.
+    if (base, head) != ("6f23449c5a3467ddcb5e8e773c40768837d5bbc5", "a381db60e8b539b3cdd06c0bee343b3348f204c4"):
+        raise ValueError("Only the enrolled synthetic Git pair may be read")
     if git(repo, "rev-parse", head + "^").decode().strip() != base:
         raise ValueError("head must have the submitted base parent")
     changed = git(repo, "diff", "--name-only", "-z", base, head).decode().strip("\0").split("\0")
@@ -127,3 +129,21 @@ def evidence_rows(rows):
         {"unit": r["id"], "field": r["field"], "approved_line": r["line"], "approved_value": r["source"], "copy_line": r["line"], "copy_value": r["observed"]}
         for r in rows
     ]
+
+
+def admission(rows, mode):
+    jobs = [(who, "blind", [r["id"] for r in scope]) for who, _, scope in plan(rows, mode == "baseline")]
+    if mode == "targeted":
+        jobs += [("MK-052", "cross", ["cross-editorial"]), ("MK-022", "cross", ["cross-offer"]), ("AR-002", "arbitration", ["arbitration"])]
+    profiles = read_catalog()
+    assignments = [
+        {
+            "assignment_id": f"{mode}-{i:02d}",
+            "reviewer_id": who,
+            "phase": phase,
+            "artifact_kind": profiles[who]["output"]["artifact_kind"],
+            "obligations": scope,
+        }
+        for i, (who, phase, scope) in enumerate(jobs, 1)
+    ]
+    return {"version": 1, "assignments": assignments, "required_obligations": sorted({o for j in assignments for o in j["obligations"]})}

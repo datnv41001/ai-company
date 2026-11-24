@@ -1,0 +1,25 @@
+name: AIRC synthetic worker isolation
+on:
+  pull_request:
+    paths:
+      - "engineering/airc500/sandbox_*"
+      - "engineering/airc500/test_sandbox_container.py"
+      - "engineering/airc500/fixtures/marketing-pr.json"
+      - ".github/workflows/airc-isolation.yml"
+permissions:
+  contents: read
+jobs:
+  contain-synthetic-review:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - name: Run positive and clean cases through the isolated worker
+        env:
+          AIRC_TEST_LINUX_DOCKER: "1"
+        run: |
+          go version
+          docker version --format '{{.Server.Version}}'
+          python3 -m unittest discover -s engineering/airc500 -p test_sandbox_container.py -v

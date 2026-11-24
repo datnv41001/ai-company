@@ -75,7 +75,7 @@ def finish(db, scope, config, row, node, result, error):
             run.reserved_microusd += cost - row["reserved"]
             metrics = {"estimated_microusd": cost, "input_tokens": inputs, "output_tokens": outputs}
             if not error:
-                output = validate_output(raw, node.skill, run.plan, run.knowledge["sources"])
+                output = validate_output(raw, node.skill, run.plan, run.knowledge["sources"], run.knowledge.get('registry'))
         except GatewayError as exc:
             error = str(exc)
     entry = {"outcome": error or "ok", "finished_at": utcnow().isoformat(), **metrics}

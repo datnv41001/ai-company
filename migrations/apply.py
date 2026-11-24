@@ -1,13 +1,49 @@
 """Apply reviewed SQL atomically on a dedicated AMC PostgreSQL database."""
+import hashlib
+import json
 import os
+
+from psycopg.types.json import Jsonb
 from pathlib import Path
 
 import psycopg
 from psycopg import sql
 
+if __package__:
+    from .registry_release import adapter_digest
+else:
+    from registry_release import adapter_digest
+
 HERE = Path(__file__).resolve().parent
 BASE = {"tenants", "users", "memberships", "clients", "brands", "campaigns",
         "work_tasks", "deliverables", "action_requests", "audit_events"}
+
+
+def publish_registry(conn, manifest):
+    """The migration publisher owns definitions. Identical imports may be replayed."""
+    contracts = manifest["contracts"]
+    if not set(manifest["required"]) <= contracts.keys() or manifest["mode"] != "dynamic-v1":
+        raise ValueError("Unsupported workflow contract")
+    for skill, contract in contracts.items():
+        if (contract.get("adapter_digest") != adapter_digest() or skill not in {"director", "research", "strategy", "content", "seo"}
+                or contract["adapter"] != skill+"@1" or contract["qa_policy"] != skill+"@1"
+                or contract["tools"] or contract["model"] != "local" or contract["node_cap"] < 0
+                or contract["max_attempts"] != 3 or contract["timeout_seconds"] != 300):
+            raise ValueError("Unsupported registry adapter or execution policy")
+        for kind, key, version in (("role", "role_id", "contract_version"), ("skill", "skill_id", "skill_version")):
+            identity = (kind, contract[key], contract[version])
+            definition = contract if kind == "skill" else {k:v for k,v in contract.items() if k not in ("adapter","skill_id","skill_version","adapter_digest")}
+            conn.execute("INSERT INTO amc_ops.registry_versions VALUES(%s,%s,%s,%s) ON CONFLICT DO NOTHING", (*identity, Jsonb(definition)))
+            existing = conn.execute("SELECT definition FROM amc_ops.registry_versions WHERE (kind,id,version)=(%s,%s,%s)", identity).fetchone()[0]
+            if existing != definition:
+                raise ValueError(f"Immutable {kind} version changed")
+    key = f"{manifest['workflow_id']}@{manifest['workflow_version']}"
+    encoded = json.dumps(manifest, ensure_ascii=False, sort_keys=True, separators=(",", ":")).encode()
+    digest = hashlib.sha256(encoded).hexdigest()
+    conn.execute("INSERT INTO amc_ops.registry_releases(workflow,digest,manifest) VALUES(%s,%s,%s) ON CONFLICT DO NOTHING",
+                 (key,digest,Jsonb(manifest)))
+    if conn.execute("SELECT digest FROM amc_ops.registry_releases WHERE workflow=%s",(key,)).fetchone() != (digest,):
+        raise ValueError("Immutable workflow version changed")
 
 
 def migrate(dsn: str, runtime_password: str | None = None):
@@ -27,9 +63,9 @@ def migrate(dsn: str, runtime_password: str | None = None):
             raise ValueError("amc_runtime must be an unprivileged role without inherited roles")
         conn.execute("CREATE TABLE IF NOT EXISTS amc_schema_versions (version int PRIMARY KEY)")
         versions = {row[0] for row in conn.execute("SELECT version FROM amc_schema_versions")}
-        if versions - {2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13}:
+        if versions - {2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14}:
             raise ValueError("Unknown schema version; use its matching application revision")
-        if 13 in versions:
+        if 14 in versions:
             return
         if 2 not in versions:
             tables = {row[0] for row in conn.execute(
@@ -73,11 +109,15 @@ def migrate(dsn: str, runtime_password: str | None = None):
         if 12 not in versions:
             conn.execute((HERE / "012_dynamic_plan.sql").read_text(encoding="utf-8"))
             conn.execute("INSERT INTO amc_schema_versions VALUES (12)")
-        conn.execute((HERE / "013_node_leases.sql").read_text(encoding="utf-8"))
-        conn.execute("INSERT INTO amc_schema_versions VALUES (13)")
+        if 13 not in versions:
+            conn.execute((HERE / "013_node_leases.sql").read_text(encoding="utf-8"))
+            conn.execute("INSERT INTO amc_schema_versions VALUES (13)")
+        conn.execute((HERE / "014_workflow_registry.sql").read_text(encoding="utf-8"))
+        publish_registry(conn, json.loads((HERE.parent / "catalog/landing-seo-v1.json").read_text(encoding="utf-8")))
+        conn.execute("INSERT INTO amc_schema_versions VALUES (14)")
 
 
 
 if __name__ == "__main__":
     migrate(os.environ["AMC_MIGRATION_DSN"], os.getenv("AMC_RUNTIME_PASSWORD"))
-    print("AMC schema version 13 ready")
+    print("AMC schema version 14 ready")

@@ -168,6 +168,9 @@ def bounded_call(config, body):
 
 def save_checkpoint(db, scope, run, stage, output, node):
     record = {"skill": stage, "output": output, "quality": quality(output, run.knowledge["sources"])}
+    if binding := run.knowledge.get("registry"):
+        from .registry_qa import assess_role
+        record["quality"]["role_qa"] = assess_role(stage, output, run.knowledge["sources"], binding["contracts"][stage])
     if node:
         record.update(node_id=node.id, plan_revision=node.revision)
         joined = workflow_dag.checkpoint(db, run, node, record)
@@ -216,11 +219,11 @@ def finish(db, scope, config, task, result, error, *, node=None, commit=True):
             metrics = {"input_tokens": inputs, "output_tokens": outputs, "estimated_microusd": cost}
             if not error:
                 if node and node.template == "dynamic-v1" and stage == "director":
-                    contract, digest = dynamic_plan.compile_plan(raw, run.knowledge["required_outputs"])
+                    contract, digest = dynamic_plan.compile_plan(raw, run.knowledge["required_outputs"], run.knowledge.get('registry'))
                     workflow_dag.freeze(db, token, contract, digest)
                     output = {"text": digest, "sections": {}, "source_ids": [], "plan_digest": digest}
                 else:
-                    output = validate_output(raw, stage, run.plan, run.knowledge["sources"])
+                    output = validate_output(raw, stage, run.plan, run.knowledge["sources"], run.knowledge.get('registry'))
         except GatewayError as exc:
             error = str(exc)
             if isinstance(exc, dynamic_plan.InvalidPlan):

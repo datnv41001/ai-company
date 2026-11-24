@@ -1,0 +1,220 @@
+{
+  "workflow_id": "WF-13/landing-seo-draft",
+  "workflow_version": 1,
+  "mode": "dynamic-v1",
+  "required": [
+    "director",
+    "content",
+    "seo"
+  ],
+  "contracts": {
+    "director": {
+      "role_id": "ai-managing-director",
+      "contract_version": 1,
+      "skill_id": "director",
+      "skill_version": 1,
+      "adapter": "director@1",
+      "qa_policy": "director@1",
+      "inputs": [
+        "brief",
+        "brand",
+        "sources"
+      ],
+      "predecessors": [],
+      "outputs": [
+        "nodes"
+      ],
+      "tools": [],
+      "model": "local",
+      "node_cap": 1000,
+      "max_attempts": 3,
+      "timeout_seconds": 300,
+      "approval": "revision_qa_and_client_snapshot",
+      "adapter_digest": "0473056dd603eecc69a6de9c683816e96493c4844ac357939c59168474ef7a94",
+      "owner": "agency marketing lead",
+      "objective": "Plan a scoped DAG",
+      "success_criteria": [
+        "nodes"
+      ],
+      "forbidden_actions": [
+        "external_write",
+        "publish",
+        "spend"
+      ],
+      "fallback": "agency editor"
+    },
+    "research": {
+      "role_id": "ai-market-researcher",
+      "contract_version": 1,
+      "skill_id": "research",
+      "skill_version": 1,
+      "adapter": "research@1",
+      "qa_policy": "research@1",
+      "inputs": [
+        "brief",
+        "brand",
+        "sources"
+      ],
+      "predecessors": [],
+      "outputs": [
+        "observed_fact",
+        "audience_hypothesis",
+        "knowledge_gap",
+        "source_ids"
+      ],
+      "tools": [],
+      "model": "local",
+      "node_cap": 1000,
+      "max_attempts": 3,
+      "timeout_seconds": 300,
+      "approval": "revision_qa_and_client_snapshot",
+      "adapter_digest": "0473056dd603eecc69a6de9c683816e96493c4844ac357939c59168474ef7a94",
+      "owner": "agency marketing lead",
+      "objective": "Separate facts from audience hypotheses",
+      "success_criteria": [
+        "observed_fact",
+        "audience_hypothesis",
+        "knowledge_gap",
+        "source_ids"
+      ],
+      "forbidden_actions": [
+        "external_write",
+        "publish",
+        "spend"
+      ],
+      "fallback": "agency editor"
+    },
+    "strategy": {
+      "role_id": "ai-marketing-strategist",
+      "contract_version": 1,
+      "skill_id": "strategy",
+      "skill_version": 1,
+      "adapter": "strategy@1",
+      "qa_policy": "strategy@1",
+      "inputs": [
+        "brief",
+        "brand",
+        "sources"
+      ],
+      "predecessors": [
+        "research"
+      ],
+      "outputs": [
+        "positioning",
+        "proposed_channel",
+        "success_metric",
+        "source_ids"
+      ],
+      "tools": [],
+      "model": "local",
+      "node_cap": 1000,
+      "max_attempts": 3,
+      "timeout_seconds": 300,
+      "approval": "revision_qa_and_client_snapshot",
+      "adapter_digest": "0473056dd603eecc69a6de9c683816e96493c4844ac357939c59168474ef7a94",
+      "owner": "agency marketing lead",
+      "objective": "Propose measurable positioning",
+      "success_criteria": [
+        "positioning",
+        "proposed_channel",
+        "success_metric",
+        "source_ids"
+      ],
+      "forbidden_actions": [
+        "external_write",
+        "publish",
+        "spend"
+      ],
+      "fallback": "agency editor"
+    },
+    "content": {
+      "role_id": "ai-copywriter-content-strategist",
+      "contract_version": 1,
+      "skill_id": "content",
+      "skill_version": 1,
+      "adapter": "content@1",
+      "qa_policy": "content@1",
+      "inputs": [
+        "brief",
+        "brand",
+        "sources"
+      ],
+      "predecessors": [
+        "research",
+        "strategy"
+      ],
+      "outputs": [
+        "headline",
+        "body_copy",
+        "call_to_action",
+        "source_ids"
+      ],
+      "tools": [],
+      "model": "local",
+      "node_cap": 1000,
+      "max_attempts": 3,
+      "timeout_seconds": 300,
+      "approval": "revision_qa_and_client_snapshot",
+      "adapter_digest": "0473056dd603eecc69a6de9c683816e96493c4844ac357939c59168474ef7a94",
+      "owner": "agency marketing lead",
+      "objective": "Draft landing page copy",
+      "success_criteria": [
+        "headline",
+        "body_copy",
+        "call_to_action",
+        "source_ids"
+      ],
+      "forbidden_actions": [
+        "external_write",
+        "publish",
+        "spend"
+      ],
+      "fallback": "agency editor"
+    },
+    "seo": {
+      "role_id": "ai-seo-geo-specialist",
+      "contract_version": 1,
+      "skill_id": "seo",
+      "skill_version": 1,
+      "adapter": "seo@1",
+      "qa_policy": "seo@1",
+      "inputs": [
+        "brief",
+        "brand",
+        "sources"
+      ],
+      "predecessors": [
+        "content",
+        "strategy",
+        "research"
+      ],
+      "outputs": [
+        "page_title",
+        "meta_description",
+        "search_intent",
+        "source_ids"
+      ],
+      "tools": [],
+      "model": "local",
+      "node_cap": 1000,
+      "max_attempts": 3,
+      "timeout_seconds": 300,
+      "approval": "revision_qa_and_client_snapshot",
+      "adapter_digest": "0473056dd603eecc69a6de9c683816e96493c4844ac357939c59168474ef7a94",
+      "owner": "agency marketing lead",
+      "objective": "Draft sourced landing metadata",
+      "success_criteria": [
+        "page_title",
+        "meta_description",
+        "search_intent",
+        "source_ids"
+      ],
+      "forbidden_actions": [
+        "external_write",
+        "publish",
+        "spend"
+      ],
+      "fallback": "agency editor"
+    }
+  }
+}

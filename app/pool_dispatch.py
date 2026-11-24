@@ -8,6 +8,8 @@ from dataclasses import replace
 from sqlalchemy import create_engine, text
 from sqlalchemy.orm import Session
 
+from migrations.registry_release import adapter_digest
+
 from . import node_attempts
 from .workforce_gateway import Gateway
 from .workforce_models import WorkforceRun
@@ -46,6 +48,21 @@ def dispatch(bind, config):
                 if not offer:
                     continue
                 token, body, hold = offer.token, offer.body, offer.hold
+                run = db.get(WorkforceRun, offer.run)
+                binding = run.knowledge.get("registry")
+                if binding:
+                    contract = binding["contracts"][node.skill]
+                    if contract["adapter_digest"] != adapter_digest():
+                        change.rollback()
+                        run.state, run.last_error = "failed", "registry_adapter_unavailable"
+                        continue
+                    # Receipt, revoke and checkpoint take this same scheduler lock.
+                    exposure = query(db, """select coalesce(sum(l.held+l.spent),0)
+                        from amc_ops.attempts a join amc_ops.ledger l on l.id=a.id
+                        where a.run=:r and a.node_id=:n""", r=run.id,n=node.id).scalar_one()
+                    if exposure + hold > contract["node_cap"] or config.provider != contract["model"] or config.timeout > contract["timeout_seconds"]:
+                        change.rollback()
+                        continue
                 period = query(
                     db,
                     """

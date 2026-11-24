@@ -46,6 +46,7 @@ class BriefData(Input):
 
 
 class Start(Input):
+    registry_workflow: str | None = Field(default=None, min_length=1, max_length=120)
     max_parallel_nodes: Literal[1, 2] = 1
     workflow: Literal["linear", "diamond-v1", "dynamic-v1"] = "linear"
     extra_skills: list[Literal["seo", "creative", "ads", "analytics"]] = Field(default_factory=list, max_length=4)
@@ -137,7 +138,9 @@ def start(tenant_id: str, bid: str, body: Start, user: User = Depends(current_us
         if db.get_bind().dialect.name != "postgresql":
             raise HTTPException(409, "Diamond requires the PostgreSQL worker pool")
         plan = [*CORE, "seo"]
-    required = sorted({'content', *body.extra_skills})
+    if body.registry_workflow and (body.workflow != 'dynamic-v1' or set(body.extra_skills) - {'seo'}):
+        raise HTTPException(422, 'Registry landing drafts require dynamic Content and SEO')
+    required = ['content','seo'] if body.registry_workflow else sorted({'content', *body.extra_skills})
     if body.workflow == 'dynamic-v1':
         if db.get_bind().dialect.name != 'postgresql':
             raise HTTPException(409, 'Dynamic planning requires the PostgreSQL worker pool')
@@ -147,6 +150,8 @@ def start(tenant_id: str, bid: str, body: Start, user: User = Depends(current_us
     prior = db.scalar(select(WorkforceRun).where(WorkforceRun.brief_id == bid, WorkforceRun.tenant_id == tenant_id))
     if prior:
         same_plan = prior.knowledge.get("required_outputs") == required if body.workflow == "dynamic-v1" else prior.plan == plan
+        if prior.knowledge.get('registry', {}).get('workflow') != body.registry_workflow:
+            raise HTTPException(409, 'Brief already queued with different registry terms')
         if prior.knowledge.get("workflow", "linear") != body.workflow or prior.knowledge.get('max_parallel_nodes', 1) != body.max_parallel_nodes or not same_plan or prior.budget_microusd != body.budget_microusd:
             raise HTTPException(409, "Brief already queued with different terms")
         return {"id": prior.id, "state": prior.state}
@@ -168,6 +173,9 @@ def start(tenant_id: str, bid: str, body: Start, user: User = Depends(current_us
         "sources": facts,
         "prompt_version": PROMPT_VERSION,
     }
+    if body.registry_workflow:
+        from .registry import pin
+        knowledge["registry"] = pin(db, b, body.registry_workflow)
     if body.workflow == "dynamic-v1":
         knowledge["required_outputs"] = required
         if body.max_parallel_nodes == 2:
@@ -273,6 +281,7 @@ def report(tenant_id: str, rid: str, user: User = Depends(current_user), db: Ses
             for k in ("id", "state", "plan", "journal", "last_error", "budget_microusd", "reserved_microusd", "deliverable_id", "checkpoints")
         },
         "graph": graph,
+        "registry": (graph or {}).get("registry", {"status":"legacy_v13"}),
         "plan": display_plan(run, graph),
         "state": display_state(run, graph),
         "source_registry": run.knowledge["sources"],

@@ -26,9 +26,11 @@ def url(dsn, docker):
     ).render_as_string(hide_password=False)
 
 
-def receipts(lab):
+def receipts(lab, cases=None):
     reports = []
-    for rid, case, label in zip(lab.runs, lab.cases, "ABC", strict=True):
+    if cases is None:
+        cases = zip(lab.runs, lab.cases, "ABC", strict=True)
+    for rid, case, label in cases:
         base, admin, reader, _, _ = case
         report = lab.api.get(base + "/workforce/runs/" + rid, headers=admin["headers"]).json()
         journal = report["journal"]

@@ -8,7 +8,6 @@ import pytest
 from migrations.apply import publish_registry
 from migrations.runtime_bundle import canonical_hash
 from pool_model_smoke import receipts
-from test_dynamic_plan import node
 from test_registry import PG, policy, pool as registry_pool, registry_brief
 from test_role_qa_rollout import post_output
 
@@ -51,7 +50,15 @@ def test_research_scope_provenance_and_strategy_snapshot(pool):
     url = base + "/workforce/runs/" + rid
     for actor in (reader, lab.cases[1][2], lab.y):
         assert lab.api.get(url, headers=actor["headers"]).status_code == 404
-    post_output(lab, rid, "planner", {"nodes": [node("facts", "research"), node("plan", "strategy", ["facts"])]})
+    post_output(
+        lab,
+        rid,
+        "research_director",
+        {
+            "research_assignment": "Identify supported facts and mark knowledge gaps.",
+            "strategy_assignment": "Propose a measurable strategy grounded in the research.",
+        },
+    )
     from app.research_strategy import KPI_FIELDS
 
     source = lab.api.get(url, headers=admin["headers"]).json()["source_registry"]["brand"]["excerpt"]
@@ -97,7 +104,15 @@ def test_research_scope_provenance_and_strategy_snapshot(pool):
 def test_revocation_between_research_and_strategy(pool):
     lab = pool
     rid = start_research(lab)
-    post_output(lab, rid, "planner", {"nodes": [node("facts", "research"), node("plan", "strategy", ["facts"])]})
+    post_output(
+        lab,
+        rid,
+        "research_director",
+        {
+            "research_assignment": "Identify supported facts and mark knowledge gaps.",
+            "strategy_assignment": "Propose a measurable strategy grounded in the research.",
+        },
+    )
     post_output(
         lab,
         rid,

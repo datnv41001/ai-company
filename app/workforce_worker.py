@@ -233,6 +233,10 @@ def finish(db, scope, config, task, result, error, *, node=None, commit=True):
             metrics = {"input_tokens": inputs, "output_tokens": outputs, "estimated_microusd": cost}
             if not error:
                 if node and node.template == "dynamic-v1" and stage == "director":
+                    binding = run.knowledge.get("registry",{})
+                    if binding.get("contracts",{}).get("director",{}).get("adapter")=="director@2":
+                        from .research_strategy import director_proposal
+                        raw = director_proposal(raw)
                     contract, digest = dynamic_plan.compile_plan(raw, run.knowledge["required_outputs"], run.knowledge.get('registry'))
                     workflow_dag.freeze(db, token, contract, digest)
                     output = {"text": digest, "sections": {}, "source_ids": [], "plan_digest": digest}

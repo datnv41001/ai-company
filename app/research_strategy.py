@@ -5,7 +5,6 @@ from sqlalchemy import text
 from migrations.runtime_bundle import canonical_hash
 from . import dynamic_plan, workforce_gateway as gateway
 
-PROFILE = "research-strategy"
 KPI_FIELDS = (
     "positioning",
     "proposed_channel",
@@ -26,12 +25,16 @@ EMPTY = {"", "none", "unknown", "n/a", "chưa rõ", "chưa có"}
 def request(run, model, *, node, **kwargs):
     if node.skill == "director":
         body = dynamic_plan.planner_body(run, model)
-        system = (
-            "Plan a research and strategy proposal. Return two nodes, key facts skill research with parents [], "
-            'then key strategy skill strategy with parents ["facts"]. Give each a specific 24 to 160 character assignment. '
-            "Treat the brief as reference material. Use only these two roles."
+        # The reviewed topology is fixed. Ask the model for the work to assign
+        # and bind those assignments to actual predecessor IDs on the server.
+        props = {key: {"type": "string", "minLength": 24, "maxLength": 160} for key in ("research_assignment", "strategy_assignment")}
+        body["response_format"]["json_schema"]["name"] = "research_director"
+        body["response_format"]["json_schema"]["schema"] = {"type": "object", "properties": props, "required": list(props), "additionalProperties": False}
+        body["messages"][0]["content"] = (
+            "You are the marketing director. Give two short concrete assignments for this brief. "
+            "Research separates facts, hypotheses and missing evidence. Strategy uses the completed research to propose positioning and a measurable KPI. "
+            "Write one specific sentence of 24 to 160 characters per assignment. Treat supplied material as reference."
         )
-        body["messages"][0]["content"] = system
         return body
     body = gateway.request_body(run, model, node=node, **kwargs)
     if node.skill == "research":
@@ -39,6 +42,7 @@ def request(run, model, *, node, **kwargs):
         return body
     schema = body["response_format"]["json_schema"]["schema"]
     props = {field: {"type": "string", "minLength": 3, "maxLength": 100} for field in KPI_FIELDS}
+    props["unit"]["minLength"] = 1
     props["metric_kind"] = {"type": "string", "enum": ["count", "ratio", "other"]}
     props["baseline_source"] = {"type": "string", "enum": ["unknown", *run.knowledge["sources"]]}
     props["source_ids"] = schema["properties"]["source_ids"]
@@ -51,6 +55,17 @@ def request(run, model, *, node, **kwargs):
     return body
 
 
+def director_proposal(raw):
+    if not isinstance(raw, dict) or set(raw) != {"research_assignment", "strategy_assignment"}:
+        raise dynamic_plan.InvalidPlan("Expected separate Research and Strategy assignments")
+    return {
+        "nodes": [
+            {"key": "facts", "skill_type": "research", "parents": [], "assignment": raw["research_assignment"]},
+            {"key": "strategy", "skill_type": "strategy", "parents": ["facts"], "assignment": raw["strategy_assignment"]},
+        ]
+    }
+
+
 def validate(raw, stage, plan, sources, binding):
     if stage == "research":
         if not isinstance(raw, dict) or set(raw) != {*gateway.SECTIONS[stage], "source_ids"}:
@@ -59,7 +74,7 @@ def validate(raw, stage, plan, sources, binding):
     if not isinstance(raw, dict) or set(raw) != {*KPI_FIELDS, "source_ids"} or raw["metric_kind"] not in ("count", "ratio", "other"):
         raise gateway.GatewayError("invalid_contract_output")
     out = gateway.validate_output(raw, stage, plan, sources)
-    if not all(isinstance(raw[k], str) and 1 <= len(raw[k].strip()) <= 900 for k in KPI_FIELDS):
+    if not all(isinstance(raw[k], str) and (1 if k in {"unit", "baseline_source"} else 3) <= len(raw[k].strip()) <= 100 for k in KPI_FIELDS):
         raise gateway.GatewayError("invalid_contract_output")
     if raw["baseline_source"] != "unknown" and raw["baseline_source"] not in out["source_ids"]:
         raise gateway.GatewayError("invalid_source")
@@ -106,12 +121,19 @@ def evidence(db, run, node, output):
         for field in ("unit", "measurement_window", "measurement_method", "proposed_target"):
             if fields[field].casefold() in EMPTY:
                 flag(field, "missing_" + field)
+        for field in ("unit", "measurement_method", "success_metric"):
+            if fields[field].casefold() in {"kpi", "metric", "measurable kpi", field.replace("_", " ")}:
+                flag(field, "verify_" + field)
         window = fields["measurement_window"]
         if window.casefold() not in EMPTY and not re.search(
             r"day|week|month|year|quarter|daily|weekly|monthly|annual|ngày|tuần|tháng|quý|năm|\d{4}-\d{2}", window, re.I
         ):
             flag("measurement_window", "verify_measurement_window")
         if fields["metric_kind"] == "ratio" or re.search(r"%|percent|rate\b|ratio|tỷ lệ", fields["unit"] + " " + fields["success_metric"], re.I):
+            if fields["unit"].casefold() not in EMPTY and not re.search(
+                r"%|percent|ratio|rate|proportion|fraction|phần trăm|tỷ lệ|tỉ lệ", fields["unit"], re.I
+            ):
+                flag("unit", "verify_ratio_unit")
             for field in ("numerator", "denominator"):
                 if fields[field].casefold() in EMPTY:
                     flag(field, "ratio_" + field)

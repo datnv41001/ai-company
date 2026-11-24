@@ -50,7 +50,9 @@ def drive(lab, rid, config, *, old_checkout=None, after_content=None, seo_v2=Fal
                 turn(old_checkout, lab, "dispatch")
         elif not lab.consume() and not lab.dispatch():
             time.sleep(0.1)
-    assert lab.states() == ["awaiting_qa"]
+    if lab.states() != ["awaiting_qa"]:
+        failed = read_run(lab,rid)
+        raise AssertionError((failed["last_error"],[(j["skill"],j["outcome"],j.get("plan_error")) for j in failed["journal"]]))
     if old_checkout:
         assert switch is not None
         assert all(read_run(lab, rid)["registry"][k] == v for k, v in switch.items())

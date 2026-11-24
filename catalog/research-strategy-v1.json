@@ -22,7 +22,8 @@
       ],
       "predecessors": [],
       "outputs": [
-        "nodes"
+        "research_assignment",
+        "strategy_assignment"
       ],
       "tools": [],
       "model": "local",
@@ -30,11 +31,12 @@
       "max_attempts": 3,
       "timeout_seconds": 300,
       "approval": "revision_qa_and_client_snapshot",
-      "adapter_digest": "3c42012fe1907cdaa2518b643ba94c49ca58fda12b272bfbd8714662523419b6",
+      "adapter_digest": "3b087033f443e1175484d1e072c605465e0c1e4230515fa18f02b3162f5a84a6",
       "owner": "agency marketing lead",
       "objective": "Plan a scoped DAG",
       "success_criteria": [
-        "nodes"
+        "research_assignment",
+        "strategy_assignment"
       ],
       "forbidden_actions": [
         "external_write",
@@ -68,7 +70,7 @@
       "max_attempts": 3,
       "timeout_seconds": 300,
       "approval": "revision_qa_and_client_snapshot",
-      "adapter_digest": "3c42012fe1907cdaa2518b643ba94c49ca58fda12b272bfbd8714662523419b6",
+      "adapter_digest": "3b087033f443e1175484d1e072c605465e0c1e4230515fa18f02b3162f5a84a6",
       "owner": "agency marketing lead",
       "objective": "Separate facts from audience hypotheses",
       "success_criteria": [
@@ -120,7 +122,7 @@
       "max_attempts": 3,
       "timeout_seconds": 300,
       "approval": "revision_qa_and_client_snapshot",
-      "adapter_digest": "3c42012fe1907cdaa2518b643ba94c49ca58fda12b272bfbd8714662523419b6",
+      "adapter_digest": "3b087033f443e1175484d1e072c605465e0c1e4230515fa18f02b3162f5a84a6",
       "owner": "agency marketing lead",
       "objective": "Propose measurable positioning",
       "success_criteria": [

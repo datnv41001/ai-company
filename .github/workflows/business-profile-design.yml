@@ -1,0 +1,25 @@
+name: Business Profile design contracts
+on:
+  pull_request:
+    paths:
+      - 'docs/business-profile/**'
+      - '.github/workflows/business-profile-design.yml'
+permissions:
+  contents: read
+jobs:
+  design-contracts:
+    strategy:
+      matrix:
+        revision: [head, integration]
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ matrix.revision == 'integration' && github.sha || github.event.pull_request.head.sha }}
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Exercise synthetic Marketing design contracts
+        run: python -m unittest discover -s docs/business-profile -p test_c0.py -v

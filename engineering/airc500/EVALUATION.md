@@ -1,5 +1,7 @@
 # Kế hoạch kiểm thử và hiệu chuẩn
 
+**Đánh giá v2.** [Corpus mù, structured fix, hai seed và bốn mốc trong vòng đời finding](QUALITY-EVALUATION.md).
+
 **Lần đo Qwen sau thiết kế.** [Kết quả theo candidate, verified finding, dissent và mẫu số](PILOT.md) · [Kiểm tra lại archive](PILOT-REVIEW.md).
 
 ## Các phép kiểm tra chạy được ở giai đoạn thiết kế

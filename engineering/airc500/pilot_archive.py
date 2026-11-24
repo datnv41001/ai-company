@@ -60,8 +60,15 @@ def gather(out, manifest, rows, trust, mode):
     run = load(work / "run.json")
     checkpoint = load(work / "checkpoint.json")
     events = load(work / "events.json")
-    replay = Journal.verify_events(run["run_id"], events, checkpoint, trust)
-    totals = {key: value for key, value in replay.items() if key not in ("run", "accepted_attempts")}
+    pins = {}
+    if events and "plan" in events[0]["data"]:
+        # The caller checks the external archive digest before loading the verifier key.
+        from pilot_fixture import admission
+        from review_plan import plan_digest
+
+        pins = {"expected_plan_digest": plan_digest(admission(rows, mode)), "verifier_key": events[0]["data"]["verifier_key"]}
+    replay = Journal.verify_events(run["run_id"], events, checkpoint, trust, **pins)
+    totals = {key: value for key, value in replay.items() if key not in ("run", "accepted_attempts", "coverage_report")}
     if replay["run"] != run or run["source_manifest_digest"] != digest(encoded(manifest)):
         raise ValueError("Unpinned source manifest")
     if (
@@ -182,6 +189,10 @@ def gather(out, manifest, rows, trust, mode):
         "evaluation": assessment,
         "decision": "changes_requested" if assessment["verified_units"] else "inconclusive",
     }
+    if "coverage_report" in replay:
+        result["coverage"] = replay["coverage_report"]
+        if replay["coverage_report"]["decision"] != "covered":
+            result["decision"] = "inconclusive"
     return result, docs
 
 

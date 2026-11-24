@@ -6,6 +6,7 @@ import json
 import os
 from pathlib import Path
 import secrets
+import shutil
 import socket
 import subprocess
 import time
@@ -13,6 +14,7 @@ import tempfile
 import urllib.error
 import urllib.request
 
+from host_capacity import machine_slot, spawn_with_slot
 from pilot_fixture import MODEL_DIGEST, encoded
 
 
@@ -62,23 +64,51 @@ class LocalAdapter:
         return self.post("/v1/chat/completions", payload, timeout)
 
 
-@contextmanager
-def launch(binary, model):
-    binary, model = Path(binary).resolve(strict=True), Path(model).resolve(strict=True)
-    if file_digest(model) != MODEL_DIGEST:
+def stage_runtime(binary, model, directory, pins_path, binary_digest, model_digest):
+    """Copy the operator-approved runtime into a private, empty loader directory."""
+    pins = json.loads(Path(pins_path).read_bytes())
+    files = pins["files"]
+    if pins["format"] != 1 or pins["executable"] != binary.name or files.get(binary.name) != binary_digest:
+        raise ValueError("Runtime does not match enrolled executable")
+    for name, expected in files.items():
+        if not name or name != Path(name).name or name in (".", "..") or "/" in name or "\\" in name:
+            raise ValueError("Invalid runtime bundle member")
+        target = directory / name
+        shutil.copyfile(binary.parent / name, target)
+        if file_digest(target) != expected:
+            raise ValueError("Runtime component digest mismatch: " + name)
+        target.chmod(0o500)
+    weight = directory / "weights.gguf"
+    shutil.copyfile(model, weight)
+    if file_digest(weight) != model_digest:
         raise ValueError("Unexpected model weights")
+    weight.chmod(0o400)
+    return directory / binary.name, weight
+
+
+@contextmanager
+def launch(binary, model, *, expected_binary_digest=None, expected_model_digest=MODEL_DIGEST, runtime_pins=None):
+    binary, model = Path(binary).resolve(strict=True), Path(model).resolve(strict=True)
+    runtime_pins = runtime_pins or Path(__file__).parent / "runtime-pins" / "windows-x64.json"
+    if expected_binary_digest is None:
+        pins = json.loads(Path(runtime_pins).read_bytes())
+        expected_binary_digest = pins["files"][pins["executable"]]
     with socket.socket() as sock:
         sock.bind(("127.0.0.1", 0))
         port = sock.getsockname()[1]
     # Do not inherit integration credentials or proxies. Use an ephemeral key so
     # another listener cannot silently impersonate the process on this port.
-    env = {k: os.environ[k] for k in ("PATH", "SystemRoot", "WINDIR", "TMP", "TEMP", "TMPDIR", "LD_LIBRARY_PATH", "DYLD_LIBRARY_PATH") if k in os.environ}
-    with tempfile.TemporaryDirectory(prefix="airc-adapter-") as tmp:
+    env = {k: os.environ[k] for k in ("SystemRoot", "WINDIR", "TMP", "TEMP", "TMPDIR") if k in os.environ}
+    with machine_slot() as slot, tempfile.TemporaryDirectory(prefix="airc-adapter-") as tmp:
+        binary, model = stage_runtime(binary, model, Path(tmp), runtime_pins, expected_binary_digest, expected_model_digest)
+        env["PATH"] = str(Path(env["SystemRoot"]) / "System32") if os.name == "nt" else os.defpath
+        if os.name != "nt":
+            env["LD_LIBRARY_PATH"] = str(Path(tmp))
         key = secrets.token_hex(32)
         keyfile = Path(tmp) / "access"
         keyfile.write_text(key, encoding="ascii")
         keyfile.chmod(0o600)
-        alias = "airc-qwen-" + MODEL_DIGEST[:12]
+        alias = "airc-qwen-" + expected_model_digest[:12]
         cmd = [
             str(binary),
             "--model",
@@ -102,7 +132,8 @@ def launch(binary, model):
             "--no-context-shift",
             "--log-disable",
         ]
-        proc = subprocess.Popen(
+        proc = spawn_with_slot(
+            slot,
             cmd,
             env=env,
             cwd=tmp,
@@ -124,7 +155,10 @@ def launch(binary, model):
                     time.sleep(0.2)
             else:
                 raise RuntimeError("Dedicated adapter startup timed out")
-            yield adapter, {"binary_sha256": file_digest(binary), "model_sha256": MODEL_DIGEST, "transport": "private loopback process", "max_concurrency": 1}
+            yield (
+                adapter,
+                {"binary_sha256": file_digest(binary), "model_sha256": expected_model_digest, "transport": "private loopback process", "max_concurrency": 1},
+            )
         finally:
             if proc.poll() is None:
                 proc.terminate()

@@ -298,3 +298,15 @@ def report(tenant_id: str, rid: str, user: User = Depends(current_user), db: Ses
         "source_registry": run.knowledge["sources"],
         "approved_assets": archived,
     }
+
+
+@router.get("/runs/{rid}/wait-diagnostics")
+def wait_diagnostics(tenant_id: str, rid: str, user: User = Depends(current_user), db: Session = Depends(get_db)):
+    from .scheduler_telemetry import inspect_waits
+    membership = require_tenant(db,user,tenant_id)
+    if membership.role not in ("owner","admin") or db.get_bind().dialect.name != "postgresql":
+        raise HTTPException(404,"Diagnostics unavailable")
+    snapshot = db.scalar(text("select amc_ops.wait_snapshot(:t,:r)"),{"t":tenant_id,"r":rid})
+    if not snapshot:
+        raise HTTPException(404,"Diagnostics unavailable")
+    return inspect_waits(snapshot)

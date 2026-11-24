@@ -1,10 +1,40 @@
 # Bắt đầu ở đây khi tiếp quản AI Marketing Company
 
+## Tích hợp PR #12 và #13 trên máy phát triển
+
+PR #12 đã vào main tại `df8466d317645fbd34064406b24edabbe89033f6`, cùng Git tree với head đã duyệt `b69d9b45`. [CI trên commit merge](https://github.com/datnv41001/ai-company/actions/runs/45338563269). PR #13 tiếp tục trên nền này. Main dùng schema 15. Nhánh PR #13 dùng schema 16.
+
+Trên máy phát triển mới, chạy `python scripts/init_env.py`, rồi `docker compose up -d --build` và kiểm tra `docker compose logs migrate`. Migrator giữ khóa trước khi đọc lịch sử và chạy SQL cùng marker trong một transaction. DB ở v14 chạy 015 rồi 016, DB ở v15 chỉ chạy 016. Chạy lại `docker compose run --rm migrate` phải giữ nguyên marker, registry, snapshot, lease và ledger.
+
+Nếu gặp `missing migration 015` trên DB dev đã chạy v16 riêng, dừng các service ghi và lưu bản sao DB hiện tại để đối soát. Khôi phục backup trước 016 vào **database dev riêng**, chạy migrator của nhánh này rồi so lại release, run, lease, ledger và snapshot với bản sao. Dữ liệu phát sinh sau backup cần được đối soát riêng trước khi chuyển kết nối. Nếu thiếu backup và cần giữ dữ liệu, giữ nguyên DB gốc để lập phương án phục hồi. Việc chèn tay marker 015 sẽ bỏ qua SQL tạo hợp đồng WF-03.
+
+Trên PostgreSQL tổng hợp với cùng môi trường như job `api-tests`, chạy `python -m pytest -q tests/test_wait_diagnostics.py tests/test_wf03_budget.py`. Đặt `AMC_WF03_HOLD_EVIDENCE` thành thư mục đích để lưu hai biên ngân sách và dòng ledger thật. Mỗi lệnh `python tests/check_postgres_upgrade.py --from-v14`, `--from-v15` hoặc `--from-isolated-v16` cần một database kiểm thử trống riêng. CI cũng diễn tập lại từ v1–v13. Job `workforce-model` ghi snapshot chẩn đoán cho WF-13 và WF-03 khi chạy Qwen local. Xem các artifact `wf03-director-ledger` và `pool-model-measurements` trên chính run tương ứng với head của PR.
+
+### Kết quả ngưỡng ngân sách WF-03
+
+Ở commit tích hợp RED `8bed9cb`, chẩn đoán dùng planner cũ để tính 385 micro-USD, trong khi PostgreSQL cấp offer và ghi một khoản giữ 264 cho request của `director@2`. Trên fixture giá tổng hợp, thử ba trần 263, 264, 265 micro-USD. Trần 263 phải trả `budget_insufficient`, có 0 offer và giữ 0. Ở 264 và 265, scheduler phải cấp một offer và ledger ghi `held=264`, `spent=0`. Bài test cũng so toàn bộ JSON của request đã cấp với request do adapter đã ghim tạo ra. Các con số này mô tả fixture dùng kiểm thử.
+
+## Review Scheduler Wait Diagnostics
+
+Schema 16 bổ sung inventory, heartbeat và snapshot chẩn đoán sau migration 015 của WF-03.
+
+Trong DB dev, khởi động Compose và cấp các LOGIN riêng theo [runbook pool](docs/POOL-RUNBOOK.md). Khai báo danh sách đầy đủ dispatcher của **database này** bằng tài khoản migrate. Với cấu hình mẫu có đúng một dispatcher, chạy lệnh sau sau khi đã tạo LOGIN.
+
+```sh
+docker compose run --rm migrate python scripts/provision_pool.py inventory amc_ops_dispatch
+```
+
+Mỗi replica dùng LOGIN riêng. Truyền tên của tất cả replica vào lệnh inventory khi thay đổi pool. Dispatcher và worker tự báo heartbeat khoảng 3 giây/lần cùng fingerprint và capability. Dữ liệu tối đa 15 giây tuổi mới được dùng để kết luận thiếu adapter. Phiên dispatcher còn kết nối nhưng thiếu heartbeat, LOGIN dự kiến vắng mặt hoặc chưa khai báo danh sách cho kết quả `telemetry_unknown`. Worker bận được nhận diện qua lease dù không poll trong lúc suy luận. Khi bộ dựng yêu cầu của dispatcher khác fingerprint với API, phép tính ngân sách được đánh dấu chưa đủ dữ liệu.
+
+Owner/admin mở **Điều phối Marketing AI → Xem kết quả và chi phí → Xem lý do node chờ**. API `GET /api/tenants/{tenant}/workforce/runs/{run}/wait-diagnostics` đọc một snapshot PostgreSQL cho các node cùng run/revision. Trường `candidate` đối chiếu tập ứng viên SQL của scheduler. Bước cấp offer còn đối chiếu runtime, ngân sách node/run/agency và lease dưới khóa scheduler. Một report có thể chờ adapter sau khi worker đã gửi. Giao diện trả thời điểm quan sát để nhận biết dữ liệu đã cũ. Client A/B và tài khoản tenant khác không có quyền đọc chẩn đoán.
+
+RED tại `47f47cd` cho thấy API trả 404 cho quản trị viên. Chạy `python -m pytest -q tests/test_wait_diagnostics.py` với DB tổng hợp và môi trường PostgreSQL trong CI. Có ca READ ONLY, so ứng viên với offer thực, heartbeat hết hạn, report còn giữ, nhiều lý do đồng thời và thu hồi quyền qua suite chung. Job model ghi `wait-diagnostics-measurements.json` trong lần chạy Qwen có snapshot khách mẫu duyệt. Khi rút, tắt truy cập vào chẩn đoán và trả về image tương thích sau khi drain. Giữ bảng telemetry trong schema 16 để tiếp tục đối chiếu. Thay đổi inventory và heartbeat chỉ ghi bảng vận hành riêng.
+
 ## Review WF-03 · Research → Strategy
 
 Nhánh độc lập từ `3af08b75b661e1d1681a5825939f7ce8656746b8` bổ sung schema 15 và định nghĩa `WF-03/research-strategy-draft@1`. Ba hợp đồng bắt buộc là director, research và strategy phiên bản 2. Manifest ghim đầu ra Strategy. Director viết hai chỉ dẫn riêng cho brief. Server nối Research → Strategy rồi kiểm tra và đóng băng DAG theo hợp đồng. Backend dùng đúng checkpoint Research của cạnh trực tiếp để ghi bằng chứng. Chỉ nội dung Strategy được trình dưới dạng đề xuất. Số liệu nền cần khớp nguồn riêng đã dẫn. Người QA kiểm tra ngữ nghĩa, digest và revision trước khi chia sẻ snapshot. Các nhận xét chỉ áp dụng cho bản nháp nội bộ.
 
-Trên DB dev riêng, chạy Compose rồi nhập bản phát hành với `docker compose run --rm migrate python migrations/apply.py --publish-registry catalog/research-strategy-v1.json`. Cấp workflow theo campaign ở màn hình điều phối. Khi rút, ngừng cấp mới, giữ dispatcher tương thích đến khi hết report và đã đối soát hold. Kiểm kê trước khi gỡ image. Dùng schema 15 để truy lịch sử. Diễn tập khôi phục trên bản sao khi cần quay về binary/schema 14. PR diagnostics xuất phát cùng main và cần kiểm tra tích hợp hai migration trước lần merge thứ hai.
+Trên DB dev riêng, chạy Compose rồi nhập bản phát hành với `docker compose run --rm migrate python migrations/apply.py --publish-registry catalog/research-strategy-v1.json`. Cấp workflow theo campaign ở màn hình điều phối. Khi rút, ngừng cấp mới, giữ dispatcher tương thích đến khi hết report và đã đối soát hold. Kiểm kê trước khi gỡ image. Dùng schema 15 để truy lịch sử. Diễn tập khôi phục trên bản sao khi cần quay về binary/schema 14.
 
 RED có tại `8b0801d`. Chạy `python -m pytest -q tests/test_research_strategy.py` trên PostgreSQL tổng hợp với biến môi trường của CI. Job model lưu `research-strategy-measurements.json`. Workflow CI chạy Chromium ở hai kích thước và nâng lặp 14 đường từ DB có dữ liệu. Reviewer nên thử tráo nguồn và thu hồi Strategy ngay sau Research rồi kiểm tra snapshot và ledger.
 

@@ -15,7 +15,7 @@ from .access import set_context, set_worker_scope
 from .database import engine, prepare_database
 from .delivery import as_utc
 from .revision_qa import evaluate
-from .registry_adapters import specialist_request, validate_output
+from .registry_adapters import node_request, validate_output
 from .models import AuditEvent, Deliverable, Membership, utcnow
 from .workforce_gateway import Gateway, GatewayError, PROMPT_VERSION, infer, measured_cost, quality, request_body, reserve_tokens
 from .workforce_models import WorkforceRun
@@ -79,14 +79,7 @@ def claim(db, scope, config, *, run_id=None, node=None, commit=True):
     if node is not None:
         stage = node.skill
         earlier, assignment = workflow_dag.inputs(db, run.id, node)
-        if node.template == 'dynamic-v1' and stage == 'director':
-            contract = run.knowledge.get("registry", {}).get("contracts", {}).get("director", {})
-            if contract.get("adapter") == "director@2":
-                body = specialist_request(run, config.model, node=node)
-            else:
-                body = dynamic_plan.planner_body(run, config.model)
-        else:
-            body = specialist_request(run, config.model, node=node, predecessors=earlier, assignment=assignment)
+        body = node_request(run, config.model, node=node, predecessors=earlier, assignment=assignment)
     else:
         stage = run.plan[len(run.checkpoints)]
         body = request_body(run, config.model)

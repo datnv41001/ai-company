@@ -253,6 +253,9 @@ def exercise():
                         expect(graph.locator("li")).to_have_count(1)
                     if "@" in template:
                         expect(graph.get_by_text(template+" · Manifest",exact=False)).to_be_visible()
+                    card.get_by_role("button",name="Xem lý do node chờ").click()
+                    expect(card.get_by_text("Chưa đủ dữ liệu từ các replica",exact=True).first).to_be_visible()
+                    expect(card.get_by_text("Thời điểm quan sát",exact=False)).to_be_visible()
                     assert graph.evaluate("(e) => e.scrollWidth <= e.clientWidth + 1")
                 print(f"PASS {template} graph in Chromium at 1280px and 390px")
                 if template == registry:

@@ -76,6 +76,16 @@ def specialist_request(run, model, *, node, **kwargs):
     return builder(run, model, node=node, **kwargs)
 
 
+def node_request(run, model, *, node, predecessors, assignment):
+    """Build the same pinned envelope for queue admission and read-only cost estimates."""
+    if node.template == "dynamic-v1" and node.skill == "director":
+        registry = run.knowledge.get("registry")
+        if not registry or registry["contracts"]["director"]["adapter"] == "director@1":
+            return dynamic_plan.planner_body(run, model)
+        return specialist_request(run, model, node=node)
+    return specialist_request(run, model, node=node, predecessors=predecessors, assignment=assignment)
+
+
 def validate_output(raw, stage, plan, sources, binding=None):
     validator = resolve(binding["contracts"][stage]).validate if binding else gateway.validate_output
     return validator(raw, stage, plan, sources, binding)

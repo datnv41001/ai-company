@@ -10,7 +10,7 @@ from sqlalchemy.orm import Session
 
 from .registry_adapters import resolve
 
-from . import node_attempts
+from . import node_attempts, scheduler_telemetry
 from .workforce_gateway import Gateway
 from .workforce_models import WorkforceRun
 from .workflow_dag import node_for_slot
@@ -71,8 +71,7 @@ def dispatch(bind, config):
                     """
                     select p.month from amc_ops.periods p where tenant=:tenant
                     and month=date_trunc('month',now() at time zone 'UTC')::date and
-                    p.ceiling >= :hold + coalesce((select sum(held+spent) from amc_ops.ledger l
-                    where l.tenant=p.tenant and l.month=p.month),0) for update of p
+                    amc_ops.available_budget(:tenant) >= :hold for update of p
                 """,
                     tenant=scope.tenant,
                     hold=hold,
@@ -202,7 +201,12 @@ def main():
     config = Gateway.configured()
     if config.provider != "local":
         raise ValueError("Pool supports local inference only")
+    next_heartbeat = 0.0
     while True:
+        if time.monotonic() >= next_heartbeat:
+            with bind.begin() as conn:
+                scheduler_telemetry.dispatcher_heartbeat(conn,config)
+            next_heartbeat = time.monotonic()+3
         if not consume(bind, config) and not dispatch(bind, config):
             time.sleep(0.5)
 

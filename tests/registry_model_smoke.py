@@ -23,7 +23,7 @@ from migrations.apply import publish_registry
 from migrations.runtime_bundle import reviewed_runtime, runtime_fingerprint, runtime_identity
 
 
-def drive(lab, rid, config, *, old_checkout=None, after_content=None, seo_v2=False):
+def drive(lab, rid, config, *, old_checkout=None, after_content=None, seo_v2=False, diagnostics=None):
     deadline = time.monotonic() + 360
     switch = None
     while time.monotonic() < deadline and lab.states()[0] in ("queued", "running"):
@@ -38,6 +38,19 @@ def drive(lab, rid, config, *, old_checkout=None, after_content=None, seo_v2=Fal
                     assert report(worker.conn, job, list(result))
                 except GatewayError as exc:
                     assert report(worker.conn, job, result=exc.usage, error=str(exc))
+        if diagnostics is not None:
+            from app.scheduler_telemetry import dispatcher_heartbeat,worker_heartbeat
+            from scripts.provision_pool import inventory
+            if not diagnostics:
+                inventory(lab.owner,[lab.logins[0][0]])
+            with lab.bind.begin() as conn:
+                dispatcher_heartbeat(conn,lab.config)
+            for worker in lab.workers:
+                worker_heartbeat(worker.conn,config)
+            base,admin,*_=lab.cases[0]
+            response=lab.api.get(base+"/workforce/runs/"+rid+"/wait-diagnostics",headers=admin["headers"])
+            response.raise_for_status()
+            diagnostics.append(response.json())
         if old_checkout and switch is None:
             probe = turn(old_checkout, lab, "consume")
             assert probe["digest"] == V1_DIGEST
@@ -132,7 +145,12 @@ def verify():
                 queued.raise_for_status()
                 qa_run = queued.json()["id"]
                 lab.runs = [qa_run]
-                drive(lab, qa_run, config, seo_v2=True)
+                diagnostics=[]
+                drive(lab, qa_run, config, seo_v2=True, diagnostics=diagnostics)
+                assert any(n["candidate"] for s in diagnostics for n in s["nodes"])
+                assert any(n.get("phase")=="report" for s in diagnostics for n in s["nodes"])
+                Path("wait-diagnostics-measurements.json").write_text(json.dumps({"sha":evidence["source_after"],
+                      "snapshots":diagnostics},indent=2),encoding="utf-8")
                 usage = receipts(lab, [(qa_run, lab.cases[0], "Landing role QA")])[0]
                 run = read_run(lab, qa_run)
                 nodes = [p for p in run["checkpoints"] if p["skill"] in ("content", "seo")]
@@ -147,7 +165,10 @@ def verify():
                 Path("role-qa-measurements.json").write_text(json.dumps(role_evidence, indent=2), encoding="utf-8")
                 from test_research_strategy import start_research
                 wf03 = start_research(lab)
-                drive(lab,wf03,config)
+                wf03_diagnostics = []
+                drive(lab, wf03, config, diagnostics=wf03_diagnostics)
+                assert any(n["node_id"] == "director" and n["candidate"] for n in wf03_diagnostics[0]["nodes"])
+                assert any(n.get("phase") == "report" for sample in wf03_diagnostics for n in sample["nodes"])
                 receipt = receipts(lab,[(wf03,lab.cases[0],"Research to Strategy")])[0]
                 proposal = read_run(lab,wf03)
                 research,strategy = proposal["checkpoints"][1:]
@@ -158,7 +179,7 @@ def verify():
                 assert len(proposal["approved_assets"]) == 1
                 Path("research-strategy-measurements.json").write_text(json.dumps({
                     "sha":evidence["source_after"],"fingerprint":runtime_fingerprint(),"usage":receipt,
-                    "research":research["quality"],"strategy":qa,"approved":proposal["approved_assets"]},indent=2),encoding="utf-8")
+                    "diagnostics":wf03_diagnostics,"research":research["quality"],"strategy":qa,"approved":proposal["approved_assets"]},indent=2),encoding="utf-8")
         finally:
             lab.close()
 

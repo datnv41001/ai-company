@@ -1,5 +1,9 @@
 # Bắt đầu ở đây khi tiếp quản AI Marketing Company
 
+## Thiết kế phiên đăng nhập và khôi phục sau PR #19
+
+Đề xuất SAA-02 mô tả thu hồi phiên trên nhiều worker, đổi refresh grant, recovery trong cooldown, chuyển khóa duy trì quota, so sánh Keycloak/Auth0 với credential local và ca nghiệm thu cho sáu rủi ro. Tài liệu giữ hợp đồng đăng ký HTTP 202 của v21. Hạng mục triển khai đầu tiên là xem và thu hồi phiên trên hai thiết bị với PostgreSQL runtime bị giới hạn. [Quyết định, quy trình kiểm thử và rollback](docs/IDENTITY-SESSION-RECOVERY.md)
+
 ## Giới hạn đăng ký, đăng nhập, xác minh và lời mời · Đang review nội bộ
 
 Nhánh `feature/identity-abuse-prevention` tách từ main sau PR #17 (`bdc24419`). Schema đề xuất v21 bổ sung policy và bộ đếm theo cửa sổ. API đăng ký trả 202; ứng dụng đăng nhập riêng trước bước xác minh. [Hợp đồng, quota, chạy lại và khôi phục](docs/IDENTITY-ADMISSION.md). Đợt diễn tập dùng database tổng hợp riêng. PR #16 và #17 đã hợp nhất trên main v20. [CI main sau #17](https://github.com/datnv41001/ai-company/actions/runs/45421423514).

@@ -1,8 +1,59 @@
 # Bắt đầu ở đây khi tiếp quản AI Marketing Company
 
+## Mốc Scheduler Wait Diagnostics trên main · 24/11/2026
+
+[PR #13](https://github.com/datnv41001/ai-company/pull/13) đã merge vào `main` tại `0ce9e1ea20d64f75aa62161166bc9b798bffa94b`. Hai parent là `df8466d317645fbd34064406b24edabbe89033f6` và head đã duyệt `4a089239b7b4038969558dde6c902313ecf7bcb8`. Merge và head cùng Git tree `a9f5d7bf41594cba4dee3d3993f933e103cff7b4`. Mốc kỹ thuật đã hoàn tất cho phát triển nội bộ với PostgreSQL **v16**. [CI trên commit merge](https://github.com/datnv41001/ai-company/actions/runs/45342029520).
+
+| Bằng chứng trên commit merge | Kết quả |
+| --- | --- |
+| [Ruff, API, PostgreSQL và RLS](https://github.com/datnv41001/ai-company/actions/runs/45342029520/job/138267704157) | 187/187 bài test. Đủ 15/15 đường nâng có dữ liệu từ v1–v15 lên v16 và chạy lặp. Ca riêng xác nhận API và migrator từ chối v16 thiếu 015, bảo toàn lease, ledger và snapshot. |
+| [Chromium qua Docker Compose](https://github.com/datnv41001/ai-company/actions/runs/45342029520/job/138267704644) | WF-03, WF-13, chẩn đoán, QA và bản bàn giao ở 1280 px và 390 px. |
+| [Ledger WF-03](https://github.com/datnv41001/ai-company/actions/runs/45342029520/artifacts/14897210860) | Với ba trần tổng hợp 263/264/265 micro-USD, offer lần lượt 0/1/1, giữ 0/264/264, chi 0. |
+| [Qwen và fingerprint](https://github.com/datnv41001/ai-company/actions/runs/45342029520/artifacts/14896013846) | WF-03 có 4 lượt (1 `invalid_source`, sau đó thành công) và 3 finding Strategy trên bản sinh lại. WF-13 đạt 3/3. Mỗi workflow có một snapshot được khách mẫu duyệt, 0 usage chưa xác nhận và 0 khoản giữ cuối. |
+
+Hai runtime đã được đo trên cây mã tích hợp. Windows CPython 3.12.14 có fingerprint `d300bafe3f36ed9948565d206899786d0b0e74d1273ad01435ca7907649d60ef`. CI Linux CPython 3.12.16 có fingerprint `8e7cf1dc7fe4960c0b3cd876d4a497c76a075022f809266f66b86a94087a49c0`. [Danh sách đầy đủ](migrations/registry-runtime.lock.json) giữ cả tám fingerprint lịch sử cùng các digest adapter đã duyệt. Kiểm tra image thực chạy bằng `python -c "from migrations.runtime_bundle import runtime_fingerprint; print(runtime_fingerprint())"`.
+
+### Kiểm tra trước khi dùng chẩn đoán trên một pool dev khác
+
+Đối chiếu danh sách replica trong cấu hình triển khai với LOGIN của từng dispatcher dành cho **database đích**, kể cả replica đang tắt. Với Compose mẫu, `scripts/init_pool.py` cấp `amc_ops_dispatch` cho một replica. Mỗi replica bổ sung cần LOGIN riêng. Khai báo toàn bộ danh sách bằng lệnh inventory bên dưới. Trong `psql` trên database v16 đích, dùng tài khoản vận hành có quyền đọc các bảng, đặt `wanted` bằng danh sách LOGIN phân cách bởi dấu phẩy, không có khoảng trắng hoặc tên trùng. Ví dụ cho pool mẫu:
+
+```sql
+\set wanted amc_ops_dispatch
+BEGIN READ ONLY;
+WITH wanted(login) AS (
+  SELECT unnest(string_to_array(:'wanted', ','))::name
+), roster(login) AS (
+  SELECT unnest(expected) FROM amc_ops.dispatcher_inventory
+), sessions AS (
+  SELECT a.usename AS login, a.pid
+  FROM pg_stat_activity a JOIN pg_auth_members m ON m.member = a.usesysid
+  WHERE a.datname = current_database() AND m.roleid = 'amc_dispatch'::regrole
+), names AS (
+  SELECT login FROM wanted UNION SELECT login FROM roster UNION SELECT login FROM sessions
+)
+SELECT n.login, w.login IS NOT NULL AS expected, r.login IS NOT NULL AS registered,
+       count(s.pid) AS sessions, count(h.pid) AS fresh,
+       array_agg(DISTINCT h.capabilities->>'fingerprint') FILTER (WHERE h.pid IS NOT NULL) AS builds
+FROM names n LEFT JOIN wanted w USING (login) LEFT JOIN roster r USING (login)
+LEFT JOIN sessions s USING (login)
+LEFT JOIN amc_ops.pool_heartbeats h ON (h.login,h.pid) = (s.login,s.pid)
+  AND h.kind = 'dispatcher' AND h.observed_at > statement_timestamp() - interval '15 seconds'
+GROUP BY n.login, w.login, r.login ORDER BY n.login;
+COMMIT;
+```
+
+Mỗi LOGIN trong cấu hình phải có `expected` và `registered` cùng đúng, có ít nhất một phiên, mọi phiên có heartbeat mới và fingerprint trong lock. Kiểm tra cả LOGIN xuất hiện ngoài cấu hình lẫn replica dự kiến chưa kết nối. Nếu thiếu, hiển thị `telemetry_unknown`, đối chiếu cấu hình, inventory và heartbeat trước khi kết luận về adapter. Kết quả là một lần quan sát. Offer thực còn phụ thuộc khóa và ngân sách tại thời điểm scheduler cấp việc.
+
+Trên PostgreSQL v16 thử riêng với hai dispatcher LOGIN, truy vấn trên đã nhận diện lần lượt LOGIN thiếu trong inventory, phiên thiếu heartbeat, đủ hai LOGIN và cả hai phiên đã ngắt. Ba DB dev có sẵn trên máy được kiểm tra trong transaction chỉ đọc. `amc_company_pool_dev`, `amc_diamond_dev`, `amc_parallel_dev` lần lượt ở v10, v11, v13. Mỗi DB có một phiên dispatcher và chưa có bảng inventory v16. Mỗi DB có 0 attempt đang mở, tổng held và spent bằng 0, 0 run lệch ledger và 0 snapshot khách duyệt. Việc bật diagnostics trên các pool đó cần một lần nâng cấp và kiểm kê riêng.
+
+**Đối soát và rollback.** Trước khi đổi image hoặc rút một adapter, ghi lại run đang ghim, attempt còn lease, số dư ledger và các snapshot đã duyệt (ID, version, digest, quyết định). Dừng nhận việc mới, cho các dispatcher tương thích xử lý report còn lại, đối chiếu `reserved_microusd` với tổng `held + spent` theo run. Kiểm lại chính danh sách snapshot sau thao tác. Xem [truy vấn đối soát](docs/POOL-RUNBOOK.md#đối-soát). Khi cần rút tính năng, tạm dừng pool dev và giữ DB v16 để truy lịch sử. Để quay về binary cũ, thử phục hồi backup đúng schema vào DB riêng, đối soát thay đổi kể từ backup trước khi chuyển kết nối. Với v16 riêng thiếu 015, áp dụng hướng dẫn khôi phục ở phần tích hợp bên dưới.
+
+**Nghiệm thu nghiệp vụ.** Bộ chấm mù bao gồm 12 ca Content và 12 ca SEO. Nhóm hiện dùng reviewer AI mô phỏng theo yêu cầu của chủ dự án. Phiếu có nguồn gốc AI được lưu riêng với điểm số, lý do và bất đồng. Năm finding Strategy trong lần chạy trên head `4a089239` cần đối chiếu đơn vị, phương pháp đo, kỳ đo, cách biểu thị tỷ lệ và số liệu nền. Bản snapshot đã duyệt trong CI là fixture kỹ thuật. Kết quả nghiệp vụ chỉ áp dụng cho các ca đã xem.
+
+
 ## Tích hợp PR #12 và #13 trên máy phát triển
 
-PR #12 đã vào main tại `df8466d317645fbd34064406b24edabbe89033f6`, cùng Git tree với head đã duyệt `b69d9b45`. [CI trên commit merge](https://github.com/datnv41001/ai-company/actions/runs/45338563269). PR #13 tiếp tục trên nền này. Main dùng schema 15. Nhánh PR #13 dùng schema 16.
+PR #12 đã vào main tại `df8466d317645fbd34064406b24edabbe89033f6`, cùng Git tree với head đã duyệt `b69d9b45`. [CI trên commit merge](https://github.com/datnv41001/ai-company/actions/runs/45338563269). Đây là mốc trung gian trước PR #13. Commit merge của PR #12 dùng schema 15 và là base đã kiểm của PR #13.
 
 Trên máy phát triển mới, chạy `python scripts/init_env.py`, rồi `docker compose up -d --build` và kiểm tra `docker compose logs migrate`. Migrator giữ khóa trước khi đọc lịch sử và chạy SQL cùng marker trong một transaction. DB ở v14 chạy 015 rồi 016, DB ở v15 chỉ chạy 016. Chạy lại `docker compose run --rm migrate` phải giữ nguyên marker, registry, snapshot, lease và ledger.
 

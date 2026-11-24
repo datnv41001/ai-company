@@ -34,7 +34,7 @@
         "8bf22c4a39ef082b3d490b2443de23cd2b4bf53f75e62e241e9224a6e8e7e778"
       ]
     },
-    "bf9c7e5fa04720d73ef6c857222182a5088d03e1e5f01cba9475bbc96e6bd8a5": {
+    "4d10b1ab3d0f04f2b553ab5c83d2674113270e3c98b2755b20387ec119930194": {
       "python": "cpython-3.12.14",
       "adapters": [
         "c64cf3e0e691a1bad191b954b07d06a28c7cd8675bb5fe8328ee0ae0e620880a",
@@ -43,7 +43,7 @@
         "8bf22c4a39ef082b3d490b2443de23cd2b4bf53f75e62e241e9224a6e8e7e778"
       ]
     },
-    "43227cf91147db476b6ddd1b898137e0a6b07bac8b3fb6d27edf2da6232c973e": {
+    "4716edcd610c0bda796e8979c608c2df2bc28f98d713a0d99cad9879e655b319": {
       "python": "cpython-3.12.16",
       "adapters": [
         "c64cf3e0e691a1bad191b954b07d06a28c7cd8675bb5fe8328ee0ae0e620880a",

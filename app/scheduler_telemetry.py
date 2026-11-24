@@ -42,8 +42,24 @@ def estimate(run, node, parents, caps):
     return config.price(reserve_tokens(body), body["max_tokens"])
 
 
+def known_capabilities(caps, approved):
+    if not isinstance(caps, dict) or not isinstance(caps.get("fingerprint"), str):
+        return False
+    release = approved.get(caps["fingerprint"])
+    adapters = caps.get("adapters")
+    return bool(
+        release
+        and isinstance(adapters, dict)
+        and all(isinstance(name, str) and digest in release["adapters"] for name, digest in adapters.items())
+        and isinstance(caps.get("model"), str)
+        and caps["model"]
+        and isinstance(caps.get("provider"), str)
+        and all(type(caps.get(key)) is int and caps[key] >= 0 for key in ("input_rate", "output_rate", "timeout"))
+    )
+
+
 def compatible(caps, contract, reporting, approved):
-    if not caps or caps.get("fingerprint") not in approved:
+    if not known_capabilities(caps, approved):
         return False
     if contract is None:
         return True
@@ -59,7 +75,7 @@ def inspect_waits(snapshot):
     replicas = snapshot["dispatchers"] or []
     approved = json.loads(APPROVAL.read_text(encoding="utf-8"))["fingerprints"]
     # A registered login with no fresh observation, or an unreviewed build, leaves fleet coverage unknown.
-    coverage = bool(replicas) and all(c and c.get("fingerprint") in approved for c in replicas)
+    coverage = bool(replicas) and all(known_capabilities(c, approved) for c in replicas)
     rows = []
     for raw in run.nodes:
         reasons = []
@@ -100,7 +116,7 @@ def inspect_waits(snapshot):
             reasons.append("worker_unavailable")
         elif not any(r["worker_free"] and r["polling"] for r in allowed):
             reasons.append("worker_busy")
-        if any(r["polling"] and not r["worker_known"] for r in allowed) and "telemetry_unknown" not in reasons:
+        if any(r["polling"] and not known_capabilities(r["worker_caps"], approved) for r in allowed) and "telemetry_unknown" not in reasons:
             reasons.append("telemetry_unknown")
         if routes and not routes[0]["enabled"]:
             reasons.append("agency_disabled")

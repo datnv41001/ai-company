@@ -92,8 +92,8 @@ BEGIN
  ), facts AS (
  SELECT n.*, p.template, EXISTS (SELECT FROM eligible WHERE eligible.step=n.slot) candidate, amc_ops.parallel_node(n.run,n.slot) multi,
  (SELECT jsonb_agg(to_jsonb(s)-ARRAY['tenant','client','brand','campaign','operator','worker','ready_at','served','tries'] ||
-    jsonb_build_object('worker_known',EXISTS(SELECT FROM amc_ops.pool_heartbeats h JOIN pg_stat_activity a ON a.pid=h.pid AND a.usename=h.login
-           WHERE h.login=s.worker AND h.kind='worker' AND h.observed_at>statement_timestamp()-interval '15 seconds')))
+    jsonb_build_object('worker_caps',(SELECT h.capabilities FROM amc_ops.pool_heartbeats h JOIN pg_stat_activity a ON a.pid=h.pid AND a.usename=h.login
+           WHERE h.login=s.worker AND h.kind='worker' AND h.observed_at>statement_timestamp()-interval '15 seconds' ORDER BY h.observed_at DESC LIMIT 1)))
   FROM routes s WHERE s.step=n.slot) routes,
  (SELECT jsonb_agg(jsonb_build_object('skill',parent.skill_type,'id',parent.node_id,'checkpoint',parent.checkpoint) ORDER BY parent.position)
     FROM amc_ops.dag_edges e JOIN amc_ops.dag_nodes parent ON (parent.run,parent.revision,parent.node_id)=(e.run,e.revision,e.parent)

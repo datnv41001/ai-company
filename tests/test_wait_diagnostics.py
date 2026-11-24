@@ -139,3 +139,38 @@ def test_readonly_sql_and_partial_roster(pool):
             conn.execute("select set_config('amc.user_id',%s,true),set_config('amc.tenant_id',%s,true)", (actor["id"], admin["tenant"]))
             snapshot = conn.execute("select amc_ops.wait_snapshot(%s,%s)", (admin["tenant"], rid)).fetchone()[0]
             assert (snapshot is not None) == expected
+
+
+@PG
+def test_busy_worker_despite_stale_poll_and_concurrent_capacity_and_budget(pool):
+    from dataclasses import replace
+    from app.pool_dispatch import dispatch
+    from app.scheduler_telemetry import dispatcher_heartbeat, worker_heartbeat
+    from scripts.provision_pool import inventory
+    from test_registry import registry_brief, WORKFLOW
+
+    lab = pool
+    rid = frozen_run(lab)
+    lab.bind.dispose()
+    base, admin, *_ = lab.cases[0]
+    path, terms = registry_brief(lab)
+    other = lab.api.post(path, headers=admin["headers"], json={**terms, "registry_workflow": WORKFLOW}).json()["id"]
+    # Only the frozen run is eligible when allocating the sole routed worker.
+    lab.owner.execute("update workforce_runs set ready_at=now()+interval '1 hour' where id=%s", (other,))
+    lab.owner.execute("delete from amc_ops.routes where worker=%s", (lab.logins[2][0],))
+    inventory(lab.owner, [lab.logins[0][0]])
+    priced = replace(lab.config, input_rate=1000, output_rate=1000)
+    with lab.bind.begin() as db:
+        dispatcher_heartbeat(db, priced)
+    worker_heartbeat(lab.workers[0].conn, priced)
+    assert lab.workers[0].take() is None and dispatch(lab.bind, priced)
+    job = lab.workers[0].take()
+    assert job["run"] == rid
+    lab.owner.execute("update workforce_runs set ready_at=now() where id=%s", (other,))
+    lab.owner.execute("update amc_ops.readiness set polled=now()-interval '1 minute' where worker=%s", (lab.logins[1][0],))
+    lab.owner.execute("update amc_ops.agencies set capacity=1 where tenant=%s", (admin["tenant"],))
+    lab.owner.execute("update amc_ops.periods set ceiling=0 where tenant=%s", (admin["tenant"],))
+    result = lab.api.get(base + "/workforce/runs/" + other + "/wait-diagnostics", headers=admin["headers"]).json()["nodes"][0]
+    assert {"capacity_full", "worker_busy", "budget_insufficient"} <= set(result["wait_reasons"])
+    assert not result["candidate"] and not dispatch(lab.bind, priced)
+    assert lab.owner.execute("select status from amc_ops.attempts where id=%s", (job["id"],)).fetchone() == ("sent",)

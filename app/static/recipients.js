@@ -87,13 +87,22 @@ function createRecipientPanel(root, api, notify, enterInvitedWorkspace) {
     term('Hết hạn', new Date(i.expires_at).toLocaleString('vi-VN'));
     action(box, 'Chấp nhận lời mời', accept);
   }
-  async function linked(secret) {
+  async function linked(secret, onStale) {
     reset();
     const ticket = revision;
     const i = await api('/api/me/invitation-link','POST',{token:secret});
     if (ticket !== revision) return;
     offer(i, async () => {
-      await api('/api/me/invitation-link/accept','POST',{token:secret});
+      try {
+        await api('/api/me/invitation-link/accept','POST',{token:secret});
+      } catch (error) {
+        if (error.status !== 404) throw error;
+        if (ticket === revision) {
+          reset();
+          onStale();
+        }
+        return;
+      }
       if (ticket === revision) await enterInvitedWorkspace(i.tenant_id);
     });
   }

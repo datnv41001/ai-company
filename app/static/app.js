@@ -90,7 +90,10 @@
       if (!result.email_verified) { msg('Hãy xác minh email nhận lời mời.'); return; }
       msg('');
       try {
-        await accessPanel.linked(invitation);
+        await accessPanel.linked(invitation, () => {
+          $('link-hint').textContent = 'Lời mời này không còn hiệu lực. Hãy mở lời mời mới nhất của workspace.';
+          msg('Quyền truy cập của bạn chưa thay đổi.', true);
+        });
         $('link-hint').textContent = 'Kiểm tra phạm vi và quyền trước khi tham gia.';
       } catch (error) {
         $('link-hint').textContent = error.message + ' Bạn có thể đổi tài khoản hoặc yêu cầu gửi lại.';

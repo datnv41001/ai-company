@@ -82,7 +82,9 @@ def exercise_stale(browser, origin, viewport, user, issuer_token, tenant, client
         with page.expect_response(lambda response: response.url.endswith("/invitation-link/accept")) as rejected:
             panel.get_by_role("button", name="Chấp nhận lời mời").click()
         assert rejected.value.status == 404
-        expect(page.locator("#notice")).to_contain_text("bị thu hồi")
+        expect(page.locator("#link-hint")).to_contain_text("Lời mời này không còn hiệu lực")
+        expect(page.get_by_role("button", name="Chấp nhận lời mời")).to_have_count(0)
+        expect(page.locator("#notice")).to_contain_text("chưa thay đổi")
         screenshot(page, "stale")
         assert_state(["revoked","pending"], 0)
         me = issuer.get("/api/me", headers=auth).json()

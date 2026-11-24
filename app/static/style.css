@@ -13,7 +13,21 @@
   .top-pill { max-width: 100%; }
 }
 
+.invitation-entry .sidebar, .invitation-entry .hero, #notice:empty { display: none; }
+.invitation-entry .main { max-width: 900px; margin: 0 auto; }
 #recipient-panel { overflow-wrap: anywhere; }
+#recipient-panel > section { margin-top: 16px; }
+#recipient-panel > section h4 { margin: 0; font-size: 18px; }
+#recipient-panel > section dl { display: grid; grid-template-columns: minmax(130px, 1fr) 2fr; gap: 0 16px; }
+#recipient-panel > section dt, #recipient-panel > section dd { margin: 0; padding: 9px 0; border-bottom: 1px solid #273652; }
+#recipient-panel > section dt { color: #b2c1dc; }
+#new-workspace { margin: 12px 0; }
+#new-workspace summary { cursor: pointer; }
+@media (max-width: 630px) {
+  #recipient-panel > section dl { display: block; }
+  #recipient-panel > section dt { font-size: 12px; padding: 8px 0 2px; border: 0; }
+  #recipient-panel > section dd { padding: 0 0 6px; }
+}
 #recipient-panel summary { cursor: pointer; }
 #recipient-panel h4 { margin-top: 20px; }
 #recipient-panel input[type=checkbox] { display: inline-block; margin: 0 0 0 8px; width: auto; }

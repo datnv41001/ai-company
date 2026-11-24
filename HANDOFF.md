@@ -4,7 +4,17 @@
 
 Từ mốc `ece8ecc84b4938900821ff85403bb5b8243534c6`, catalog engineering có 500 hồ sơ và 12 discipline. Trên máy mới chạy `python engineering/airc500/catalog.py` từ gốc repo. [Đề xuất kiến trúc, hợp đồng, lệnh kiểm thử và backlog pilot](engineering/airc500/README.md). Mốc thiết kế ban đầu là `c1eda054`; commercial GA giữ NO-GO. Runtime AMC vẫn dùng schema v18 tại mốc trên.
 
-**Pilot kế tiếp trên cùng nhánh.** [Quy trình chạy lại Qwen và kiểm chữ ký](engineering/airc500/PILOT.md) · [Hồ sơ thực thi và quality metrics](engineering/airc500/evidence/qwen-marketing-01/REPORT.md). Chỉ dùng Git fixture Marketing tổng hợp. Chủ nhánh giữ PR #17 ở trạng thái draft để review. Sau khi PR #16 được duyệt và merge, đồng bộ main, giữ cả hai mục HANDOFF, kiểm lại tree app/migrations theo main và chạy CI cho cả head mới lẫn bản integration trước quyết định tiếp theo.
+**Pilot kế tiếp trên cùng nhánh.** [Quy trình chạy lại Qwen và kiểm chữ ký](engineering/airc500/PILOT.md) · [Hồ sơ thực thi và quality metrics](engineering/airc500/evidence/qwen-marketing-01/REPORT.md). Chỉ dùng Git fixture Marketing tổng hợp. PR #16 đã merge tại `49cbc0709388101c4ff6254d901e62e70a17a512` (tree `dbff352337ee9ded2721af712da3e290dba5d7be` trùng integration đã duyệt, schema v20). [CI sau merge #16](https://github.com/datnv41001/ai-company/actions/runs/45419903493). Phạm vi PR #17 là công cụ engineering thử nghiệm trên fixture tổng hợp. Giai đoạn tiếp theo cần đánh giá chất lượng theo từng vòng, kế hoạch coverage bất biến và giới hạn hạ tầng trước khi mở rộng.
+
+## PR #16 · Tạo tài khoản và tham gia qua lời mời
+
+PR #15 đã merge vào main tại `ece8ecc84b4938900821ff85403bb5b8243534c6`, CI sau merge đạt 3/3 job. [CI của main](https://github.com/datnv41001/ai-company/actions/runs/45363202327).
+
+PR #16 phát triển từ commit này. Nhánh `feature/invitation-first-onboarding` dùng schema v20 với PostgreSQL 16.6 trong Docker Compose. Từ checkout của nhánh, chạy `python scripts/init_env.py` rồi `docker compose -p amc-onboarding up -d --build` với database thử riêng. Mở ứng dụng ở cổng `AMC_HTTP_PORT` (mặc định 8000). Khi dùng địa chỉ khác máy local, cấu hình `AMC_PUBLIC_ORIGIN` bằng URL gốc mà người nhận dùng để mở ứng dụng. [Thiết kế, kiểm thử và khôi phục](docs/PR16-ONBOARDING.md).
+
+Đăng ký qua giao diện chỉ tạo tài khoản. Sau xác minh, người dùng chọn tạo workspace hoặc xem và chấp nhận quyền được mời. Owner/Admin có thể mời địa chỉ chưa đăng ký và gửi lại để thay link cũ. Hộp thư tổng hợp riêng dùng thư mục theo SHA-256 của email chuẩn hóa. Mã xác minh nằm trong các tệp `*.txt` trực tiếp của thư mục này. Link nằm trong `invitations/<invitation-id>.txt`. Chỉ đọc thư của tài khoản thử nghiệm trong terminal riêng. Giữ bản sao v18 cùng khóa ký để khôi phục. Ba pool v10/v11/v13 dùng phiên bản đang vận hành.
+
+**Review vòng 2.** Migration 020 bổ sung khóa vòng đời theo workspace và email chuẩn hóa, đồng bộ cấp/gửi lại/nhận/thu hồi, đồng thời đóng lời mời cũ khi xóa membership. Khi nâng từ v19, sao lưu riêng DB, giữ khóa signer và chạy migrator trước API. Chạy lại ca cạnh tranh PostgreSQL bằng `python -m pytest -q tests/test_recipient_lifecycle.py` theo cấu hình CI. Job Chromium xuất ảnh `resend-{1280,390}-{stale,accepted}.png`. [Kiểm thử, backlog phục hồi và rollback](docs/PR16-ONBOARDING.md#recipient-lifecycle-v20).
 
 ## PR #15 · Xác minh email và nhận lời mời workspace
 

@@ -116,6 +116,10 @@ jobs:
           export AMC_MIGRATION_DSN="${AMC_MIGRATION_DSN%/*}/amc_test_populated_v19"
           export DATABASE_URL="${DATABASE_URL%/*}/amc_test_populated_v19"
           AMC_UPGRADE_BACKUP_CONTAINER=amc-test-pg python tests/check_postgres_upgrade.py --from-v19
+          docker exec amc-test-pg createdb -U postgres amc_test_populated_v20
+          export AMC_MIGRATION_DSN="${AMC_MIGRATION_DSN%/*}/amc_test_populated_v20"
+          export DATABASE_URL="${DATABASE_URL%/*}/amc_test_populated_v20"
+          AMC_UPGRADE_BACKUP_CONTAINER=amc-test-pg python tests/check_postgres_upgrade.py --from-v20
           docker exec amc-test-pg createdb -U postgres amc_test_isolated_v16
           export AMC_MIGRATION_DSN="${AMC_MIGRATION_DSN%/*}/amc_test_isolated_v16"
           export DATABASE_URL="${DATABASE_URL%/*}/amc_test_isolated_v16"

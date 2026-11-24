@@ -14,7 +14,7 @@ from agency_fixtures import account, create
 from app.access import set_context
 from app.database import engine
 from app.models import User
-from app.recipients import accept, resend
+from app.recipients import accept, replace_invitation
 from app.security import sign_actor
 from test_verified_identity import check_acceptance_rows, wait_for_lock
 
@@ -42,7 +42,7 @@ def test_recipient_commands_have_one_serial_order(api, first, second, expected):
             if first == "accept":
                 accept(iid, None, user, db)
             else:
-                replacement = resend(t, iid, user, db)["id"]
+                replacement = replace_invitation(t, iid, user, db)["id"]
             if second == "resend":
                 pending = pool.submit(api.post, f"{path}/{iid}/resend", headers=owner["headers"])
             elif second == "issue":

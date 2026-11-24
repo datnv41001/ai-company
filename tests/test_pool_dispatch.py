@@ -47,11 +47,10 @@ def test_last_agency_balance_and_late_duplicate_bill(pool_lab):
 
 @pytest.fixture()
 def pool_lab():
-    from fastapi.testclient import TestClient
     from app.main import app
-    from pool_lab import Lab
+    from pool_lab import Lab, lab_client
 
-    with TestClient(app) as api:
+    with lab_client(app) as api:
         lab = Lab(api, os.environ["AMC_MIGRATION_DSN"])
         try:
             assert all(w.take() is None for w in lab.workers)

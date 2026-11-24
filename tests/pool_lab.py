@@ -4,6 +4,7 @@ import json
 from dataclasses import dataclass
 from secrets import token_hex
 
+from fastapi.testclient import TestClient
 import psycopg
 from psycopg import sql
 from psycopg.conninfo import make_conninfo
@@ -16,6 +17,14 @@ from app.pool_worker import report, take
 from app.workforce_gateway import Gateway
 from scripts.provision_pool import provision, route
 from test_workforce import DATA, call_model
+
+
+def lab_client(app):
+    # Each independent synthetic deployment has a distinct ASGI socket peer.
+    # Every request inside one lab retains that peer and all normal quotas.
+    subnet = token_hex(4)
+    peer = f"2001:db8:{subnet[:4]}:{subnet[4:]}::1"
+    return TestClient(app, client=(peer, 50000))
 
 
 @dataclass(frozen=True)

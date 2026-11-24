@@ -9,7 +9,7 @@ import pytest
 import httpx
 import uvicorn
 
-from identity_fixtures import verify_registration
+from identity_fixtures import start_registration, verify_registration
 from identity_fixtures import invite_member
 from app.database import engine
 from app.main import app
@@ -30,7 +30,7 @@ def api(request):
     with socket.socket() as sock:
         sock.bind(("127.0.0.1", 0))
         url = f"http://127.0.0.1:{sock.getsockname()[1]}"
-        server = uvicorn.Server(uvicorn.Config(app, log_level="error", access_log=False))
+        server = uvicorn.Server(uvicorn.Config(app, log_level="error", access_log=False, proxy_headers=False))
         thread = threading.Thread(target=server.run, kwargs={"sockets": [sock]})
         thread.start()
         try:
@@ -50,9 +50,7 @@ def api(request):
 def account(api, label):
     email = f"{label}-{uuid4().hex}@example.com"
     body = dict(email=email, password=uuid4().hex, organization_name=label, mode="agency")
-    result = api.post("/api/auth/register", json=body)
-    assert result.status_code == 201, result.status_code
-    info = result.json()
+    info = start_registration(api, **body)
     verify_registration(api,email,info)
     login = api.post("/api/auth/login", json={"email": email, "password": body["password"]})
     assert login.status_code == 200

@@ -13,6 +13,10 @@
   const api = async (path, method='GET', body=null, withCursor=false) => {
     const response = await fetch(path, {method, headers: {'Content-Type':'application/json', ...(state.token ? {'Authorization':`Bearer ${state.token}`} : {})}, ...(body ? {body: JSON.stringify(body)} : {})});
     const result = await response.json().catch(() => ({}));
+    if (response.status === 429) {
+      const delay = Number(response.headers.get('Retry-After'));
+      throw new Error(Number.isInteger(delay) && delay > 0 ? `Vui lòng thử lại sau ${delay} giây.` : 'Vui lòng thử lại sau.');
+    }
     if(!response.ok) throw Object.assign(new Error(typeof result.detail === 'string' ? result.detail : `HTTP ${response.status}`),{status:response.status});
     return withCursor ? {items:result, next:response.headers.get("X-Next-Cursor")} : result;
   };
@@ -119,8 +123,13 @@
     if(linked && !result.tenants.some(m=>m.tenant_id===linked)) msg('Bạn không có quyền mở liên kết của workspace này.',true);
   };
   process($('register-form'), async data => {
-    const result = await api('/api/auth/register', 'POST', data);
-    await session({...result, tenants:[]}, data.email);
+    await api('/api/auth/register', 'POST', data);
+    $('register-form').reset();
+    const login = $('login-form');
+    login.elements.email.value = data.email;
+    login.elements.password.value = '';
+    login.elements.password.focus();
+    msg('Đã nhận yêu cầu. Đăng nhập để tiếp tục xác minh hoặc mở tài khoản của bạn.');
   });
   $('leave-invite').onclick = async () => {
     invitation = null;

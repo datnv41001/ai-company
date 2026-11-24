@@ -10,11 +10,12 @@ from uuid import UUID, uuid5, NAMESPACE_URL
 from typing import Literal
 from urllib.parse import urlsplit
 
-from fastapi import APIRouter, Depends, HTTPException
+from fastapi import APIRouter, Depends, HTTPException, Request
 from pydantic import BaseModel, ConfigDict, Field, SecretStr
 from sqlalchemy import text
 from sqlalchemy.orm import Session
 
+from .identity_quota import admit
 from .access import set_context
 from .database import APP_ENV, get_db
 from .delivery import as_utc, lock_document
@@ -29,13 +30,17 @@ class Verification(BaseModel):
     token: SecretStr = Field(min_length=43, max_length=128)
 
 
+class MailboxConfigurationError(RuntimeError):
+    pass
+
+
 def deliver(email, message, *, invitation_id=None):
     """Development delivery boundary. The caller commits only after delivery succeeds."""
     if APP_ENV not in {"local", "development", "test"}:
-        raise RuntimeError("Local mailbox requires a development environment")
+        raise MailboxConfigurationError("Local mailbox requires a development environment")
     root = Path(os.getenv("AMC_DEV_MAILBOX_DIR", ".dev-mailbox")).resolve()
     if root.is_relative_to(Path(__file__).resolve().parent):
-        raise RuntimeError("Configure a private mailbox outside application sources")
+        raise MailboxConfigurationError("Configure a private mailbox outside application sources")
     directory = root / hashlib.sha256(email.encode()).hexdigest()
     directory.mkdir(mode=0o700, parents=True, exist_ok=True)
     if invitation_id:
@@ -67,13 +72,15 @@ def issue(db, user, **reservation):
 
 
 @router.post("/auth/request-verification", status_code=204)
-def request_verification(user: User = Depends(current_user), db: Session = Depends(get_db)):
+def request_verification(request: Request, user: User = Depends(current_user), db: Session = Depends(get_db)):
+    admit(db, request, "verification_issue", actor=user.id)
     issue(db, user)
     db.commit()
 
 
 @router.post("/auth/verify-email", status_code=204)
-def verify_email(body: Verification, user: User = Depends(current_user), db: Session = Depends(get_db)):
+def verify_email(body: Verification, request: Request, user: User = Depends(current_user), db: Session = Depends(get_db)):
+    admit(db, request, "verification_redeem", actor=user.id)
     lock_document(db, user.id)
     row = db.get(IdentityChallenge, user.id)
     digest = hashlib.sha256(body.token.get_secret_value().encode()).hexdigest()

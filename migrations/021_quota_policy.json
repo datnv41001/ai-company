@@ -1,0 +1,64 @@
+{
+  "register": {
+    "origin": [
+      120,
+      60
+    ],
+    "address": [
+      4,
+      600
+    ]
+  },
+  "login": {
+    "origin": [
+      300,
+      60
+    ],
+    "address": [
+      60,
+      60
+    ],
+    "origin_address": [
+      12,
+      60
+    ]
+  },
+  "verification_issue": {
+    "origin": [
+      240,
+      60
+    ],
+    "account": [
+      4,
+      300
+    ]
+  },
+  "verification_redeem": {
+    "origin": [
+      240,
+      60
+    ],
+    "account": [
+      10,
+      300
+    ]
+  },
+  "invitation": {
+    "origin": [
+      300,
+      60
+    ],
+    "account": [
+      40,
+      60
+    ],
+    "tenant": [
+      100,
+      60
+    ],
+    "recipient": [
+      6,
+      600
+    ]
+  }
+}

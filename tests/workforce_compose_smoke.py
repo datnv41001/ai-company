@@ -7,7 +7,7 @@ import time
 from datetime import datetime, timedelta, timezone
 from uuid import uuid4
 
-from identity_fixtures import verify_registration, invite_member
+from identity_fixtures import start_registration, verify_registration, invite_member
 import httpx
 
 
@@ -23,13 +23,8 @@ def exercise():
 
         def account(name):
             email = f"{name}-{uuid4().hex}@example.com"
-            registration = {
-                **request(
-                    "POST", "/api/auth/register", body={"email": email, "password": secrets.token_urlsafe(24), "organization_name": name, "mode": "agency"}
-                ),
-                "email": email,
-            }
-
+            registration = start_registration(api,email,secrets.token_urlsafe(24),organization_name=name,mode="agency")
+            registration["email"] = email
             verify_registration(api,email,registration,project)
             return registration
 

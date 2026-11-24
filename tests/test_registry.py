@@ -4,11 +4,10 @@ import os
 
 import psycopg
 import pytest
-from fastapi.testclient import TestClient
 
 from app.main import app
 from app.dynamic_plan import compile_plan, InvalidPlan
-from pool_lab import Lab
+from pool_lab import Lab, lab_client
 from test_dynamic_plan import node
 
 WORKFLOW = "WF-13/landing-seo-draft@1"
@@ -45,7 +44,7 @@ def test_publication_and_version_immutability():
 
 @pytest.fixture
 def pool():
-    with TestClient(app) as api:
+    with lab_client(app) as api:
         lab = Lab(api, os.environ["AMC_MIGRATION_DSN"], workflow="dynamic-v1")
         try:
             yield lab

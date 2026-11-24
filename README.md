@@ -50,7 +50,7 @@ python -m pip install -r requirements-dev.txt
 Copy-Item .env.example .env
 # Edit .env: set a unique random JWT_SECRET
 python -m pytest -q
-python -m uvicorn app.main:app --reload --host 127.0.0.1 --port 8000
+python -m uvicorn app.main:app --no-proxy-headers --reload --host 127.0.0.1 --port 8000
 ```
 
 Open http://127.0.0.1:8000 and http://127.0.0.1:8000/docs.
@@ -64,7 +64,7 @@ python -m pip install -r requirements-dev.txt
 cp .env.example .env
 # Set a strong JWT_SECRET.
 python -m pytest -q
-python -m uvicorn app.main:app --reload --host 127.0.0.1 --port 8000
+python -m uvicorn app.main:app --no-proxy-headers --reload --host 127.0.0.1 --port 8000
 ```
 
 ## Docker + Postgres (development, not production)

@@ -5,12 +5,11 @@ import time
 from concurrent.futures import ThreadPoolExecutor
 from threading import Barrier
 
-from fastapi.testclient import TestClient
 import pytest
 
 from app.main import app
 from app.pool_worker import report
-from pool_lab import Lab
+from pool_lab import Lab, lab_client
 from test_diamond import take_node
 from test_dynamic_plan import node
 from test_workforce import call_model
@@ -20,7 +19,7 @@ pytestmark = pytest.mark.skipif(os.getenv("AMC_TEST_PG") != "1", reason="require
 
 @pytest.fixture
 def parallel():
-    with TestClient(app) as api:
+    with lab_client(app) as api:
         pool = Lab(api, os.environ["AMC_MIGRATION_DSN"], workflow="dynamic-v1", parallelism=2)
         try:
             pool.configure(pool.y, 10000, False)

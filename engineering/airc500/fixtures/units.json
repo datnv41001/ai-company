@@ -1,0 +1,66 @@
+[
+  {
+    "id": "M-1",
+    "invariant": "Copy must identify the object visitors may touch",
+    "source": "Guests may touch the replica. The original remains behind glass.",
+    "observed": "Touch the original at our exhibition.",
+    "present": true,
+    "severity": "P1"
+  },
+  {
+    "id": "M-2",
+    "invariant": "Copy must identify the object visitors may touch",
+    "source": "Guests may touch the replica. The original remains behind glass.",
+    "observed": "Try the tactile replica during your visit.",
+    "present": false,
+    "severity": null
+  },
+  {
+    "id": "B-1",
+    "invariant": "One settled attempt is charged once",
+    "source": "Attempt X has a single settled receipt of 8 units.",
+    "observed": "The synthetic period total for X contains 8 + 8 units.",
+    "present": true,
+    "severity": "P1"
+  },
+  {
+    "id": "B-2",
+    "invariant": "Separate attempts reconcile to their own usage",
+    "source": "Attempts X and Y each have a settled receipt of 8 units.",
+    "observed": "The period total is 16 units.",
+    "present": false,
+    "severity": null
+  },
+  {
+    "id": "S-1",
+    "invariant": "Each client sees only its shared synthetic document",
+    "source": "A is assigned Doc-A and B is assigned Doc-B.",
+    "observed": "The fixture view for A lists Doc-A and Doc-B.",
+    "present": true,
+    "severity": "P0"
+  },
+  {
+    "id": "S-2",
+    "invariant": "Each client sees only its shared synthetic document",
+    "source": "A is assigned Doc-A and B is assigned Doc-B.",
+    "observed": "The fixture view for B lists only Doc-B.",
+    "present": false,
+    "severity": null
+  },
+  {
+    "id": "K-1",
+    "invariant": "KPI includes its measurement window",
+    "source": "The brief requires an objective for the next 30 days.",
+    "observed": "The proposed objective omits the time window.",
+    "present": true,
+    "severity": "P2"
+  },
+  {
+    "id": "K-2",
+    "invariant": "KPI includes its measurement window",
+    "source": "The brief requires an objective for the next 30 days.",
+    "observed": "Track sign-ups during days 1–30.",
+    "present": false,
+    "severity": null
+  }
+]

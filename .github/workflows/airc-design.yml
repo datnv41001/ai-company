@@ -1,0 +1,27 @@
+name: AIRC design contracts
+on:
+  pull_request:
+    paths:
+      - "engineering/airc500/**"
+      - ".github/workflows/airc-design.yml"
+permissions:
+  contents: read
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Check the catalog and portable calibration tests
+        run: |
+          python engineering/airc500/catalog.py
+          python -m unittest discover -s engineering/airc500 -p "test_design.py" -v
+      - name: Check receipt authenticity and crash recovery on synthetic records
+        run: |
+          python -m pip install -r engineering/airc500/requirements-pilot.txt
+          python -m unittest discover -s engineering/airc500 -p "test_*.py" -v

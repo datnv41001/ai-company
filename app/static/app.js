@@ -1,6 +1,13 @@
 (() => {
   const state = { memberships: [], readOnly: false, token: null, tenantId: null, mode: null, email: null, clients: [], brands: [], campaigns: [] };
   const $ = id => document.getElementById(id);
+  let invitation = new URLSearchParams(location.hash.slice(1)).get('invite');
+  if (invitation !== null) {
+    document.body.classList.add('invitation-entry');
+    history.replaceState(null, '', location.pathname + location.search);
+    $('link-hint').classList.remove('hidden');
+  }
+  let workspaceRequest = null;
   const esc = v => String(v ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
   const msg = (text, error=false) => { $('notice').textContent = text; $('notice').className = error ? 'error' : 'ok'; };
   const api = async (path, method='GET', body=null, withCursor=false) => {
@@ -12,6 +19,12 @@
   const workforce = createWorkforce($('workforce-panel'),api,msg);
   const portal = createReviewPanel($('review-panel'),api,msg);
   const accessPanel = createRecipientPanel($('recipient-panel'), api, msg, async tenantId => {
+    invitation = null;
+    document.body.classList.remove('invitation-entry');
+    $('leave-invite').classList.add('hidden');
+    $('link-hint').classList.add('hidden');
+    $('onboarding').classList.remove('hidden');
+    $('entry-title').textContent = 'Tài khoản của bạn';
     const me = await api('/api/me');
     state.memberships = me.tenants;
     $('workspace-select').replaceChildren(...me.tenants.map(m => new Option(m.organization_name, m.tenant_id)));
@@ -66,6 +79,24 @@
     $('verify-form').classList.toggle('hidden', Boolean(result.email_verified));
     $('verify-address').textContent = email;
     $('auth').classList.add('hidden');
+    $('switch-account').classList.remove('hidden');
+    $('leave-invite').classList.toggle('hidden', invitation === null);
+    $('who').textContent = email;
+    $('onboarding').classList.toggle('hidden', !result.email_verified || invitation !== null);
+    $('entry-title').textContent = result.tenants.length ? 'Tài khoản của bạn' : 'Bạn chưa tham gia workspace nào';
+    if (invitation !== null) {
+      $('workspace').classList.add('hidden');
+      $('workspace').before($('recipient-panel'));
+      if (!result.email_verified) { msg('Hãy xác minh email nhận lời mời.'); return; }
+      msg('');
+      try {
+        await accessPanel.linked(invitation);
+        $('link-hint').textContent = 'Kiểm tra phạm vi và quyền trước khi tham gia.';
+      } catch (error) {
+        $('link-hint').textContent = error.message + ' Bạn có thể đổi tài khoản hoặc yêu cầu gửi lại.';
+      }
+      return;
+    }
     if (!result.tenants.length) {
       $('workspace').classList.add('hidden');
       if (result.email_verified) {
@@ -73,7 +104,7 @@
         await accessPanel.show(null, null, [], [], []);
         msg('Tài khoản chưa thuộc workspace nào. Bạn có thể nhận lời mời tại đây.');
       } else {
-        msg('Hãy xác minh email để mở workspace của bạn.');
+        msg('Hãy xác minh địa chỉ email của bạn.');
       }
       return;
     }
@@ -87,6 +118,30 @@
   process($('register-form'), async data => {
     const result = await api('/api/auth/register', 'POST', data);
     await session({...result, tenants:[]}, data.email);
+  });
+  $('leave-invite').onclick = async () => {
+    invitation = null;
+    document.body.classList.remove('invitation-entry');
+    $('link-hint').classList.add('hidden');
+    try { await session({...await api('/api/me'), access_token:state.token},state.email); }
+    catch (error) { msg(error.message, true); }
+  };
+  $('switch-account').onclick = () => {
+    if (invitation !== null) history.replaceState(null, '', location.pathname + '#invite=' + encodeURIComponent(invitation));
+    location.reload();
+  };
+  $('workspace-form').addEventListener('input', () => { workspaceRequest = null; });
+  process($('workspace-form'), async data => {
+    workspaceRequest ||= crypto.randomUUID();
+    const button = $('workspace-form').querySelector('button');
+    button.disabled = true;
+    try {
+      const result = await api('/api/me/workspaces', 'POST', {...data, request_id:workspaceRequest});
+      const me = await api('/api/me');
+      await session({...me,access_token:state.token},me.email);
+      await enter(state.token,me.tenants.find(m => m.tenant_id === result.tenant_id),me.email);
+      $('workspace-form').reset(); $('new-workspace').open = false; workspaceRequest = null;
+    } finally { button.disabled = false; }
   });
   process($('login-form'), async data => session(await api('/api/auth/login', 'POST', data), data.email));
   process($('verify-form'), async data => {

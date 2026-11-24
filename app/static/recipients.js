@@ -62,6 +62,41 @@ function createRecipientPanel(root, api, notify, enterInvitedWorkspace) {
     return {client, rights:() => ({brand_id:brand.value || null, campaign_id:campaign.value || null,
       can_comment:comment.checked, can_decide:decide.checked})};
   }
+  function offer(i, accept) {
+    const box = node(root, 'section');
+    box.className = 'panel';
+    node(box, 'h4', 'Lời mời từ '+i.workspace_name);
+    const terms = node(box, 'dl');
+    terms.style.overflowWrap = 'anywhere';
+    function term(label, value) {
+      node(terms, 'dt', label);
+      node(terms, 'dd', value);
+    }
+    function scopeLabel(name, id, all) {
+      if (!id) return all;
+      return name ? name+' ('+id+')' : id;
+    }
+    term('Vai trò', roles[i.role]);
+    if (i.role === 'client_viewer') {
+      term('Khách hàng', scopeLabel(i.client_name, i.client_id));
+      term('Thương hiệu', scopeLabel(i.brand_name, i.brand_id, 'Tất cả thương hiệu của khách hàng'));
+      term('Chiến dịch', scopeLabel(i.campaign_name, i.campaign_id, 'Tất cả chiến dịch trong phạm vi trên'));
+      term('Bình luận', i.can_comment ? 'Được phép' : 'Không được phép');
+      term('Duyệt, từ chối hoặc yêu cầu sửa', i.can_decide ? 'Được phép' : 'Không được phép');
+    }
+    term('Hết hạn', new Date(i.expires_at).toLocaleString('vi-VN'));
+    action(box, 'Chấp nhận lời mời', accept);
+  }
+  async function linked(secret) {
+    reset();
+    const ticket = revision;
+    const i = await api('/api/me/invitation-link','POST',{token:secret});
+    if (ticket !== revision) return;
+    offer(i, async () => {
+      await api('/api/me/invitation-link/accept','POST',{token:secret});
+      if (ticket === revision) await enterInvitedWorkspace(i.tenant_id);
+    });
+  }
   async function show(tenant, role, clients, brands, campaigns, expanded = Boolean(root.querySelector(":scope > details[open]"))) {
     const ticket = ++revision;
     root.replaceChildren();
@@ -79,34 +114,10 @@ function createRecipientPanel(root, api, notify, enterInvitedWorkspace) {
       return;
     }
     if (ticket !== revision) return;
-    for (const i of inbox) {
-      const box = node(root, 'section');
-      box.className = 'panel';
-      node(box, 'h4', 'Lời mời từ '+i.workspace_name);
-      const terms = node(box, 'dl');
-      terms.style.overflowWrap = 'anywhere';
-      function term(label, value) {
-        node(terms, 'dt', label);
-        node(terms, 'dd', value);
-      }
-      function scopeLabel(name, id, all) {
-        if (!id) return all;
-        return name ? name+' ('+id+')' : id;
-      }
-      term('Vai trò', roles[i.role]);
-      if (i.role === 'client_viewer') {
-        term('Khách hàng', scopeLabel(i.client_name, i.client_id));
-        term('Thương hiệu', scopeLabel(i.brand_name, i.brand_id, 'Tất cả thương hiệu của khách hàng'));
-        term('Chiến dịch', scopeLabel(i.campaign_name, i.campaign_id, 'Tất cả chiến dịch trong phạm vi trên'));
-        term('Bình luận', i.can_comment ? 'Được phép' : 'Không được phép');
-        term('Duyệt, từ chối hoặc yêu cầu sửa', i.can_decide ? 'Được phép' : 'Không được phép');
-      }
-      term('Hết hạn', new Date(i.expires_at).toLocaleString('vi-VN'));
-      action(box, 'Chấp nhận lời mời', async () => {
-        await api('/api/me/invitations/'+i.id+'/accept', 'POST');
-        if (ticket === revision) await enterInvitedWorkspace(i.tenant_id);
-      });
-    }
+    for (const i of inbox) offer(i, async () => {
+      await api('/api/me/invitations/'+i.id+'/accept', 'POST');
+      if (ticket === revision) await enterInvitedWorkspace(i.tenant_id);
+    });
     if (!admin) return;
     const panel = node(root, 'details');
     panel.className = 'panel';
@@ -114,7 +125,7 @@ function createRecipientPanel(root, api, notify, enterInvitedWorkspace) {
     node(panel, 'summary', 'Quản lý người nhận và lời mời');
     node(panel, 'h4', 'Mời người nhận');
     const form = node(panel, 'form');
-    const email = field(form, 'Email tài khoản đã đăng ký', 'input');
+    const email = field(form, 'Email người nhận', 'input');
     email.type = 'email';
     email.required = true;
     const roleSelect = field(form, 'Vai trò được mời', 'select');
@@ -144,6 +155,7 @@ function createRecipientPanel(root, api, notify, enterInvitedWorkspace) {
     for (const i of invites) {
       const row = node(panel,'div');
       node(row, 'span', i.email+' · '+(i.client_name || roles[i.role])+' · '+(i.state==='expired'?'Đã hết hạn':'Đang chờ'));
+      action(row, 'Gửi lại lời mời', async () => { await api(base+'/invitations/'+i.id+'/resend', 'POST'); await refresh(); });
       action(row, 'Thu hồi lời mời', async () => { await api(base+'/invitations/'+i.id, 'DELETE'); await refresh(); });
     }
     node(panel, 'h4', 'Người nhận đang có quyền');
@@ -163,5 +175,5 @@ function createRecipientPanel(root, api, notify, enterInvitedWorkspace) {
       });
     }
   }
-  return {reset,show};
+  return {reset,show,linked};
 }

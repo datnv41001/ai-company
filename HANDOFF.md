@@ -1,5 +1,13 @@
 # Bắt đầu ở đây khi tiếp quản AI Marketing Company
 
+## PR #16 · Tạo tài khoản và tham gia qua lời mời
+
+PR #15 đã merge vào main tại `ece8ecc84b4938900821ff85403bb5b8243534c6`, CI sau merge đạt 3/3 job. [CI của main](https://github.com/datnv41001/ai-company/actions/runs/45363202327).
+
+PR #16 phát triển từ commit này. Nhánh `feature/invitation-first-onboarding` dùng schema v19 với PostgreSQL 16.6 trong Docker Compose. Từ checkout của nhánh, chạy `python scripts/init_env.py` rồi `docker compose -p amc-onboarding up -d --build` với database thử riêng. Mở ứng dụng ở cổng `AMC_HTTP_PORT` (mặc định 8000). Khi dùng địa chỉ khác máy local, cấu hình `AMC_PUBLIC_ORIGIN` bằng URL gốc mà người nhận dùng để mở ứng dụng. [Thiết kế, kiểm thử và khôi phục](docs/PR16-ONBOARDING.md).
+
+Đăng ký qua giao diện chỉ tạo tài khoản. Sau xác minh, người dùng chọn tạo workspace hoặc xem và chấp nhận quyền được mời. Owner/Admin có thể mời địa chỉ chưa đăng ký và gửi lại để thay link cũ. Hộp thư tổng hợp riêng dùng thư mục theo SHA-256 của email chuẩn hóa. Mã xác minh nằm trong các tệp `*.txt` trực tiếp của thư mục này. Link nằm trong `invitations/<invitation-id>.txt`. Chỉ đọc thư của tài khoản thử nghiệm trong terminal riêng. Giữ bản sao v18 cùng khóa ký để khôi phục. Ba pool v10/v11/v13 dùng phiên bản đang vận hành.
+
 ## PR #15 · Xác minh email và nhận lời mời workspace
 
 Nhánh `feature/verified-workspace-invitations` phát triển từ `d81df0be`. Compose chạy PostgreSQL **16.6**. Schema ứng dụng **v18** bổ sung tên thương hiệu và chiến dịch vào lời mời. Khi dùng bản v17 đã review tại `df48ef26`, chạy migrator để nâng cấp trước khi khởi động API mới. Commercial GA vẫn NO-GO. Xem [hướng dẫn vận hành và nghiệm thu](docs/PR15-IDENTITY.md) và [CI trên head và bản tích hợp thử](https://github.com/datnv41001/ai-company/pull/15/checks).

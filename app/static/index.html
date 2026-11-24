@@ -28,10 +28,13 @@
       <header class="topbar"><div><small>WORKSPACE</small><h1>AI Marketing Company</h1></div><div id="who" class="top-pill">Chưa đăng nhập</div></header>
       <section class="hero"><div><div class="eyebrow">FULL PRODUCT V1.0 · DEVELOPMENT FOUNDATION</div><h2>Điều hành đội ngũ Marketing AI<br>trên một nền tảng.</h2><p>Lõi kỹ thuật đầu tiên: tổ chức, thương hiệu, chiến dịch, nhiệm vụ, bản thảo, kiểm duyệt và dấu vết hoạt động.</p></div><div class="hero-orb">AMC<span>ENGINEERING</span></div></section>
       <div id="notice" role="status"></div>
+      <p id="link-hint" class="panel hidden">Đăng nhập hoặc tạo tài khoản bằng email nhận lời mời.</p>
+      <button type="button" id="leave-invite" class="secondary hidden">Vào tài khoản của tôi</button>
+      <button type="button" id="switch-account" class="secondary hidden">Đổi tài khoản</button>
       <section id="auth" class="section-panel">
-        <div class="section-head"><div><small>GET STARTED</small><h3>Đăng ký workspace hoặc đăng nhập</h3></div></div>
+        <div class="section-head"><div><small>GET STARTED</small><h3>Tài khoản AMC</h3></div></div>
         <div class="auth-grid">
-          <form id="register-form" class="panel"><h4>Tạo tổ chức</h4><label>Email<input name="email" type="email" required placeholder="name@company.com"></label><label>Mật khẩu (≥12 ký tự)<input name="password" type="password" minlength="12" required></label><label>Tên tổ chức<input name="organization_name" required minlength="2" placeholder="Marketing Agency"></label><label>Chế độ<select name="mode"><option value="agency">Agency Mode</option><option value="inhouse">In-house Mode</option></select></label><button type="submit">Tạo tổ chức →</button></form>
+          <form id="register-form" class="panel"><h4>Tạo tài khoản</h4><label>Email<input name="email" type="email" required placeholder="name@company.com"></label><label>Mật khẩu (≥12 ký tự)<input name="password" type="password" minlength="12" required></label><button type="submit">Tạo tài khoản</button></form>
           <form id="login-form" class="panel"><h4>Đăng nhập</h4><label>Email<input name="email" type="email" required></label><label>Mật khẩu<input name="password" type="password" required></label><button type="submit">Đăng nhập →</button></form>
         </div>
       </section>
@@ -39,6 +42,14 @@
         <label>Mã từ hộp thư phát triển<input name="token" type="password" autocomplete="one-time-code" required maxlength="128"></label>
         <button type="submit">Xác minh email</button><button id="resend-proof" type="button">Gửi mã mới</button>
       </form>
+      <section id="onboarding" class="section-panel hidden">
+        <h3 id="entry-title">Tài khoản của bạn</h3>
+        <details id="new-workspace"><summary>Tạo workspace</summary>
+          <form id="workspace-form" class="panel"><label>Tên tổ chức<input name="organization_name" required minlength="2" maxlength="150"></label>
+            <label>Chế độ<select name="mode"><option value="agency">Agency</option><option value="inhouse">Marketing nội bộ</option></select></label>
+            <button type="submit">Xác nhận tạo workspace</button></form>
+        </details>
+      </section>
       <section id="workspace" class="hidden">
         <label id="workspace-choice" class="hidden">Không gian làm việc<select id="workspace-select"></select></label>
         <p id="client-scope" class="hidden"></p>

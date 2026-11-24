@@ -1,14 +1,17 @@
 """In-app invitations for registered development accounts and the agency's recipient directory."""
 
 from datetime import timedelta
+import hashlib
+import secrets
 
 from fastapi import APIRouter, Depends, HTTPException
 from typing import Literal
-from pydantic import EmailStr, model_validator
+from pydantic import EmailStr, SecretStr, Field, model_validator
 from sqlalchemy import select, text, update
 from sqlalchemy.exc import IntegrityError
 from sqlalchemy.orm import Session
 
+from .identity import deliver_invitation
 from .access import set_context
 from .database import get_db
 from .delivery import Input, Rights, as_utc, lock_document, validate_scope
@@ -38,6 +41,14 @@ class Invite(Rights):
 
 class Acceptance(Input):
     """A recipient accepts the stored terms without supplying replacement fields."""
+
+
+class InvitationLink(Input):
+    token: SecretStr = Field(min_length=43, max_length=128)
+
+
+def link_digest(secret):
+    return hashlib.sha256(("amc-invitation:" + secret).encode()).hexdigest()
 
 
 def summary(i):
@@ -115,23 +126,22 @@ def invite(tenant_id: str, body: Invite, user: User = Depends(current_user), db:
     email = str(body.email).lower().strip()
     set_context(db, actor=user.id, tenant=tenant_id, email=email)
     recipient = db.scalar(select(User).where(User.email == email))
-    if recipient is None:
-        raise HTTPException(404, "Người nhận cần đăng ký tài khoản trước.")
-    if db.get(Membership, (tenant_id, recipient.id)):
+    if recipient and db.get(Membership, (tenant_id, recipient.id)):
         raise HTTPException(409, "Tài khoản đã thuộc workspace này.")
     db.execute(
         update(PortalInvitation)
         .where(
             PortalInvitation.tenant_id == tenant_id,
-            PortalInvitation.user_id == recipient.id,
+            PortalInvitation.email == email,
             PortalInvitation.state == "pending",
             PortalInvitation.expires_at <= utcnow(),
         )
         .values(state="revoked")
     )
+    secret = secrets.token_urlsafe(32)
     invitation = PortalInvitation(
         tenant_id=tenant_id,
-        user_id=recipient.id,
+        link_digest=link_digest(secret),
         invited_by=user.id,
         email=email,
         workspace_name=db.get(Tenant, tenant_id).name,
@@ -145,6 +155,7 @@ def invite(tenant_id: str, body: Invite, user: User = Depends(current_user), db:
     try:
         db.flush()
         db.add(AuditEvent(tenant_id=tenant_id, user_id=user.id, event="portal.invitation_created", subject_id=invitation.id, details={}))
+        deliver_invitation(email, invitation.id, secret)
         response = summary(invitation)
         db.commit()
     except IntegrityError:
@@ -175,7 +186,8 @@ def incoming(user: User = Depends(current_user), db: Session = Depends(get_db)):
         summary(i)
         for i in db.scalars(
             select(PortalInvitation)
-            .where(PortalInvitation.user_id == user.id, PortalInvitation.state == "pending", PortalInvitation.expires_at > utcnow())
+            .where(PortalInvitation.email == user.email, (PortalInvitation.user_id.is_(None) | (PortalInvitation.user_id == user.id)),
+                   PortalInvitation.state == "pending", PortalInvitation.expires_at > utcnow())
             .order_by(PortalInvitation.expires_at)
         )
     ]
@@ -191,14 +203,15 @@ def accept(iid: str, body: Acceptance | None = None, user: User = Depends(curren
             raise HTTPException(404, "Invitation unavailable")
     else:
         lock_document(db, iid)
-        i = db.get(PortalInvitation, iid)
-        if not i or i.user_id != user.id or i.state != "pending" or as_utc(i.expires_at) <= utcnow() or db.get(Membership, (i.tenant_id, user.id)):
+        i = db.get(PortalInvitation, iid, populate_existing=True)
+        if not i or i.user_id not in (None, user.id) or i.state != "pending" or as_utc(i.expires_at) <= utcnow() or db.get(Membership, (i.tenant_id, user.id)):
             raise HTTPException(404, "Invitation unavailable")
         issuer = db.get(Membership, (i.tenant_id, i.invited_by))
         if not issuer or issuer.role not in ("admin", "owner") or (i.role == "admin" and issuer.role != "owner") or not db.get(User, i.invited_by).verified_at:
             raise HTTPException(404, "Invitation unavailable")
         if i.email != user.email:
             raise HTTPException(404, "Invitation unavailable")
+        i.user_id = user.id
         db.add(Membership(tenant_id=i.tenant_id, user_id=user.id, client_id=i.client_id, role=i.role))
         db.flush()
         if i.role == "client_viewer":
@@ -207,3 +220,42 @@ def accept(iid: str, body: Acceptance | None = None, user: User = Depends(curren
         i.state = "accepted"
         db.add(AuditEvent(tenant_id=i.tenant_id, user_id=user.id, event="portal.invitation_accepted", subject_id=i.id, details={"role":i.role}))
     db.commit()
+
+
+@router.post("/tenants/{tenant_id}/invitations/{iid}/resend", status_code=201)
+def resend(tenant_id: str, iid: str, user: User = Depends(current_user), db: Session = Depends(get_db)):
+    require_tenant(db, user, tenant_id, "admin")
+    lock_document(db, iid)
+    old = db.scalar(select(PortalInvitation).where(PortalInvitation.id == iid, PortalInvitation.tenant_id == tenant_id,
+                                                  PortalInvitation.state == "pending").with_for_update())
+    if old is None:
+        raise HTTPException(404, "Lời mời không còn hiệu lực.")
+    terms = Invite(**{key: getattr(old, key) for key in Invite.model_fields})
+    old.state = "revoked"
+    db.flush()
+    db.add(AuditEvent(tenant_id=tenant_id, user_id=user.id, event="portal.invitation_revoked", subject_id=iid, details={"reason":"resend"}))
+    # Issuance rechecks the current sender and scope. A failure rolls back revocation as well.
+    return invite(tenant_id, terms, user, db)
+
+
+def addressed_link(body, user, db):
+    if user.verified_at is None:
+        raise HTTPException(403, "Hãy xác minh email để xem lời mời.")
+    row = db.scalar(select(PortalInvitation).where(
+        PortalInvitation.link_digest == link_digest(body.token.get_secret_value()), PortalInvitation.email == user.email,
+        (PortalInvitation.user_id.is_(None) | (PortalInvitation.user_id == user.id)), PortalInvitation.state == "pending",
+        PortalInvitation.expires_at > utcnow()))
+    if row is None:
+        raise HTTPException(404, "Lời mời đã hết hạn, đã dùng, bị thu hồi hoặc dành cho email khác.")
+    return row
+
+
+@router.post("/me/invitation-link")
+def preview_link(body: InvitationLink, user: User = Depends(current_user), db: Session = Depends(get_db)):
+    return summary(addressed_link(body, user, db))
+
+
+@router.post("/me/invitation-link/accept", status_code=204)
+def accept_link(body: InvitationLink, user: User = Depends(current_user), db: Session = Depends(get_db)):
+    # Resend issues a different ID. The locked acceptance path rechecks state and expiry.
+    return accept(addressed_link(body, user, db).id, None, user, db)

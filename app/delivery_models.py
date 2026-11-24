@@ -83,6 +83,8 @@ class PortalInvitation(Base):
                         "(role IN ('viewer','editor','admin') AND client_id IS NULL AND client_name IS NULL "
                         "AND brand_id IS NULL AND campaign_id IS NULL AND NOT can_comment AND NOT can_decide)"),
         CheckConstraint("state IN ('pending','accepted','revoked')"),
+        Index("uq_pending_invite_email", "tenant_id", "email", unique=True,
+              sqlite_where=text("state='pending'"), postgresql_where=text("state='pending'")),
         Index("uq_pending_portal_invite", "tenant_id", "user_id", unique=True,
               sqlite_where=text("state='pending'"), postgresql_where=text("state='pending'")),
     )
@@ -90,7 +92,8 @@ class PortalInvitation(Base):
     tenant_id: Mapped[str] = mapped_column(ForeignKey("tenants.id"), index=True)
     role: Mapped[str] = mapped_column(String(16), server_default=text("'client_viewer'"))
     client_id: Mapped[str | None] = mapped_column(String(36))
-    user_id: Mapped[str] = mapped_column(ForeignKey("users.id"), index=True)
+    user_id: Mapped[str | None] = mapped_column(ForeignKey("users.id"), index=True)
+    link_digest: Mapped[str | None] = mapped_column(String(64), unique=True)
     invited_by: Mapped[str] = mapped_column(ForeignKey("users.id"))
     email: Mapped[str] = mapped_column(String(320))
     workspace_name: Mapped[str] = mapped_column(String(150))

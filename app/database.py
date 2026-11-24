@@ -59,7 +59,7 @@ def prepare_database(bind):
             if inspector.has_table("users") and "verified_at" not in {c["name"] for c in inspector.get_columns("users")}:
                 conn.exec_driver_sql("ALTER TABLE users ADD COLUMN verified_at DATETIME")
             invite_columns = {c["name"] for c in inspector.get_columns("portal_invitations")} if inspector.has_table("portal_invitations") else set()
-            if invite_columns and "role" not in invite_columns:
+            if invite_columns and "link_digest" not in invite_columns:
                 columns = ",".join(c["name"] for c in inspector.get_columns("portal_invitations"))
                 conn.exec_driver_sql("ALTER TABLE portal_invitations RENAME TO old_portal_invitations")
                 for index in inspector.get_indexes("old_portal_invitations"):
@@ -67,9 +67,6 @@ def prepare_database(bind):
                 Base.metadata.tables["portal_invitations"].create(conn)
                 conn.exec_driver_sql(f"INSERT INTO portal_invitations ({columns}) SELECT {columns} FROM old_portal_invitations")
                 conn.exec_driver_sql("DROP TABLE old_portal_invitations")
-            elif invite_columns and "brand_name" not in invite_columns:
-                conn.exec_driver_sql("ALTER TABLE portal_invitations ADD COLUMN brand_name VARCHAR(160)")
-                conn.exec_driver_sql("ALTER TABLE portal_invitations ADD COLUMN campaign_name VARCHAR(160)")
             if invite_columns and "brand_name" not in invite_columns:
                 conn.exec_driver_sql("""UPDATE portal_invitations AS i SET brand_name=b.name FROM brands AS b
                     WHERE i.state='pending' AND (b.tenant_id,b.client_id,b.id)=(i.tenant_id,i.client_id,i.brand_id)""")
@@ -104,7 +101,7 @@ def prepare_database(bind):
         versions = set(conn.scalars(text("SELECT version FROM public.amc_schema_versions")))
         if 16 in versions and 15 not in versions:
             raise RuntimeError("Isolated schema v16 is missing migration 015; restore a pre-016 backup before upgrading")
-        if versions != set(range(2, 19)):
+        if versions != set(range(2, 20)):
             raise RuntimeError("Apply the PostgreSQL schema migrations before starting the API")
         from .access import set_context
         from .security import sign_actor

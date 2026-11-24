@@ -16,6 +16,24 @@ Previously registration reserved an organization and verification created its fi
 
 A user has many memberships across tenants. A tenant has many invitations addressed to an email. A pending invitation may precede its recipient user. Acceptance binds the matching user and creates that user's membership, optional client grant and audit in the same transaction. Composite brand/campaign foreign keys continue to constrain scope. v19 allows a null invitation user, adds a nullable unique link digest and enforces one pending offer per tenant and normalized email. Historical invitations have no link and remain accessible in the verified inbox. Preserve historical migration files. Snapshot the v18 database with its signer's secret, test restoring it to a separate database, compare identity, grant, registry, ledger and snapshot rows. Stop writes and reconcile new users, memberships and decisions before switching back to that restore and its v18 binary.
 
+The composite scope keys relate these records as follows.
+
+```mermaid
+erDiagram
+    USER ||--o{ MEMBERSHIP : holds
+    TENANT ||--o{ MEMBERSHIP : includes
+    TENANT ||--o{ INVITATION : issues
+    USER ||--o{ INVITATION : invites
+    USER o|--o{ INVITATION : accepts
+    MEMBERSHIP ||--o| PORTAL_GRANT : scopes
+    CLIENT ||--o{ PORTAL_GRANT : limits
+    BRAND o|--o{ PORTAL_GRANT : narrows
+    CAMPAIGN o|--o{ PORTAL_GRANT : narrows
+    USER ||--o| IDENTITY_CHALLENGE : verifies
+```
+
+Separate account and workspace creation through an optional organization name on the existing endpoint. This preserves old callers and avoids shadow accounts for unregistered recipients. The explicit workspace request UUID is scoped to the actor and maps to a stable workspace ID. The same transaction creates its owner and initial in-house client. Retrying the request reads the existing workspace.
+
 ## API, UI and permission matrix
 
 | Actor | Operation | Outcome |
@@ -38,5 +56,16 @@ Invitation links use 32 random bytes. Store only their purpose-prefixed SHA-256 
 ## Acceptance and follow-up
 
 ONB-T01–02 check account-only verification and idempotent explicit creation. T03–09 cover unregistered address, bind after verification, wrong account, expiry, revoke, concurrent accepts, issuer changes and immutable terms. T10–12 exercise zero/multiple memberships and the client portal at 1280/390. T13 replaces a link. T14–15 upgrade a populated v18 and rehearse restoring the previous snapshot. Re-run SQLite/PostgreSQL, Chromium, full migration history and Qwen on head and integration. Commercial GA remains NO-GO.
+
+| Tests | Executable evidence |
+| --- | --- |
+| T01, T02 | `test_account_only_and_idempotent_workspace` |
+| T03–T05, T07, T09, T12, T13 | `test_invitation_before_account_resend_and_consent`, verified identity race tests |
+| T06, T08 | `test_withdrawn_and_expired_links_keep_workspace_private`, `test_issuer_demotion_serializes_with_accept` |
+| T10, T11 | `test_multiple_workspaces_pending_and_cross_tenant_resend`, Chromium invitation-first cases |
+| T14, T15 | `tests/check_postgres_upgrade.py --from-v18`, marker failure, independent archive restoration and comparison |
+| Signed DB transaction | `test_verified_actor_and_email_challenge_have_separate_authority` |
+
+In the v18 rollback rehearsal the archive also contains pending identity challenges and the protected signing key. Restrict operator access to the archive. CI compares the restored data across 15 tables without printing its contents. A v19 binary verifies the complete migration history on startup. Use the CI workflow for the disposable database environment and the project-specific Compose instructions in HANDOFF.md for a new development machine.
 
 Separate increments: (1) rate limits and invitation quotas, (2) session inventory, refresh, logout and revocation, (3) recovery, MFA and signer rotation, (4) team lifecycle and ownership transfer, (5) transactional email outbox, delivery retries and suppression, (6) OIDC/SSO and a database/worker identity audit. Evaluate managed Auth0 or self-hosted Keycloak for established account/session factors against operating cost, data residency and organization isolation. Keep AMC's campaign scopes, client consent and ledger in AMC. Avoid moving account storage or introducing a second identity system in this PR. Business Profile, Brand Kit and Knowledge Center can advance independently after scope contracts stabilize. [Auth0 invitations](https://auth0.com/docs/manage-users/organizations/configure-organizations/invite-members) · [Keycloak guides](https://www.keycloak.org/documentation) · [OWASP token guidance](https://cheatsheetseries.owasp.org/cheatsheets/Forgot_Password_Cheat_Sheet.html)

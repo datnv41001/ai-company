@@ -21,7 +21,7 @@ from .delivery import router as delivery_router, working_copy
 from .operations import router as operations_router
 from .registry import router as registry_router
 from .workforce import router as workforce_router
-from .recipients import router as recipients_router, revoke_pending
+from .recipients import router as recipients_router, revoke_pending, preview_link, accept_link
 from .delivery_models import PortalGrant
 from .access import set_context, visible
 from .database import APP_ENV, engine, get_db, prepare_database
@@ -113,8 +113,8 @@ def register(payload: RegisterIn, db: Session = Depends(get_db)):
     if db.scalar(select(User).where(User.email == email)):
         raise HTTPException(status_code=409, detail="Account already exists")
     user = User(id=new_id(), email=email, password_hash=hash_password(payload.password))
-    tenant_id = new_id()
-    set_context(db, actor=user.id, tenant=tenant_id)
+    tenant_id = new_id() if payload.organization_name else None
+    set_context(db, actor=user.id, tenant=tenant_id or "")
     sign_actor(db, user.id)
     db.add(user)
     try:
@@ -122,7 +122,7 @@ def register(payload: RegisterIn, db: Session = Depends(get_db)):
     except IntegrityError:
         db.rollback()
         raise HTTPException(409, "Account already exists") from None
-    issue(db, user, workspace_id=tenant_id, organization_name=payload.organization_name, mode=payload.mode)
+    issue(db, user, **({"workspace_id": tenant_id, "organization_name": payload.organization_name, "mode": payload.mode} if tenant_id else {}))
     db.commit()
     return {"access_token": make_token(user), "token_type": "bearer", "tenant_id": tenant_id, "user_id": user.id, "mode": payload.mode}
 
@@ -417,11 +417,11 @@ def role_catalog(user: User = Depends(current_user)):
 
 @app.exception_handler(RequestValidationError)
 async def validation_error(request: Request, exc: RequestValidationError):
-    if request.scope.get("endpoint") not in (register, login, verify_email):
+    if request.scope.get("endpoint") not in (register, login, verify_email, preview_link, accept_link):
         return await request_validation_exception_handler(request, exc)
     # Validation inputs can contain a password or the entire submitted body.
     errors = [
-        {"loc": error["loc"], "type": error["type"], "msg": "Invalid authentication input"}
+        {"loc": ["body"], "type": error["type"], "msg": "Invalid authentication input"}
         for error in exc.errors()
     ]
     return JSONResponse(status_code=422, content={"detail": errors})

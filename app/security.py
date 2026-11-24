@@ -45,6 +45,14 @@ def sign_actor(db, uid):
         db.execute(text("SELECT set_config('amc.identity_proof',:proof,true)"), {"proof":proof})
 
 
+def sign_challenge(db, uid, purpose, digest):
+    if db.get_bind().dialect.name == "postgresql":
+        tx = db.scalar(text("SELECT txid_current()"))
+        key = hmac.digest(SECRET.encode(), b"amc-identity-v17", "sha256")
+        proof = hmac.new(key, f"challenge:{purpose}:{uid}:{tx}:{digest}".encode(), "sha256").hexdigest()
+        db.execute(text("SELECT set_config('amc.challenge_proof',:proof,true)"), {"proof": proof})
+
+
 def current_user(credentials: HTTPAuthorizationCredentials | None = Depends(security), db: Session = Depends(get_db)) -> User:
     if not credentials or credentials.scheme.lower() != "bearer":
         raise HTTPException(status_code=401, detail="Bearer authentication required")

@@ -15,7 +15,7 @@ import pytest
 from sqlalchemy import text
 from sqlalchemy.orm import Session
 
-from identity_fixtures import capture
+from identity_fixtures import start_registration, capture
 from agency_fixtures import account, create
 from app.database import engine
 from app.access import set_context
@@ -26,9 +26,7 @@ from app.security import sign_actor
 
 def register(api, mode="agency"):
     email = f"proof-{uuid4().hex}@example.com"
-    result = api.post("/api/auth/register", json=dict(email=email, password=uuid4().hex, mode=mode, organization_name="Synthetic"))
-    assert result.status_code == 201
-    record = result.json()
+    record = start_registration(api,email,uuid4().hex,mode=mode,organization_name="Synthetic")
     return email, record, {"Authorization": "Bearer " + record["access_token"]}
 
 

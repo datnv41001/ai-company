@@ -29,6 +29,7 @@ services:
       migrate:
         condition: service_completed_successfully
     environment:
+      AMC_IDENTITY_TRUSTED_PROXIES: ${AMC_IDENTITY_TRUSTED_PROXIES:-}
       APP_ENV: development
       DATABASE_URL: postgresql+psycopg://amc_runtime:${AMC_RUNTIME_PASSWORD}@db:5432/amc
       JWT_SECRET: ${JWT_SECRET:?set JWT_SECRET in .env}

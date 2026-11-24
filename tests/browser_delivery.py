@@ -8,9 +8,21 @@ from urllib.parse import urlsplit
 from uuid import uuid4
 
 from browser_stale_invitation import exercise_stale
-from identity_fixtures import capture, verify_registration, invite_member
+from identity_fixtures import start_registration, capture, verify_registration, invite_member
 import httpx
 from playwright.sync_api import expect, sync_playwright
+
+
+def register_and_login(page,address):
+    password = uuid4().hex
+    form = page.locator("#register-form")
+    form.locator('[name="email"]').fill(address)
+    form.locator('[name="password"]').fill(password)
+    form.get_by_role("button").click()
+    login = page.locator("#login-form")
+    expect(login.locator('[name="email"]')).to_have_value(address)
+    login.get_by_label("Mật khẩu").fill(password)
+    login.get_by_role("button").click()
 
 
 def exercise():
@@ -26,7 +38,7 @@ def exercise():
 
         def user(label):
             email, password = f"{label}-{uuid4().hex}@example.com", uuid4().hex
-            reg = post("/api/auth/register", dict(email=email, password=password, organization_name=label, mode="agency"))
+            reg = start_registration(api,email,password,organization_name=label,mode="agency")
             verify_registration(api,email,reg,os.getenv("AMC_BROWSER_MAILBOX_PROJECT"))
             return reg["access_token"], reg["tenant_id"], reg["user_id"], email, password
 
@@ -66,14 +78,18 @@ def exercise():
                 print(f"PASS stale screen, replacement scope and pre-existing workspace at {width}px")
                 onboarding = browser.new_page(viewport={"width": width, "height": height})
                 onboarding.goto(origin)
-                registration = onboarding.locator("#register-form")
                 address = f"identity-{uuid4().hex}@example.com"
-                registration.locator('[name="email"]').fill(address)
-                registration.locator('[name="password"]').fill(uuid4().hex)
-                registration.locator("button").click()
+                register_and_login(onboarding,address)
                 verify = onboarding.locator("#verify-form")
                 expect(verify).to_be_visible()
                 expect(onboarding.locator("#workspace")).to_be_hidden()
+                for status in (204, 204, 204, 204, 429):
+                    with onboarding.expect_response(lambda response: response.url.endswith("/api/auth/request-verification")) as received:
+                        onboarding.locator("#resend-proof").click()
+                    assert received.value.status == status
+                delay = received.value.headers["retry-after"]
+                expect(onboarding.locator("#notice")).to_have_text(f"Vui lòng thử lại sau {delay} giây.")
+                print(f"PASS verification cooldown {width}px")
                 verify.locator('[name="token"]').fill(capture(address, os.getenv("AMC_BROWSER_MAILBOX_PROJECT")))
                 verify.locator('[type="submit"]').click()
                 expect(onboarding.get_by_text("Bạn chưa tham gia workspace nào")).to_be_visible()
@@ -102,10 +118,7 @@ def exercise():
                 wrong.get_by_role("button").click()
                 expect(visitor.locator("#link-hint")).to_contain_text("email khác")
                 visitor.locator("#switch-account").click()
-                registration = visitor.locator("#register-form")
-                registration.get_by_label("Email").fill(address)
-                registration.get_by_label("Mật khẩu", exact=False).fill(uuid4().hex)
-                registration.get_by_role("button").click()
+                register_and_login(visitor,address)
                 verify = visitor.locator("#verify-form")
                 expect(verify).to_be_visible()
                 verify.locator('[name="token"]').fill(capture(address,os.getenv("AMC_BROWSER_MAILBOX_PROJECT")))

@@ -120,6 +120,6 @@ if __name__ == "__main__":
         import uvicorn
         sys.path.insert(0, str(ROOT))
         Path(sys.argv[2]).write_text(str(os.getpid()), encoding="ascii")
-        uvicorn.run("app.main:app", host=HOST, port=API_PORT, access_log=False)
+        uvicorn.run("app.main:app", host=HOST, port=API_PORT, access_log=False, proxy_headers=False)
     else:
         main()

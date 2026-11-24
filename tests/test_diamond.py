@@ -5,11 +5,10 @@ import os
 from concurrent.futures import ThreadPoolExecutor
 
 import pytest
-from fastapi.testclient import TestClient
 
 from app.main import app
 from app.pool_worker import report
-from pool_lab import Lab
+from pool_lab import Lab, lab_client
 from test_workforce import call_model
 
 pytestmark = pytest.mark.skipif(os.getenv("AMC_TEST_PG") != "1", reason="requires PostgreSQL")
@@ -17,7 +16,7 @@ pytestmark = pytest.mark.skipif(os.getenv("AMC_TEST_PG") != "1", reason="require
 
 @pytest.fixture
 def diamond():
-    with TestClient(app) as api:
+    with lab_client(app) as api:
         lab = Lab(api, os.environ["AMC_MIGRATION_DSN"], workflow="diamond-v1")
         try:
             lab.configure(lab.y, 10000, False)

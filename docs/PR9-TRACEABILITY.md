@@ -147,3 +147,11 @@ Cột điều kiện trích từ quy tắc duyệt và xử lý lỗi trong cata
 | WF-22 | Incident & Recovery | specification_only | L | fail closed, không báo success giả | mở |
 | WF-23 | Weekly/Monthly Operations | specification_only | — | số liệu kiểm chứng, lịch đúng timezone | mở |
 | WF-24 | Subscription Lifecycle | specification_only | — | billing idempotency, ngừng agent theo policy | mở |
+
+## Bằng chứng bổ sung cho nền tảng danh tính
+
+Hạng mục onboarding có nhánh v21 chờ review cho admission theo tài khoản, tenant, người nhận và nguồn kết nối. Điểm kiểm chứng gồm hồi quy SQLite/PostgreSQL, giới hạn đồng thời, Chromium và đường nâng cấp từ v20. [Hợp đồng và giới hạn](IDENTITY-ADMISSION.md).
+
+## Business Profile C0 · phạm vi thiết kế
+
+MKT-03 Brand Management, MKT-20 Localization & Regional và AIO-06 Knowledge & Memory có [hợp đồng C0 và fixture](business-profile/README.md) cho dữ kiện theo sản phẩm/variant/market, source revision và hiệu lực khi share. WF-03/WF-13 tiếp tục dùng các release đã duyệt đến khi C1/C3 chứng minh adapter mới. Nhãn tiến độ là design + synthetic contract checks; tính năng và business acceptance còn chờ.

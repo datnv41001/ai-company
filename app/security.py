@@ -18,6 +18,8 @@ if (APP_ENV == "production" or DATABASE_URL.startswith("postgresql")) and (len(S
     raise RuntimeError("A unique strong JWT_SECRET is required with PostgreSQL or in production.")
 
 hasher = PasswordHasher()
+# A nonexistent account follows the same password verification work as a wrong password.
+DUMMY_HASH = hasher.hash("dummy-password-timing-input")
 security = HTTPBearer(auto_error=False)
 
 

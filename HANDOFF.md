@@ -4,6 +4,10 @@
 
 Từ main `bdc2441914478b918ea96e861aeb21f2d61655cd` (schema AMC v20), công cụ dùng kế hoạch pin, bằng chứng ký và đối chứng năm cấu hình. Trên máy mới chạy `python -m unittest discover -s engineering/airc500 -p "test_*.py" -v` trong venv engineering. [Phép đo và cách replay](engineering/airc500/QUALITY-EVALUATION.md) · [Kết quả và public pins](engineering/airc500/evidence/quality-v2/README.md) · [So hai checkpoint local](engineering/airc500/stronger/README.md) · [Giới hạn trust và intake](engineering/airc500/RUNTIME-HARDENING.md) · [Docker probe Linux](engineering/airc500/SANDBOX-CONTAINER.md). Commercial GA NO-GO, nguồn repository thực tiếp tục HOLD.
 
+## Giới hạn đăng ký, đăng nhập, xác minh và lời mời · Đang review nội bộ
+
+Nhánh `feature/identity-abuse-prevention` tách từ main sau PR #17 (`bdc24419`). Schema đề xuất v21 bổ sung policy và bộ đếm theo cửa sổ. API đăng ký trả 202; ứng dụng đăng nhập riêng trước bước xác minh. [Hợp đồng, quota, chạy lại và khôi phục](docs/IDENTITY-ADMISSION.md). Đợt diễn tập dùng database tổng hợp riêng. PR #16 và #17 đã hợp nhất trên main v20. [CI main sau #17](https://github.com/datnv41001/ai-company/actions/runs/45421423514).
+
 ## AIRC-500 · Thiết kế công cụ review nội bộ
 
 Từ mốc `ece8ecc84b4938900821ff85403bb5b8243534c6`, catalog engineering có 500 hồ sơ và 12 discipline. Trên máy mới chạy `python engineering/airc500/catalog.py` từ gốc repo. [Đề xuất kiến trúc, hợp đồng, lệnh kiểm thử và backlog pilot](engineering/airc500/README.md). Mốc thiết kế ban đầu là `c1eda054`; commercial GA giữ NO-GO. Runtime AMC vẫn dùng schema v18 tại mốc trên.
@@ -488,3 +492,7 @@ Từ **Điều phối Marketing AI → Quyền workflow của chiến dịch**, 
 **Tái lập nghiệm thu.** Commit RED `74e4785b9b58be0c9c28a5c4749185e781e53055` có 13 ca thất bại ở đường lưu checkpoint. Bộ nhãn cuối gồm 16 fixture, 18 finding kỳ vọng, 0 thừa và 0 thiếu theo rule trên các fixture này. Dùng `python -m pytest -q tests/test_role_qa.py` và `python -m ruff check app tests migrations scripts`. Trên PostgreSQL tổng hợp với các biến môi trường của [CI](.github/workflows/ci.yml), chạy `python -m pytest -q tests/test_role_qa_rollout.py tests/test_registry.py` rồi `python -m pytest -q`. Bài PostgreSQL thực hiện cấp/thu hồi, kiểm tra nguồn giả, hai node Content và SEO chỉ đọc một node, phân quyền A/B/C và duyệt A → B → A. Chromium có fixture giao diện riêng cho việc mở finding. Bài Qwen thật lưu `role-qa-measurements.json` với SHA, fingerprint, report của từng node, usage và snapshot khách mẫu duyệt.
 
 **Nâng cấp và rollback.** Tiếp tục dùng schema v14 và các trường JSON checkpoint hiện có. Nhập manifest là thao tác thêm định nghĩa. Khi cần rút `@4`, chọn **Ngừng cấp mới**, giao brief tiếp theo qua `@1`, giữ runtime tương thích cho run `@4` đến khi đã drain và đối soát hold/receipt. Kiểm tra snapshot và số dư theo mục kiểm kê v14 trước khi rút image cuối. Các đầu việc tiếp theo là Research → Strategy và chẩn đoán nguyên nhân chờ trước khi tăng quy mô pool.
+
+## Business Profile & Brand Intelligence · increment Marketing đề xuất
+
+Sau khi đồng bộ schema v20 từ `49cbc070`, C0 có [sáu quyết định, snapshot ví dụ và lệnh kiểm tra](docs/business-profile/README.md), [kế hoạch C1](docs/business-profile/C1-PLAN.md) và [năm tình huống C2/C4](docs/business-profile/C2-C4-ACCEPTANCE.md). Từ thư mục gốc chạy `python -m unittest discover -s docs/business-profile -p test_c0.py -v`. Chờ review độc lập C0 trước PR C1. Kiểm số migration còn trống trên main khi chuẩn bị tích hợp, kể cả nhánh Identity đang đề xuất. Commercial GA vẫn NO-GO.

@@ -39,7 +39,7 @@ def rehearse_archive(dsn, container, version=16):
               "client_reviews", "review_entries", "workforce_runs", "amc_ops.attempts", "amc_ops.ledger",
               "amc_ops.registry_releases", "amc_ops.registry_versions", "amc_ops.dag_nodes")
 
-    if version == 18:
+    if version >= 18:
         tables += ("identity_challenges", "amc_acl.identity_key")
 
     def snapshot(conn):
@@ -65,7 +65,8 @@ def rehearse_archive(dsn, container, version=16):
 
 
 def verify():
-    from_v18 = "--from-v18" in sys.argv
+    from_v19 = "--from-v19" in sys.argv
+    from_v18 = "--from-v18" in sys.argv or from_v19
     from_v17 = '--from-v17' in sys.argv or from_v18
     from_v16 = '--from-v16' in sys.argv or from_v17
     from_v15 = '--from-v15' in sys.argv or from_v16
@@ -273,9 +274,14 @@ def verify():
                 owner.execute("INSERT INTO identity_challenges(user_id,digest,expires_at) VALUES ('external',repeat('a',64),now()+interval '10 minutes')")
                 v18_challenges = owner.execute("select * from identity_challenges order by user_id").fetchall()
                 v18_verified = owner.execute("select id,verified_at from users order by id").fetchall()
+            if from_v19:
+                migrate_historical_fixture("36e5579d003d9ab87a10e251050d5d71eebe5149")
+                with psycopg.connect(dsn) as observer:
+                    assert observer.execute("select to_regprocedure('amc_acl.lock_recipient(text,text)')").fetchone() == (None,)
+                    print("RED v19 structural contract: recipient lifecycle fence absent")
             if os.getenv("AMC_UPGRADE_BACKUP_CONTAINER"):
-                rehearse_archive(dsn, os.environ["AMC_UPGRADE_BACKUP_CONTAINER"], 18)
-        prior_version = 18 if from_v18 else 17 if from_v17 else 16
+                rehearse_archive(dsn, os.environ["AMC_UPGRADE_BACKUP_CONTAINER"], 19 if from_v19 else 18)
+        prior_version = 19 if from_v19 else 18 if from_v18 else 17 if from_v17 else 16
         # Fail at the next genuine marker and verify atomic rollback.
         with psycopg.connect(dsn) as owner:
             owner.execute(f"alter table upgrade_marker_probe add constraint synthetic_failure check (version <= {prior_version})")
@@ -285,7 +291,7 @@ def verify():
             owner.execute("alter table upgrade_marker_probe drop constraint synthetic_failure")
             assert owner.execute("select max(version) from amc_schema_versions").fetchone() == (prior_version,)
             assert owner.execute("select count(*) from information_schema.columns where table_schema='public' and table_name='portal_invitations' and column_name='brand_name'").fetchone() == (int(from_v18),)
-            assert owner.execute("select count(*) from information_schema.columns where table_schema='public' and table_name='portal_invitations' and column_name='link_digest'").fetchone() == (0,)
+            assert owner.execute("select count(*) from information_schema.columns where table_schema='public' and table_name='portal_invitations' and column_name='link_digest'").fetchone() == (int(from_v19),)
             if not from_v17:
                 assert owner.execute("select to_regclass('identity_challenges')").fetchone() == (None,)
             assert registry_upgrade_fixture.snapshot(owner) == v13_snapshot
@@ -295,6 +301,11 @@ def verify():
     migrate(dsn, os.environ.get("AMC_RUNTIME_PASSWORD"))
     migrate(dsn)
     prepare_database(runtime)
+    if from_v19:
+        with runtime.connect() as observer:
+            assert observer.scalar(text("select to_regprocedure('amc_acl.lock_recipient(text,text)') is not null"))
+            assert not observer.scalar(text("select has_function_privilege(current_user,'amc_acl.consume_locked_invitation(text)','EXECUTE')"))
+            print("GREEN v20 structural contract: fence present, inner consumer private")
     if ext_before:
         with psycopg.connect(dsn) as owner:
             assert owner.execute(extension).fetchone() == ext_before
@@ -306,7 +317,7 @@ def verify():
     with runtime.connect() as c:
         if from_v14:
             with psycopg.connect(dsn) as owner:
-                assert owner.execute("select version from upgrade_marker_probe order by seq").fetchall() == [(v,) for v in range(16 if from_v15 else 15, 20)]
+                assert owner.execute("select version from upgrade_marker_probe order by seq").fetchall() == [(v,) for v in range(16 if from_v15 else 15, 21)]
                 if from_v16:
                     assert owner.execute("select state,role,client_id,can_comment,can_decide from portal_invitations where id='legacy-invite'").fetchone() == ("pending","client_viewer","a",True,False)
                     assert owner.execute("select brand_name,campaign_name from portal_invitations where id='legacy-invite'").fetchone() == ("Brand","Name")
@@ -329,7 +340,7 @@ def verify():
             owner.execute("UPDATE memberships SET role='client_viewer',client_id='a' WHERE user_id='alice'")
         identify()
         assert set(c.scalars(text("SELECT id FROM clients"))) == {"a"}
-        assert set(c.scalars(text("SELECT version FROM amc_schema_versions"))) == set(range(2,20))
+        assert set(c.scalars(text("SELECT version FROM amc_schema_versions"))) == set(range(2,21))
         if "--from-v2" in sys.argv or from_v3:
             c.rollback()
             c.execute(text("SELECT set_config('amc.user_id','external',true),set_config('amc.tenant_id','agency',true)"))
@@ -371,7 +382,7 @@ def verify():
                 assert owner.execute("SELECT title FROM deliverables WHERE id='doc'").fetchone() == ("Internal",)
     runtime.dispose()
     baseline = "v13" if from_v13 else "v12" if from_v12 else "v11" if from_v11 else "v10" if from_v10 else "v9" if from_v9 else "v8" if from_v8 else "v7" if from_v7 else "v6" if from_v6 else "v5" if from_v5 else "v4" if from_v4 else "v3" if from_v3 else "v2" if "--from-v2" in sys.argv else "v1"
-    print(f"PASS: populated {'v18' if from_v18 else 'v17' if from_v17 else 'v16' if from_v16 else 'v15' if from_v15 else 'v14' if from_v14 else baseline} to v19, repeated migration, privileged API login refused, client isolated")
+    print(f"PASS: populated {'v19' if from_v19 else 'v18' if from_v18 else 'v17' if from_v17 else 'v16' if from_v16 else 'v15' if from_v15 else 'v14' if from_v14 else baseline} to v20, repeated migration, privileged API login refused, client isolated")
 
 
 if __name__ == "__main__":

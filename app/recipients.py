@@ -7,7 +7,7 @@ import secrets
 from fastapi import APIRouter, Depends, HTTPException
 from typing import Literal
 from pydantic import EmailStr, SecretStr, Field, model_validator
-from sqlalchemy import select, text, update
+from sqlalchemy import func, select, text, update
 from sqlalchemy.exc import IntegrityError
 from sqlalchemy.orm import Session
 
@@ -77,12 +77,39 @@ def summary(i):
     }
 
 
-def revoke_pending(db, tenant_id, uid):
-    db.execute(
-        update(PortalInvitation)
-        .where(PortalInvitation.tenant_id == tenant_id, PortalInvitation.user_id == uid, PortalInvitation.state == "pending")
-        .values(state="revoked")
-    )
+def lock_recipient(db, tenant_id, email):
+    if db.get_bind().dialect.name == "postgresql":
+        db.execute(text("SELECT amc_acl.lock_recipient(:tenant,:email)"), {"tenant":tenant_id,"email":email})
+    else:
+        lock_document(db, email)  # SQLite serializes writers using BEGIN IMMEDIATE.
+
+
+def lock_member_recipient(db, tenant_id, uid):
+    if db.get_bind().dialect.name == "postgresql":
+        email = db.scalar(text("SELECT amc_acl.removal_address(:t,:u)"), {"t":tenant_id,"u":uid})
+    else:
+        user = db.get(User, uid)
+        email = user.email if user else None
+    if email:
+        lock_recipient(db, tenant_id, email)
+    return email
+
+
+def lock_offer_recipient(db, tenant_id, iid):
+    email = db.scalar(select(PortalInvitation.email).where(
+        PortalInvitation.id == iid, PortalInvitation.tenant_id == tenant_id))
+    if email is None:
+        raise HTTPException(404, "Lời mời không còn hiệu lực.")
+    lock_recipient(db, tenant_id, email)
+
+
+def revoke_pending(db, tenant_id, uid, email):
+    # PostgreSQL enforces this at DELETE for every restricted writer.
+    if db.get_bind().dialect.name != "postgresql":
+        db.execute(update(PortalInvitation).where(
+            PortalInvitation.tenant_id == tenant_id, PortalInvitation.state == "pending",
+            (PortalInvitation.user_id == uid) | (func.lower(func.trim(PortalInvitation.email)) == email.strip().lower())
+        ).values(state="revoked"))
 
 
 @router.get("/tenants/{tenant_id}/recipients")
@@ -125,6 +152,7 @@ def invite(tenant_id: str, body: Invite, user: User = Depends(current_user), db:
         brand, campaign = validate_scope(db, tenant_id, client.id, body)
     email = str(body.email).lower().strip()
     set_context(db, actor=user.id, tenant=tenant_id, email=email)
+    lock_recipient(db, tenant_id, email)
     recipient = db.scalar(select(User).where(User.email == email))
     if recipient and db.get(Membership, (tenant_id, recipient.id)):
         raise HTTPException(409, "Tài khoản đã thuộc workspace này.")
@@ -167,6 +195,7 @@ def invite(tenant_id: str, body: Invite, user: User = Depends(current_user), db:
 @router.delete("/tenants/{tenant_id}/invitations/{iid}", status_code=204)
 def withdraw(tenant_id: str, iid: str, user: User = Depends(current_user), db: Session = Depends(get_db)):
     require_tenant(db, user, tenant_id, "admin")
+    lock_offer_recipient(db, tenant_id, iid)
     result = db.execute(
         update(PortalInvitation)
         .where(PortalInvitation.tenant_id == tenant_id, PortalInvitation.id == iid, PortalInvitation.state == "pending")
@@ -225,7 +254,7 @@ def accept(iid: str, body: Acceptance | None = None, user: User = Depends(curren
 @router.post("/tenants/{tenant_id}/invitations/{iid}/resend", status_code=201)
 def resend(tenant_id: str, iid: str, user: User = Depends(current_user), db: Session = Depends(get_db)):
     require_tenant(db, user, tenant_id, "admin")
-    lock_document(db, iid)
+    lock_offer_recipient(db, tenant_id, iid)
     old = db.scalar(select(PortalInvitation).where(PortalInvitation.id == iid, PortalInvitation.tenant_id == tenant_id,
                                                   PortalInvitation.state == "pending").with_for_update())
     if old is None:

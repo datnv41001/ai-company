@@ -50,7 +50,9 @@ def drive(lab, rid, config, *, old_checkout=None, after_content=None, seo_v2=Fal
                 turn(old_checkout, lab, "dispatch")
         elif not lab.consume() and not lab.dispatch():
             time.sleep(0.1)
-    assert lab.states() == ["awaiting_qa"]
+    if lab.states() != ["awaiting_qa"]:
+        failed = read_run(lab,rid)
+        raise AssertionError((failed["last_error"],[(j["skill"],j["outcome"],j.get("plan_error")) for j in failed["journal"]]))
     if old_checkout:
         assert switch is not None
         assert all(read_run(lab, rid)["registry"][k] == v for k, v in switch.items())
@@ -143,6 +145,20 @@ def verify():
                                  "manifest_digest": run["registry"]["manifest_digest"], "usage": usage,
                                  "reports": [p["quality"]["role_qa"] for p in nodes], "approved": run["approved_assets"]}
                 Path("role-qa-measurements.json").write_text(json.dumps(role_evidence, indent=2), encoding="utf-8")
+                from test_research_strategy import start_research
+                wf03 = start_research(lab)
+                drive(lab,wf03,config)
+                receipt = receipts(lab,[(wf03,lab.cases[0],"Research to Strategy")])[0]
+                proposal = read_run(lab,wf03)
+                research,strategy = proposal["checkpoints"][1:]
+                qa = strategy["quality"]["role_qa"]
+                assert qa["research_parents"] == {research["node_id"]:canonical_hash(research["output"])}
+                doc = api.get(lab.cases[0][0]+"/deliverables/"+proposal["deliverable_id"],headers=lab.x["headers"]).json()
+                assert doc["content"]["client_preview"].startswith("Định vị đề xuất")
+                assert len(proposal["approved_assets"]) == 1
+                Path("research-strategy-measurements.json").write_text(json.dumps({
+                    "sha":evidence["source_after"],"fingerprint":runtime_fingerprint(),"usage":receipt,
+                    "research":research["quality"],"strategy":qa,"approved":proposal["approved_assets"]},indent=2),encoding="utf-8")
         finally:
             lab.close()
 

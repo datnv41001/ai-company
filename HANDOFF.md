@@ -1,5 +1,9 @@
 # Bắt đầu ở đây khi tiếp quản AI Marketing Company
 
+## AIRC · Kiểm định chất lượng v2 và runtime
+
+Từ main `bdc2441914478b918ea96e861aeb21f2d61655cd` (schema AMC v20), công cụ dùng kế hoạch pin, bằng chứng ký và đối chứng năm cấu hình. Trên máy mới chạy `python -m unittest discover -s engineering/airc500 -p "test_*.py" -v` trong venv engineering. [Phép đo và cách replay](engineering/airc500/QUALITY-EVALUATION.md) · [Kết quả và public pins](engineering/airc500/evidence/quality-v2/README.md) · [Giới hạn trust và intake](engineering/airc500/RUNTIME-HARDENING.md). Commercial GA NO-GO, nguồn repository thực tiếp tục HOLD.
+
 ## AIRC-500 · Thiết kế công cụ review nội bộ
 
 Từ mốc `ece8ecc84b4938900821ff85403bb5b8243534c6`, catalog engineering có 500 hồ sơ và 12 discipline. Trên máy mới chạy `python engineering/airc500/catalog.py` từ gốc repo. [Đề xuất kiến trúc, hợp đồng, lệnh kiểm thử và backlog pilot](engineering/airc500/README.md). Mốc thiết kế ban đầu là `c1eda054`; commercial GA giữ NO-GO. Runtime AMC vẫn dùng schema v18 tại mốc trên.

@@ -1,5 +1,7 @@
 # Security, Reliability and General Availability (GA) Blockers
 
+Engineering review tooling remains fixture-only. Production and autonomous real-repository review are still on hold pending independent host isolation, signing-key custody, and domain-quality gates. [Runtime boundary](../engineering/airc500/RUNTIME-HARDENING.md) · [Measured fixture evaluation](../engineering/airc500/QUALITY-EVALUATION.md).
+
 **Current status: NO-GO for production.** The bootstrap is intentionally safe for local development and demonstrates scoped API behavior; it is not a commercial service.
 
 Schema 3 enforces PostgreSQL row policies for client delivery and includes populated upgrade tests. See the [handoff](../HANDOFF.md) for current coverage. The checklist below addresses the full product.

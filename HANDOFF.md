@@ -1,5 +1,41 @@
 # Bắt đầu ở đây khi tiếp quản AI Marketing Company
 
+## PR #14 trên main · 24/11/2026
+
+**Đánh giá bằng AI mô phỏng đã hoàn tất. Nghiệm thu nghiệp vụ bởi con người đang chờ. Commercial GA giữ trạng thái NO-GO.** Phạm vi đã duyệt là lưu hồ sơ đánh giá nội bộ và công cụ tính lại kết quả. [Quyết định tích hợp PR #14](https://github.com/datnv41001/ai-company/pull/14).
+
+| Mốc Git | SHA |
+| --- | --- |
+| Merge commit trên `main` | `0bfb839aacebbf638f683133d0da68651cadaf3e` |
+| Parent 1 · base đã kiểm toán | `cce821d0f2c27f0296dab1772da7fc3af0ab14b0` |
+| Parent 2 · head đã duyệt | `f459f5004ba7a2bc7fe265070621c16e2b9ea251` |
+| Git tree của cả merge và head | `dbb2e046aa76e967d6b64d7692f92ba8ec63a677` |
+
+CI push trên **commit merge** đạt 3/3 job. Ruff và 187/187 bài kiểm thử đạt, gồm PostgreSQL/RLS. Đủ 15/15 đường nâng có dữ liệu từ v1–v15 lên v16, kể cả chạy lặp. Ca riêng cho v16 thiếu 015 xác nhận migrator và API từ chối khởi động, giữ nguyên ledger, lease và snapshot đã duyệt. Chromium đạt ở 1280 px và 390 px. WF-03 và WF-13 hoàn tất với Qwen local. [CI merge #45347807436](https://github.com/datnv41001/ai-company/actions/runs/45347807436) · [CI push trước merge](https://github.com/datnv41001/ai-company/actions/runs/45345375086) · [CI PR trước merge](https://github.com/datnv41001/ai-company/actions/runs/45345414108).
+
+Schema của bản merge vẫn là **PostgreSQL v16**. So với parent 1, Git tree của `app/`, `migrations/` và `catalog/` giống hệt. Kết quả đối chiếu bao gồm QA policy v2 và `migrations/registry-runtime.lock.json`. Trạng thái các pool dev cũ được ghi ở mục PR #13 bên dưới.
+
+**Content/SEO.** Trên 24 ca, so với 40 nhãn **do AI phân xử**, QA v2 khớp 18, báo thừa 15 và bỏ sót 22. Precision **54,5%**, recall **45,0%**. Đa số Qwen ở ngưỡng 5/9 khớp 0, thừa 15, bỏ sót 40. Các lượt này dùng chung một checkpoint. Kết quả chưa đủ tin cậy để giao cho hội đồng AI quyền tự duyệt. [Báo cáo và cách tính](docs/reviews/ai-panel-20261124/README.md).
+
+**Ca G02.** Nguồn cho phép chạm thấu kính bản sao và nêu bản gốc nằm sau kính. Bản viết quảng bá việc chạm bản gốc. Chỉ P178 có nhãn `body_copy · claim_evidence` trong phiếu, đồng thời chọn **13/14** cặp hợp lệ. Lời giải thích nhận xét cách diễn đạt ưu đãi, bỏ qua mâu thuẫn về hiện vật. Việc phiếu chứa nhãn này chưa chứng minh model hiểu claim. [Phiếu P178 và nguồn đối chiếu](docs/reviews/ai-panel-20261124/opinions.md#g02).
+
+**Strategy WF-03.** Giữ finding gắn với digest đầu ra của từng run. Trong run đầu, hai finding về đơn vị cùng chỉ vào một trường. Research còn suy diễn độ phù hợp với sinh viên từ nguồn chỉ mô tả sổ A5 và số trang. Khi review, cần đối chiếu giả thuyết với dữ kiện trước khi dùng làm căn cứ cho Strategy. [Thẩm định và bằng chứng](docs/reviews/ai-panel-20261124/strategy.md).
+
+| Run WF-03 | SHA-256 đầu ra Strategy | Finding gắn với bản đó |
+| --- | --- | --- |
+| Head `4a089239` · `6e2bf58c-f05f-40ed-a1c7-2b522d4a34d1` | `f14be3bf0884a845052e35beed6c55ba8f8fd8a2913012c1293c5d39c9bb42a1` | 5 · `verify_unit`, `verify_measurement_method`, `verify_measurement_window`, `verify_ratio_unit`, `baseline_evidence` |
+| Merge `0ce9e1ea` · `88aa51f7-bdea-49c7-abe3-3e3b9aa69913` | `6ab88d781cb270785b8fc84d2132e44a5c84aca88f8a8160b4430dabc2cbd25c` | 3 · `verify_unit`, `verify_ratio_unit`, `baseline_evidence` |
+| [Merge PR #14 `0bfb839a`](https://github.com/datnv41001/ai-company/actions/runs/45347807436/artifacts/14898673885) · `2c04ef0d-6286-4dab-ad5e-d83b0fb0604e` | `74cbe1718335821337cbca0ec0eb5480ac1c117fd9fdce41f049c16e38063264` | 5 · `verify_measurement_method`, `verify_success_metric`, `verify_measurement_window`, `verify_ratio_unit`, `baseline_evidence` |
+
+Trên checkout của merge, hai lệnh sau đã xác minh 216 phiếu lưu sẵn và tái tạo toàn bộ điểm cùng nội dung nhận xét. Đây là bước kiểm chứng offline riêng với ba job CI. Với PowerShell, chạy từ thư mục gốc sau khi cài dependencies của dự án.
+
+```sh
+python docs/reviews/ai-panel-20261124/panel.py --validate-only
+python docs/reviews/ai-panel-20261124/score.py --output scores-replay.json --opinions opinions-replay.md
+```
+
+Mốc tiếp theo là kiểm toán bản merge này. Verified Identity & Workspace Invitation Acceptance (SAA-02) là ứng viên để chốt phạm vi sau kiểm toán.
+
 ## Mốc Scheduler Wait Diagnostics trên main · 24/11/2026
 
 [PR #13](https://github.com/datnv41001/ai-company/pull/13) đã merge vào `main` tại `0ce9e1ea20d64f75aa62161166bc9b798bffa94b`. Hai parent là `df8466d317645fbd34064406b24edabbe89033f6` và head đã duyệt `4a089239b7b4038969558dde6c902313ecf7bcb8`. Merge và head cùng Git tree `a9f5d7bf41594cba4dee3d3993f933e103cff7b4`. Mốc kỹ thuật đã hoàn tất cho phát triển nội bộ với PostgreSQL **v16**. [CI trên commit merge](https://github.com/datnv41001/ai-company/actions/runs/45342029520).

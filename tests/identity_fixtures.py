@@ -41,7 +41,8 @@ def capture(email, project=None, invitation_id=None):
 def start_registration(api, email, password, **workspace):
     body = {"email": email, "password": password}
     registered = api.post("/api/auth/register", json={**body, **workspace})
-    assert registered.status_code == 202 and registered.json() == {"status": "accepted"}
+    assert registered.status_code == 202, (registered.status_code, registered.headers.get("Retry-After"))
+    assert registered.json() == {"status": "accepted"}
     login = api.post("/api/auth/login", json=body)
     assert login.status_code == 200
     authenticated = login.json()

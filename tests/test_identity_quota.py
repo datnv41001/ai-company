@@ -229,3 +229,26 @@ def test_login_rejects_oversize_password_before_hashing(client, monkeypatch):
     oversized = "synthetic-password-" * 8
     response = client.post("/api/auth/login", json={"email": email(), "password": oversized})
     assert response.status_code == 422 and oversized not in response.text
+
+
+@pytest.mark.parametrize("provider", ["sqlite", "postgres"])
+def test_one_origin_keeps_its_limit_across_distinct_addresses(provider, tmp_path):
+    if provider == "postgres":
+        if os.getenv("AMC_TEST_PG") != "1":
+            pytest.skip("Requires disposable PostgreSQL")
+        database = engine
+    else:
+        database = create_engine("sqlite:///" + str(tmp_path / "origin.sqlite3"))
+        Base.metadata.create_all(database)
+    limit, seconds = quota.POLICY["register"]["origin"]
+    request = peer("2001:db8:45:15::1")
+    with Session(database) as db:
+        for _ in range(limit):
+            quota.admit(db, request, "register", address=email())
+        with pytest.raises(HTTPException) as denied:
+            quota.admit(db, request, "register", address=email())
+        assert denied.value.status_code == 429
+        assert 0 < int(denied.value.headers["Retry-After"]) <= seconds
+        quota.admit(db, peer("2001:db8:45:16::1"), "register", address=email())
+    if provider == "sqlite":
+        database.dispose()

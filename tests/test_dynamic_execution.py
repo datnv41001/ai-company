@@ -1,13 +1,12 @@
 import json
 import os
 
-from fastapi.testclient import TestClient
 import pytest
 
 from app import workflow_dag
 from app.main import app
 from app.pool_worker import report
-from pool_lab import Lab
+from pool_lab import Lab, lab_client
 from test_diamond import take_node
 from test_dynamic_plan import node
 
@@ -16,7 +15,7 @@ pytestmark = pytest.mark.skipif(os.getenv("AMC_TEST_PG") != "1", reason="require
 
 @pytest.fixture
 def lab():
-    with TestClient(app) as api:
+    with lab_client(app) as api:
         pool = Lab(api, os.environ["AMC_MIGRATION_DSN"], workflow="dynamic-v1")
         try:
             pool.configure(pool.y, 10000, False)

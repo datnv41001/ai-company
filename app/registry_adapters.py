@@ -9,7 +9,7 @@ from typing import Callable
 
 from migrations.registry_release import adapter_digest
 from migrations.runtime_bundle import approved_adapter_digests
-from . import dynamic_plan, landing_qa, registry_seo_v2, workforce_gateway as gateway
+from . import dynamic_plan, landing_qa, research_strategy, registry_seo_v2, workforce_gateway as gateway
 
 V1_DIGEST = "c64cf3e0e691a1bad191b954b07d06a28c7cd8675bb5fe8328ee0ae0e620880a"
 ROLES = {
@@ -34,6 +34,11 @@ def role_qa_digest(skill):
     return sha256((skill + "\n" + previous + "\n" + rules).encode()).hexdigest()
 
 
+@lru_cache(maxsize=1)
+def research_digest():
+    return sha256((V1_DIGEST + "\n" + Path(research_strategy.__file__).read_text(encoding="utf-8")).encode()).hexdigest()
+
+
 @dataclass(frozen=True)
 class Adapter:
     skill: str
@@ -53,6 +58,8 @@ def runtimes():
     adapters["seo@2"] = Adapter("seo", 2, seo_v2_digest(), registry_seo_v2.request, registry_seo_v2.validate)
     adapters["content@2"] = Adapter("content", 2, role_qa_digest("content"), gateway.request_body, landing_qa.validate)
     adapters["seo@3"] = Adapter("seo", 3, role_qa_digest("seo"), registry_seo_v2.request, landing_qa.validate)
+    for skill in ("director","research","strategy"):
+        adapters[skill+"@2"] = Adapter(skill,2,research_digest(),research_strategy.request,research_strategy.validate)
     return {name: adapter for name, adapter in adapters.items() if adapter.digest in approved}
 
 
@@ -92,7 +99,7 @@ def structural_schema(schema):
 def output_schema(adapter):
     # Inspect the same request builder used to form a real worker envelope.
     run = SimpleNamespace(knowledge={"sources": {"brand": {"excerpt": "fact"}}, "required_outputs": ["content", "seo"]}, checkpoints=[], plan=[], journal=[])
-    if adapter.skill == "director":
+    if adapter.skill == "director" and adapter.version == 1:
         body = dynamic_plan.planner_body(run, "local")
     else:
         node = SimpleNamespace(skill=adapter.skill, attempts=0, last_error=None)

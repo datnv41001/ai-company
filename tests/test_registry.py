@@ -53,7 +53,7 @@ def pool():
             lab.close()
 
 
-def registry_brief(lab, idx=0):
+def registry_brief(lab, idx=0, objective="Write notebook landing page copy and matching SEO metadata for students."):
     base, admin, reader, _, campaign = lab.cases[idx]
     api = lab.api
     bid = api.post(
@@ -63,7 +63,7 @@ def registry_brief(lab, idx=0):
     from test_workforce import DATA
 
     api.put(
-        path + "/submission", headers=reader["headers"], json={**DATA, "objective": "Write notebook landing page copy and matching SEO metadata for students."}
+        path + "/submission", headers=reader["headers"], json={**DATA, "objective": objective}
     ).raise_for_status()
     return path + "/run", {"workflow": "dynamic-v1", "registry_workflow": WORKFLOW, "budget_microusd": 10000, "max_parallel_nodes": 2}
 

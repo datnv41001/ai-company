@@ -62,8 +62,12 @@ def migrate(dsn: str, runtime_password: str | None = None):
             raise ValueError("amc_runtime must be an unprivileged role without inherited roles")
         conn.execute("CREATE TABLE IF NOT EXISTS amc_schema_versions (version int PRIMARY KEY)")
         versions = {row[0] for row in conn.execute("SELECT version FROM amc_schema_versions")}
-        if versions - {2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 16}:
+        if versions - set(range(2, 17)):
             raise ValueError("Unknown schema version; use its matching application revision")
+        if 16 in versions and 15 not in versions:
+            raise ValueError("Isolated schema v16 is missing migration 015; restore a pre-016 backup before upgrading")
+        if versions and versions != set(range(2, max(versions) + 1)):
+            raise ValueError("Incomplete migration history; restore a consistent backup before upgrading")
         if 16 in versions:
             return
         if 2 not in versions:
@@ -115,6 +119,9 @@ def migrate(dsn: str, runtime_password: str | None = None):
             conn.execute((HERE / "014_workflow_registry.sql").read_text(encoding="utf-8"))
             publish_registry(conn, json.loads((HERE.parent / "catalog/landing-seo-v1.json").read_text(encoding="utf-8")))
             conn.execute("INSERT INTO amc_schema_versions VALUES (14)")
+        if 15 not in versions:
+            conn.execute((HERE / "015_registry_outputs.sql").read_text(encoding="utf-8"))
+            conn.execute("INSERT INTO amc_schema_versions VALUES (15)")
         conn.execute((HERE / "016_scheduler_diagnostics.sql").read_text(encoding="utf-8"))
         conn.execute("INSERT INTO amc_schema_versions VALUES (16)")
 

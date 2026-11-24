@@ -15,7 +15,9 @@ MIGRATIONS = Path(__file__).resolve().parents[1] / "migrations"
 
 
 def verify():
-    from_v14 = '--from-v14' in sys.argv
+    from_v15 = '--from-v15' in sys.argv
+    orphan_v16 = '--from-isolated-v16' in sys.argv
+    from_v14 = '--from-v14' in sys.argv or from_v15 or orphan_v16
     from_v13 = '--from-v13' in sys.argv or from_v14
     from_v12 = '--from-v12' in sys.argv or from_v13
     from_v11 = '--from-v11' in sys.argv or from_v12
@@ -150,7 +152,47 @@ def verify():
             conn.execute((MIGRATIONS/"014_workflow_registry.sql").read_text(encoding="utf-8"))
             publish_registry(conn,json.loads((MIGRATIONS.parent/"catalog/landing-seo-v1.json").read_text(encoding="utf-8")))
             conn.execute("insert into amc_schema_versions values (14)")
+            if from_v15:
+                conn.execute((MIGRATIONS/"015_registry_outputs.sql").read_text(encoding="utf-8"))
+                conn.execute("INSERT INTO amc_schema_versions VALUES (15)")
+                publish_registry(conn,json.loads((MIGRATIONS.parent/"catalog/research-strategy-v1.json").read_text(encoding="utf-8")))
+                conn.execute("insert into users values ('v15-owner','owner15@example.test','unused',now())")
+                conn.execute("insert into memberships(tenant_id,user_id,role) values ('agency','v15-owner','owner')")
+                conn.execute("select set_config('amc.user_id','v15-owner',true),set_config('amc.tenant_id','agency',true)")
+                workflow = "WF-03/research-strategy-draft@1"
+                assert conn.execute("select amc_ops.change_registry('agency','ca',%s,'activate',ARRAY['director','research','strategy'])",(workflow,)).fetchone() == (True,)
+                conn.execute("""insert into workforce_briefs(id,tenant_id,client_id,brand_id,campaign_id,recipient_id,title,created_at)
+                    values('v15-brief','agency','a','br','ca','current','Existing strategy proposal',now())""")
+                conn.execute("""insert into workforce_runs(id,tenant_id,client_id,brand_id,campaign_id,brief_id,knowledge,plan,
+                    checkpoints,journal,state,ready_at,attempts,budget_microusd,reserved_microusd,created_at)
+                    values('v15-run','agency','a','br','ca','v15-brief',jsonb_build_object('workflow','dynamic-v1',
+                    'required_outputs',jsonb_build_array('strategy'),'registry',amc_ops.registry_pin('agency','ca',%s)),
+                    '["director"]','[]','[]','queued',now(),0,1000,0,now())""",(workflow,))
+                frozen = conn.execute("select id,checkpoints::text,journal::text,ready_at from workforce_runs order by id").fetchall()
+                v13_snapshot = registry_upgrade_fixture.snapshot(conn)
+            if orphan_v16:
+                # Reproduce the real independent branch schema (DDL and marker), before 015 ever ran.
+                conn.execute((MIGRATIONS/"016_scheduler_diagnostics.sql").read_text(encoding="utf-8"))
+                conn.execute("INSERT INTO amc_schema_versions VALUES (16)")
+            # Record the actual marker insert order, including the second migration invocation.
+            conn.execute("create table upgrade_marker_probe(seq bigint generated always as identity primary key,version int)")
+            conn.execute("""create function observe_upgrade_marker() returns trigger language plpgsql as $$
+                begin insert into upgrade_marker_probe(version) values(new.version); return new; end $$""")
+            conn.execute("create trigger observe_marker after insert on amc_schema_versions for each row execute function observe_upgrade_marker()")
             before_release = conn.execute("select workflow,digest,manifest from amc_ops.registry_releases order by workflow").fetchall()
+    if orphan_v16:
+        with pytest.raises(ValueError, match="missing migration 015"):
+            migrate(dsn)
+        with pytest.raises(RuntimeError, match="missing migration 015"):
+            prepare_database(runtime)
+        with psycopg.connect(dsn) as owner:
+            assert registry_upgrade_fixture.snapshot(owner) == v13_snapshot
+            assert owner.execute("select version from upgrade_marker_probe").fetchall() == []
+            assert owner.execute("select version from amc_schema_versions order by version").fetchall() == [(v,) for v in (*range(2,15),16)]
+            assert owner.execute("select preview from client_reviews where id='rv'").fetchone() == ("Preview",)
+        runtime.dispose()
+        print("PASS: isolated v16 without 015 refused by migrator and API; ledger, leases and approved snapshot preserved")
+        return
     migrate(dsn, os.environ.get("AMC_RUNTIME_PASSWORD"))
     migrate(dsn)
     prepare_database(runtime)
@@ -160,6 +202,8 @@ def verify():
     privileged.dispose()
     with runtime.connect() as c:
         if from_v14:
+            with psycopg.connect(dsn) as owner:
+                assert owner.execute("select version from upgrade_marker_probe order by seq").fetchall() == ([(16,)] if from_v15 else [(15,),(16,)])
             assert c.execute(text("select workflow,digest,manifest from amc_ops.registry_releases order by workflow")).fetchall() == before_release
         def identify():
             c.execute(text("SELECT set_config('amc.user_id','alice',true),set_config('amc.tenant_id','agency',true)"))
@@ -170,7 +214,7 @@ def verify():
             owner.execute("UPDATE memberships SET role='client_viewer',client_id='a' WHERE user_id='alice'")
         identify()
         assert set(c.scalars(text("SELECT id FROM clients"))) == {"a"}
-        assert set(c.scalars(text("SELECT version FROM amc_schema_versions"))) == {2,3,4,5,6,7,8,9,10,11,12,13,14,16}
+        assert set(c.scalars(text("SELECT version FROM amc_schema_versions"))) == {2,3,4,5,6,7,8,9,10,11,12,13,14,15,16}
         if "--from-v2" in sys.argv or from_v3:
             c.rollback()
             c.execute(text("SELECT set_config('amc.user_id','external',true),set_config('amc.tenant_id','agency',true)"))
@@ -191,7 +235,7 @@ def verify():
                     assert owner.execute("SELECT version,title,preview,digest FROM client_reviews WHERE id='rv'").fetchone() == (
                         1, "Title", "Preview", hashlib.sha256(b'{"preview":"Preview","title":"Title"}').hexdigest())
                 if from_v10:
-                    assert owner.execute("select count(*) from amc_ops.dag_plans").fetchone()==(int(from_v11)+int(from_v12),)
+                    assert owner.execute("select count(*) from amc_ops.dag_plans").fetchone()==(int(from_v11)+int(from_v12)+int(from_v15),)
                     if from_v13:
                         assert registry_upgrade_fixture.snapshot(owner) == v13_snapshot
                     elif from_v12:
@@ -212,7 +256,7 @@ def verify():
                 assert owner.execute("SELECT title FROM deliverables WHERE id='doc'").fetchone() == ("Internal",)
     runtime.dispose()
     baseline = "v13" if from_v13 else "v12" if from_v12 else "v11" if from_v11 else "v10" if from_v10 else "v9" if from_v9 else "v8" if from_v8 else "v7" if from_v7 else "v6" if from_v6 else "v5" if from_v5 else "v4" if from_v4 else "v3" if from_v3 else "v2" if "--from-v2" in sys.argv else "v1"
-    print(f"PASS: populated {'v14' if from_v14 else baseline} to v16, repeated migration, privileged API login refused, client isolated")
+    print(f"PASS: populated {'v15' if from_v15 else 'v14' if from_v14 else baseline} to v16, repeated migration, privileged API login refused, client isolated")
 
 
 if __name__ == "__main__":

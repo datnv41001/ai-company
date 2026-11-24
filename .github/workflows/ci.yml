@@ -31,7 +31,7 @@ jobs:
           export DATABASE_URL="postgresql+psycopg://amc_runtime:$AMC_RUNTIME_PASSWORD@127.0.0.1:$port/amc_test_ci"
           export AMC_TEST_PG=1 PYTHONPATH=.
           python migrations/apply.py
-          python -m pytest -q
+          AMC_WF03_HOLD_EVIDENCE="$RUNNER_TEMP/wf03-holds" python -m pytest -q
           docker exec amc-test-pg createdb -U postgres amc_test_upgrade
           export AMC_MIGRATION_DSN="${AMC_MIGRATION_DSN%/*}/amc_test_upgrade"
           export DATABASE_URL="${DATABASE_URL%/*}/amc_test_upgrade"
@@ -89,6 +89,19 @@ jobs:
           export AMC_MIGRATION_DSN="${AMC_MIGRATION_DSN%/*}/amc_test_populated_v14"
           export DATABASE_URL="${DATABASE_URL%/*}/amc_test_populated_v14"
           python tests/check_postgres_upgrade.py --from-v14
+          docker exec amc-test-pg createdb -U postgres amc_test_populated_v15
+          export AMC_MIGRATION_DSN="${AMC_MIGRATION_DSN%/*}/amc_test_populated_v15"
+          export DATABASE_URL="${DATABASE_URL%/*}/amc_test_populated_v15"
+          python tests/check_postgres_upgrade.py --from-v15
+          docker exec amc-test-pg createdb -U postgres amc_test_isolated_v16
+          export AMC_MIGRATION_DSN="${AMC_MIGRATION_DSN%/*}/amc_test_isolated_v16"
+          export DATABASE_URL="${DATABASE_URL%/*}/amc_test_isolated_v16"
+          python tests/check_postgres_upgrade.py --from-isolated-v16
+      - uses: actions/upload-artifact@v4
+        with:
+          name: wf03-director-ledger
+          path: ${{ runner.temp }}/wf03-holds/*.json
+          if-no-files-found: error
   compose-browser:
     runs-on: ubuntu-latest
     steps:
@@ -121,6 +134,7 @@ jobs:
           docker compose -p amc-acceptance exec -T api python -m pip freeze > compose-versions.txt
           docker compose -p amc-acceptance images >> compose-versions.txt
           docker image inspect postgres:16.6-alpine --format '{{json .RepoDigests}}' >> compose-versions.txt
+          docker compose -p amc-acceptance run --rm migrate python migrations/apply.py --publish-registry catalog/research-strategy-v1.json
           AMC_BROWSER_TEST_URL=http://127.0.0.1:8000 python tests/browser_delivery.py
       - uses: actions/upload-artifact@v4
         with:
@@ -195,4 +209,5 @@ jobs:
             registry-rollout.json
             role-qa-measurements.json
             wait-diagnostics-measurements.json
+            research-strategy-measurements.json
           if-no-files-found: ignore

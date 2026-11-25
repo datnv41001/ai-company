@@ -170,6 +170,7 @@ def commercial_dispute(api, owner, base, pane, scope, page, size):
         label = {"Ghi tranh chấp": "Tranh chấp", "Thay thế": "Đã thay thế", "Thu hồi": "Đã thu hồi"}[name]
         expect(pane.locator(".catalog-detail")).to_contain_text(label + " · Phiên bản")
         if name == "Ghi tranh chấp":
+            expect(pane.locator(".catalog-detail h4")).to_have_text("Hết hàng")
             capture(page, size, "materials", "stock-disputed", pane.locator(".catalog-detail"))
     history = get(api, base + "/knowledge/revisions/" + by_status["unavailable"] + "/events", owner)
     assert [entry["state"] for entry in history][-3:] == ["disputed", "superseded", "withdrawn"]
@@ -354,6 +355,8 @@ def agency_switch(api, page, owner, t, c, brand, base, sku):
 
 def exercise(api, browser, size, code):
     owner, t, c, b, base = setup_scope(api, code)
+    if code == "inhouse":
+        sibling = post(api, "/api/tenants/" + t + "/brands", owner, {"client_id": c, "name": "Trường đào tạo trực tuyến"})["id"]
     company, product_name, audience, objective, wording = CASES[code]
     report = {"persona": code, "viewport": size, "screenshots": []}
     original = get(api, "/api/me", owner)["tenants"]
@@ -410,16 +413,39 @@ def exercise(api, browser, size, code):
             obj.locator("[name=name]").fill(objective)
             obj.locator("[name=owner]").fill("Trưởng nhóm Marketing")
             obj.locator("[name=level]").select_option("brand")
-            expect(obj).to_contain_text("Chọn mục tiêu doanh nghiệp làm mục tiêu cha")
-            with page.expect_response(lambda r: r.request.method == "POST" and r.url.endswith("/catalog/items")) as invalid:
-                obj.get_by_role("button", name="Lưu bản nháp").click()
-            assert invalid.value.status == 422
-            expect(pane.get_by_role("status")).to_contain_text("Kiểm tra mục tiêu cha và chiến dịch")
+            expect(obj).to_contain_text("Chọn một mục tiêu chung đã duyệt")
+            obj.get_by_role("button", name="Lưu bản nháp").click()
+            expect(pane.get_by_role("status")).to_contain_text("Chọn đúng một mục tiêu cha")
             expect(pane.get_by_role("status")).not_to_contain_text("value_error")
-            enter_item(pane, "objective", {"name": company_goal, "owner": "Giám đốc", "level": "company"})
-            parent = catalog_record(api, base, owner, "objective", label=company_goal)
-            enter_item(pane, "objective", {"name": objective, "owner": "Trưởng nhóm Marketing", "level": "brand", "parent": parent["id"]})
+            invalid = call(
+                api,
+                owner,
+                base + "/catalog",
+                "/items",
+                kind="objective",
+                visibility="internal",
+                expected_revision=0,
+                data={"name": objective, "owner": "Trưởng nhóm Marketing", "level": "brand"},
+            )
+            assert invalid.status_code == 422
+            enter_item(pane, "company_objective", {"name": company_goal, "owner": "Giám đốc"})
+            shared_path = f"/api/tenants/{t}/clients/{c}/company-objectives"
+            parent = get(api, shared_path + "?approved_only=true", owner)["items"][0]
+            select_scope(page, c, sibling)
+            sibling_pane = open_catalog(page)
+            enter_item(
+                sibling_pane,
+                "objective",
+                {"name": "Học viên trực tuyến", "owner": "Trưởng nhóm trực tuyến", "level": "brand", "company_parent": (company_goal,)},
+            )
+            sibling_path = f"/api/tenants/{t}/clients/{c}/brands/{sibling}"
+            child = catalog_record(api, sibling_path, owner, "objective", label="Học viên trực tuyến")
+            assert get(api, sibling_path + "/catalog/items/" + child["id"], owner)["references"]["company_parent"]["id"] == parent["id"]
+            select_scope(page, c, b)
+            pane = open_catalog(page)
+            enter_item(pane, "objective", {"name": objective, "owner": "Trưởng nhóm Marketing", "level": "brand", "company_parent": (company_goal,)})
             goal = catalog_record(api, base, owner, "objective", label=objective)
+            assert get(api, base + "/catalog/items/" + goal["id"], owner)["references"]["company_parent"]["id"] == parent["id"]
             enter_item(
                 pane,
                 "kpi",
@@ -479,6 +505,8 @@ def exercise(api, browser, size, code):
             assert pinned["label"] == label and pinned["digest"] and pinned["revision"] > 0
         if code == "inhouse":
             assert draft["selections"]["audience"]["basis"] == "hypothesis"
+            assert draft["selections"]["objective"]["id"] == goal["id"] and draft["selections"]["objective"]["digest"] == goal["digest"]
+            report["shared_objective_across_brands"] = True
         report["pinned_selection_kinds"] = sorted(draft.get("selections", {}))
         page.reload()
         authenticate(page, owner)

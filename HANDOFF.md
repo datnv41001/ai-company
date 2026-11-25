@@ -1,5 +1,9 @@
 # Bắt đầu ở đây khi tiếp quản AI Marketing Company
 
+## C2.5 · Mục tiêu thật cấp công ty và liên kết thương hiệu, chiến dịch
+
+Chạy publisher module `amc_business` v3 trên core v22. Chọn **Mục tiêu chung doanh nghiệp** để lập cùng một mục tiêu cho nhiều thương hiệu của một khách hàng. API và giao diện dùng ID phiên bản, CAS và lịch sử quyết định khi cha được thay thế hoặc thu hồi. [Các bước dùng, nâng cấp và ca chạy lại](docs/business-profile/C2-OBJECTIVES-RUNBOOK.md)
+
 ## Business Knowledge Center · review tích hợp
 
 [Mở bản bàn giao C2](docs/business-profile/C2-REVIEW-HANDOFF.md) để chạy trên máy mới, kiểm tra luồng từ hồ sơ đến brief, tải ảnh và đối chiếu commit, CI, giới hạn migration.

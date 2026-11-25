@@ -168,7 +168,10 @@ def install_business_workspace(conn):
     versions = conn.execute("SELECT version FROM amc_business.versions ORDER BY version").fetchall()
     if versions == [(1,)]:
         install_catalog(conn)
-    elif versions != [(1,), (2,)]:
+        versions = [(1,), (2,)]
+    if versions == [(1,), (2,)]:
+        conn.execute((HERE / "business_workspace" / "003_objectives.sql").read_text(encoding="utf-8"))
+    elif versions != [(1,), (2,), (3,)]:
         raise ValueError("Unsupported business workspace schema version")
     install_claim_display(conn)
 

@@ -1,0 +1,62 @@
+{
+  "id": "icp-segmentation",
+  "version": 1,
+  "role": "research",
+  "task": "Identify the decision and constraint within the selected segment.",
+  "inputs": [
+    "audience",
+    "region",
+    "product",
+    "hypotheses"
+  ],
+  "method": "Describe the segment by its purchasing situation, decision maker and constraint; treat unobserved behaviors as hypotheses.",
+  "applicability": "Independent sellers, households and trade buyers",
+  "references": [
+    "K-02",
+    "K-05"
+  ],
+  "examples": {
+    "good": {
+      "segment": "Trade buyers planning quantities before a quote.",
+      "buyer_problem": "Work out how many full packs a bill of materials requires."
+    },
+    "bad": "Calling all residents confirmed buyers."
+  },
+  "output_schema": {
+    "type": "object",
+    "properties": {
+      "segment": {
+        "type": "string",
+        "minLength": 3,
+        "maxLength": 200
+      },
+      "buyer_problem": {
+        "type": "string",
+        "minLength": 3,
+        "maxLength": 200
+      }
+    },
+    "required": [
+      "segment",
+      "buyer_problem"
+    ],
+    "additionalProperties": false
+  },
+  "rubric": [
+    "Keep the chosen segment and geography.",
+    "Name the decision it must make without inventing demographics."
+  ],
+  "prohibited": "Demand, demographics or willingness to pay not established by a source.",
+  "tests": [
+    {
+      "case": "example_positive",
+      "expected": "all structured output fields and applicable sources are present"
+    },
+    {
+      "case": "example_negative",
+      "expected": "Keep the chosen segment and geography."
+    }
+  ],
+  "release": "Publish the reviewed workflow manifest containing this exact skill version and digest; activate only on the selected campaign.",
+  "rollback": "Disable the candidate workflow for new runs and activate the previous compatible workflow. Retain pinned definitions and existing run receipts."
+}

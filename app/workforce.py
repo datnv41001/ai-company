@@ -12,11 +12,12 @@ from sqlalchemy.orm import Session
 from .database import get_db
 from .delivery import lock_document
 from .delivery_models import ClientReview, PortalGrant, ReviewEntry
-from .models import AuditEvent, Brand, Campaign, User
+from .models import AuditEvent, Brand, Campaign, Deliverable, User
 from .security import current_user, require_tenant
 from .workforce_gateway import CORE, EXTRA, PROMPT_VERSION
 from . import workforce_authority  # noqa: F401 - install SQLite triggers on fresh schema
 from .workforce_models import WorkforceBrief, WorkforceRun
+from .c3_tasks import TaskIntent
 
 router = APIRouter(prefix="/api/tenants/{tenant_id}/workforce", tags=["Marketing workforce"])
 Short = Annotated[str, StringConstraints(strip_whitespace=True, min_length=3, max_length=150)]
@@ -43,9 +44,16 @@ class BriefData(Input):
     audience: Paragraph
     offer: Paragraph
     sources: list[Source] = Field(min_length=1, max_length=4)
+    task_intent: TaskIntent | None = None
+
+
+class ManifestID(Input):
+    id: str = Field(min_length=36, max_length=36)
+    digest: str = Field(pattern=r"^[0-9a-f]{64}$")
 
 
 class Start(Input):
+    knowledge_manifest: ManifestID | None = None
     registry_workflow: str | None = Field(default=None, min_length=1, max_length=120)
     max_parallel_nodes: Literal[1, 2] = 1
     workflow: Literal["linear", "diamond-v1", "dynamic-v1"] = "linear"
@@ -59,7 +67,7 @@ def brief_query(db, member):
         grant = db.get(PortalGrant, (member.tenant_id, member.user_id))
         if not grant or grant.client_id != member.client_id:
             return q.where(False)
-        q = q.where(WorkforceBrief.recipient_id == member.user_id, WorkforceBrief.client_id == grant.client_id)
+        q = q.where(WorkforceBrief.origin == "agency", WorkforceBrief.recipient_id == member.user_id, WorkforceBrief.client_id == grant.client_id)
         if grant.brand_id:
             q = q.where(WorkforceBrief.brand_id == grant.brand_id)
         if grant.campaign_id:
@@ -68,7 +76,8 @@ def brief_query(db, member):
 
 
 def public_brief(b):
-    return {"id": b.id, "title": b.title, "submitted": b.payload is not None, "campaign_id": b.campaign_id}
+    return {"id": b.id, "title": b.title, "submitted": b.payload is not None, "campaign_id": b.campaign_id,
+            **({"origin":"internal"} if b.origin == "internal" else {})}
 
 
 @router.get("/briefs")
@@ -97,6 +106,16 @@ def open_brief(tenant_id: str, body: OpenBrief, user: User = Depends(current_use
 
 @router.put("/briefs/{bid}/submission")
 def submit(tenant_id: str, bid: str, body: BriefData, user: User = Depends(current_user), db: Session = Depends(get_db)):
+    return save_submission(db,user,tenant_id,bid,body.model_dump(exclude_none=True))
+
+
+@router.put("/briefs/{bid}/task-submission")
+def submit_task(tenant_id: str, bid: str, body: TaskIntent, user: User = Depends(current_user), db: Session = Depends(get_db)):
+    from .c3_tasks import TASK_VERSION
+    return save_submission(db,user,tenant_id,bid,{"task_version":TASK_VERSION,"task_intent":body.model_dump()})
+
+
+def save_submission(db,user,tenant_id,bid,payload):
     m = require_tenant(db, user, tenant_id)
     if m.role != "client_viewer":
         raise HTTPException(404, "Brief unavailable")
@@ -110,25 +129,32 @@ def submit(tenant_id: str, bid: str, body: BriefData, user: User = Depends(curre
         changed = db.execute(
             update(WorkforceBrief)
             .where(WorkforceBrief.id == bid, WorkforceBrief.payload.is_(None))
-            .values(payload=body.model_dump())
+            .values(payload=payload)
             .execution_options(synchronize_session=False)
         )
         db.commit()
         if changed.rowcount:
             return {"submitted": True}
         db.refresh(b)
-    if b.payload == body.model_dump():
+    if b.payload == payload:
         return {"submitted": True}
     raise HTTPException(409, "Brief already submitted")
 
 
 @router.post("/briefs/{bid}/run")
 def start(tenant_id: str, bid: str, body: Start, user: User = Depends(current_user), db: Session = Depends(get_db)):
+    from . import c3_boundaries, c3_marketing
+    from .c3_projection import TASK_RELEASES
+    backed = body.registry_workflow in c3_marketing.ROLES or body.registry_workflow in TASK_RELEASES
+    if backed != bool(body.knowledge_manifest):
+        raise HTTPException(422, "Knowledge-backed releases require an exact business knowledge manifest")
     m = require_tenant(db, user, tenant_id, "editor")
     lock_document(db, "workforce-brief:" + bid)
     b = db.scalar(brief_query(db, m).where(WorkforceBrief.id == bid))
     if not b:
         raise HTTPException(404, "Brief unavailable")
+    if b.payload and "sources" not in b.payload and body.registry_workflow not in TASK_RELEASES:
+        raise HTTPException(409, "Nhiệm vụ này cần quy trình Marketing và manifest yêu cầu công việc đã ghim.")
     if body.max_parallel_nodes == 2 and body.workflow != 'dynamic-v1':
         raise HTTPException(422, 'Two leases require a dynamic workflow')
     plan = CORE + [s for s in EXTRA if s in body.extra_skills]
@@ -149,6 +175,8 @@ def start(tenant_id: str, bid: str, body: Start, user: User = Depends(current_us
         plan = ['director']
     prior = db.scalar(select(WorkforceRun).where(WorkforceRun.brief_id == bid, WorkforceRun.tenant_id == tenant_id))
     if prior:
+        if backed and prior.knowledge.get("c3_manifest") != body.knowledge_manifest.model_dump():
+            raise HTTPException(409, "Brief already queued against a different Marketing manifest")
         if body.registry_workflow:
             required = prior.knowledge.get("required_outputs", [])
             if set(body.extra_skills) - set(required):
@@ -162,24 +190,31 @@ def start(tenant_id: str, bid: str, body: Start, user: User = Depends(current_us
     if not b.payload:
         raise HTTPException(409, "Waiting for the client's brief")
     brand = db.get(Brand, b.brand_id)
-    if not brand.product_truth.strip():
+    if not backed and not brand.product_truth.strip():
         raise HTTPException(422, "Brand Kit needs verified product facts")
-    if max(len(brand.product_truth), len(brand.brand_guidelines)) > 4000:
+    if not backed and max(len(brand.product_truth), len(brand.brand_guidelines)) > 4000:
         raise HTTPException(422, "Summarize each Brand Kit field to 4000 characters for this workflow")
-    facts = {"brand": {"label": brand.name, "excerpt": brand.product_truth}}
-    facts.update({f"S{n}": s for n, s in enumerate(b.payload["sources"], 1)})
-    knowledge = {
-        "title": b.title,
-        "objective": b.payload["objective"],
-        "audience": b.payload["audience"],
-        "offer": b.payload["offer"],
-        "brand_rules": brand.brand_guidelines,
-        "sources": facts,
-        "prompt_version": PROMPT_VERSION,
-    }
+    if not backed:
+        facts = {"brand": {"label": brand.name, "excerpt": brand.product_truth}}
+        facts.update({f"S{n}": s for n, s in enumerate(b.payload["sources"], 1)})
+        knowledge = {"title": b.title, "objective":b.payload["objective"], "audience":b.payload["audience"],
+                     "offer":b.payload["offer"], "brand_rules":brand.brand_guidelines,"sources":facts,"prompt_version":PROMPT_VERSION}
     if body.registry_workflow:
         from .registry import pin
         from .registry_compatibility import required_outputs
+        if backed:
+            store, snap, public = c3_boundaries.checked(db, user, b, body.knowledge_manifest.model_dump(), body.registry_workflow, "queue")
+            if body.registry_workflow in TASK_RELEASES:
+                from .c3_releases import fact_text
+                facts = {fact["id"]: {"label":fact["id"],"excerpt":fact_text(body.registry_workflow,fact,public)} for fact in public["facts"]}
+            else:
+                facts = {fact["id"]: {"label": fact["id"], "excerpt": c3_marketing.fact_line(fact)} for fact in public["facts"]}
+            knowledge = {"title": public["product"], "objective":public["objective"], "audience":public["audience"],
+                         "offer":public["product"], "brand_rules":"", "sources":facts, "prompt_version":PROMPT_VERSION,
+                         "c3_manifest":body.knowledge_manifest.model_dump(), "c3_projection":public}
+            if body.registry_workflow in TASK_RELEASES:
+                knowledge.update(objective=public["task_intent"]["purpose"],brand_rules=public["brand_guidelines"]["guidance"],
+                                 internal_task=b.origin == "internal")
         binding = pin(db, b, body.registry_workflow)
         manifest = db.scalar(text("select manifest from amc_ops.registry_releases where workflow=:w and digest=:d"),
                              {"w":body.registry_workflow, "d":binding["manifest_digest"]})
@@ -207,6 +242,9 @@ def start(tenant_id: str, bid: str, body: Start, user: User = Depends(current_us
     db.add(run)
     try:
         db.flush()
+        if backed:
+            c3_boundaries.record(store, snap, "queue", "queue:"+run.id,
+                {"run_id":run.id, "manifest_digest":snap.digest, "release_digest":binding["manifest_digest"]})
         db.add(
             AuditEvent(
                 tenant_id=tenant_id,
@@ -263,14 +301,70 @@ def runs(tenant_id: str, user: User = Depends(current_user), db: Session = Depen
     return summaries
 
 
+def marketing_artifacts(run, doc):
+    """Project staff work from frozen checkpoints and the latest editable preview from its document."""
+    from . import c3_assets, c3_content_evidence, c3_skill_library
+    from .revision_qa import content_digest
+
+    workflow = run.knowledge["registry"]["workflow"]
+    outcomes = {step["skill"]: step["output"] for step in run.checkpoints}
+    sections = c3_assets.artifacts(workflow, run.knowledge["c3_projection"], outcomes)
+    generated = sections["customer_preview"] if doc else None
+    current = None
+    bound = False
+    if doc:
+        body = doc.content.get("client_preview", "")
+        digest = content_digest(doc.title, body)
+        current = {"title": doc.title, "body": body, "revision": doc.qa_revision, "digest": digest, "document_id": doc.id}
+        evidence = (doc.qa_evidence or {}).get("content_evidence") or {}
+        bound = (evidence.get("version"), evidence.get("qa_revision"), evidence.get("content_digest"), evidence.get("manifest_digest")) == (
+            c3_content_evidence.VERSION, doc.qa_revision, digest, run.knowledge["c3_manifest"]["digest"]
+        )
+    sections["customer_preview"] = {"generated": generated, "current": current}
+    issues = []
+    for role in c3_assets.ROLES[workflow]:
+        if role not in outcomes:
+            continue
+        fields = outcomes[role]["sections"]
+        previously_seen = {}
+        for key in c3_skill_library.fields(role):
+            value = c3_assets.normalized(fields.get(key, ""))
+            if not value:
+                issues.append({"role":role, "field":key, "reason":"missing"})
+                continue
+            visible = {"content": sections["buyer_copy"], "seo": sections["seo_fields"]}.get(role)
+            if visible is not None and key not in visible:
+                issues.append({"role":role, "field":key, "reason":"withheld"})
+            if value in previously_seen:
+                issues.append({"role":role, "field":key, "reason":"same_text", "other_field":previously_seen[value]})
+            else:
+                previously_seen[value] = key
+    return {"workflow":workflow, "sections":sections, "completed_roles":list(outcomes),
+            "editorial_status":"unreviewed_suggestions", "field_issues":issues,
+            "evidence_coverage":{"fields":["title","client_preview"], "current_assessment":bound}}
+
+
 @router.get("/runs/{rid}")
 def report(tenant_id: str, rid: str, user: User = Depends(current_user), db: Session = Depends(get_db)):
+    from .c3_assets import ROLES as separated_releases
     m = require_tenant(db, user, tenant_id)
     if m.role == "client_viewer":
         raise HTTPException(404, "Run unavailable")
     run = db.scalar(select(WorkforceRun).where(WorkforceRun.tenant_id == tenant_id, WorkforceRun.id == rid))
     if not run:
         raise HTTPException(404, "Run unavailable")
+    extra = {}
+    if run.knowledge.get("registry", {}).get("workflow") in separated_releases:
+        doc = None
+        if run.deliverable_id:
+            doc = db.scalar(select(Deliverable).join(Campaign, Campaign.id == Deliverable.campaign_id)
+                            .join(Brand, Brand.id == Campaign.brand_id)
+                            .where(Deliverable.id == run.deliverable_id, Deliverable.tenant_id == tenant_id,
+                                   Campaign.tenant_id == tenant_id, Campaign.id == run.campaign_id,
+                                   Brand.tenant_id == tenant_id, Brand.id == run.brand_id, Brand.client_id == run.client_id))
+            if doc is None:
+                raise HTTPException(404, "Run unavailable")
+        extra["marketing_artifacts"] = marketing_artifacts(run, doc)
     archived = (
         db.execute(
             select(ClientReview.id, ClientReview.version, ClientReview.digest)
@@ -296,6 +390,10 @@ def report(tenant_id: str, rid: str, user: User = Depends(current_user), db: Ses
         "plan": display_plan(run, graph),
         "state": display_state(run, graph),
         "source_registry": run.knowledge["sources"],
+        **extra,
+        **({"marketing_provenance": f"/api/tenants/{tenant_id}/clients/{run.client_id}/brands/{run.brand_id}"
+              f"/business-workspace/marketing/manifests/{run.knowledge['c3_manifest']['id']}/provenance"}
+           if m.role in ("owner", "admin") and run.knowledge.get("c3_manifest") else {}),
         "approved_assets": archived,
     }
 

@@ -17,7 +17,7 @@ Ref = Annotated[str, Field(min_length=36, max_length=36)]
 ListNotes = Annotated[list[Name], Field(max_length=12)]
 Amount = Annotated[Decimal, Field(gt=0, max_digits=12, decimal_places=3), PlainSerializer(lambda v: format(v.normalize(), "f"), when_used="json")]
 Money = Annotated[StrictInt, Field(ge=0, le=9_000_000_000_000_000)]
-Unit = Literal["piece", "box", "m²", "tonne", "kg", "service", "subscription_month", "subscription_year"]
+Unit = Literal["piece", "box", "m²", "tonne", "kg", "service", "machine", "participant", "subscription_month", "subscription_year"]
 Currency = Literal["VND", "USD", "EUR", "JPY", "GBP", "AUD", "CAD", "SGD", "THB"]
 Visibility = Literal["public", "internal", "restricted"]
 Kind = Literal[
@@ -147,6 +147,7 @@ class KPI(Input):
 class Guidelines(Input):
     guidance: Note
     tone: Note | None = Field(default=None, exclude_if=lambda v: v is None)
+    prohibited_claims: ListNotes = Field(default_factory=list, exclude_if=lambda value: not value)
 
 
 class Placement(Input):

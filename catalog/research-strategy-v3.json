@@ -1,0 +1,557 @@
+{
+  "workflow_id": "WF-03/research-strategy-draft",
+  "workflow_version": 3,
+  "mode": "dynamic-v1",
+  "profile": "research-strategy",
+  "required": [
+    "director",
+    "research",
+    "strategy"
+  ],
+  "required_outputs": [
+    "strategy"
+  ],
+  "knowledge_projection": "amc.marketing-manifest/2",
+  "contracts": {
+    "director": {
+      "skill_id": "director",
+      "skill_version": 4,
+      "role_id": "ai-managing-director",
+      "contract_version": 4,
+      "adapter": "director@4",
+      "adapter_digest": "de8896dfee4aaf662dbf31bdda67606e3ae2376b8e4b4542acfeb3993646724d",
+      "qa_policy": "c3-director@2",
+      "model": "local",
+      "inputs": [
+        "brief",
+        "brand",
+        "sources"
+      ],
+      "outputs": [
+        "primary_assignment",
+        "secondary_assignment"
+      ],
+      "output_schema": {
+        "type": "object",
+        "required": [
+          "primary_assignment",
+          "secondary_assignment"
+        ],
+        "additionalProperties": false,
+        "properties": {
+          "primary_assignment": {
+            "type": "string"
+          },
+          "secondary_assignment": {
+            "type": "string"
+          }
+        }
+      },
+      "success_criteria": [
+        "primary_assignment",
+        "secondary_assignment"
+      ],
+      "predecessors": [],
+      "tools": [],
+      "approval": "revision_qa_and_client_snapshot",
+      "node_cap": 1000,
+      "max_attempts": 3,
+      "timeout_seconds": 300,
+      "owner": "agency marketing lead",
+      "objective": "Use this role's approved knowledge projection to prepare internal Marketing work",
+      "forbidden_actions": [
+        "external_write",
+        "publish",
+        "spend"
+      ],
+      "fallback": "agency editor",
+      "marketing_methods": {}
+    },
+    "research": {
+      "skill_id": "research",
+      "skill_version": 4,
+      "role_id": "ai-market-researcher",
+      "contract_version": 4,
+      "adapter": "research@4",
+      "adapter_digest": "cb32178ff6ab9076426ab22cbfb8624c282d76e47d6f08a12e4447f504391239",
+      "qa_policy": "c3-research@2",
+      "model": "local",
+      "inputs": [
+        "brief",
+        "brand",
+        "sources"
+      ],
+      "outputs": [
+        "buyer_problem",
+        "evidence_needed",
+        "research_question",
+        "segment",
+        "source_ids"
+      ],
+      "output_schema": {
+        "type": "object",
+        "required": [
+          "buyer_problem",
+          "evidence_needed",
+          "research_question",
+          "segment",
+          "source_ids"
+        ],
+        "additionalProperties": false,
+        "properties": {
+          "research_question": {
+            "type": "string"
+          },
+          "evidence_needed": {
+            "type": "string"
+          },
+          "segment": {
+            "type": "string"
+          },
+          "buyer_problem": {
+            "type": "string"
+          },
+          "source_ids": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        }
+      },
+      "success_criteria": [
+        "buyer_problem",
+        "evidence_needed",
+        "research_question",
+        "segment",
+        "source_ids"
+      ],
+      "predecessors": [],
+      "tools": [],
+      "approval": "revision_qa_and_client_snapshot",
+      "node_cap": 1000,
+      "max_attempts": 3,
+      "timeout_seconds": 300,
+      "owner": "agency marketing lead",
+      "objective": "Use this role's approved knowledge projection to prepare internal Marketing work",
+      "forbidden_actions": [
+        "external_write",
+        "publish",
+        "spend"
+      ],
+      "fallback": "agency editor",
+      "marketing_methods": {
+        "market-research@1": "86eeef60340cfd5035e4ecbba3807b7afca9b4abd4356e047d8806b8c9f77621",
+        "icp-segmentation@1": "b69cd2acdf276b874a4cb956987cfd9ebf00efe4fd286e80d4b835ec6ab5102f"
+      }
+    },
+    "strategy": {
+      "skill_id": "strategy",
+      "skill_version": 4,
+      "role_id": "ai-marketing-strategist",
+      "contract_version": 4,
+      "adapter": "strategy@4",
+      "adapter_digest": "225597105f7168efbf65e5e2e4e9cbb5fd725b2eca9b319fd352d5b39b10bf64",
+      "qa_policy": "c3-strategy@2",
+      "model": "local",
+      "inputs": [
+        "brief",
+        "brand",
+        "sources"
+      ],
+      "outputs": [
+        "channel_choice",
+        "measurable_action",
+        "measurement_method",
+        "positioning",
+        "rationale",
+        "source_ids",
+        "test_hypothesis"
+      ],
+      "output_schema": {
+        "type": "object",
+        "required": [
+          "channel_choice",
+          "measurable_action",
+          "measurement_method",
+          "positioning",
+          "rationale",
+          "source_ids",
+          "test_hypothesis"
+        ],
+        "additionalProperties": false,
+        "properties": {
+          "positioning": {
+            "type": "string"
+          },
+          "rationale": {
+            "type": "string"
+          },
+          "channel_choice": {
+            "type": "string"
+          },
+          "test_hypothesis": {
+            "type": "string"
+          },
+          "measurable_action": {
+            "type": "string"
+          },
+          "measurement_method": {
+            "type": "string"
+          },
+          "source_ids": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        }
+      },
+      "success_criteria": [
+        "channel_choice",
+        "measurable_action",
+        "measurement_method",
+        "positioning",
+        "rationale",
+        "source_ids",
+        "test_hypothesis"
+      ],
+      "predecessors": [
+        "research"
+      ],
+      "tools": [],
+      "approval": "revision_qa_and_client_snapshot",
+      "node_cap": 1000,
+      "max_attempts": 3,
+      "timeout_seconds": 300,
+      "owner": "agency marketing lead",
+      "objective": "Use this role's approved knowledge projection to prepare internal Marketing work",
+      "forbidden_actions": [
+        "external_write",
+        "publish",
+        "spend"
+      ],
+      "fallback": "agency editor",
+      "marketing_methods": {
+        "positioning-value@1": "b83430d074a232e1b0e8a2485a935c20bdc2d72521ac25478ac34f99475af93c",
+        "campaign-channel@1": "e5f47b865cad8e80a7efab8d1ef1854cf9a4cf5b8185b80ecc263fea1dc631d0",
+        "kpi-measurement@1": "b3f38b752f72b7a4bb76afc2783e08308f3d19a473b3a18eeed277d6552a13f9"
+      }
+    }
+  },
+  "marketing_methods": {
+    "market-research@1": {
+      "id": "market-research",
+      "version": 1,
+      "role": "research",
+      "task": "Design a short inquiry for a buyer decision.",
+      "inputs": [
+        "product",
+        "market",
+        "audience",
+        "facts",
+        "hypotheses",
+        "gaps"
+      ],
+      "method": "Start from one buying episode; separate what a source establishes from a falsifiable hypothesis and name evidence still needed.",
+      "applicability": "Local services and B2B purchasing teams",
+      "references": [
+        "K-01",
+        "K-05"
+      ],
+      "examples": {
+        "good": {
+          "research_question": "Ask which part of the most recent quote the buyer needed clarified.",
+          "evidence_needed": "Compare the questions on the last quote with the approved conditions."
+        },
+        "bad": "Claiming an observed market preference on the basis of a product spec."
+      },
+      "output_schema": {
+        "type": "object",
+        "properties": {
+          "research_question": {
+            "type": "string",
+            "minLength": 3,
+            "maxLength": 200
+          },
+          "evidence_needed": {
+            "type": "string",
+            "minLength": 3,
+            "maxLength": 200
+          }
+        },
+        "required": [
+          "research_question",
+          "evidence_needed"
+        ],
+        "additionalProperties": false
+      },
+      "rubric": [
+        "State a single answerable research question.",
+        "Distinguish the proposed observation from a completed interview."
+      ],
+      "prohibited": "Claims of conducted interviews, market shares or measured demand.",
+      "tests": [
+        {
+          "case": "example_positive",
+          "expected": "all structured output fields and applicable sources are present"
+        },
+        {
+          "case": "example_negative",
+          "expected": "State a single answerable research question."
+        }
+      ],
+      "release": "Publish the reviewed workflow manifest containing this exact skill version and digest; activate only on the selected campaign.",
+      "rollback": "Disable the candidate workflow for new runs and activate the previous compatible workflow. Retain pinned definitions and existing run receipts."
+    },
+    "icp-segmentation@1": {
+      "id": "icp-segmentation",
+      "version": 1,
+      "role": "research",
+      "task": "Identify the decision and constraint within the selected segment.",
+      "inputs": [
+        "audience",
+        "region",
+        "product",
+        "hypotheses"
+      ],
+      "method": "Describe the segment by its purchasing situation, decision maker and constraint; treat unobserved behaviors as hypotheses.",
+      "applicability": "Independent sellers, households and trade buyers",
+      "references": [
+        "K-02",
+        "K-05"
+      ],
+      "examples": {
+        "good": {
+          "segment": "Trade buyers planning quantities before a quote.",
+          "buyer_problem": "Work out how many full packs a bill of materials requires."
+        },
+        "bad": "Calling all residents confirmed buyers."
+      },
+      "output_schema": {
+        "type": "object",
+        "properties": {
+          "segment": {
+            "type": "string",
+            "minLength": 3,
+            "maxLength": 200
+          },
+          "buyer_problem": {
+            "type": "string",
+            "minLength": 3,
+            "maxLength": 200
+          }
+        },
+        "required": [
+          "segment",
+          "buyer_problem"
+        ],
+        "additionalProperties": false
+      },
+      "rubric": [
+        "Keep the chosen segment and geography.",
+        "Name the decision it must make without inventing demographics."
+      ],
+      "prohibited": "Demand, demographics or willingness to pay not established by a source.",
+      "tests": [
+        {
+          "case": "example_positive",
+          "expected": "all structured output fields and applicable sources are present"
+        },
+        {
+          "case": "example_negative",
+          "expected": "Keep the chosen segment and geography."
+        }
+      ],
+      "release": "Publish the reviewed workflow manifest containing this exact skill version and digest; activate only on the selected campaign.",
+      "rollback": "Disable the candidate workflow for new runs and activate the previous compatible workflow. Retain pinned definitions and existing run receipts."
+    },
+    "positioning-value@1": {
+      "id": "positioning-value",
+      "version": 1,
+      "role": "strategy",
+      "task": "Choose one relevant differentiator and explain its use.",
+      "inputs": [
+        "product",
+        "audience",
+        "facts",
+        "hypotheses"
+      ],
+      "method": "Connect a documented attribute to one buyer decision. Make the proposed positioning and reason explicit; comparisons require matched evidence.",
+      "applicability": "Catalog products, local services and workshops",
+      "references": [
+        "K-05",
+        "K-06"
+      ],
+      "examples": {
+        "good": {
+          "positioning": "Lead with labelled pack coverage when the buyer is estimating quantities.",
+          "rationale": "It supports a packing calculation before requesting the quote."
+        },
+        "bad": "The best tile for every project."
+      },
+      "output_schema": {
+        "type": "object",
+        "properties": {
+          "positioning": {
+            "type": "string",
+            "minLength": 3,
+            "maxLength": 200
+          },
+          "rationale": {
+            "type": "string",
+            "minLength": 3,
+            "maxLength": 200
+          }
+        },
+        "required": [
+          "positioning",
+          "rationale"
+        ],
+        "additionalProperties": false
+      },
+      "rubric": [
+        "Tie one approved detail to the chosen problem.",
+        "Retain the qualifier when stating the benefit."
+      ],
+      "prohibited": "Unsubstantiated superiority, endorsements and guaranteed savings.",
+      "tests": [
+        {
+          "case": "example_positive",
+          "expected": "all structured output fields and applicable sources are present"
+        },
+        {
+          "case": "example_negative",
+          "expected": "Tie one approved detail to the chosen problem."
+        }
+      ],
+      "release": "Publish the reviewed workflow manifest containing this exact skill version and digest; activate only on the selected campaign.",
+      "rollback": "Disable the candidate workflow for new runs and activate the previous compatible workflow. Retain pinned definitions and existing run receipts."
+    },
+    "campaign-channel@1": {
+      "id": "campaign-channel",
+      "version": 1,
+      "role": "strategy",
+      "task": "Select the authorized channel and design a controlled message test.",
+      "inputs": [
+        "channel",
+        "audience",
+        "objective",
+        "facts",
+        "kpi"
+      ],
+      "method": "Choose a message placement on the authorized channel; say why it fits the buyer, what changes, and what stays constant.",
+      "applicability": "B2B quote flows and B2C booking or purchase flows",
+      "references": [
+        "K-04",
+        "K-07"
+      ],
+      "examples": {
+        "good": {
+          "channel_choice": "Test pack coverage before the quote form on the selected product page.",
+          "test_hypothesis": "Showing the coverage earlier may help buyers submit usable dimensions."
+        },
+        "bad": "Launch paid advertisements everywhere because they always convert."
+      },
+      "output_schema": {
+        "type": "object",
+        "properties": {
+          "channel_choice": {
+            "type": "string",
+            "minLength": 3,
+            "maxLength": 200
+          },
+          "test_hypothesis": {
+            "type": "string",
+            "minLength": 3,
+            "maxLength": 200
+          }
+        },
+        "required": [
+          "channel_choice",
+          "test_hypothesis"
+        ],
+        "additionalProperties": false
+      },
+      "rubric": [
+        "Identify the allowed channel and the single change.",
+        "State a hypothesis without predicting numerical lift."
+      ],
+      "prohibited": "External activation, guaranteed lift and invented benchmarks.",
+      "tests": [
+        {
+          "case": "example_positive",
+          "expected": "all structured output fields and applicable sources are present"
+        },
+        {
+          "case": "example_negative",
+          "expected": "Identify the allowed channel and the single change."
+        }
+      ],
+      "release": "Publish the reviewed workflow manifest containing this exact skill version and digest; activate only on the selected campaign.",
+      "rollback": "Disable the candidate workflow for new runs and activate the previous compatible workflow. Retain pinned definitions and existing run receipts."
+    },
+    "kpi-measurement@1": {
+      "id": "kpi-measurement",
+      "version": 1,
+      "role": "strategy",
+      "task": "Specify a countable outcome for the selected objective.",
+      "inputs": [
+        "kpi",
+        "objective",
+        "channel",
+        "region"
+      ],
+      "method": "Use the pinned event, unit, eligibility and window. Distinguish observed transactions from clicks; propose deduplication and explain an inconclusive result.",
+      "applicability": "Qualified-quote, confirmed-appointment and paid-order funnels",
+      "references": [
+        "K-07",
+        "K-08"
+      ],
+      "examples": {
+        "good": {
+          "measurable_action": "Count each confirmed appointment once in the approved window.",
+          "measurement_method": "Deduplicate by appointment ID and exclude canceled bookings."
+        },
+        "bad": "Count views as confirmed appointments or put the price in the denominator."
+      },
+      "output_schema": {
+        "type": "object",
+        "properties": {
+          "measurable_action": {
+            "type": "string",
+            "minLength": 3,
+            "maxLength": 200
+          },
+          "measurement_method": {
+            "type": "string",
+            "minLength": 3,
+            "maxLength": 200
+          }
+        },
+        "required": [
+          "measurable_action",
+          "measurement_method"
+        ],
+        "additionalProperties": false
+      },
+      "rubric": [
+        "Match the business event and its period.",
+        "Provide a reproducible counting rule using an eligible record."
+      ],
+      "prohibited": "Invented measurements, revenue from a click, or an undisclosed attribution change.",
+      "tests": [
+        {
+          "case": "example_positive",
+          "expected": "all structured output fields and applicable sources are present"
+        },
+        {
+          "case": "example_negative",
+          "expected": "Match the business event and its period."
+        }
+      ],
+      "release": "Publish the reviewed workflow manifest containing this exact skill version and digest; activate only on the selected campaign.",
+      "rollback": "Disable the candidate workflow for new runs and activate the previous compatible workflow. Retain pinned definitions and existing run receipts."
+    }
+  }
+}

@@ -55,11 +55,20 @@ class Lab:
         self.workflow = workflow
         self.api, self.dsn = api, dsn
         self.owner = psycopg.connect(dsn, autocommit=True)
-        assert self.owner.info.dbname.startswith("amc_test")
+        if not self.owner.info.dbname.startswith("amc_test"):
+            self.owner.close()
+            raise ValueError("A disposable test database is required")
         self.logins = []
         self.workers = []
         self.runs, self.cases = [], []
         self.config = Gateway("local", "amc-local", "http://localhost/v1", 0, 0, 180)
+        try:
+            self.setup(api)
+        except BaseException:
+            self.release_connections()
+            raise
+
+    def setup(self, api):
         dispatch_name, dispatch_dsn = self.login("amc_dispatch")
         self.bind = create_engine("postgresql+psycopg://", creator=lambda: psycopg.connect(dispatch_dsn))
         for _ in range(2):
@@ -73,7 +82,9 @@ class Lab:
 
     def login(self, group):
         name, password = "amc_ops_" + token_hex(5), token_hex(32)
-        provision(self.owner, name, group, password)
+        # Both CREATE ROLE and GRANT must roll back on partial setup.
+        with self.owner.transaction():
+            provision(self.owner, name, group, password)
         dsn = make_conninfo(self.dsn, user=name, password=password)
         self.logins.append((name, dsn))
         return name, dsn
@@ -209,15 +220,31 @@ class Lab:
         with pytest.raises(psycopg.Error, match="append-only"):
             self.owner.execute("update amc_ops.ledger set spent=0 where id=%s", (job["id"],))
 
+    def release_connections(self):
+        names = [name for name, _ in self.logins]
+        try:
+            if names:
+                # Lease liveness depends on these routes. Revoke them before draining, so
+                # outstanding offers/sent work cannot become the next lab's first result.
+                self.owner.execute("delete from amc_ops.routes where worker=any(%s)", (names,))
+                if hasattr(self, "bind"):
+                    while consume(self.bind, self.config, worker_names=names):
+                        pass
+        finally:
+            for worker in self.workers:
+                worker.conn.close()
+            if hasattr(self, "bind"):
+                self.bind.dispose()
+            try:
+                with self.owner.transaction():
+                    for name in names:
+                        self.owner.execute(sql.SQL("drop role {}").format(sql.Identifier(name)))
+            finally:
+                self.owner.close()
+
     def close(self):
-        for admin in (self.x, self.y):
-            self.configure(admin, 0, False)
-        self.owner.execute("delete from amc_ops.routes where worker=any(%s)", ([n for n, _ in self.logins[1:]],))
-        while self.consume():
-            pass
-        for w in self.workers:
-            w.conn.close()
-        self.bind.dispose()
-        for name, _ in self.logins:
-            self.owner.execute(sql.SQL("drop role {}").format(sql.Identifier(name)))
-        self.owner.close()
+        try:
+            for admin in (self.x, self.y):
+                self.configure(admin, 0, False)
+        finally:
+            self.release_connections()

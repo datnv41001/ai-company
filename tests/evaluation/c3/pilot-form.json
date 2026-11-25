@@ -1,0 +1,42 @@
+{
+  "protocol": "c3-pilot-v1",
+  "synthetic": true,
+  "blind_asset_id": null,
+  "brief_id": null,
+  "reviewer_role_and_experience": null,
+  "conflict_of_interest": null,
+  "workflow": null,
+  "first_pass_accepted": null,
+  "buyer_usefulness": null,
+  "professional_reasoning": null,
+  "correct_structured_values": null,
+  "total_structured_values": null,
+  "valid_material_citations": null,
+  "total_material_claims": null,
+  "severe_scope_or_claim_errors": null,
+  "observations": [
+    {
+      "field": null,
+      "span": null,
+      "finding": null,
+      "evidence_revision": null,
+      "evidence_digest": null,
+      "action_needed": null
+    }
+  ],
+  "task_minutes": {
+    "planning": null,
+    "drafting": null,
+    "source_check": null,
+    "editing": null,
+    "qa": null,
+    "wait": null,
+    "total_elapsed": null
+  },
+  "edited_artifact_digest": null,
+  "previous_artifact_digest": null,
+  "hourly_rate_and_currency": null,
+  "compute_cost": null,
+  "provider_cost": null,
+  "adjudication": null
+}

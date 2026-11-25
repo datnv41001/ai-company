@@ -76,6 +76,9 @@ def prepare_database(bind, *, verify_identity=True):
                 conn.exec_driver_sql("""UPDATE portal_invitations AS i SET campaign_name=c.name FROM campaigns AS c
                     WHERE i.state='pending' AND (c.tenant_id,c.brand_id,c.id)=(i.tenant_id,i.brand_id,i.campaign_id)""")
             from .workforce_authority import install_sqlite
+            if inspector.has_table("workforce_briefs") and "origin" not in {column["name"] for column in inspector.get_columns("workforce_briefs")}:
+                conn.exec_driver_sql("ALTER TABLE workforce_briefs ADD COLUMN origin VARCHAR(12) NOT NULL DEFAULT 'agency'")
+                conn.exec_driver_sql("DROP TRIGGER IF EXISTS workforce_check_intake")
             Base.metadata.create_all(conn)
             from .session_state import install_epoch_trigger
             install_epoch_trigger(conn)
@@ -106,7 +109,7 @@ def prepare_database(bind, *, verify_identity=True):
         versions = set(conn.scalars(text("SELECT version FROM public.amc_schema_versions")))
         if 16 in versions and 15 not in versions:
             raise RuntimeError("Isolated schema v16 is missing migration 015; restore a pre-016 backup before upgrading")
-        if versions != set(range(2, 25)):
+        if versions != set(range(2, 26)):
             raise RuntimeError("Apply the PostgreSQL schema migrations before starting the API")
         from migrations.combined_contract import COMMERCIAL_CURRENT, DESK_CURRENT
         if not conn.scalar(text(COMMERCIAL_CURRENT)):
@@ -115,6 +118,16 @@ def prepare_database(bind, *, verify_identity=True):
             raise RuntimeError("Apply the compatible business workspace migration")
         if not conn.scalar(text(DESK_CURRENT)):
             raise RuntimeError("Apply the current claim desk read capability")
+        from migrations.c3_writer_contract import WRITER_FENCE
+        if not conn.scalar(text(WRITER_FENCE)):
+            raise RuntimeError("Apply the compatible C3 delivery writer fence")
+        if not conn.scalar(text("""
+            SELECT EXISTS (SELECT FROM pg_attribute WHERE attrelid='public.workforce_briefs'::regclass
+                            AND attname='origin' AND NOT attisdropped)
+               AND COALESCE(has_function_privilege(current_user,
+                     to_regprocedure('amc_acl.lock_c3_internal_target(text,text,text,text,text)'), 'EXECUTE'), false)
+        """)):
+            raise RuntimeError("Run the C3 task migration publisher before starting this API")
         if not verify_identity:
             return
         from .access import set_context

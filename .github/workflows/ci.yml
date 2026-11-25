@@ -41,8 +41,8 @@ jobs:
           export DATABASE_URL="postgresql+psycopg://amc_runtime:$AMC_RUNTIME_PASSWORD@127.0.0.1:$port/amc_test_ci"
           export AMC_TEST_PG=1 PYTHONPATH=.
           python migrations/apply.py
-          AMC_WF03_HOLD_EVIDENCE="$RUNNER_TEMP/wf03-holds" python -m pytest -q
-          python -c 'import os, sys; sys.path.insert(0, "tests"); from check_postgres_upgrade import rehearse_archive; rehearse_archive(os.environ["AMC_MIGRATION_DSN"], "amc-test-pg", 24)'
+          AMC_WF03_HOLD_EVIDENCE="$RUNNER_TEMP/wf03-holds" python -m pytest -q -rs --junitxml="$RUNNER_TEMP/api-regression.xml"
+          python -c 'import os, sys; sys.path.insert(0, "tests"); from check_postgres_upgrade import rehearse_archive; rehearse_archive(os.environ["AMC_MIGRATION_DSN"], "amc-test-pg", 25)'
           docker exec amc-test-pg createdb -U postgres amc_test_upgrade
           export AMC_MIGRATION_DSN="${AMC_MIGRATION_DSN%/*}/amc_test_upgrade"
           export DATABASE_URL="${DATABASE_URL%/*}/amc_test_upgrade"
@@ -139,6 +139,13 @@ jobs:
             export DATABASE_URL="${DATABASE_URL%/*}/$database"
             python tests/check_combined_upgrade.py "$prior"
           done
+          for phase in observation qualification; do
+            database="amc_test_c3_cutover_$phase"
+            docker exec amc-test-pg createdb -U postgres "$database"
+            export AMC_MIGRATION_DSN="${AMC_MIGRATION_DSN%/*}/$database"
+            export DATABASE_URL="${DATABASE_URL%/*}/$database"
+            python tests/check_c3_cutover.py "$phase"
+          done
           docker exec amc-test-pg createdb -U postgres amc_test_populated_v22
           export AMC_MIGRATION_DSN="${AMC_MIGRATION_DSN%/*}/amc_test_populated_v22"
           export DATABASE_URL="${DATABASE_URL%/*}/amc_test_populated_v22"
@@ -151,6 +158,11 @@ jobs:
         with:
           name: wf03-director-ledger${{ matrix.revision == 'integration' && '-integration' || '' }}
           path: ${{ runner.temp }}/wf03-holds/*.json
+          if-no-files-found: error
+      - uses: actions/upload-artifact@v4
+        with:
+          name: api-regression-${{ matrix.revision }}
+          path: ${{ runner.temp }}/api-regression.xml
           if-no-files-found: error
   compose-browser:
     strategy: *revision_strategy
@@ -189,12 +201,18 @@ jobs:
           docker compose -p amc-acceptance images >> compose-versions.txt
           docker image inspect postgres:16.6-alpine --format '{{json .RepoDigests}}' >> compose-versions.txt
           docker compose -p amc-acceptance run --rm migrate python migrations/apply.py --publish-registry catalog/research-strategy-v1.json
+          docker compose -p amc-acceptance run --rm migrate python migrations/apply.py --publish-registry catalog/research-strategy-v2.json
+          docker compose -p amc-acceptance run --rm migrate python migrations/apply.py --publish-registry catalog/landing-seo-v5.json
+          docker compose -p amc-acceptance run --rm migrate python migrations/apply.py --publish-registry catalog/landing-seo-v6.json
           AMC_ONBOARDING_SCREENSHOTS="$RUNNER_TEMP/onboarding" AMC_BROWSER_MAILBOX_PROJECT=amc-acceptance AMC_BROWSER_TEST_URL=http://127.0.0.1:8000 python tests/browser_delivery.py
           AMC_KNOWLEDGE_EVIDENCE="$RUNNER_TEMP/knowledge-workspace" AMC_BROWSER_MAILBOX_PROJECT=amc-acceptance AMC_BROWSER_TEST_URL=http://127.0.0.1:8000 python tests/browser_knowledge.py
           AMC_CLAIM_SCREENSHOTS="$RUNNER_TEMP/knowledge-workspace/claim-desk" AMC_BROWSER_MAILBOX_PROJECT=amc-acceptance AMC_BROWSER_TEST_URL=http://127.0.0.1:8000 python tests/browser_claim_desk.py
           AMC_KNOWLEDGE_EVIDENCE="$RUNNER_TEMP/knowledge-workspace/catalog" AMC_BROWSER_MAILBOX_PROJECT=amc-acceptance AMC_BROWSER_TEST_URL=http://127.0.0.1:8000 python tests/browser_catalog.py
           AMC_KNOWLEDGE_EVIDENCE="$RUNNER_TEMP/knowledge-workspace/objectives" AMC_BROWSER_MAILBOX_PROJECT=amc-acceptance AMC_BROWSER_TEST_URL=http://127.0.0.1:8000 python tests/browser_objectives.py
           AMC_C2_ACCEPTANCE_EVIDENCE="$RUNNER_TEMP/knowledge-center-journeys" AMC_BROWSER_MAILBOX_PROJECT=amc-acceptance AMC_BROWSER_TEST_URL=http://127.0.0.1:8000 python tests/browser_knowledge_center.py
+          AMC_KNOWLEDGE_EVIDENCE="$RUNNER_TEMP/knowledge-center-journeys/marketing-workflows" AMC_BROWSER_MAILBOX_PROJECT=amc-acceptance AMC_BROWSER_TEST_URL=http://127.0.0.1:8000 python tests/browser_c3.py
+          AMC_KNOWLEDGE_EVIDENCE="$RUNNER_TEMP/knowledge-center-journeys/marketing-tasks" AMC_BROWSER_MAILBOX_PROJECT=amc-acceptance AMC_BROWSER_TEST_URL=http://127.0.0.1:8000 python tests/browser_c3_task.py
+          AMC_KNOWLEDGE_EVIDENCE="$RUNNER_TEMP/knowledge-center-journeys" AMC_DEV_MAILBOX_DIR="$RUNNER_TEMP/c3-gate-mail" python -m pytest -q tests/browser_c3_content_gate.py -k sqlite --basetemp="$RUNNER_TEMP/c3-gate-db"
           AMC_PREMIUM_EVIDENCE="$RUNNER_TEMP/premium-ui" AMC_BROWSER_MAILBOX_PROJECT=amc-acceptance AMC_BROWSER_TEST_URL=http://127.0.0.1:8000 python tests/browser_premium_ui.py
       - uses: actions/upload-artifact@v4
         if: always()
@@ -280,6 +298,7 @@ jobs:
           AMC_LOCAL_MODEL_URL="http://127.0.0.1:$model_port/v1" AMC_PARALLEL_REPORT=parallel-measurements.json python tests/parallel_model_smoke.py
           AMC_V1_SOURCE="$PWD/.ci/adapter-v1" AMC_SOURCE_SHA="$(git rev-parse HEAD)" \
             AMC_LOCAL_MODEL_URL="http://127.0.0.1:$model_port/v1" python tests/registry_model_smoke.py
+          AMC_LOCAL_MODEL_URL="http://127.0.0.1:$model_port/v1" AMC_EVAL_MODEL_FILE="$PWD/models/workforce.gguf" python tests/evaluation/c3/qualification.py c3-model-receipts
           test "$single_result" -eq 0 && test "$pool_result" -eq 0
       - uses: actions/upload-artifact@v4
         if: always()
@@ -295,4 +314,5 @@ jobs:
             role-qa-measurements.json
             wait-diagnostics-measurements.json
             research-strategy-measurements.json
+            c3-model-receipts/
           if-no-files-found: ignore

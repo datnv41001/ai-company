@@ -1,0 +1,63 @@
+{
+  "id": "campaign-channel",
+  "version": 1,
+  "role": "strategy",
+  "task": "Select the authorized channel and design a controlled message test.",
+  "inputs": [
+    "channel",
+    "audience",
+    "objective",
+    "facts",
+    "kpi"
+  ],
+  "method": "Choose a message placement on the authorized channel; say why it fits the buyer, what changes, and what stays constant.",
+  "applicability": "B2B quote flows and B2C booking or purchase flows",
+  "references": [
+    "K-04",
+    "K-07"
+  ],
+  "examples": {
+    "good": {
+      "channel_choice": "Test pack coverage before the quote form on the selected product page.",
+      "test_hypothesis": "Showing the coverage earlier may help buyers submit usable dimensions."
+    },
+    "bad": "Launch paid advertisements everywhere because they always convert."
+  },
+  "output_schema": {
+    "type": "object",
+    "properties": {
+      "channel_choice": {
+        "type": "string",
+        "minLength": 3,
+        "maxLength": 200
+      },
+      "test_hypothesis": {
+        "type": "string",
+        "minLength": 3,
+        "maxLength": 200
+      }
+    },
+    "required": [
+      "channel_choice",
+      "test_hypothesis"
+    ],
+    "additionalProperties": false
+  },
+  "rubric": [
+    "Identify the allowed channel and the single change.",
+    "State a hypothesis without predicting numerical lift."
+  ],
+  "prohibited": "External activation, guaranteed lift and invented benchmarks.",
+  "tests": [
+    {
+      "case": "example_positive",
+      "expected": "all structured output fields and applicable sources are present"
+    },
+    {
+      "case": "example_negative",
+      "expected": "Identify the allowed channel and the single change."
+    }
+  ],
+  "release": "Publish the reviewed workflow manifest containing this exact skill version and digest; activate only on the selected campaign.",
+  "rollback": "Disable the candidate workflow for new runs and activate the previous compatible workflow. Retain pinned definitions and existing run receipts."
+}

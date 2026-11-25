@@ -60,6 +60,7 @@ function createCatalogPane(root, api) {
     availability: 'Quan sát kho',
     guidance: 'Hướng dẫn',
     tone: 'Giọng thương hiệu',
+    prohibited_claims: 'Cụm từ cấm dùng cho khách hàng, mỗi dòng một cụm',
     description: 'Mô tả',
     basis: 'Căn cứ',
     needs: 'Nhu cầu',
@@ -87,7 +88,7 @@ function createCatalogPane(root, api) {
     region: ['VN-HN', 'VN-SG', 'VN-DN'],
     locale: ['vi-VN', 'en', 'en-US'],
     currency: ['VND', 'USD', 'EUR', 'JPY', 'GBP', 'AUD', 'CAD', 'SGD', 'THB'],
-    unit: ['piece', 'box', 'm²', 'tonne', 'kg', 'service', 'subscription_month', 'subscription_year'],
+    unit: ['piece', 'box', 'm²', 'tonne', 'kg', 'service', 'machine', 'participant', 'subscription_month', 'subscription_year'],
     tax: ['included', 'excluded', 'unknown'],
     status: ['available', 'unavailable', 'unknown'],
     buyer: ['retail', 'wholesale'],
@@ -135,7 +136,7 @@ function createCatalogPane(root, api) {
     service: ['name', 'code'],
     variant: ['name', 'code', 'product'],
     market: ['name', 'code', 'locales'],
-    guidelines: ['guidance', 'tone?'],
+    guidelines: ['guidance', 'tone?', 'prohibited_claims?'],
     icp: ['name', 'description', 'needs?', 'basis', 'source?', 'market?'],
     segment: ['name', 'description', 'needs?', 'basis', 'source?', 'market?'],
     company_objective: ['name', 'owner'],
@@ -362,6 +363,7 @@ function createCatalogPane(root, api) {
         if (pick[k].includes(data.applicability.option)) obj[k] = data.applicability.option;
     }
     if (Array.isArray(obj.locales)) obj.locales = obj.locales.join(', ');
+    if (Array.isArray(obj.prohibited_claims)) obj.prohibited_claims = obj.prohibited_claims.join('\n');
     return obj;
   }
   async function inspect(id) {
@@ -533,6 +535,8 @@ function createCatalogPane(root, api) {
         .split(',')
         .map((v) => v.trim())
         .filter(Boolean);
+    if (kind === 'guidelines' && obj.prohibited_claims)
+      obj.prohibited_claims = obj.prohibited_claims.split('\n').map(value => value.trim()).filter(Boolean);
     return obj;
   }
   async function edit(record = null) {
@@ -570,7 +574,7 @@ function createCatalogPane(root, api) {
             optional,
           );
         } else {
-          input = el(['description', 'guidance', 'needs', 'method'].includes(key) ? 'textarea' : 'input');
+          input = el(['description', 'guidance', 'needs', 'method', 'prohibited_claims'].includes(key) ? 'textarea' : 'input');
           if (['valid_from', 'valid_until', 'observed_at'].includes(key)) {
             input.type = 'datetime-local';
           }

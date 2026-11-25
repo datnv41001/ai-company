@@ -1,0 +1,215 @@
+{
+  "workflow_id": "WF-13/landing-seo-draft",
+  "workflow_version": 5,
+  "mode": "dynamic-v1",
+  "profile": "landing-seo",
+  "required": [
+    "director",
+    "content",
+    "seo"
+  ],
+  "required_outputs": [
+    "content",
+    "seo"
+  ],
+  "knowledge_projection": "amc.marketing-manifest/1",
+  "contracts": {
+    "director": {
+      "skill_id": "director",
+      "skill_version": 3,
+      "role_id": "ai-managing-director",
+      "contract_version": 3,
+      "adapter": "director@3",
+      "adapter_digest": "ad8071a5187693d7ccf9cb47fc7c3cb1699845e2cfb1d2c27fce9bd21c7a10bc",
+      "qa_policy": "c3-director@1",
+      "model": "local",
+      "inputs": [
+        "brief",
+        "brand",
+        "sources"
+      ],
+      "outputs": [
+        "primary_assignment",
+        "secondary_assignment"
+      ],
+      "output_schema": {
+        "type": "object",
+        "required": [
+          "primary_assignment",
+          "secondary_assignment"
+        ],
+        "additionalProperties": false,
+        "properties": {
+          "primary_assignment": {
+            "type": "string"
+          },
+          "secondary_assignment": {
+            "type": "string"
+          }
+        }
+      },
+      "success_criteria": [
+        "primary_assignment",
+        "secondary_assignment"
+      ],
+      "predecessors": [],
+      "tools": [],
+      "approval": "revision_qa_and_client_snapshot",
+      "node_cap": 1000,
+      "max_attempts": 3,
+      "timeout_seconds": 300,
+      "owner": "agency marketing lead",
+      "objective": "Use this role's approved knowledge projection to prepare internal Marketing work",
+      "forbidden_actions": [
+        "external_write",
+        "publish",
+        "spend"
+      ],
+      "fallback": "agency editor"
+    },
+    "content": {
+      "skill_id": "content",
+      "skill_version": 3,
+      "role_id": "ai-copywriter-content-strategist",
+      "contract_version": 3,
+      "adapter": "content@3",
+      "adapter_digest": "ad8071a5187693d7ccf9cb47fc7c3cb1699845e2cfb1d2c27fce9bd21c7a10bc",
+      "qa_policy": "c3-content@1",
+      "model": "local",
+      "inputs": [
+        "brief",
+        "brand",
+        "sources"
+      ],
+      "outputs": [
+        "benefit",
+        "call_to_action",
+        "headline",
+        "source_ids",
+        "value_proposition"
+      ],
+      "output_schema": {
+        "type": "object",
+        "required": [
+          "benefit",
+          "call_to_action",
+          "headline",
+          "source_ids",
+          "value_proposition"
+        ],
+        "additionalProperties": false,
+        "properties": {
+          "headline": {
+            "type": "string"
+          },
+          "value_proposition": {
+            "type": "string"
+          },
+          "benefit": {
+            "type": "string"
+          },
+          "call_to_action": {
+            "type": "string"
+          },
+          "source_ids": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        }
+      },
+      "success_criteria": [
+        "benefit",
+        "call_to_action",
+        "headline",
+        "source_ids",
+        "value_proposition"
+      ],
+      "predecessors": [],
+      "tools": [],
+      "approval": "revision_qa_and_client_snapshot",
+      "node_cap": 1000,
+      "max_attempts": 3,
+      "timeout_seconds": 300,
+      "owner": "agency marketing lead",
+      "objective": "Use this role's approved knowledge projection to prepare internal Marketing work",
+      "forbidden_actions": [
+        "external_write",
+        "publish",
+        "spend"
+      ],
+      "fallback": "agency editor"
+    },
+    "seo": {
+      "skill_id": "seo",
+      "skill_version": 4,
+      "role_id": "ai-seo-geo-specialist",
+      "contract_version": 4,
+      "adapter": "seo@4",
+      "adapter_digest": "ad8071a5187693d7ccf9cb47fc7c3cb1699845e2cfb1d2c27fce9bd21c7a10bc",
+      "qa_policy": "c3-seo@1",
+      "model": "local",
+      "inputs": [
+        "brief",
+        "brand",
+        "sources"
+      ],
+      "outputs": [
+        "meta_description",
+        "page_title",
+        "search_intent",
+        "source_ids"
+      ],
+      "output_schema": {
+        "type": "object",
+        "required": [
+          "meta_description",
+          "page_title",
+          "search_intent",
+          "source_ids"
+        ],
+        "additionalProperties": false,
+        "properties": {
+          "page_title": {
+            "type": "string"
+          },
+          "meta_description": {
+            "type": "string"
+          },
+          "search_intent": {
+            "type": "string"
+          },
+          "source_ids": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        }
+      },
+      "success_criteria": [
+        "meta_description",
+        "page_title",
+        "search_intent",
+        "source_ids"
+      ],
+      "predecessors": [
+        "content"
+      ],
+      "tools": [],
+      "approval": "revision_qa_and_client_snapshot",
+      "node_cap": 1000,
+      "max_attempts": 3,
+      "timeout_seconds": 300,
+      "owner": "agency marketing lead",
+      "objective": "Use this role's approved knowledge projection to prepare internal Marketing work",
+      "forbidden_actions": [
+        "external_write",
+        "publish",
+        "spend"
+      ],
+      "fallback": "agency editor"
+    }
+  }
+}

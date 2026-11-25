@@ -111,27 +111,29 @@ def dispatch(bind, config):
     return False
 
 
-def pending_reports(db):
+def pending_reports(db, worker_names=None):
     # Usually the oldest report is compatible. Fetch another only when a peer
     # owns its adapter; avoid locking or reading every queued model response.
     after = None
+    workers = "and a.worker = any(cast(:workers as name[]))" if worker_names is not None else ""
+    params = {"workers": worker_names} if worker_names is not None else {}
     while True:
         cursor = "and (a.started,a.id) > (:started,cast(:id as uuid))" if after else ""
         row = query(db, f"""
             select a.*,t.client,t.brand,t.campaign,t.skill from amc_ops.attempts a join amc_ops.tasks t using(run,step)
-            where a.status<>'closed' and (a.status='reported' or not amc_ops.live(a.id)) {cursor}
+            where a.status<>'closed' and (a.status='reported' or not amc_ops.live(a.id)) {workers} {cursor}
             order by a.started,a.id limit 1 for update of a
-        """, **(after or {})).mappings().first()
+        """, **params, **(after or {})).mappings().first()
         if row is None:
             return
         yield row
         after = {"started":row["started"], "id":str(row["id"])}
 
 
-def consume(bind, config):
+def consume(bind, config, *, worker_names=None):
     with Session(bind) as db, db.begin():
         lock_scheduler(db)
-        for row in pending_reports(db):
+        for row in pending_reports(db, worker_names):
             token = str(row["id"])
             scope = Scope(*(row[k] for k in ("tenant", "client", "brand", "campaign", "operator")))
             live_report = row["status"] == "reported" and query(db, "select amc_ops.fence(:id)", id=token).scalar()

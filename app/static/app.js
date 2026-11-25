@@ -76,7 +76,7 @@
       typeof result.detail === 'string' ? result.detail : `HTTP ${response.status}`),{status:response.status});
     return withCursor ? {items:result, next:response.headers.get("X-Next-Cursor")} : result;
   };
-  const knowledge = createKnowledgePanel($('knowledge-panel'), api);
+  const knowledge = createKnowledgePanel($('knowledge-panel'), api, refreshWorkforce);
   const screens = createWorkspaceScreens(id => {
     const membership=state.memberships.find(m=>m.tenant_id===id);
     if(!membership) return false;
@@ -402,11 +402,11 @@
       if (generation !== workspaceGeneration || sequence !== refreshSequence) return;
       state.clients=clients;state.brands=brands;state.campaigns=campaigns;render(actions,deliverables);
       await Promise.all([dashboardTicket===overviewRequest ? showCommand({clients,brands,campaigns,deliverables}) : null, profileRemoved ? knowledge.permissionChanged() : knowledge.show({
-        tenant: tenantId, actor: state.userId, role: state.role,
+        tenant: tenantId, actor: state.userId, role: state.role, mode: state.mode, campaigns,
         requestedBrand: document.body.dataset.screen==='knowledge' ? screens.params().get('brand') : null,
         organization: state.memberships.find(m => m.tenant_id === tenantId)?.organization_name || '',
         clients, brands
-      }), operations(), workforce.show(tenantId,state.role,campaigns.map(c=>({...c,client_id:brands.find(b=>b.id===c.brand_id)?.client_id}))),portal.show(deliverables,campaigns,refresh),
+      }), operations(), refreshWorkforce(tenantId),portal.show(deliverables,campaigns,refresh),
         accessPanel.show(tenantId, state.role, clients, brands, campaigns)]);
     } catch (error) {
       if (generation !== workspaceGeneration || sequence !== refreshSequence) return;
@@ -420,6 +420,11 @@
       throw error;
     }
   };
+  function refreshWorkforce(tenant) {
+    if (tenant !== state.tenantId) return;
+    const campaigns=state.campaigns.map(c=>({...c,client_id:state.brands.find(b=>b.id===c.brand_id)?.client_id}));
+    return workforce.show(tenant,state.role,campaigns,undefined,state.mode);
+  }
   function showCommand(data) {
     if (document.hidden) { command.clear(); return; }
     return command.show({...data,tenant:state.tenantId,role:state.role,mode:state.mode,

@@ -1,0 +1,797 @@
+{
+  "schema": "c3-holdout-repeat/v1",
+  "conditions": {
+    "checkout": "08cc65b4de4ae637d3a3bbd70b7e1e0eb6128f32",
+    "provider": "llama.cpp loopback",
+    "model_sha256": "74a4da8c9fdbcd15bd1f6d01d621410d31c6fc00986f5eb687824e7b93d7a9db",
+    "build": "b12649-1f8baae28",
+    "cases_sha256": "c497ff707c986acaa3c48ba799ab1a378f194d3e7cd4262834d41a4aae0fe477",
+    "worker_concurrency": 1
+  },
+  "arms": {
+    "projected": {
+      "assigned": 10,
+      "paired_drafts": 10,
+      "state_pairs": {
+        "awaiting_qa -> awaiting_qa": 10
+      },
+      "rendered_title_body_identical": 4,
+      "all_text_fields_identical": 4,
+      "identical_stage_requests": 5,
+      "raw_fields_changed": 22,
+      "raw_fields_compared": 90,
+      "within_brief_absolute_delta": {
+        "runtime_s": {
+          "n": 10,
+          "median": 4.6095,
+          "max": 38.781
+        },
+        "input_tokens": {
+          "n": 10,
+          "median": 0.0,
+          "max": 64
+        },
+        "output_tokens": {
+          "n": 10,
+          "median": 16.0,
+          "max": 50
+        }
+      },
+      "pairs": [
+        {
+          "case": "agency-01",
+          "state": [
+            "awaiting_qa",
+            "awaiting_qa"
+          ],
+          "attempt_counts": [
+            3,
+            3
+          ],
+          "measurements": {
+            "runtime_s": {
+              "pair": [
+                21.859,
+                19.672
+              ],
+              "absolute_delta": 2.187
+            },
+            "input_tokens": {
+              "pair": [
+                1618,
+                1594
+              ],
+              "absolute_delta": 24
+            },
+            "output_tokens": {
+              "pair": [
+                377,
+                358
+              ],
+              "absolute_delta": 19
+            }
+          },
+          "rendered_title_body_identical": false,
+          "successful_stage_requests_identical": false,
+          "specialist_and_director_fields": 9,
+          "changed_raw_fields_excluding_handles": [
+            "c3_research.evidence_needed",
+            "c3_research.icp_analysis",
+            "c3_research.market_analysis",
+            "c3_strategy.measurement_plan",
+            "c3_strategy.recommendation"
+          ]
+        },
+        {
+          "case": "agency-02",
+          "state": [
+            "awaiting_qa",
+            "awaiting_qa"
+          ],
+          "attempt_counts": [
+            3,
+            3
+          ],
+          "measurements": {
+            "runtime_s": {
+              "pair": [
+                19.016,
+                15.937
+              ],
+              "absolute_delta": 3.079
+            },
+            "input_tokens": {
+              "pair": [
+                1527,
+                1463
+              ],
+              "absolute_delta": 64
+            },
+            "output_tokens": {
+              "pair": [
+                355,
+                309
+              ],
+              "absolute_delta": 46
+            }
+          },
+          "rendered_title_body_identical": false,
+          "successful_stage_requests_identical": false,
+          "specialist_and_director_fields": 9,
+          "changed_raw_fields_excluding_handles": [
+            "c3_content.benefit",
+            "c3_content.call_to_action",
+            "c3_content.value_proposition",
+            "c3_seo.meta_description",
+            "c3_seo.page_title",
+            "c3_seo.search_intent"
+          ]
+        },
+        {
+          "case": "inhouse-01",
+          "state": [
+            "awaiting_qa",
+            "awaiting_qa"
+          ],
+          "attempt_counts": [
+            3,
+            3
+          ],
+          "measurements": {
+            "runtime_s": {
+              "pair": [
+                26.125,
+                13.578
+              ],
+              "absolute_delta": 12.547
+            },
+            "input_tokens": {
+              "pair": [
+                1584,
+                1584
+              ],
+              "absolute_delta": 0
+            },
+            "output_tokens": {
+              "pair": [
+                362,
+                312
+              ],
+              "absolute_delta": 50
+            }
+          },
+          "rendered_title_body_identical": false,
+          "successful_stage_requests_identical": true,
+          "specialist_and_director_fields": 9,
+          "changed_raw_fields_excluding_handles": [
+            "c3_strategy.measurement_plan",
+            "c3_strategy.recommendation"
+          ]
+        },
+        {
+          "case": "inhouse-02",
+          "state": [
+            "awaiting_qa",
+            "awaiting_qa"
+          ],
+          "attempt_counts": [
+            3,
+            3
+          ],
+          "measurements": {
+            "runtime_s": {
+              "pair": [
+                55.218,
+                16.437
+              ],
+              "absolute_delta": 38.781
+            },
+            "input_tokens": {
+              "pair": [
+                1474,
+                1476
+              ],
+              "absolute_delta": 2
+            },
+            "output_tokens": {
+              "pair": [
+                359,
+                346
+              ],
+              "absolute_delta": 13
+            }
+          },
+          "rendered_title_body_identical": false,
+          "successful_stage_requests_identical": false,
+          "specialist_and_director_fields": 9,
+          "changed_raw_fields_excluding_handles": [
+            "c3_seo.meta_description"
+          ]
+        },
+        {
+          "case": "materials-01",
+          "state": [
+            "awaiting_qa",
+            "awaiting_qa"
+          ],
+          "attempt_counts": [
+            3,
+            3
+          ],
+          "measurements": {
+            "runtime_s": {
+              "pair": [
+                21.734,
+                15.453
+              ],
+              "absolute_delta": 6.281
+            },
+            "input_tokens": {
+              "pair": [
+                1555,
+                1555
+              ],
+              "absolute_delta": 0
+            },
+            "output_tokens": {
+              "pair": [
+                300,
+                300
+              ],
+              "absolute_delta": 0
+            }
+          },
+          "rendered_title_body_identical": true,
+          "successful_stage_requests_identical": true,
+          "specialist_and_director_fields": 9,
+          "changed_raw_fields_excluding_handles": []
+        },
+        {
+          "case": "materials-02",
+          "state": [
+            "awaiting_qa",
+            "awaiting_qa"
+          ],
+          "attempt_counts": [
+            3,
+            3
+          ],
+          "measurements": {
+            "runtime_s": {
+              "pair": [
+                15.188,
+                15.844
+              ],
+              "absolute_delta": 0.656
+            },
+            "input_tokens": {
+              "pair": [
+                1445,
+                1445
+              ],
+              "absolute_delta": 0
+            },
+            "output_tokens": {
+              "pair": [
+                286,
+                286
+              ],
+              "absolute_delta": 0
+            }
+          },
+          "rendered_title_body_identical": true,
+          "successful_stage_requests_identical": true,
+          "specialist_and_director_fields": 9,
+          "changed_raw_fields_excluding_handles": []
+        },
+        {
+          "case": "seller-01",
+          "state": [
+            "awaiting_qa",
+            "awaiting_qa"
+          ],
+          "attempt_counts": [
+            3,
+            3
+          ],
+          "measurements": {
+            "runtime_s": {
+              "pair": [
+                17.532,
+                23.672
+              ],
+              "absolute_delta": 6.14
+            },
+            "input_tokens": {
+              "pair": [
+                1583,
+                1583
+              ],
+              "absolute_delta": 0
+            },
+            "output_tokens": {
+              "pair": [
+                349,
+                398
+              ],
+              "absolute_delta": 49
+            }
+          },
+          "rendered_title_body_identical": false,
+          "successful_stage_requests_identical": false,
+          "specialist_and_director_fields": 9,
+          "changed_raw_fields_excluding_handles": [
+            "c3_research.evidence_needed",
+            "c3_strategy.positioning"
+          ]
+        },
+        {
+          "case": "seller-02",
+          "state": [
+            "awaiting_qa",
+            "awaiting_qa"
+          ],
+          "attempt_counts": [
+            3,
+            3
+          ],
+          "measurements": {
+            "runtime_s": {
+              "pair": [
+                20.547,
+                14.187
+              ],
+              "absolute_delta": 6.36
+            },
+            "input_tokens": {
+              "pair": [
+                1428,
+                1428
+              ],
+              "absolute_delta": 0
+            },
+            "output_tokens": {
+              "pair": [
+                323,
+                321
+              ],
+              "absolute_delta": 2
+            }
+          },
+          "rendered_title_body_identical": true,
+          "successful_stage_requests_identical": true,
+          "specialist_and_director_fields": 9,
+          "changed_raw_fields_excluding_handles": []
+        },
+        {
+          "case": "service-01",
+          "state": [
+            "awaiting_qa",
+            "awaiting_qa"
+          ],
+          "attempt_counts": [
+            3,
+            3
+          ],
+          "measurements": {
+            "runtime_s": {
+              "pair": [
+                14.281,
+                15.969
+              ],
+              "absolute_delta": 1.688
+            },
+            "input_tokens": {
+              "pair": [
+                1569,
+                1569
+              ],
+              "absolute_delta": 0
+            },
+            "output_tokens": {
+              "pair": [
+                320,
+                320
+              ],
+              "absolute_delta": 0
+            }
+          },
+          "rendered_title_body_identical": true,
+          "successful_stage_requests_identical": true,
+          "specialist_and_director_fields": 9,
+          "changed_raw_fields_excluding_handles": []
+        },
+        {
+          "case": "service-02",
+          "state": [
+            "awaiting_qa",
+            "awaiting_qa"
+          ],
+          "attempt_counts": [
+            3,
+            3
+          ],
+          "measurements": {
+            "runtime_s": {
+              "pair": [
+                17.922,
+                15.969
+              ],
+              "absolute_delta": 1.953
+            },
+            "input_tokens": {
+              "pair": [
+                1490,
+                1476
+              ],
+              "absolute_delta": 14
+            },
+            "output_tokens": {
+              "pair": [
+                336,
+                305
+              ],
+              "absolute_delta": 31
+            }
+          },
+          "rendered_title_body_identical": false,
+          "successful_stage_requests_identical": false,
+          "specialist_and_director_fields": 9,
+          "changed_raw_fields_excluding_handles": [
+            "c3_content.benefit",
+            "c3_content.call_to_action",
+            "c3_content.headline",
+            "c3_content.value_proposition",
+            "c3_seo.meta_description",
+            "c3_seo.page_title"
+          ]
+        }
+      ]
+    },
+    "improved": {
+      "assigned": 10,
+      "paired_drafts": 6,
+      "state_pairs": {
+        "awaiting_qa -> awaiting_qa": 6,
+        "needs_clarification -> needs_clarification": 4
+      },
+      "rendered_title_body_identical": 2,
+      "all_text_fields_identical": 1,
+      "identical_stage_requests": 1,
+      "raw_fields_changed": 25,
+      "raw_fields_compared": 63,
+      "within_brief_absolute_delta": {
+        "runtime_s": {
+          "n": 6,
+          "median": 6.938,
+          "max": 13.86
+        },
+        "input_tokens": {
+          "n": 6,
+          "median": 2.0,
+          "max": 32
+        },
+        "output_tokens": {
+          "n": 6,
+          "median": 12.5,
+          "max": 32
+        }
+      },
+      "pairs": [
+        {
+          "case": "agency-01",
+          "state": [
+            "awaiting_qa",
+            "awaiting_qa"
+          ],
+          "attempt_counts": [
+            3,
+            3
+          ],
+          "measurements": {
+            "runtime_s": {
+              "pair": [
+                18.735,
+                20.297
+              ],
+              "absolute_delta": 1.562
+            },
+            "input_tokens": {
+              "pair": [
+                2299,
+                2297
+              ],
+              "absolute_delta": 2
+            },
+            "output_tokens": {
+              "pair": [
+                265,
+                286
+              ],
+              "absolute_delta": 21
+            }
+          },
+          "rendered_title_body_identical": false,
+          "successful_stage_requests_identical": false,
+          "specialist_and_director_fields": 12,
+          "changed_raw_fields_excluding_handles": [
+            "c3_skills_research.evidence_needed",
+            "c3_skills_research.research_question",
+            "c3_skills_strategy.measurement_method",
+            "c3_skills_strategy.positioning",
+            "c3_skills_strategy.rationale",
+            "c3_skills_strategy.test_hypothesis"
+          ]
+        },
+        {
+          "case": "agency-02",
+          "state": [
+            "awaiting_qa",
+            "awaiting_qa"
+          ],
+          "attempt_counts": [
+            3,
+            3
+          ],
+          "measurements": {
+            "runtime_s": {
+              "pair": [
+                15.766,
+                24.297
+              ],
+              "absolute_delta": 8.531
+            },
+            "input_tokens": {
+              "pair": [
+                1586,
+                1618
+              ],
+              "absolute_delta": 32
+            },
+            "output_tokens": {
+              "pair": [
+                273,
+                305
+              ],
+              "absolute_delta": 32
+            }
+          },
+          "rendered_title_body_identical": false,
+          "successful_stage_requests_identical": false,
+          "specialist_and_director_fields": 9,
+          "changed_raw_fields_excluding_handles": [
+            "c3_skills_content.benefit",
+            "c3_skills_content.call_to_action",
+            "c3_skills_content.headline",
+            "c3_skills_content.value_proposition",
+            "c3_skills_seo.meta_description",
+            "c3_skills_seo.search_intent"
+          ]
+        },
+        {
+          "case": "inhouse-01",
+          "state": [
+            "needs_clarification",
+            "needs_clarification"
+          ],
+          "attempt_counts": [
+            0,
+            0
+          ]
+        },
+        {
+          "case": "inhouse-02",
+          "state": [
+            "needs_clarification",
+            "needs_clarification"
+          ],
+          "attempt_counts": [
+            0,
+            0
+          ]
+        },
+        {
+          "case": "materials-01",
+          "state": [
+            "awaiting_qa",
+            "awaiting_qa"
+          ],
+          "attempt_counts": [
+            3,
+            3
+          ],
+          "measurements": {
+            "runtime_s": {
+              "pair": [
+                29.219,
+                15.359
+              ],
+              "absolute_delta": 13.86
+            },
+            "input_tokens": {
+              "pair": [
+                2266,
+                2264
+              ],
+              "absolute_delta": 2
+            },
+            "output_tokens": {
+              "pair": [
+                305,
+                301
+              ],
+              "absolute_delta": 4
+            }
+          },
+          "rendered_title_body_identical": true,
+          "successful_stage_requests_identical": false,
+          "specialist_and_director_fields": 12,
+          "changed_raw_fields_excluding_handles": [
+            "c3_skills_research.evidence_needed",
+            "c3_skills_strategy.positioning",
+            "c3_skills_strategy.rationale",
+            "c3_skills_strategy.test_hypothesis"
+          ]
+        },
+        {
+          "case": "materials-02",
+          "state": [
+            "awaiting_qa",
+            "awaiting_qa"
+          ],
+          "attempt_counts": [
+            3,
+            3
+          ],
+          "measurements": {
+            "runtime_s": {
+              "pair": [
+                20.344,
+                14.281
+              ],
+              "absolute_delta": 6.063
+            },
+            "input_tokens": {
+              "pair": [
+                1618,
+                1618
+              ],
+              "absolute_delta": 0
+            },
+            "output_tokens": {
+              "pair": [
+                301,
+                301
+              ],
+              "absolute_delta": 0
+            }
+          },
+          "rendered_title_body_identical": true,
+          "successful_stage_requests_identical": true,
+          "specialist_and_director_fields": 9,
+          "changed_raw_fields_excluding_handles": []
+        },
+        {
+          "case": "seller-01",
+          "state": [
+            "awaiting_qa",
+            "awaiting_qa"
+          ],
+          "attempt_counts": [
+            3,
+            3
+          ],
+          "measurements": {
+            "runtime_s": {
+              "pair": [
+                23.266,
+                15.453
+              ],
+              "absolute_delta": 7.813
+            },
+            "input_tokens": {
+              "pair": [
+                2260,
+                2260
+              ],
+              "absolute_delta": 0
+            },
+            "output_tokens": {
+              "pair": [
+                267,
+                265
+              ],
+              "absolute_delta": 2
+            }
+          },
+          "rendered_title_body_identical": false,
+          "successful_stage_requests_identical": false,
+          "specialist_and_director_fields": 12,
+          "changed_raw_fields_excluding_handles": [
+            "c3_skills_strategy.measurable_action",
+            "c3_skills_strategy.measurement_method"
+          ]
+        },
+        {
+          "case": "seller-02",
+          "state": [
+            "awaiting_qa",
+            "awaiting_qa"
+          ],
+          "attempt_counts": [
+            3,
+            3
+          ],
+          "measurements": {
+            "runtime_s": {
+              "pair": [
+                16.047,
+                19.985
+              ],
+              "absolute_delta": 3.938
+            },
+            "input_tokens": {
+              "pair": [
+                1548,
+                1555
+              ],
+              "absolute_delta": 7
+            },
+            "output_tokens": {
+              "pair": [
+                245,
+                267
+              ],
+              "absolute_delta": 22
+            }
+          },
+          "rendered_title_body_identical": false,
+          "successful_stage_requests_identical": false,
+          "specialist_and_director_fields": 9,
+          "changed_raw_fields_excluding_handles": [
+            "c3_skills_content.benefit",
+            "c3_skills_content.call_to_action",
+            "c3_skills_content.headline",
+            "c3_skills_content.value_proposition",
+            "c3_skills_seo.meta_description",
+            "c3_skills_seo.page_title",
+            "c3_skills_seo.search_intent"
+          ]
+        },
+        {
+          "case": "service-01",
+          "state": [
+            "needs_clarification",
+            "needs_clarification"
+          ],
+          "attempt_counts": [
+            0,
+            0
+          ]
+        },
+        {
+          "case": "service-02",
+          "state": [
+            "needs_clarification",
+            "needs_clarification"
+          ],
+          "attempt_counts": [
+            0,
+            0
+          ]
+        }
+      ]
+    }
+  },
+  "model_memory": {
+    "sampler_process_id": 28116,
+    "samples": 2895,
+    "first_utc": "2026-11-25T06:45:54.0647136Z",
+    "last_utc": "2026-11-25T07:36:49.1298091Z",
+    "median_sample_gap_s": 1.038,
+    "longest_sample_gap_s": 2.186,
+    "highest_sampled_resident_bytes": 924962816,
+    "highest_reported_process_lifetime_peak_bytes": 924966912,
+    "scope": "whole sampled process across tasks; lifetime peak can predate sampling"
+  }
+}

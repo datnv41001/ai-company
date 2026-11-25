@@ -25,6 +25,30 @@ def test_two_workers_three_campaigns(pool_lab):
     lab.verify_assets_and_dependencies(b, c)
 
 
+def test_partial_setup_releases_only_its_own_logins(monkeypatch):
+    import psycopg
+    from pool_lab import Lab
+
+    names = []
+    original = Lab.login
+
+    def fail_after_provision(lab, group):
+        name, dsn = original(lab, group)
+        names.append(name)
+        if len(names) == 2:
+            raise RuntimeError("synthetic failure during setup")
+        return name, dsn
+
+    monkeypatch.setattr(Lab, "login", fail_after_provision)
+    dsn = os.environ["AMC_MIGRATION_DSN"]
+    with pytest.raises(RuntimeError, match="synthetic failure during setup"):
+        Lab(None, dsn)
+    with psycopg.connect(dsn) as conn:
+        assert len(names) == 2
+        assert not conn.execute("select rolname from pg_roles where rolname=any(%s)", (names,)).fetchall()
+        assert not conn.execute("select worker from amc_ops.routes where worker=any(%s)", (names,)).fetchall()
+
+
 def test_last_agency_balance_and_late_duplicate_bill(pool_lab):
     lab = pool_lab
     lab.limit_x(1000)
@@ -115,6 +139,40 @@ def test_offline_worker_and_cutover(pool_lab):
     )
     assert response.status_code == 409
     assert lab.owner.execute("select execution_mode from workforce_runs where id=%s", (lab.runs[-1],)).fetchone() == ("legacy",)
+
+
+def test_teardown_retires_only_its_workers_attempts(pool_lab):
+    """A live reservation must be fenced even when another lab owns the oldest report."""
+    from app.main import app
+    from pool_lab import Lab, lab_client
+
+    foreign = pool_lab
+    assert foreign.dispatch()
+    first_worker, first_job = next((w, j) for w in foreign.workers if (j := w.take()))
+    assert first_worker.complete(first_job)
+    for admin in (foreign.x, foreign.y):
+        foreign.configure(admin, 0, False)
+
+    with lab_client(app) as client:
+        closing = Lab(client, foreign.dsn)
+        try:
+            assert all(worker.take() is None for worker in closing.workers)
+            assert closing.dispatch(reserve=700)
+            job = next(j for w in closing.workers if (j := w.take()))
+            names = [name for name, _ in closing.logins]
+            assert job["run"] in closing.runs
+        finally:
+            closing.close()
+
+    db = foreign.owner
+    assert db.execute("select status from amc_ops.attempts where id=%s", (first_job["id"],)).fetchone() == ("reported",)
+    assert db.execute("select status from amc_ops.attempts where id=%s", (job["id"],)).fetchone() == ("closed",)
+    assert db.execute("select count(*) from amc_ops.routes where worker=any(%s)", (names,)).fetchone() == (0,)
+    assert db.execute("select count(*) from pg_roles where rolname=any(%s)", (names,)).fetchone() == (0,)
+    # The sent reservation remains held for a legitimate late usage receipt.
+    assert db.execute("select sum(held),sum(spent) from amc_ops.ledger where id=%s", (job["id"],)).fetchone() == (700, 0)
+    assert db.execute("select count(*) from amc_ops.attempts where worker=any(%s) and status<>'closed'", (names,)).fetchone() == (0,)
+    assert foreign.consume()
 
 
 @pytest.fixture()

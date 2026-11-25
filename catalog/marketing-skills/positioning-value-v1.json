@@ -1,0 +1,62 @@
+{
+  "id": "positioning-value",
+  "version": 1,
+  "role": "strategy",
+  "task": "Choose one relevant differentiator and explain its use.",
+  "inputs": [
+    "product",
+    "audience",
+    "facts",
+    "hypotheses"
+  ],
+  "method": "Connect a documented attribute to one buyer decision. Make the proposed positioning and reason explicit; comparisons require matched evidence.",
+  "applicability": "Catalog products, local services and workshops",
+  "references": [
+    "K-05",
+    "K-06"
+  ],
+  "examples": {
+    "good": {
+      "positioning": "Lead with labelled pack coverage when the buyer is estimating quantities.",
+      "rationale": "It supports a packing calculation before requesting the quote."
+    },
+    "bad": "The best tile for every project."
+  },
+  "output_schema": {
+    "type": "object",
+    "properties": {
+      "positioning": {
+        "type": "string",
+        "minLength": 3,
+        "maxLength": 200
+      },
+      "rationale": {
+        "type": "string",
+        "minLength": 3,
+        "maxLength": 200
+      }
+    },
+    "required": [
+      "positioning",
+      "rationale"
+    ],
+    "additionalProperties": false
+  },
+  "rubric": [
+    "Tie one approved detail to the chosen problem.",
+    "Retain the qualifier when stating the benefit."
+  ],
+  "prohibited": "Unsubstantiated superiority, endorsements and guaranteed savings.",
+  "tests": [
+    {
+      "case": "example_positive",
+      "expected": "all structured output fields and applicable sources are present"
+    },
+    {
+      "case": "example_negative",
+      "expected": "Tie one approved detail to the chosen problem."
+    }
+  ],
+  "release": "Publish the reviewed workflow manifest containing this exact skill version and digest; activate only on the selected campaign.",
+  "rollback": "Disable the candidate workflow for new runs and activate the previous compatible workflow. Retain pinned definitions and existing run receipts."
+}

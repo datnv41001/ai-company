@@ -1,0 +1,29 @@
+{
+  "legacy": {
+    "model_sha256": "74a4da8c9fdbcd15bd1f6d01d621410d31c6fc00986f5eb687824e7b93d7a9db",
+    "build": "b12649-1f8baae28",
+    "provider": "llama.cpp loopback",
+    "case_file_sha256": "8946b272865354afbd2be0cf551b488e113e31d79f6ee126a30de2610829deb0",
+    "seed": 42,
+    "workers_per_case": 1,
+    "code": "d5d9a0401d6ba26bb2f673e8aabb803890ffb54c"
+  },
+  "first": {
+    "model_sha256": "74a4da8c9fdbcd15bd1f6d01d621410d31c6fc00986f5eb687824e7b93d7a9db",
+    "build": "b12649-1f8baae28",
+    "provider": "llama.cpp loopback",
+    "case_file_sha256": "8946b272865354afbd2be0cf551b488e113e31d79f6ee126a30de2610829deb0",
+    "seed": 42,
+    "workers_per_case": 1,
+    "code": "dee8da035e4b36d7ac2ab0396a7e63dd9069efe1"
+  },
+  "revised": {
+    "model_sha256": "74a4da8c9fdbcd15bd1f6d01d621410d31c6fc00986f5eb687824e7b93d7a9db",
+    "build": "b12649-1f8baae28",
+    "provider": "llama.cpp loopback",
+    "case_file_sha256": "8946b272865354afbd2be0cf551b488e113e31d79f6ee126a30de2610829deb0",
+    "seed": 42,
+    "workers_per_case": 1,
+    "code": "230380aaa71165f646705d1afc3d4dd5a1bb55f2"
+  }
+}

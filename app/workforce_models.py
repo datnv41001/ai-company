@@ -20,6 +20,7 @@ class WorkforceBrief(Base):
     campaign_id: Mapped[str] = mapped_column(String(36))
     recipient_id: Mapped[str] = mapped_column(ForeignKey("users.id"))
     title: Mapped[str] = mapped_column(String(150))
+    origin: Mapped[str] = mapped_column(String(12), default="agency", server_default="agency")
     payload: Mapped[dict | None] = mapped_column(JSON(none_as_null=True))
     created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), default=utcnow)
 

@@ -1,5 +1,32 @@
 # Bắt đầu ở đây khi tiếp quản AI Marketing Company
 
+## Chuyển database C3 từ core v24 sang v25
+
+Core v25 giữ Business v3 và module nhiệm vụ C3 v1. Checkpoint kỹ thuật trước chuyển đổi là main `9bfbabcaddf9818eb4030cb0c5337e65e794ebfe` và PR #37 `58258de5c802f1af3ad19d3491d63cf9f7b49e8a`. Chỉ chạy quy trình sau trên môi trường phát triển được phép.
+
+1. Dừng nhận việc mới, drain worker, dừng API cũ và tạm chặn kết nối đến ứng dụng. Sao lưu database cùng cấu hình phát hành; giữ secret ngoài Git. Xác minh bản sao bằng thủ tục restore riêng.
+2. Chạy `docker compose build`, sau đó `docker compose run --rm migrate`. Publisher cài ba trigger cho bản giao, snapshot khách và nhật ký quyết định trong cùng giao dịch với marker 25. PostgreSQL chờ giao dịch ghi trước đó kết thúc trước khi chuyển quyền ghi sang giao thức mới. Khi publisher lỗi, kiểm tra nguyên nhân và chạy lại.
+3. Khởi động API v25 và worker tương thích, chạy health check rồi mở lại đầu vào. Yêu cầu xác thực của API mới khai báo giao thức trên từng giao dịch. Kết nối của tiến trình v24 còn sống nhận SQLSTATE `55000` khi ghi một trong ba bảng, kể cả sau khi mượn lại kết nối. Publisher và API v24 từ chối marker 25. Kiểm soát này xử lý tương thích giữa các binary đã phát hành; xác thực, RLS, cổng QA và kiểm chứng nguồn tiếp tục kiểm tra quyền và nội dung.
+4. Để quay lại phiên bản cũ, dừng tiếp nhận việc, giữ bản sao đầy đủ của DB đã nâng cấp để đối soát thay đổi sau thời điểm backup. Khôi phục backup v24 vào DB riêng, tạo generation mới với `--identity-operation restore-fence` theo runbook phiên đăng nhập, kiểm tra dữ liệu rồi trỏ API và worker v24 vào DB đã khôi phục. Việc xóa marker hoặc sửa lịch sử migration sẽ làm mất bảo đảm cutover.
+
+CI chạy `python tests/check_c3_cutover.py observation` và `python tests/check_c3_cutover.py qualification` trên hai DB loopback `amc_test*` trống với migration DSN và runtime DSN như job API. Lượt đầu đối chiếu dấu hiệu tương thích của đúng hai bản đã review bằng thao tác tác động 0 dòng. Lượt sau giữ kết nối cũ sống qua migration, kiểm tra từ chối writer, startup, replay, rollback của một lần nâng cấp bị ngắt, lịch sử và các trường hợp nội dung mâu thuẫn qua API hiện tại. [Migration 025](migrations/025_c3_writer_protocol.sql) · [Kiểm thử chuyển đổi](tests/check_c3_cutover.py)
+
+## PR #37 — nhiệm vụ Marketing, kiểm chứng nội dung và đánh giá chất lượng
+
+Để phản biện WF-03 và WF-13, bắt đầu với [bản giao thật, bản biên tập và receipt từng brief](docs/evaluation/c3-holdout-v1/README.md). Để đo công biên tập, dùng [bộ pilot tiếng Việt có chấm mù](docs/evaluation/C3-PRACTITIONER-KIT.md). Trong GitHub Actions, artifact `api-regression-integration` ghi tên từng ca đạt hoặc bỏ qua trên bản tích hợp, gồm các thứ tự thu hồi quyền, phiên đăng nhập, phân quyền cùng agency và kiểm chứng từng nhận định.
+
+Bản phát triển kết hợp core v24, business v3 và module nhiệm vụ C3 v1. Khi chuyển máy, dùng PostgreSQL thử nghiệm và chạy publisher trong Compose trước khi mở ứng dụng. Trên máy đã có cấu hình, giữ lại secret và khóa nhận diện hiện tại. Publisher chạy lại được. Ghi nhận mọi thay đổi qua bản nâng cấp mới để giữ lịch sử quyết định và snapshot đã bàn giao.
+
+```bash
+docker compose up -d --build
+docker compose run --rm migrate python migrations/apply.py --publish-registry catalog/research-strategy-v3.json
+docker compose run --rm migrate python migrations/apply.py --publish-registry catalog/landing-seo-v6.json
+```
+
+Người giao việc mở **Hồ sơ doanh nghiệp → Brief**, chọn mục tiêu, sản phẩm, tập người mua, hướng dẫn thương hiệu và điều kiện áp dụng. Solo và Business dùng workspace nội bộ. Agency giữ brief do người nhận được cấp quyền gửi. Sau khi worker hoàn tất, mở bản giao để soạn nội dung, xem từng câu kèm nguồn và lịch sử lần lưu. Hướng dẫn dành cho người vận hành gồm [cấp route nội bộ và quyền duyệt](docs/ADR-C3-INTERNAL-TASKS.md), [7 skill và cách quay về phiên bản trước](docs/C3-MARKETING-SKILLS.md) và [quyết định QA theo câu](docs/business-profile/C3-CONTENT-EVIDENCE.md).
+
+CI chạy các release lịch sử @2/@5 qua Qwen thật trên đúng checkout. Trong artifact `pool-model-measurements-integration`, mở `c3-model-receipts` để đối chiếu SHA, weights, token, run, snapshot nguồn, draft và lần biên tập tổng hợp. Artifact `knowledge-center-journeys-integration` chứa hành trình giao việc và đối chiếu nguồn trên ba kích thước màn hình. Rà soát chuyên môn theo [protocol holdout và pilot](docs/evaluation/C3-HOLDOUT-AND-PILOT.md), [kết quả đã đo](docs/evaluation/C3-QUALITY-RESULTS.md) và [ngân sách kết nối local](docs/evaluation/C3-LOCAL-RESOURCES.md). PR #37 chờ phản biện. Commercial GA vẫn NO-GO.
+
 ## AIRC · Kiểm định theo năng lực v5
 
 Tám ca mới so một reviewer với phản biện chéo cùng ngân sách. Có 20 invocation ký trên hai checkpoint local; kết quả chưa đủ để mở rộng. Chạy replay offline và xem các giới hạn trước khi tiếp quản. [Kết quả theo reviewer/model](engineering/airc500/joint-v5/REPORT.md) · [Lệnh kiểm và rollback](engineering/airc500/joint-v5/RUNBOOK.md).
@@ -7,6 +34,12 @@ Tám ca mới so một reviewer với phản biện chéo cùng ngân sách. Có
 ## Nghiên cứu ứng dụng cho AMC và AIRC
 
 Bắt đầu từ [sổ nguồn](docs/research/SOURCE_REGISTRY.md), mở [thẻ kiến thức](docs/research/KNOWLEDGE_CARDS.md), [đối chiếu với mã hiện hành](docs/research/APPLICABILITY_MATRIX.md) rồi chọn [cải tiến có tiêu chí nghiệm thu](docs/research/PRODUCT_OPPORTUNITIES.md). Đọc [các giả thuyết đã hoãn hoặc bác bỏ](docs/research/REJECTED_HYPOTHESES.md) trước khi lặp lại nghiên cứu. Công cụ engineering chạy độc lập ở [runbook Research Broker](engineering/airc500/APPLIED-RESEARCH.md). Receipt lần đầu có hai nguồn quan sát được và một nguồn bị publisher hạn chế. Có thể replay ngoại tuyến bằng mã băm trong runbook. Rollback bằng dùng phiên bản catalog/adapter trước cho đợt đọc mới, giữ lại biên nhận cũ để đối soát. C2/C3 tiếp tục theo thứ tự sản phẩm.
+
+## C3 · Marketing từ tri thức đã duyệt
+
+Hai release WF-03 @2 và WF-13 @5 dùng brief C2 đã ghim, kiểm tra lại căn cứ tại queue, QA và chia sẻ. [Thiết lập, chọn nguồn, chạy worker, kiểm thử và rollback](docs/business-profile/C3-MARKETING-RUNBOOK.md).
+
+Với core v24 và giao diện Premium, chọn **Hồ sơ doanh nghiệp** → **Brief** để mở tác vụ C3 theo đúng khách hàng và thương hiệu. Màn hình **Đội ngũ AI** hiển thị tiến độ. CI chạy Chromium trên cả hai phần và thực hiện ba kiểm tra thu hồi phiên tại lúc xếp việc, duyệt QA và chia sẻ.
 
 ## PR #34 · Màn hình điều hành Marketing
 

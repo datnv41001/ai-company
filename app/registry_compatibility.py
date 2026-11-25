@@ -1,6 +1,6 @@
 """Check executable release contracts before the publisher writes any definition."""
 
-from . import dynamic_plan, landing_qa
+from . import c3_assets, c3_marketing, c3_skill_library, dynamic_plan, landing_qa
 from .registry_adapters import ROLES, output_schema, resolve
 
 FIELDS = {
@@ -51,7 +51,11 @@ def check_workflow(manifest):
     profile = manifest.get("profile", "landing-seo")
     profiles = {"landing-seo": ("WF-13/landing-seo-draft", ["content","seo"], ["content","seo"]),
                 "research-strategy": ("WF-03/research-strategy-draft", ["research","strategy"], ["strategy"])}
-    if profile not in profiles:
+    workflow = f"{manifest['workflow_id']}@{manifest['workflow_version']}"
+    current = workflow in c3_assets.ROLES
+    backed = current or workflow in c3_marketing.ROLES
+    projection = "amc.marketing-manifest/2" if current else "amc.marketing-manifest/1" if backed else None
+    if manifest.get("knowledge_projection") != projection or profile not in profiles:
         raise ValueError("Unknown executable workflow profile")
     identity, stages, outputs = profiles[profile]
     if (
@@ -65,10 +69,23 @@ def check_workflow(manifest):
     ):
         raise ValueError("Unsupported workflow contract")
 
+    versions = c3_skill_library.VERSIONS if current else c3_marketing.VERSIONS
+    methods = {ref: c3_skill_library.method(ref) for stage in stages for ref in c3_skill_library.PACKS[stage]} if current else None
+    if manifest.get("marketing_methods") != methods or (not current and "marketing_methods" in manifest):
+        raise ValueError("Unrecognized Marketing skill library release")
     for skill, contract in contracts.items():
-        if profile == "research-strategy" and (skill not in required or contract["adapter"] != skill+"@2"):
+        if current:
+            if contract.get("marketing_methods") != c3_skill_library.skill_pins(skill):
+                raise ValueError("Marketing skill pin differs from the reviewed contract")
+        elif "marketing_methods" in contract or contract["adapter"] == f"{skill}@{c3_skill_library.VERSIONS.get(skill)}":
+            raise ValueError("Separated-asset adapter requires the scoped skill release")
+        if not backed and skill in c3_marketing.VERSIONS and contract["adapter"] == f"{skill}@{c3_marketing.VERSIONS[skill]}":
+            raise ValueError("Knowledge-backed adapter requires a scoped projection release")
+        if backed and (skill not in required or contract["adapter"] != f"{skill}@{versions[skill]}"):
+            raise ValueError("Unsupported knowledge projection adapter")
+        if not backed and profile == "research-strategy" and (skill not in required or contract["adapter"] != skill+"@2"):
             raise ValueError("Unsupported research strategy adapter")
-        if profile == "landing-seo" and skill in ("director","research","strategy") and contract["adapter"] != skill+"@1":
+        if not backed and profile == "landing-seo" and skill in ("director","research","strategy") and contract["adapter"] != skill+"@1":
             raise ValueError("Unsupported landing adapter")
         adapter = resolve(contract)
         if (
@@ -77,7 +94,7 @@ def check_workflow(manifest):
             or contract["skill_id"] != skill
             or contract["role_id"] != ROLES[skill]
             or any(type(contract[k]) is not int or contract[k] != adapter.version for k in ("skill_version", "contract_version"))
-            or contract["qa_policy"] != (skill+"-wf03@1" if profile == "research-strategy" else landing_qa.ROLE_POLICY.get(contract["adapter"], skill + "@1"))
+            or contract["qa_policy"] != ("c3-" + skill + ("@2" if current else "@1") if backed else skill+"-wf03@1" if profile == "research-strategy" else landing_qa.ROLE_POLICY.get(contract["adapter"], skill + "@1"))
             or not landing_qa.valid_limits(contract)
         ):
             raise ValueError(f"Unsupported adapter, role or skill version for {skill}")
@@ -91,7 +108,7 @@ def check_workflow(manifest):
         if skill == "strategy" and "research" not in parents:
             raise ValueError("Strategy requires a Research predecessor")
         if (
-            set(contract) - FIELDS
+            set(contract) - (FIELDS | {"marketing_methods"} if current else FIELDS)
             or contract["inputs"] != ["brief", "brand", "sources"]
             or contract["tools"] != []
             or contract["model"] != "local"

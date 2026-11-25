@@ -1,0 +1,62 @@
+{
+  "id": "kpi-measurement",
+  "version": 1,
+  "role": "strategy",
+  "task": "Specify a countable outcome for the selected objective.",
+  "inputs": [
+    "kpi",
+    "objective",
+    "channel",
+    "region"
+  ],
+  "method": "Use the pinned event, unit, eligibility and window. Distinguish observed transactions from clicks; propose deduplication and explain an inconclusive result.",
+  "applicability": "Qualified-quote, confirmed-appointment and paid-order funnels",
+  "references": [
+    "K-07",
+    "K-08"
+  ],
+  "examples": {
+    "good": {
+      "measurable_action": "Count each confirmed appointment once in the approved window.",
+      "measurement_method": "Deduplicate by appointment ID and exclude canceled bookings."
+    },
+    "bad": "Count views as confirmed appointments or put the price in the denominator."
+  },
+  "output_schema": {
+    "type": "object",
+    "properties": {
+      "measurable_action": {
+        "type": "string",
+        "minLength": 3,
+        "maxLength": 200
+      },
+      "measurement_method": {
+        "type": "string",
+        "minLength": 3,
+        "maxLength": 200
+      }
+    },
+    "required": [
+      "measurable_action",
+      "measurement_method"
+    ],
+    "additionalProperties": false
+  },
+  "rubric": [
+    "Match the business event and its period.",
+    "Provide a reproducible counting rule using an eligible record."
+  ],
+  "prohibited": "Invented measurements, revenue from a click, or an undisclosed attribution change.",
+  "tests": [
+    {
+      "case": "example_positive",
+      "expected": "all structured output fields and applicable sources are present"
+    },
+    {
+      "case": "example_negative",
+      "expected": "Match the business event and its period."
+    }
+  ],
+  "release": "Publish the reviewed workflow manifest containing this exact skill version and digest; activate only on the selected campaign.",
+  "rollback": "Disable the candidate workflow for new runs and activate the previous compatible workflow. Retain pinned definitions and existing run receipts."
+}

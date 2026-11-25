@@ -17,6 +17,9 @@ from sqlalchemy.orm import Session
 
 from .identity_quota import admit
 from .business_knowledge import router as knowledge_router
+from . import c3_boundaries
+from .c3_evidence_review import router as content_evidence_router
+from .c3_projection import router as marketing_projection_router
 from .claim_desk import router as claim_desk_router
 from .business_workspace import router as workspace_router
 from .marketing_catalog import router as catalog_router
@@ -28,6 +31,7 @@ from .delivery import router as delivery_router, working_copy
 from .operations import router as operations_router
 from .registry import router as registry_router
 from .workforce import router as workforce_router
+from .c3_tasks import router as marketing_task_router
 from .recipients import router as recipients_router, lock_recipient, revoke_pending, preview_link, accept_link
 from .delivery_models import PortalGrant
 from .access import set_context, visible
@@ -57,9 +61,12 @@ app.include_router(devices_router)
 app.include_router(delivery_router)
 app.include_router(recipients_router)
 app.include_router(workforce_router)
+app.include_router(marketing_task_router)
 app.include_router(registry_router)
 app.include_router(operations_router)
 app.include_router(knowledge_router)
+app.include_router(marketing_projection_router)
+app.include_router(content_evidence_router)
 app.include_router(claim_desk_router)
 app.include_router(workspace_router)
 app.include_router(catalog_router)
@@ -362,7 +369,7 @@ def assess_working_copy(tenant_id: str, deliverable_id: str, user: User = Depend
     item = working_copy(db, tenant_id, deliverable_id)
     previous = item.qa_evidence or {}
     report = evaluate(db, item, user.id)
-    if any(previous.get(k) != report[k] for k in ("qa_revision", "content_digest", "ruleset_version", "state", "findings")):
+    if any(previous.get(k) != report.get(k) for k in ("qa_revision", "content_digest", "ruleset_version", "state", "findings", "content_evidence")):
         item.qa_approved_revision = None
         item.qa_approved_digest = None
     return done(db, item)
@@ -384,10 +391,16 @@ def review_deliverable(tenant_id: str, deliverable_id: str, body: DeliverableRev
     ):
         raise HTTPException(412, "Content changed or assessment is stale. Reload and reassess before deciding.")
     legacy_approval = item.status == "approved" and item.qa_approved_revision is None
+    if body.decision == "approved" and item.status == "approved" and item.qa_approved_revision == item.qa_revision and item.qa_approved_digest == digest and item.reviewed_by == user.id and item.review_note == body.note and c3_boundaries.run_for(db, item):
+        c3_boundaries.boundary(db, user, item, digest, "replay_qa")
+        return data(item)
     if item.status != "submitted" and not legacy_approval:
         raise HTTPException(409, "Deliverable is not awaiting review")
     if user.id in (item.created_by, item.last_editor_id):
         raise HTTPException(403, "Self-approval is forbidden")
+    if body.decision == "approved" and (gate := c3_boundaries.boundary(db, user, item, digest, "qa")):
+        store, snap, values = gate
+        c3_boundaries.record_approval(store, snap, values)
     item.status, item.reviewed_by, item.review_note = body.decision, user.id, body.note
     item.qa_approved_revision = item.qa_revision if body.decision == "approved" else None
     item.qa_approved_digest = digest if body.decision == "approved" else None

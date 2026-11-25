@@ -1,0 +1,11 @@
+.claim-comparison {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(17rem, 100%), 1fr));
+  gap: 1rem;
+  padding: .75rem 0;
+  border-block-start: 1px solid var(--border, currentColor);
+}
+.claim-comparison > * { min-width: 0; overflow-wrap: anywhere; }
+.claim-comparison blockquote { margin: .5rem 0; }
+.claim-comparison h5 { font-size: inherit; margin: 0; }
+.claim-comparison select { max-width: 100%; }

@@ -1,0 +1,28 @@
+{
+  "paired_measures": {
+    "checkout": "08cc65b4de4ae637d3a3bbd70b7e1e0eb6128f32",
+    "provider": "llama.cpp loopback",
+    "model_sha256": "74a4da8c9fdbcd15bd1f6d01d621410d31c6fc00986f5eb687824e7b93d7a9db",
+    "build": "b12649-1f8baae28",
+    "cases_sha256": "c497ff707c986acaa3c48ba799ab1a378f194d3e7cd4262834d41a4aae0fe477",
+    "worker_concurrency": 1
+  },
+  "reference": {
+    "checkout": "6a2d65f3b5bf641a1b5fd6d4662f98d910b8fc4e",
+    "runtime_fingerprint": "c653519b97501e80bf959a01a48fa085372b80b4e39ef1304803873879bbd62d",
+    "cases_sha256": "c497ff707c986acaa3c48ba799ab1a378f194d3e7cd4262834d41a4aae0fe477",
+    "model_sha256": "74a4da8c9fdbcd15bd1f6d01d621410d31c6fc00986f5eb687824e7b93d7a9db",
+    "build": "b12649-1f8baae28",
+    "provider": "llama.cpp loopback"
+  },
+  "model_and_renderer_source_objects": {
+    "app/c3_assets.py": "5b329f06f889c310bf6690415ddf756762de2a48",
+    "app/c3_marketing.py": "86c4969f057eb72def109b85aaa63b16ccfc9e47",
+    "app/c3_skill_library.py": "86b8a6903a01cfd2e99d68dff73472d252b6c68a",
+    "catalog/landing-seo-v5.json": "c32226f6e9dfbd03a03b0c52b5ec6bc3977429a8",
+    "catalog/landing-seo-v6.json": "e20f83f339b7c342155ed44386cfbd7421877f51",
+    "catalog/marketing-skills": "2aa717f4ca7f1a8567e6bc86a1798f9e3d6df8c0",
+    "catalog/research-strategy-v2.json": "4a5724bc794fb2bd9d45b0dac352bd9ba096d328",
+    "catalog/research-strategy-v3.json": "7db6af185d7a82e7bc34b73adcd5f94c1a6d63b6"
+  }
+}

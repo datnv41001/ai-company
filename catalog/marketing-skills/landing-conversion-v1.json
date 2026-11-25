@@ -1,0 +1,78 @@
+{
+  "id": "landing-conversion",
+  "version": 1,
+  "role": "content",
+  "task": "Write useful customer-facing conversion copy grounded in the offer.",
+  "inputs": [
+    "product",
+    "audience",
+    "region",
+    "channel",
+    "facts",
+    "locale"
+  ],
+  "method": "Lead with the buyer's job. Turn a documented attribute into a decision and end with one executable next step on the selected channel. Leave prices to the structured offer block.",
+  "applicability": "Retail, service booking and trade quote pages",
+  "references": [
+    "K-02",
+    "K-06"
+  ],
+  "examples": {
+    "good": {
+      "headline": "Choose coverage for your floor plan",
+      "value_proposition": "Plan a quote using the area of your project.",
+      "benefit": "Compare the coverage per pack with the area you need.",
+      "call_to_action": "Send your area and project location for a quote."
+    },
+    "bad": "Increase campaign conversions by promising the lowest price."
+  },
+  "output_schema": {
+    "type": "object",
+    "properties": {
+      "headline": {
+        "type": "string",
+        "minLength": 3,
+        "maxLength": 160
+      },
+      "value_proposition": {
+        "type": "string",
+        "minLength": 3,
+        "maxLength": 200
+      },
+      "benefit": {
+        "type": "string",
+        "minLength": 3,
+        "maxLength": 200
+      },
+      "call_to_action": {
+        "type": "string",
+        "minLength": 3,
+        "maxLength": 200
+      }
+    },
+    "required": [
+      "headline",
+      "value_proposition",
+      "benefit",
+      "call_to_action"
+    ],
+    "additionalProperties": false
+  },
+  "rubric": [
+    "One coherent headline, value proposition and fact-supported benefit.",
+    "A concrete buyer action suited to the permitted channel."
+  ],
+  "prohibited": "Internal goals, invented offers, performance guarantees or seller instructions.",
+  "tests": [
+    {
+      "case": "example_positive",
+      "expected": "all structured output fields and applicable sources are present"
+    },
+    {
+      "case": "example_negative",
+      "expected": "One coherent headline, value proposition and fact-supported benefit."
+    }
+  ],
+  "release": "Publish the reviewed workflow manifest containing this exact skill version and digest; activate only on the selected campaign.",
+  "rollback": "Disable the candidate workflow for new runs and activate the previous compatible workflow. Retain pinned definitions and existing run receipts."
+}

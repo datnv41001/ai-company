@@ -156,7 +156,7 @@ body[data-access] .guest-nav,body[data-role=viewer] .settings-nav{display:none}
 .knowledge{padding:clamp(16px,2.5vw,32px);margin:26px 0}
 .knowledge-heading{margin-bottom:14px}.knowledge h2{font-weight:650}.knowledge-heading p{font-weight:600}
 #knowledge-progress{background:var(--tint);padding:4px 10px;border-radius:24px;color:var(--ink)}
-.knowledge-tabs,.knowledge-body .knowledge-brief,#knowledge-new-brief,.marketing-catalog,.catalog-list li{border-color:var(--border)}
+.knowledge-tabs,.knowledge-body .knowledge-brief,.knowledge-body [data-task-entry],#knowledge-new-brief,.marketing-catalog,.catalog-list li{border-color:var(--border)}
 .knowledge-tabs button{color:var(--muted);border-color:var(--border);background:var(--paper);font-weight:600}
 .knowledge-tabs button[aria-pressed=true]{color:var(--ink);background:var(--tint);border-color:var(--accent)}
 .knowledge-source{font-size:.8rem}.knowledge-body input,.knowledge-body select{background:var(--paper)}

@@ -1,0 +1,372 @@
+{
+  "workflow_id": "WF-13/landing-seo-draft",
+  "workflow_version": 6,
+  "mode": "dynamic-v1",
+  "profile": "landing-seo",
+  "required": [
+    "director",
+    "content",
+    "seo"
+  ],
+  "required_outputs": [
+    "content",
+    "seo"
+  ],
+  "knowledge_projection": "amc.marketing-manifest/2",
+  "contracts": {
+    "director": {
+      "skill_id": "director",
+      "skill_version": 4,
+      "role_id": "ai-managing-director",
+      "contract_version": 4,
+      "adapter": "director@4",
+      "adapter_digest": "de8896dfee4aaf662dbf31bdda67606e3ae2376b8e4b4542acfeb3993646724d",
+      "qa_policy": "c3-director@2",
+      "model": "local",
+      "inputs": [
+        "brief",
+        "brand",
+        "sources"
+      ],
+      "outputs": [
+        "primary_assignment",
+        "secondary_assignment"
+      ],
+      "output_schema": {
+        "type": "object",
+        "required": [
+          "primary_assignment",
+          "secondary_assignment"
+        ],
+        "additionalProperties": false,
+        "properties": {
+          "primary_assignment": {
+            "type": "string"
+          },
+          "secondary_assignment": {
+            "type": "string"
+          }
+        }
+      },
+      "success_criteria": [
+        "primary_assignment",
+        "secondary_assignment"
+      ],
+      "predecessors": [],
+      "tools": [],
+      "approval": "revision_qa_and_client_snapshot",
+      "node_cap": 1000,
+      "max_attempts": 3,
+      "timeout_seconds": 300,
+      "owner": "agency marketing lead",
+      "objective": "Use this role's approved knowledge projection to prepare internal Marketing work",
+      "forbidden_actions": [
+        "external_write",
+        "publish",
+        "spend"
+      ],
+      "fallback": "agency editor",
+      "marketing_methods": {}
+    },
+    "content": {
+      "skill_id": "content",
+      "skill_version": 4,
+      "role_id": "ai-copywriter-content-strategist",
+      "contract_version": 4,
+      "adapter": "content@4",
+      "adapter_digest": "fcea91e89e8806897a72d314ca258a87c6e509f6ec34ee737edf9d8897d28aa8",
+      "qa_policy": "c3-content@2",
+      "model": "local",
+      "inputs": [
+        "brief",
+        "brand",
+        "sources"
+      ],
+      "outputs": [
+        "benefit",
+        "call_to_action",
+        "headline",
+        "source_ids",
+        "value_proposition"
+      ],
+      "output_schema": {
+        "type": "object",
+        "required": [
+          "benefit",
+          "call_to_action",
+          "headline",
+          "source_ids",
+          "value_proposition"
+        ],
+        "additionalProperties": false,
+        "properties": {
+          "headline": {
+            "type": "string"
+          },
+          "value_proposition": {
+            "type": "string"
+          },
+          "benefit": {
+            "type": "string"
+          },
+          "call_to_action": {
+            "type": "string"
+          },
+          "source_ids": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        }
+      },
+      "success_criteria": [
+        "benefit",
+        "call_to_action",
+        "headline",
+        "source_ids",
+        "value_proposition"
+      ],
+      "predecessors": [],
+      "tools": [],
+      "approval": "revision_qa_and_client_snapshot",
+      "node_cap": 1000,
+      "max_attempts": 3,
+      "timeout_seconds": 300,
+      "owner": "agency marketing lead",
+      "objective": "Use this role's approved knowledge projection to prepare internal Marketing work",
+      "forbidden_actions": [
+        "external_write",
+        "publish",
+        "spend"
+      ],
+      "fallback": "agency editor",
+      "marketing_methods": {
+        "landing-conversion@1": "65fed41e31b470d9ac009c03a5ee376851fe86664f2c73f2c5e08af49385bcc6"
+      }
+    },
+    "seo": {
+      "skill_id": "seo",
+      "skill_version": 5,
+      "role_id": "ai-seo-geo-specialist",
+      "contract_version": 5,
+      "adapter": "seo@5",
+      "adapter_digest": "c8c7649ce2ef9d2d9e02e2a8ca83ba3cee22da2e9c90525248a26af693ff385f",
+      "qa_policy": "c3-seo@2",
+      "model": "local",
+      "inputs": [
+        "brief",
+        "brand",
+        "sources"
+      ],
+      "outputs": [
+        "meta_description",
+        "page_title",
+        "search_intent",
+        "source_ids"
+      ],
+      "output_schema": {
+        "type": "object",
+        "required": [
+          "meta_description",
+          "page_title",
+          "search_intent",
+          "source_ids"
+        ],
+        "additionalProperties": false,
+        "properties": {
+          "page_title": {
+            "type": "string"
+          },
+          "meta_description": {
+            "type": "string"
+          },
+          "search_intent": {
+            "type": "string"
+          },
+          "source_ids": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        }
+      },
+      "success_criteria": [
+        "meta_description",
+        "page_title",
+        "search_intent",
+        "source_ids"
+      ],
+      "predecessors": [
+        "content"
+      ],
+      "tools": [],
+      "approval": "revision_qa_and_client_snapshot",
+      "node_cap": 1000,
+      "max_attempts": 3,
+      "timeout_seconds": 300,
+      "owner": "agency marketing lead",
+      "objective": "Use this role's approved knowledge projection to prepare internal Marketing work",
+      "forbidden_actions": [
+        "external_write",
+        "publish",
+        "spend"
+      ],
+      "fallback": "agency editor",
+      "marketing_methods": {
+        "search-intent-seo@1": "95015035ae8f0183d82fa88c9851879885736b82032ce11d9b8f12230dc0152d"
+      }
+    }
+  },
+  "marketing_methods": {
+    "landing-conversion@1": {
+      "id": "landing-conversion",
+      "version": 1,
+      "role": "content",
+      "task": "Write useful customer-facing conversion copy grounded in the offer.",
+      "inputs": [
+        "product",
+        "audience",
+        "region",
+        "channel",
+        "facts",
+        "locale"
+      ],
+      "method": "Lead with the buyer's job. Turn a documented attribute into a decision and end with one executable next step on the selected channel. Leave prices to the structured offer block.",
+      "applicability": "Retail, service booking and trade quote pages",
+      "references": [
+        "K-02",
+        "K-06"
+      ],
+      "examples": {
+        "good": {
+          "headline": "Choose coverage for your floor plan",
+          "value_proposition": "Plan a quote using the area of your project.",
+          "benefit": "Compare the coverage per pack with the area you need.",
+          "call_to_action": "Send your area and project location for a quote."
+        },
+        "bad": "Increase campaign conversions by promising the lowest price."
+      },
+      "output_schema": {
+        "type": "object",
+        "properties": {
+          "headline": {
+            "type": "string",
+            "minLength": 3,
+            "maxLength": 160
+          },
+          "value_proposition": {
+            "type": "string",
+            "minLength": 3,
+            "maxLength": 200
+          },
+          "benefit": {
+            "type": "string",
+            "minLength": 3,
+            "maxLength": 200
+          },
+          "call_to_action": {
+            "type": "string",
+            "minLength": 3,
+            "maxLength": 200
+          }
+        },
+        "required": [
+          "headline",
+          "value_proposition",
+          "benefit",
+          "call_to_action"
+        ],
+        "additionalProperties": false
+      },
+      "rubric": [
+        "One coherent headline, value proposition and fact-supported benefit.",
+        "A concrete buyer action suited to the permitted channel."
+      ],
+      "prohibited": "Internal goals, invented offers, performance guarantees or seller instructions.",
+      "tests": [
+        {
+          "case": "example_positive",
+          "expected": "all structured output fields and applicable sources are present"
+        },
+        {
+          "case": "example_negative",
+          "expected": "One coherent headline, value proposition and fact-supported benefit."
+        }
+      ],
+      "release": "Publish the reviewed workflow manifest containing this exact skill version and digest; activate only on the selected campaign.",
+      "rollback": "Disable the candidate workflow for new runs and activate the previous compatible workflow. Retain pinned definitions and existing run receipts."
+    },
+    "search-intent-seo@1": {
+      "id": "search-intent-seo",
+      "version": 1,
+      "role": "seo",
+      "task": "Write consistent search metadata for the actual page.",
+      "inputs": [
+        "product",
+        "region",
+        "channel",
+        "facts",
+        "locale"
+      ],
+      "method": "Identify a plausible buyer query, align the title with page content, and summarize the distinguishing offer in a descriptive snippet. A suggested snippet is not a ranking prediction.",
+      "applicability": "Local-intent service pages and product detail pages",
+      "references": [
+        "K-06",
+        "K-08"
+      ],
+      "examples": {
+        "good": {
+          "page_title": "Tile pack coverage for local project quotes",
+          "meta_description": "Check pack coverage and supply your required area to request a project quote.",
+          "search_intent": "Compare tile pack coverage before asking for a quote."
+        },
+        "bad": "Rank number one: increase our company's conversion KPI."
+      },
+      "output_schema": {
+        "type": "object",
+        "properties": {
+          "page_title": {
+            "type": "string",
+            "minLength": 3,
+            "maxLength": 200
+          },
+          "meta_description": {
+            "type": "string",
+            "minLength": 3,
+            "maxLength": 200
+          },
+          "search_intent": {
+            "type": "string",
+            "minLength": 3,
+            "maxLength": 200
+          }
+        },
+        "required": [
+          "page_title",
+          "meta_description",
+          "search_intent"
+        ],
+        "additionalProperties": false
+      },
+      "rubric": [
+        "Match both metadata fields to the actual asset.",
+        "Use the buyer's intent, not the seller's campaign objective."
+      ],
+      "prohibited": "Guaranteed rankings, traffic forecasts, keyword stuffing or unsupported promotions.",
+      "tests": [
+        {
+          "case": "example_positive",
+          "expected": "all structured output fields and applicable sources are present"
+        },
+        {
+          "case": "example_negative",
+          "expected": "Match both metadata fields to the actual asset."
+        }
+      ],
+      "release": "Publish the reviewed workflow manifest containing this exact skill version and digest; activate only on the selected campaign.",
+      "rollback": "Disable the candidate workflow for new runs and activate the previous compatible workflow. Retain pinned definitions and existing run receipts."
+    }
+  }
+}

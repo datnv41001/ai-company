@@ -1,0 +1,3006 @@
+{
+  "version": "holdout-1",
+  "synthetic": true,
+  "cases": [
+    {
+      "id": "seller-01",
+      "persona": "seller",
+      "workflow": "WF-03",
+      "company": "Lá Phố",
+      "brand": "Lá Phố",
+      "product": "Túi vải hai quai SEH-101",
+      "sku": "SEH-101",
+      "market": "Việt Nam",
+      "locale": "vi-VN",
+      "region": "Huế",
+      "audience": "khách mua lẻ",
+      "objective": "Giúp khách mua lẻ đặt túi đựng sách tại Huế",
+      "channel": "trang sản phẩm",
+      "cta": "đặt túi đựng sách",
+      "kpi": "Yêu cầu đã xác nhận cho SEH-101",
+      "kpi_unit": "yêu cầu",
+      "kpi_method": "Đếm yêu cầu duy nhất đã xác nhận cho SEH-101 qua trang sản phẩm trong 21 ngày, loại trùng theo mã yêu cầu.",
+      "kpi_window": "21 ngày",
+      "facts": [
+        {
+          "id": "scope-card",
+          "wording": "Túi vải hai quai SEH-101 có lựa chọn mẫu vải nâu.",
+          "qualifiers": "Chỉ áp dụng tại Huế."
+        },
+        {
+          "id": "commercial-card",
+          "category": "price",
+          "wording": "Giá 97.000 VND/chiếc.",
+          "qualifiers": "Chỉ áp dụng tại Huế cho mẫu vải nâu. Chưa gồm in logo.",
+          "price": {
+            "amount_minor": 97000,
+            "currency": "VND",
+            "unit": "piece",
+            "basis_quantity": "1",
+            "moq": "1",
+            "tier_min": "1",
+            "tier_max": null,
+            "tax": "included",
+            "conditions": [
+              "Chỉ áp dụng tại Huế cho mẫu vải nâu. Chưa gồm in logo."
+            ]
+          },
+          "quantity": "1"
+        }
+      ],
+      "hypotheses": [
+        "Khách có thể cần xác nhận mẫu vải nâu trước khi quyết định."
+      ],
+      "gaps": [
+        "Chưa có bằng chứng so sánh chi phí túi vải hai quai với đối thủ."
+      ],
+      "unsupported_example": "rẻ nhất toàn quốc",
+      "evaluation_notes": {
+        "buyer_action": "đặt túi đựng sách",
+        "required_scope": "Chỉ áp dụng tại Huế cho mẫu vải nâu. Chưa gồm in logo.",
+        "forbidden": "rẻ nhất toàn quốc",
+        "exclude_from_prompt": true
+      }
+    },
+    {
+      "id": "seller-02",
+      "persona": "seller",
+      "workflow": "WF-13",
+      "company": "Lá Phố",
+      "brand": "Lá Phố",
+      "product": "Kệ sách lắp ráp SEH-102",
+      "sku": "SEH-102",
+      "market": "Việt Nam",
+      "locale": "vi-VN",
+      "region": "Huế",
+      "audience": "khách mua lẻ",
+      "objective": "Giúp khách mua lẻ chọn kệ cho phòng trọ tại Huế",
+      "channel": "trang sản phẩm",
+      "cta": "chọn kệ cho phòng trọ",
+      "kpi": "Yêu cầu đã xác nhận cho SEH-102",
+      "kpi_unit": "yêu cầu",
+      "kpi_method": "Đếm yêu cầu duy nhất đã xác nhận cho SEH-102 qua trang sản phẩm trong 21 ngày, loại trùng theo mã yêu cầu.",
+      "kpi_window": "21 ngày",
+      "facts": [
+        {
+          "id": "scope-card",
+          "wording": "Kệ sách lắp ráp SEH-102 có lựa chọn bản ba tầng.",
+          "qualifiers": "Chỉ áp dụng tại Huế."
+        },
+        {
+          "id": "commercial-card",
+          "category": "price",
+          "wording": "Giá 121.000 VND/chiếc.",
+          "qualifiers": "Chỉ áp dụng tại Huế cho bản ba tầng. Chưa gồm lắp đặt.",
+          "price": {
+            "amount_minor": 121000,
+            "currency": "VND",
+            "unit": "piece",
+            "basis_quantity": "1",
+            "moq": "1",
+            "tier_min": "1",
+            "tier_max": null,
+            "tax": "included",
+            "conditions": [
+              "Chỉ áp dụng tại Huế cho bản ba tầng. Chưa gồm lắp đặt."
+            ]
+          },
+          "quantity": "1"
+        }
+      ],
+      "hypotheses": [
+        "Khách có thể cần xác nhận bản ba tầng trước khi quyết định."
+      ],
+      "gaps": [
+        "Chưa có bằng chứng so sánh chi phí kệ sách lắp ráp với đối thủ."
+      ],
+      "unsupported_example": "rẻ nhất toàn quốc",
+      "evaluation_notes": {
+        "buyer_action": "chọn kệ cho phòng trọ",
+        "required_scope": "Chỉ áp dụng tại Huế cho bản ba tầng. Chưa gồm lắp đặt.",
+        "forbidden": "rẻ nhất toàn quốc",
+        "exclude_from_prompt": true
+      }
+    },
+    {
+      "id": "seller-03",
+      "persona": "seller",
+      "workflow": "WF-03",
+      "company": "Lá Phố",
+      "brand": "Lá Phố",
+      "product": "Đèn đọc sách kẹp bàn SEH-103",
+      "sku": "SEH-103",
+      "market": "Việt Nam",
+      "locale": "vi-VN",
+      "region": "Huế",
+      "audience": "khách mua lẻ",
+      "objective": "Giúp khách mua lẻ đăng ký thử đèn tại Huế",
+      "channel": "trang sản phẩm",
+      "cta": "đăng ký thử đèn",
+      "kpi": "Yêu cầu đã xác nhận cho SEH-103",
+      "kpi_unit": "yêu cầu",
+      "kpi_method": "Đếm yêu cầu duy nhất đã xác nhận cho SEH-103 qua trang sản phẩm trong 21 ngày, loại trùng theo mã yêu cầu.",
+      "kpi_window": "21 ngày",
+      "facts": [
+        {
+          "id": "scope-card",
+          "wording": "Đèn đọc sách kẹp bàn SEH-103 có lựa chọn màu đen.",
+          "qualifiers": "Chỉ áp dụng tại Huế."
+        },
+        {
+          "id": "commercial-card",
+          "category": "price",
+          "wording": "Giá 145.000 VND/chiếc.",
+          "qualifiers": "Chỉ áp dụng tại Huế cho màu đen. Chưa gồm pin dự phòng.",
+          "price": {
+            "amount_minor": 145000,
+            "currency": "VND",
+            "unit": "piece",
+            "basis_quantity": "1",
+            "moq": "1",
+            "tier_min": "1",
+            "tier_max": null,
+            "tax": "included",
+            "conditions": [
+              "Chỉ áp dụng tại Huế cho màu đen. Chưa gồm pin dự phòng."
+            ]
+          },
+          "quantity": "1"
+        }
+      ],
+      "hypotheses": [
+        "Khách có thể cần xác nhận màu đen trước khi quyết định."
+      ],
+      "gaps": [
+        "Chưa có bằng chứng so sánh chi phí đèn đọc sách kẹp bàn với đối thủ."
+      ],
+      "unsupported_example": "rẻ nhất toàn quốc",
+      "evaluation_notes": {
+        "buyer_action": "đăng ký thử đèn",
+        "required_scope": "Chỉ áp dụng tại Huế cho màu đen. Chưa gồm pin dự phòng.",
+        "forbidden": "rẻ nhất toàn quốc",
+        "exclude_from_prompt": true
+      }
+    },
+    {
+      "id": "seller-04",
+      "persona": "seller",
+      "workflow": "WF-13",
+      "company": "Lá Phố",
+      "brand": "Lá Phố",
+      "product": "Bình giữ nước SEH-104",
+      "sku": "SEH-104",
+      "market": "Việt Nam",
+      "locale": "vi-VN",
+      "region": "Huế",
+      "audience": "khách mua lẻ",
+      "objective": "Giúp khách mua lẻ đặt bình mang đi học tại Huế",
+      "channel": "trang sản phẩm",
+      "cta": "đặt bình mang đi học",
+      "kpi": "Yêu cầu đã xác nhận cho SEH-104",
+      "kpi_unit": "yêu cầu",
+      "kpi_method": "Đếm yêu cầu duy nhất đã xác nhận cho SEH-104 qua trang sản phẩm trong 21 ngày, loại trùng theo mã yêu cầu.",
+      "kpi_window": "21 ngày",
+      "facts": [
+        {
+          "id": "scope-card",
+          "wording": "Bình giữ nước SEH-104 có lựa chọn nắp vặn.",
+          "qualifiers": "Chỉ áp dụng tại Huế."
+        },
+        {
+          "id": "commercial-card",
+          "category": "price",
+          "wording": "Giá 169.000 VND/chiếc.",
+          "qualifiers": "Chỉ áp dụng tại Huế cho nắp vặn. Chưa gồm khắc tên.",
+          "price": {
+            "amount_minor": 169000,
+            "currency": "VND",
+            "unit": "piece",
+            "basis_quantity": "1",
+            "moq": "1",
+            "tier_min": "1",
+            "tier_max": null,
+            "tax": "included",
+            "conditions": [
+              "Chỉ áp dụng tại Huế cho nắp vặn. Chưa gồm khắc tên."
+            ]
+          },
+          "quantity": "1"
+        }
+      ],
+      "hypotheses": [
+        "Khách có thể cần xác nhận nắp vặn trước khi quyết định."
+      ],
+      "gaps": [
+        "Chưa có bằng chứng so sánh chi phí bình giữ nước với đối thủ."
+      ],
+      "unsupported_example": "rẻ nhất toàn quốc",
+      "evaluation_notes": {
+        "buyer_action": "đặt bình mang đi học",
+        "required_scope": "Chỉ áp dụng tại Huế cho nắp vặn. Chưa gồm khắc tên.",
+        "forbidden": "rẻ nhất toàn quốc",
+        "exclude_from_prompt": true
+      }
+    },
+    {
+      "id": "seller-05",
+      "persona": "seller",
+      "workflow": "WF-03",
+      "company": "Lá Phố",
+      "brand": "Lá Phố",
+      "product": "Hộp đựng cơm SEH-105",
+      "sku": "SEH-105",
+      "market": "Việt Nam",
+      "locale": "vi-VN",
+      "region": "Huế",
+      "audience": "khách mua lẻ",
+      "objective": "Giúp khách mua lẻ chọn hộp cho bữa trưa tại Huế",
+      "channel": "trang sản phẩm",
+      "cta": "chọn hộp cho bữa trưa",
+      "kpi": "Yêu cầu đã xác nhận cho SEH-105",
+      "kpi_unit": "yêu cầu",
+      "kpi_method": "Đếm yêu cầu duy nhất đã xác nhận cho SEH-105 qua trang sản phẩm trong 21 ngày, loại trùng theo mã yêu cầu.",
+      "kpi_window": "21 ngày",
+      "facts": [
+        {
+          "id": "scope-card",
+          "wording": "Hộp đựng cơm SEH-105 có lựa chọn bản hai ngăn.",
+          "qualifiers": "Chỉ áp dụng tại Huế."
+        },
+        {
+          "id": "commercial-card",
+          "category": "price",
+          "wording": "Giá 193.000 VND/chiếc.",
+          "qualifiers": "Chỉ áp dụng tại Huế cho bản hai ngăn. Chưa gồm túi giữ nhiệt.",
+          "price": {
+            "amount_minor": 193000,
+            "currency": "VND",
+            "unit": "piece",
+            "basis_quantity": "1",
+            "moq": "1",
+            "tier_min": "1",
+            "tier_max": null,
+            "tax": "included",
+            "conditions": [
+              "Chỉ áp dụng tại Huế cho bản hai ngăn. Chưa gồm túi giữ nhiệt."
+            ]
+          },
+          "quantity": "1"
+        }
+      ],
+      "hypotheses": [
+        "Khách có thể cần xác nhận bản hai ngăn trước khi quyết định."
+      ],
+      "gaps": [
+        "Chưa có bằng chứng so sánh chi phí hộp đựng cơm với đối thủ."
+      ],
+      "unsupported_example": "rẻ nhất toàn quốc",
+      "evaluation_notes": {
+        "buyer_action": "chọn hộp cho bữa trưa",
+        "required_scope": "Chỉ áp dụng tại Huế cho bản hai ngăn. Chưa gồm túi giữ nhiệt.",
+        "forbidden": "rẻ nhất toàn quốc",
+        "exclude_from_prompt": true
+      }
+    },
+    {
+      "id": "seller-06",
+      "persona": "seller",
+      "workflow": "WF-13",
+      "company": "Lá Phố",
+      "brand": "Lá Phố",
+      "product": "Bút máy SEH-106",
+      "sku": "SEH-106",
+      "market": "Việt Nam",
+      "locale": "vi-VN",
+      "region": "Huế",
+      "audience": "khách mua lẻ",
+      "objective": "Giúp khách mua lẻ đặt ngòi viết nhỏ tại Huế",
+      "channel": "trang sản phẩm",
+      "cta": "đặt ngòi viết nhỏ",
+      "kpi": "Yêu cầu đã xác nhận cho SEH-106",
+      "kpi_unit": "yêu cầu",
+      "kpi_method": "Đếm yêu cầu duy nhất đã xác nhận cho SEH-106 qua trang sản phẩm trong 21 ngày, loại trùng theo mã yêu cầu.",
+      "kpi_window": "21 ngày",
+      "facts": [
+        {
+          "id": "scope-card",
+          "wording": "Bút máy SEH-106 có lựa chọn ngòi mảnh.",
+          "qualifiers": "Chỉ áp dụng tại Huế."
+        },
+        {
+          "id": "commercial-card",
+          "category": "price",
+          "wording": "Giá 217.000 VND/chiếc.",
+          "qualifiers": "Chỉ áp dụng tại Huế cho ngòi mảnh. Chưa gồm mực thay thế.",
+          "price": {
+            "amount_minor": 217000,
+            "currency": "VND",
+            "unit": "piece",
+            "basis_quantity": "1",
+            "moq": "1",
+            "tier_min": "1",
+            "tier_max": null,
+            "tax": "included",
+            "conditions": [
+              "Chỉ áp dụng tại Huế cho ngòi mảnh. Chưa gồm mực thay thế."
+            ]
+          },
+          "quantity": "1"
+        }
+      ],
+      "hypotheses": [
+        "Khách có thể cần xác nhận ngòi mảnh trước khi quyết định."
+      ],
+      "gaps": [
+        "Chưa có bằng chứng so sánh chi phí bút máy với đối thủ."
+      ],
+      "unsupported_example": "rẻ nhất toàn quốc",
+      "evaluation_notes": {
+        "buyer_action": "đặt ngòi viết nhỏ",
+        "required_scope": "Chỉ áp dụng tại Huế cho ngòi mảnh. Chưa gồm mực thay thế.",
+        "forbidden": "rẻ nhất toàn quốc",
+        "exclude_from_prompt": true
+      }
+    },
+    {
+      "id": "seller-07",
+      "persona": "seller",
+      "workflow": "WF-03",
+      "company": "Lá Phố",
+      "brand": "Lá Phố",
+      "product": "Ví đựng thẻ SEH-107",
+      "sku": "SEH-107",
+      "market": "Việt Nam",
+      "locale": "vi-VN",
+      "region": "Huế",
+      "audience": "khách mua lẻ",
+      "objective": "Giúp khách mua lẻ chọn ví đi làm tại Huế",
+      "channel": "trang sản phẩm",
+      "cta": "chọn ví đi làm",
+      "kpi": "Yêu cầu đã xác nhận cho SEH-107",
+      "kpi_unit": "yêu cầu",
+      "kpi_method": "Đếm yêu cầu duy nhất đã xác nhận cho SEH-107 qua trang sản phẩm trong 21 ngày, loại trùng theo mã yêu cầu.",
+      "kpi_window": "21 ngày",
+      "facts": [
+        {
+          "id": "scope-card",
+          "wording": "Ví đựng thẻ SEH-107 có lựa chọn màu xanh.",
+          "qualifiers": "Chỉ áp dụng tại Huế."
+        },
+        {
+          "id": "commercial-card",
+          "category": "price",
+          "wording": "Giá 241.000 VND/chiếc.",
+          "qualifiers": "Chỉ áp dụng tại Huế cho màu xanh. Chưa gồm phí giao.",
+          "price": {
+            "amount_minor": 241000,
+            "currency": "VND",
+            "unit": "piece",
+            "basis_quantity": "1",
+            "moq": "1",
+            "tier_min": "1",
+            "tier_max": null,
+            "tax": "included",
+            "conditions": [
+              "Chỉ áp dụng tại Huế cho màu xanh. Chưa gồm phí giao."
+            ]
+          },
+          "quantity": "1"
+        }
+      ],
+      "hypotheses": [
+        "Khách có thể cần xác nhận màu xanh trước khi quyết định."
+      ],
+      "gaps": [
+        "Chưa có bằng chứng so sánh chi phí ví đựng thẻ với đối thủ."
+      ],
+      "unsupported_example": "rẻ nhất toàn quốc",
+      "evaluation_notes": {
+        "buyer_action": "chọn ví đi làm",
+        "required_scope": "Chỉ áp dụng tại Huế cho màu xanh. Chưa gồm phí giao.",
+        "forbidden": "rẻ nhất toàn quốc",
+        "exclude_from_prompt": true
+      }
+    },
+    {
+      "id": "seller-08",
+      "persona": "seller",
+      "workflow": "WF-13",
+      "company": "Lá Phố",
+      "brand": "Lá Phố",
+      "product": "Khung ảnh gỗ SEH-108",
+      "sku": "SEH-108",
+      "market": "Việt Nam",
+      "locale": "vi-VN",
+      "region": "Huế",
+      "audience": "khách mua lẻ",
+      "objective": "Giúp khách mua lẻ gửi kích thước ảnh để tư vấn tại Huế",
+      "channel": "trang sản phẩm",
+      "cta": "gửi kích thước ảnh để tư vấn",
+      "kpi": "Yêu cầu đã xác nhận cho SEH-108",
+      "kpi_unit": "yêu cầu",
+      "kpi_method": "Đếm yêu cầu duy nhất đã xác nhận cho SEH-108 qua trang sản phẩm trong 21 ngày, loại trùng theo mã yêu cầu.",
+      "kpi_window": "21 ngày",
+      "facts": [
+        {
+          "id": "scope-card",
+          "wording": "Khung ảnh gỗ SEH-108 có lựa chọn bản để bàn.",
+          "qualifiers": "Chỉ áp dụng tại Huế."
+        },
+        {
+          "id": "commercial-card",
+          "category": "price",
+          "wording": "Giá 265.000 VND/chiếc.",
+          "qualifiers": "Chỉ áp dụng tại Huế cho bản để bàn. Chưa gồm ảnh in.",
+          "price": {
+            "amount_minor": 265000,
+            "currency": "VND",
+            "unit": "piece",
+            "basis_quantity": "1",
+            "moq": "1",
+            "tier_min": "1",
+            "tier_max": null,
+            "tax": "included",
+            "conditions": [
+              "Chỉ áp dụng tại Huế cho bản để bàn. Chưa gồm ảnh in."
+            ]
+          },
+          "quantity": "1"
+        }
+      ],
+      "hypotheses": [
+        "Khách có thể cần xác nhận bản để bàn trước khi quyết định."
+      ],
+      "gaps": [
+        "Chưa có bằng chứng so sánh chi phí khung ảnh gỗ với đối thủ."
+      ],
+      "unsupported_example": "rẻ nhất toàn quốc",
+      "evaluation_notes": {
+        "buyer_action": "gửi kích thước ảnh để tư vấn",
+        "required_scope": "Chỉ áp dụng tại Huế cho bản để bàn. Chưa gồm ảnh in.",
+        "forbidden": "rẻ nhất toàn quốc",
+        "exclude_from_prompt": true
+      }
+    },
+    {
+      "id": "seller-09",
+      "persona": "seller",
+      "workflow": "WF-03",
+      "company": "Lá Phố",
+      "brand": "Lá Phố",
+      "product": "Tạp dề bếp SEH-109",
+      "sku": "SEH-109",
+      "market": "Việt Nam",
+      "locale": "vi-VN",
+      "region": "Huế",
+      "audience": "khách mua lẻ",
+      "objective": "Giúp khách mua lẻ chọn tạp dề làm bánh tại Huế",
+      "channel": "trang sản phẩm",
+      "cta": "chọn tạp dề làm bánh",
+      "kpi": "Yêu cầu đã xác nhận cho SEH-109",
+      "kpi_unit": "yêu cầu",
+      "kpi_method": "Đếm yêu cầu duy nhất đã xác nhận cho SEH-109 qua trang sản phẩm trong 21 ngày, loại trùng theo mã yêu cầu.",
+      "kpi_window": "21 ngày",
+      "facts": [
+        {
+          "id": "scope-card",
+          "wording": "Tạp dề bếp SEH-109 có lựa chọn màu kem.",
+          "qualifiers": "Chỉ áp dụng tại Huế."
+        },
+        {
+          "id": "commercial-card",
+          "category": "price",
+          "wording": "Giá 289.000 VND/chiếc.",
+          "qualifiers": "Chỉ áp dụng tại Huế cho màu kem. Chưa gồm thêu tên.",
+          "price": {
+            "amount_minor": 289000,
+            "currency": "VND",
+            "unit": "piece",
+            "basis_quantity": "1",
+            "moq": "1",
+            "tier_min": "1",
+            "tier_max": null,
+            "tax": "included",
+            "conditions": [
+              "Chỉ áp dụng tại Huế cho màu kem. Chưa gồm thêu tên."
+            ]
+          },
+          "quantity": "1"
+        }
+      ],
+      "hypotheses": [
+        "Khách có thể cần xác nhận màu kem trước khi quyết định."
+      ],
+      "gaps": [
+        "Chưa có bằng chứng so sánh chi phí tạp dề bếp với đối thủ."
+      ],
+      "unsupported_example": "rẻ nhất toàn quốc",
+      "evaluation_notes": {
+        "buyer_action": "chọn tạp dề làm bánh",
+        "required_scope": "Chỉ áp dụng tại Huế cho màu kem. Chưa gồm thêu tên.",
+        "forbidden": "rẻ nhất toàn quốc",
+        "exclude_from_prompt": true
+      }
+    },
+    {
+      "id": "seller-10",
+      "persona": "seller",
+      "workflow": "WF-13",
+      "company": "Lá Phố",
+      "brand": "Lá Phố",
+      "product": "Áo khoác gió SEH-110",
+      "sku": "SEH-110",
+      "market": "Việt Nam",
+      "locale": "vi-VN",
+      "region": "Huế",
+      "audience": "khách mua lẻ",
+      "objective": "Giúp khách mua lẻ đặt thử cỡ áo tại Huế",
+      "channel": "trang sản phẩm",
+      "cta": "đặt thử cỡ áo",
+      "kpi": "Yêu cầu đã xác nhận cho SEH-110",
+      "kpi_unit": "yêu cầu",
+      "kpi_method": "Đếm yêu cầu duy nhất đã xác nhận cho SEH-110 qua trang sản phẩm trong 21 ngày, loại trùng theo mã yêu cầu.",
+      "kpi_window": "21 ngày",
+      "facts": [
+        {
+          "id": "scope-card",
+          "wording": "Áo khoác gió SEH-110 có lựa chọn mẫu cổ đứng.",
+          "qualifiers": "Chỉ áp dụng tại Huế."
+        },
+        {
+          "id": "commercial-card",
+          "category": "price",
+          "wording": "Giá 313.000 VND/chiếc.",
+          "qualifiers": "Chỉ áp dụng tại Huế cho mẫu cổ đứng. Chưa gồm đổi màu theo yêu cầu.",
+          "price": {
+            "amount_minor": 313000,
+            "currency": "VND",
+            "unit": "piece",
+            "basis_quantity": "1",
+            "moq": "1",
+            "tier_min": "1",
+            "tier_max": null,
+            "tax": "included",
+            "conditions": [
+              "Chỉ áp dụng tại Huế cho mẫu cổ đứng. Chưa gồm đổi màu theo yêu cầu."
+            ]
+          },
+          "quantity": "1"
+        }
+      ],
+      "hypotheses": [
+        "Khách có thể cần xác nhận mẫu cổ đứng trước khi quyết định."
+      ],
+      "gaps": [
+        "Chưa có bằng chứng so sánh chi phí áo khoác gió với đối thủ."
+      ],
+      "unsupported_example": "rẻ nhất toàn quốc",
+      "evaluation_notes": {
+        "buyer_action": "đặt thử cỡ áo",
+        "required_scope": "Chỉ áp dụng tại Huế cho mẫu cổ đứng. Chưa gồm đổi màu theo yêu cầu.",
+        "forbidden": "rẻ nhất toàn quốc",
+        "exclude_from_prompt": true
+      }
+    },
+    {
+      "id": "materials-01",
+      "persona": "materials",
+      "workflow": "WF-03",
+      "company": "Xưởng Vòm",
+      "brand": "Xưởng Vòm",
+      "product": "Mẫu đá mài MAH-101",
+      "sku": "MAH-101",
+      "market": "Việt Nam",
+      "locale": "vi-VN",
+      "region": "Hà Nội",
+      "audience": "đội hoàn thiện công trình",
+      "objective": "Giúp đội hoàn thiện công trình xin bộ mẫu mặt bếp tại Hà Nội",
+      "channel": "trang báo giá",
+      "cta": "xin bộ mẫu mặt bếp",
+      "kpi": "Yêu cầu đã xác nhận cho MAH-101",
+      "kpi_unit": "yêu cầu",
+      "kpi_method": "Đếm yêu cầu duy nhất đã xác nhận cho MAH-101 qua trang báo giá trong 21 ngày, loại trùng theo mã yêu cầu.",
+      "kpi_window": "21 ngày",
+      "facts": [
+        {
+          "id": "scope-card",
+          "wording": "Mẫu đá mài MAH-101 có lựa chọn bề mặt mờ.",
+          "qualifiers": "Chỉ áp dụng tại Hà Nội."
+        },
+        {
+          "id": "commercial-card",
+          "category": "price",
+          "wording": "Giá 107.000 VND/chiếc.",
+          "qualifiers": "Chỉ áp dụng tại Hà Nội cho bề mặt mờ. Chưa gồm thi công.",
+          "price": {
+            "amount_minor": 107000,
+            "currency": "VND",
+            "unit": "piece",
+            "basis_quantity": "1",
+            "moq": "1",
+            "tier_min": "1",
+            "tier_max": null,
+            "tax": "included",
+            "conditions": [
+              "Chỉ áp dụng tại Hà Nội cho bề mặt mờ. Chưa gồm thi công."
+            ]
+          },
+          "quantity": "1"
+        }
+      ],
+      "hypotheses": [
+        "Khách có thể cần xác nhận bề mặt mờ trước khi quyết định."
+      ],
+      "gaps": [
+        "Chưa có bằng chứng so sánh chi phí mẫu đá mài với đối thủ."
+      ],
+      "unsupported_example": "rẻ nhất toàn quốc",
+      "evaluation_notes": {
+        "buyer_action": "xin bộ mẫu mặt bếp",
+        "required_scope": "Chỉ áp dụng tại Hà Nội cho bề mặt mờ. Chưa gồm thi công.",
+        "forbidden": "rẻ nhất toàn quốc",
+        "exclude_from_prompt": true
+      }
+    },
+    {
+      "id": "materials-02",
+      "persona": "materials",
+      "workflow": "WF-13",
+      "company": "Xưởng Vòm",
+      "brand": "Xưởng Vòm",
+      "product": "Thanh nẹp nhôm MAH-102",
+      "sku": "MAH-102",
+      "market": "Việt Nam",
+      "locale": "vi-VN",
+      "region": "Hà Nội",
+      "audience": "đội hoàn thiện công trình",
+      "objective": "Giúp đội hoàn thiện công trình lấy báo giá theo chiều dài tại Hà Nội",
+      "channel": "trang báo giá",
+      "cta": "lấy báo giá theo chiều dài",
+      "kpi": "Yêu cầu đã xác nhận cho MAH-102",
+      "kpi_unit": "yêu cầu",
+      "kpi_method": "Đếm yêu cầu duy nhất đã xác nhận cho MAH-102 qua trang báo giá trong 21 ngày, loại trùng theo mã yêu cầu.",
+      "kpi_window": "21 ngày",
+      "facts": [
+        {
+          "id": "scope-card",
+          "wording": "Thanh nẹp nhôm MAH-102 có lựa chọn màu bạc.",
+          "qualifiers": "Chỉ áp dụng tại Hà Nội."
+        },
+        {
+          "id": "commercial-card",
+          "category": "price",
+          "wording": "Giá 131.000 VND/chiếc.",
+          "qualifiers": "Chỉ áp dụng tại Hà Nội cho màu bạc. Chưa gồm cắt tại công trường.",
+          "price": {
+            "amount_minor": 131000,
+            "currency": "VND",
+            "unit": "piece",
+            "basis_quantity": "1",
+            "moq": "1",
+            "tier_min": "1",
+            "tier_max": null,
+            "tax": "included",
+            "conditions": [
+              "Chỉ áp dụng tại Hà Nội cho màu bạc. Chưa gồm cắt tại công trường."
+            ]
+          },
+          "quantity": "1"
+        }
+      ],
+      "hypotheses": [
+        "Khách có thể cần xác nhận màu bạc trước khi quyết định."
+      ],
+      "gaps": [
+        "Chưa có bằng chứng so sánh chi phí thanh nẹp nhôm với đối thủ."
+      ],
+      "unsupported_example": "rẻ nhất toàn quốc",
+      "evaluation_notes": {
+        "buyer_action": "lấy báo giá theo chiều dài",
+        "required_scope": "Chỉ áp dụng tại Hà Nội cho màu bạc. Chưa gồm cắt tại công trường.",
+        "forbidden": "rẻ nhất toàn quốc",
+        "exclude_from_prompt": true
+      }
+    },
+    {
+      "id": "materials-03",
+      "persona": "materials",
+      "workflow": "WF-03",
+      "company": "Xưởng Vòm",
+      "brand": "Xưởng Vòm",
+      "product": "Cửa chớp gỗ MAH-103",
+      "sku": "MAH-103",
+      "market": "Việt Nam",
+      "locale": "vi-VN",
+      "region": "Hà Nội",
+      "audience": "đội hoàn thiện công trình",
+      "objective": "Giúp đội hoàn thiện công trình gửi số đo ô cửa tại Hà Nội",
+      "channel": "trang báo giá",
+      "cta": "gửi số đo ô cửa",
+      "kpi": "Yêu cầu đã xác nhận cho MAH-103",
+      "kpi_unit": "yêu cầu",
+      "kpi_method": "Đếm yêu cầu duy nhất đã xác nhận cho MAH-103 qua trang báo giá trong 21 ngày, loại trùng theo mã yêu cầu.",
+      "kpi_window": "21 ngày",
+      "facts": [
+        {
+          "id": "scope-card",
+          "wording": "Cửa chớp gỗ MAH-103 có lựa chọn bản gỗ thông.",
+          "qualifiers": "Chỉ áp dụng tại Hà Nội."
+        },
+        {
+          "id": "commercial-card",
+          "category": "price",
+          "wording": "Giá 155.000 VND/chiếc.",
+          "qualifiers": "Chỉ áp dụng tại Hà Nội cho bản gỗ thông. Chưa gồm lắp đặt.",
+          "price": {
+            "amount_minor": 155000,
+            "currency": "VND",
+            "unit": "piece",
+            "basis_quantity": "1",
+            "moq": "1",
+            "tier_min": "1",
+            "tier_max": null,
+            "tax": "included",
+            "conditions": [
+              "Chỉ áp dụng tại Hà Nội cho bản gỗ thông. Chưa gồm lắp đặt."
+            ]
+          },
+          "quantity": "1"
+        }
+      ],
+      "hypotheses": [
+        "Khách có thể cần xác nhận bản gỗ thông trước khi quyết định."
+      ],
+      "gaps": [
+        "Chưa có bằng chứng so sánh chi phí cửa chớp gỗ với đối thủ."
+      ],
+      "unsupported_example": "rẻ nhất toàn quốc",
+      "evaluation_notes": {
+        "buyer_action": "gửi số đo ô cửa",
+        "required_scope": "Chỉ áp dụng tại Hà Nội cho bản gỗ thông. Chưa gồm lắp đặt.",
+        "forbidden": "rẻ nhất toàn quốc",
+        "exclude_from_prompt": true
+      }
+    },
+    {
+      "id": "materials-04",
+      "persona": "materials",
+      "workflow": "WF-13",
+      "company": "Xưởng Vòm",
+      "brand": "Xưởng Vòm",
+      "product": "Tấm trần tiêu âm MAH-104",
+      "sku": "MAH-104",
+      "market": "Việt Nam",
+      "locale": "vi-VN",
+      "region": "Hà Nội",
+      "audience": "đội hoàn thiện công trình",
+      "objective": "Giúp đội hoàn thiện công trình đăng ký xem mẫu phòng họp tại Hà Nội",
+      "channel": "trang báo giá",
+      "cta": "đăng ký xem mẫu phòng họp",
+      "kpi": "Yêu cầu đã xác nhận cho MAH-104",
+      "kpi_unit": "yêu cầu",
+      "kpi_method": "Đếm yêu cầu duy nhất đã xác nhận cho MAH-104 qua trang báo giá trong 21 ngày, loại trùng theo mã yêu cầu.",
+      "kpi_window": "21 ngày",
+      "facts": [
+        {
+          "id": "scope-card",
+          "wording": "Tấm trần tiêu âm MAH-104 có lựa chọn màu xám.",
+          "qualifiers": "Chỉ áp dụng tại Hà Nội."
+        },
+        {
+          "id": "commercial-card",
+          "category": "price",
+          "wording": "Giá 179.000 VND/chiếc.",
+          "qualifiers": "Chỉ áp dụng tại Hà Nội cho màu xám. Chưa gồm đo âm học.",
+          "price": {
+            "amount_minor": 179000,
+            "currency": "VND",
+            "unit": "piece",
+            "basis_quantity": "1",
+            "moq": "1",
+            "tier_min": "1",
+            "tier_max": null,
+            "tax": "included",
+            "conditions": [
+              "Chỉ áp dụng tại Hà Nội cho màu xám. Chưa gồm đo âm học."
+            ]
+          },
+          "quantity": "1"
+        }
+      ],
+      "hypotheses": [
+        "Khách có thể cần xác nhận màu xám trước khi quyết định."
+      ],
+      "gaps": [
+        "Chưa có bằng chứng so sánh chi phí tấm trần tiêu âm với đối thủ."
+      ],
+      "unsupported_example": "rẻ nhất toàn quốc",
+      "evaluation_notes": {
+        "buyer_action": "đăng ký xem mẫu phòng họp",
+        "required_scope": "Chỉ áp dụng tại Hà Nội cho màu xám. Chưa gồm đo âm học.",
+        "forbidden": "rẻ nhất toàn quốc",
+        "exclude_from_prompt": true
+      }
+    },
+    {
+      "id": "materials-05",
+      "persona": "materials",
+      "workflow": "WF-03",
+      "company": "Xưởng Vòm",
+      "brand": "Xưởng Vòm",
+      "product": "Tay nắm tủ MAH-105",
+      "sku": "MAH-105",
+      "market": "Việt Nam",
+      "locale": "vi-VN",
+      "region": "Hà Nội",
+      "audience": "đội hoàn thiện công trình",
+      "objective": "Giúp đội hoàn thiện công trình yêu cầu mẫu cho căn hộ tại Hà Nội",
+      "channel": "trang báo giá",
+      "cta": "yêu cầu mẫu cho căn hộ",
+      "kpi": "Yêu cầu đã xác nhận cho MAH-105",
+      "kpi_unit": "yêu cầu",
+      "kpi_method": "Đếm yêu cầu duy nhất đã xác nhận cho MAH-105 qua trang báo giá trong 21 ngày, loại trùng theo mã yêu cầu.",
+      "kpi_window": "21 ngày",
+      "facts": [
+        {
+          "id": "scope-card",
+          "wording": "Tay nắm tủ MAH-105 có lựa chọn mẫu chữ U.",
+          "qualifiers": "Chỉ áp dụng tại Hà Nội."
+        },
+        {
+          "id": "commercial-card",
+          "category": "price",
+          "wording": "Giá 203.000 VND/chiếc.",
+          "qualifiers": "Chỉ áp dụng tại Hà Nội cho mẫu chữ U. Chưa gồm vít dài.",
+          "price": {
+            "amount_minor": 203000,
+            "currency": "VND",
+            "unit": "piece",
+            "basis_quantity": "1",
+            "moq": "1",
+            "tier_min": "1",
+            "tier_max": null,
+            "tax": "included",
+            "conditions": [
+              "Chỉ áp dụng tại Hà Nội cho mẫu chữ U. Chưa gồm vít dài."
+            ]
+          },
+          "quantity": "1"
+        }
+      ],
+      "hypotheses": [
+        "Khách có thể cần xác nhận mẫu chữ U trước khi quyết định."
+      ],
+      "gaps": [
+        "Chưa có bằng chứng so sánh chi phí tay nắm tủ với đối thủ."
+      ],
+      "unsupported_example": "rẻ nhất toàn quốc",
+      "evaluation_notes": {
+        "buyer_action": "yêu cầu mẫu cho căn hộ",
+        "required_scope": "Chỉ áp dụng tại Hà Nội cho mẫu chữ U. Chưa gồm vít dài.",
+        "forbidden": "rẻ nhất toàn quốc",
+        "exclude_from_prompt": true
+      }
+    },
+    {
+      "id": "materials-06",
+      "persona": "materials",
+      "workflow": "WF-13",
+      "company": "Xưởng Vòm",
+      "brand": "Xưởng Vòm",
+      "product": "Kính hoa văn MAH-106",
+      "sku": "MAH-106",
+      "market": "Việt Nam",
+      "locale": "vi-VN",
+      "region": "Hà Nội",
+      "audience": "đội hoàn thiện công trình",
+      "objective": "Giúp đội hoàn thiện công trình gửi bản vẽ vách để báo giá tại Hà Nội",
+      "channel": "trang báo giá",
+      "cta": "gửi bản vẽ vách để báo giá",
+      "kpi": "Yêu cầu đã xác nhận cho MAH-106",
+      "kpi_unit": "yêu cầu",
+      "kpi_method": "Đếm yêu cầu duy nhất đã xác nhận cho MAH-106 qua trang báo giá trong 21 ngày, loại trùng theo mã yêu cầu.",
+      "kpi_window": "21 ngày",
+      "facts": [
+        {
+          "id": "scope-card",
+          "wording": "Kính hoa văn MAH-106 có lựa chọn hoa văn sọc.",
+          "qualifiers": "Chỉ áp dụng tại Hà Nội."
+        },
+        {
+          "id": "commercial-card",
+          "category": "price",
+          "wording": "Giá 227.000 VND/chiếc.",
+          "qualifiers": "Chỉ áp dụng tại Hà Nội cho hoa văn sọc. Chưa gồm khoan lỗ.",
+          "price": {
+            "amount_minor": 227000,
+            "currency": "VND",
+            "unit": "piece",
+            "basis_quantity": "1",
+            "moq": "1",
+            "tier_min": "1",
+            "tier_max": null,
+            "tax": "included",
+            "conditions": [
+              "Chỉ áp dụng tại Hà Nội cho hoa văn sọc. Chưa gồm khoan lỗ."
+            ]
+          },
+          "quantity": "1"
+        }
+      ],
+      "hypotheses": [
+        "Khách có thể cần xác nhận hoa văn sọc trước khi quyết định."
+      ],
+      "gaps": [
+        "Chưa có bằng chứng so sánh chi phí kính hoa văn với đối thủ."
+      ],
+      "unsupported_example": "rẻ nhất toàn quốc",
+      "evaluation_notes": {
+        "buyer_action": "gửi bản vẽ vách để báo giá",
+        "required_scope": "Chỉ áp dụng tại Hà Nội cho hoa văn sọc. Chưa gồm khoan lỗ.",
+        "forbidden": "rẻ nhất toàn quốc",
+        "exclude_from_prompt": true
+      }
+    },
+    {
+      "id": "materials-07",
+      "persona": "materials",
+      "workflow": "WF-03",
+      "company": "Xưởng Vòm",
+      "brand": "Xưởng Vòm",
+      "product": "Gỗ ghép MAH-107",
+      "sku": "MAH-107",
+      "market": "Việt Nam",
+      "locale": "vi-VN",
+      "region": "Hà Nội",
+      "audience": "đội hoàn thiện công trình",
+      "objective": "Giúp đội hoàn thiện công trình chọn ván đóng giá trưng bày tại Hà Nội",
+      "channel": "trang báo giá",
+      "cta": "chọn ván đóng giá trưng bày",
+      "kpi": "Yêu cầu đã xác nhận cho MAH-107",
+      "kpi_unit": "yêu cầu",
+      "kpi_method": "Đếm yêu cầu duy nhất đã xác nhận cho MAH-107 qua trang báo giá trong 21 ngày, loại trùng theo mã yêu cầu.",
+      "kpi_window": "21 ngày",
+      "facts": [
+        {
+          "id": "scope-card",
+          "wording": "Gỗ ghép MAH-107 có lựa chọn bản phủ dầu.",
+          "qualifiers": "Chỉ áp dụng tại Hà Nội."
+        },
+        {
+          "id": "commercial-card",
+          "category": "price",
+          "wording": "Giá 251.000 VND/chiếc.",
+          "qualifiers": "Chỉ áp dụng tại Hà Nội cho bản phủ dầu. Chưa gồm sơn lại.",
+          "price": {
+            "amount_minor": 251000,
+            "currency": "VND",
+            "unit": "piece",
+            "basis_quantity": "1",
+            "moq": "1",
+            "tier_min": "1",
+            "tier_max": null,
+            "tax": "included",
+            "conditions": [
+              "Chỉ áp dụng tại Hà Nội cho bản phủ dầu. Chưa gồm sơn lại."
+            ]
+          },
+          "quantity": "1"
+        }
+      ],
+      "hypotheses": [
+        "Khách có thể cần xác nhận bản phủ dầu trước khi quyết định."
+      ],
+      "gaps": [
+        "Chưa có bằng chứng so sánh chi phí gỗ ghép với đối thủ."
+      ],
+      "unsupported_example": "rẻ nhất toàn quốc",
+      "evaluation_notes": {
+        "buyer_action": "chọn ván đóng giá trưng bày",
+        "required_scope": "Chỉ áp dụng tại Hà Nội cho bản phủ dầu. Chưa gồm sơn lại.",
+        "forbidden": "rẻ nhất toàn quốc",
+        "exclude_from_prompt": true
+      }
+    },
+    {
+      "id": "materials-08",
+      "persona": "materials",
+      "workflow": "WF-13",
+      "company": "Xưởng Vòm",
+      "brand": "Xưởng Vòm",
+      "product": "Len chân tường MAH-108",
+      "sku": "MAH-108",
+      "market": "Việt Nam",
+      "locale": "vi-VN",
+      "region": "Hà Nội",
+      "audience": "đội hoàn thiện công trình",
+      "objective": "Giúp đội hoàn thiện công trình tính khối lượng theo phòng tại Hà Nội",
+      "channel": "trang báo giá",
+      "cta": "tính khối lượng theo phòng",
+      "kpi": "Yêu cầu đã xác nhận cho MAH-108",
+      "kpi_unit": "yêu cầu",
+      "kpi_method": "Đếm yêu cầu duy nhất đã xác nhận cho MAH-108 qua trang báo giá trong 21 ngày, loại trùng theo mã yêu cầu.",
+      "kpi_window": "21 ngày",
+      "facts": [
+        {
+          "id": "scope-card",
+          "wording": "Len chân tường MAH-108 có lựa chọn bản trắng.",
+          "qualifiers": "Chỉ áp dụng tại Hà Nội."
+        },
+        {
+          "id": "commercial-card",
+          "category": "price",
+          "wording": "Giá 275.000 VND/chiếc.",
+          "qualifiers": "Chỉ áp dụng tại Hà Nội cho bản trắng. Chưa gồm keo dán.",
+          "price": {
+            "amount_minor": 275000,
+            "currency": "VND",
+            "unit": "piece",
+            "basis_quantity": "1",
+            "moq": "1",
+            "tier_min": "1",
+            "tier_max": null,
+            "tax": "included",
+            "conditions": [
+              "Chỉ áp dụng tại Hà Nội cho bản trắng. Chưa gồm keo dán."
+            ]
+          },
+          "quantity": "1"
+        }
+      ],
+      "hypotheses": [
+        "Khách có thể cần xác nhận bản trắng trước khi quyết định."
+      ],
+      "gaps": [
+        "Chưa có bằng chứng so sánh chi phí len chân tường với đối thủ."
+      ],
+      "unsupported_example": "rẻ nhất toàn quốc",
+      "evaluation_notes": {
+        "buyer_action": "tính khối lượng theo phòng",
+        "required_scope": "Chỉ áp dụng tại Hà Nội cho bản trắng. Chưa gồm keo dán.",
+        "forbidden": "rẻ nhất toàn quốc",
+        "exclude_from_prompt": true
+      }
+    },
+    {
+      "id": "materials-09",
+      "persona": "materials",
+      "workflow": "WF-03",
+      "company": "Xưởng Vòm",
+      "brand": "Xưởng Vòm",
+      "product": "Lưới che nắng MAH-109",
+      "sku": "MAH-109",
+      "market": "Việt Nam",
+      "locale": "vi-VN",
+      "region": "Hà Nội",
+      "audience": "đội hoàn thiện công trình",
+      "objective": "Giúp đội hoàn thiện công trình gửi kích thước mái hiên tại Hà Nội",
+      "channel": "trang báo giá",
+      "cta": "gửi kích thước mái hiên",
+      "kpi": "Yêu cầu đã xác nhận cho MAH-109",
+      "kpi_unit": "yêu cầu",
+      "kpi_method": "Đếm yêu cầu duy nhất đã xác nhận cho MAH-109 qua trang báo giá trong 21 ngày, loại trùng theo mã yêu cầu.",
+      "kpi_window": "21 ngày",
+      "facts": [
+        {
+          "id": "scope-card",
+          "wording": "Lưới che nắng MAH-109 có lựa chọn màu ghi.",
+          "qualifiers": "Chỉ áp dụng tại Hà Nội."
+        },
+        {
+          "id": "commercial-card",
+          "category": "price",
+          "wording": "Giá 299.000 VND/chiếc.",
+          "qualifiers": "Chỉ áp dụng tại Hà Nội cho màu ghi. Chưa gồm khung treo.",
+          "price": {
+            "amount_minor": 299000,
+            "currency": "VND",
+            "unit": "piece",
+            "basis_quantity": "1",
+            "moq": "1",
+            "tier_min": "1",
+            "tier_max": null,
+            "tax": "included",
+            "conditions": [
+              "Chỉ áp dụng tại Hà Nội cho màu ghi. Chưa gồm khung treo."
+            ]
+          },
+          "quantity": "1"
+        }
+      ],
+      "hypotheses": [
+        "Khách có thể cần xác nhận màu ghi trước khi quyết định."
+      ],
+      "gaps": [
+        "Chưa có bằng chứng so sánh chi phí lưới che nắng với đối thủ."
+      ],
+      "unsupported_example": "rẻ nhất toàn quốc",
+      "evaluation_notes": {
+        "buyer_action": "gửi kích thước mái hiên",
+        "required_scope": "Chỉ áp dụng tại Hà Nội cho màu ghi. Chưa gồm khung treo.",
+        "forbidden": "rẻ nhất toàn quốc",
+        "exclude_from_prompt": true
+      }
+    },
+    {
+      "id": "materials-10",
+      "persona": "materials",
+      "workflow": "WF-13",
+      "company": "Xưởng Vòm",
+      "brand": "Xưởng Vòm",
+      "product": "Gạch thông gió MAH-110",
+      "sku": "MAH-110",
+      "market": "Việt Nam",
+      "locale": "vi-VN",
+      "region": "Hà Nội",
+      "audience": "đội hoàn thiện công trình",
+      "objective": "Giúp đội hoàn thiện công trình đặt lịch nhận mẫu mặt đứng tại Hà Nội",
+      "channel": "trang báo giá",
+      "cta": "đặt lịch nhận mẫu mặt đứng",
+      "kpi": "Yêu cầu đã xác nhận cho MAH-110",
+      "kpi_unit": "yêu cầu",
+      "kpi_method": "Đếm yêu cầu duy nhất đã xác nhận cho MAH-110 qua trang báo giá trong 21 ngày, loại trùng theo mã yêu cầu.",
+      "kpi_window": "21 ngày",
+      "facts": [
+        {
+          "id": "scope-card",
+          "wording": "Gạch thông gió MAH-110 có lựa chọn mẫu ô vuông.",
+          "qualifiers": "Chỉ áp dụng tại Hà Nội."
+        },
+        {
+          "id": "commercial-card",
+          "category": "price",
+          "wording": "Giá 323.000 VND/chiếc.",
+          "qualifiers": "Chỉ áp dụng tại Hà Nội cho mẫu ô vuông. Chưa gồm vận chuyển.",
+          "price": {
+            "amount_minor": 323000,
+            "currency": "VND",
+            "unit": "piece",
+            "basis_quantity": "1",
+            "moq": "1",
+            "tier_min": "1",
+            "tier_max": null,
+            "tax": "included",
+            "conditions": [
+              "Chỉ áp dụng tại Hà Nội cho mẫu ô vuông. Chưa gồm vận chuyển."
+            ]
+          },
+          "quantity": "1"
+        }
+      ],
+      "hypotheses": [
+        "Khách có thể cần xác nhận mẫu ô vuông trước khi quyết định."
+      ],
+      "gaps": [
+        "Chưa có bằng chứng so sánh chi phí gạch thông gió với đối thủ."
+      ],
+      "unsupported_example": "rẻ nhất toàn quốc",
+      "evaluation_notes": {
+        "buyer_action": "đặt lịch nhận mẫu mặt đứng",
+        "required_scope": "Chỉ áp dụng tại Hà Nội cho mẫu ô vuông. Chưa gồm vận chuyển.",
+        "forbidden": "rẻ nhất toàn quốc",
+        "exclude_from_prompt": true
+      }
+    },
+    {
+      "id": "service-01",
+      "persona": "service",
+      "workflow": "WF-03",
+      "company": "Đội Kỹ Thuật Sen",
+      "brand": "Đội Kỹ Thuật Sen",
+      "product": "Bảo trì quạt trần SEH-101",
+      "sku": "SEH-101",
+      "market": "Việt Nam",
+      "locale": "vi-VN",
+      "region": "Đà Nẵng",
+      "audience": "hộ gia đình có lịch hẹn",
+      "objective": "Giúp hộ gia đình có lịch hẹn đặt ca kiểm tra quạt tại Đà Nẵng",
+      "channel": "trang đặt lịch",
+      "cta": "đặt ca kiểm tra quạt",
+      "kpi": "Yêu cầu đã xác nhận cho SEH-101",
+      "kpi_unit": "yêu cầu",
+      "kpi_method": "Đếm yêu cầu duy nhất đã xác nhận cho SEH-101 qua trang đặt lịch trong 21 ngày, loại trùng theo mã yêu cầu.",
+      "kpi_window": "21 ngày",
+      "facts": [
+        {
+          "id": "scope-card",
+          "wording": "Bảo trì quạt trần SEH-101 có lựa chọn thiết bị dân dụng.",
+          "qualifiers": "Chỉ áp dụng tại Đà Nẵng."
+        },
+        {
+          "id": "commercial-card",
+          "category": "price",
+          "wording": "Giá 117.000 VND/lượt.",
+          "qualifiers": "Chỉ áp dụng tại Đà Nẵng cho thiết bị dân dụng. Chưa gồm phụ tùng.",
+          "price": {
+            "amount_minor": 117000,
+            "currency": "VND",
+            "unit": "service",
+            "basis_quantity": "1",
+            "moq": "1",
+            "tier_min": "1",
+            "tier_max": null,
+            "tax": "included",
+            "conditions": [
+              "Chỉ áp dụng tại Đà Nẵng cho thiết bị dân dụng. Chưa gồm phụ tùng."
+            ]
+          },
+          "quantity": "1"
+        }
+      ],
+      "hypotheses": [
+        "Khách có thể cần xác nhận thiết bị dân dụng trước khi quyết định."
+      ],
+      "gaps": [
+        "Chưa có bằng chứng so sánh chi phí bảo trì quạt trần với đối thủ."
+      ],
+      "unsupported_example": "rẻ nhất toàn quốc",
+      "evaluation_notes": {
+        "buyer_action": "đặt ca kiểm tra quạt",
+        "required_scope": "Chỉ áp dụng tại Đà Nẵng cho thiết bị dân dụng. Chưa gồm phụ tùng.",
+        "forbidden": "rẻ nhất toàn quốc",
+        "exclude_from_prompt": true
+      }
+    },
+    {
+      "id": "service-02",
+      "persona": "service",
+      "workflow": "WF-13",
+      "company": "Đội Kỹ Thuật Sen",
+      "brand": "Đội Kỹ Thuật Sen",
+      "product": "Giặt rèm SEH-102",
+      "sku": "SEH-102",
+      "market": "Việt Nam",
+      "locale": "vi-VN",
+      "region": "Đà Nẵng",
+      "audience": "hộ gia đình có lịch hẹn",
+      "objective": "Giúp hộ gia đình có lịch hẹn gửi ảnh rèm để khảo sát tại Đà Nẵng",
+      "channel": "trang đặt lịch",
+      "cta": "gửi ảnh rèm để khảo sát",
+      "kpi": "Yêu cầu đã xác nhận cho SEH-102",
+      "kpi_unit": "yêu cầu",
+      "kpi_method": "Đếm yêu cầu duy nhất đã xác nhận cho SEH-102 qua trang đặt lịch trong 21 ngày, loại trùng theo mã yêu cầu.",
+      "kpi_window": "21 ngày",
+      "facts": [
+        {
+          "id": "scope-card",
+          "wording": "Giặt rèm SEH-102 có lựa chọn rèm vải rời.",
+          "qualifiers": "Chỉ áp dụng tại Đà Nẵng."
+        },
+        {
+          "id": "commercial-card",
+          "category": "price",
+          "wording": "Giá 141.000 VND/lượt.",
+          "qualifiers": "Chỉ áp dụng tại Đà Nẵng cho rèm vải rời. Chưa gồm tháo ray.",
+          "price": {
+            "amount_minor": 141000,
+            "currency": "VND",
+            "unit": "service",
+            "basis_quantity": "1",
+            "moq": "1",
+            "tier_min": "1",
+            "tier_max": null,
+            "tax": "included",
+            "conditions": [
+              "Chỉ áp dụng tại Đà Nẵng cho rèm vải rời. Chưa gồm tháo ray."
+            ]
+          },
+          "quantity": "1"
+        }
+      ],
+      "hypotheses": [
+        "Khách có thể cần xác nhận rèm vải rời trước khi quyết định."
+      ],
+      "gaps": [
+        "Chưa có bằng chứng so sánh chi phí giặt rèm với đối thủ."
+      ],
+      "unsupported_example": "rẻ nhất toàn quốc",
+      "evaluation_notes": {
+        "buyer_action": "gửi ảnh rèm để khảo sát",
+        "required_scope": "Chỉ áp dụng tại Đà Nẵng cho rèm vải rời. Chưa gồm tháo ray.",
+        "forbidden": "rẻ nhất toàn quốc",
+        "exclude_from_prompt": true
+      }
+    },
+    {
+      "id": "service-03",
+      "persona": "service",
+      "workflow": "WF-03",
+      "company": "Đội Kỹ Thuật Sen",
+      "brand": "Đội Kỹ Thuật Sen",
+      "product": "Chỉnh đàn SEH-103",
+      "sku": "SEH-103",
+      "market": "Việt Nam",
+      "locale": "vi-VN",
+      "region": "Đà Nẵng",
+      "audience": "hộ gia đình có lịch hẹn",
+      "objective": "Giúp hộ gia đình có lịch hẹn đặt lịch khảo sát đàn tại Đà Nẵng",
+      "channel": "trang đặt lịch",
+      "cta": "đặt lịch khảo sát đàn",
+      "kpi": "Yêu cầu đã xác nhận cho SEH-103",
+      "kpi_unit": "yêu cầu",
+      "kpi_method": "Đếm yêu cầu duy nhất đã xác nhận cho SEH-103 qua trang đặt lịch trong 21 ngày, loại trùng theo mã yêu cầu.",
+      "kpi_window": "21 ngày",
+      "facts": [
+        {
+          "id": "scope-card",
+          "wording": "Chỉnh đàn SEH-103 có lựa chọn đàn cơ.",
+          "qualifiers": "Chỉ áp dụng tại Đà Nẵng."
+        },
+        {
+          "id": "commercial-card",
+          "category": "price",
+          "wording": "Giá 165.000 VND/lượt.",
+          "qualifiers": "Chỉ áp dụng tại Đà Nẵng cho đàn cơ. Chưa gồm thay dây.",
+          "price": {
+            "amount_minor": 165000,
+            "currency": "VND",
+            "unit": "service",
+            "basis_quantity": "1",
+            "moq": "1",
+            "tier_min": "1",
+            "tier_max": null,
+            "tax": "included",
+            "conditions": [
+              "Chỉ áp dụng tại Đà Nẵng cho đàn cơ. Chưa gồm thay dây."
+            ]
+          },
+          "quantity": "1"
+        }
+      ],
+      "hypotheses": [
+        "Khách có thể cần xác nhận đàn cơ trước khi quyết định."
+      ],
+      "gaps": [
+        "Chưa có bằng chứng so sánh chi phí chỉnh đàn với đối thủ."
+      ],
+      "unsupported_example": "rẻ nhất toàn quốc",
+      "evaluation_notes": {
+        "buyer_action": "đặt lịch khảo sát đàn",
+        "required_scope": "Chỉ áp dụng tại Đà Nẵng cho đàn cơ. Chưa gồm thay dây.",
+        "forbidden": "rẻ nhất toàn quốc",
+        "exclude_from_prompt": true
+      }
+    },
+    {
+      "id": "service-04",
+      "persona": "service",
+      "workflow": "WF-13",
+      "company": "Đội Kỹ Thuật Sen",
+      "brand": "Đội Kỹ Thuật Sen",
+      "product": "Vệ sinh bếp SEH-104",
+      "sku": "SEH-104",
+      "market": "Việt Nam",
+      "locale": "vi-VN",
+      "region": "Đà Nẵng",
+      "audience": "hộ gia đình có lịch hẹn",
+      "objective": "Giúp hộ gia đình có lịch hẹn xác nhận ca vệ sinh bếp tại Đà Nẵng",
+      "channel": "trang đặt lịch",
+      "cta": "xác nhận ca vệ sinh bếp",
+      "kpi": "Yêu cầu đã xác nhận cho SEH-104",
+      "kpi_unit": "yêu cầu",
+      "kpi_method": "Đếm yêu cầu duy nhất đã xác nhận cho SEH-104 qua trang đặt lịch trong 21 ngày, loại trùng theo mã yêu cầu.",
+      "kpi_window": "21 ngày",
+      "facts": [
+        {
+          "id": "scope-card",
+          "wording": "Vệ sinh bếp SEH-104 có lựa chọn bếp điện.",
+          "qualifiers": "Chỉ áp dụng tại Đà Nẵng."
+        },
+        {
+          "id": "commercial-card",
+          "category": "price",
+          "wording": "Giá 189.000 VND/lượt.",
+          "qualifiers": "Chỉ áp dụng tại Đà Nẵng cho bếp điện. Chưa gồm thay mặt kính.",
+          "price": {
+            "amount_minor": 189000,
+            "currency": "VND",
+            "unit": "service",
+            "basis_quantity": "1",
+            "moq": "1",
+            "tier_min": "1",
+            "tier_max": null,
+            "tax": "included",
+            "conditions": [
+              "Chỉ áp dụng tại Đà Nẵng cho bếp điện. Chưa gồm thay mặt kính."
+            ]
+          },
+          "quantity": "1"
+        }
+      ],
+      "hypotheses": [
+        "Khách có thể cần xác nhận bếp điện trước khi quyết định."
+      ],
+      "gaps": [
+        "Chưa có bằng chứng so sánh chi phí vệ sinh bếp với đối thủ."
+      ],
+      "unsupported_example": "rẻ nhất toàn quốc",
+      "evaluation_notes": {
+        "buyer_action": "xác nhận ca vệ sinh bếp",
+        "required_scope": "Chỉ áp dụng tại Đà Nẵng cho bếp điện. Chưa gồm thay mặt kính.",
+        "forbidden": "rẻ nhất toàn quốc",
+        "exclude_from_prompt": true
+      }
+    },
+    {
+      "id": "service-05",
+      "persona": "service",
+      "workflow": "WF-03",
+      "company": "Đội Kỹ Thuật Sen",
+      "brand": "Đội Kỹ Thuật Sen",
+      "product": "Khảo sát tủ gỗ SEH-105",
+      "sku": "SEH-105",
+      "market": "Việt Nam",
+      "locale": "vi-VN",
+      "region": "Đà Nẵng",
+      "audience": "hộ gia đình có lịch hẹn",
+      "objective": "Giúp hộ gia đình có lịch hẹn gửi ảnh bản lề hỏng tại Đà Nẵng",
+      "channel": "trang đặt lịch",
+      "cta": "gửi ảnh bản lề hỏng",
+      "kpi": "Yêu cầu đã xác nhận cho SEH-105",
+      "kpi_unit": "yêu cầu",
+      "kpi_method": "Đếm yêu cầu duy nhất đã xác nhận cho SEH-105 qua trang đặt lịch trong 21 ngày, loại trùng theo mã yêu cầu.",
+      "kpi_window": "21 ngày",
+      "facts": [
+        {
+          "id": "scope-card",
+          "wording": "Khảo sát tủ gỗ SEH-105 có lựa chọn tủ trong nhà.",
+          "qualifiers": "Chỉ áp dụng tại Đà Nẵng."
+        },
+        {
+          "id": "commercial-card",
+          "category": "price",
+          "wording": "Giá 213.000 VND/lượt.",
+          "qualifiers": "Chỉ áp dụng tại Đà Nẵng cho tủ trong nhà. Chưa gồm gia công cửa.",
+          "price": {
+            "amount_minor": 213000,
+            "currency": "VND",
+            "unit": "service",
+            "basis_quantity": "1",
+            "moq": "1",
+            "tier_min": "1",
+            "tier_max": null,
+            "tax": "included",
+            "conditions": [
+              "Chỉ áp dụng tại Đà Nẵng cho tủ trong nhà. Chưa gồm gia công cửa."
+            ]
+          },
+          "quantity": "1"
+        }
+      ],
+      "hypotheses": [
+        "Khách có thể cần xác nhận tủ trong nhà trước khi quyết định."
+      ],
+      "gaps": [
+        "Chưa có bằng chứng so sánh chi phí khảo sát tủ gỗ với đối thủ."
+      ],
+      "unsupported_example": "rẻ nhất toàn quốc",
+      "evaluation_notes": {
+        "buyer_action": "gửi ảnh bản lề hỏng",
+        "required_scope": "Chỉ áp dụng tại Đà Nẵng cho tủ trong nhà. Chưa gồm gia công cửa.",
+        "forbidden": "rẻ nhất toàn quốc",
+        "exclude_from_prompt": true
+      }
+    },
+    {
+      "id": "service-06",
+      "persona": "service",
+      "workflow": "WF-13",
+      "company": "Đội Kỹ Thuật Sen",
+      "brand": "Đội Kỹ Thuật Sen",
+      "product": "Chăm cây ban công SEH-106",
+      "sku": "SEH-106",
+      "market": "Việt Nam",
+      "locale": "vi-VN",
+      "region": "Đà Nẵng",
+      "audience": "hộ gia đình có lịch hẹn",
+      "objective": "Giúp hộ gia đình có lịch hẹn chọn buổi xem cây tại Đà Nẵng",
+      "channel": "trang đặt lịch",
+      "cta": "chọn buổi xem cây",
+      "kpi": "Yêu cầu đã xác nhận cho SEH-106",
+      "kpi_unit": "yêu cầu",
+      "kpi_method": "Đếm yêu cầu duy nhất đã xác nhận cho SEH-106 qua trang đặt lịch trong 21 ngày, loại trùng theo mã yêu cầu.",
+      "kpi_window": "21 ngày",
+      "facts": [
+        {
+          "id": "scope-card",
+          "wording": "Chăm cây ban công SEH-106 có lựa chọn ban công có lối vào.",
+          "qualifiers": "Chỉ áp dụng tại Đà Nẵng."
+        },
+        {
+          "id": "commercial-card",
+          "category": "price",
+          "wording": "Giá 237.000 VND/lượt.",
+          "qualifiers": "Chỉ áp dụng tại Đà Nẵng cho ban công có lối vào. Chưa gồm thay chậu.",
+          "price": {
+            "amount_minor": 237000,
+            "currency": "VND",
+            "unit": "service",
+            "basis_quantity": "1",
+            "moq": "1",
+            "tier_min": "1",
+            "tier_max": null,
+            "tax": "included",
+            "conditions": [
+              "Chỉ áp dụng tại Đà Nẵng cho ban công có lối vào. Chưa gồm thay chậu."
+            ]
+          },
+          "quantity": "1"
+        }
+      ],
+      "hypotheses": [
+        "Khách có thể cần xác nhận ban công có lối vào trước khi quyết định."
+      ],
+      "gaps": [
+        "Chưa có bằng chứng so sánh chi phí chăm cây ban công với đối thủ."
+      ],
+      "unsupported_example": "rẻ nhất toàn quốc",
+      "evaluation_notes": {
+        "buyer_action": "chọn buổi xem cây",
+        "required_scope": "Chỉ áp dụng tại Đà Nẵng cho ban công có lối vào. Chưa gồm thay chậu.",
+        "forbidden": "rẻ nhất toàn quốc",
+        "exclude_from_prompt": true
+      }
+    },
+    {
+      "id": "service-07",
+      "persona": "service",
+      "workflow": "WF-03",
+      "company": "Đội Kỹ Thuật Sen",
+      "brand": "Đội Kỹ Thuật Sen",
+      "product": "Lắp giá treo SEH-107",
+      "sku": "SEH-107",
+      "market": "Việt Nam",
+      "locale": "vi-VN",
+      "region": "Đà Nẵng",
+      "audience": "hộ gia đình có lịch hẹn",
+      "objective": "Giúp hộ gia đình có lịch hẹn gửi ảnh tường để thẩm định tại Đà Nẵng",
+      "channel": "trang đặt lịch",
+      "cta": "gửi ảnh tường để thẩm định",
+      "kpi": "Yêu cầu đã xác nhận cho SEH-107",
+      "kpi_unit": "yêu cầu",
+      "kpi_method": "Đếm yêu cầu duy nhất đã xác nhận cho SEH-107 qua trang đặt lịch trong 21 ngày, loại trùng theo mã yêu cầu.",
+      "kpi_window": "21 ngày",
+      "facts": [
+        {
+          "id": "scope-card",
+          "wording": "Lắp giá treo SEH-107 có lựa chọn tường gạch.",
+          "qualifiers": "Chỉ áp dụng tại Đà Nẵng."
+        },
+        {
+          "id": "commercial-card",
+          "category": "price",
+          "wording": "Giá 261.000 VND/lượt.",
+          "qualifiers": "Chỉ áp dụng tại Đà Nẵng cho tường gạch. Chưa gồm giá đỡ.",
+          "price": {
+            "amount_minor": 261000,
+            "currency": "VND",
+            "unit": "service",
+            "basis_quantity": "1",
+            "moq": "1",
+            "tier_min": "1",
+            "tier_max": null,
+            "tax": "included",
+            "conditions": [
+              "Chỉ áp dụng tại Đà Nẵng cho tường gạch. Chưa gồm giá đỡ."
+            ]
+          },
+          "quantity": "1"
+        }
+      ],
+      "hypotheses": [
+        "Khách có thể cần xác nhận tường gạch trước khi quyết định."
+      ],
+      "gaps": [
+        "Chưa có bằng chứng so sánh chi phí lắp giá treo với đối thủ."
+      ],
+      "unsupported_example": "rẻ nhất toàn quốc",
+      "evaluation_notes": {
+        "buyer_action": "gửi ảnh tường để thẩm định",
+        "required_scope": "Chỉ áp dụng tại Đà Nẵng cho tường gạch. Chưa gồm giá đỡ.",
+        "forbidden": "rẻ nhất toàn quốc",
+        "exclude_from_prompt": true
+      }
+    },
+    {
+      "id": "service-08",
+      "persona": "service",
+      "workflow": "WF-13",
+      "company": "Đội Kỹ Thuật Sen",
+      "brand": "Đội Kỹ Thuật Sen",
+      "product": "Bảo dưỡng xe đạp SEH-108",
+      "sku": "SEH-108",
+      "market": "Việt Nam",
+      "locale": "vi-VN",
+      "region": "Đà Nẵng",
+      "audience": "hộ gia đình có lịch hẹn",
+      "objective": "Giúp hộ gia đình có lịch hẹn đặt khung giờ kiểm tra phanh tại Đà Nẵng",
+      "channel": "trang đặt lịch",
+      "cta": "đặt khung giờ kiểm tra phanh",
+      "kpi": "Yêu cầu đã xác nhận cho SEH-108",
+      "kpi_unit": "yêu cầu",
+      "kpi_method": "Đếm yêu cầu duy nhất đã xác nhận cho SEH-108 qua trang đặt lịch trong 21 ngày, loại trùng theo mã yêu cầu.",
+      "kpi_window": "21 ngày",
+      "facts": [
+        {
+          "id": "scope-card",
+          "wording": "Bảo dưỡng xe đạp SEH-108 có lựa chọn xe số cơ.",
+          "qualifiers": "Chỉ áp dụng tại Đà Nẵng."
+        },
+        {
+          "id": "commercial-card",
+          "category": "price",
+          "wording": "Giá 285.000 VND/lượt.",
+          "qualifiers": "Chỉ áp dụng tại Đà Nẵng cho xe số cơ. Chưa gồm má phanh.",
+          "price": {
+            "amount_minor": 285000,
+            "currency": "VND",
+            "unit": "service",
+            "basis_quantity": "1",
+            "moq": "1",
+            "tier_min": "1",
+            "tier_max": null,
+            "tax": "included",
+            "conditions": [
+              "Chỉ áp dụng tại Đà Nẵng cho xe số cơ. Chưa gồm má phanh."
+            ]
+          },
+          "quantity": "1"
+        }
+      ],
+      "hypotheses": [
+        "Khách có thể cần xác nhận xe số cơ trước khi quyết định."
+      ],
+      "gaps": [
+        "Chưa có bằng chứng so sánh chi phí bảo dưỡng xe đạp với đối thủ."
+      ],
+      "unsupported_example": "rẻ nhất toàn quốc",
+      "evaluation_notes": {
+        "buyer_action": "đặt khung giờ kiểm tra phanh",
+        "required_scope": "Chỉ áp dụng tại Đà Nẵng cho xe số cơ. Chưa gồm má phanh.",
+        "forbidden": "rẻ nhất toàn quốc",
+        "exclude_from_prompt": true
+      }
+    },
+    {
+      "id": "service-09",
+      "persona": "service",
+      "workflow": "WF-03",
+      "company": "Đội Kỹ Thuật Sen",
+      "brand": "Đội Kỹ Thuật Sen",
+      "product": "Sửa khóa kéo SEH-109",
+      "sku": "SEH-109",
+      "market": "Việt Nam",
+      "locale": "vi-VN",
+      "region": "Đà Nẵng",
+      "audience": "hộ gia đình có lịch hẹn",
+      "objective": "Giúp hộ gia đình có lịch hẹn gửi ảnh đầu kéo để báo phí tại Đà Nẵng",
+      "channel": "trang đặt lịch",
+      "cta": "gửi ảnh đầu kéo để báo phí",
+      "kpi": "Yêu cầu đã xác nhận cho SEH-109",
+      "kpi_unit": "yêu cầu",
+      "kpi_method": "Đếm yêu cầu duy nhất đã xác nhận cho SEH-109 qua trang đặt lịch trong 21 ngày, loại trùng theo mã yêu cầu.",
+      "kpi_window": "21 ngày",
+      "facts": [
+        {
+          "id": "scope-card",
+          "wording": "Sửa khóa kéo SEH-109 có lựa chọn túi vải.",
+          "qualifiers": "Chỉ áp dụng tại Đà Nẵng."
+        },
+        {
+          "id": "commercial-card",
+          "category": "price",
+          "wording": "Giá 309.000 VND/lượt.",
+          "qualifiers": "Chỉ áp dụng tại Đà Nẵng cho túi vải. Chưa gồm thay lớp lót.",
+          "price": {
+            "amount_minor": 309000,
+            "currency": "VND",
+            "unit": "service",
+            "basis_quantity": "1",
+            "moq": "1",
+            "tier_min": "1",
+            "tier_max": null,
+            "tax": "included",
+            "conditions": [
+              "Chỉ áp dụng tại Đà Nẵng cho túi vải. Chưa gồm thay lớp lót."
+            ]
+          },
+          "quantity": "1"
+        }
+      ],
+      "hypotheses": [
+        "Khách có thể cần xác nhận túi vải trước khi quyết định."
+      ],
+      "gaps": [
+        "Chưa có bằng chứng so sánh chi phí sửa khóa kéo với đối thủ."
+      ],
+      "unsupported_example": "rẻ nhất toàn quốc",
+      "evaluation_notes": {
+        "buyer_action": "gửi ảnh đầu kéo để báo phí",
+        "required_scope": "Chỉ áp dụng tại Đà Nẵng cho túi vải. Chưa gồm thay lớp lót.",
+        "forbidden": "rẻ nhất toàn quốc",
+        "exclude_from_prompt": true
+      }
+    },
+    {
+      "id": "service-10",
+      "persona": "service",
+      "workflow": "WF-13",
+      "company": "Đội Kỹ Thuật Sen",
+      "brand": "Đội Kỹ Thuật Sen",
+      "product": "Đo sáng bàn học SEH-110",
+      "sku": "SEH-110",
+      "market": "Việt Nam",
+      "locale": "vi-VN",
+      "region": "Đà Nẵng",
+      "audience": "hộ gia đình có lịch hẹn",
+      "objective": "Giúp hộ gia đình có lịch hẹn đặt buổi đo tại nhà tại Đà Nẵng",
+      "channel": "trang đặt lịch",
+      "cta": "đặt buổi đo tại nhà",
+      "kpi": "Yêu cầu đã xác nhận cho SEH-110",
+      "kpi_unit": "yêu cầu",
+      "kpi_method": "Đếm yêu cầu duy nhất đã xác nhận cho SEH-110 qua trang đặt lịch trong 21 ngày, loại trùng theo mã yêu cầu.",
+      "kpi_window": "21 ngày",
+      "facts": [
+        {
+          "id": "scope-card",
+          "wording": "Đo sáng bàn học SEH-110 có lựa chọn phòng học gia đình.",
+          "qualifiers": "Chỉ áp dụng tại Đà Nẵng."
+        },
+        {
+          "id": "commercial-card",
+          "category": "price",
+          "wording": "Giá 333.000 VND/lượt.",
+          "qualifiers": "Chỉ áp dụng tại Đà Nẵng cho phòng học gia đình. Chưa gồm đèn mới.",
+          "price": {
+            "amount_minor": 333000,
+            "currency": "VND",
+            "unit": "service",
+            "basis_quantity": "1",
+            "moq": "1",
+            "tier_min": "1",
+            "tier_max": null,
+            "tax": "included",
+            "conditions": [
+              "Chỉ áp dụng tại Đà Nẵng cho phòng học gia đình. Chưa gồm đèn mới."
+            ]
+          },
+          "quantity": "1"
+        }
+      ],
+      "hypotheses": [
+        "Khách có thể cần xác nhận phòng học gia đình trước khi quyết định."
+      ],
+      "gaps": [
+        "Chưa có bằng chứng so sánh chi phí đo sáng bàn học với đối thủ."
+      ],
+      "unsupported_example": "rẻ nhất toàn quốc",
+      "evaluation_notes": {
+        "buyer_action": "đặt buổi đo tại nhà",
+        "required_scope": "Chỉ áp dụng tại Đà Nẵng cho phòng học gia đình. Chưa gồm đèn mới.",
+        "forbidden": "rẻ nhất toàn quốc",
+        "exclude_from_prompt": true
+      }
+    },
+    {
+      "id": "agency-01",
+      "persona": "agency",
+      "workflow": "WF-03",
+      "company": "Khách hàng Nếp",
+      "brand": "Khách hàng Nếp",
+      "product": "Hộp trà AGH-101",
+      "sku": "AGH-101",
+      "market": "Việt Nam",
+      "locale": "vi-VN",
+      "region": "Hải Phòng",
+      "audience": "đại lý mua theo lô",
+      "objective": "Giúp đại lý mua theo lô đăng ký bộ mẫu trưng bày tại Hải Phòng",
+      "channel": "trang đăng ký mẫu",
+      "cta": "đăng ký bộ mẫu trưng bày",
+      "kpi": "Yêu cầu đã xác nhận cho AGH-101",
+      "kpi_unit": "yêu cầu",
+      "kpi_method": "Đếm yêu cầu duy nhất đã xác nhận cho AGH-101 qua trang đăng ký mẫu trong 21 ngày, loại trùng theo mã yêu cầu.",
+      "kpi_window": "21 ngày",
+      "facts": [
+        {
+          "id": "scope-card",
+          "wording": "Hộp trà AGH-101 có lựa chọn mẫu nắp gập.",
+          "qualifiers": "Chỉ áp dụng tại Hải Phòng."
+        },
+        {
+          "id": "commercial-card",
+          "category": "price",
+          "wording": "Giá 127.000 VND/chiếc.",
+          "qualifiers": "Chỉ áp dụng tại Hải Phòng cho mẫu nắp gập. Chưa gồm in thương hiệu.",
+          "price": {
+            "amount_minor": 127000,
+            "currency": "VND",
+            "unit": "piece",
+            "basis_quantity": "1",
+            "moq": "1",
+            "tier_min": "1",
+            "tier_max": null,
+            "tax": "included",
+            "conditions": [
+              "Chỉ áp dụng tại Hải Phòng cho mẫu nắp gập. Chưa gồm in thương hiệu."
+            ]
+          },
+          "quantity": "1"
+        }
+      ],
+      "hypotheses": [
+        "Khách có thể cần xác nhận mẫu nắp gập trước khi quyết định."
+      ],
+      "gaps": [
+        "Chưa có bằng chứng so sánh chi phí hộp trà với đối thủ."
+      ],
+      "unsupported_example": "rẻ nhất toàn quốc",
+      "evaluation_notes": {
+        "buyer_action": "đăng ký bộ mẫu trưng bày",
+        "required_scope": "Chỉ áp dụng tại Hải Phòng cho mẫu nắp gập. Chưa gồm in thương hiệu.",
+        "forbidden": "rẻ nhất toàn quốc",
+        "exclude_from_prompt": true
+      }
+    },
+    {
+      "id": "agency-02",
+      "persona": "agency",
+      "workflow": "WF-13",
+      "company": "Khách hàng Nếp",
+      "brand": "Khách hàng Nếp",
+      "product": "Thiệp giấy AGH-102",
+      "sku": "AGH-102",
+      "market": "Việt Nam",
+      "locale": "vi-VN",
+      "region": "Hải Phòng",
+      "audience": "đại lý mua theo lô",
+      "objective": "Giúp đại lý mua theo lô xin bảng màu thiệp tại Hải Phòng",
+      "channel": "trang đăng ký mẫu",
+      "cta": "xin bảng màu thiệp",
+      "kpi": "Yêu cầu đã xác nhận cho AGH-102",
+      "kpi_unit": "yêu cầu",
+      "kpi_method": "Đếm yêu cầu duy nhất đã xác nhận cho AGH-102 qua trang đăng ký mẫu trong 21 ngày, loại trùng theo mã yêu cầu.",
+      "kpi_window": "21 ngày",
+      "facts": [
+        {
+          "id": "scope-card",
+          "wording": "Thiệp giấy AGH-102 có lựa chọn bề mặt nhám.",
+          "qualifiers": "Chỉ áp dụng tại Hải Phòng."
+        },
+        {
+          "id": "commercial-card",
+          "category": "price",
+          "wording": "Giá 151.000 VND/chiếc.",
+          "qualifiers": "Chỉ áp dụng tại Hải Phòng cho bề mặt nhám. Chưa gồm ép kim.",
+          "price": {
+            "amount_minor": 151000,
+            "currency": "VND",
+            "unit": "piece",
+            "basis_quantity": "1",
+            "moq": "1",
+            "tier_min": "1",
+            "tier_max": null,
+            "tax": "included",
+            "conditions": [
+              "Chỉ áp dụng tại Hải Phòng cho bề mặt nhám. Chưa gồm ép kim."
+            ]
+          },
+          "quantity": "1"
+        }
+      ],
+      "hypotheses": [
+        "Khách có thể cần xác nhận bề mặt nhám trước khi quyết định."
+      ],
+      "gaps": [
+        "Chưa có bằng chứng so sánh chi phí thiệp giấy với đối thủ."
+      ],
+      "unsupported_example": "rẻ nhất toàn quốc",
+      "evaluation_notes": {
+        "buyer_action": "xin bảng màu thiệp",
+        "required_scope": "Chỉ áp dụng tại Hải Phòng cho bề mặt nhám. Chưa gồm ép kim.",
+        "forbidden": "rẻ nhất toàn quốc",
+        "exclude_from_prompt": true
+      }
+    },
+    {
+      "id": "agency-03",
+      "persona": "agency",
+      "workflow": "WF-03",
+      "company": "Khách hàng Nếp",
+      "brand": "Khách hàng Nếp",
+      "product": "Túi đựng hạt AGH-103",
+      "sku": "AGH-103",
+      "market": "Việt Nam",
+      "locale": "vi-VN",
+      "region": "Hải Phòng",
+      "audience": "đại lý mua theo lô",
+      "objective": "Giúp đại lý mua theo lô gửi quy cách để tư vấn sỉ tại Hải Phòng",
+      "channel": "trang đăng ký mẫu",
+      "cta": "gửi quy cách để tư vấn sỉ",
+      "kpi": "Yêu cầu đã xác nhận cho AGH-103",
+      "kpi_unit": "yêu cầu",
+      "kpi_method": "Đếm yêu cầu duy nhất đã xác nhận cho AGH-103 qua trang đăng ký mẫu trong 21 ngày, loại trùng theo mã yêu cầu.",
+      "kpi_window": "21 ngày",
+      "facts": [
+        {
+          "id": "scope-card",
+          "wording": "Túi đựng hạt AGH-103 có lựa chọn bản khóa kéo.",
+          "qualifiers": "Chỉ áp dụng tại Hải Phòng."
+        },
+        {
+          "id": "commercial-card",
+          "category": "price",
+          "wording": "Giá 175.000 VND/chiếc.",
+          "qualifiers": "Chỉ áp dụng tại Hải Phòng cho bản khóa kéo. Chưa gồm hạt bên trong.",
+          "price": {
+            "amount_minor": 175000,
+            "currency": "VND",
+            "unit": "piece",
+            "basis_quantity": "1",
+            "moq": "1",
+            "tier_min": "1",
+            "tier_max": null,
+            "tax": "included",
+            "conditions": [
+              "Chỉ áp dụng tại Hải Phòng cho bản khóa kéo. Chưa gồm hạt bên trong."
+            ]
+          },
+          "quantity": "1"
+        }
+      ],
+      "hypotheses": [
+        "Khách có thể cần xác nhận bản khóa kéo trước khi quyết định."
+      ],
+      "gaps": [
+        "Chưa có bằng chứng so sánh chi phí túi đựng hạt với đối thủ."
+      ],
+      "unsupported_example": "rẻ nhất toàn quốc",
+      "evaluation_notes": {
+        "buyer_action": "gửi quy cách để tư vấn sỉ",
+        "required_scope": "Chỉ áp dụng tại Hải Phòng cho bản khóa kéo. Chưa gồm hạt bên trong.",
+        "forbidden": "rẻ nhất toàn quốc",
+        "exclude_from_prompt": true
+      }
+    },
+    {
+      "id": "agency-04",
+      "persona": "agency",
+      "workflow": "WF-13",
+      "company": "Khách hàng Nếp",
+      "brand": "Khách hàng Nếp",
+      "product": "Khay đựng bánh AGH-104",
+      "sku": "AGH-104",
+      "market": "Việt Nam",
+      "locale": "vi-VN",
+      "region": "Hải Phòng",
+      "audience": "đại lý mua theo lô",
+      "objective": "Giúp đại lý mua theo lô đề nghị giao mẫu cho đại lý tại Hải Phòng",
+      "channel": "trang đăng ký mẫu",
+      "cta": "đề nghị giao mẫu cho đại lý",
+      "kpi": "Yêu cầu đã xác nhận cho AGH-104",
+      "kpi_unit": "yêu cầu",
+      "kpi_method": "Đếm yêu cầu duy nhất đã xác nhận cho AGH-104 qua trang đăng ký mẫu trong 21 ngày, loại trùng theo mã yêu cầu.",
+      "kpi_window": "21 ngày",
+      "facts": [
+        {
+          "id": "scope-card",
+          "wording": "Khay đựng bánh AGH-104 có lựa chọn bản giấy kraft.",
+          "qualifiers": "Chỉ áp dụng tại Hải Phòng."
+        },
+        {
+          "id": "commercial-card",
+          "category": "price",
+          "wording": "Giá 199.000 VND/chiếc.",
+          "qualifiers": "Chỉ áp dụng tại Hải Phòng cho bản giấy kraft. Chưa gồm bánh mẫu.",
+          "price": {
+            "amount_minor": 199000,
+            "currency": "VND",
+            "unit": "piece",
+            "basis_quantity": "1",
+            "moq": "1",
+            "tier_min": "1",
+            "tier_max": null,
+            "tax": "included",
+            "conditions": [
+              "Chỉ áp dụng tại Hải Phòng cho bản giấy kraft. Chưa gồm bánh mẫu."
+            ]
+          },
+          "quantity": "1"
+        }
+      ],
+      "hypotheses": [
+        "Khách có thể cần xác nhận bản giấy kraft trước khi quyết định."
+      ],
+      "gaps": [
+        "Chưa có bằng chứng so sánh chi phí khay đựng bánh với đối thủ."
+      ],
+      "unsupported_example": "rẻ nhất toàn quốc",
+      "evaluation_notes": {
+        "buyer_action": "đề nghị giao mẫu cho đại lý",
+        "required_scope": "Chỉ áp dụng tại Hải Phòng cho bản giấy kraft. Chưa gồm bánh mẫu.",
+        "forbidden": "rẻ nhất toàn quốc",
+        "exclude_from_prompt": true
+      }
+    },
+    {
+      "id": "agency-05",
+      "persona": "agency",
+      "workflow": "WF-03",
+      "company": "Khách hàng Nếp",
+      "brand": "Khách hàng Nếp",
+      "product": "Gói quà vải AGH-105",
+      "sku": "AGH-105",
+      "market": "Việt Nam",
+      "locale": "vi-VN",
+      "region": "Hải Phòng",
+      "audience": "đại lý mua theo lô",
+      "objective": "Giúp đại lý mua theo lô chọn gói cho giỏ quà tại Hải Phòng",
+      "channel": "trang đăng ký mẫu",
+      "cta": "chọn gói cho giỏ quà",
+      "kpi": "Yêu cầu đã xác nhận cho AGH-105",
+      "kpi_unit": "yêu cầu",
+      "kpi_method": "Đếm yêu cầu duy nhất đã xác nhận cho AGH-105 qua trang đăng ký mẫu trong 21 ngày, loại trùng theo mã yêu cầu.",
+      "kpi_window": "21 ngày",
+      "facts": [
+        {
+          "id": "scope-card",
+          "wording": "Gói quà vải AGH-105 có lựa chọn dây trắng.",
+          "qualifiers": "Chỉ áp dụng tại Hải Phòng."
+        },
+        {
+          "id": "commercial-card",
+          "category": "price",
+          "wording": "Giá 223.000 VND/chiếc.",
+          "qualifiers": "Chỉ áp dụng tại Hải Phòng cho dây trắng. Chưa gồm in nhãn.",
+          "price": {
+            "amount_minor": 223000,
+            "currency": "VND",
+            "unit": "piece",
+            "basis_quantity": "1",
+            "moq": "1",
+            "tier_min": "1",
+            "tier_max": null,
+            "tax": "included",
+            "conditions": [
+              "Chỉ áp dụng tại Hải Phòng cho dây trắng. Chưa gồm in nhãn."
+            ]
+          },
+          "quantity": "1"
+        }
+      ],
+      "hypotheses": [
+        "Khách có thể cần xác nhận dây trắng trước khi quyết định."
+      ],
+      "gaps": [
+        "Chưa có bằng chứng so sánh chi phí gói quà vải với đối thủ."
+      ],
+      "unsupported_example": "rẻ nhất toàn quốc",
+      "evaluation_notes": {
+        "buyer_action": "chọn gói cho giỏ quà",
+        "required_scope": "Chỉ áp dụng tại Hải Phòng cho dây trắng. Chưa gồm in nhãn.",
+        "forbidden": "rẻ nhất toàn quốc",
+        "exclude_from_prompt": true
+      }
+    },
+    {
+      "id": "agency-06",
+      "persona": "agency",
+      "workflow": "WF-13",
+      "company": "Khách hàng Nếp",
+      "brand": "Khách hàng Nếp",
+      "product": "Ống giấy AGH-106",
+      "sku": "AGH-106",
+      "market": "Việt Nam",
+      "locale": "vi-VN",
+      "region": "Hải Phòng",
+      "audience": "đại lý mua theo lô",
+      "objective": "Giúp đại lý mua theo lô gửi độ dài cuộn tranh tại Hải Phòng",
+      "channel": "trang đăng ký mẫu",
+      "cta": "gửi độ dài cuộn tranh",
+      "kpi": "Yêu cầu đã xác nhận cho AGH-106",
+      "kpi_unit": "yêu cầu",
+      "kpi_method": "Đếm yêu cầu duy nhất đã xác nhận cho AGH-106 qua trang đăng ký mẫu trong 21 ngày, loại trùng theo mã yêu cầu.",
+      "kpi_window": "21 ngày",
+      "facts": [
+        {
+          "id": "scope-card",
+          "wording": "Ống giấy AGH-106 có lựa chọn nắp giấy.",
+          "qualifiers": "Chỉ áp dụng tại Hải Phòng."
+        },
+        {
+          "id": "commercial-card",
+          "category": "price",
+          "wording": "Giá 247.000 VND/chiếc.",
+          "qualifiers": "Chỉ áp dụng tại Hải Phòng cho nắp giấy. Chưa gồm đóng gói tranh.",
+          "price": {
+            "amount_minor": 247000,
+            "currency": "VND",
+            "unit": "piece",
+            "basis_quantity": "1",
+            "moq": "1",
+            "tier_min": "1",
+            "tier_max": null,
+            "tax": "included",
+            "conditions": [
+              "Chỉ áp dụng tại Hải Phòng cho nắp giấy. Chưa gồm đóng gói tranh."
+            ]
+          },
+          "quantity": "1"
+        }
+      ],
+      "hypotheses": [
+        "Khách có thể cần xác nhận nắp giấy trước khi quyết định."
+      ],
+      "gaps": [
+        "Chưa có bằng chứng so sánh chi phí ống giấy với đối thủ."
+      ],
+      "unsupported_example": "rẻ nhất toàn quốc",
+      "evaluation_notes": {
+        "buyer_action": "gửi độ dài cuộn tranh",
+        "required_scope": "Chỉ áp dụng tại Hải Phòng cho nắp giấy. Chưa gồm đóng gói tranh.",
+        "forbidden": "rẻ nhất toàn quốc",
+        "exclude_from_prompt": true
+      }
+    },
+    {
+      "id": "agency-07",
+      "persona": "agency",
+      "workflow": "WF-03",
+      "company": "Khách hàng Nếp",
+      "brand": "Khách hàng Nếp",
+      "product": "Bìa hồ sơ AGH-107",
+      "sku": "AGH-107",
+      "market": "Việt Nam",
+      "locale": "vi-VN",
+      "region": "Hải Phòng",
+      "audience": "đại lý mua theo lô",
+      "objective": "Giúp đại lý mua theo lô đăng ký mẫu cho văn phòng phẩm tại Hải Phòng",
+      "channel": "trang đăng ký mẫu",
+      "cta": "đăng ký mẫu cho văn phòng phẩm",
+      "kpi": "Yêu cầu đã xác nhận cho AGH-107",
+      "kpi_unit": "yêu cầu",
+      "kpi_method": "Đếm yêu cầu duy nhất đã xác nhận cho AGH-107 qua trang đăng ký mẫu trong 21 ngày, loại trùng theo mã yêu cầu.",
+      "kpi_window": "21 ngày",
+      "facts": [
+        {
+          "id": "scope-card",
+          "wording": "Bìa hồ sơ AGH-107 có lựa chọn mẫu gấp đôi.",
+          "qualifiers": "Chỉ áp dụng tại Hải Phòng."
+        },
+        {
+          "id": "commercial-card",
+          "category": "price",
+          "wording": "Giá 271.000 VND/chiếc.",
+          "qualifiers": "Chỉ áp dụng tại Hải Phòng cho mẫu gấp đôi. Chưa gồm in tên.",
+          "price": {
+            "amount_minor": 271000,
+            "currency": "VND",
+            "unit": "piece",
+            "basis_quantity": "1",
+            "moq": "1",
+            "tier_min": "1",
+            "tier_max": null,
+            "tax": "included",
+            "conditions": [
+              "Chỉ áp dụng tại Hải Phòng cho mẫu gấp đôi. Chưa gồm in tên."
+            ]
+          },
+          "quantity": "1"
+        }
+      ],
+      "hypotheses": [
+        "Khách có thể cần xác nhận mẫu gấp đôi trước khi quyết định."
+      ],
+      "gaps": [
+        "Chưa có bằng chứng so sánh chi phí bìa hồ sơ với đối thủ."
+      ],
+      "unsupported_example": "rẻ nhất toàn quốc",
+      "evaluation_notes": {
+        "buyer_action": "đăng ký mẫu cho văn phòng phẩm",
+        "required_scope": "Chỉ áp dụng tại Hải Phòng cho mẫu gấp đôi. Chưa gồm in tên.",
+        "forbidden": "rẻ nhất toàn quốc",
+        "exclude_from_prompt": true
+      }
+    },
+    {
+      "id": "agency-08",
+      "persona": "agency",
+      "workflow": "WF-13",
+      "company": "Khách hàng Nếp",
+      "brand": "Khách hàng Nếp",
+      "product": "Hộp gỗ AGH-108",
+      "sku": "AGH-108",
+      "market": "Việt Nam",
+      "locale": "vi-VN",
+      "region": "Hải Phòng",
+      "audience": "đại lý mua theo lô",
+      "objective": "Giúp đại lý mua theo lô hẹn xem bản mẫu hộp tại Hải Phòng",
+      "channel": "trang đăng ký mẫu",
+      "cta": "hẹn xem bản mẫu hộp",
+      "kpi": "Yêu cầu đã xác nhận cho AGH-108",
+      "kpi_unit": "yêu cầu",
+      "kpi_method": "Đếm yêu cầu duy nhất đã xác nhận cho AGH-108 qua trang đăng ký mẫu trong 21 ngày, loại trùng theo mã yêu cầu.",
+      "kpi_window": "21 ngày",
+      "facts": [
+        {
+          "id": "scope-card",
+          "wording": "Hộp gỗ AGH-108 có lựa chọn gỗ sáng màu.",
+          "qualifiers": "Chỉ áp dụng tại Hải Phòng."
+        },
+        {
+          "id": "commercial-card",
+          "category": "price",
+          "wording": "Giá 295.000 VND/chiếc.",
+          "qualifiers": "Chỉ áp dụng tại Hải Phòng cho gỗ sáng màu. Chưa gồm lót nhung.",
+          "price": {
+            "amount_minor": 295000,
+            "currency": "VND",
+            "unit": "piece",
+            "basis_quantity": "1",
+            "moq": "1",
+            "tier_min": "1",
+            "tier_max": null,
+            "tax": "included",
+            "conditions": [
+              "Chỉ áp dụng tại Hải Phòng cho gỗ sáng màu. Chưa gồm lót nhung."
+            ]
+          },
+          "quantity": "1"
+        }
+      ],
+      "hypotheses": [
+        "Khách có thể cần xác nhận gỗ sáng màu trước khi quyết định."
+      ],
+      "gaps": [
+        "Chưa có bằng chứng so sánh chi phí hộp gỗ với đối thủ."
+      ],
+      "unsupported_example": "rẻ nhất toàn quốc",
+      "evaluation_notes": {
+        "buyer_action": "hẹn xem bản mẫu hộp",
+        "required_scope": "Chỉ áp dụng tại Hải Phòng cho gỗ sáng màu. Chưa gồm lót nhung.",
+        "forbidden": "rẻ nhất toàn quốc",
+        "exclude_from_prompt": true
+      }
+    },
+    {
+      "id": "agency-09",
+      "persona": "agency",
+      "workflow": "WF-03",
+      "company": "Khách hàng Nếp",
+      "brand": "Khách hàng Nếp",
+      "product": "Giá mica AGH-109",
+      "sku": "AGH-109",
+      "market": "Việt Nam",
+      "locale": "vi-VN",
+      "region": "Hải Phòng",
+      "audience": "đại lý mua theo lô",
+      "objective": "Giúp đại lý mua theo lô gửi kích thước bảng giá tại Hải Phòng",
+      "channel": "trang đăng ký mẫu",
+      "cta": "gửi kích thước bảng giá",
+      "kpi": "Yêu cầu đã xác nhận cho AGH-109",
+      "kpi_unit": "yêu cầu",
+      "kpi_method": "Đếm yêu cầu duy nhất đã xác nhận cho AGH-109 qua trang đăng ký mẫu trong 21 ngày, loại trùng theo mã yêu cầu.",
+      "kpi_window": "21 ngày",
+      "facts": [
+        {
+          "id": "scope-card",
+          "wording": "Giá mica AGH-109 có lựa chọn bản chữ L.",
+          "qualifiers": "Chỉ áp dụng tại Hải Phòng."
+        },
+        {
+          "id": "commercial-card",
+          "category": "price",
+          "wording": "Giá 319.000 VND/chiếc.",
+          "qualifiers": "Chỉ áp dụng tại Hải Phòng cho bản chữ L. Chưa gồm thiết kế bảng.",
+          "price": {
+            "amount_minor": 319000,
+            "currency": "VND",
+            "unit": "piece",
+            "basis_quantity": "1",
+            "moq": "1",
+            "tier_min": "1",
+            "tier_max": null,
+            "tax": "included",
+            "conditions": [
+              "Chỉ áp dụng tại Hải Phòng cho bản chữ L. Chưa gồm thiết kế bảng."
+            ]
+          },
+          "quantity": "1"
+        }
+      ],
+      "hypotheses": [
+        "Khách có thể cần xác nhận bản chữ L trước khi quyết định."
+      ],
+      "gaps": [
+        "Chưa có bằng chứng so sánh chi phí giá mica với đối thủ."
+      ],
+      "unsupported_example": "rẻ nhất toàn quốc",
+      "evaluation_notes": {
+        "buyer_action": "gửi kích thước bảng giá",
+        "required_scope": "Chỉ áp dụng tại Hải Phòng cho bản chữ L. Chưa gồm thiết kế bảng.",
+        "forbidden": "rẻ nhất toàn quốc",
+        "exclude_from_prompt": true
+      }
+    },
+    {
+      "id": "agency-10",
+      "persona": "agency",
+      "workflow": "WF-13",
+      "company": "Khách hàng Nếp",
+      "brand": "Khách hàng Nếp",
+      "product": "Nhãn treo AGH-110",
+      "sku": "AGH-110",
+      "market": "Việt Nam",
+      "locale": "vi-VN",
+      "region": "Hải Phòng",
+      "audience": "đại lý mua theo lô",
+      "objective": "Giúp đại lý mua theo lô chọn chất giấy nhãn tại Hải Phòng",
+      "channel": "trang đăng ký mẫu",
+      "cta": "chọn chất giấy nhãn",
+      "kpi": "Yêu cầu đã xác nhận cho AGH-110",
+      "kpi_unit": "yêu cầu",
+      "kpi_method": "Đếm yêu cầu duy nhất đã xác nhận cho AGH-110 qua trang đăng ký mẫu trong 21 ngày, loại trùng theo mã yêu cầu.",
+      "kpi_window": "21 ngày",
+      "facts": [
+        {
+          "id": "scope-card",
+          "wording": "Nhãn treo AGH-110 có lựa chọn mẫu bo góc.",
+          "qualifiers": "Chỉ áp dụng tại Hải Phòng."
+        },
+        {
+          "id": "commercial-card",
+          "category": "price",
+          "wording": "Giá 343.000 VND/chiếc.",
+          "qualifiers": "Chỉ áp dụng tại Hải Phòng cho mẫu bo góc. Chưa gồm dây treo.",
+          "price": {
+            "amount_minor": 343000,
+            "currency": "VND",
+            "unit": "piece",
+            "basis_quantity": "1",
+            "moq": "1",
+            "tier_min": "1",
+            "tier_max": null,
+            "tax": "included",
+            "conditions": [
+              "Chỉ áp dụng tại Hải Phòng cho mẫu bo góc. Chưa gồm dây treo."
+            ]
+          },
+          "quantity": "1"
+        }
+      ],
+      "hypotheses": [
+        "Khách có thể cần xác nhận mẫu bo góc trước khi quyết định."
+      ],
+      "gaps": [
+        "Chưa có bằng chứng so sánh chi phí nhãn treo với đối thủ."
+      ],
+      "unsupported_example": "rẻ nhất toàn quốc",
+      "evaluation_notes": {
+        "buyer_action": "chọn chất giấy nhãn",
+        "required_scope": "Chỉ áp dụng tại Hải Phòng cho mẫu bo góc. Chưa gồm dây treo.",
+        "forbidden": "rẻ nhất toàn quốc",
+        "exclude_from_prompt": true
+      }
+    },
+    {
+      "id": "inhouse-01",
+      "persona": "inhouse",
+      "workflow": "WF-03",
+      "company": "Học xưởng Bến",
+      "brand": "Học xưởng Bến",
+      "product": "Lớp đóng sách INH-101",
+      "sku": "INH-101",
+      "market": "Việt Nam",
+      "locale": "vi-VN",
+      "region": "Cần Thơ",
+      "audience": "người đăng ký lớp thực hành",
+      "objective": "Giúp người đăng ký lớp thực hành đăng ký buổi khâu gáy tại Cần Thơ",
+      "channel": "trang ghi danh",
+      "cta": "đăng ký buổi khâu gáy",
+      "kpi": "Yêu cầu đã xác nhận cho INH-101",
+      "kpi_unit": "yêu cầu",
+      "kpi_method": "Đếm yêu cầu duy nhất đã xác nhận cho INH-101 qua trang ghi danh trong 21 ngày, loại trùng theo mã yêu cầu.",
+      "kpi_window": "21 ngày",
+      "facts": [
+        {
+          "id": "scope-card",
+          "wording": "Lớp đóng sách INH-101 có lựa chọn lớp trực tiếp.",
+          "qualifiers": "Chỉ áp dụng tại Cần Thơ."
+        },
+        {
+          "id": "commercial-card",
+          "category": "price",
+          "wording": "Giá 137.000 VND/người.",
+          "qualifiers": "Chỉ áp dụng tại Cần Thơ cho lớp trực tiếp. Chưa gồm bộ dụng cụ.",
+          "price": {
+            "amount_minor": 137000,
+            "currency": "VND",
+            "unit": "service",
+            "basis_quantity": "1",
+            "moq": "1",
+            "tier_min": "1",
+            "tier_max": null,
+            "tax": "included",
+            "conditions": [
+              "Chỉ áp dụng tại Cần Thơ cho lớp trực tiếp. Chưa gồm bộ dụng cụ."
+            ]
+          },
+          "quantity": "1"
+        }
+      ],
+      "hypotheses": [
+        "Khách có thể cần xác nhận lớp trực tiếp trước khi quyết định."
+      ],
+      "gaps": [
+        "Chưa có bằng chứng so sánh chi phí lớp đóng sách với đối thủ."
+      ],
+      "unsupported_example": "rẻ nhất toàn quốc",
+      "evaluation_notes": {
+        "buyer_action": "đăng ký buổi khâu gáy",
+        "required_scope": "Chỉ áp dụng tại Cần Thơ cho lớp trực tiếp. Chưa gồm bộ dụng cụ.",
+        "forbidden": "rẻ nhất toàn quốc",
+        "exclude_from_prompt": true
+      }
+    },
+    {
+      "id": "inhouse-02",
+      "persona": "inhouse",
+      "workflow": "WF-13",
+      "company": "Học xưởng Bến",
+      "brand": "Học xưởng Bến",
+      "product": "Lớp vẽ ký họa INH-102",
+      "sku": "INH-102",
+      "market": "Việt Nam",
+      "locale": "vi-VN",
+      "region": "Cần Thơ",
+      "audience": "người đăng ký lớp thực hành",
+      "objective": "Giúp người đăng ký lớp thực hành chọn buổi vẽ ngoài trời tại Cần Thơ",
+      "channel": "trang ghi danh",
+      "cta": "chọn buổi vẽ ngoài trời",
+      "kpi": "Yêu cầu đã xác nhận cho INH-102",
+      "kpi_unit": "yêu cầu",
+      "kpi_method": "Đếm yêu cầu duy nhất đã xác nhận cho INH-102 qua trang ghi danh trong 21 ngày, loại trùng theo mã yêu cầu.",
+      "kpi_window": "21 ngày",
+      "facts": [
+        {
+          "id": "scope-card",
+          "wording": "Lớp vẽ ký họa INH-102 có lựa chọn nhóm mới học.",
+          "qualifiers": "Chỉ áp dụng tại Cần Thơ."
+        },
+        {
+          "id": "commercial-card",
+          "category": "price",
+          "wording": "Giá 161.000 VND/người.",
+          "qualifiers": "Chỉ áp dụng tại Cần Thơ cho nhóm mới học. Chưa gồm giấy vẽ.",
+          "price": {
+            "amount_minor": 161000,
+            "currency": "VND",
+            "unit": "service",
+            "basis_quantity": "1",
+            "moq": "1",
+            "tier_min": "1",
+            "tier_max": null,
+            "tax": "included",
+            "conditions": [
+              "Chỉ áp dụng tại Cần Thơ cho nhóm mới học. Chưa gồm giấy vẽ."
+            ]
+          },
+          "quantity": "1"
+        }
+      ],
+      "hypotheses": [
+        "Khách có thể cần xác nhận nhóm mới học trước khi quyết định."
+      ],
+      "gaps": [
+        "Chưa có bằng chứng so sánh chi phí lớp vẽ ký họa với đối thủ."
+      ],
+      "unsupported_example": "rẻ nhất toàn quốc",
+      "evaluation_notes": {
+        "buyer_action": "chọn buổi vẽ ngoài trời",
+        "required_scope": "Chỉ áp dụng tại Cần Thơ cho nhóm mới học. Chưa gồm giấy vẽ.",
+        "forbidden": "rẻ nhất toàn quốc",
+        "exclude_from_prompt": true
+      }
+    },
+    {
+      "id": "inhouse-03",
+      "persona": "inhouse",
+      "workflow": "WF-03",
+      "company": "Học xưởng Bến",
+      "brand": "Học xưởng Bến",
+      "product": "Lớp cắm hoa INH-103",
+      "sku": "INH-103",
+      "market": "Việt Nam",
+      "locale": "vi-VN",
+      "region": "Cần Thơ",
+      "audience": "người đăng ký lớp thực hành",
+      "objective": "Giúp người đăng ký lớp thực hành giữ chỗ buổi làm bình hoa tại Cần Thơ",
+      "channel": "trang ghi danh",
+      "cta": "giữ chỗ buổi làm bình hoa",
+      "kpi": "Yêu cầu đã xác nhận cho INH-103",
+      "kpi_unit": "yêu cầu",
+      "kpi_method": "Đếm yêu cầu duy nhất đã xác nhận cho INH-103 qua trang ghi danh trong 21 ngày, loại trùng theo mã yêu cầu.",
+      "kpi_window": "21 ngày",
+      "facts": [
+        {
+          "id": "scope-card",
+          "wording": "Lớp cắm hoa INH-103 có lựa chọn buổi sáng.",
+          "qualifiers": "Chỉ áp dụng tại Cần Thơ."
+        },
+        {
+          "id": "commercial-card",
+          "category": "price",
+          "wording": "Giá 185.000 VND/người.",
+          "qualifiers": "Chỉ áp dụng tại Cần Thơ cho buổi sáng. Chưa gồm bình mang về.",
+          "price": {
+            "amount_minor": 185000,
+            "currency": "VND",
+            "unit": "service",
+            "basis_quantity": "1",
+            "moq": "1",
+            "tier_min": "1",
+            "tier_max": null,
+            "tax": "included",
+            "conditions": [
+              "Chỉ áp dụng tại Cần Thơ cho buổi sáng. Chưa gồm bình mang về."
+            ]
+          },
+          "quantity": "1"
+        }
+      ],
+      "hypotheses": [
+        "Khách có thể cần xác nhận buổi sáng trước khi quyết định."
+      ],
+      "gaps": [
+        "Chưa có bằng chứng so sánh chi phí lớp cắm hoa với đối thủ."
+      ],
+      "unsupported_example": "rẻ nhất toàn quốc",
+      "evaluation_notes": {
+        "buyer_action": "giữ chỗ buổi làm bình hoa",
+        "required_scope": "Chỉ áp dụng tại Cần Thơ cho buổi sáng. Chưa gồm bình mang về.",
+        "forbidden": "rẻ nhất toàn quốc",
+        "exclude_from_prompt": true
+      }
+    },
+    {
+      "id": "inhouse-04",
+      "persona": "inhouse",
+      "workflow": "WF-13",
+      "company": "Học xưởng Bến",
+      "brand": "Học xưởng Bến",
+      "product": "Lớp ảnh sản phẩm INH-104",
+      "sku": "INH-104",
+      "market": "Việt Nam",
+      "locale": "vi-VN",
+      "region": "Cần Thơ",
+      "audience": "người đăng ký lớp thực hành",
+      "objective": "Giúp người đăng ký lớp thực hành xác nhận chỗ thực hành ánh sáng tại Cần Thơ",
+      "channel": "trang ghi danh",
+      "cta": "xác nhận chỗ thực hành ánh sáng",
+      "kpi": "Yêu cầu đã xác nhận cho INH-104",
+      "kpi_unit": "yêu cầu",
+      "kpi_method": "Đếm yêu cầu duy nhất đã xác nhận cho INH-104 qua trang ghi danh trong 21 ngày, loại trùng theo mã yêu cầu.",
+      "kpi_window": "21 ngày",
+      "facts": [
+        {
+          "id": "scope-card",
+          "wording": "Lớp ảnh sản phẩm INH-104 có lựa chọn buổi tại xưởng.",
+          "qualifiers": "Chỉ áp dụng tại Cần Thơ."
+        },
+        {
+          "id": "commercial-card",
+          "category": "price",
+          "wording": "Giá 209.000 VND/người.",
+          "qualifiers": "Chỉ áp dụng tại Cần Thơ cho buổi tại xưởng. Chưa gồm máy ảnh.",
+          "price": {
+            "amount_minor": 209000,
+            "currency": "VND",
+            "unit": "service",
+            "basis_quantity": "1",
+            "moq": "1",
+            "tier_min": "1",
+            "tier_max": null,
+            "tax": "included",
+            "conditions": [
+              "Chỉ áp dụng tại Cần Thơ cho buổi tại xưởng. Chưa gồm máy ảnh."
+            ]
+          },
+          "quantity": "1"
+        }
+      ],
+      "hypotheses": [
+        "Khách có thể cần xác nhận buổi tại xưởng trước khi quyết định."
+      ],
+      "gaps": [
+        "Chưa có bằng chứng so sánh chi phí lớp ảnh sản phẩm với đối thủ."
+      ],
+      "unsupported_example": "rẻ nhất toàn quốc",
+      "evaluation_notes": {
+        "buyer_action": "xác nhận chỗ thực hành ánh sáng",
+        "required_scope": "Chỉ áp dụng tại Cần Thơ cho buổi tại xưởng. Chưa gồm máy ảnh.",
+        "forbidden": "rẻ nhất toàn quốc",
+        "exclude_from_prompt": true
+      }
+    },
+    {
+      "id": "inhouse-05",
+      "persona": "inhouse",
+      "workflow": "WF-03",
+      "company": "Học xưởng Bến",
+      "brand": "Học xưởng Bến",
+      "product": "Lớp thêu tay INH-105",
+      "sku": "INH-105",
+      "market": "Việt Nam",
+      "locale": "vi-VN",
+      "region": "Cần Thơ",
+      "audience": "người đăng ký lớp thực hành",
+      "objective": "Giúp người đăng ký lớp thực hành gửi lựa chọn mẫu thêu tại Cần Thơ",
+      "channel": "trang ghi danh",
+      "cta": "gửi lựa chọn mẫu thêu",
+      "kpi": "Yêu cầu đã xác nhận cho INH-105",
+      "kpi_unit": "yêu cầu",
+      "kpi_method": "Đếm yêu cầu duy nhất đã xác nhận cho INH-105 qua trang ghi danh trong 21 ngày, loại trùng theo mã yêu cầu.",
+      "kpi_window": "21 ngày",
+      "facts": [
+        {
+          "id": "scope-card",
+          "wording": "Lớp thêu tay INH-105 có lựa chọn lớp nhập môn.",
+          "qualifiers": "Chỉ áp dụng tại Cần Thơ."
+        },
+        {
+          "id": "commercial-card",
+          "category": "price",
+          "wording": "Giá 233.000 VND/người.",
+          "qualifiers": "Chỉ áp dụng tại Cần Thơ cho lớp nhập môn. Chưa gồm khung thêu lớn.",
+          "price": {
+            "amount_minor": 233000,
+            "currency": "VND",
+            "unit": "service",
+            "basis_quantity": "1",
+            "moq": "1",
+            "tier_min": "1",
+            "tier_max": null,
+            "tax": "included",
+            "conditions": [
+              "Chỉ áp dụng tại Cần Thơ cho lớp nhập môn. Chưa gồm khung thêu lớn."
+            ]
+          },
+          "quantity": "1"
+        }
+      ],
+      "hypotheses": [
+        "Khách có thể cần xác nhận lớp nhập môn trước khi quyết định."
+      ],
+      "gaps": [
+        "Chưa có bằng chứng so sánh chi phí lớp thêu tay với đối thủ."
+      ],
+      "unsupported_example": "rẻ nhất toàn quốc",
+      "evaluation_notes": {
+        "buyer_action": "gửi lựa chọn mẫu thêu",
+        "required_scope": "Chỉ áp dụng tại Cần Thơ cho lớp nhập môn. Chưa gồm khung thêu lớn.",
+        "forbidden": "rẻ nhất toàn quốc",
+        "exclude_from_prompt": true
+      }
+    },
+    {
+      "id": "inhouse-06",
+      "persona": "inhouse",
+      "workflow": "WF-13",
+      "company": "Học xưởng Bến",
+      "brand": "Học xưởng Bến",
+      "product": "Lớp làm bánh INH-106",
+      "sku": "INH-106",
+      "market": "Việt Nam",
+      "locale": "vi-VN",
+      "region": "Cần Thơ",
+      "audience": "người đăng ký lớp thực hành",
+      "objective": "Giúp người đăng ký lớp thực hành chọn buổi thực hành nhào bột tại Cần Thơ",
+      "channel": "trang ghi danh",
+      "cta": "chọn buổi thực hành nhào bột",
+      "kpi": "Yêu cầu đã xác nhận cho INH-106",
+      "kpi_unit": "yêu cầu",
+      "kpi_method": "Đếm yêu cầu duy nhất đã xác nhận cho INH-106 qua trang ghi danh trong 21 ngày, loại trùng theo mã yêu cầu.",
+      "kpi_window": "21 ngày",
+      "facts": [
+        {
+          "id": "scope-card",
+          "wording": "Lớp làm bánh INH-106 có lựa chọn lớp người lớn.",
+          "qualifiers": "Chỉ áp dụng tại Cần Thơ."
+        },
+        {
+          "id": "commercial-card",
+          "category": "price",
+          "wording": "Giá 257.000 VND/người.",
+          "qualifiers": "Chỉ áp dụng tại Cần Thơ cho lớp người lớn. Chưa gồm nguyên liệu mang về.",
+          "price": {
+            "amount_minor": 257000,
+            "currency": "VND",
+            "unit": "service",
+            "basis_quantity": "1",
+            "moq": "1",
+            "tier_min": "1",
+            "tier_max": null,
+            "tax": "included",
+            "conditions": [
+              "Chỉ áp dụng tại Cần Thơ cho lớp người lớn. Chưa gồm nguyên liệu mang về."
+            ]
+          },
+          "quantity": "1"
+        }
+      ],
+      "hypotheses": [
+        "Khách có thể cần xác nhận lớp người lớn trước khi quyết định."
+      ],
+      "gaps": [
+        "Chưa có bằng chứng so sánh chi phí lớp làm bánh với đối thủ."
+      ],
+      "unsupported_example": "rẻ nhất toàn quốc",
+      "evaluation_notes": {
+        "buyer_action": "chọn buổi thực hành nhào bột",
+        "required_scope": "Chỉ áp dụng tại Cần Thơ cho lớp người lớn. Chưa gồm nguyên liệu mang về.",
+        "forbidden": "rẻ nhất toàn quốc",
+        "exclude_from_prompt": true
+      }
+    },
+    {
+      "id": "inhouse-07",
+      "persona": "inhouse",
+      "workflow": "WF-03",
+      "company": "Học xưởng Bến",
+      "brand": "Học xưởng Bến",
+      "product": "Lớp ghi âm INH-107",
+      "sku": "INH-107",
+      "market": "Việt Nam",
+      "locale": "vi-VN",
+      "region": "Cần Thơ",
+      "audience": "người đăng ký lớp thực hành",
+      "objective": "Giúp người đăng ký lớp thực hành ghi danh buổi thu giọng nói tại Cần Thơ",
+      "channel": "trang ghi danh",
+      "cta": "ghi danh buổi thu giọng nói",
+      "kpi": "Yêu cầu đã xác nhận cho INH-107",
+      "kpi_unit": "yêu cầu",
+      "kpi_method": "Đếm yêu cầu duy nhất đã xác nhận cho INH-107 qua trang ghi danh trong 21 ngày, loại trùng theo mã yêu cầu.",
+      "kpi_window": "21 ngày",
+      "facts": [
+        {
+          "id": "scope-card",
+          "wording": "Lớp ghi âm INH-107 có lựa chọn tại phòng thu.",
+          "qualifiers": "Chỉ áp dụng tại Cần Thơ."
+        },
+        {
+          "id": "commercial-card",
+          "category": "price",
+          "wording": "Giá 281.000 VND/người.",
+          "qualifiers": "Chỉ áp dụng tại Cần Thơ cho tại phòng thu. Chưa gồm micro riêng.",
+          "price": {
+            "amount_minor": 281000,
+            "currency": "VND",
+            "unit": "service",
+            "basis_quantity": "1",
+            "moq": "1",
+            "tier_min": "1",
+            "tier_max": null,
+            "tax": "included",
+            "conditions": [
+              "Chỉ áp dụng tại Cần Thơ cho tại phòng thu. Chưa gồm micro riêng."
+            ]
+          },
+          "quantity": "1"
+        }
+      ],
+      "hypotheses": [
+        "Khách có thể cần xác nhận tại phòng thu trước khi quyết định."
+      ],
+      "gaps": [
+        "Chưa có bằng chứng so sánh chi phí lớp ghi âm với đối thủ."
+      ],
+      "unsupported_example": "rẻ nhất toàn quốc",
+      "evaluation_notes": {
+        "buyer_action": "ghi danh buổi thu giọng nói",
+        "required_scope": "Chỉ áp dụng tại Cần Thơ cho tại phòng thu. Chưa gồm micro riêng.",
+        "forbidden": "rẻ nhất toàn quốc",
+        "exclude_from_prompt": true
+      }
+    },
+    {
+      "id": "inhouse-08",
+      "persona": "inhouse",
+      "workflow": "WF-13",
+      "company": "Học xưởng Bến",
+      "brand": "Học xưởng Bến",
+      "product": "Lớp kể chuyện INH-108",
+      "sku": "INH-108",
+      "market": "Việt Nam",
+      "locale": "vi-VN",
+      "region": "Cần Thơ",
+      "audience": "người đăng ký lớp thực hành",
+      "objective": "Giúp người đăng ký lớp thực hành đăng ký đọc thử kịch bản tại Cần Thơ",
+      "channel": "trang ghi danh",
+      "cta": "đăng ký đọc thử kịch bản",
+      "kpi": "Yêu cầu đã xác nhận cho INH-108",
+      "kpi_unit": "yêu cầu",
+      "kpi_method": "Đếm yêu cầu duy nhất đã xác nhận cho INH-108 qua trang ghi danh trong 21 ngày, loại trùng theo mã yêu cầu.",
+      "kpi_window": "21 ngày",
+      "facts": [
+        {
+          "id": "scope-card",
+          "wording": "Lớp kể chuyện INH-108 có lựa chọn nhóm tiếng Việt.",
+          "qualifiers": "Chỉ áp dụng tại Cần Thơ."
+        },
+        {
+          "id": "commercial-card",
+          "category": "price",
+          "wording": "Giá 305.000 VND/người.",
+          "qualifiers": "Chỉ áp dụng tại Cần Thơ cho nhóm tiếng Việt. Chưa gồm biên tập thuê.",
+          "price": {
+            "amount_minor": 305000,
+            "currency": "VND",
+            "unit": "service",
+            "basis_quantity": "1",
+            "moq": "1",
+            "tier_min": "1",
+            "tier_max": null,
+            "tax": "included",
+            "conditions": [
+              "Chỉ áp dụng tại Cần Thơ cho nhóm tiếng Việt. Chưa gồm biên tập thuê."
+            ]
+          },
+          "quantity": "1"
+        }
+      ],
+      "hypotheses": [
+        "Khách có thể cần xác nhận nhóm tiếng Việt trước khi quyết định."
+      ],
+      "gaps": [
+        "Chưa có bằng chứng so sánh chi phí lớp kể chuyện với đối thủ."
+      ],
+      "unsupported_example": "rẻ nhất toàn quốc",
+      "evaluation_notes": {
+        "buyer_action": "đăng ký đọc thử kịch bản",
+        "required_scope": "Chỉ áp dụng tại Cần Thơ cho nhóm tiếng Việt. Chưa gồm biên tập thuê.",
+        "forbidden": "rẻ nhất toàn quốc",
+        "exclude_from_prompt": true
+      }
+    },
+    {
+      "id": "inhouse-09",
+      "persona": "inhouse",
+      "workflow": "WF-03",
+      "company": "Học xưởng Bến",
+      "brand": "Học xưởng Bến",
+      "product": "Lớp in lụa INH-109",
+      "sku": "INH-109",
+      "market": "Việt Nam",
+      "locale": "vi-VN",
+      "region": "Cần Thơ",
+      "audience": "người đăng ký lớp thực hành",
+      "objective": "Giúp người đăng ký lớp thực hành gửi mẫu cho buổi thử in tại Cần Thơ",
+      "channel": "trang ghi danh",
+      "cta": "gửi mẫu cho buổi thử in",
+      "kpi": "Yêu cầu đã xác nhận cho INH-109",
+      "kpi_unit": "yêu cầu",
+      "kpi_method": "Đếm yêu cầu duy nhất đã xác nhận cho INH-109 qua trang ghi danh trong 21 ngày, loại trùng theo mã yêu cầu.",
+      "kpi_window": "21 ngày",
+      "facts": [
+        {
+          "id": "scope-card",
+          "wording": "Lớp in lụa INH-109 có lựa chọn mực một màu.",
+          "qualifiers": "Chỉ áp dụng tại Cần Thơ."
+        },
+        {
+          "id": "commercial-card",
+          "category": "price",
+          "wording": "Giá 329.000 VND/người.",
+          "qualifiers": "Chỉ áp dụng tại Cần Thơ cho mực một màu. Chưa gồm áo nền.",
+          "price": {
+            "amount_minor": 329000,
+            "currency": "VND",
+            "unit": "service",
+            "basis_quantity": "1",
+            "moq": "1",
+            "tier_min": "1",
+            "tier_max": null,
+            "tax": "included",
+            "conditions": [
+              "Chỉ áp dụng tại Cần Thơ cho mực một màu. Chưa gồm áo nền."
+            ]
+          },
+          "quantity": "1"
+        }
+      ],
+      "hypotheses": [
+        "Khách có thể cần xác nhận mực một màu trước khi quyết định."
+      ],
+      "gaps": [
+        "Chưa có bằng chứng so sánh chi phí lớp in lụa với đối thủ."
+      ],
+      "unsupported_example": "rẻ nhất toàn quốc",
+      "evaluation_notes": {
+        "buyer_action": "gửi mẫu cho buổi thử in",
+        "required_scope": "Chỉ áp dụng tại Cần Thơ cho mực một màu. Chưa gồm áo nền.",
+        "forbidden": "rẻ nhất toàn quốc",
+        "exclude_from_prompt": true
+      }
+    },
+    {
+      "id": "inhouse-10",
+      "persona": "inhouse",
+      "workflow": "WF-13",
+      "company": "Học xưởng Bến",
+      "brand": "Học xưởng Bến",
+      "product": "Lớp làm nến INH-110",
+      "sku": "INH-110",
+      "market": "Việt Nam",
+      "locale": "vi-VN",
+      "region": "Cần Thơ",
+      "audience": "người đăng ký lớp thực hành",
+      "objective": "Giúp người đăng ký lớp thực hành ghi danh buổi chọn mùi tại Cần Thơ",
+      "channel": "trang ghi danh",
+      "cta": "ghi danh buổi chọn mùi",
+      "kpi": "Yêu cầu đã xác nhận cho INH-110",
+      "kpi_unit": "yêu cầu",
+      "kpi_method": "Đếm yêu cầu duy nhất đã xác nhận cho INH-110 qua trang ghi danh trong 21 ngày, loại trùng theo mã yêu cầu.",
+      "kpi_window": "21 ngày",
+      "facts": [
+        {
+          "id": "scope-card",
+          "wording": "Lớp làm nến INH-110 có lựa chọn lớp cuối tuần.",
+          "qualifiers": "Chỉ áp dụng tại Cần Thơ."
+        },
+        {
+          "id": "commercial-card",
+          "category": "price",
+          "wording": "Giá 353.000 VND/người.",
+          "qualifiers": "Chỉ áp dụng tại Cần Thơ cho lớp cuối tuần. Chưa gồm khuôn riêng.",
+          "price": {
+            "amount_minor": 353000,
+            "currency": "VND",
+            "unit": "service",
+            "basis_quantity": "1",
+            "moq": "1",
+            "tier_min": "1",
+            "tier_max": null,
+            "tax": "included",
+            "conditions": [
+              "Chỉ áp dụng tại Cần Thơ cho lớp cuối tuần. Chưa gồm khuôn riêng."
+            ]
+          },
+          "quantity": "1"
+        }
+      ],
+      "hypotheses": [
+        "Khách có thể cần xác nhận lớp cuối tuần trước khi quyết định."
+      ],
+      "gaps": [
+        "Chưa có bằng chứng so sánh chi phí lớp làm nến với đối thủ."
+      ],
+      "unsupported_example": "rẻ nhất toàn quốc",
+      "evaluation_notes": {
+        "buyer_action": "ghi danh buổi chọn mùi",
+        "required_scope": "Chỉ áp dụng tại Cần Thơ cho lớp cuối tuần. Chưa gồm khuôn riêng.",
+        "forbidden": "rẻ nhất toàn quốc",
+        "exclude_from_prompt": true
+      }
+    }
+  ]
+}

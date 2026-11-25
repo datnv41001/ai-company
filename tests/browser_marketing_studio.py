@@ -64,13 +64,19 @@ def capture_completed(browser, origin, tenant, email, password, document_id, wor
                     panel.get_by_role("button", name="Lưu bản biên tập").click()
                 assert saved.value.ok, saved.value.text()
                 expect(field).to_have_value(revised)
-            panel.locator(".studio-layout > section > h4").evaluate("e=>e.scrollIntoView({block:'start'})")
+            public = panel.locator("details").filter(has=page.get_by_text("Bản xem trước dành cho khách", exact=True)).first
+            public.locator("summary").first.focus()
+            public.locator("summary").first.press("Enter")
+            expect(public.locator("h5")).to_be_visible()
+            public.locator("summary").first.press("Enter")
+            assert page.evaluate("document.documentElement.scrollWidth") == width
+            nav.evaluate("e=>e.scrollIntoView({block:'start'})")
             expect(panel.get_by_role("heading", name="Nguồn được duyệt")).to_be_attached()
             capture_themes(page, out / f"{prefix}-completed-{width}.png")
             if not strategy:
                 nav.get_by_role("button", name="SEO", exact=True).click()
                 expect(panel.get_by_label("Tiêu đề SEO", exact=True)).not_to_have_value("")
-                panel.locator(".studio-layout > section > h4").evaluate("e=>e.scrollIntoView({block:'start'})")
+                nav.evaluate("e=>e.scrollIntoView({block:'start'})")
                 capture_themes(page, out / f"{prefix}-seo-{width}.png")
             sessions.append(
                 {

@@ -12,7 +12,7 @@ from .database import get_db
 from .delivery import save_working_revision, working_copy
 from .knowledge_contracts import Input
 from .knowledge_models import KnowledgeCommand
-from .knowledge_store import canonical, conflict, digest, missing
+from .knowledge_store import Store, canonical, conflict, digest, missing
 from .models import AuditEvent, Brand, Campaign, Membership, User
 from .revision_qa import content_digest
 from .security import current_user, require_tenant
@@ -120,7 +120,18 @@ def present(db, doc, run):
 @router.get("")
 def view(tenant_id: str, did: str, user: User = Depends(current_user), db: Session = Depends(get_db)):
     doc, run = scoped(db, user, tenant_id, did, "editor")
-    return present(db, doc, run)
+    result = present(db, doc, run)
+    store = Store(db, user, run.tenant_id, run.client_id, run.brand_id, write=False)
+    if store.approver and result["mode"] == "saved":
+        snapshot_id = run.knowledge["c3_manifest"]["id"]
+        resolved = store.query(KnowledgeCommand).filter_by(operation="c3_resolve", snapshot_id=snapshot_id)
+        if db.scalar(resolved.where(KnowledgeCommand.key.startswith(f"claim:{doc.qa_revision}:")).limit(1)):
+            from .c3_projection import unpack
+
+            snap, _ = unpack(store, snapshot_id)
+            report = c3_evidence_review.current_report(store, snap, doc, run, content_digest(doc.title, result["preview"]["body"]))
+            result["findings"] = report["statements"]
+    return result
 
 
 @router.patch("")
@@ -194,5 +205,6 @@ def review_asset(tenant_id: str, did: str, body: StudioApproval, user: User = De
         c3_boundaries.record(store, snap, "studio_qa", key, record)
         db.flush()
     response = present(db, doc, run)
+    response["findings"] = report["statements"]
     db.commit()
     return response

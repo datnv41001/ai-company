@@ -7,6 +7,7 @@ const studioLabels = {
   headline:'Tiêu đề',value_proposition:'Giá trị cho người mua',benefit:'Lợi ích có căn cứ',commercial_terms:'Điều kiện thương mại',
   call_to_action:'Hành động mong muốn',page_title:'Tiêu đề SEO',meta_description:'Mô tả tìm kiếm',search_intent:'Ý định tìm kiếm'
 };
+let studioHintSequence=0;
 function mountMarketingStudio(host,api,path,role,afterSave) {
   const add=(p,tag,text)=>{const e=document.createElement(tag);if(text!==undefined)e.textContent=text;p.append(e);return e;};
   const panel=add(host,'details');panel.className='marketing-studio';
@@ -14,7 +15,9 @@ function mountMarketingStudio(host,api,path,role,afterSave) {
   const body=add(panel,'div');
   const states={missing:'Thiếu nội dung',repetition:'Trùng nội dung ở trường khác',placeholder:'Cần thay nội dung hướng dẫn',
     buyer_action:'Chưa khớp hành động đã giao',missing_declaration:'Thiếu công bố hoặc điều kiện đã duyệt',relevance:'Cần liên hệ rõ hơn với sản phẩm được giao',
-    contradiction:'Mâu thuẫn cần sửa',unresolved:'Cần xác minh',needs_correction:'Cần đối chiếu cách viết',reviewed:'Đã xác minh',verified:'Khớp nguồn',editorial:'Nội dung biên tập'};
+    contradiction:'Mâu thuẫn cần sửa',unresolved:'Cần xác minh',needs_correction:'Cần đối chiếu cách viết',reviewed:'Đã xác minh',verified:'Khớp nguồn',editorial:'Nội dung biên tập',
+    missing_qualifier:'Thiếu điều kiện áp dụng',unsupported_format:'Cách trình bày chưa đối chiếu được',unsupported_assertion:'Chưa có căn cứ cho nhận định này',
+    known_contradiction:'Mâu thuẫn với nguồn hoặc quy tắc đã duyệt',semantic_interpretation:'Cần người có chuyên môn xác minh ý nghĩa'};
   let view,group,draft,dirty=false,openRequest=0;
   const use=()=>body.isConnected && panel.open;
   function button(p,title,fn) {
@@ -48,7 +51,12 @@ function mountMarketingStudio(host,api,path,role,afterSave) {
       input.oninput=()=>{draft[group][key]=input.value;dirty=true;note('Có thay đổi chưa lưu');};
       const issues=view.quality_issues.filter(i=>i.group===group && i.field===key).map(i=>states[i.reason]);
       const evidence=view.findings.filter(i=>i.field==='studio.'+group+'.'+key);
-      for(const item of new Set([...issues,...evidence.map(i=>states[i.outcome])]))if(item)add(edit,'small',item);
+      const ids=[];
+      for(const item of new Set([...issues,...evidence.map(i=>states[i.outcome==='reviewed'?'reviewed':i.diagnostic]||states[i.outcome])])){
+        if(!item)continue;
+        const finding=add(edit,'small',item);finding.id='studio-finding-'+(++studioHintSequence);ids.push(finding.id);
+      }
+      if(ids.length)input.setAttribute('aria-describedby',ids.join(' '));
     }
     const side=add(layout,'aside');side.setAttribute('aria-label','Nguồn được duyệt');add(side,'h4','Nguồn được duyệt');
     for(const src of view.references){add(side,'strong',src.handle);add(side,'p',src.text);}

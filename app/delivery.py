@@ -223,8 +223,11 @@ def append(db, review, actor, kind, note, key):
 
 @router.post("/deliverables/{did}/share", status_code=201)
 def share(tenant_id: str, did: str, body: Share, user: User = Depends(current_user), db: Session = Depends(get_db)):
+    from . import c3_boundaries
     m = require_tenant(db, user, tenant_id, "admin")
     doc = working_copy(db, tenant_id, did)
+    if existing := c3_boundaries.existing_share(db, user, doc, body.expires_at):
+        return render(db, m, find_review(db, m, existing))
     if doc.status != "approved" or not doc.reviewed_by:
         raise HTTPException(409, "Independent QA approval is required")
     preview = doc.content.get("client_preview")
@@ -243,6 +246,7 @@ def share(tenant_id: str, did: str, body: Share, user: User = Depends(current_us
         raise HTTPException(409, "Independent QA must review this revision before sharing")
     if body.expires_at <= utcnow():
         raise HTTPException(422, "Deadline must be in the future")
+    gate = c3_boundaries.boundary(db, user, doc, digest, "share")
     campaign = db.get(Campaign, doc.campaign_id)
     brand = db.get(Brand, campaign.brand_id)
     previous = db.scalar(select(ClientReview).where(ClientReview.deliverable_id == did).order_by(ClientReview.version.desc()).limit(1))
@@ -264,6 +268,10 @@ def share(tenant_id: str, did: str, body: Share, user: User = Depends(current_us
     )
     db.add(review)
     db.flush()  # The PostgreSQL policy checks the still-approved working copy.
+    if gate:
+        store, snap, values = gate
+        key = c3_boundaries.share_key(values["run_id"], doc.qa_revision, digest, body.expires_at)
+        c3_boundaries.record(store, snap, "share", key, {**values, "review_id":review.id})
     doc.status = "shared"
     db.add(
         AuditEvent(

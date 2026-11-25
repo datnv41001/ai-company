@@ -185,6 +185,8 @@ def check_snapshot(s, snap, at, target):
     if digest(snap.canonical) != snap.digest:
         conflict("Snapshot integrity check failed")
     payload = json.loads(snap.canonical)
+    if payload["version"] != 1:
+        missing()
     deps, claims = resolved(s, [r["claim_revision"] for r in payload["claims"]], at)
     recorded = s.db.scalars(s.query(m.KnowledgeDependency).filter_by(snapshot_id=snap.id)).all()
     if target != payload["target"] or claims != payload["claims"] or payload["scope"] != s.scope or {r.revision_id for r in recorded} != deps.keys():

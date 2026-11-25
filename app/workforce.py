@@ -45,7 +45,13 @@ class BriefData(Input):
     sources: list[Source] = Field(min_length=1, max_length=4)
 
 
+class ManifestID(Input):
+    id: str = Field(min_length=36, max_length=36)
+    digest: str = Field(pattern=r"^[0-9a-f]{64}$")
+
+
 class Start(Input):
+    knowledge_manifest: ManifestID | None = None
     registry_workflow: str | None = Field(default=None, min_length=1, max_length=120)
     max_parallel_nodes: Literal[1, 2] = 1
     workflow: Literal["linear", "diamond-v1", "dynamic-v1"] = "linear"
@@ -124,6 +130,10 @@ def submit(tenant_id: str, bid: str, body: BriefData, user: User = Depends(curre
 
 @router.post("/briefs/{bid}/run")
 def start(tenant_id: str, bid: str, body: Start, user: User = Depends(current_user), db: Session = Depends(get_db)):
+    from . import c3_boundaries, c3_marketing
+    backed = body.registry_workflow in c3_marketing.ROLES
+    if backed != bool(body.knowledge_manifest):
+        raise HTTPException(422, "Knowledge-backed releases require an exact business knowledge manifest")
     m = require_tenant(db, user, tenant_id, "editor")
     lock_document(db, "workforce-brief:" + bid)
     b = db.scalar(brief_query(db, m).where(WorkforceBrief.id == bid))
@@ -149,6 +159,8 @@ def start(tenant_id: str, bid: str, body: Start, user: User = Depends(current_us
         plan = ['director']
     prior = db.scalar(select(WorkforceRun).where(WorkforceRun.brief_id == bid, WorkforceRun.tenant_id == tenant_id))
     if prior:
+        if backed and prior.knowledge.get("c3_manifest") != body.knowledge_manifest.model_dump():
+            raise HTTPException(409, "Brief already queued against a different Marketing manifest")
         if body.registry_workflow:
             required = prior.knowledge.get("required_outputs", [])
             if set(body.extra_skills) - set(required):
@@ -162,9 +174,9 @@ def start(tenant_id: str, bid: str, body: Start, user: User = Depends(current_us
     if not b.payload:
         raise HTTPException(409, "Waiting for the client's brief")
     brand = db.get(Brand, b.brand_id)
-    if not brand.product_truth.strip():
+    if not backed and not brand.product_truth.strip():
         raise HTTPException(422, "Brand Kit needs verified product facts")
-    if max(len(brand.product_truth), len(brand.brand_guidelines)) > 4000:
+    if not backed and max(len(brand.product_truth), len(brand.brand_guidelines)) > 4000:
         raise HTTPException(422, "Summarize each Brand Kit field to 4000 characters for this workflow")
     facts = {"brand": {"label": brand.name, "excerpt": brand.product_truth}}
     facts.update({f"S{n}": s for n, s in enumerate(b.payload["sources"], 1)})
@@ -180,6 +192,12 @@ def start(tenant_id: str, bid: str, body: Start, user: User = Depends(current_us
     if body.registry_workflow:
         from .registry import pin
         from .registry_compatibility import required_outputs
+        if backed:
+            store, snap, public = c3_boundaries.checked(db, user, b, body.knowledge_manifest.model_dump(), body.registry_workflow, "queue")
+            facts = {fact["id"]: {"label": fact["id"], "excerpt": c3_marketing.fact_line(fact)} for fact in public["facts"]}
+            knowledge = {"title": public["product"], "objective":public["objective"], "audience":public["audience"],
+                         "offer":public["product"], "brand_rules":"", "sources":facts, "prompt_version":"amc.marketing-manifest/1",
+                         "c3_manifest":body.knowledge_manifest.model_dump(), "c3_projection":public}
         binding = pin(db, b, body.registry_workflow)
         manifest = db.scalar(text("select manifest from amc_ops.registry_releases where workflow=:w and digest=:d"),
                              {"w":body.registry_workflow, "d":binding["manifest_digest"]})
@@ -207,6 +225,9 @@ def start(tenant_id: str, bid: str, body: Start, user: User = Depends(current_us
     db.add(run)
     try:
         db.flush()
+        if backed:
+            c3_boundaries.record(store, snap, "queue", "queue:"+run.id,
+                {"run_id":run.id, "manifest_digest":snap.digest, "release_digest":binding["manifest_digest"]})
         db.add(
             AuditEvent(
                 tenant_id=tenant_id,

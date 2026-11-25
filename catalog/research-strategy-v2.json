@@ -1,0 +1,214 @@
+{
+  "workflow_id": "WF-03/research-strategy-draft",
+  "workflow_version": 2,
+  "mode": "dynamic-v1",
+  "profile": "research-strategy",
+  "required": [
+    "director",
+    "research",
+    "strategy"
+  ],
+  "required_outputs": [
+    "strategy"
+  ],
+  "knowledge_projection": "amc.marketing-manifest/1",
+  "contracts": {
+    "director": {
+      "skill_id": "director",
+      "skill_version": 3,
+      "role_id": "ai-managing-director",
+      "contract_version": 3,
+      "adapter": "director@3",
+      "adapter_digest": "2d6270f95aeddcac28ddf67590cab2ddf1b53c5352cc009ff2c3a5d8a041cd8e",
+      "qa_policy": "c3-director@1",
+      "model": "local",
+      "inputs": [
+        "brief",
+        "brand",
+        "sources"
+      ],
+      "outputs": [
+        "primary_assignment",
+        "secondary_assignment"
+      ],
+      "output_schema": {
+        "type": "object",
+        "required": [
+          "primary_assignment",
+          "secondary_assignment"
+        ],
+        "additionalProperties": false,
+        "properties": {
+          "primary_assignment": {
+            "type": "string"
+          },
+          "secondary_assignment": {
+            "type": "string"
+          }
+        }
+      },
+      "success_criteria": [
+        "primary_assignment",
+        "secondary_assignment"
+      ],
+      "predecessors": [],
+      "tools": [],
+      "approval": "revision_qa_and_client_snapshot",
+      "node_cap": 1000,
+      "max_attempts": 3,
+      "timeout_seconds": 300,
+      "owner": "agency marketing lead",
+      "objective": "Use this role's approved knowledge projection to prepare internal Marketing work",
+      "forbidden_actions": [
+        "external_write",
+        "publish",
+        "spend"
+      ],
+      "fallback": "agency editor"
+    },
+    "research": {
+      "skill_id": "research",
+      "skill_version": 3,
+      "role_id": "ai-market-researcher",
+      "contract_version": 3,
+      "adapter": "research@3",
+      "adapter_digest": "2d6270f95aeddcac28ddf67590cab2ddf1b53c5352cc009ff2c3a5d8a041cd8e",
+      "qa_policy": "c3-research@1",
+      "model": "local",
+      "inputs": [
+        "brief",
+        "brand",
+        "sources"
+      ],
+      "outputs": [
+        "evidence_needed",
+        "icp_analysis",
+        "market_analysis",
+        "research_question",
+        "source_ids"
+      ],
+      "output_schema": {
+        "type": "object",
+        "required": [
+          "evidence_needed",
+          "icp_analysis",
+          "market_analysis",
+          "research_question",
+          "source_ids"
+        ],
+        "additionalProperties": false,
+        "properties": {
+          "research_question": {
+            "type": "string"
+          },
+          "market_analysis": {
+            "type": "string"
+          },
+          "icp_analysis": {
+            "type": "string"
+          },
+          "evidence_needed": {
+            "type": "string"
+          },
+          "source_ids": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        }
+      },
+      "success_criteria": [
+        "evidence_needed",
+        "icp_analysis",
+        "market_analysis",
+        "research_question",
+        "source_ids"
+      ],
+      "predecessors": [],
+      "tools": [],
+      "approval": "revision_qa_and_client_snapshot",
+      "node_cap": 1000,
+      "max_attempts": 3,
+      "timeout_seconds": 300,
+      "owner": "agency marketing lead",
+      "objective": "Use this role's approved knowledge projection to prepare internal Marketing work",
+      "forbidden_actions": [
+        "external_write",
+        "publish",
+        "spend"
+      ],
+      "fallback": "agency editor"
+    },
+    "strategy": {
+      "skill_id": "strategy",
+      "skill_version": 3,
+      "role_id": "ai-marketing-strategist",
+      "contract_version": 3,
+      "adapter": "strategy@3",
+      "adapter_digest": "2d6270f95aeddcac28ddf67590cab2ddf1b53c5352cc009ff2c3a5d8a041cd8e",
+      "qa_policy": "c3-strategy@1",
+      "model": "local",
+      "inputs": [
+        "brief",
+        "brand",
+        "sources"
+      ],
+      "outputs": [
+        "measurement_plan",
+        "positioning",
+        "recommendation",
+        "source_ids"
+      ],
+      "output_schema": {
+        "type": "object",
+        "required": [
+          "measurement_plan",
+          "positioning",
+          "recommendation",
+          "source_ids"
+        ],
+        "additionalProperties": false,
+        "properties": {
+          "positioning": {
+            "type": "string"
+          },
+          "recommendation": {
+            "type": "string"
+          },
+          "measurement_plan": {
+            "type": "string"
+          },
+          "source_ids": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        }
+      },
+      "success_criteria": [
+        "measurement_plan",
+        "positioning",
+        "recommendation",
+        "source_ids"
+      ],
+      "predecessors": [
+        "research"
+      ],
+      "tools": [],
+      "approval": "revision_qa_and_client_snapshot",
+      "node_cap": 1000,
+      "max_attempts": 3,
+      "timeout_seconds": 300,
+      "owner": "agency marketing lead",
+      "objective": "Use this role's approved knowledge projection to prepare internal Marketing work",
+      "forbidden_actions": [
+        "external_write",
+        "publish",
+        "spend"
+      ],
+      "fallback": "agency editor"
+    }
+  }
+}

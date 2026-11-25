@@ -17,6 +17,8 @@ from sqlalchemy.orm import Session
 
 from .identity_quota import admit
 from .business_knowledge import router as knowledge_router
+from . import c3_boundaries
+from .c3_projection import router as marketing_projection_router
 from .claim_desk import router as claim_desk_router
 from .business_workspace import router as workspace_router
 from .marketing_catalog import router as catalog_router
@@ -57,6 +59,7 @@ app.include_router(workforce_router)
 app.include_router(registry_router)
 app.include_router(operations_router)
 app.include_router(knowledge_router)
+app.include_router(marketing_projection_router)
 app.include_router(claim_desk_router)
 app.include_router(workspace_router)
 app.include_router(catalog_router)
@@ -377,10 +380,15 @@ def review_deliverable(tenant_id: str, deliverable_id: str, body: DeliverableRev
     ):
         raise HTTPException(412, "Content changed or assessment is stale. Reload and reassess before deciding.")
     legacy_approval = item.status == "approved" and item.qa_approved_revision is None
+    if body.decision == "approved" and item.status == "approved" and item.qa_approved_revision == item.qa_revision and item.qa_approved_digest == digest and item.reviewed_by == user.id and item.review_note == body.note and c3_boundaries.run_for(db, item):
+        return data(item)
     if item.status != "submitted" and not legacy_approval:
         raise HTTPException(409, "Deliverable is not awaiting review")
     if user.id in (item.created_by, item.last_editor_id):
         raise HTTPException(403, "Self-approval is forbidden")
+    if body.decision == "approved" and (gate := c3_boundaries.boundary(db, user, item, digest, "qa")):
+        store, snap, values = gate
+        c3_boundaries.record(store, snap, "qa", c3_boundaries.decision_key(values["run_id"], item.qa_revision, digest), values)
     item.status, item.reviewed_by, item.review_note = body.decision, user.id, body.note
     item.qa_approved_revision = item.qa_revision if body.decision == "approved" else None
     item.qa_approved_digest = digest if body.decision == "approved" else None

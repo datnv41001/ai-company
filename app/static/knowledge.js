@@ -269,6 +269,12 @@ function createKnowledgePanel(root, api) {
         <div class="knowledge-grid">${fields.map(k=>`<div>${fieldBlock(k)}</div>`).join('')}</div>
         ${data.can_edit?'<button type="submit" disabled>Lưu thay đổi</button>':'<p>Bạn có quyền xem hồ sơ này.</p>'}
         <span id="knowledge-dirty" role="status"></span></form>`}</div>`;
+    if (view==='briefs' && brief && data.can_edit) {
+      const mount=document.createElement('div');
+      mount.id='knowledge-marketing-workflow';
+      content.querySelector('.knowledge-brief').append(mount);
+      mountMarketingBrief(mount,api,{tenant:scope.tenant,client,brand,brief:brief.id,role:scope.role,signal:reading.signal});
+    }
     if (view==='briefs' && Object.keys(edit?.picks || {}).length) chooseBriefData();
   }
   function edited() {

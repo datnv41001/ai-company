@@ -170,7 +170,11 @@ def save_checkpoint(db, scope, run, stage, output, node):
     if binding := run.knowledge.get("registry"):
         from .registry_qa import assess_role
         contract = binding["contracts"][stage]
-        if stage in ("research","strategy") and contract["adapter"] == stage+"@2":
+        from . import c3_marketing
+        if binding["workflow"] in c3_marketing.ROLES:
+            record["quality"]["role_qa"] = {"policy": contract["qa_policy"], "findings": record["quality"]["claims"],
+                                          "manifest_digest":run.knowledge["c3_manifest"]["digest"], "source_ids":output["source_ids"]}
+        elif stage in ("research","strategy") and contract["adapter"] == stage+"@2":
             record["quality"]["role_qa"] = research_strategy.evidence(db,run,node,output)
         elif contract["adapter"] in landing_qa.ROLE_POLICY:
             record["quality"]["role_qa"] = landing_qa.evaluate_node(db, run, node, output)
@@ -187,10 +191,14 @@ def save_checkpoint(db, scope, run, stage, output, node):
         preview = "\n\n".join(p["skill"].upper() + "\n" + p["output"]["text"] for p in run.checkpoints if p["skill"] != "director")
         if binding and binding["contracts"]["director"]["adapter"] == "director@2":
             preview = research_strategy.proposal(run.checkpoints)
+        title = run.knowledge["title"]
+        if binding and binding["workflow"] in c3_marketing.ROLES:
+            draft = c3_marketing.render(binding["workflow"], run.knowledge["c3_projection"], {p["skill"]:p["output"] for p in run.checkpoints})
+            title, preview = draft["title"], draft["body"]
         doc = Deliverable(
             tenant_id=run.tenant_id,
             campaign_id=run.campaign_id,
-            title=run.knowledge["title"],
+            title=title,
             content={"client_preview": preview, "workforce_run_id": run.id},
             created_by=scope.operator,
             status="submitted",
@@ -227,7 +235,10 @@ def finish(db, scope, config, task, result, error, *, node=None, commit=True):
             if not error:
                 if node and node.template == "dynamic-v1" and stage == "director":
                     binding = run.knowledge.get("registry",{})
-                    if binding.get("contracts",{}).get("director",{}).get("adapter")=="director@2":
+                    from . import c3_marketing
+                    if binding.get("workflow") in c3_marketing.ROLES:
+                        raw = c3_marketing.director_proposal(binding["workflow"], raw)
+                    elif binding.get("contracts",{}).get("director",{}).get("adapter")=="director@2":
                         from .research_strategy import director_proposal
                         raw = director_proposal(raw)
                     contract, digest = dynamic_plan.compile_plan(raw, run.knowledge["required_outputs"], run.knowledge.get('registry'))

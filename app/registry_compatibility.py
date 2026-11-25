@@ -1,6 +1,6 @@
 """Check executable release contracts before the publisher writes any definition."""
 
-from . import dynamic_plan, landing_qa
+from . import c3_marketing, dynamic_plan, landing_qa
 from .registry_adapters import ROLES, output_schema, resolve
 
 FIELDS = {
@@ -51,7 +51,9 @@ def check_workflow(manifest):
     profile = manifest.get("profile", "landing-seo")
     profiles = {"landing-seo": ("WF-13/landing-seo-draft", ["content","seo"], ["content","seo"]),
                 "research-strategy": ("WF-03/research-strategy-draft", ["research","strategy"], ["strategy"])}
-    if profile not in profiles:
+    workflow = f"{manifest['workflow_id']}@{manifest['workflow_version']}"
+    backed = workflow in c3_marketing.ROLES
+    if (manifest.get("knowledge_projection") == "amc.marketing-manifest/1") != backed or profile not in profiles:
         raise ValueError("Unknown executable workflow profile")
     identity, stages, outputs = profiles[profile]
     if (
@@ -66,9 +68,11 @@ def check_workflow(manifest):
         raise ValueError("Unsupported workflow contract")
 
     for skill, contract in contracts.items():
-        if profile == "research-strategy" and (skill not in required or contract["adapter"] != skill+"@2"):
+        if backed and (skill not in required or contract["adapter"] != f"{skill}@{c3_marketing.VERSIONS[skill]}"):
+            raise ValueError("Unsupported knowledge projection adapter")
+        if not backed and profile == "research-strategy" and (skill not in required or contract["adapter"] != skill+"@2"):
             raise ValueError("Unsupported research strategy adapter")
-        if profile == "landing-seo" and skill in ("director","research","strategy") and contract["adapter"] != skill+"@1":
+        if not backed and profile == "landing-seo" and skill in ("director","research","strategy") and contract["adapter"] != skill+"@1":
             raise ValueError("Unsupported landing adapter")
         adapter = resolve(contract)
         if (
@@ -77,7 +81,7 @@ def check_workflow(manifest):
             or contract["skill_id"] != skill
             or contract["role_id"] != ROLES[skill]
             or any(type(contract[k]) is not int or contract[k] != adapter.version for k in ("skill_version", "contract_version"))
-            or contract["qa_policy"] != (skill+"-wf03@1" if profile == "research-strategy" else landing_qa.ROLE_POLICY.get(contract["adapter"], skill + "@1"))
+            or contract["qa_policy"] != ("c3-" + skill + "@1" if backed else skill+"-wf03@1" if profile == "research-strategy" else landing_qa.ROLE_POLICY.get(contract["adapter"], skill + "@1"))
             or not landing_qa.valid_limits(contract)
         ):
             raise ValueError(f"Unsupported adapter, role or skill version for {skill}")

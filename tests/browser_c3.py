@@ -89,7 +89,8 @@ if __name__ == "__main__":
     with httpx.Client(base_url=BASE, timeout=30, trust_env=False) as api, sync_playwright() as pw:
         browser = pw.chromium.launch(executable_path=os.getenv("AMC_BROWSER_EXECUTABLE") or None)
         try:
-            report = {"browser": browser.version, "cases": [exercise(api, browser, w, h) for w, h in ((1280, 850), (390, 844))]}
+            viewports = ((1280, 850), (820, 1180), (390, 844))
+            report = {"browser": browser.version, "cases": [exercise(api, browser, width, height) for width, height in viewports]}
             (OUT / "c3-browser.json").write_text(json.dumps(report, indent=2), encoding="utf8")
         finally:
             browser.close()

@@ -41,7 +41,7 @@ python -m ruff check .
 python -m pytest -q tests/test_c3_authority.py tests/test_c3_races.py tests/test_c3_operational_guards.py
 ```
 
-Dùng quy trình CI PostgreSQL cho các test đánh dấu PG. Job Compose publish hai release và chạy tests/browser_c3.py ở desktop 1280 px và mobile 390 px cùng bộ browser hiện có. Hai tệp catalog, mã adapter và registry-runtime.lock.json là một đơn vị triển khai. Thay đổi mã runtime cần kiểm định và phê duyệt đúng fingerprint. Bộ thử schema cũ và các bản catalog trước tiếp tục chạy trên CI.
+Dùng quy trình CI PostgreSQL cho các test đánh dấu PG. Job Compose publish hai release và chạy `tests/browser_c3.py` trên desktop 1280 × 850, tablet 820 × 1180 và mobile 390 × 844. Hai tệp catalog, mã adapter và registry-runtime.lock.json là một đơn vị triển khai. Thay đổi mã runtime cần kiểm định và phê duyệt đúng fingerprint. Bộ thử schema cũ và các bản catalog trước tiếp tục chạy trên CI.
 
 Kiểm tra chất lượng thực tế dùng bộ ca tổng hợp, đầu ra WF-03/WF-13 và receipt invocation cho từng lượt tại [bộ so sánh C3](../../tests/evaluation/c3/). Ghi riêng kết quả cấu trúc và kết quả Marketing, mức sửa của con người cần pilot riêng.
 
@@ -55,7 +55,7 @@ Kiểm tra chất lượng thực tế dùng bộ ca tổng hợp, đầu ra WF-
 | Mất phản hồi và worker dừng sau khi nhận việc | Hai yêu cầu xếp việc đồng thời cùng trả một run. Lease cũ hết hạn, worker tiếp quản. Kiểm số bản giao, receipt và từng bút toán. |
 | Thiếu điều kiện sử dụng | Sai công ty, SKU, biến thể, campaign, locale, stock bị tranh chấp hoặc rút ủy quyền làm dừng tác vụ. Ca hết hạn báo giá dịch riêng thời điểm đánh giá, giữ nguyên dữ liệu giá và thời hạn các nguồn khác. |
 | Phiên bản QA và bản giao | Gửi cả `expected_qa_revision` và `expected_content_digest` khi chia sẻ tài sản C3. Gửi lại sau khi sửa nhận 412; gửi lại sau khi mất ACK cho đúng bản vẫn lấy cùng bản giao. |
-| Thao tác thực tế trong browser | Artifact `knowledge-center-journeys-*/marketing-workflows/` trong job Compose có hai kích thước Chromium, trạng thái đã sẵn sàng, số run sau khi xếp việc và ảnh tại từng bước. |
+| Thao tác thực tế trong browser | Artifact `knowledge-center-journeys-*/marketing-workflows/` lưu kích thước Chromium, mã run và ảnh trước/sau khi xếp việc cho từng thiết bị. |
 | Phiên thiết bị | Ba ca `revoked_device` yêu cầu API phiên của A1. Trên core v22 chúng được đánh dấu skip. Bản tích hợp thử trên PostgreSQL giữa C3 và [PR #36](https://github.com/datnv41001/ai-company/pull/36) (`c9ae22ba`, core v24) đã xác nhận logout chặn cả ba điểm, không phát sinh receipt. |
 
 Job PostgreSQL trong [PR C3](https://github.com/datnv41001/ai-company/pull/37) chạy bằng role ứng dụng hạn chế; identity migration kiểm tra kết quả cuối và tạo/xóa database tổng hợp. Kiểm registry cũ và mới trong cùng database trước khi đánh giá nâng cấp. Ảnh browser native dùng Chromium 157.0.8103.52, PostgreSQL native 16.16; job Compose dùng image PostgreSQL 16.6.

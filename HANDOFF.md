@@ -2,6 +2,8 @@
 
 ## PR #37 — nhiệm vụ Marketing, kiểm chứng nội dung và đánh giá chất lượng
 
+Để phản biện WF-03 và WF-13, bắt đầu với [bản giao thật, bản biên tập và receipt từng brief](docs/evaluation/c3-holdout-v1/README.md). Để đo công biên tập, dùng [bộ pilot tiếng Việt có chấm mù](docs/evaluation/C3-PRACTITIONER-KIT.md). Trong GitHub Actions, artifact `api-regression-integration` ghi tên từng ca đạt hoặc bỏ qua trên bản tích hợp, gồm các thứ tự thu hồi quyền, phiên đăng nhập, phân quyền cùng agency và kiểm chứng từng nhận định.
+
 Bản phát triển kết hợp core v24, business v3 và module nhiệm vụ C3 v1. Khi chuyển máy, dùng PostgreSQL thử nghiệm và chạy publisher trong Compose trước khi mở ứng dụng. Trên máy đã có cấu hình, giữ lại secret và khóa nhận diện hiện tại. Publisher chạy lại được. Ghi nhận mọi thay đổi qua bản nâng cấp mới để giữ lịch sử quyết định và snapshot đã bàn giao.
 
 ```bash

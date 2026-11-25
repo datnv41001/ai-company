@@ -11,7 +11,8 @@ from sqlalchemy.exc import DBAPIError, IntegrityError
 
 from . import knowledge_models as m
 from .models import Brand, Membership, new_id
-from .security import SECRET, require_tenant
+from .security import require_tenant
+from .session_keys import key
 
 
 VISIBILITY = ("public", "internal", "restricted")
@@ -45,9 +46,8 @@ def signed_document(db, actor, name, values):
     """Bind a validated append to its table, actor and current PostgreSQL transaction."""
     tx = db.scalar(text("SELECT txid_current()"))
     doc = canonical({k: stamp(v) if isinstance(v, datetime) else v for k, v in values.items()})
-    key = hmac.digest(SECRET.encode(), b"amc-identity-v17", "sha256")
     message = "\n".join(("knowledge-v22", actor, str(tx), name, doc))
-    return dict(doc=doc, proof=hmac.new(key, message.encode(), "sha256").hexdigest())
+    return dict(doc=doc, proof=hmac.new(key("AMC_DB_PROOF_KEY"), message.encode(), "sha256").hexdigest())
 
 
 def restrictive(*classes):

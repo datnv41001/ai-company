@@ -1,5 +1,9 @@
 # Bắt đầu ở đây khi tiếp quản AI Marketing Company
 
+## C2.4 · Nguồn và nhận định Marketing
+
+Trong hồ sơ thương hiệu, mở **Nguồn và nhận định** để ghi nguồn, chọn locator, so sánh câu và điều kiện, kiểm quyền chuyên môn, duyệt, xử lý tranh chấp và xem ảnh hưởng. Câu công khai dùng được qua nguồn hạn chế được tính trên server tại lúc đọc. Editor chỉ nhận phần được phép xem. Publisher cài predicate riêng trong `amc_business`, không tăng version core hoặc sidecar hồ sơ. Kiểm lại API, Chromium desktop/mobile và ranh giới kiểm chứng theo [runbook C2.4](docs/business-profile/C2-CLAIM-DESK.md).
+
 ## C2 · Hồ sơ chung và brief nội bộ
 
 Increment đầu tiên của C2.1/C2.5 trên C1 `c847f910` cho phép lưu một phần bốn field theo doanh nghiệp, kế thừa/ghi đè/để trống theo thương hiệu và tạo brief cá nhân khi chưa đủ thông tin. Publisher cài `amc_business` v1 bên cạnh core v22. Core 023 dành cho Identity A1. Chạy Compose rồi đối chiếu hai brand, thử lại lệnh sau mất phản hồi và đọc brief sau khi hồ sơ gốc đổi. PostgreSQL native 16.16 và SQLite đã qua năm ca API đầu tiên. Bộ điều phối Marketing và nghiệm thu thương mại giữ gate riêng. [Hợp đồng, quyền, chạy kiểm thử và rollback trên máy mới](docs/business-profile/C2-WORKSPACE-RUNBOOK.md)

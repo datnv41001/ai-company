@@ -129,7 +129,11 @@ def source(source_id: str, s=Depends(reader)):
             key: refs[key, value].data["name"] for key, value in entry["assertion"]["placement"].items() if key in ("product", "variant", "market") and value
         }
         entries.append(dict(entry, names=names))
-    return brief(s, row) | {key: row.data.get(key) for key in ("publisher", "document", "valid_from", "valid_until")} | {"entries": entries}
+    return (
+        brief(s, row)
+        | {key: row.data.get(key) for key in ("publisher", "document", "valid_from", "valid_until")}
+        | {"entries": entries, "events": history(row.id, s), "impact": impact(row.id, 30, s)}
+    )
 
 
 @router.get("/qualifications", dependencies=[Depends(no_cache)])
@@ -157,9 +161,23 @@ def placements(term: str = Query("", max_length=100), s=Depends(reader)):
         if term:
             query = query.where(m.KnowledgeRevision.data["name"].as_string().icontains(term, autoescape=True))
         rows = s.db.scalars(query.order_by(m.KnowledgeRevision.created_at.desc(), m.KnowledgeRevision.id).limit(51)).all()
-        result[name] = [dict(id=row.id, label=row.data["name"], product=row.data.get("product"), locales=row.data.get("locales", [])) for row in rows[:50]]
+        result[name] = [
+            dict(id=row.id, label=f"{row.data['name']} · bản {row.revision}", product=row.data.get("product"), locales=row.data.get("locales", []))
+            for row in rows[:50]
+            if not row.data.get("product") or visible(s, row.data["product"]) is not None
+        ]
         result[name + "_more"] = len(rows) > 50
     return result
+
+
+@router.get("/commands/{key}", dependencies=[Depends(no_cache)])
+def command_status(key: str, s=Depends(reader)):
+    row = s.db.scalar(s.query(m.KnowledgeCommand).filter_by(actor=s.actor, key=key))
+    if row is None or row.operation not in ("revision", "event", "desk_claim_draft"):
+        missing()
+    # Recover only the record already committed by this actor. Never echo
+    # source text, qualification notes, reasons, or request bodies to storage.
+    return {"kind": row.result.get("kind"), "id": row.result["id"]}
 
 
 @router.get("/{claim_id}", dependencies=[Depends(no_cache)])

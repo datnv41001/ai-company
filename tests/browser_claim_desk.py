@@ -8,7 +8,7 @@ from uuid import uuid4
 import httpx
 from playwright.sync_api import expect, sync_playwright
 
-from browser_knowledge import BASE, login, select_scope, user
+from browser_knowledge import BASE, drop_after_commit, login, select_scope, user
 from identity_fixtures import invite_member
 from knowledge_fixtures import accepted, bundle, call, revision
 
@@ -127,8 +127,18 @@ def exercise(browser, api, width, height):
             view.get_by_role("button", name="Lưu bản nháp", exact=True).click()
             expect(manager.locator("#knowledge-status")).to_contain_text("Đối chiếu")
             view.get_by_label("Điều kiện kèm theo, mỗi dòng một điều kiện").fill("")
-            view.get_by_role("button", name="Lưu bản nháp", exact=True).click()
-            expect(manager.locator("#knowledge-status")).to_contain_text("Đã lưu bản nháp")
+            if width == 1280:
+                commits = drop_after_commit(manager, "claim-desk/drafts")
+                with manager.expect_request_failed(lambda req: req.url.endswith("/claim-desk/drafts")):
+                    view.get_by_role("button", name="Lưu bản nháp", exact=True).click()
+                assert len(commits) == 1
+                manager.unroute("**/claim-desk/drafts")
+                view = open_desk(manager, f["owner"], f["tenant"], f["client"], f["brand"])
+                expect(manager.locator("#knowledge-status")).to_contain_text("Đã tìm thấy kết quả lưu")
+                expect(view.get_by_label("Chọn nhận định")).to_have_value(commits[0]["id"])
+            else:
+                view.get_by_role("button", name="Lưu bản nháp", exact=True).click()
+                expect(manager.locator("#knowledge-status")).to_contain_text("Đã lưu bản nháp")
             for heading in ("Xác nhận đối chiếu nguồn", "Duyệt nhận định"):
                 section = view.locator("section").filter(has=manager.get_by_role("heading", name=heading, exact=True))
                 section.get_by_label("Quyết định", exact=True).select_option("approved")

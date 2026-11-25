@@ -77,6 +77,11 @@ def test_read_only_projection_checks_current_source_and_qualification(api):
         for suffix in ("", "/events", "/impact"):
             assert api.get(path + "/revisions/" + row["id"] + suffix, headers=editor["headers"]).status_code == 404
     assert api.get(path + "/snapshots/" + private_snapshot["id"], headers=editor["headers"]).status_code == 404
+    assertion = api.get(path + "/revisions/" + claim["id"], headers=owner["headers"]).json()["data"]["assertion"]
+    public_binding = revision(api, owner, path, "readable-binding", "binding", {"source": src["id"], "locator": "PRIVATE-LOCATOR", "assertion": assertion})
+    assert api.get(path + "/revisions/" + public_binding["id"], headers=editor["headers"]).status_code == 404
+    trail = api.get(path + "/revisions/" + public_binding["id"] + "/events", headers=editor["headers"])
+    assert trail.is_success and "reason" not in trail.json()[0] and "actor" not in trail.json()[0]
     detail = api.get(url, headers=editor["headers"]).json()
     assert detail["public_wording"]["qualifiers"] == ["Conditions synthétiques"]
     assert detail["public_wording"]["placement"] == dict(product="Tile", market="Vietnam", locale="vi-VN", channel="web", region="HN")
@@ -101,6 +106,9 @@ def test_exact_source_draft_retry_comparison_transition_and_impact(api):
     bad = payload | {"assertion": entry["assertion"] | {"qualifiers": ["New words"]}}
     assert api.post(path + "/claim-desk/drafts", headers=owner["headers"], json=bad).status_code == 409
     current = accepted(api.post(path + "/claim-desk/drafts", headers=owner["headers"], json=payload))
+    assert api.get(path + "/claim-desk/commands/" + key, headers=owner["headers"]).json() == {"kind": "claim", "id": current["id"]}
+    colleague = reader(api, owner, "editor")
+    assert api.get(path + "/claim-desk/commands/" + key, headers=colleague["headers"]).status_code == 404
     assert accepted(api.post(path + "/claim-desk/drafts", headers=owner["headers"], json=payload)) == current
     assert api.post(path + "/claim-desk/drafts", headers=owner["headers"], json=payload | {"key": uuid4().hex}).status_code == 409
     url = path + "/claim-desk/" + current["id"]

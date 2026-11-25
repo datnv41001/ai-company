@@ -4,8 +4,17 @@ function createClaimDesk(root, api, notify) {
   const options = {retail:'Bán lẻ', wholesale:'Bán sỉ', prepaid:'Trả trước', credit:'Trả sau', standard:'Tiêu chuẩn', extended:'Mở rộng'};
   const units = {piece:'Cái',box:'Hộp','m²':'m²',tonne:'Tấn',kg:'kg',service:'Dịch vụ',subscription_month:'Tháng',subscription_year:'Năm'};
   let generation = 0, requestNo = 0, scope, ctl, board, data, src, entry, mandates, selectedMandate, pending, busy;
-  let claimOffset = 0, sourceOffset = 0, captureChoices;
+  let claimOffset = 0, sourceOffset = 0, captureChoices, qualificationOffset=0;
   const path = () => `/api/tenants/${scope.tenant}/clients/${scope.client}/brands/${scope.brand}/knowledge`;
+  const pointerKey = () => `amc.claim-desk.${scope.actor}.${scope.tenant}.${scope.client}.${scope.brand}`;
+  async function fingerprint(value) {
+    const digest=await crypto.subtle.digest('SHA-256',new TextEncoder().encode(JSON.stringify(value)));
+    return Array.from(new Uint8Array(digest),b=>b.toString(16).padStart(2,'0')).join('');
+  }
+  function remember(value) {
+    pending=value;
+    try {if(value)sessionStorage.setItem(pointerKey(),JSON.stringify(value));else sessionStorage.removeItem(pointerKey());}catch{}
+  }
   const field = (tag, label) => { const n=document.createElement(tag); if(label!=null)n.textContent=label; return n; };
   function button(label, callback) {
     const n=field('button',label); n.type='button'; n.onclick=()=>action(callback); return n;
@@ -24,7 +33,7 @@ function createClaimDesk(root, api, notify) {
   async function action(fn) {const g=generation;try {await fn();}catch(e){if(g===generation && e.name!=='AbortError')notify(decode(e),true);}}
   function reset() {
     ++generation;++requestNo;ctl?.abort();ctl=null;scope=board=data=src=entry=mandates=selectedMandate=pending=null;busy=false;
-    claimOffset=sourceOffset=0;captureChoices=null;root.replaceChildren();
+    claimOffset=sourceOffset=qualificationOffset=0;captureChoices=null;root.replaceChildren();
   }
   async function get(suffix) {
     const g=generation;const result=await api(path()+'/claim-desk'+suffix,'GET',null,false,ctl.signal);
@@ -36,11 +45,24 @@ function createClaimDesk(root, api, notify) {
     const result=await get(`?claim_offset=${claimOffset}&source_offset=${sourceOffset}`);
     if(seq!==requestNo)return;
     board=result;
-    if(board.can_approve) {const list=await get('/qualifications');if(seq!==requestNo)return;mandates=list;}
+    if(board.can_approve) {const list=await get('/qualifications?offset='+qualificationOffset);if(seq!==requestNo)return;mandates=list;}
     render();
   }
   async function show(context) {
-    reset();scope={...context};ctl=new AbortController();await action(loadBoard);
+    reset();scope={...context};ctl=new AbortController();
+    try {pending=JSON.parse(sessionStorage.getItem(pointerKey()));}catch{}
+    const g=generation;
+    await action(async()=>{await loadBoard();if(g===generation && pending)await recover();});
+  }
+  async function recover() {
+    try {
+      const receipt=await get('/commands/'+encodeURIComponent(pending.key));
+      remember(null);
+      if(receipt.kind==='claim')await open(receipt.id);
+      else if(receipt.kind==='source')await chooseSource(receipt.id);
+      notify('Đã tìm thấy kết quả lưu trước đó.');
+      return true;
+    } catch(error){if(error.status!==404)throw error;return false;}
   }
   async function open(id) {
     const seq=++requestNo;const found=await get('/'+encodeURIComponent(id));if(seq!==requestNo)return;
@@ -58,16 +80,21 @@ function createClaimDesk(root, api, notify) {
   async function send(url, body, done) {
     if(busy)return;
     const g=generation;
-    const signature=JSON.stringify([url,body]);
-    if(!pending || pending.signature!==signature)pending={signature,key:crypto.randomUUID()};
     busy=true;
     try {
+      const signature=await fingerprint([url,body]);
+      if(g!==generation)return;
+      if(pending && pending.signature!==signature){
+        if(await recover())return;
+        if(!window.confirm('Yêu cầu trước chưa có kết quả. Tiếp tục với nội dung mới?'))return;
+      }
+      if(!pending || pending.signature!==signature)remember({signature,key:crypto.randomUUID()});
       const result=await api(path()+url,'POST',{...body,key:pending.key},false,ctl.signal);
       if(g!==generation)return;
-      pending=null;await done(result);
+      remember(null);await done(result);
     } catch(err) {
       if(g!==generation)return;
-      if(err.status)pending=null;
+      if(err.status && err.status<500)remember(null);
       throw err;
     } finally {if(g===generation)busy=false;}
   }
@@ -76,7 +103,12 @@ function createClaimDesk(root, api, notify) {
     const scopeNames=names || place;
     const pieces=[scopeNames.product,scopeNames.variant,scopeNames.market,place.region,place.locale,place.channel].filter(Boolean);
     if(a)pieces.push([options[a.option] || a.option,a.minimum&&'từ '+a.minimum,a.maximum&&'đến '+a.maximum,units[a.unit] || a.unit].filter(Boolean).join(' '));
-    if(price)pieces.push(`${price.amount_minor} ${price.currency} (đơn vị tiền nhỏ nhất), mỗi ${price.basis_quantity} ${units[price.unit] || price.unit}, thuế ${price.tax}, lượng ${statement.quantity}; ${price.conditions.join(', ')}`);
+    if(price) {
+      const major=price.amount_minor/(['JPY','VND'].includes(price.currency)?1:100);
+      const display=new Intl.NumberFormat('vi-VN',{style:'currency',currency:price.currency}).format(major);
+      const tax={included:'đã gồm thuế',excluded:'chưa gồm thuế',unknown:'chưa rõ thuế'};
+      pieces.push(`${display} / ${price.basis_quantity} ${units[price.unit] || price.unit}, ${tax[price.tax]}, số lượng ${statement.quantity}, tối thiểu ${price.moq}, bậc từ ${price.tier_min}${price.tier_max?' đến '+price.tier_max:''}. ${price.conditions.join(', ')}`);
+    }
     return pieces.join(' · ');
   }
   function pager(target, kind) {
@@ -100,13 +132,17 @@ function createClaimDesk(root, api, notify) {
       if(!sel.value || !note.value.trim())throw Error('Hãy chọn quyết định và nhập lý do.');
       const body={expected_digest:row.digest,expected_sequence:row.sequence,state:sel.value,reason:note.value.trim()};
       if(sel.value==='approved' && mandate){if(!mandate.value)throw Error('Cần chọn ủy quyền còn hiệu lực.');body.qualification_revision=mandate.value;}
-      return send('/revisions/'+row.id+'/events',body,async()=>{await loadBoard();if(data)await open(data.claim.id);notify('Đã ghi quyết định.');});
+      return send('/revisions/'+row.id+'/events',body,async()=>{await loadBoard();if(data)await open(data.claim.id);else if(src)await chooseSource(src.id);notify('Đã ghi quyết định.');});
     }));
   }
   function qualification() {
     if(!board.can_approve)return;
     const section=field('details');section.append(field('summary','Chuyên môn và ủy quyền duyệt'));
+    const own=mandates.reviewers.find(r=>r.self);
+    if(own)section.append(field('p','Mã đối chiếu của bạn trong danh sách người duyệt: '+own.id.slice(-6)));
     const list=select(section,'Hồ sơ ủy quyền',mandates.items,selectedMandate);
+    if(qualificationOffset)section.append(button('Ủy quyền trang trước',()=>{qualificationOffset-=30;return loadBoard();}));
+    if(mandates.more)section.append(button('Ủy quyền trang sau',()=>{qualificationOffset+=30;return loadBoard();}));
     list.onchange=()=>{selectedMandate=list.value;render();};
     const record=mandates.items.find(m=>m.id===selectedMandate);
     if(record){section.append(field('p',`${kinds[record.category]} · ${record.basis} · ${states[record.state]} · ${record.valid_until}`));transitions(section,record,false);}
@@ -129,7 +165,11 @@ function createClaimDesk(root, api, notify) {
       panel.append(field('p',`${src.publisher} · ${src.document} · hiệu lực đến ${src.valid_until}`));
       const pick=select(panel,'Vị trí trong nguồn',src.entries.map(e=>({id:e.locator,label:e.locator})),entry?.locator);
       pick.onchange=()=>{entry=src.entries.find(r=>r.locator===pick.value);render();};
-      if(board.can_approve && src.state!=='approved')transitions(panel,src,false);
+      panel.append(field('p',`Ảnh hưởng của nguồn đang thấy: ${src.impact.more?'ít nhất ':''}${src.impact.snapshots.length} bản chụp.`));
+      const log=field('details');log.append(field('summary','Lịch sử nguồn'));
+      src.events.forEach(e=>log.append(field('p',states[e.state]+' · '+new Date(e.effective_at).toLocaleString()+(e.reason?' · '+e.reason:''))));
+      panel.append(log);
+      if(board.can_approve)transitions(panel,src,false);
     }
     if(entry) {
       const both=field('div');both.className='knowledge-grid';panel.append(both);
@@ -193,7 +233,7 @@ function createClaimDesk(root, api, notify) {
       unit=select(form,'Đơn vị trong nguồn',Object.entries(units).map(([id,label])=>({id,label})),ap.unit);
       min=input(form,'Từ số lượng',ap.minimum);max=input(form,'Đến số lượng',ap.maximum);
     }
-    form.append(button('Lưu nguồn chờ duyệt',()=>{
+    form.append(button('Lưu nguồn chờ duyệt',async()=>{
       if(!publisher.value.trim()||!documentName.value.trim()||!locator.value.trim()||!expiry.value||!excerpt.value.trim()||!product.value||!market.value||!wording.value.trim()||!region.value.trim())throw Error('Cần tài liệu, trích dẫn, thời hạn, nội dung và phạm vi áp dụng.');
       const assertion=original?structuredClone(original):{};
       Object.assign(assertion,{category:category.value,wording:wording.value.trim(),qualifiers:qualifiers.value.split('\n').map(v=>v.trim()).filter(Boolean),
@@ -201,8 +241,10 @@ function createClaimDesk(root, api, notify) {
       if(option){const ap=Object.fromEntries(Object.entries({option:option.value,unit:unit.value,minimum:min.value,maximum:max.value}).filter(([,v])=>v));
         if(Object.keys(ap).length)assertion.applicability=ap;else delete assertion.applicability;}
       const description={publisher:publisher.value.trim(),document:documentName.value.trim(),valid_until:new Date(expiry.value).toISOString(),entries:[{locator:locator.value.trim(),excerpt:excerpt.value.trim(),assertion}]};
-      if(!form.dataset.subject)form.dataset.subject='source-'+crypto.randomUUID();
-      return send('/revisions',{subject:form.dataset.subject,kind:'source',expected_revision:0,visibility:visibility.value,data:description},
+      const g=generation;
+      const subject='source-'+(await fingerprint(description)).slice(0,36);
+      if(g!==generation)return;
+      return send('/revisions',{subject,kind:'source',expected_revision:0,visibility:visibility.value,data:description},
         async r=>{captureChoices=null;await loadBoard();await chooseSource(r.id);notify('Đã lưu nguồn ở trạng thái chờ duyệt.');});
     }));
   }

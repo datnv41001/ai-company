@@ -1,5 +1,9 @@
 # Bắt đầu ở đây khi tiếp quản AI Marketing Company
 
+## Nghiên cứu ứng dụng cho AMC và AIRC
+
+Bắt đầu từ [sổ nguồn](docs/research/SOURCE_REGISTRY.md), mở [thẻ kiến thức](docs/research/KNOWLEDGE_CARDS.md), [đối chiếu với mã hiện hành](docs/research/APPLICABILITY_MATRIX.md) rồi chọn [cải tiến có tiêu chí nghiệm thu](docs/research/PRODUCT_OPPORTUNITIES.md). Đọc [các giả thuyết đã hoãn hoặc bác bỏ](docs/research/REJECTED_HYPOTHESES.md) trước khi lặp lại nghiên cứu. Công cụ engineering chạy độc lập ở [runbook Research Broker](engineering/airc500/APPLIED-RESEARCH.md). Receipt lần đầu có hai nguồn quan sát được và một nguồn bị publisher hạn chế. Có thể replay ngoại tuyến bằng mã băm trong runbook. Rollback bằng dùng phiên bản catalog/adapter trước cho đợt đọc mới, giữ lại biên nhận cũ để đối soát. C2/C3 tiếp tục theo thứ tự sản phẩm.
+
 ## Publisher kết hợp C2 và A1
 
 Core v24 kết hợp business module v3 với phiên thiết bị A1. Publisher kiểm tra hai định nghĩa SQL thực tế, quyền thực thi, liên tục quota và các khóa A1 trước khi commit. Hai đường nâng từ C2 v22 và A1 v23 dùng đúng mã đã duyệt và dữ liệu tổng hợp. Khi chuyển máy, làm theo [runbook publisher, kiểm thử và khôi phục](docs/COMBINED-C2-A1.md). Các mục bên dưới lưu hợp đồng lịch sử từng nhánh.

@@ -1,0 +1,61 @@
+{
+  "adapter": "amc-applied-public/1",
+  "version": 1,
+  "policy_sha256": "0c5657b2ce52ae5a44f149f43e41cdefc429d1f2d26bc4e92e4504db9ce97e24",
+  "cards": [
+    "K-06",
+    "K-08"
+  ],
+  "receipts": [
+    {
+      "source": "SRC-GA",
+      "card": "K-08",
+      "status": "absent",
+      "reason": "publisher_restricted",
+      "robots_sha256": "3b8a0b2f1e13e3e4b93b2b1ca90696daf98c2d386fbc1e6cde937af12e7ebd83",
+      "checked_utc": "2026-11-25T02:43:51.859503+00:00"
+    },
+    {
+      "source": "SRC-SC",
+      "card": "K-08",
+      "status": "observed",
+      "robots_sha256": "169a788d82e6ec84ffb5bf5a0eabef6bf97a7766cb94ef473c7022901d596239",
+      "evidence": {
+        "publisher": "Google Search Central",
+        "url": "https://developers.google.com/search/docs/monitor-debug/google-analytics-search-console",
+        "locator": "Comparing data in Google Analytics and Search Console",
+        "reference": "Clicks and sessions",
+        "rights": "cc_by_4_0_short_attributed_excerpt",
+        "limitation": "The definition alone cannot diagnose a property-specific discrepancy or attribute a lead.",
+        "excerpt": "Clicks and sessions are calculated differently",
+        "license": "https://creativecommons.org/licenses/by/4.0/",
+        "excerpt_sha256": "04b73cf6f225b3bc871482ab237980422403e68632c1183f72e2bab39da3266d",
+        "raw_sha256": "d9a005a4c21f78cf11306a00c18477f227ab9dd10344990502b7b3c342067203",
+        "bytes": 203072,
+        "untrusted": true
+      },
+      "checked_utc": "2026-11-25T02:43:54.555822+00:00"
+    },
+    {
+      "source": "SRC-PF",
+      "card": "K-06",
+      "status": "observed",
+      "robots_sha256": "169a788d82e6ec84ffb5bf5a0eabef6bf97a7766cb94ef473c7022901d596239",
+      "evidence": {
+        "publisher": "Google Search Central",
+        "url": "https://developers.google.com/search/docs/fundamentals/creating-helpful-content",
+        "locator": "Content and quality questions",
+        "reference": "Originality self-assessment",
+        "rights": "cc_by_4_0_short_attributed_excerpt",
+        "limitation": "An editorial review question cannot establish a ranking, sales result or business claim.",
+        "excerpt": "Does the content provide original information, reporting, research, or analysis?",
+        "license": "https://creativecommons.org/licenses/by/4.0/",
+        "excerpt_sha256": "b00f719400f27d693cd89437a3a7e56831fd3f0b0bfd4e675cf29fd0a9b0f17f",
+        "raw_sha256": "1f4b8b2f4e1a17c27d0a194e8f3fa8389563d1eec03b18ce539f78e1313b55c6",
+        "bytes": 196705,
+        "untrusted": true
+      },
+      "checked_utc": "2026-11-25T02:43:56.007252+00:00"
+    }
+  ]
+}

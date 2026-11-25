@@ -1,5 +1,8 @@
 # Ma trận truy vết V1.0 · Mốc 2846c174
 
+B1–B8 AIRC sau PR #20 được kiểm theo ma trận engineering, riêng với chức năng Marketing sản phẩm. [Acceptance, journal và outbox](../engineering/airc500/UNION-STUDY.md).
+
+
 Đối soát theo [PRD](PRODUCT_SPEC_V1.md), [37 vai trò](../catalog/agent_roles.json) và [24 workflow](../catalog/workflows.json). Đơn vị đếm là một yêu cầu đầy đủ. Tại mốc gốc, số hàng có đủ bằng chứng và quyết định `verified` trong ma trận là **0/49 module, 0/37 vai trò và 0/24 workflow**. Các luồng đã được nghiệm thu nội bộ ở v13 có bằng chứng riêng dưới đây. Không quy đổi tỷ lệ nghiệm thu thành phần trăm công sức đã hoàn thành.
 
 ## Cách đọc và cập nhật
@@ -157,3 +160,7 @@ Hạng mục onboarding có nhánh v21 chờ review cho admission theo tài kho�
 MKT-03, MKT-20 và AIO-06 có bổ sung nền backend C1 tại schema v22. Các ca đo gồm 29 kiểm thử thực thi trên PostgreSQL/SQLite, CAS, quyền theo scope, giá thương mại, thu hồi nguồn trước/sau QA/share và tái lập snapshot. WF-03 và WF-13 vẫn dùng các adapter đã ghim. C2–C4 tiếp nhận giao diện, adapter phiên bản mới và đánh giá nghiệp vụ. [Ma trận 16 tiêu chí, mã kiểm thử và cách chạy](business-profile/C1-RUNBOOK.md)
 
 MKT-03 Brand Management, MKT-20 Localization & Regional và AIO-06 Knowledge & Memory có [hợp đồng C0 và fixture](business-profile/README.md) cho dữ kiện theo sản phẩm/variant/market, source revision và hiệu lực khi share. WF-03/WF-13 tiếp tục dùng các release đã duyệt đến khi C1/C3 chứng minh adapter mới. Nhãn tiến độ là design + synthetic contract checks; tính năng và business acceptance còn chờ.
+
+## SAA-02 · session và recovery
+
+[Thiết kế và tiêu chí nghiệm thu](IDENTITY-SESSION-RECOVERY.md) bao gồm thu hồi giữa hai worker, recovery khi cooldown, xoay khóa và so sánh OIDC. Những gate này chờ triển khai và kiểm thử độc lập.

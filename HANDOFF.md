@@ -1,5 +1,11 @@
 # Bắt đầu ở đây khi tiếp quản AI Marketing Company
 
+## Trung tâm điều hành và chuẩn giao diện
+
+Mốc nền là PR #32 tại `068b85170cf47106c8d08a8c573548e3f530647c`. Từ tài khoản nhân sự, chọn workspace để mở **Trung tâm điều hành**, chọn chiến dịch và đối chiếu bước kế hoạch với nhiệm vụ, bộ phận, bản giao và lượt xử lý Workforce. Menu **Hồ sơ doanh nghiệp** mở C2. Công tắc **Giao diện** hỗ trợ hệ thống, sáng và tối. [Hợp đồng dữ liệu, component và quy tắc nghiệm thu](docs/AMC-DESIGN-SYSTEM.md)
+
+Dùng Compose và tài khoản tổng hợp theo hướng dẫn Docker bên dưới. Chạy browser test trong job Chromium với `python tests/browser_premium_ui.py` và các biến môi trường của workflow. Kiểm tra cả ảnh, số đo và nguồn API trên cùng SHA. Để rollback riêng giao diện, dùng lại image API đã build ở SHA nền cùng publisher và DB core v22, module doanh nghiệp v3. Thay đổi giao diện này chỉ đọc các endpoint hiện hữu. [Job kiểm thử](.github/workflows/ci.yml)
+
 ## C2.5 · Mục tiêu thật cấp công ty và liên kết thương hiệu, chiến dịch
 
 Chạy publisher module `amc_business` v3 trên core v22. Chọn **Mục tiêu chung doanh nghiệp** để lập cùng một mục tiêu cho nhiều thương hiệu của một khách hàng. API và giao diện dùng ID phiên bản, CAS và lịch sử quyết định khi cha được thay thế hoặc thu hồi. [Các bước dùng, nâng cấp và ca chạy lại](docs/business-profile/C2-OBJECTIVES-RUNBOOK.md)

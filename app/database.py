@@ -118,6 +118,15 @@ def prepare_database(bind, *, verify_identity=True):
             raise RuntimeError("Apply the compatible business workspace migration")
         if not conn.scalar(text(DESK_CURRENT)):
             raise RuntimeError("Apply the current claim desk read capability")
+        # The approved combined publisher and the task-aware publisher both use core v24.
+        # Check the actual task capability before ORM queries begin selecting the origin column.
+        if not conn.scalar(text("""
+            SELECT EXISTS (SELECT FROM pg_attribute WHERE attrelid='public.workforce_briefs'::regclass
+                            AND attname='origin' AND NOT attisdropped)
+               AND COALESCE(has_function_privilege(current_user,
+                     to_regprocedure('amc_acl.lock_c3_internal_target(text,text,text,text,text)'), 'EXECUTE'), false)
+        """)):
+            raise RuntimeError("Run the C3 task migration publisher before starting this API")
         if not verify_identity:
             return
         from .access import set_context

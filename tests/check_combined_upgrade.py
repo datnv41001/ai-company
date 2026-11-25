@@ -120,6 +120,7 @@ def run(line):
             assert snapshot(db, line) == before
             assert db.execute("SELECT version FROM amc_business.versions ORDER BY version").fetchall() == [(1,), (2,), (3,)]
             assert db.execute("SELECT max(version) FROM amc_schema_versions").fetchone() == (24,)
+            assert db.execute("SELECT version FROM amc_c3.versions ORDER BY version").fetchall() == [(1,)]
             assert db.execute(COMMERCIAL_CURRENT).fetchone()[0] and db.execute(DESK_CURRENT).fetchone()[0]
             if line == "a1":
                 check_devices(db, runtime)

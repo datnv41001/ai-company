@@ -22,6 +22,7 @@ from .c3_evidence_review import router as content_evidence_router
 from .c3_studio_routes import router as studio_router
 from .c3_projection import router as marketing_projection_router
 from .claim_desk import router as claim_desk_router
+from .campaign_lab import replay as replay_campaign_lab
 from .business_workspace import router as workspace_router
 from .marketing_catalog import router as catalog_router
 from .company_objectives import router as objective_router
@@ -314,6 +315,14 @@ def build_campaign_plan(tenant_id: str, campaign_id: str, user: User = Depends(c
     db.commit()
     tasks = db.scalars(select(WorkTask).where(WorkTask.tenant_id == tenant_id, WorkTask.campaign_id == campaign_id)).all()
     return {"campaign_id": campaign_id, "llm_called": False, "created_count": len(created), "tasks": [data(i) for i in tasks]}
+
+
+@app.post("/api/tenants/{tenant_id}/campaigns/{campaign_id}/execution-lab/replay")
+def run_campaign_lab(tenant_id: str, campaign_id: str, user: User = Depends(current_user), db: Session = Depends(get_db)):
+    membership = member(db, user, tenant_id, "editor")
+    visible_campaign(db, membership, campaign_id)
+    # The selected campaign scopes entry. Only the versioned synthetic file supplies inputs.
+    return {"campaign_id": campaign_id, **replay_campaign_lab()}
 
 
 @app.get("/api/tenants/{tenant_id}/campaigns/{campaign_id}/tasks")

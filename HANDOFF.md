@@ -9,6 +9,12 @@
 
 Nhánh tài sản giao khách kế thừa cơ chế khóa quyền của [STUDIO-G02](https://github.com/datnv41001/ai-company/pull/40). [Campaign Lab](https://github.com/datnv41001/ai-company/pull/41) và [composer theo hành trình mua](https://github.com/datnv41001/ai-company/pull/42) có phạm vi và bằng chứng độc lập. Khi kết hợp nhiều thay đổi runtime, cần đối chiếu lại fingerprint của đúng cây tích hợp và chạy lại bộ hồi quy trước khi nghiệm thu.
 
+## Chạy Campaign Execution Lab
+
+Trong màn hình **Chiến dịch**, chọn một chiến dịch mà nhân viên được phép chỉnh sửa và bấm **Chạy kịch bản B2B**. Kịch bản vật liệu xây dựng cố định cung cấp kế hoạch, sáu tài sản, biên nhận mô phỏng và báo cáo từ RFQ đến doanh thu. Kết quả hiển thị chỉ thuộc lần diễn tập. Với Docker, chạy `docker compose exec -T api python -m scripts.campaign_execution_lab` để nhận JSON. Trên host đã cài dependencies, dùng `python -m scripts.campaign_execution_lab --output rfq.json`. [Hợp đồng và bản replay](docs/campaign-lab/RFQ-LAB.md) · [Cách đếm công việc](docs/evaluation/RFQ-WORK-UNITS.md)
+
+Để chụp lại giao diện, cài Chromium của Playwright rồi chạy `python -m pytest -q tests/browser_campaign_lab.py`. Biến `AMC_LAB_EVIDENCE` trỏ tới thư mục lưu PNG và kết quả từng viewport. Windows cũng hỗ trợ `AMC_BROWSER_EXECUTABLE` trỏ vào Chrome đã cài. CI lưu ảnh cho cả head và bản tích hợp. [Ảnh phiên chạy nội bộ](docs/campaign-lab/ui/README.md)
+
 ## Nghiệm thu bản nháp Marketing trên máy khác
 
 Xem [hồ sơ 10 brief mới, 20 brief khôi phục và hai smoke nội bộ](docs/evaluation/c3-product-v2/RESULTS.md) để đọc số liệu, bản Marketing hoàn chỉnh, nhận xét mù của AI và các phép đo còn thiếu.

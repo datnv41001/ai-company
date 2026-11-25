@@ -65,8 +65,13 @@ def rehearse_archive(dsn, container, version=16):
         assert source.info.host in ("localhost", "127.0.0.1", "::1") and source.info.dbname.startswith("amc_test")
         assert source.execute("SELECT max(version) FROM amc_schema_versions").fetchone() == (version,)
         db, owner = source.info.dbname, source.info.user
+        workspace_tables = ()
+        if version >= 22 and source.execute("SELECT to_regclass('amc_business.versions')").fetchone()[0]:
+            workspace_tables = ("amc_business.versions", "business_workspace_records")
+            tables += workspace_tables
+            assert {r[0] for r in source.execute("SELECT DISTINCT kind FROM business_workspace_records")} == {"company","brand","brief"}
         before = snapshot(source)
-    required = before[-(len(knowledge) + 1):] if version == 22 else before
+    required = before[-(len(knowledge) + 1 + len(workspace_tables)):] if version == 22 else before
     assert all(required), "Restore rehearsal requires populated fixture tables"
     # Both the archive and restore are inside this disposable CI container.
     target = "amc_test_restore_" + uuid4().hex

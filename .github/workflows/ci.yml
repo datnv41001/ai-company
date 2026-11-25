@@ -125,6 +125,10 @@ jobs:
           export AMC_MIGRATION_DSN="${AMC_MIGRATION_DSN%/*}/amc_test_populated_v21"
           export DATABASE_URL="${DATABASE_URL%/*}/amc_test_populated_v21"
           AMC_UPGRADE_BACKUP_CONTAINER=amc-test-pg python tests/check_postgres_upgrade.py --from-v21
+          docker exec amc-test-pg createdb -U postgres amc_test_workspace_upgrade
+          export AMC_MIGRATION_DSN="${AMC_MIGRATION_DSN%/*}/amc_test_workspace_upgrade"
+          export DATABASE_URL="${DATABASE_URL%/*}/amc_test_workspace_upgrade"
+          python tests/check_workspace_upgrade.py
           docker exec amc-test-pg createdb -U postgres amc_test_isolated_v16
           export AMC_MIGRATION_DSN="${AMC_MIGRATION_DSN%/*}/amc_test_isolated_v16"
           export DATABASE_URL="${DATABASE_URL%/*}/amc_test_isolated_v16"
@@ -171,6 +175,12 @@ jobs:
           docker image inspect postgres:16.6-alpine --format '{{json .RepoDigests}}' >> compose-versions.txt
           docker compose -p amc-acceptance run --rm migrate python migrations/apply.py --publish-registry catalog/research-strategy-v1.json
           AMC_ONBOARDING_SCREENSHOTS="$RUNNER_TEMP/onboarding" AMC_BROWSER_MAILBOX_PROJECT=amc-acceptance AMC_BROWSER_TEST_URL=http://127.0.0.1:8000 python tests/browser_delivery.py
+          AMC_KNOWLEDGE_EVIDENCE="$RUNNER_TEMP/knowledge-workspace" AMC_BROWSER_MAILBOX_PROJECT=amc-acceptance AMC_BROWSER_TEST_URL=http://127.0.0.1:8000 python tests/browser_knowledge.py
+      - uses: actions/upload-artifact@v4
+        with:
+          name: knowledge-workspace-${{ matrix.revision }}
+          path: ${{ runner.temp }}/knowledge-workspace
+          if-no-files-found: error
       - uses: actions/upload-artifact@v4
         with:
           name: compose-versions${{ matrix.revision == 'integration' && '-integration' || '' }}

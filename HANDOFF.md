@@ -1,5 +1,9 @@
 # Bắt đầu ở đây khi tiếp quản AI Marketing Company
 
+## C2 · Hồ sơ chung và brief nội bộ
+
+Increment đầu tiên của C2.1/C2.5 trên C1 `c847f910` cho phép lưu một phần bốn field theo doanh nghiệp, kế thừa/ghi đè/để trống theo thương hiệu và tạo brief cá nhân khi chưa đủ thông tin. Publisher cài `amc_business` v1 bên cạnh core v22. Core 023 dành cho Identity A1. Chạy Compose rồi đối chiếu hai brand, thử lại lệnh sau mất phản hồi và đọc brief sau khi hồ sơ gốc đổi. PostgreSQL native 16.16 và SQLite đã qua năm ca API đầu tiên. Bộ điều phối Marketing và nghiệm thu thương mại giữ gate riêng. [Hợp đồng, quyền, chạy kiểm thử và rollback trên máy mới](docs/business-profile/C2-WORKSPACE-RUNBOOK.md)
+
 ## AIRC · Research Broker công khai và holdout năng lực v4
 
 Trên nền main sau PR #23 `5dc4ebc73c9423f360d63287d52350e2ef21a31a`, tooling engineering thu thập các trích đoạn Marketing công khai đã duyệt, ghi cả các nguồn bị chặn, và so sánh cùng holdout có/không có packet. Chạy `python engineering/airc500/research_release.py` trong venv engineering trên máy mới. [Runbook, phạm vi quyền và rollback](engineering/airc500/PUBLIC-RESEARCH.md) · [Phép đo đã ghim](engineering/airc500/research-v4/REPORT.md).

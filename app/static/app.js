@@ -8,10 +8,11 @@
     $('link-hint').classList.remove('hidden');
   }
   let workspaceRequest = null;
+  let workspaceGeneration = 0;
   const esc = v => String(v ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
   const msg = (text, error=false) => { $('notice').textContent = text; $('notice').className = error ? 'error' : 'ok'; };
-  const api = async (path, method='GET', body=null, withCursor=false) => {
-    const response = await fetch(path, {method, headers: {'Content-Type':'application/json', ...(state.token ? {'Authorization':`Bearer ${state.token}`} : {})}, ...(body ? {body: JSON.stringify(body)} : {})});
+  const api = async (path, method='GET', body=null, withCursor=false, signal) => {
+    const response = await fetch(path, {method, signal, headers: {'Content-Type':'application/json', ...(state.token ? {'Authorization':`Bearer ${state.token}`} : {})}, ...(body ? {body: JSON.stringify(body)} : {})});
     const result = await response.json().catch(() => ({}));
     if (response.status === 429) {
       const delay = Number(response.headers.get('Retry-After'));
@@ -20,6 +21,7 @@
     if(!response.ok) throw Object.assign(new Error(typeof result.detail === 'string' ? result.detail : `HTTP ${response.status}`),{status:response.status});
     return withCursor ? {items:result, next:response.headers.get("X-Next-Cursor")} : result;
   };
+  const knowledge = createKnowledgePanel($('knowledge-panel'), api);
   const workforce = createWorkforce($('workforce-panel'),api,msg);
   const portal = createReviewPanel($('review-panel'),api,msg);
   const accessPanel = createRecipientPanel($('recipient-panel'), api, msg, async tenantId => {
@@ -59,6 +61,8 @@
   const process = (form, handler) => form.addEventListener('submit', async event => { event.preventDefault(); try { await handler(fromForm(form)); } catch (e) { msg(e.message, true); } });
   const enter = async (token, membership, email='') => {
     const tenantId = membership.tenant_id;
+    workspaceGeneration++;
+    knowledge.reset();
     $('review-panel').before($('recipient-panel'));
     state.token = token; state.tenantId = tenantId; state.mode = membership.mode; state.email = email;
     portal.setContext({tenant:tenantId,role:membership.role});
@@ -77,6 +81,7 @@
     await refresh();
   };
   const session = async (result, email) => {
+    state.userId = result.user_id || result.id;
     state.token = result.access_token;
     state.email = email;
     $('verify-form').reset();
@@ -139,6 +144,8 @@
     catch (error) { msg(error.message, true); }
   };
   $('switch-account').onclick = () => {
+    workspaceGeneration++;
+    knowledge.reset();
     if (invitation !== null) history.replaceState(null, '', location.pathname + '#invite=' + encodeURIComponent(invitation));
     location.reload();
   };
@@ -197,20 +204,25 @@
     workforce.pause();
     portal.select(selected);
     const tenantId = state.tenantId;
+    const generation = workspaceGeneration;
     try {
       const [clients,brands,campaigns,actions,deliverables] = await Promise.all(
         ['clients','brands','campaigns','actions','deliverables'].map(n=>api(tenantPath(n)))
       );
-      if (tenantId !== state.tenantId) return;
+      if (generation !== workspaceGeneration) return;
       state.clients=clients;state.brands=brands;state.campaigns=campaigns;render(actions,deliverables);
-      await Promise.all([operations(), workforce.show(tenantId,state.role,campaigns.map(c=>({...c,client_id:brands.find(b=>b.id===c.brand_id)?.client_id}))),portal.show(deliverables,campaigns,refresh),
+      await Promise.all([knowledge.show({
+        tenant: tenantId, actor: state.userId, role: state.role,
+        organization: state.memberships.find(m => m.tenant_id === tenantId)?.organization_name || '',
+        clients, brands
+      }), operations(), workforce.show(tenantId,state.role,campaigns.map(c=>({...c,client_id:brands.find(b=>b.id===c.brand_id)?.client_id}))),portal.show(deliverables,campaigns,refresh),
         accessPanel.show(tenantId, state.role, clients, brands, campaigns)]);
     } catch (error) {
-      if (tenantId !== state.tenantId) return;
+      if (generation !== workspaceGeneration) return;
       state.clients = []; state.brands = []; state.campaigns = [];
       render([], []);
       $('operations-panel').classList.add('hidden'); $('operations-values').replaceChildren();
-    accessPanel.reset(); workforce.reset();
+      knowledge.reset(); accessPanel.reset(); workforce.reset();
       $('review-panel').replaceChildren();
       throw error;
     }

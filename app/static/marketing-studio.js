@@ -13,7 +13,7 @@ function mountMarketingStudio(host,api,path,role,afterSave) {
   const panel=add(host,'details');panel.className='marketing-studio';
   add(panel,'summary','Biên tập tài liệu Marketing');
   const body=add(panel,'div');
-  const states={missing:'Thiếu nội dung',repetition:'Trùng nội dung ở trường khác',placeholder:'Cần thay nội dung hướng dẫn',
+  const states={missing:'Thiếu nội dung',repetition:'Nội dung bị lặp, cần biên tập lại',entity_only:'Cần diễn giải ý nghĩa, hiện chỉ có tên hoặc đối tượng trong brief',placeholder:'Cần thay nội dung hướng dẫn',
     buyer_action:'Chưa khớp hành động đã giao',missing_declaration:'Thiếu công bố hoặc điều kiện đã duyệt',relevance:'Cần liên hệ rõ hơn với sản phẩm được giao',
     contradiction:'Mâu thuẫn cần sửa',unresolved:'Cần xác minh',needs_correction:'Cần đối chiếu cách viết',reviewed:'Đã xác minh',verified:'Khớp nguồn',editorial:'Nội dung biên tập',
     missing_qualifier:'Thiếu điều kiện áp dụng',unsupported_format:'Cách trình bày chưa đối chiếu được',unsupported_assertion:'Chưa có căn cứ cho nhận định này',

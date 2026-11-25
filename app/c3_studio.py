@@ -153,6 +153,8 @@ def quality_issues(workflow, groups, projection):
     """Conservative structural signals; professional relevance still requires an independent review."""
     result, seen = [], {}
     norm = c3_assets.normalized
+    intent = projection.get("task_intent") or {}
+    entities = {norm(str(source.get(key) or "")) for source in (intent, projection) for key in ("audience", "region", "channel", "product", "sku")}
     product_terms = set(re.findall(r"[^\W_]{3,}", norm(projection["product"] + " " + (projection.get("sku") or ""))))
     product_terms -= {"the", "for", "and", "sản", "phẩm", "của", "cho", "với"}
     for group, fields in FIELDS[workflow].items():
@@ -161,6 +163,8 @@ def quality_issues(workflow, groups, projection):
             reason = ""
             if not text:
                 reason = "missing"
+            elif field in ("buyer_problem", "positioning", "rationale", "test_hypothesis", "measurement_method") and text.rstrip(".!?") in entities:
+                reason = "entity_only"
             elif field not in ("evidence", "commercial_terms") and text in seen and not ({field, seen[text]} <= {"headline", "page_title"}):
                 reason = "repetition"
             elif re.search(r"\b(lorem ipsum|as an ai|tôi là một ai|điền vào đây|insert text here)\b", text):
@@ -171,6 +175,10 @@ def quality_issues(workflow, groups, projection):
                 expected = buyer_action(projection)
                 if not expected or text != norm(expected):
                     reason = "buyer_action"
+            if not reason and field in ("execution", "positioning", "rationale", "measurement_method", "test_hypothesis"):
+                clauses = [part.strip() for part in re.split(r"[,;.!?\n]+", text) if len(part.split()) >= 6]
+                if len(clauses) != len(set(clauses)):
+                    reason = "repetition"
             if field in ("commercial_terms", "evidence"):
                 declarations = [" ".join(c3_order_units.fact_lines(f, projection)) for f in projection["facts"]]
                 if not declarations or any(line not in groups[group][field].splitlines() for line in declarations):

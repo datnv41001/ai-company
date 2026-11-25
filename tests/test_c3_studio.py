@@ -67,6 +67,23 @@ def test_studio_get_save_history_scope(api, studio_fixture):
         assert doc_row.content["studio"]["groups"] == changed
 
 
+def test_strategy_requires_a_problem_position_and_distinct_measurement_steps():
+    from app.c3_studio import compose, quality_issues
+
+    p = projection("materials")
+    p["task_intent"].update(audience="Chủ xưởng đồ gỗ", region="Bình Dương")
+    groups = compose(c3_assets.RESEARCH, p)
+    groups["research"]["buyer_problem"] = p["task_intent"]["audience"]
+    groups["strategy"]["positioning"] = p["task_intent"]["region"] + "."
+    clause = "Đếm số yêu cầu hợp lệ theo từng biểu mẫu"
+    groups["measurement"]["measurement_method"] = f"{clause}, {clause}."
+    issues = {row["field"]: row["reason"] for row in quality_issues(c3_assets.RESEARCH, groups, p)}
+    assert issues["buyer_problem"] == issues["positioning"] == "entity_only"
+    assert issues["measurement_method"] == "repetition"
+    groups["measurement"]["measurement_method"] = clause + ", sau đó kiểm tra các yêu cầu trùng."
+    assert "measurement_method" not in {row["field"] for row in quality_issues(c3_assets.RESEARCH, groups, p)}
+
+
 def test_composer_explicit_control_and_distinct_strategy():
     from app.c3_studio import compose, quality_issues
 

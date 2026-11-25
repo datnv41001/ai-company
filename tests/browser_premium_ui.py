@@ -470,6 +470,8 @@ def mode_and_scope(browser, api, f):
             authenticate(portal, f["recipient"])
             expect(portal.locator("#command-center")).to_be_hidden()
             expect(portal.locator("#knowledge-panel")).to_be_hidden()
+            expect(portal.locator("#knowledge-client, #knowledge-brand, #knowledge-content input")).to_have_count(0)
+            expect(portal.locator("#knowledge-status")).to_be_empty()
             expect(portal.locator("#workspace")).not_to_contain_text(f["campaigns"][2]["name"])
             assert not task_requests
         finally:
@@ -607,6 +609,8 @@ def foreground_membership(browser, api, f):
         page.evaluate("window.__amcCollectionHeld=false")
         expect(page.locator("#command-campaign-count")).to_have_text("3")
         choose_campaign(page, f["campaigns"][2])
+        page.locator("#knowledge-client").select_option(f["clients"][1]["id"])
+        expect(page.locator("#knowledge-brand")).to_have_value(f["brands"][1]["id"])
         page.locator("#refresh").click()
         page.wait_for_function("window.__amcCollectionHeld === true")
         # Dispatch both lifecycle states deterministically. Both HTTP responses are real.
@@ -628,8 +632,14 @@ def foreground_membership(browser, api, f):
         assert not page.locator("#campaigns-list button[data-action]:visible").count()
         held["identity"].continue_()
         expect(page.locator("body")).to_have_attribute("data-access", "portal")
+        expect(page.locator("#knowledge-status")).to_contain_text("Quyền xem hồ sơ đã thay đổi")
+        expect(page.locator("#knowledge-status")).to_be_visible()
         expect(page.locator("#command-center")).to_be_hidden()
-        expect(page.locator("#knowledge-panel")).to_be_hidden()
+        for container in ("#knowledge-context", "#knowledge-content", "#knowledge-progress", "#knowledge-org"):
+            expect(page.locator(container)).to_be_empty()
+        expect(page.locator("#knowledge-client, #knowledge-brand, #knowledge-claim-desk")).to_have_count(0)
+        expect(page.locator("#catalog-drawer")).to_be_hidden()
+        expect(page.locator("#workspace")).not_to_contain_text(f["brands"][1]["name"])
         expect(page.locator("#workspace")).not_to_contain_text(f["campaigns"][2]["name"])
         current = request_json(api, "GET", "/api/me", viewer)
         assert any(m["tenant_id"] == f["tenant"] and m["role"] == "client_viewer" for m in current["tenants"])

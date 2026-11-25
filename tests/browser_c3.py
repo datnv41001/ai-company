@@ -42,6 +42,8 @@ def exercise(api, browser, width, height):
     try:
         login(page, owner, owner["tenant"])
         select_scope(page, client, brand)
+        expect(page.locator('a[data-route="knowledge"]')).to_have_attribute("aria-current", "page")
+        expect(page.locator("#workforce-panel")).to_be_hidden()
         page.locator("[data-view=briefs]").click()
         page.locator("[data-brief]").first.click()
         panel = page.locator("#knowledge-marketing-workflow")

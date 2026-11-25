@@ -97,10 +97,16 @@ function createKnowledgePanel(root, api) {
       tell(scope.clients.length ? 'Chọn khách hàng và thương hiệu để mở hồ sơ.' : 'Chưa có hồ sơ trong phạm vi của bạn.');
     }
   }
+  const revokedMessage = 'Quyền xem hồ sơ đã thay đổi. Hãy liên hệ quản trị viên hoặc làm mới workspace.';
   function lockout() {
     clearView();
     context.replaceChildren();
-    tell('Quyền xem hồ sơ đã thay đổi. Hãy liên hệ quản trị viên hoặc làm mới workspace.',true);
+    tell(revokedMessage,true);
+  }
+  function permissionChanged() {
+    reset();
+    root.classList.remove('hidden');
+    tell(revokedMessage,true);
   }
   function failed(error, token, retry='load') {
     if (!current(token)) return;
@@ -158,7 +164,8 @@ function createKnowledgePanel(root, api) {
       await revalidate();
       return;
     }
-    const last = remembered(contextKey());
+    const direct = next.brands.find(b=>b.id===next.requestedBrand && next.clients.some(c=>c.id===b.client_id));
+    const last = direct ? {client:direct.client_id,brand:direct.id} : remembered(contextKey());
     const clientId = next.clients.some(row=>row.id===last?.client) ? last.client : next.clients.length===1 ? next.clients[0].id : '';
     await selectScope(clientId,last?.brand);
   }
@@ -440,6 +447,7 @@ function createKnowledgePanel(root, api) {
     const viaClient=e.target.id==='knowledge-client';
     const id=e.target.id;
     const loading=selectScope(viaClient?e.target.value:client,viaClient?'':e.target.value);
+    document.dispatchEvent(new CustomEvent('amc-brand-selection',{detail:{tenant:scope.tenant,brand}}));
     byId(id)?.focus();
     void loading;
   });
@@ -483,6 +491,7 @@ function createKnowledgePanel(root, api) {
     const {view:next,brief:id,action,create}=button.dataset;
     if(create){
       const f=byId(create+'-form');
+      document.querySelector('[data-route="settings"]').click();
       if(create==='brand')f.elements.client_id.value=client;
       f.elements.name.focus();return;
     }
@@ -510,6 +519,10 @@ function createKnowledgePanel(root, api) {
     }
   });
   window.addEventListener('focus',revalidate);
+  document.addEventListener('amc-open-brand',event=>{
+    const next=scope?.brands.find(b=>b.id===event.detail && scope.clients.some(c=>c.id===b.client_id));
+    if(next && next.id!==brand && mayLeave()) void selectScope(next.client_id,next.id);
+  });
   document.addEventListener('visibilitychange',()=>{if(!document.hidden)revalidate();});
-  return {show,reset};
+  return {show,reset,permissionChanged};
 }

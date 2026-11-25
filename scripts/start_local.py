@@ -1,6 +1,7 @@
 """Start the Windows development instance with native PostgreSQL and loopback HTTP."""
 import argparse
 import json
+import hmac
 import os
 from pathlib import Path
 import secrets
@@ -55,6 +56,13 @@ def main():
         with conf.open("x", encoding="utf-8") as f:
             json.dump({key: secrets.token_hex(40) for key in ("owner", "runtime", "jwt")}, f)
     keys = json.loads(conf.read_text(encoding="utf-8"))
+    identity_path = state / "identity-v23.json"
+    if not identity_path.exists():
+        values = {"AMC_DB_PROOF_KEY":secrets.token_hex(32),"AMC_SESSION_GENERATION":secrets.token_hex(32),
+                  "AMC_QUOTA_KEY":hmac.digest(keys["jwt"].encode(),b"amc/identity-quota/v1","sha256").hex()}
+        with os.fdopen(os.open(identity_path,os.O_WRONLY|os.O_CREAT|os.O_EXCL,0o600),"w") as stream:
+            json.dump(values,stream)
+    identity_env = json.loads(identity_path.read_text())
     flags = subprocess.CREATE_NO_WINDOW
     if not (data / "PG_VERSION").exists():
         pwfile = state / "initdb-password.tmp"
@@ -86,7 +94,7 @@ def main():
             raise RuntimeError("Port 55432 belongs to a different PostgreSQL cluster")
         if conn.execute("SELECT 1 FROM pg_database WHERE datname='amc_local'").fetchone() is None:
             conn.execute("CREATE DATABASE amc_local")
-    migration_env = dict(os.environ, AMC_MIGRATION_DSN=make_conninfo(owner, dbname="amc_local"),
+    migration_env = dict(os.environ, **identity_env, AMC_MIGRATION_DSN=make_conninfo(owner, dbname="amc_local"),
                          AMC_RUNTIME_PASSWORD=keys["runtime"], JWT_SECRET=keys["jwt"])
     subprocess.run([sys.executable, "migrations/apply.py"], cwd=ROOT, env=migration_env, check=True, creationflags=flags)
     pidfile = state / "api.pid"
@@ -97,7 +105,7 @@ def main():
                    and parts[4] == expected_pid for parts in map(str.split, listing.splitlines())):
             raise RuntimeError("Port 8000 is already in use by another service")
     else:
-        api_env = dict(os.environ, APP_ENV="development", JWT_SECRET=keys["jwt"],
+        api_env = dict(os.environ, **identity_env, APP_ENV="development", JWT_SECRET=keys["jwt"],
                        DATABASE_URL=f"postgresql+psycopg://amc_runtime:{keys['runtime']}@{HOST}:{DB_PORT}/amc_local")
         for name in ("AMC_MIGRATION_DSN", "POSTGRES_PASSWORD", "AMC_RUNTIME_PASSWORD", "OPENAI_API_KEY", "AMC_WORKER_KEY_FILE"):
             api_env.pop(name, None)

@@ -26,3 +26,5 @@ Project: commercial AI Marketing Company V1.0. Single complete product scope; no
 **Definition of Done for each change:** tests first or with feature; static checks; API/schema migration; permission scope; failure handling; audit events; documentation; evidence from a demo run; no unsupported claims; bounded costs; reviewer challenges resolved.
 
 **Before modifying code:** run `python -m pytest -q`; inspect failures; produce a brief plan and risk assessment. On completion give a summary, exact commands, test counts, limitations, and a 'challenge to ChatGPT reviewer' section.
+
+**Frontend acceptance.** Apply [AMC Design System](docs/AMC-DESIGN-SYSTEM.md) to frontend changes. Include real desktop, tablet and mobile screenshots in the PR and report light/dark, keyboard, responsiveness, measured performance, scope and known gaps. Use only authorized records for counts, progress and outcomes. Link CI evidence on the reviewed SHA.

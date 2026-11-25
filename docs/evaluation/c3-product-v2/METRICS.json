@@ -1,0 +1,1200 @@
+{
+  "checkout": "a2dbe4566415fe28226b014ffb8785a1cc2cd9d6",
+  "commercial": {
+    "recovery": {
+      "cases_with_valid_inputs": 19,
+      "coverage": {
+        "after.preview": {
+          "additional_commercial_lines_for_review": 8,
+          "expected_checks": 240,
+          "fields": {
+            "amount_minor": {
+              "expected_checks": 20,
+              "outcomes": {
+                "inconclusive": 1,
+                "matched": 19
+              }
+            },
+            "basis_quantity": {
+              "expected_checks": 20,
+              "outcomes": {
+                "inconclusive": 1,
+                "matched": 19
+              }
+            },
+            "condition": {
+              "expected_checks": 20,
+              "outcomes": {
+                "inconclusive": 1,
+                "matched": 19
+              }
+            },
+            "currency": {
+              "expected_checks": 20,
+              "outcomes": {
+                "inconclusive": 1,
+                "matched": 19
+              }
+            },
+            "declaration": {
+              "expected_checks": 20,
+              "outcomes": {
+                "inconclusive": 1,
+                "matched": 19
+              }
+            },
+            "moq_with_unit": {
+              "expected_checks": 20,
+              "outcomes": {
+                "inconclusive": 1,
+                "matched": 19
+              }
+            },
+            "open_upper_tier": {
+              "expected_checks": 20,
+              "outcomes": {
+                "inconclusive": 1,
+                "matched": 19
+              }
+            },
+            "price_unit": {
+              "expected_checks": 20,
+              "outcomes": {
+                "inconclusive": 1,
+                "matched": 19
+              }
+            },
+            "qualifier": {
+              "expected_checks": 20,
+              "outcomes": {
+                "inconclusive": 1,
+                "matched": 19
+              }
+            },
+            "quoted_quantity_with_unit": {
+              "expected_checks": 20,
+              "outcomes": {
+                "inconclusive": 1,
+                "matched": 19
+              }
+            },
+            "tax": {
+              "expected_checks": 20,
+              "outcomes": {
+                "inconclusive": 1,
+                "matched": 19
+              }
+            },
+            "tier_min_with_unit": {
+              "expected_checks": 20,
+              "outcomes": {
+                "inconclusive": 1,
+                "matched": 19
+              }
+            }
+          },
+          "outcomes": {
+            "inconclusive": 12,
+            "matched": 228
+          }
+        },
+        "after.terms": {
+          "additional_commercial_lines_for_review": 0,
+          "expected_checks": 240,
+          "fields": {
+            "amount_minor": {
+              "expected_checks": 20,
+              "outcomes": {
+                "inconclusive": 1,
+                "matched": 19
+              }
+            },
+            "basis_quantity": {
+              "expected_checks": 20,
+              "outcomes": {
+                "inconclusive": 1,
+                "matched": 19
+              }
+            },
+            "condition": {
+              "expected_checks": 20,
+              "outcomes": {
+                "inconclusive": 1,
+                "matched": 19
+              }
+            },
+            "currency": {
+              "expected_checks": 20,
+              "outcomes": {
+                "inconclusive": 1,
+                "matched": 19
+              }
+            },
+            "declaration": {
+              "expected_checks": 20,
+              "outcomes": {
+                "inconclusive": 1,
+                "matched": 19
+              }
+            },
+            "moq_with_unit": {
+              "expected_checks": 20,
+              "outcomes": {
+                "inconclusive": 1,
+                "matched": 19
+              }
+            },
+            "open_upper_tier": {
+              "expected_checks": 20,
+              "outcomes": {
+                "inconclusive": 1,
+                "matched": 19
+              }
+            },
+            "price_unit": {
+              "expected_checks": 20,
+              "outcomes": {
+                "inconclusive": 1,
+                "matched": 19
+              }
+            },
+            "qualifier": {
+              "expected_checks": 20,
+              "outcomes": {
+                "inconclusive": 1,
+                "matched": 19
+              }
+            },
+            "quoted_quantity_with_unit": {
+              "expected_checks": 20,
+              "outcomes": {
+                "inconclusive": 1,
+                "matched": 19
+              }
+            },
+            "tax": {
+              "expected_checks": 20,
+              "outcomes": {
+                "inconclusive": 1,
+                "matched": 19
+              }
+            },
+            "tier_min_with_unit": {
+              "expected_checks": 20,
+              "outcomes": {
+                "inconclusive": 1,
+                "matched": 19
+              }
+            }
+          },
+          "outcomes": {
+            "inconclusive": 12,
+            "matched": 228
+          }
+        },
+        "before.preview": {
+          "additional_commercial_lines_for_review": 8,
+          "expected_checks": 240,
+          "fields": {
+            "amount_minor": {
+              "expected_checks": 20,
+              "outcomes": {
+                "inconclusive": 1,
+                "matched": 19
+              }
+            },
+            "basis_quantity": {
+              "expected_checks": 20,
+              "outcomes": {
+                "inconclusive": 1,
+                "matched": 19
+              }
+            },
+            "condition": {
+              "expected_checks": 20,
+              "outcomes": {
+                "inconclusive": 1,
+                "matched": 19
+              }
+            },
+            "currency": {
+              "expected_checks": 20,
+              "outcomes": {
+                "inconclusive": 1,
+                "matched": 19
+              }
+            },
+            "declaration": {
+              "expected_checks": 20,
+              "outcomes": {
+                "inconclusive": 1,
+                "matched": 19
+              }
+            },
+            "moq_with_unit": {
+              "expected_checks": 20,
+              "outcomes": {
+                "inconclusive": 1,
+                "matched": 19
+              }
+            },
+            "open_upper_tier": {
+              "expected_checks": 20,
+              "outcomes": {
+                "inconclusive": 1,
+                "matched": 19
+              }
+            },
+            "price_unit": {
+              "expected_checks": 20,
+              "outcomes": {
+                "inconclusive": 1,
+                "matched": 19
+              }
+            },
+            "qualifier": {
+              "expected_checks": 20,
+              "outcomes": {
+                "inconclusive": 1,
+                "matched": 19
+              }
+            },
+            "quoted_quantity_with_unit": {
+              "expected_checks": 20,
+              "outcomes": {
+                "inconclusive": 1,
+                "matched": 19
+              }
+            },
+            "tax": {
+              "expected_checks": 20,
+              "outcomes": {
+                "inconclusive": 1,
+                "matched": 19
+              }
+            },
+            "tier_min_with_unit": {
+              "expected_checks": 20,
+              "outcomes": {
+                "inconclusive": 1,
+                "matched": 19
+              }
+            }
+          },
+          "outcomes": {
+            "inconclusive": 12,
+            "matched": 228
+          }
+        },
+        "before.terms": {
+          "additional_commercial_lines_for_review": 0,
+          "expected_checks": 240,
+          "fields": {
+            "amount_minor": {
+              "expected_checks": 20,
+              "outcomes": {
+                "inconclusive": 1,
+                "matched": 19
+              }
+            },
+            "basis_quantity": {
+              "expected_checks": 20,
+              "outcomes": {
+                "inconclusive": 1,
+                "matched": 19
+              }
+            },
+            "condition": {
+              "expected_checks": 20,
+              "outcomes": {
+                "inconclusive": 1,
+                "matched": 19
+              }
+            },
+            "currency": {
+              "expected_checks": 20,
+              "outcomes": {
+                "inconclusive": 1,
+                "matched": 19
+              }
+            },
+            "declaration": {
+              "expected_checks": 20,
+              "outcomes": {
+                "inconclusive": 1,
+                "matched": 19
+              }
+            },
+            "moq_with_unit": {
+              "expected_checks": 20,
+              "outcomes": {
+                "inconclusive": 1,
+                "matched": 19
+              }
+            },
+            "open_upper_tier": {
+              "expected_checks": 20,
+              "outcomes": {
+                "inconclusive": 1,
+                "matched": 19
+              }
+            },
+            "price_unit": {
+              "expected_checks": 20,
+              "outcomes": {
+                "inconclusive": 1,
+                "matched": 19
+              }
+            },
+            "qualifier": {
+              "expected_checks": 20,
+              "outcomes": {
+                "inconclusive": 1,
+                "matched": 19
+              }
+            },
+            "quoted_quantity_with_unit": {
+              "expected_checks": 20,
+              "outcomes": {
+                "inconclusive": 1,
+                "matched": 19
+              }
+            },
+            "tax": {
+              "expected_checks": 20,
+              "outcomes": {
+                "inconclusive": 1,
+                "matched": 19
+              }
+            },
+            "tier_min_with_unit": {
+              "expected_checks": 20,
+              "outcomes": {
+                "inconclusive": 1,
+                "matched": 19
+              }
+            }
+          },
+          "outcomes": {
+            "inconclusive": 12,
+            "matched": 228
+          }
+        }
+      },
+      "expected_cases": 20,
+      "fixture_sha256": "c497ff707c986acaa3c48ba799ab1a378f194d3e7cd4262834d41a4aae0fe477",
+      "mode": "recovery",
+      "product_qa": {
+        "after": {
+          "covered_cases": 19,
+          "expected_cases": 20,
+          "statement_outcomes": {
+            "contradiction": 10,
+            "editorial": 56,
+            "needs_correction": 20,
+            "unresolved": 130,
+            "verified": 110
+          },
+          "statements_n": 326,
+          "statements_with_recorded_handles": 114,
+          "studio_issues": {
+            "relevance": 10,
+            "repetition": 21
+          },
+          "studio_issues_n": 31,
+          "unrecognized_handle_mentions": 34
+        },
+        "before": {
+          "covered_cases": 19,
+          "expected_cases": 20,
+          "statement_outcomes": {
+            "contradiction": 13,
+            "editorial": 56,
+            "needs_correction": 25,
+            "unresolved": 113,
+            "verified": 110
+          },
+          "statements_n": 317,
+          "statements_with_recorded_handles": 114,
+          "studio_issues": {
+            "relevance": 10,
+            "repetition": 26
+          },
+          "studio_issues_n": 36,
+          "unrecognized_handle_mentions": 34
+        }
+      },
+      "reviewed_checkout": "a2dbe4566415fe28226b014ffb8785a1cc2cd9d6",
+      "scope": "Automated scoped rendering checks on frozen synthetic facts. Free prose, truth of sources, professional acceptance and human time are unmeasured.",
+      "scorer_file_sha256": "f4dd914b66f7537dfeeb6efe60cdc9a203168614810864178cb381d042af86e7",
+      "unexpected_case_folders": []
+    },
+    "study": {
+      "cases_with_valid_inputs": 8,
+      "coverage": {
+        "after.preview": {
+          "additional_commercial_lines_for_review": 9,
+          "expected_checks": 120,
+          "fields": {
+            "amount_minor": {
+              "expected_checks": 10,
+              "outcomes": {
+                "inconclusive": 2,
+                "matched": 8
+              }
+            },
+            "basis_quantity": {
+              "expected_checks": 10,
+              "outcomes": {
+                "inconclusive": 2,
+                "matched": 8
+              }
+            },
+            "condition": {
+              "expected_checks": 10,
+              "outcomes": {
+                "inconclusive": 2,
+                "matched": 8
+              }
+            },
+            "currency": {
+              "expected_checks": 10,
+              "outcomes": {
+                "inconclusive": 2,
+                "matched": 8
+              }
+            },
+            "declaration": {
+              "expected_checks": 10,
+              "outcomes": {
+                "inconclusive": 2,
+                "matched": 8
+              }
+            },
+            "moq_with_unit": {
+              "expected_checks": 10,
+              "outcomes": {
+                "inconclusive": 2,
+                "matched": 8
+              }
+            },
+            "open_upper_tier": {
+              "expected_checks": 10,
+              "outcomes": {
+                "inconclusive": 2,
+                "matched": 8
+              }
+            },
+            "price_unit": {
+              "expected_checks": 10,
+              "outcomes": {
+                "inconclusive": 2,
+                "matched": 8
+              }
+            },
+            "qualifier": {
+              "expected_checks": 10,
+              "outcomes": {
+                "inconclusive": 2,
+                "matched": 8
+              }
+            },
+            "quoted_quantity_with_unit": {
+              "expected_checks": 10,
+              "outcomes": {
+                "inconclusive": 2,
+                "matched": 8
+              }
+            },
+            "tax": {
+              "expected_checks": 10,
+              "outcomes": {
+                "inconclusive": 2,
+                "matched": 8
+              }
+            },
+            "tier_min_with_unit": {
+              "expected_checks": 10,
+              "outcomes": {
+                "inconclusive": 2,
+                "matched": 8
+              }
+            }
+          },
+          "outcomes": {
+            "inconclusive": 24,
+            "matched": 96
+          }
+        },
+        "after.terms": {
+          "additional_commercial_lines_for_review": 0,
+          "expected_checks": 120,
+          "fields": {
+            "amount_minor": {
+              "expected_checks": 10,
+              "outcomes": {
+                "inconclusive": 2,
+                "matched": 8
+              }
+            },
+            "basis_quantity": {
+              "expected_checks": 10,
+              "outcomes": {
+                "inconclusive": 2,
+                "matched": 8
+              }
+            },
+            "condition": {
+              "expected_checks": 10,
+              "outcomes": {
+                "inconclusive": 2,
+                "matched": 8
+              }
+            },
+            "currency": {
+              "expected_checks": 10,
+              "outcomes": {
+                "inconclusive": 2,
+                "matched": 8
+              }
+            },
+            "declaration": {
+              "expected_checks": 10,
+              "outcomes": {
+                "inconclusive": 2,
+                "matched": 8
+              }
+            },
+            "moq_with_unit": {
+              "expected_checks": 10,
+              "outcomes": {
+                "inconclusive": 2,
+                "matched": 8
+              }
+            },
+            "open_upper_tier": {
+              "expected_checks": 10,
+              "outcomes": {
+                "inconclusive": 2,
+                "matched": 8
+              }
+            },
+            "price_unit": {
+              "expected_checks": 10,
+              "outcomes": {
+                "inconclusive": 2,
+                "matched": 8
+              }
+            },
+            "qualifier": {
+              "expected_checks": 10,
+              "outcomes": {
+                "inconclusive": 2,
+                "matched": 8
+              }
+            },
+            "quoted_quantity_with_unit": {
+              "expected_checks": 10,
+              "outcomes": {
+                "inconclusive": 2,
+                "matched": 8
+              }
+            },
+            "tax": {
+              "expected_checks": 10,
+              "outcomes": {
+                "inconclusive": 2,
+                "matched": 8
+              }
+            },
+            "tier_min_with_unit": {
+              "expected_checks": 10,
+              "outcomes": {
+                "inconclusive": 2,
+                "matched": 8
+              }
+            }
+          },
+          "outcomes": {
+            "inconclusive": 24,
+            "matched": 96
+          }
+        },
+        "before.preview": {
+          "additional_commercial_lines_for_review": 9,
+          "expected_checks": 120,
+          "fields": {
+            "amount_minor": {
+              "expected_checks": 10,
+              "outcomes": {
+                "inconclusive": 2,
+                "matched": 8
+              }
+            },
+            "basis_quantity": {
+              "expected_checks": 10,
+              "outcomes": {
+                "inconclusive": 2,
+                "matched": 8
+              }
+            },
+            "condition": {
+              "expected_checks": 10,
+              "outcomes": {
+                "inconclusive": 2,
+                "matched": 8
+              }
+            },
+            "currency": {
+              "expected_checks": 10,
+              "outcomes": {
+                "inconclusive": 2,
+                "matched": 8
+              }
+            },
+            "declaration": {
+              "expected_checks": 10,
+              "outcomes": {
+                "inconclusive": 2,
+                "matched": 8
+              }
+            },
+            "moq_with_unit": {
+              "expected_checks": 10,
+              "outcomes": {
+                "inconclusive": 2,
+                "matched": 8
+              }
+            },
+            "open_upper_tier": {
+              "expected_checks": 10,
+              "outcomes": {
+                "inconclusive": 2,
+                "matched": 8
+              }
+            },
+            "price_unit": {
+              "expected_checks": 10,
+              "outcomes": {
+                "inconclusive": 2,
+                "matched": 8
+              }
+            },
+            "qualifier": {
+              "expected_checks": 10,
+              "outcomes": {
+                "inconclusive": 2,
+                "matched": 8
+              }
+            },
+            "quoted_quantity_with_unit": {
+              "expected_checks": 10,
+              "outcomes": {
+                "inconclusive": 2,
+                "matched": 8
+              }
+            },
+            "tax": {
+              "expected_checks": 10,
+              "outcomes": {
+                "inconclusive": 2,
+                "matched": 8
+              }
+            },
+            "tier_min_with_unit": {
+              "expected_checks": 10,
+              "outcomes": {
+                "inconclusive": 2,
+                "matched": 8
+              }
+            }
+          },
+          "outcomes": {
+            "inconclusive": 24,
+            "matched": 96
+          }
+        },
+        "before.terms": {
+          "additional_commercial_lines_for_review": 0,
+          "expected_checks": 120,
+          "fields": {
+            "amount_minor": {
+              "expected_checks": 10,
+              "outcomes": {
+                "inconclusive": 2,
+                "matched": 8
+              }
+            },
+            "basis_quantity": {
+              "expected_checks": 10,
+              "outcomes": {
+                "inconclusive": 2,
+                "matched": 8
+              }
+            },
+            "condition": {
+              "expected_checks": 10,
+              "outcomes": {
+                "inconclusive": 2,
+                "matched": 8
+              }
+            },
+            "currency": {
+              "expected_checks": 10,
+              "outcomes": {
+                "inconclusive": 2,
+                "matched": 8
+              }
+            },
+            "declaration": {
+              "expected_checks": 10,
+              "outcomes": {
+                "inconclusive": 2,
+                "matched": 8
+              }
+            },
+            "moq_with_unit": {
+              "expected_checks": 10,
+              "outcomes": {
+                "inconclusive": 2,
+                "matched": 8
+              }
+            },
+            "open_upper_tier": {
+              "expected_checks": 10,
+              "outcomes": {
+                "inconclusive": 2,
+                "matched": 8
+              }
+            },
+            "price_unit": {
+              "expected_checks": 10,
+              "outcomes": {
+                "inconclusive": 2,
+                "matched": 8
+              }
+            },
+            "qualifier": {
+              "expected_checks": 10,
+              "outcomes": {
+                "inconclusive": 2,
+                "matched": 8
+              }
+            },
+            "quoted_quantity_with_unit": {
+              "expected_checks": 10,
+              "outcomes": {
+                "inconclusive": 2,
+                "matched": 8
+              }
+            },
+            "tax": {
+              "expected_checks": 10,
+              "outcomes": {
+                "inconclusive": 2,
+                "matched": 8
+              }
+            },
+            "tier_min_with_unit": {
+              "expected_checks": 10,
+              "outcomes": {
+                "inconclusive": 2,
+                "matched": 8
+              }
+            }
+          },
+          "outcomes": {
+            "inconclusive": 24,
+            "matched": 96
+          }
+        }
+      },
+      "expected_cases": 10,
+      "fixture_sha256": "993f93551657734fbea73f6c8898633a18df9dd573fcd0ff78b5e01653bc3346",
+      "mode": "study",
+      "product_qa": {
+        "after": {
+          "covered_cases": 8,
+          "expected_cases": 10,
+          "statement_outcomes": {
+            "contradiction": 6,
+            "editorial": 22,
+            "needs_correction": 22,
+            "unresolved": 38,
+            "verified": 48
+          },
+          "statements_n": 136,
+          "statements_with_recorded_handles": 54,
+          "studio_issues": {
+            "relevance": 4,
+            "repetition": 6
+          },
+          "studio_issues_n": 10,
+          "unrecognized_handle_mentions": 16
+        },
+        "before": {
+          "covered_cases": 8,
+          "expected_cases": 10,
+          "statement_outcomes": {
+            "contradiction": 6,
+            "editorial": 22,
+            "needs_correction": 29,
+            "unresolved": 31,
+            "verified": 48
+          },
+          "statements_n": 136,
+          "statements_with_recorded_handles": 54,
+          "studio_issues": {
+            "relevance": 4,
+            "repetition": 7
+          },
+          "studio_issues_n": 11,
+          "unrecognized_handle_mentions": 16
+        }
+      },
+      "reviewed_checkout": "a2dbe4566415fe28226b014ffb8785a1cc2cd9d6",
+      "scope": "Automated scoped rendering checks on frozen synthetic facts. Free prose, truth of sources, professional acceptance and human time are unmeasured.",
+      "scorer_file_sha256": "f4dd914b66f7537dfeeb6efe60cdc9a203168614810864178cb381d042af86e7",
+      "unexpected_case_folders": []
+    }
+  },
+  "complete": true,
+  "human_accepted": null,
+  "qualification": {
+    "recovery": {
+      "assigned": 20,
+      "both_releases_generated": 0,
+      "complete": true,
+      "conditions": {
+        "build": "b12648-44d50873b",
+        "cases_sha256": "c497ff707c986acaa3c48ba799ab1a378f194d3e7cd4262834d41a4aae0fe477",
+        "checkout": "a2dbe4566415fe28226b014ffb8785a1cc2cd9d6",
+        "model_sha256": "74a4da8c9fdbcd15bd1f6d01d621410d31c6fc00986f5eb687824e7b93d7a9db",
+        "provider": "llama.cpp loopback",
+        "worker_concurrency": 1
+      },
+      "confirmed_units": {
+        "participant": 10,
+        "visit": 10
+      },
+      "controls_with_comparison": 0,
+      "corrected": 20,
+      "deterministic_vs_full_method": {
+        "different_fields": 112,
+        "first": {
+          "fields": 179,
+          "nonempty_fields": 179,
+          "structural_findings": 0
+        },
+        "paired_drafts": 19,
+        "second": {
+          "fields": 179,
+          "nonempty_fields": 179,
+          "structural_findings": 36
+        }
+      },
+      "drafts": 19,
+      "edits_with_current_qa": 19,
+      "errors": {},
+      "files_present": 20,
+      "generic_vs_full_method": {
+        "different_fields": 0,
+        "first": {
+          "fields": 0,
+          "nonempty_fields": 0,
+          "structural_findings": 0
+        },
+        "paired_drafts": 0,
+        "second": {
+          "fields": 0,
+          "nonempty_fields": 0,
+          "structural_findings": 0
+        }
+      },
+      "matched_role_controls": 0,
+      "median_automated_journey_s": 17.866500000000002,
+      "median_control_s": null,
+      "median_correction_stage_s": {
+        "approve": 0.1663,
+        "clarify_and_propose": 0.245,
+        "resume": 0.19985,
+        "seed_and_task": 1.1864
+      },
+      "missing_or_invalid_case_ids": [],
+      "observed": 20,
+      "observed_control_provider_fee_usd": 0,
+      "observed_control_tokens": {
+        "input_tokens": 0,
+        "output_tokens": 0
+      },
+      "observed_previous_usage": {
+        "attempts": 0,
+        "input_tokens": 0,
+        "output_tokens": 0,
+        "provider_fee_usd": 0,
+        "unmetered_attempts": 0
+      },
+      "observed_treatment_usage": {
+        "attempts": 60,
+        "input_tokens": 39316,
+        "output_tokens": 5258,
+        "provider_fee_usd": 0,
+        "unmetered_attempts": 0
+      },
+      "previous_release_drafts": 0,
+      "previous_release_states": {},
+      "release_pins_on_drafted_cases": {
+        "campaign-channel@1": "e5f47b865cad8e80a7efab8d1ef1854cf9a4cf5b8185b80ecc263fea1dc631d0",
+        "icp-segmentation@1": "b69cd2acdf276b874a4cb956987cfd9ebf00efe4fd286e80d4b835ec6ab5102f",
+        "kpi-measurement@1": "b3f38b752f72b7a4bb76afc2783e08308f3d19a473b3a18eeed277d6552a13f9",
+        "landing-conversion@1": "65fed41e31b470d9ac009c03a5ee376851fe86664f2c73f2c5e08af49385bcc6",
+        "market-research@1": "86eeef60340cfd5035e4ecbba3807b7afca9b4abd4356e047d8806b8c9f77621",
+        "positioning-value@1": "b83430d074a232e1b0e8a2485a935c20bdc2d72521ac25478ac34f99475af93c",
+        "search-intent-seo@1": "95015035ae8f0183d82fa88c9851879885736b82032ce11d9b8f12230dc0152d"
+      },
+      "states": {
+        "awaiting_qa": 19,
+        "failed": 1
+      },
+      "technical_pairs": 0,
+      "unmetered_controls": 0
+    },
+    "smoke": {
+      "assigned": 2,
+      "both_releases_generated": 0,
+      "complete": true,
+      "conditions": {
+        "build": "b12648-44d50873b",
+        "cases_sha256": "1bd6b50b12c40790679f0204f1c40b0508b620e94784e5468121e766862a395c",
+        "checkout": "a2dbe4566415fe28226b014ffb8785a1cc2cd9d6",
+        "model_sha256": "74a4da8c9fdbcd15bd1f6d01d621410d31c6fc00986f5eb687824e7b93d7a9db",
+        "provider": "llama.cpp loopback",
+        "worker_concurrency": 1
+      },
+      "confirmed_units": {},
+      "controls_with_comparison": 0,
+      "corrected": 0,
+      "deterministic_vs_full_method": {
+        "different_fields": 11,
+        "first": {
+          "fields": 19,
+          "nonempty_fields": 19,
+          "structural_findings": 0
+        },
+        "paired_drafts": 2,
+        "second": {
+          "fields": 19,
+          "nonempty_fields": 19,
+          "structural_findings": 5
+        }
+      },
+      "drafts": 2,
+      "edits_with_current_qa": 2,
+      "errors": {},
+      "files_present": 2,
+      "generic_vs_full_method": {
+        "different_fields": 0,
+        "first": {
+          "fields": 0,
+          "nonempty_fields": 0,
+          "structural_findings": 0
+        },
+        "paired_drafts": 0,
+        "second": {
+          "fields": 0,
+          "nonempty_fields": 0,
+          "structural_findings": 0
+        }
+      },
+      "matched_role_controls": 0,
+      "median_automated_journey_s": 28.5375,
+      "median_control_s": null,
+      "median_correction_stage_s": {},
+      "missing_or_invalid_case_ids": [],
+      "observed": 2,
+      "observed_control_provider_fee_usd": 0,
+      "observed_control_tokens": {
+        "input_tokens": 0,
+        "output_tokens": 0
+      },
+      "observed_previous_usage": {
+        "attempts": 0,
+        "input_tokens": 0,
+        "output_tokens": 0,
+        "provider_fee_usd": 0,
+        "unmetered_attempts": 0
+      },
+      "observed_treatment_usage": {
+        "attempts": 7,
+        "input_tokens": 4638,
+        "output_tokens": 668,
+        "provider_fee_usd": 0,
+        "unmetered_attempts": 0
+      },
+      "previous_release_drafts": 0,
+      "previous_release_states": {},
+      "release_pins_on_drafted_cases": {
+        "campaign-channel@1": "e5f47b865cad8e80a7efab8d1ef1854cf9a4cf5b8185b80ecc263fea1dc631d0",
+        "icp-segmentation@1": "b69cd2acdf276b874a4cb956987cfd9ebf00efe4fd286e80d4b835ec6ab5102f",
+        "kpi-measurement@1": "b3f38b752f72b7a4bb76afc2783e08308f3d19a473b3a18eeed277d6552a13f9",
+        "landing-conversion@1": "65fed41e31b470d9ac009c03a5ee376851fe86664f2c73f2c5e08af49385bcc6",
+        "market-research@1": "86eeef60340cfd5035e4ecbba3807b7afca9b4abd4356e047d8806b8c9f77621",
+        "positioning-value@1": "b83430d074a232e1b0e8a2485a935c20bdc2d72521ac25478ac34f99475af93c",
+        "search-intent-seo@1": "95015035ae8f0183d82fa88c9851879885736b82032ce11d9b8f12230dc0152d"
+      },
+      "states": {
+        "awaiting_qa": 2
+      },
+      "technical_pairs": 0,
+      "unmetered_controls": 0
+    },
+    "study": {
+      "assigned": 10,
+      "both_releases_generated": 8,
+      "complete": true,
+      "conditions": {
+        "build": "b12648-44d50873b",
+        "cases_sha256": "993f93551657734fbea73f6c8898633a18df9dd573fcd0ff78b5e01653bc3346",
+        "checkout": "a2dbe4566415fe28226b014ffb8785a1cc2cd9d6",
+        "model_sha256": "74a4da8c9fdbcd15bd1f6d01d621410d31c6fc00986f5eb687824e7b93d7a9db",
+        "provider": "llama.cpp loopback",
+        "worker_concurrency": 1
+      },
+      "confirmed_units": {},
+      "controls_with_comparison": 8,
+      "corrected": 0,
+      "deterministic_vs_full_method": {
+        "different_fields": 46,
+        "first": {
+          "fields": 73,
+          "nonempty_fields": 73,
+          "structural_findings": 0
+        },
+        "paired_drafts": 8,
+        "second": {
+          "fields": 73,
+          "nonempty_fields": 73,
+          "structural_findings": 11
+        }
+      },
+      "drafts": 8,
+      "edits_with_current_qa": 8,
+      "errors": {},
+      "files_present": 10,
+      "generic_vs_full_method": {
+        "different_fields": 18,
+        "first": {
+          "fields": 73,
+          "nonempty_fields": 73,
+          "structural_findings": 18
+        },
+        "paired_drafts": 8,
+        "second": {
+          "fields": 73,
+          "nonempty_fields": 73,
+          "structural_findings": 11
+        }
+      },
+      "matched_role_controls": 8,
+      "median_automated_journey_s": 20.939,
+      "median_control_s": 5.004,
+      "median_correction_stage_s": {},
+      "missing_or_invalid_case_ids": [],
+      "observed": 10,
+      "observed_control_provider_fee_usd": 0,
+      "observed_control_tokens": {
+        "input_tokens": 4292,
+        "output_tokens": 1140
+      },
+      "observed_previous_usage": {
+        "attempts": 30,
+        "input_tokens": 14834,
+        "output_tokens": 3279,
+        "provider_fee_usd": 0,
+        "unmetered_attempts": 0
+      },
+      "observed_treatment_usage": {
+        "attempts": 30,
+        "input_tokens": 18200,
+        "output_tokens": 2462,
+        "provider_fee_usd": 0,
+        "unmetered_attempts": 0
+      },
+      "previous_release_drafts": 10,
+      "previous_release_states": {
+        "awaiting_qa": 10
+      },
+      "release_pins_on_drafted_cases": {
+        "campaign-channel@1": "e5f47b865cad8e80a7efab8d1ef1854cf9a4cf5b8185b80ecc263fea1dc631d0",
+        "icp-segmentation@1": "b69cd2acdf276b874a4cb956987cfd9ebf00efe4fd286e80d4b835ec6ab5102f",
+        "kpi-measurement@1": "b3f38b752f72b7a4bb76afc2783e08308f3d19a473b3a18eeed277d6552a13f9",
+        "landing-conversion@1": "65fed41e31b470d9ac009c03a5ee376851fe86664f2c73f2c5e08af49385bcc6",
+        "market-research@1": "86eeef60340cfd5035e4ecbba3807b7afca9b4abd4356e047d8806b8c9f77621",
+        "positioning-value@1": "b83430d074a232e1b0e8a2485a935c20bdc2d72521ac25478ac34f99475af93c",
+        "search-intent-seo@1": "95015035ae8f0183d82fa88c9851879885736b82032ce11d9b8f12230dc0152d"
+      },
+      "states": {
+        "awaiting_qa": 8,
+        "failed": 2
+      },
+      "technical_pairs": 10,
+      "unmetered_controls": 0
+    }
+  },
+  "run": "45582688602",
+  "semantic_advantage": null,
+  "stronger": {
+    "assigned": 10,
+    "backend_model_path": "/models/qwen2.5-7b-instruct-q4_k_m-00001-of-00002.gguf",
+    "baseline_model_sha256": "74a4da8c9fdbcd15bd1f6d01d621410d31c6fc00986f5eb687824e7b93d7a9db",
+    "build": "b12648-44d50873b",
+    "candidate": "Qwen2.5-7B-Instruct Q4_K_M",
+    "checkout": "a2dbe4566415fe28226b014ffb8785a1cc2cd9d6",
+    "expected_shards": {
+      "qwen2.5-7b-instruct-q4_k_m-00001-of-00002.gguf": "dfce12e3862a5283ccfb88221b48480e58745165de856439950d0f22590580db",
+      "qwen2.5-7b-instruct-q4_k_m-00002-of-00002.gguf": "539cf93f78e887edea1c04e2d7d8cdaca9d01dae9c9025bcb8accbe29df3d72a"
+    },
+    "frozen_sha256": "993f93551657734fbea73f6c8898633a18df9dd573fcd0ff78b5e01653bc3346",
+    "hardware": {
+      "available_ram_bytes": 15512944640,
+      "disk_free_bytes": 97010159616,
+      "disk_required_bytes": 7921225472,
+      "error": null,
+      "fp16_kv_bytes": 469762048,
+      "ram_required_bytes": 8390987520,
+      "weight_bytes_upper_bound": 4700000000
+    },
+    "human_accepted": null,
+    "image": "ghcr.io/ggml-org/llama.cpp:server@sha256:20db01dc9a92bff54a5b9fe4078caa52be6a0c1fa73859c6449e25b9cb67f998",
+    "invoked": 8,
+    "license": "Apache-2.0",
+    "max_attempts": 10,
+    "observed_tokens": {
+      "input_tokens": 5411,
+      "output_tokens": 1530
+    },
+    "paired": 8,
+    "peak_model_rss_bytes": 10090897408,
+    "provider_fee_usd": 0,
+    "retries": 0,
+    "revision": "bb5d59e06d9551d752d08b292a50eb208b07ab1f",
+    "role_concurrency": 1,
+    "run_attempt": "1",
+    "semantic_advantage": null,
+    "source_artifact": "pool-model-measurements-integration",
+    "source_run": "45582688602",
+    "status": "partial",
+    "unmetered_attempts": 0,
+    "verified_shards": {
+      "qwen2.5-7b-instruct-q4_k_m-00001-of-00002.gguf": {
+        "bytes": 3993201344,
+        "sha256": "dfce12e3862a5283ccfb88221b48480e58745165de856439950d0f22590580db"
+      },
+      "qwen2.5-7b-instruct-q4_k_m-00002-of-00002.gguf": {
+        "bytes": 689872288,
+        "sha256": "539cf93f78e887edea1c04e2d7d8cdaca9d01dae9c9025bcb8accbe29df3d72a"
+      }
+    }
+  },
+  "time_saved_vs_manual": null
+}

@@ -141,6 +141,40 @@ def test_offline_worker_and_cutover(pool_lab):
     assert lab.owner.execute("select execution_mode from workforce_runs where id=%s", (lab.runs[-1],)).fetchone() == ("legacy",)
 
 
+def test_teardown_retires_only_its_workers_attempts(pool_lab):
+    """A live reservation must be fenced even when another lab owns the oldest report."""
+    from app.main import app
+    from pool_lab import Lab, lab_client
+
+    foreign = pool_lab
+    assert foreign.dispatch()
+    first_worker, first_job = next((w, j) for w in foreign.workers if (j := w.take()))
+    assert first_worker.complete(first_job)
+    for admin in (foreign.x, foreign.y):
+        foreign.configure(admin, 0, False)
+
+    with lab_client(app) as client:
+        closing = Lab(client, foreign.dsn)
+        try:
+            assert closing.dispatch(reserve=700)
+            job = next(j for w in closing.workers if (j := w.take()))
+            names = [name for name, _ in closing.logins]
+            tenant = closing.x["tenant"]
+            assert job["run"] in closing.runs
+        finally:
+            closing.close()
+
+    db = foreign.owner
+    assert db.execute("select status from amc_ops.attempts where id=%s", (first_job["id"],)).fetchone() == ("reported",)
+    assert db.execute("select status from amc_ops.attempts where id=%s", (job["id"],)).fetchone() == ("closed",)
+    assert db.execute("select count(*) from amc_ops.routes where worker=any(%s)", (names,)).fetchone() == (0,)
+    assert db.execute("select count(*) from pg_roles where rolname=any(%s)", (names,)).fetchone() == (0,)
+    # The sent reservation remains held for a legitimate late usage receipt.
+    assert db.execute("select sum(held),sum(spent) from amc_ops.ledger where id=%s", (job["id"],)).fetchone() == (700, 0)
+    assert db.execute("select count(*) from amc_ops.attempts where tenant=%s and status<>'closed'", (tenant,)).fetchone() == (0,)
+    assert foreign.consume()
+
+
 @pytest.fixture()
 def one_run(pool_lab):
     lab = pool_lab

@@ -66,6 +66,16 @@ SELECT tenant,month,sum(held) held_microusd,sum(spent) spent_microusd
 FROM amc_ops.ledger GROUP BY tenant,month;
 ```
 
+## Xác minh hai ca kiểm thử liên tiếp
+
+Mỗi suite dùng database PostgreSQL tổng hợp riêng có tên bắt đầu bằng `amc_test`. Khi kết thúc, fixture tắt tiếp nhận việc cho các agency của mình, thu hồi route của các login đã tạo rồi xử lý các attempt còn lại của đúng những login đó. Gỡ route làm lease mất hiệu lực ngay. Attempt đã gửi tiếp tục giữ khoản dự phòng để xử lý receipt đến muộn. Sau đó fixture giải phóng kết nối và xóa đúng các login của mình.
+
+Để kiểm lại thứ tự thu hồi trong môi trường thử nghiệm đã thiết lập `AMC_TEST_PG=1`, chạy các ca sau trong cùng một tiến trình.
+
+```bash
+python -m pytest -q tests/test_pool_dispatch.py::test_offline_worker_and_cutover tests/test_pool_dispatch.py::test_late_receipt_releases_run_budget_for_next_400 tests/test_pool_dispatch.py::test_teardown_retires_only_its_workers_attempts
+```
+
 ## Khôi phục
 
 Để tạm dừng việc mới, dừng dispatcher. Worker đang suy luận có thể báo kết quả đến khi lease hết hạn. Khởi động lại dispatcher để ghi kết quả, thu hồi lease hết hạn và tiếp tục giới hạn ba lần thử. Khi chuyển về legacy, tạm dừng enqueue, chờ pool xử lý xong các run còn mở, đối soát khoản chưa xác nhận, đặt enabled=false, rồi chạy worker legacy cho run mới. Giữ schema v10 để bảo toàn ledger và snapshot. Rollback toàn database dùng bản backup đã thử khôi phục và cùng phiên bản ứng dụng, sau khi xuất bằng chứng phát sinh kể từ backup.

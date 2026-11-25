@@ -221,25 +221,30 @@ class Lab:
             self.owner.execute("update amc_ops.ledger set spent=0 where id=%s", (job["id"],))
 
     def release_connections(self):
-        for worker in self.workers:
-            worker.conn.close()
-        if hasattr(self, "bind"):
-            self.bind.dispose()
+        names = [name for name, _ in self.logins]
         try:
-            names = [name for name, _ in self.logins]
             if names:
+                # Lease liveness depends on these routes. Revoke them before draining, so
+                # outstanding offers/sent work cannot become the next lab's first result.
+                self.owner.execute("delete from amc_ops.routes where worker=any(%s)", (names,))
+                if hasattr(self, "bind"):
+                    while consume(self.bind, self.config, worker_names=names):
+                        pass
+        finally:
+            for worker in self.workers:
+                worker.conn.close()
+            if hasattr(self, "bind"):
+                self.bind.dispose()
+            try:
                 with self.owner.transaction():
-                    self.owner.execute("delete from amc_ops.routes where worker=any(%s)", (names,))
                     for name in names:
                         self.owner.execute(sql.SQL("drop role {}").format(sql.Identifier(name)))
-        finally:
-            self.owner.close()
+            finally:
+                self.owner.close()
 
     def close(self):
         try:
             for admin in (self.x, self.y):
                 self.configure(admin, 0, False)
-            while self.consume():
-                pass
         finally:
             self.release_connections()

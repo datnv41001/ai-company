@@ -8,7 +8,15 @@ PR #37 đã merge nội bộ tại `b23497dcce9719fa3d413ad0c7215d751fba3b9f`. C
 
 Bắt đầu từ [giao thức thí nghiệm và lệnh chạy lại](docs/evaluation/C3-PRODUCT-QUALIFICATION.md). Hai smoke nội bộ chạy Qwen 0.5B trước. Nhánh thử nghiệm lưu riêng đầu vào của vai trò Strategy hoặc Content để [đối chiếu Qwen 7B](docs/evaluation/C3_STRONGER_ROLE.md) trên runner có đủ bộ nhớ. Mỗi kết quả gắn với commit tích hợp thực chạy. Khi đo thời gian hoàn thành và mức chấp nhận nghề nghiệp, giữ phiếu chấm mù và thời gian thao tác của từng người theo [bộ pilot](docs/evaluation/C3-PRACTITIONER-KIT.md).
 
-## Chuyển sang Marketing Studio
+## Duyệt theo nhóm trên PostgreSQL (STUDIO-G02)
+
+Bản này dùng core v25, Business v3 và C3 v3. Người QA duyệt đúng nhóm nghiên cứu, chiến lược và đo lường của một bản. Khi quyết định phụ thuộc vào một người đã ký trước đó, PostgreSQL giữ khóa đọc trên membership của người đó đến hết giao dịch. Nếu hạ quyền trước, quyết định mới phải chờ và đánh giá theo quyền đã đổi. Nếu chia sẻ trước, snapshot và biên nhận cùng commit rồi giao dịch hạ quyền mới tiếp tục. Quyết định và nội dung khách đã nhận được giữ trong lịch sử.
+
+Trên database kiểm thử PostgreSQL mới, cấu hình bộ biến môi trường của job `api-tests` trong [CI](.github/workflows/ci.yml), chạy `python migrations/apply.py` rồi `python -m pytest -q tests/test_studio_postgres.py`. Ca này dùng `amc_runtime` có RLS, dispatcher và worker login riêng, phản hồi vai trò tất định. Test kiểm tra duyệt độc lập, trường thiếu bằng chứng, nhóm chưa ký, sửa bản, thu hồi chuyên môn/quyền, hai thứ tự khóa, khách đúng phạm vi và snapshot sau khi khách duyệt. Nhóm Marketing và QA có thể kiểm tra vì sao hệ thống cho phép hoặc từ chối bàn giao. Công biên tập, thời gian tiết kiệm và chi phí trên bản được duyệt vẫn chưa đo với chuyên viên.
+
+Khi diễn tập cutover, dùng **hai database loopback `amc_test*` riêng, còn trống**. Trên DB thứ nhất chạy `python tests/check_studio_cutover.py` cho v1 → v3. Trên DB thứ hai chạy `python tests/check_studio_cutover.py --from-studio-v2` cho v2 → v3. Giao thức mới là `c3/3`. API cũ bị chặn ghi sau cutover, kể cả ghi biên nhận mới vào lệnh tri thức. Dừng nhận việc, drain worker và API trước khi nâng cấp, lưu backup nhất quán và image đang chạy, kiểm tra startup rồi mới mở lại. Để phục hồi, dùng database cô lập từ backup và image tương ứng, đối chiếu các thay đổi phát sinh sau backup rồi theo thủ tục restore-fence hiện hành. [Migration](migrations/c3_tasks/003_reviewer_authority.sql) · [Ca nghiệm thu](tests/test_studio_postgres.py) · [Diễn tập rollback và replay](tests/check_studio_cutover.py)
+
+## Lịch sử chuyển sang Marketing Studio
 
 Studio dùng core v25, Business v3 và module C3 v2. Trước cutover, dừng xếp việc, drain các worker, dừng API cũ, lưu backup cùng image tương ứng. Chạy publisher mới trên database đã sao lưu, sau đó khởi động API và worker cùng bản. Migration `002_studio_writer.sql` khóa ba bảng bàn giao, thay các trigger trong một giao dịch và ghi module v2. Các API từng khai báo `c3/1` mất quyền ghi ngay sau commit. Publisher v1 từ chối module v2 và API v1 từ chối bộ trigger v2. Studio chỉ khởi động khi kiểm tra đúng ba trigger còn hiệu lực. Chữ ký giao thức dùng cho tương thích binary; quyền nguồn, quyền người dùng và quyết định QA của từng bản vẫn do ứng dụng và RLS kiểm tra.
 

@@ -16,6 +16,7 @@ if not __package__:
     sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 from app.registry_compatibility import validate_manifest  # noqa: E402
 from migrations.knowledge_commerce import RULE_IS_CURRENT, install as install_knowledge_commerce  # noqa: E402
+from migrations.combined_contract import check_capabilities, check_commercial_input, material_from_environment, verify_stored_keys  # noqa: E402
 
 HERE = Path(__file__).resolve().parent
 BASE = {"tenants", "users", "memberships", "clients", "brands", "campaigns",
@@ -64,17 +65,12 @@ def migrate(dsn: str, runtime_password: str | None = None):
             raise ValueError("amc_runtime must be an unprivileged role without inherited roles")
         conn.execute("CREATE TABLE IF NOT EXISTS amc_schema_versions (version int PRIMARY KEY)")
         versions = {row[0] for row in conn.execute("SELECT version FROM amc_schema_versions")}
-        if versions - set(range(2, 23)):
+        if versions - set(range(2, 25)):
             raise ValueError("Unknown schema version; use its matching application revision")
         if 16 in versions and 15 not in versions:
             raise ValueError("Isolated schema v16 is missing migration 015; restore a pre-016 backup before upgrading")
         if versions and versions != set(range(2, max(versions) + 1)):
             raise ValueError("Incomplete migration history; restore a consistent backup before upgrading")
-        if 22 in versions:
-            if not conn.execute(RULE_IS_CURRENT).fetchone()[0]:
-                install_knowledge_commerce(conn)
-            install_business_workspace(conn)
-            return
         if 2 not in versions:
             tables = {row[0] for row in conn.execute(
                 "SELECT tablename FROM pg_tables WHERE schemaname='public' AND tablename <> 'amc_schema_versions'")}
@@ -154,10 +150,37 @@ def migrate(dsn: str, runtime_password: str | None = None):
                 for dimension, (capacity, seconds) in dimensions.items():
                     conn.execute("INSERT INTO amc_acl.quota_policy VALUES(%s,%s,%s,%s)",(action,dimension,capacity,seconds))
             conn.execute("INSERT INTO amc_schema_versions VALUES (21)")
-        conn.execute((HERE / "022_business_knowledge.sql").read_text(encoding="utf-8"))
-        install_knowledge_commerce(conn)
-        conn.execute("INSERT INTO amc_schema_versions VALUES (22)")
-        install_business_workspace(conn)
+        if 22 not in versions:
+            conn.execute((HERE / "022_business_knowledge.sql").read_text(encoding="utf-8"))
+            install_knowledge_commerce(conn)
+            conn.execute("INSERT INTO amc_schema_versions VALUES (22)")
+        material = material_from_environment()
+        if 23 not in versions:
+            install_device_sessions(conn, material)
+        verify_stored_keys(conn, material)
+        # Only the reviewed C2 commercial rule may become active in v24.
+        # The A1 publisher is intentionally refused once marker 024 is committed.
+        install_combined_capabilities(conn, versions)
+        if 24 not in versions:
+            conn.execute((HERE / "024_combined_publisher.sql").read_text(encoding="utf-8"))
+
+
+def install_device_sessions(conn, material):
+    quota, proof, generation = material
+    # Bind the supplied legacy issuer to the stored C2 proof before deriving a
+    # quota key from it. Two consistently wrong environment keys cannot prove continuity.
+    prior_proof = hmac.digest(os.environ["JWT_SECRET"].encode(), b"amc-identity-v17", "sha256")
+    stored = conn.execute("SELECT secret FROM amc_acl.identity_key WHERE singleton FOR UPDATE").fetchone()
+    if not stored or not hmac.compare_digest(bytes(stored[0]), prior_proof):
+        raise ValueError("Legacy issuer differs from the stored identity proof")
+    if conn.execute("SELECT EXISTS(SELECT FROM amc_acl.identity_windows WHERE until_epoch>extract(epoch FROM clock_timestamp()))").fetchone()[0]:
+        prior = hmac.digest(os.environ["JWT_SECRET"].encode(),b"amc/identity-quota/v1","sha256")
+        if not hmac.compare_digest(quota,prior):
+            raise ValueError("Preserve the v21 quota key while old quota windows remain active")
+    conn.execute((HERE / "023_device_sessions.sql").read_text(encoding="utf-8"))
+    conn.execute("UPDATE amc_acl.identity_key SET secret=%s WHERE singleton",(proof,))
+    conn.execute("INSERT INTO amc_acl.session_keys VALUES(true,%s,%s)",(hashlib.sha256(quota).hexdigest(),hashlib.sha256(generation).hexdigest()))
+    conn.execute("INSERT INTO amc_schema_versions VALUES (23)")
 
 
 def install_business_workspace(conn):
@@ -174,7 +197,48 @@ def install_business_workspace(conn):
     elif versions != [(1,), (2,), (3,)]:
         raise ValueError("Unsupported business workspace schema version")
     install_claim_display(conn)
+def install_combined_capabilities(conn, versions):
+    if 24 in versions and not conn.execute("SELECT to_regclass('amc_business.versions')").fetchone()[0]:
+        raise ValueError("Missing combined business workspace ledger")
+    check_commercial_input(conn)
+    if not conn.execute(RULE_IS_CURRENT).fetchone()[0]:
+        install_knowledge_commerce(conn)
+    install_business_workspace(conn)
+    check_capabilities(conn)
 
+
+
+
+def maintain_identity(conn, operation, material):
+    """Offline publisher transaction. Restore requires an independently generated epoch."""
+    value = bytes.fromhex(material)
+    if len(value) != 32:
+        raise ValueError("Expected a fresh 32-byte hex key")
+    fingerprint = hashlib.sha256(value).hexdigest()
+    conn.execute("SET LOCAL row_security=off")
+    conn.execute("SELECT pg_advisory_xact_lock(4197832741)")
+    quota, generation = conn.execute("SELECT quota_fingerprint,restore_generation FROM amc_acl.session_keys WHERE singleton FOR UPDATE").fetchone()
+    current_proof = conn.execute("SELECT secret FROM amc_acl.identity_key WHERE singleton").fetchone()[0]
+    domains = {"rotate-proof":hashlib.sha256(current_proof).hexdigest(),"rotate-quota":quota,"restore-fence":generation}
+    if any(fingerprint==pin for kind,pin in domains.items() if kind!=operation) or value.hex()==os.getenv("JWT_SECRET","").lower():
+        raise ValueError("Identity key material cannot be reused across purposes")
+    if operation=="rotate-proof":
+        conn.execute("UPDATE amc_acl.identity_key SET secret=%s WHERE singleton",(value,))
+    elif operation=="rotate-quota":
+        conn.execute("LOCK TABLE amc_acl.identity_windows IN ACCESS EXCLUSIVE MODE")
+        if conn.execute("SELECT EXISTS(SELECT FROM amc_acl.identity_windows WHERE until_epoch>extract(epoch FROM clock_timestamp()))").fetchone()[0]:
+            raise ValueError("Drain admission and wait for active windows to expire before quota key replacement")
+        conn.execute("UPDATE amc_acl.session_keys SET quota_fingerprint=%s WHERE singleton",(fingerprint,))
+    elif operation=="restore-fence":
+        conn.execute("LOCK TABLE public.device_sessions,public.used_refresh_grants IN ACCESS EXCLUSIVE MODE")
+        if conn.execute("SELECT restore_generation FROM amc_acl.session_keys WHERE singleton FOR UPDATE").fetchone()[0]==fingerprint:
+            raise ValueError("Restored database requires a new external generation")
+        conn.execute("UPDATE amc_acl.session_keys SET restore_generation=%s WHERE singleton",(fingerprint,))
+        conn.execute("UPDATE public.device_sessions SET revoked=true,epoch=epoch+1 WHERE NOT revoked")
+        conn.execute("DELETE FROM public.used_refresh_grants")
+        conn.execute("DELETE FROM public.identity_challenges")
+    else:
+        raise ValueError("Unknown identity operation")
 
 
 if __name__ == "__main__":
@@ -182,10 +246,15 @@ if __name__ == "__main__":
 
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--publish-registry", type=Path, help="Import a reviewed release using the migration identity")
+    parser.add_argument("--identity-operation", choices=("restore-fence","rotate-proof","rotate-quota"))
     args = parser.parse_args()
-    if args.publish_registry:
+    if args.identity_operation:
+        env_name = {"restore-fence":"AMC_SESSION_GENERATION","rotate-proof":"AMC_DB_PROOF_KEY","rotate-quota":"AMC_QUOTA_KEY"}[args.identity_operation]
+        with psycopg.connect(os.environ["AMC_MIGRATION_DSN"]) as conn:
+            maintain_identity(conn,args.identity_operation,os.environ[env_name])
+    elif args.publish_registry:
         with psycopg.connect(os.environ["AMC_MIGRATION_DSN"]) as conn:
             publish_registry(conn, json.loads(args.publish_registry.read_text(encoding="utf-8")))
     else:
         migrate(os.environ["AMC_MIGRATION_DSN"], os.getenv("AMC_RUNTIME_PASSWORD"))
-    print("AMC schema version 22 ready")
+    print("AMC schema version 24 ready")

@@ -31,3 +31,5 @@
 **Duy trì.** Người phụ trách đề xuất mở một câu hỏi từ khoảng trống trong [ma trận](APPLICABILITY_MATRIX.md), đăng ký nguồn cụ thể, ghi phần đã đọc và tác giả trước khi viết thẻ. Chủ module đối chiếu mã ở SHA hiện hành, chỉ rõ ý kiến trái chiều và cập nhật quyết định trong cùng PR. Khi chuẩn bị thay đổi liên quan đến GA4, SEO, nguồn kiến thức hoặc workflow, kiểm lại trang động và so bản hiện tại với lần đọc trước. Nếu trang chuyển sang đăng nhập, hạn chế bot, đổi nội dung hoặc mất locator, ghi thiếu bằng chứng và giữ lại quyết định cũ trong lịch sử Git. Giá trị của đợt tiếp theo là một quyết định hoặc ca kiểm thử được cải thiện và tái lập được.
 
 Chỉ ba trang SRC-GA, SRC-SC và SRC-PF thuộc danh mục thu thập có giới hạn được đề xuất trong increment này. Đọc thủ công một URL không tự cấp quyền cho broker hay reviewer. [Quy trình broker và receipt](../../engineering/airc500/APPLIED-RESEARCH.md)
+
+Đợt 2 ngày 25/11/2026 bổ sung ba nguồn về đo lường, SEO và đánh giá tác vụ, cùng hai tài liệu phần cứng/model phục vụ qualification. [Sổ nguồn đợt 2, locator và giới hạn](C3-QUALITY-AND-REVIEWER-CAPACITY.md).

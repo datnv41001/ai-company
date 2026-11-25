@@ -195,7 +195,7 @@ def consume(bind, config):
 
 
 def main():
-    from .main import app  # noqa: F401 - load ORM relationships
+    from . import delivery_models, knowledge_models, session_state  # noqa: F401 - load ORM relationships without user signing keys
 
     bind = create_engine(os.environ["AMC_DISPATCH_URL"], pool_pre_ping=True)
     config = Gateway.configured()

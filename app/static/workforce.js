@@ -1,5 +1,5 @@
 /* Keep the intake form separate from agency-only checkpoints and QA. */
-function createWorkforce(root, api, notify) {
+function createWorkforce(root, api, notify, onActivity=()=>{}) {
   let revision = 0;
   function reset() { revision++; root.inert=false; root.replaceChildren(); }
   function node(parent, tag, text) {
@@ -84,9 +84,11 @@ function createWorkforce(root, api, notify) {
         admin?api('/api/tenants/'+encodeURIComponent(tenant)+'/recipients'):[]]);
     } catch(e) {
       if(ticket!==revision)return;
+      if(!external) onActivity(tenant,null,null);
       root.inert=false;root.replaceChildren();action(root,'Tải lại brief và tiến độ',reload);return;
     }
     if(ticket!==revision)return;
+    if(!external) onActivity(tenant,briefs,runs);
     root.inert=false;
     const keepOpen=expanded ?? root.querySelector("details")?.open;
     root.replaceChildren();

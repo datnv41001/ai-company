@@ -6,7 +6,8 @@ from sqlalchemy.orm import DeclarativeBase, Session
 
 # Only shared application settings cross the native API startup boundary.
 for name, value in dotenv_values().items():
-    if value is not None and name in ("DATABASE_URL", "APP_ENV", "JWT_SECRET", "JWT_ISSUER", "AMC_IDENTITY_TRUSTED_PROXIES"):
+    if value is not None and name in ("DATABASE_URL", "APP_ENV", "JWT_SECRET", "JWT_ISSUER", "AMC_IDENTITY_TRUSTED_PROXIES",
+                                      "AMC_DB_PROOF_KEY", "AMC_QUOTA_KEY", "AMC_SESSION_GENERATION","AMC_PUBLIC_ORIGIN"):
         os.environ.setdefault(name, value)
 
 DATABASE_URL = os.getenv("DATABASE_URL", "sqlite:///./amc_local.db")
@@ -30,7 +31,7 @@ class Base(DeclarativeBase):
     pass
 
 
-def prepare_database(bind):
+def prepare_database(bind, *, verify_identity=True):
     if bind.dialect.name == "sqlite":
         with bind.begin() as conn:
             conn.exec_driver_sql("BEGIN IMMEDIATE")
@@ -58,6 +59,8 @@ def prepare_database(bind):
                     conn.exec_driver_sql("ALTER TABLE deliverables ADD COLUMN qa_approved_digest VARCHAR(64)")
             if inspector.has_table("users") and "verified_at" not in {c["name"] for c in inspector.get_columns("users")}:
                 conn.exec_driver_sql("ALTER TABLE users ADD COLUMN verified_at DATETIME")
+            if inspector.has_table("users") and "credential_epoch" not in {c["name"] for c in inspector.get_columns("users")}:
+                conn.exec_driver_sql("ALTER TABLE users ADD COLUMN credential_epoch INTEGER NOT NULL DEFAULT 1")
             invite_columns = {c["name"] for c in inspector.get_columns("portal_invitations")} if inspector.has_table("portal_invitations") else set()
             if invite_columns and "link_digest" not in invite_columns:
                 columns = ",".join(c["name"] for c in inspector.get_columns("portal_invitations"))
@@ -74,6 +77,8 @@ def prepare_database(bind):
                     WHERE i.state='pending' AND (c.tenant_id,c.brand_id,c.id)=(i.tenant_id,i.brand_id,i.campaign_id)""")
             from .workforce_authority import install_sqlite
             Base.metadata.create_all(conn)
+            from .session_state import install_epoch_trigger
+            install_epoch_trigger(conn)
             for index in Base.metadata.tables["workforce_runs"].indexes:
                 index.create(conn, checkfirst=True)
             if not conn.exec_driver_sql("SELECT 1 FROM sqlite_master WHERE type='trigger' AND name='workforce_check_intake'").scalar():
@@ -101,18 +106,22 @@ def prepare_database(bind):
         versions = set(conn.scalars(text("SELECT version FROM public.amc_schema_versions")))
         if 16 in versions and 15 not in versions:
             raise RuntimeError("Isolated schema v16 is missing migration 015; restore a pre-016 backup before upgrading")
-        if versions != set(range(2, 23)):
+        if versions != set(range(2, 25)):
             raise RuntimeError("Apply the PostgreSQL schema migrations before starting the API")
-        from migrations.knowledge_commerce import RULE_IS_CURRENT
-        if not conn.scalar(text(RULE_IS_CURRENT)):
-            raise RuntimeError("Rerun the v22 migration publisher to install the commercial authority rule")
+        from migrations.combined_contract import COMMERCIAL_CURRENT, DESK_CURRENT
+        if not conn.scalar(text(COMMERCIAL_CURRENT)):
+            raise RuntimeError("Rerun the combined migration publisher to install the commercial authority rule")
         if not conn.scalar(text("SELECT to_regclass('amc_business.versions') IS NOT NULL")) or list(conn.scalars(text("SELECT version FROM amc_business.versions ORDER BY version"))) != [1, 2, 3]:
             raise RuntimeError("Apply the compatible business workspace migration")
-        from migrations.claim_display import CURRENT as claim_display_current
-        if not conn.scalar(text(claim_display_current)):
+        if not conn.scalar(text(DESK_CURRENT)):
             raise RuntimeError("Apply the current claim desk read capability")
+        if not verify_identity:
+            return
         from .access import set_context
-        from .security import sign_actor
+        from .security import access_key, sign_actor
+        access_key()
+        from .session_keys import verify_config
+        verify_config(conn)
         with Session(conn) as session:
             set_context(session, actor="startup")
             sign_actor(session, "startup")

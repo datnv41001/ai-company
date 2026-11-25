@@ -1,5 +1,9 @@
 # Bắt đầu ở đây khi tiếp quản AI Marketing Company
 
+## A1 · Phiên thiết bị, phụ thuộc Business Profile C1
+
+Draft A1 dành migration 023 sau C1 v22. Người dùng có thể xem thiết bị, xác thực lại, refresh và thu hồi phiên. Khi tiếp quản, kiểm tra hai thứ tự commit trên PostgreSQL, diễn tập restore, chuyển riêng ba loại khóa và xác nhận vẫn ký được append C1. Thử nghiệm Keycloak chạy trong lab độc lập. [API, lệnh chạy, rollback và giới hạn](docs/DEVICE-SESSIONS-A1.md)
+
 ## Business Profile C1 · backend v22 đang review nội bộ
 
 Nhánh `feature/business-profile-knowledge-v22` tích hợp main `16fea3d45`. Staff có thể ghi hồ sơ, SKU, offer và chứng cứ, tự duyệt dữ kiện thông thường hoặc yêu cầu người thứ hai đủ quyền. API tạo snapshot và cấp receipt nội bộ cho queue/QA/share. Local PostgreSQL 16.16 và SQLite đã đạt 29 ca C1, gồm tranh chấp thật, hết hạn, idempotency và quyền đọc nguồn. Mốc tiếp là giao diện C2, adapter WF-03/WF-13 C3 và nghiệm thu nghiệp vụ. Commercial GA giữ NO-GO. [Lệnh Docker, API, ma trận nghiệm thu và rollback](docs/business-profile/C1-RUNBOOK.md) · [SHA và CI của các mốc đã hợp nhất](docs/business-profile/INTEGRATION-BASE.md)

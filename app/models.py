@@ -20,6 +20,7 @@ class User(Base):
     email: Mapped[str] = mapped_column(String(320), unique=True, index=True)
     verified_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True), server_default=text("NULL"))
     password_hash: Mapped[str] = mapped_column(String(255))
+    credential_epoch: Mapped[int] = mapped_column(server_default=text("1"))
     created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), default=utcnow)
 
 

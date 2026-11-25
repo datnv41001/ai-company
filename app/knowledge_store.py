@@ -11,7 +11,8 @@ from sqlalchemy.exc import DBAPIError, IntegrityError
 
 from . import knowledge_models as m
 from .models import Brand, Membership, new_id
-from .security import SECRET, require_tenant
+from .security import require_tenant
+from .session_keys import key
 
 
 VISIBILITY = ("public", "internal", "restricted")
@@ -112,10 +113,9 @@ class Store:
         if self.postgres:
             tx = self.db.scalar(text("SELECT txid_current()"))
             doc = canonical({k: stamp(v) if isinstance(v, datetime) else v for k, v in values.items()})
-            key = hmac.digest(SECRET.encode(), b"amc-identity-v17", "sha256")
             name = table.__tablename__
             message = "\n".join(("knowledge-v22", self.actor, str(tx), name, doc))
-            proof = hmac.new(key, message.encode(), "sha256").hexdigest()
+            proof = hmac.new(key("AMC_DB_PROOF_KEY"), message.encode(), "sha256").hexdigest()
             self.db.execute(text("SELECT amc_acl.append_knowledge(:rel,:doc,:proof)"), dict(rel=name, doc=doc, proof=proof))
         else:
             self.db.execute(table.__table__.insert().values(**values))

@@ -10,7 +10,24 @@
   let workspaceRequest = null;
   const esc = v => String(v ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
   const msg = (text, error=false) => { $('notice').textContent = text; $('notice').className = error ? 'error' : 'ok'; };
+  const claims = token => JSON.parse(atob(token.split('.')[1].replace(/-/g,'+').replace(/_/g,'/')));
+  let refreshing = null;
+  async function renew() {
+    if (refreshing) return refreshing;
+    if (!navigator.locks) throw Error('Vui lòng đăng nhập lại để tiếp tục.');
+    refreshing = navigator.locks.request('amc-refresh', async () => {
+      const csrf = document.cookie.split('; ').find(v => v.startsWith('__Host-amc-csrf='))?.split('=')[1];
+      if (!csrf) throw Error('Phiên đã hết hiệu lực. Vui lòng đăng nhập lại.');
+      const response = await fetch('/api/auth/refresh', {method:'POST', headers:{'X-AMC-CSRF':csrf}});
+      if (!response.ok) throw Error('Vui lòng đăng nhập lại để tiếp tục.');
+      const token = (await response.json()).access_token;
+      if (claims(token).sid !== claims(state.token).sid) throw Error('Tài khoản đã đổi ở tab khác. Vui lòng đăng nhập lại.');
+      state.token = token;
+    }).finally(() => { refreshing = null; });
+    return refreshing;
+  }
   const api = async (path, method='GET', body=null, withCursor=false) => {
+    if (state.token && !path.startsWith('/api/auth/login') && claims(state.token).exp <= Date.now()/1000 + 15) await renew();
     const response = await fetch(path, {method, headers: {'Content-Type':'application/json', ...(state.token ? {'Authorization':`Bearer ${state.token}`} : {})}, ...(body ? {body: JSON.stringify(body)} : {})});
     const result = await response.json().catch(() => ({}));
     if (response.status === 429) {
@@ -84,6 +101,7 @@
     $('verify-address').textContent = email;
     $('auth').classList.add('hidden');
     $('switch-account').classList.remove('hidden');
+    $('device-panel').classList.remove('hidden');
     $('leave-invite').classList.toggle('hidden', invitation === null);
     $('who').textContent = email;
     $('onboarding').classList.toggle('hidden', !result.email_verified || invitation !== null);
@@ -138,10 +156,42 @@
     try { await session({...await api('/api/me'), access_token:state.token},state.email); }
     catch (error) { msg(error.message, true); }
   };
-  $('switch-account').onclick = () => {
-    if (invitation !== null) history.replaceState(null, '', location.pathname + '#invite=' + encodeURIComponent(invitation));
-    location.reload();
+  $('switch-account').onclick = async () => {
+    try {
+      if (state.token) {
+        const csrf = document.cookie.split('; ').find(v => v.startsWith('__Host-amc-csrf='))?.split('=')[1];
+        const response = csrf ? await fetch('/api/auth/logout-cookie',{method:'POST',headers:{'X-AMC-CSRF':csrf,'X-AMC-Session':claims(state.token).sid}})
+          : await fetch('/api/auth/logout',{method:'POST',headers:{Authorization:'Bearer '+state.token}});
+        if (!response.ok && response.status !== 409 && (csrf || response.status !== 401)) throw Error('Máy chủ chưa xác nhận đăng xuất. Vui lòng thử lại.');
+      }
+      if (invitation !== null) history.replaceState(null, '', location.pathname + '#invite=' + encodeURIComponent(invitation));
+      location.reload();
+    } catch(error) { msg(error.message,true); }
   };
+  async function deviceList() {
+    const list = $('device-list');
+    const devices = await api('/api/me/sessions');
+    list.replaceChildren();
+    for (const device of devices) {
+      const row = document.createElement('li');
+      row.append(document.createTextNode(device.device+' · '+new Date(device.last_seen*1000).toLocaleString()+(device.current?' · Phiên hiện tại ': ' ')));
+      if (!device.current) {
+        const button = document.createElement('button');
+        button.type = 'button'; button.textContent = 'Thu hồi';
+        button.onclick = async () => {
+          try { await api('/api/me/sessions/'+device.id,'DELETE'); await deviceList(); }
+          catch(error) { msg(error.message,true); }
+        };
+        row.append(button);
+      }
+      list.append(row);
+    }
+  }
+  $('device-panel').ontoggle = () => { if ($('device-panel').open) deviceList().catch(error=>msg(error.message,true)); };
+  process($('device-reauth'),async data => {
+    try { await api('/api/auth/reauthenticate','POST',data); msg('Đã xác thực lại. Bạn có thể thu hồi phiên khác.'); }
+    finally { $('device-reauth').reset(); }
+  });
   $('workspace-form').addEventListener('input', () => { workspaceRequest = null; });
   process($('workspace-form'), async data => {
     workspaceRequest ||= crypto.randomUUID();

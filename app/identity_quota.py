@@ -14,10 +14,11 @@ from sqlalchemy import BigInteger, Column, Index, Integer, MetaData, String, Tab
 from sqlalchemy.exc import SQLAlchemyError
 
 from .database import Base
-from .security import SECRET, sign_actor
+from .security import sign_actor
+from .session_keys import key, verify_config
 
 POLICY = json.loads((Path(__file__).resolve().parents[1] / "migrations/021_quota_policy.json").read_text(encoding="utf-8"))
-KEY = hmac.digest(SECRET.encode(), b"amc/identity-quota/v1", "sha256")
+KEY = key("AMC_QUOTA_KEY")
 LOG = logging.getLogger("amc.identity_limits")
 # SQLite keeps development counters separately from the tenant-domain schema.
 DEV_WINDOWS = Table(
@@ -111,6 +112,7 @@ def admit(db, request, action, *, actor=None, address=None, tenant=None):
         raise RuntimeError("Identity admission requires a clean transaction")
     try:
         if db.get_bind().dialect.name == "postgresql":
+            verify_config(db)
             delay = db.scalar(text("SELECT amc_acl.consume_identity_quota(:a,cast(:keys as jsonb))"), {"a": action, "keys": json.dumps(keys)})
         else:
             delay = sqlite_charge(db, action, keys)

@@ -34,9 +34,12 @@ def login(api, body):
     jar = SimpleCookie()
     for raw in res.headers.get_list("set-cookie"):
         jar.load(raw)
-    assert jar[REFRESH]["secure"] and jar[REFRESH]["httponly"] and jar[REFRESH]["samesite"] == "lax" and not jar[REFRESH]["domain"]
+    access = res.json()["access_token"]
+    sid = jwt.decode(access, SECRET, algorithms=["HS256"], audience="amc-api", issuer=ISSUER)["sid"]
+    grant = jar[REFRESH + sid]
+    assert grant["secure"] and grant["httponly"] and grant["samesite"] == "lax" and not grant["domain"]
     cookie = "; ".join(f"{k}={p.value}" for k, p in jar.items())
-    return res.json()["access_token"], {"Cookie": cookie, "X-AMC-CSRF": jar[CSRF].value, "Origin": str(api.base_url).rstrip("/")}
+    return access, {"Cookie": cookie, "X-AMC-CSRF": jar[CSRF + sid].value, "X-AMC-Session": sid, "Origin": str(api.base_url).rstrip("/")}
 
 
 def bearer(token):
@@ -75,6 +78,48 @@ def test_refresh_response_loss_reuse_and_csrf(api):
     assert api.post("/api/auth/refresh", headers=proof).status_code == 401
     for access in (token, fresh.json()["access_token"]):
         assert api.get("/api/me", headers=bearer(access)).status_code == 401
+
+
+def test_refresh_requires_tab_family_before_grant_consumption(api):
+    first, a = login(api, signup(api))
+    second, b = login(api, signup(api))
+    def mismatch(proof):
+        headers = dict(b)
+        headers.update(proof)
+        response = api.post("/api/auth/refresh", headers=headers)
+        assert response.status_code == 409 and "set-cookie" not in response.headers
+
+    mismatch({"X-AMC-Session": ""})
+    mismatch({"X-AMC-Session": a["X-AMC-Session"]})
+    ok = api.post("/api/auth/refresh", headers=b)
+    assert ok.is_success
+    mismatch({"X-AMC-Session": a["X-AMC-Session"]})  # Even a spent B grant cannot revoke B on this mismatch.
+    for token in (first, second, ok.json()["access_token"]):
+        assert api.get("/api/me", headers=bearer(token)).is_success
+
+
+@pytest.mark.skipif(os.getenv("AMC_TEST_PG") != "1", reason="requires disposable PostgreSQL")
+def test_wrong_tab_leaves_postgres_family_and_history_unchanged(api):
+    if str(api.base_url).rstrip("/") == "http://testserver":
+        pytest.skip("PostgreSQL storage assertions")
+    _, a = login(api, signup(api))
+    _, b = login(api, signup(api))
+    def snapshot():
+        with psycopg.connect(os.environ["AMC_MIGRATION_DSN"]) as owner:
+            return owner.execute(
+                "SELECT d.id,d.current_digest,d.seen,d.revoked,d.epoch, "
+                "(SELECT count(*) FROM used_refresh_grants u WHERE u.session_id=d.id) "
+                "FROM device_sessions d WHERE d.id IN (%s,%s) ORDER BY d.id",
+                (a["X-AMC-Session"], b["X-AMC-Session"]),
+            ).fetchall()
+    before = snapshot()
+    assert len(before) == 2
+    for path in ("refresh", "logout-cookie"):
+        response = api.post("/api/auth/" + path, headers=b | {"X-AMC-Session": a["X-AMC-Session"]})
+        assert response.status_code == 409 and "set-cookie" not in response.headers
+    assert snapshot() == before
+    assert api.post("/api/auth/refresh", headers=b).is_success
+    assert snapshot() != before
 
 
 def test_logout_of_expired_browser_access_with_live_cookie(api):

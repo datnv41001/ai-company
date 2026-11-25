@@ -5,7 +5,8 @@ Nhánh này xếp trên Business Profile C1 v22, xét duyệt riêng. Migration 
 ## Người dùng và API
 
 - Sau khi đăng nhập, mở **Phiên đăng nhập trên thiết bị** để xem các phiên của tài khoản, thời điểm refresh gần nhất và thu hồi thiết bị khác. Thiết bị ghi nhãn trình duyệt chung. Muốn thu hồi phiên khác sau 5 phút, người dùng xác thực lại mật khẩu tại chỗ. Nút **Đổi tài khoản** kết thúc phiên hiện tại trước khi mở lại trang đăng nhập.
-- `GET /api/me/sessions`, `DELETE /api/me/sessions/{sid}`, `POST /api/auth/reauthenticate` và `POST /api/auth/logout` xác thực bearer. `POST /api/auth/refresh` và `POST /api/auth/logout-cookie` kiểm Origin, cookie host-only `Secure`, `SameSite=Lax` và CSRF header. Refresh secret có `HttpOnly`. Xóa phiên qua cookie còn kiểm sid của tab để xử lý trường hợp người khác đã đăng nhập ở tab khác. Native client dùng HTTPS cookie jar với CSRF proof hoặc đăng nhập lại.
+- `GET /api/me/sessions`, `DELETE /api/me/sessions/{sid}`, `POST /api/auth/reauthenticate` và `POST /api/auth/logout` xác thực bearer. Với `POST /api/auth/refresh` và `POST /api/auth/logout-cookie`, giữ nguyên HTTPS cookie jar, gửi Origin, `X-AMC-Session` bằng SID của access token đang dùng và `X-AMC-CSRF` lấy từ cookie `__Host-amc-csrf-<sid>`. API khóa account, đối chiếu SID, thế hệ đăng nhập và family trước khi tiêu hoặc thu hồi grant. Thiếu hoặc sai SID trả HTTP 409. Refresh secret nằm trong cookie host-only `HttpOnly`, `Secure`, `SameSite=Lax`. Trình duyệt chạy bản draft cũ với một cookie refresh chung cần đăng nhập lại.
+- Chỉ login chọn account cho browser. Hai tab đăng nhập cùng một tài khoản giữ được hai family riêng. Đổi sang tài khoản khác tạo một thế hệ mới, kể cả khi sau đó quay lại tài khoản trước. UI chụp thế hệ ở đầu request và kiểm lại khi nhận response. Refresh hoặc logout trả về muộn chỉ ghi/xóa cookie của đúng SID. Login dọn grant cũ và giữ tối đa tám family của cùng tài khoản trong cookie jar tại lần đăng nhập đó. Thu hồi server vẫn theo danh sách thiết bị.
 - Mỗi lần refresh khóa family theo account, thay digest và ghi dấu grant đã tiêu trong cùng transaction. Reuse đúng secret đã tiêu thu hồi cả phiên. Secret ngẫu nhiên sai bị từ chối. Hai tab Chrome dùng Web Locks khi refresh. Nếu server đã commit mà trình duyệt mất response thì lần dùng lại grant cũ dẫn đến đăng nhập lại. UI không tự phát lại lệnh thay đổi dữ liệu.
 - API kiểm `sid`, hai epoch, thời hạn, chữ ký và khóa triển khai trên PostgreSQL primary. Lỗi đọc trạng thái phải đóng request. Tất cả thay đổi password hash trong database, kể cả từ cơ chế recovery sau này, tăng credential epoch trong trigger. Session và refresh trước đó mất hiệu lực. API recovery và email thật sẽ có phạm vi riêng.
 
@@ -32,4 +33,16 @@ python -m pytest -q tests/test_device_sessions.py tests/test_identity_quota.py
 
 Dùng biến môi trường và PostgreSQL bỏ được trong job `api-tests` để chạy cả hai provider và đường nâng v1–v22 → v23. Các ca concurrency chạy thực qua hai Uvicorn listener dùng cùng primary và role hạn chế. Đọc mã lab độc lập trước khi chạy OIDC. Keycloak trong Docker đã cho thấy thiết bị còn refresh được sau administrative password reset. Lệnh logout tường minh sau đó ngăn refresh. AMC hiện xử lý đổi credential local qua trigger; liên kết IdP cần event và đối soát có bằng chứng riêng. [Keycloak lab](../engineering/identity-lab/README.md) · [CI của phép thử](https://github.com/datnv41001/ai-company/actions/runs/45518450304/job/138883891993)
 
-Ràng buộc vận hành còn mở gồm định kỳ dọn session/grant hết hạn, chốt ngưỡng tải theo NAT, audit vận hành, HA, recovery đầy đủ và chính sách cutover cho client không có HTTPS. Commercial GA tiếp tục NO-GO.
+Để chạy acceptance Chromium độc lập trên database tổng hợp và API đang chạy, đặt `AMC_BROWSER_TEST_URL` bằng origin loopback và chạy `python tests/browser_device_context.py`. Lệnh kiểm hai tab cùng tài khoản, tab cũ sau khi đổi tài khoản, response refresh đến sau login của tab mới và logout trong lúc refresh chờ response. Job Compose gọi cùng các ca ở desktop và mobile. Bài PostgreSQL đối chiếu cả digest, epoch, thời điểm, trạng thái thu hồi và số grant đã tiêu.
+
+## Backlog Identity
+
+| Mã | Nghĩa vụ tiếp theo |
+| --- | --- |
+| A1-P2-01 | Lưu audit bền vững cho login, revoke, reuse và nguyên nhân kết thúc phiên. |
+| A1-P2-02 | Dọn các phiên và lịch sử refresh hết hạn theo chính sách lưu giữ. |
+| A1-P2-03 | Đo tải nhiều API worker, contention cùng account và nhiều người sau cùng NAT. |
+| A2-G01 | Khôi phục tài khoản đầu cuối, thu hồi phiên và đối soát outbox, kể cả đổi mật khẩu/logout phía IdP. |
+| A2-G02 | Diễn tập restore sau khi invitation, challenge hoặc credential khác đã bị thu hồi. Restore-fence v23 mới có bằng chứng cho phiên thiết bị. |
+
+Commercial GA tiếp tục NO-GO. Mở rộng HA và chốt chính sách client không có HTTPS thuộc phần vận hành sau pilot.

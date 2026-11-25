@@ -19,8 +19,9 @@ from .security import check_password, current_user, make_token, sign_actor
 from .session_state import DeviceSession, UsedRefresh, MAX_SECONDS, active, now, sha, unauthorized, user_lock, verify_access
 
 router = APIRouter(prefix="/api", tags=["Device sessions"])
-REFRESH = "__Host-amc-refresh"
-CSRF = "__Host-amc-csrf"
+CONTEXT = "__Host-amc-context"
+REFRESH = "__Host-amc-refresh-"
+CSRF = "__Host-amc-csrf-"
 
 
 class Reauthentication(BaseModel):
@@ -38,56 +39,87 @@ def allowed_origin(request):
     return actual.hostname in ("localhost", "127.0.0.1", "::1", "testserver") and origin == str(request.base_url).rstrip("/")
 
 
-def cookies(response, device, secret, csrf, max_age):
-    options = dict(secure=True, samesite="lax", path="/", max_age=max(0, max_age))
-    response.set_cookie(REFRESH, f"{device.user_id}.{device.id}.{secret}", httponly=True, **options)
-    response.set_cookie(CSRF, csrf, httponly=False, **options)
+def grant_cookie(response, sid, secret, context, max_age):
+    # A delayed refresh only replaces its own family's grant. It cannot select
+    # an account, clear another device, or overwrite a later login's credential.
+    response.set_cookie(REFRESH + sid, f"{context}.{sid}.{secret}", httponly=True,
+                        secure=True, samesite="lax", path="/", max_age=max(0, max_age))
     response.headers["Cache-Control"] = "no-store"
 
 
-def clear_cookies(response):
-    response.delete_cookie(REFRESH, secure=True, httponly=True, samesite="lax", path="/")
-    response.delete_cookie(CSRF, secure=True, samesite="lax", path="/")
+def clear_cookies(response, sid):
+    response.delete_cookie(REFRESH + sid, secure=True, httponly=True, samesite="lax", path="/")
+    response.delete_cookie(CSRF + sid, secure=True, samesite="lax", path="/")
     response.headers["Cache-Control"] = "no-store"
 
 
 def clear_matching_device(request, response, sid):
-    # A second tab may now have a different device cookie. Revoking the bearer
-    # only authorizes retiring the device from which that bearer was issued.
-    parts = request.cookies.get(REFRESH, "").split(".")
-    if len(parts) == 3 and parts[1] == sid:
-        clear_cookies(response)
+    if REFRESH + sid in request.cookies:
+        clear_cookies(response, sid)
     else:
         response.headers["Cache-Control"] = "no-store"
 
 
-def cookie_proof(request):
-    csrf = request.headers.get("x-amc-csrf", "")
-    if (
-        not allowed_origin(request)
-        or not csrf.isascii()
-        or not (20 <= len(csrf) <= 64)
-        or not hmac.compare_digest(sha(csrf), sha(request.cookies.get(CSRF, "")))
-    ):
-        raise HTTPException(403, "Invalid refresh origin or CSRF proof")
-    parts = request.cookies.get(REFRESH, "").split(".")
-    if len(parts) != 3 or len(parts[2]) != 43:
-        raise unauthorized()
-    uid, sid, token = parts
+def login_cookies(request, response, device, secret, csrf):
+    current = request.cookies.get(CONTEXT, "")
+    uid, _, generation = current.partition(".")
+    if uid != device.user_id or len(generation) != 32 or not all(c in "0123456789abcdef" for c in generation):
+        current = device.user_id + "." + secrets.token_hex(16)
+    # Keep the jar bounded after repeated logins. Browser cookie order starts
+    # with older cookies for this common path. Stale tabs can sign in again.
+    keep = []
+    for name, value in request.cookies.items():
+        if name.startswith(REFRESH):
+            try:
+                sid = str(UUID(name[len(REFRESH):]))
+            except ValueError:
+                continue
+            if value.startswith(current + "."):
+                keep.append(sid)
+            else:
+                clear_cookies(response, sid)
+    for sid in keep[:-7]:
+        clear_cookies(response, sid)
+    options = dict(secure=True, samesite="lax", path="/", max_age=MAX_SECONDS)
+    response.set_cookie(CONTEXT, current, **options)
+    response.set_cookie(CSRF + device.id, csrf, **options)
+    grant_cookie(response, device.id, secret, current, MAX_SECONDS)
+    return current
+
+
+def cookie_proof(request, db):
+    context = request.cookies.get(CONTEXT, "")
+    uid, _, generation = context.partition(".")
+    sid = request.headers.get("x-amc-session", "")
+    if not allowed_origin(request):
+        raise HTTPException(403, "Invalid refresh origin")
     try:
         UUID(uid)
         UUID(sid)
     except ValueError:
-        raise unauthorized() from None
-    return uid, sid, token, csrf
+        raise HTTPException(409, "Reload and sign in to the intended session") from None
+    set_context(db, actor=uid)
+    sign_actor(db, uid)
+    user_lock(db, uid)
+    parts = request.cookies.get(REFRESH + sid, "").split(".")
+    if len(parts) != 4 or parts[:3] != [uid, generation, sid]:
+        raise HTTPException(409, "A different session is active in this browser")
+    token = parts[3]
+    csrf = request.headers.get("x-amc-csrf", "")
+    if (
+        not csrf.isascii()
+        or not (20 <= len(csrf) <= 64)
+        or not hmac.compare_digest(sha(csrf), sha(request.cookies.get(CSRF + sid, "")))
+    ):
+        raise HTTPException(403, "Invalid refresh origin or CSRF proof")
+    if len(token) != 43:
+        raise unauthorized()
+    return uid, sid, token, csrf, context
 
 
 @router.post("/auth/refresh")
 def refresh(request: Request, response: Response, db: Session = Depends(get_db)):
-    uid, sid, token, csrf = cookie_proof(request)
-    set_context(db, actor=uid)
-    sign_actor(db, uid)
-    user_lock(db, uid)
+    uid, sid, token, csrf, context = cookie_proof(request, db)
     device = db.get(DeviceSession, sid)
     if not device or device.user_id != uid or not hmac.compare_digest(device.csrf_digest, sha(csrf)):
         raise unauthorized()
@@ -104,7 +136,7 @@ def refresh(request: Request, response: Response, db: Session = Depends(get_db))
     device.current_digest = sha(successor)
     device.seen = now(db)
     access = make_token(device)
-    cookies(response, device, successor, csrf, device.created + MAX_SECONDS - device.seen)
+    grant_cookie(response, sid, successor, context, device.created + MAX_SECONDS - device.seen)
     db.commit()
     return {"access_token": access, "token_type": "bearer"}
 
@@ -159,12 +191,7 @@ def logout(request: Request, response: Response, user: User = Depends(current_us
 
 @router.post("/auth/logout-cookie", status_code=204)
 def logout_cookie(request: Request, response: Response, db: Session = Depends(get_db)):
-    uid, sid, token, csrf = cookie_proof(request)
-    if request.headers.get("x-amc-session") != sid:
-        raise HTTPException(409, "A different session is active in this browser")
-    set_context(db, actor=uid)
-    sign_actor(db, uid)
-    user_lock(db, uid)
+    uid, sid, token, csrf, _ = cookie_proof(request, db)
     device = db.get(DeviceSession, sid)
     if device and not device.revoked:
         if device.user_id != uid or not hmac.compare_digest(device.csrf_digest, sha(csrf)) or not hmac.compare_digest(device.current_digest, sha(token)):
@@ -172,7 +199,7 @@ def logout_cookie(request: Request, response: Response, db: Session = Depends(ge
         device.revoked = True
         device.epoch += 1
         db.commit()
-    clear_cookies(response)
+    clear_cookies(response, sid)
 
 
 @router.delete("/me/sessions/{sid}", status_code=204)

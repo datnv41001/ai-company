@@ -11,25 +11,42 @@
   const esc = v => String(v ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
   const msg = (text, error=false) => { $('notice').textContent = text; $('notice').className = error ? 'error' : 'ok'; };
   const claims = token => JSON.parse(atob(token.split('.')[1].replace(/-/g,'+').replace(/_/g,'/')));
+  const cookie = name => document.cookie.split('; ').find(v => v.startsWith(name+'='))?.slice(name.length+1);
+  let accountGeneration = 0, browserContext = null, switching = false;
+  const changed = () => new Error('Phiên hoặc tài khoản đã thay đổi. Vui lòng đăng nhập lại.');
+  function checkAccount(generation) {
+    if (generation !== accountGeneration || switching || (browserContext && browserContext !== cookie('__Host-amc-context'))) throw changed();
+  }
+  function familyLock(sid, task) {
+    if (!navigator.locks) throw Error('Trình duyệt cần hỗ trợ khóa phiên. Vui lòng đăng nhập lại trên HTTPS.');
+    return navigator.locks.request('amc-device-'+sid, task);
+  }
   let refreshing = null;
-  async function renew() {
-    if (refreshing) return refreshing;
-    if (!navigator.locks) throw Error('Vui lòng đăng nhập lại để tiếp tục.');
-    refreshing = navigator.locks.request('amc-refresh', async () => {
-      const csrf = document.cookie.split('; ').find(v => v.startsWith('__Host-amc-csrf='))?.split('=')[1];
-      if (!csrf) throw Error('Phiên đã hết hiệu lực. Vui lòng đăng nhập lại.');
-      const response = await fetch('/api/auth/refresh', {method:'POST', headers:{'X-AMC-CSRF':csrf}});
+  async function renew(generation) {
+    if (refreshing?.generation === generation) return refreshing.promise;
+    const sid = claims(state.token).sid;
+    const promise = familyLock(sid, async () => {
+      checkAccount(generation);
+      const csrf = cookie('__Host-amc-csrf-'+sid);
+      if (!csrf) throw changed();
+      const response = await fetch('/api/auth/refresh', {method:'POST', headers:{'X-AMC-CSRF':csrf,'X-AMC-Session':sid}});
       if (!response.ok) throw Error('Vui lòng đăng nhập lại để tiếp tục.');
       const token = (await response.json()).access_token;
-      if (claims(token).sid !== claims(state.token).sid) throw Error('Tài khoản đã đổi ở tab khác. Vui lòng đăng nhập lại.');
+      checkAccount(generation);
+      if (claims(token).sid !== sid) throw changed();
       state.token = token;
-    }).finally(() => { refreshing = null; });
-    return refreshing;
+    }).finally(() => { if (refreshing?.generation === generation) refreshing = null; });
+    refreshing = {generation, promise};
+    return promise;
   }
   const api = async (path, method='GET', body=null, withCursor=false) => {
-    if (state.token && !path.startsWith('/api/auth/login') && claims(state.token).exp <= Date.now()/1000 + 15) await renew();
+    const generation = accountGeneration;
+    checkAccount(generation);
+    if (state.token && claims(state.token).exp <= Date.now()/1000 + 15) await renew(generation);
+    checkAccount(generation);
     const response = await fetch(path, {method, headers: {'Content-Type':'application/json', ...(state.token ? {'Authorization':`Bearer ${state.token}`} : {})}, ...(body ? {body: JSON.stringify(body)} : {})});
     const result = await response.json().catch(() => ({}));
+    checkAccount(generation);
     if (response.status === 429) {
       const delay = Number(response.headers.get('Retry-After'));
       throw new Error(Number.isInteger(delay) && delay > 0 ? `Vui lòng thử lại sau ${delay} giây.` : 'Vui lòng thử lại sau.');
@@ -75,6 +92,7 @@
   const fromForm = form => Object.fromEntries(new FormData(form).entries());
   const process = (form, handler) => form.addEventListener('submit', async event => { event.preventDefault(); try { await handler(fromForm(form)); } catch (e) { msg(e.message, true); } });
   const enter = async (token, membership, email='') => {
+    checkAccount(accountGeneration);
     const tenantId = membership.tenant_id;
     $('review-panel').before($('recipient-panel'));
     state.token = token; state.tenantId = tenantId; state.mode = membership.mode; state.email = email;
@@ -94,6 +112,7 @@
     await refresh();
   };
   const session = async (result, email) => {
+    checkAccount(accountGeneration);
     state.token = result.access_token;
     state.email = email;
     $('verify-form').reset();
@@ -157,22 +176,31 @@
     catch (error) { msg(error.message, true); }
   };
   function leaveTab() {
+    ++accountGeneration;
+    switching = true;
     if (invitation !== null) history.replaceState(null, '', location.pathname + '#invite=' + encodeURIComponent(invitation));
     location.reload();
   }
   $('leave-tab').onclick = leaveTab;
   $('switch-account').onclick = async () => {
+    if (switching) return;
+    ++accountGeneration;
+    switching = true;
     try {
       if (state.token) {
-        const csrf = document.cookie.split('; ').find(v => v.startsWith('__Host-amc-csrf='))?.split('=')[1];
-        let response = await fetch('/api/auth/logout',{method:'POST',headers:{Authorization:'Bearer '+state.token}});
-        if (response.status === 401 && csrf) {
-          response = await fetch('/api/auth/logout-cookie',{method:'POST',headers:{'X-AMC-CSRF':csrf,'X-AMC-Session':claims(state.token).sid}});
-        }
-        if (!response.ok) throw Error('Máy chủ chưa xác nhận thu hồi phiên này. Bạn có thể thử lại hoặc về đăng nhập trên tab này.');
+        const token = state.token, sid = claims(token).sid;
+        const logout = async () => {
+          let response = await fetch('/api/auth/logout',{method:'POST',headers:{Authorization:'Bearer '+token}});
+          const csrf = cookie('__Host-amc-csrf-'+sid);
+          if (response.status === 401 && csrf) {
+            response = await fetch('/api/auth/logout-cookie',{method:'POST',headers:{'X-AMC-CSRF':csrf,'X-AMC-Session':sid}});
+          }
+          if (!response.ok) throw Error('Máy chủ chưa xác nhận thu hồi phiên này. Bạn có thể thử lại hoặc về đăng nhập trên tab này.');
+        };
+        await (navigator.locks ? familyLock(sid, logout) : logout());
       }
       leaveTab();
-    } catch(error) { $('leave-tab').classList.remove('hidden'); msg(error.message,true); }
+    } catch(error) { switching = false; $('leave-tab').classList.remove('hidden'); msg(error.message,true); }
   };
   async function deviceList() {
     const list = $('device-list');
@@ -211,7 +239,19 @@
       $('workspace-form').reset(); $('new-workspace').open = false; workspaceRequest = null;
     } finally { button.disabled = false; }
   });
-  process($('login-form'), async data => session(await api('/api/auth/login', 'POST', data), data.email));
+  process($('login-form'), async data => {
+    const generation = ++accountGeneration;
+    const login = async () => {
+      checkAccount(generation);
+      const result = await api('/api/auth/login', 'POST', data);
+      if (result.browser_context !== cookie('__Host-amc-context')) throw changed();
+      browserContext = result.browser_context;
+      return result;
+    };
+    const result = await (navigator.locks ? navigator.locks.request('amc-account-login',login) : login());
+    checkAccount(generation);
+    await session(result,data.email);
+  });
   process($('verify-form'), async data => {
     await api('/api/auth/verify-email', 'POST', data);
     await session({...await api('/api/me'), access_token:state.token}, state.email);

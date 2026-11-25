@@ -4,6 +4,8 @@
 
 Draft A1 dành migration 023 sau C1 v22. Người dùng có thể xem thiết bị, xác thực lại, refresh và thu hồi phiên. Khi tiếp quản, kiểm tra hai thứ tự commit trên PostgreSQL, diễn tập restore, chuyển riêng ba loại khóa và xác nhận vẫn ký được append C1. Thử nghiệm Keycloak chạy trong lab độc lập. [API, lệnh chạy, rollback và giới hạn](docs/DEVICE-SESSIONS-A1.md)
 
+A1-P1-01 sửa luồng refresh của hai tab. Browser gửi SID đang hiển thị, PostgreSQL đối chiếu trước rotation. Cookie grant theo SID giữ response đến muộn của A tách khỏi phiên B. Khi nâng từ draft cũ hãy đăng nhập lại. Kiểm bằng `tests/test_device_sessions.py` và `tests/browser_device_context.py` trên dữ liệu tổng hợp. [Hợp đồng native, cách chạy và backlog Identity](docs/DEVICE-SESSIONS-A1.md)
+
 ## Business Profile C1 · backend v22 đang review nội bộ
 
 Sau phản biện trên `b9edc99`, C1 so khớp bí danh Hà Nội, TP.HCM và Đà Nẵng ở selector tồn kho, điều khoản và giá. Có thể có đơn vừa bán lẻ vừa trả trước. Hai chính sách áp dụng đồng thời cho đơn đó cần được đối chiếu. Hãy chạy lại publisher kể cả khi hàm SQL kiểm tồn kho đã tồn tại. API kiểm dấu SHA-256 của phiên bản quy tắc. [Danh mục và các ca hồi quy](tests/test_knowledge_scope_aliases.py)

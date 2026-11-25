@@ -31,8 +31,8 @@ from .database import APP_ENV, engine, get_db, prepare_database
 from .models import IdentityChallenge, User, Tenant, Membership, Client, Brand, Campaign, WorkTask, Deliverable, ActionRequest, AuditEvent, new_id
 from .schemas import RegisterIn, LoginIn, ClientIn, BrandIn, CampaignIn, AddMemberIn, DeliverableIn, DeliverableReviewIn, ReviewIn, ActionIn, ClientScopeIn
 from .security import DUMMY_HASH, sign_actor, hash_password, check_password, make_token, current_user, require_tenant
-from .device_api import cookies, reauthenticate, router as devices_router
-from .session_state import MAX_SECONDS, issue as issue_device
+from .device_api import login_cookies, reauthenticate, router as devices_router
+from .session_state import issue as issue_device
 from .services.marketing import WORKFLOW_STEPS
 
 ROOT = Path(__file__).resolve().parent
@@ -167,7 +167,7 @@ def login(payload: LoginIn, request: Request, response: Response, db: Session = 
         "email_verified": user.verified_at is not None,
         "tenants": workspaces(db, user),
     }
-    cookies(response,device,secret,csrf,MAX_SECONDS)
+    result["browser_context"] = login_cookies(request,response,device,secret,csrf)
     db.commit()
     return result
 

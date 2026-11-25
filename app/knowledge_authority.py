@@ -149,8 +149,14 @@ def eligible(store, row, at, seen, *, include_root=True):
         eligible(store, target, at, seen)
     if include_root and row.kind == "claim":
         decision = store.events(row)
-        if decision and decision.qualification_id:
-            eligible(store, store.get(m.KnowledgeRevision, decision.qualification_id), at, seen)
+        category = approval_category(row.data["assertion"])
+        if category:
+            if not decision or not decision.qualification_id or decision.actor == row.author:
+                conflict("This exact claim needs a new independently qualified approval")
+            mandate = store.get(m.KnowledgeRevision, decision.qualification_id)
+            if mandate.kind != "qualification" or mandate.data["category"] != category or mandate.data["approver_id"] != decision.actor:
+                conflict("Prior approval does not cover the complete public claim")
+            eligible(store, mandate, at, seen)
 
 
 def check_assertion(store, assertion, at):

@@ -8,7 +8,7 @@ from uuid import uuid4
 import httpx
 from playwright.sync_api import expect, sync_playwright
 
-from browser_knowledge import BASE, drop_after_commit, login, select_scope, user
+from browser_knowledge import BASE, authenticate, drop_after_commit, login, select_scope, user
 from identity_fixtures import invite_member
 from knowledge_fixtures import accepted, bundle, call, revision
 
@@ -77,6 +77,10 @@ def fixture(api):
 
 def open_desk(page, actor, tenant, client, brand):
     login(page, actor, tenant)
+    return select_desk(page, client, brand)
+
+
+def select_desk(page, client, brand):
     select_scope(page, client, brand)
     page.get_by_role("button", name="Nguồn và nhận định", exact=True).click()
     desk = page.locator("#knowledge-claim-desk")
@@ -159,7 +163,11 @@ def exercise(browser, api, width, height):
                     view.get_by_role("button", name="Lưu bản nháp", exact=True).click()
                 assert len(commits) == 1
                 manager.unroute("**/claim-desk/drafts")
-                view = open_desk(manager, f["owner"], f["tenant"], f["client"], f["brand"])
+                # A hash-route navigation keeps the current document and its in-memory session.
+                # Reload the document to exercise recovery of the committed draft after reauthentication.
+                manager.reload()
+                authenticate(manager, f["owner"])
+                view = select_desk(manager, f["client"], f["brand"])
                 expect(manager.locator("#knowledge-status")).to_contain_text("Đã tìm thấy kết quả lưu")
                 expect(view.get_by_label("Chọn nhận định")).to_have_value(commits[0]["id"])
             else:

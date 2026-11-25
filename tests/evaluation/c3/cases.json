@@ -1,5 +1,5 @@
 {
-  "version": 1,
+  "version": 2,
   "synthetic": true,
   "cases": [
     {
@@ -24,8 +24,23 @@
         },
         {
           "id": "commercial-sheet",
-          "wording": "Giá 245.000 VND/chiếc khi nhận tại cửa hàng.",
-          "qualifiers": "Nhận tại cửa hàng Quận 3, chưa gồm phí giao."
+          "wording": "Giá 245.000 VND/chiếc khi nhận tại cửa hàng. Đã gồm thuế.",
+          "qualifiers": "Nhận tại cửa hàng Quận 3, chưa gồm phí giao.",
+          "category": "price",
+          "price": {
+            "amount_minor": 245000,
+            "currency": "VND",
+            "unit": "piece",
+            "basis_quantity": "1",
+            "moq": "1",
+            "tier_min": "1",
+            "tier_max": null,
+            "tax": "included",
+            "conditions": [
+              "Nhận tại cửa hàng Quận 3, chưa gồm phí giao."
+            ]
+          },
+          "quantity": "1"
         }
       ],
       "hypotheses": [
@@ -34,7 +49,10 @@
       "gaps": [
         "Chưa đo độ chống nước theo tiêu chuẩn độc lập."
       ],
-      "unsupported_example": "chống nước 100%"
+      "unsupported_example": "chống nước 100%",
+      "kpi_unit": "đơn hàng",
+      "kpi_window": "28 ngày",
+      "kpi_method": "đơn hàng MN-L đã thanh toán trong 28 ngày"
     },
     {
       "id": "materials",
@@ -58,8 +76,23 @@
         },
         {
           "id": "commercial-sheet",
-          "wording": "Giá tham khảo 210.000 VND/m² cho đơn từ 50 m².",
-          "qualifiers": "Tại Hà Nội, chưa gồm vận chuyển và thi công."
+          "wording": "Giá tham khảo 210.000 VND/m² cho đơn từ 50 m². Đã gồm thuế.",
+          "qualifiers": "Tại Hà Nội, chưa gồm vận chuyển và thi công.",
+          "category": "price",
+          "price": {
+            "amount_minor": 210000,
+            "currency": "VND",
+            "unit": "m²",
+            "basis_quantity": "1",
+            "moq": "50",
+            "tier_min": "50",
+            "tier_max": null,
+            "tax": "included",
+            "conditions": [
+              "Tại Hà Nội, chưa gồm vận chuyển và thi công."
+            ]
+          },
+          "quantity": "50"
         }
       ],
       "hypotheses": [
@@ -68,7 +101,10 @@
       "gaps": [
         "Chưa có chứng nhận chống trượt hoặc số liệu thị phần."
       ],
-      "unsupported_example": "chống trượt tuyệt đối"
+      "unsupported_example": "chống trượt tuyệt đối",
+      "kpi_unit": "yêu cầu báo giá",
+      "kpi_window": "30 ngày",
+      "kpi_method": "yêu cầu báo giá hợp lệ có diện tích và quận trong 30 ngày"
     },
     {
       "id": "service",
@@ -92,8 +128,23 @@
         },
         {
           "id": "commercial-sheet",
-          "wording": "Phí vệ sinh 180.000 VND/máy.",
-          "qualifiers": "Chưa gồm linh kiện hoặc nạp gas."
+          "wording": "Phí vệ sinh 180.000 VND/máy. Đã gồm thuế.",
+          "qualifiers": "Chưa gồm linh kiện hoặc nạp gas.",
+          "category": "price",
+          "price": {
+            "amount_minor": 180000,
+            "currency": "VND",
+            "unit": "service",
+            "basis_quantity": "1",
+            "moq": "1",
+            "tier_min": "1",
+            "tier_max": null,
+            "tax": "included",
+            "conditions": [
+              "Chưa gồm linh kiện hoặc nạp gas."
+            ]
+          },
+          "quantity": "1"
         }
       ],
       "hypotheses": [
@@ -102,7 +153,10 @@
       "gaps": [
         "Chưa đo hiệu quả tiết kiệm điện sau vệ sinh."
       ],
-      "unsupported_example": "tiết kiệm 30% điện"
+      "unsupported_example": "tiết kiệm 30% điện",
+      "kpi_unit": "lịch đã xác nhận",
+      "kpi_window": "14 ngày",
+      "kpi_method": "lịch khảo sát có xác nhận trong 14 ngày"
     },
     {
       "id": "agency",
@@ -136,7 +190,10 @@
       "gaps": [
         "Chưa có phép thử chống xuyên mực."
       ],
-      "unsupported_example": "không xuyên mực"
+      "unsupported_example": "không xuyên mực",
+      "kpi_unit": "yêu cầu mẫu",
+      "kpi_window": "30 ngày",
+      "kpi_method": "yêu cầu mẫu từ nhà bán lẻ có mã cửa hàng trong 30 ngày"
     },
     {
       "id": "inhouse",
@@ -160,8 +217,23 @@
         },
         {
           "id": "commercial-sheet",
-          "wording": "Học phí 120.000 VND/người.",
-          "qualifiers": "Ưu đãi sinh viên cần xuất trình thẻ; chưa gồm phần mềm."
+          "wording": "Học phí 120.000 VND/người. Đã gồm thuế.",
+          "qualifiers": "Ưu đãi sinh viên cần xuất trình thẻ; chưa gồm phần mềm.",
+          "category": "price",
+          "price": {
+            "amount_minor": 120000,
+            "currency": "VND",
+            "unit": "service",
+            "basis_quantity": "1",
+            "moq": "1",
+            "tier_min": "1",
+            "tier_max": null,
+            "tax": "included",
+            "conditions": [
+              "Ưu đãi sinh viên cần xuất trình thẻ; chưa gồm phần mềm."
+            ]
+          },
+          "quantity": "1"
         }
       ],
       "hypotheses": [
@@ -170,7 +242,10 @@
       "gaps": [
         "Chưa theo dõi việc làm hoặc thu nhập sau khóa."
       ],
-      "unsupported_example": "cam kết việc làm"
+      "unsupported_example": "cam kết việc làm",
+      "kpi_unit": "đăng ký đã xác nhận",
+      "kpi_window": "21 ngày",
+      "kpi_method": "đăng ký email xác nhận hai bước trong 21 ngày"
     }
   ]
 }

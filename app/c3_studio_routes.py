@@ -13,7 +13,8 @@ from .delivery import save_working_revision, working_copy
 from .knowledge_contracts import Input
 from .knowledge_models import KnowledgeCommand
 from .knowledge_store import Store, canonical, conflict, digest, missing
-from .models import AuditEvent, Brand, Campaign, Membership, User
+from .models import AuditEvent, Brand, Campaign, User
+from .c3_reviewer import active_approver
 from .revision_qa import content_digest
 from .security import current_user, require_tenant
 from .workforce_models import WorkforceBrief
@@ -63,7 +64,7 @@ def asset_digest(doc, run, group, fields):
     return digest(canonical([contract, doc.id, doc.qa_revision, run.knowledge["c3_manifest"]["digest"], group, fields]))
 
 
-def signoffs(db, doc, run):
+def signoffs(db, doc, run, *, lock_reviewers=False):
     groups = doc.content["studio"]["groups"]
     snapshot = run.knowledge["c3_manifest"]["id"]
     commands = db.scalars(
@@ -76,15 +77,14 @@ def signoffs(db, doc, run):
     for row in commands:
         group = row.result["group"]
         if group in groups and row.result["asset_digest"] == asset_digest(doc, run, group, groups[group]):
-            role = db.scalar(select(Membership.role).filter_by(tenant_id=run.tenant_id, user_id=row.actor))
-            if role in ("admin", "owner") and row.actor not in (doc.created_by, doc.last_editor_id):
+            if row.actor not in (doc.created_by, doc.last_editor_id) and active_approver(db, run.tenant_id, row.actor, lock=lock_reviewers):
                 current.setdefault(group, {"receipt": row.id, "actor": row.actor, "note": row.result["note"]})
     return current
 
 
 def require_all_approved(db, doc, run):
     if bundle := doc.content.get("studio"):
-        signed = signoffs(db, doc, run)
+        signed = signoffs(db, doc, run, lock_reviewers=True)
         if set(signed) != set(bundle["groups"]):
             conflict("Independent Marketing Studio signoff is required for every asset of this revision")
         return {group: r["receipt"] for group, r in signed.items()}
@@ -219,7 +219,9 @@ def review_asset(tenant_id: str, did: str, body: StudioApproval, user: User = De
     if any(row["group"] == body.group for row in issues):
         conflict("Correct missing, duplicated or mismatched fields before signing")
     store, snap, _ = c3_boundaries.checked(db, user, brief, run.knowledge["c3_manifest"], workflow, "qa")
-    report = c3_evidence_review.current_report(store, snap, doc, run, content_digest(doc.title, doc.content.get("client_preview", "")))
+    if not store.approver:
+        missing()
+    report = c3_evidence_review.current_report(store, snap, doc, run, content_digest(doc.title, doc.content.get("client_preview", "")), lock_reviewers=True)
     rows = [s for s in report["statements"] if s["field"].startswith(f"studio.{body.group}.")]
     if {s["field"].split(".")[-1] for s in rows} != set(groups[body.group]) or any(s["outcome"] not in ("verified", "editorial", "reviewed") for s in rows):
         conflict("Review the evidence of every field before signing this asset")

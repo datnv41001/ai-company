@@ -3,6 +3,7 @@ function createClaimDesk(root, api, notify) {
   const kinds = {description:'Mô tả', price:'Giá', availability:'Tình trạng hàng', payment:'Thanh toán', warranty:'Bảo hành', performance:'Hiệu năng', regulated:'Nội dung có quy định chuyên ngành', comparison:'So sánh', unclassified:'Nội dung cần chuyên môn'};
   const options = {retail:'Bán lẻ', wholesale:'Bán sỉ', prepaid:'Trả trước', credit:'Trả sau', standard:'Tiêu chuẩn', extended:'Mở rộng'};
   const units = {piece:'Cái',box:'Hộp','m²':'m²',tonne:'Tấn',kg:'kg',service:'Dịch vụ',subscription_month:'Tháng',subscription_year:'Năm'};
+  const axes={buyer:['Nhóm người mua',['retail','wholesale']],payment_type:['Cách thanh toán',['prepaid','credit']],service_level:['Mức dịch vụ',['standard','extended']]};
   let generation = 0, requestNo = 0, scope, ctl, board, data, src, entry, mandates, selectedMandate, pending, busy;
   let claimOffset = 0, sourceOffset = 0, captureChoices, qualificationOffset=0;
   const path = () => `/api/tenants/${scope.tenant}/clients/${scope.client}/brands/${scope.brand}/knowledge`;
@@ -28,6 +29,25 @@ function createClaimDesk(root, api, notify) {
     const label=field('label',title),node=field('select'); node.setAttribute('aria-label',title); label.append(node); parent.append(label);
     node.add(new Option('Chọn…','')); choices.forEach(c=>node.add(new Option(c.label,c.id)));
     node.value=current||''; return node;
+  }
+  function orderFields(parent, original) {
+    const base=original||{}, inputs={};
+    for(const [key,[title,choices]] of Object.entries(axes)){
+      const selected=base[key] || (choices.includes(base.option)?base.option:'');
+      inputs[key]=select(parent,title,choices.map(id=>({id,label:options[id]})),selected);
+    }
+    inputs.unit=select(parent,'Đơn vị áp dụng',Object.entries(units).map(([id,label])=>({id,label})),base.unit);
+    inputs.minimum=input(parent,'Số lượng tối thiểu',base.minimum);inputs.maximum=input(parent,'Số lượng tối đa',base.maximum);
+    const values=()=>Object.fromEntries(Object.entries(inputs).filter(([,n])=>n.value).map(([k,n])=>[k,n.value]));
+    const initial=JSON.stringify(values());
+    // Existing v22 source entries may pin the legacy option field. Preserve
+    // exact evidence bytes until the user actually changes an order dimension.
+    return ()=>JSON.stringify(values())===initial?original:values();
+  }
+  function applyOrder(assertion,read) {
+    if(!read)return;
+    const values=read();
+    if(values && Object.keys(values).length)assertion.applicability=values;else delete assertion.applicability;
   }
   const decode = err => ({401:'Phiên đăng nhập đã hết hạn.',403:'Bạn chưa có quyền thao tác.',404:'Thông tin này không còn khả dụng.',409:'Bản ghi hoặc điều kiện phê duyệt đã thay đổi. Đối chiếu lại bản mới nhất.',422:'Kiểm tra dữ liệu nhập và phạm vi đã chọn.'}[err.status] || err.message);
   async function action(fn) {const g=generation;try {await fn();}catch(e){if(g===generation && e.name!=='AbortError')notify(decode(e),true);}}
@@ -102,7 +122,8 @@ function createClaimDesk(root, api, notify) {
     const place=statement.placement,a=statement.applicability,price=statement.price;
     const scopeNames=names || place;
     const pieces=[scopeNames.product,scopeNames.variant,scopeNames.market,place.region,place.locale,place.channel].filter(Boolean);
-    if(a)pieces.push([options[a.option] || a.option,a.minimum&&'từ '+a.minimum,a.maximum&&'đến '+a.maximum,units[a.unit] || a.unit].filter(Boolean).join(' '));
+    if(a)pieces.push([...new Set([a.option,a.buyer,a.payment_type,a.service_level].filter(Boolean).map(id=>options[id]||id)),
+      a.minimum&&'từ '+a.minimum,a.maximum&&'đến '+a.maximum,units[a.unit] || a.unit].filter(Boolean).join(' · '));
     if(price) {
       const major=price.amount_minor/(['JPY','VND'].includes(price.currency)?1:100);
       const display=new Intl.NumberFormat('vi-VN',{style:'currency',currency:price.currency}).format(major);
@@ -180,20 +201,13 @@ function createClaimDesk(root, api, notify) {
         const a=entry.assertion, wording=input(right,'Câu dùng cho Marketing',a.wording,'textarea');
         const qualifiers=input(right,'Điều kiện kèm theo, mỗi dòng một điều kiện',a.qualifiers.join('\n'),'textarea');
         const region=input(right,'Khu vực',a.placement.region),channel=input(right,'Kênh',a.placement.channel), locale=input(right,'Ngôn ngữ',a.placement.locale);
-        let option,unit,minimum,maximum;
-        if(['availability','payment','warranty'].includes(a.category)){
-          const ap=a.applicability||{};
-          option=select(right,'Điều kiện đơn hàng',Object.entries(options).map(([id,label])=>({id,label})),ap.option);
-          unit=select(right,'Đơn vị áp dụng',Object.entries(units).map(([id,label])=>({id,label})),ap.unit);
-          minimum=input(right,'Số lượng tối thiểu',ap.minimum);maximum=input(right,'Số lượng tối đa',ap.maximum);
-        }
+        const order=['availability','payment','warranty'].includes(a.category)?orderFields(right,a.applicability):null;
         const from=input(right,'Bắt đầu áp dụng (giờ địa phương)',localDate(data?.valid_from),'datetime-local');
         const until=input(right,'Kết thúc áp dụng (giờ địa phương)',localDate(data?.valid_until),'datetime-local');
         const save=button(data?'Lưu phiên bản mới':'Lưu bản nháp',()=>{
           const assertion=structuredClone(a);assertion.wording=wording.value.trim();assertion.qualifiers=qualifiers.value.split('\n').map(s=>s.trim()).filter(Boolean);
           Object.assign(assertion.placement,{region:region.value.trim(),channel:channel.value.trim(),locale:locale.value.trim()});
-          if(option){const ap=Object.fromEntries(Object.entries({option:option.value,unit:unit.value,minimum:minimum.value,maximum:maximum.value}).filter(([,v])=>v));
-            if(Object.keys(ap).length)assertion.applicability=ap;else delete assertion.applicability;}
+          applyOrder(assertion,order);
           return send('/claim-desk/drafts',{subject:data?.claim.subject || null,expected_revision:data?.claim.revision || 0,source_revision:src.id,locator:entry.locator,assertion,
             valid_from:from.value?new Date(from.value).toISOString():null,valid_until:until.value?new Date(until.value).toISOString():null},async r=>{await loadBoard();await open(r.id);notify('Đã lưu bản nháp để duyệt.');});
         });
@@ -226,20 +240,13 @@ function createClaimDesk(root, api, notify) {
     const language=input(form,'Ngôn ngữ của chứng cứ',original?.placement.locale||'vi-VN'),region=input(form,'Địa bàn của chứng cứ',original?.placement.region),
       channel=input(form,'Kênh áp dụng',original?.placement.channel||'web'),wording=input(form,'Nội dung được chứng minh',original?.wording,'textarea'),
       qualifiers=input(form,'Điều kiện trong chứng cứ, mỗi dòng một điều kiện',(original?.qualifiers||[]).join('\n'),'textarea');
-    let option,unit,min,max;
-    if(original && ['availability','payment','warranty'].includes(original.category)){
-      const ap=original.applicability||{};
-      option=select(form,'Hình thức áp dụng',Object.entries(options).map(([id,label])=>({id,label})),ap.option);
-      unit=select(form,'Đơn vị trong nguồn',Object.entries(units).map(([id,label])=>({id,label})),ap.unit);
-      min=input(form,'Từ số lượng',ap.minimum);max=input(form,'Đến số lượng',ap.maximum);
-    }
+    const order=original && ['availability','payment','warranty'].includes(original.category)?orderFields(form,original.applicability):null;
     form.append(button('Lưu nguồn chờ duyệt',async()=>{
       if(!publisher.value.trim()||!documentName.value.trim()||!locator.value.trim()||!expiry.value||!excerpt.value.trim()||!product.value||!market.value||!wording.value.trim()||!region.value.trim())throw Error('Cần tài liệu, trích dẫn, thời hạn, nội dung và phạm vi áp dụng.');
       const assertion=original?structuredClone(original):{};
       Object.assign(assertion,{category:category.value,wording:wording.value.trim(),qualifiers:qualifiers.value.split('\n').map(v=>v.trim()).filter(Boolean),
         placement:{product:product.value,variant:variant.value||null,market:market.value,locale:language.value.trim(),region:region.value.trim(),channel:channel.value.trim()}});
-      if(option){const ap=Object.fromEntries(Object.entries({option:option.value,unit:unit.value,minimum:min.value,maximum:max.value}).filter(([,v])=>v));
-        if(Object.keys(ap).length)assertion.applicability=ap;else delete assertion.applicability;}
+      applyOrder(assertion,order);
       const description={publisher:publisher.value.trim(),document:documentName.value.trim(),valid_until:new Date(expiry.value).toISOString(),entries:[{locator:locator.value.trim(),excerpt:excerpt.value.trim(),assertion}]};
       const g=generation;
       const subject='source-'+(await fingerprint(description)).slice(0,36);

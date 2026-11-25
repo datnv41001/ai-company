@@ -157,6 +157,8 @@ Hạng mục onboarding có nhánh v21 chờ review cho admission theo tài kho�
 
 ## Business Profile C0 · phạm vi thiết kế
 
+MKT-03, MKT-20 và AIO-06 có bổ sung nền backend C1 tại schema v22. Các ca đo gồm 29 kiểm thử thực thi trên PostgreSQL/SQLite, CAS, quyền theo scope, giá thương mại, thu hồi nguồn trước/sau QA/share và tái lập snapshot. WF-03 và WF-13 vẫn dùng các adapter đã ghim. C2–C4 tiếp nhận giao diện, adapter phiên bản mới và đánh giá nghiệp vụ. [Ma trận 16 tiêu chí, mã kiểm thử và cách chạy](business-profile/C1-RUNBOOK.md)
+
 MKT-03 Brand Management, MKT-20 Localization & Regional và AIO-06 Knowledge & Memory có [hợp đồng C0 và fixture](business-profile/README.md) cho dữ kiện theo sản phẩm/variant/market, source revision và hiệu lực khi share. WF-03/WF-13 tiếp tục dùng các release đã duyệt đến khi C1/C3 chứng minh adapter mới. Nhãn tiến độ là design + synthetic contract checks; tính năng và business acceptance còn chờ.
 
 ## SAA-02 · session và recovery

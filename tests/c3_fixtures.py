@@ -31,15 +31,17 @@ def prepared(api, admin, base, client, brand, campaign, bid, workflow=c3_marketi
 
     parent = make("brand-goal","objective",{"level":"brand","name":"Request samples","owner":"Planner","company_parent":shared["id"]})
     goal = make("campaign-goal","objective",{"level":"campaign","name":info["objective"],"owner":"Planner","parent":parent["id"],"campaign_id":campaign})
-    kpi_source = make("measurement-protocol","source",{"publisher":"Synthetic agency measurement team",
-        "document":"Definition of the event and observation period", "valid_until":"2099-01-01T00:00:00Z","entries":[]})
-    kpi = make("north-star","kpi",{"name":info["kpi"],"objective":goal["id"],"owner":"Analyst","source":kpi_source["id"],
-        "unit":info.get("kpi_unit","requests"),"method":info.get("kpi_method","Count completed request forms"),
-        "window":info.get("kpi_window","30 days")})
     product = make("catalog-item","product",{"name":info["product"],"sku":info["sku"]})
     market = make("market-vn","market",{"name":info["market"],"locales":[info["locale"]]})
     audience = make("buyer","icp",{"name":info["audience"],"description":" ".join(info.get("hypotheses",["Buyer needs require interviews"])),"basis":"hypothesis","market":market["id"]})
     placement = {"product":product["id"],"variant":None,"market":market["id"],**{k:info[k] for k in ("locale","channel","region")}}
+    method = info.get("kpi_method","Count completed request forms")
+    protocol = {"placement":placement,"category":"description","wording":method,"qualifiers":[]}
+    kpi_source = make("measurement-protocol","source",{"publisher":"Synthetic agency measurement team",
+        "document":"Definition of the event and observation period", "valid_until":"2099-01-01T00:00:00Z",
+        "entries":[{"locator":"Measurement protocol, event definition","excerpt":method,"assertion":protocol}]})
+    kpi = make("north-star","kpi",{"name":info["kpi"],"objective":goal["id"],"owner":"Analyst","source":kpi_source["id"],
+        "unit":info.get("kpi_unit","requests"),"method":method,"window":info.get("kpi_window","30 days")})
     claims, sources = [], []
     reviewer = None
     mandates = {}

@@ -424,14 +424,20 @@ def navigation_and_density(page, f, dev, theme, shots):
     menu(page, "scope")
     page.locator("#toolbar-brand").select_option("")
     page.keyboard.press("Escape")
+    expect(page.locator("#scope-menu")).to_be_hidden()
     choose_campaign(page, f["campaigns"][0])
     if not page.locator("#menu-toggle").is_visible():
         toggle = page.locator("#rail-toggle")
-        width = nav.bounding_box()["width"]
+        expect(toggle).to_have_attribute("aria-expanded", "true")
+        expanded = nav.bounding_box()["width"]
         toggle.click()
-        assert nav.bounding_box()["width"] < width
         expect(toggle).to_have_attribute("aria-expanded", "false")
+        expect(nav).to_have_css("width", "72px")
+        collapsed = nav.bounding_box()["width"]
+        assert collapsed < expanded, (dev, theme, collapsed, expanded)
         toggle.click()
+        expect(toggle).to_have_attribute("aria-expanded", "true")
+        expect(nav).to_have_css("width", f"{expanded:g}px")
     else:
         assert page.locator(".topbar").bounding_box()["height"] <= 64
     targets = page.locator("#account-trigger, #scope-trigger, #command-refresh, #command-campaign")

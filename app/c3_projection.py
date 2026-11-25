@@ -8,7 +8,7 @@ from fastapi import APIRouter, Depends, HTTPException, Query
 from pydantic import Field
 from sqlalchemy import select
 
-from . import business_workspace as ws, c3_marketing as marketing, knowledge_models as m
+from . import business_workspace as ws, c3_clarification, c3_marketing as marketing, knowledge_models as m
 from .business_knowledge import resolved
 from .commercial_scope import same_placement
 from .company_objectives import check_company_reference
@@ -17,7 +17,7 @@ from .knowledge_contracts import Amount, Command, Currency, Name, Ref, Target
 from .knowledge_store import Store, aware, canonical, conflict, digest, missing, restrictive, stamp
 from .knowledge_target import describe
 from .workforce_models import WorkforceBrief
-from .c3_tasks import TASK_VERSION, TaskIntent
+from .c3_tasks import ACTION_VERSION, TASK_VERSION, ActionIntent, TaskIntent
 
 router = APIRouter(prefix=ws.BASE + ws.BRAND + "/marketing", tags=["Knowledge-backed Marketing"])
 VERSION = "amc.marketing-manifest/1"
@@ -25,6 +25,7 @@ TASK_MANIFEST = "amc.marketing-manifest/2"
 TASK_RESEARCH = "WF-03/research-strategy-draft@3"
 TASK_LANDING = "WF-13/landing-seo-draft@6"
 TASK_RELEASES = (TASK_RESEARCH, TASK_LANDING)
+GENERIC_UNIT = "Approve a price or applicability revision with an exact selling unit, such as machine or participant"
 
 
 class Selection(Command):
@@ -126,7 +127,10 @@ def materialize(s, workspace, pins, options, at):
         intent_data = brief.payload.get("task_intent") if brief and brief.payload else None
         if not intent_data:
             conflict("Yêu cầu người giao việc gửi brief mới có mục đích, phạm vi, đầu ra và tiêu chí chấp nhận.")
-        intent = TaskIntent.model_validate(intent_data).model_dump()
+        version = brief.payload.get("task_version", TASK_VERSION)
+        if version not in (TASK_VERSION, ACTION_VERSION):
+            conflict("Phiên bản yêu cầu công việc chưa được hỗ trợ.")
+        intent = (ActionIntent if version == ACTION_VERSION else TaskIntent).model_validate(intent_data).model_dump(exclude_none=True)
         expected_kind = "marketing_strategy" if options["workflow"] == TASK_RESEARCH else "landing_page"
         if intent["deliverable_type"] != expected_kind:
             conflict("Loại bản giao của brief khác quy trình đã chọn. Chọn quy trình đúng hoặc làm rõ yêu cầu.")
@@ -141,7 +145,7 @@ def materialize(s, workspace, pins, options, at):
         public["brand_guidelines"] = {"revision":rule.revision,"digest":rule.digest,
                                       "guidance":rule.data["guidance"],"tone":rule.data.get("tone"),
                                       "prohibited_claims":rule.data.get("prohibited_claims",[])}
-        task_pins = {"guidelines":[rule.id,rule.digest], "task":[brief.id,TASK_VERSION,digest(canonical(intent))]}
+        task_pins = {"guidelines":[rule.id,rule.digest], "task":[brief.id,version,digest(canonical(intent))]}
     private = {"company": [company.id, company.revision], "brand": [brand.id, brand.revision],
                "company_objective": [root.revision_id, root.digest], "dependencies": {id_:row.digest for id_,row in deps.items()}, **task_pins}
     if options["workflow"] in TASK_RELEASES:
@@ -201,7 +205,9 @@ def build(s, workspace, body):
         conflict("Ask the selected recipient to submit the campaign brief")
     pins = resolve_brief(workspace, body.workspace_brief_id)
     legacy = body.workflow not in TASK_RELEASES
-    if legacy and (body.guidelines or target["kind"] == "internal_task"):
+    target_brief = s.db.get(WorkforceBrief, body.target.brief_id) if legacy else None
+    action_task = target_brief and (target_brief.payload or {}).get("task_version") == ACTION_VERSION
+    if legacy and (body.guidelines or target["kind"] == "internal_task" or action_task):
         conflict("Chọn quy trình hiểu yêu cầu công việc để dùng nhiệm vụ nội bộ hoặc hướng dẫn thương hiệu.")
     options = body.model_dump(mode="json", exclude={"key","ttl_seconds"} | ({"guidelines"} if legacy else set()))
     public, private, deps = materialize(s, workspace, pins, options, at)
@@ -223,8 +229,43 @@ def readiness(body: Selection, workspace=Depends(ws.writer)):
     except HTTPException as exc:
         if exc.status_code != 409:
             raise
-        return {"status":"needs_input", "guidance":[exc.detail]}
+        result = {"status":"needs_input", "guidance":[exc.detail]}
+        generic_unit = exc.detail == GENERIC_UNIT
+        if body.workflow in TASK_RELEASES and (generic_unit or (s.approver and exc.detail == "Revision lacks current approved authority")):
+            result["clarifications"] = c3_clarification.issues(s, body.claims)
+        return result
     return {"status":"ready", "guidance":[]}
+
+
+@router.post("/clarifications/propose", status_code=201)
+def propose_unit(selection: Selection, correction: c3_clarification.Proposal, workspace=Depends(ws.writer)):
+    s = store(workspace, True)
+    describe(s, selection.target, lock=True)
+    resolve_brief(workspace, selection.workspace_brief_id)
+
+    def check_selection():
+        try:
+            build(s, workspace, selection)
+        except HTTPException as exc:
+            if exc.status_code == 409 and exc.detail == GENERIC_UNIT:
+                return
+            raise
+        conflict("Nhiệm vụ đã sẵn sàng. Kiểm tra lại thẻ giá cần sửa.")
+
+    return c3_clarification.propose(s, correction, selection, check_selection)
+
+
+@router.post("/clarifications/approve")
+def approve_unit(decision: c3_clarification.Decision, workspace=Depends(ws.writer)):
+    s = store(workspace, True)
+    return c3_clarification.approve(s, decision)
+
+
+@router.get("/clarifications")
+def corrections(workspace_brief_id: Ref | None = None, offset: int = Query(0,ge=0), workspace=Depends(ws.reader)):
+    if workspace_brief_id:
+        resolve_brief(workspace, workspace_brief_id)
+    return c3_clarification.inbox(store(workspace,False),offset,workspace_brief_id)
 
 
 @router.post("/manifests", status_code=201)

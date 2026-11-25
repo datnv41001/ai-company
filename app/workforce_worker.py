@@ -193,8 +193,8 @@ def save_checkpoint(db, scope, run, stage, output, node):
             preview = research_strategy.proposal(run.checkpoints)
         title = run.knowledge["title"]
         if binding and binding.get("workflow") in c3_releases.WORKFLOWS:
-            from . import c3_assets, c3_marketing
-            renderer = c3_assets.render if c3_releases.is_current(binding["workflow"]) else c3_marketing.render
+            from . import c3_marketing, c3_order_units
+            renderer = c3_order_units.render if c3_releases.is_current(binding["workflow"]) else c3_marketing.render
             draft = renderer(binding["workflow"], run.knowledge["c3_projection"], {p["skill"]:p["output"] for p in run.checkpoints})
             title, preview = draft["title"], draft["body"]
             if len(title) > 160:

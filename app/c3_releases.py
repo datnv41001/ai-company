@@ -1,6 +1,6 @@
 """Route by the exact immutable workflow identity; leave older adapters executable."""
 
-from . import c3_assets, c3_marketing, c3_skill_library
+from . import c3_assets, c3_marketing, c3_order_units, c3_skill_library
 from .knowledge_store import conflict
 
 WORKFLOWS = {**c3_marketing.ROLES, **c3_assets.ROLES}
@@ -16,20 +16,27 @@ def roles(workflow):
 
 def role_view(workflow, stage, projection):
     if is_current(workflow):
-        return c3_skill_library.role_view(stage, projection)
+        view = c3_skill_library.role_view(stage, projection)
+        intent = projection.get("task_intent", {})
+        if "buyer_action" in intent:
+            view["buyer_action"] = intent["buyer_action"]
+            view["editorial_style"] = intent["editorial_style"]
+            if intent.get("buyer_input"):
+                view["buyer_input"] = intent["buyer_input"]
+        return view
     return c3_marketing.role_view(stage, projection)
 
 
 def fact_text(workflow, fact, projection):
     if is_current(workflow):
-        return f"[{fact['id']}] " + " ".join(c3_assets.fact_lines(fact, projection))
+        return f"[{fact['id']}] " + " ".join(c3_order_units.fact_lines(fact, projection))
     return c3_marketing.fact_line(fact)
 
 
 def check_capacity(workflow, projection):
     if is_current(workflow):
         try:
-            preview = c3_assets.render(workflow, projection, {})
+            preview = c3_order_units.render(workflow, projection, {})
         except ValueError as exc:
             conflict(str(exc))
         public = c3_assets.normalized(preview["body"])

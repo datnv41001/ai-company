@@ -56,14 +56,14 @@ def postgres_api():
             assert not thread.is_alive()
 
 
-def account(api, label):
+def account(api, label, project=None):
     email = f"{label}-{uuid4().hex}@example.com"
     body = dict(email=email, password=uuid4().hex, organization_name=label, mode="agency")
     info = start_registration(api, **body)
-    verify_registration(api,email,info)
+    verify_registration(api,email,info,project)
     login = api.post("/api/auth/login", json={"email": email, "password": body["password"]})
     assert login.status_code == 200
-    return dict(id=info["user_id"], tenant=info["tenant_id"], email=email,
+    return dict(id=info["user_id"], tenant=info["tenant_id"], email=email, password=body["password"],
                 headers={"Authorization": "Bearer " + login.json()["access_token"]})
 
 

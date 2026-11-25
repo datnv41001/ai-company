@@ -17,6 +17,8 @@ Core v25 giữ Business v3 và module nhiệm vụ C3 v1. Checkpoint kỹ thuậ
 
 CI chạy `python tests/check_c3_cutover.py observation` và `python tests/check_c3_cutover.py qualification` trên hai DB loopback `amc_test*` trống với migration DSN và runtime DSN như job API. Lượt đầu đối chiếu dấu hiệu tương thích của đúng hai bản đã review bằng thao tác tác động 0 dòng. Lượt sau giữ kết nối cũ sống qua migration, kiểm tra từ chối writer, startup, replay, rollback của một lần nâng cấp bị ngắt, lịch sử và các trường hợp nội dung mâu thuẫn qua API hiện tại. [Migration 025](migrations/025_c3_writer_protocol.sql) · [Kiểm thử chuyển đổi](tests/check_c3_cutover.py)
 
+Nếu brief dừng vì giá ghi theo “dịch vụ”, xem [cách làm rõ đơn vị bán và tiếp tục nhiệm vụ](docs/business-profile/C3-UNIT-CLARIFICATION.md). Tài liệu ghi cách đối chiếu 20 brief cũ, tạo manifest cho Qwen và kiểm tra ý định người mua qua các phiên bản nhiệm vụ.
+
 ## PR #37 — nhiệm vụ Marketing, kiểm chứng nội dung và đánh giá chất lượng
 
 Để phản biện WF-03 và WF-13, bắt đầu với [bản giao thật, bản biên tập và receipt từng brief](docs/evaluation/c3-holdout-v1/README.md). Để đo công biên tập, dùng [bộ pilot tiếng Việt có chấm mù](docs/evaluation/C3-PRACTITIONER-KIT.md). Trong GitHub Actions, artifact `api-regression-integration` ghi tên từng ca đạt hoặc bỏ qua trên bản tích hợp, gồm các thứ tự thu hồi quyền, phiên đăng nhập, phân quyền cùng agency và kiểm chứng từng nhận định.

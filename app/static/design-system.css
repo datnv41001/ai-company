@@ -242,6 +242,7 @@ body[data-access=staff] .top-brand,body[data-access=portal] .top-brand{display:n
 .hero-head h3{font-size:1.05rem}.hero-head label{min-width:0;width:min(45%,22rem)}
 .hero-head select{margin:2px 0 0;min-height:44px}
 .hero-progress{margin:7px 0;align-items:center}.hero-progress strong{font-size:1.75rem}
+.hero-progress #command-progress-label{min-inline-size:4ch}
 .hero-progress p{margin:0;min-height:2.9em;line-height:1.4}.hero-progress>div{gap:8px;min-height:1.9rem}
 #command-flow,#command-flow:empty{min-height:44px;margin:7px 0 0}
 #command-flow .phase-button{display:flex;gap:5px;align-items:center}
@@ -265,7 +266,8 @@ body[data-access=staff] .top-brand,body[data-access=portal] .top-brand{display:n
 #command-departments summary:hover strong{text-decoration:underline}
 #command-departments summary .icon{color:var(--accent);width:25px;height:25px;padding:3px;background:var(--tint);border-radius:5px}
 .assignment{display:grid;gap:2px;padding:8px 0 8px 35px;font-size:.82rem}
-#command-departments:has(details){display:grid;grid-template-columns:1fr 1fr;align-content:start;gap:6px}
+#command-departments{display:grid;grid-template-columns:1fr 1fr;align-content:start;gap:6px}
+#command-departments>.empty{grid-column:1/-1}
 #command-departments details{background:var(--layer);border:1px solid var(--border);border-radius:8px;height:100%}
 #command-departments li:has(details[open]){grid-column:1/-1}
 #command-departments summary{grid-template-columns:1fr auto;align-content:start;gap:4px;padding:8px}
@@ -299,6 +301,7 @@ body[data-screen=account] #workspace:has(> #recipient-panel:empty){min-height:0}
   .command-totals .metric span{font-size:.71rem}
   .command-hero{padding:12px}.hero-head{gap:4px}.hero-head label{width:100%}
   .hero-progress{gap:3px}.hero-progress p{min-height:4.2em}
+  .hero-progress>div{display:grid;grid-template-columns:max-content minmax(0,1fr);width:100%;align-items:center;min-height:2.9rem}
   #command-flow,#command-flow:empty{grid-template-columns:repeat(4,minmax(0,1fr));min-height:88px;gap:0 4px}
   #command-flow .phase-button{font-size:.72rem;gap:3px;flex-wrap:wrap;align-content:center}
   #command-flow .step-number{width:16px;height:16px;font-size:.59rem}

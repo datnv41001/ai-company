@@ -22,6 +22,23 @@ def fixture(api):
     _, path, src, public, _ = bundle(api, owner)
     data = api.get(path + "/revisions/" + src["id"], headers=owner["headers"]).json()["data"]
     assertion = data["entries"][0]["assertion"]
+    conditions = {"buyer": "wholesale", "payment_type": "prepaid", "service_level": "extended", "unit": "box", "minimum": "2", "maximum": "20"}
+    policy = revision(
+        api, owner, path, "wholesale-warranty", "policy", {"placement": assertion["placement"], "applicability": conditions, "warranty": "12 tháng"}
+    )
+    warranty = assertion | {"category": "warranty", "policy": policy["id"], "wording": "12 tháng", "applicability": conditions}
+    warranty_source = revision(
+        api,
+        owner,
+        path,
+        "warranty-sheet",
+        "source",
+        data
+        | {
+            "document": "Bảng bảo hành tổng hợp",
+            "entries": [{"locator": "Dòng 3", "excerpt": "Bảo hành 12 tháng cho đơn sỉ đúng điều kiện", "assertion": warranty}],
+        },
+    )
     secret = uuid4().hex
     markers = [secret + "-document", secret + "-issuer", secret + "-locator", secret + "-excerpt", secret + "-notes"]
     private = revision(
@@ -52,6 +69,7 @@ def fixture(api):
         public=public,
         claim=claim,
         source=src,
+        warranty_source=warranty_source,
         private=private,
         markers=[*markers, private["id"], bound["id"]],
     )
@@ -120,16 +138,24 @@ def exercise(browser, api, width, height):
         manager = browser.new_page(viewport={"width": width, "height": height})
         try:
             view = open_desk(manager, f["owner"], f["tenant"], f["client"], f["brand"])
-            view.get_by_label("Nguồn chứng cứ").select_option(f["source"]["id"])
-            view.get_by_label("Vị trí trong nguồn").select_option("row 2")
-            expect(view.get_by_label("Câu dùng cho Marketing")).to_have_value("Matte surface")
+            view.get_by_label("Nguồn chứng cứ").select_option(f["warranty_source"]["id"])
+            view.get_by_label("Vị trí trong nguồn").select_option("Dòng 3")
+            expect(view.get_by_label("Câu dùng cho Marketing")).to_have_value("12 tháng")
+            for label, expected in (
+                ("Nhóm người mua", "wholesale"),
+                ("Cách thanh toán", "prepaid"),
+                ("Mức dịch vụ", "extended"),
+                ("Số lượng tối thiểu", "2"),
+                ("Số lượng tối đa", "20"),
+            ):
+                expect(view.get_by_label(label, exact=True)).to_have_value(expected)
             view.get_by_label("Điều kiện kèm theo, mỗi dòng một điều kiện").fill("Not in the selected source")
             view.get_by_role("button", name="Lưu bản nháp", exact=True).click()
             expect(manager.locator("#knowledge-status")).to_contain_text("Đối chiếu")
             view.get_by_label("Điều kiện kèm theo, mỗi dòng một điều kiện").fill("")
             if width == 1280:
                 commits = drop_after_commit(manager, "claim-desk/drafts")
-                with manager.expect_request_failed(lambda req: req.url.endswith("/claim-desk/drafts")):
+                with manager.expect_event("requestfailed", predicate=lambda req: req.url.endswith("/claim-desk/drafts")):
                     view.get_by_role("button", name="Lưu bản nháp", exact=True).click()
                 assert len(commits) == 1
                 manager.unroute("**/claim-desk/drafts")
@@ -147,6 +173,8 @@ def exercise(browser, api, width, height):
                 section.get_by_role("button", name="Ghi quyết định").click()
                 expect(manager.locator("#knowledge-status")).to_contain_text("Đã ghi quyết định")
             expect(view.get_by_role("heading", name="Lịch sử")).to_be_visible()
+            published = view.locator("section").filter(has=manager.get_by_role("heading", name="Câu chữ công khai còn hiệu lực", exact=True))
+            expect(published).to_contain_text("Bán sỉ · Trả trước · Mở rộng · từ 2 · đến 20 · Hộp")
             if capture:
                 view.scroll_into_view_if_needed()
                 manager.screenshot(path=str(out / f"claim-review-{width}.png"))

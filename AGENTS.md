@@ -4,7 +4,7 @@ Project: commercial AI Marketing Company V1.0. Single complete product scope; no
 
 **Mandatory read order:**
 1. `README.md` and `HANDOFF.md` (current cross-machine runbook, behavior, tests and next task)
-2. `docs/PRODUCT_SPEC_V1.md` (authoritative full product charter)
+2. [Product Mission](docs/PRODUCT_MISSION.md) (customer work and commercial qualification) and `docs/PRODUCT_SPEC_V1.md` (authoritative V1 scope). In each handoff, identify the user, the work AMC takes on, the usable output and the evidence for quality, time or cost. Record unmeasured outcomes and the next test.
 3. `docs/ADR-001-OWN-SaaS-CORE.md` (proposed architecture, challenge allowed)
 4. `docs/GITHUB_RESEARCH_AND_REUSE.md`
 5. `docs/SECURITY_AND_GA_BLOCKERS.md`

@@ -51,6 +51,10 @@ Người giao việc mở **Hồ sơ doanh nghiệp → Brief**, chọn mục ti
 
 CI chạy các release lịch sử @2/@5 qua Qwen thật trên đúng checkout. Trong artifact `pool-model-measurements-integration`, mở `c3-model-receipts` để đối chiếu SHA, weights, token, run, snapshot nguồn, draft và lần biên tập tổng hợp. Artifact `knowledge-center-journeys-integration` chứa hành trình giao việc và đối chiếu nguồn trên ba kích thước màn hình. Rà soát chuyên môn theo [protocol holdout và pilot](docs/evaluation/C3-HOLDOUT-AND-PILOT.md), [kết quả đã đo](docs/evaluation/C3-QUALITY-RESULTS.md) và [ngân sách kết nối local](docs/evaluation/C3-LOCAL-RESOURCES.md). PR #37 chờ phản biện. Commercial GA vẫn NO-GO.
 
+## Bàn giao giá trị nghiệp vụ
+
+Ở mỗi lần bàn giao, ghi người dùng, bước công việc trước và sau, bản nào đã được ai chấp nhận và còn cần bao nhiêu công biên tập hoặc QA. Gắn phép đo với phiên bản, số việc được giao và chi phí của cả lần làm lại. Với tính năng hỗ trợ gián tiếp, xác định bước nghiệp vụ được hỗ trợ. Nếu chưa đo được hiệu quả hoặc khả năng chi trả, ghi rõ và mô tả phép thử kế tiếp. [Product Mission và ngưỡng commercial qualification](docs/PRODUCT_MISSION.md)
+
 ## AIRC · Kiểm định theo năng lực v5
 
 Tám ca mới so một reviewer với phản biện chéo cùng ngân sách. Có 20 invocation ký trên hai checkpoint local; kết quả chưa đủ để mở rộng. Chạy replay offline và xem các giới hạn trước khi tiếp quản. [Kết quả theo reviewer/model](engineering/airc500/joint-v5/REPORT.md) · [Lệnh kiểm và rollback](engineering/airc500/joint-v5/RUNBOOK.md).

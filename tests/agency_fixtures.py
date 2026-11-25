@@ -11,8 +11,6 @@ import uvicorn
 
 from identity_fixtures import start_registration, verify_registration
 from identity_fixtures import invite_member
-from app.database import engine
-from app.main import app
 
 
 @pytest.fixture(params=["sqlite", "postgres"])
@@ -22,6 +20,10 @@ def api(request):
         return
     if os.environ.get("AMC_TEST_PG") != "1":
         pytest.skip("Set AMC_TEST_PG=1 to run PostgreSQL acceptance tests")
+    # Browser clients reuse the HTTP fixture helpers without importing a local API.
+    from app.database import engine
+    from app.main import app
+
     assert engine.dialect.name == "postgresql"
     assert engine.url.host in ("localhost", "127.0.0.1", "::1")
     assert engine.url.database.startswith("amc_test")

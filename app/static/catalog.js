@@ -582,6 +582,18 @@ function createCatalogPane(root, api) {
       }
       if (key === 'code' && record) input.readOnly = true;
     }
+    if (kind === 'objective') {
+      const hints = {
+        company: 'Với mục tiêu doanh nghiệp, hãy để trống mục tiêu cha và chiến dịch.',
+        brand: 'Chọn mục tiêu doanh nghiệp làm mục tiêu cha của thương hiệu. Để trống chiến dịch.',
+        campaign: 'Chọn mục tiêu thương hiệu làm mục tiêu cha và chọn chiến dịch tương ứng.',
+      };
+      const guidance = el('p', hints[controls.level.value]);
+      guidance.id = 'catalog-objective-guidance';
+      controls.level.setAttribute('aria-describedby', guidance.id);
+      controls.level.addEventListener('change', () => { guidance.textContent = hints[controls.level.value]; });
+      form.prepend(guidance);
+    }
     const submit = el('button', 'Lưu bản nháp');
     submit.type = 'submit';
     form.append(submit);

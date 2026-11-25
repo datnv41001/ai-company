@@ -11,6 +11,23 @@
   let workspaceGeneration = 0;
   const esc = v => String(v ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
   const msg = (text, error=false) => { $('notice').textContent = text; $('notice').className = error ? 'error' : 'ok'; };
+  function validationMessage(detail) {
+    const fallback = 'Dữ liệu chưa hợp lệ. Kiểm tra các trường bắt buộc và định dạng đã nhập.';
+    if (typeof detail === 'string') {
+      if (detail.includes("Check the objective's parent and campaign scope") || detail.includes('Objective hierarchy or parent identity differs')) {
+        return 'Kiểm tra mục tiêu cha và chiến dịch. Mục tiêu thương hiệu cần mục tiêu doanh nghiệp làm cha. Mục tiêu chiến dịch cần mục tiêu thương hiệu và chiến dịch tương ứng.';
+      }
+      // Some older commands serialize Pydantic errors as text. They can include raw inputs.
+      const trimmed = detail.trimStart();
+      return trimmed.startsWith('[') || trimmed.startsWith('{') ? fallback : detail || fallback;
+    }
+    if (!Array.isArray(detail)) return fallback;
+    const labels = {name:'Tên', title:'Tên bản nháp', email:'Email', password:'Mật khẩu', amount:'Giá', currency:'Tiền tệ',
+      parent:'Mục tiêu cha', campaign_id:'Chiến dịch', owner:'Người phụ trách', valid_from:'Ngày bắt đầu', valid_until:'Ngày kết thúc'};
+    const fields = [...new Set(detail.flatMap(issue => (Array.isArray(issue?.loc) ? issue.loc : [])
+      .filter(key => Object.hasOwn(labels, key)).map(key => labels[key])))];
+    return fields.length ? 'Kiểm tra trường ' + fields.join(', ') + ' rồi thử lại.' : fallback;
+  }
   const api = async (path, method='GET', body=null, withCursor=false, signal) => {
     const response = await fetch(path, {method, signal, headers: {'Content-Type':'application/json', ...(state.token ? {'Authorization':`Bearer ${state.token}`} : {})}, ...(body ? {body: JSON.stringify(body)} : {})});
     const result = await response.json().catch(() => ({}));
@@ -18,7 +35,8 @@
       const delay = Number(response.headers.get('Retry-After'));
       throw new Error(Number.isInteger(delay) && delay > 0 ? `Vui lòng thử lại sau ${delay} giây.` : 'Vui lòng thử lại sau.');
     }
-    if(!response.ok) throw Object.assign(new Error(typeof result.detail === 'string' ? result.detail : `HTTP ${response.status}`),{status:response.status});
+    if(!response.ok) throw Object.assign(new Error(response.status === 422 ? validationMessage(result.detail) :
+      typeof result.detail === 'string' ? result.detail : `HTTP ${response.status}`),{status:response.status});
     return withCursor ? {items:result, next:response.headers.get("X-Next-Cursor")} : result;
   };
   const knowledge = createKnowledgePanel($('knowledge-panel'), api);

@@ -404,6 +404,18 @@ def exercise(api, browser, size, code):
             icp = catalog_record(api, base, owner, "icp", label=audience)
             expect(pane).to_contain_text("Chưa liên kết chứng cứ.")
             company_goal = "Phát triển số người học"
+            pane.get_by_label("Loại dữ liệu").select_option("objective")
+            pane.get_by_role("button", name="Thêm mới", exact=True).click()
+            obj = pane.locator(".catalog-form")
+            obj.locator("[name=name]").fill(objective)
+            obj.locator("[name=owner]").fill("Trưởng nhóm Marketing")
+            obj.locator("[name=level]").select_option("brand")
+            expect(obj).to_contain_text("Chọn mục tiêu doanh nghiệp làm mục tiêu cha")
+            with page.expect_response(lambda r: r.request.method == "POST" and r.url.endswith("/catalog/items")) as invalid:
+                obj.get_by_role("button", name="Lưu bản nháp").click()
+            assert invalid.value.status == 422
+            expect(pane.get_by_role("status")).to_contain_text("Kiểm tra mục tiêu cha và chiến dịch")
+            expect(pane.get_by_role("status")).not_to_contain_text("value_error")
             enter_item(pane, "objective", {"name": company_goal, "owner": "Giám đốc", "level": "company"})
             parent = catalog_record(api, base, owner, "objective", label=company_goal)
             enter_item(pane, "objective", {"name": objective, "owner": "Trưởng nhóm Marketing", "level": "brand", "parent": parent["id"]})

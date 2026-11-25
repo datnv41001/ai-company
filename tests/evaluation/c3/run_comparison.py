@@ -95,7 +95,7 @@ def run_one(lab, kind, arm, folder):
         rid, release = queue_legacy(lab, kind)
     else:
         from candidate_fixture import queue_projected
-        rid, release = queue_projected(lab, kind)
+        rid, release = queue_projected(lab, kind, improved=arm == "improved")
     base, admin, *_ = lab.cases[0]
     lab.runs = [rid]
     started = monotonic()
@@ -143,6 +143,16 @@ def run_one(lab, kind, arm, folder):
         draft = doc.json()
         record["deliverable"] = {"id": value["deliverable_id"], "title": draft["title"], "body": draft["content"]["client_preview"],
                                  "qa_revision": draft["qa_revision"], "digest": draft["qa_evidence"]["content_digest"]}
+        record["deliverable"].update(status=draft["status"], assessment=draft["qa_evidence"])
+        if arm != "legacy":
+            from migrations.runtime_bundle import runtime_fingerprint
+            knowledge = lab.owner.execute("select knowledge from workforce_runs where id=%s", (rid,)).fetchone()[0]
+            record.update(runtime_fingerprint=runtime_fingerprint(), manifest=knowledge["c3_manifest"],
+                          binding=knowledge["registry"])
+            if arm == "improved":
+                from app.c3_assets import artifacts
+                nodes = {c["skill"]: c["output"] for c in value["checkpoints"]}
+                record["assets"] = artifacts(release, knowledge["c3_projection"], nodes)
         (folder / "deliverable.md").write_text("# " + draft["title"] + "\n\n" + draft["content"]["client_preview"] + "\n", encoding="utf8")
     return record
 

@@ -25,6 +25,30 @@ def test_two_workers_three_campaigns(pool_lab):
     lab.verify_assets_and_dependencies(b, c)
 
 
+def test_partial_setup_releases_only_its_own_logins(monkeypatch):
+    import psycopg
+    from pool_lab import Lab
+
+    names = []
+    original = Lab.login
+
+    def fail_after_provision(lab, group):
+        name, dsn = original(lab, group)
+        names.append(name)
+        if len(names) == 2:
+            raise RuntimeError("synthetic failure during setup")
+        return name, dsn
+
+    monkeypatch.setattr(Lab, "login", fail_after_provision)
+    dsn = os.environ["AMC_MIGRATION_DSN"]
+    with pytest.raises(RuntimeError, match="synthetic failure during setup"):
+        Lab(None, dsn)
+    with psycopg.connect(dsn) as conn:
+        assert len(names) == 2
+        assert not conn.execute("select rolname from pg_roles where rolname=any(%s)", (names,)).fetchall()
+        assert not conn.execute("select worker from amc_ops.routes where worker=any(%s)", (names,)).fetchall()
+
+
 def test_last_agency_balance_and_late_duplicate_bill(pool_lab):
     lab = pool_lab
     lab.limit_x(1000)

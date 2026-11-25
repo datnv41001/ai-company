@@ -183,6 +183,7 @@ jobs:
           AMC_KNOWLEDGE_EVIDENCE="$RUNNER_TEMP/knowledge-workspace/objectives" AMC_BROWSER_MAILBOX_PROJECT=amc-acceptance AMC_BROWSER_TEST_URL=http://127.0.0.1:8000 python tests/browser_objectives.py
           AMC_C2_ACCEPTANCE_EVIDENCE="$RUNNER_TEMP/knowledge-center-journeys" AMC_BROWSER_MAILBOX_PROJECT=amc-acceptance AMC_BROWSER_TEST_URL=http://127.0.0.1:8000 python tests/browser_knowledge_center.py
           AMC_KNOWLEDGE_EVIDENCE="$RUNNER_TEMP/knowledge-center-journeys/marketing-workflows" AMC_BROWSER_MAILBOX_PROJECT=amc-acceptance AMC_BROWSER_TEST_URL=http://127.0.0.1:8000 python tests/browser_c3.py
+          AMC_KNOWLEDGE_EVIDENCE="$RUNNER_TEMP/knowledge-center-journeys" AMC_DEV_MAILBOX_DIR="$RUNNER_TEMP/c3-gate-mail" python -m pytest -q tests/browser_c3_content_gate.py -k sqlite --basetemp="$RUNNER_TEMP/c3-gate-db"
       - uses: actions/upload-artifact@v4
         if: always()
         with:
@@ -261,6 +262,7 @@ jobs:
           AMC_LOCAL_MODEL_URL="http://127.0.0.1:$model_port/v1" AMC_PARALLEL_REPORT=parallel-measurements.json python tests/parallel_model_smoke.py
           AMC_V1_SOURCE="$PWD/.ci/adapter-v1" AMC_SOURCE_SHA="$(git rev-parse HEAD)" \
             AMC_LOCAL_MODEL_URL="http://127.0.0.1:$model_port/v1" python tests/registry_model_smoke.py
+          AMC_LOCAL_MODEL_URL="http://127.0.0.1:$model_port/v1" AMC_EVAL_MODEL_FILE="$PWD/models/workforce.gguf" python tests/evaluation/c3/qualification.py c3-model-receipts
           test "$single_result" -eq 0 && test "$pool_result" -eq 0
       - uses: actions/upload-artifact@v4
         if: always()
@@ -276,4 +278,5 @@ jobs:
             role-qa-measurements.json
             wait-diagnostics-measurements.json
             research-strategy-measurements.json
+            c3-model-receipts/
           if-no-files-found: ignore

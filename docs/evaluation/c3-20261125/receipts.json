@@ -1,0 +1,3087 @@
+[
+  {
+    "case": "seller",
+    "workflow": "WF-03",
+    "arm": "legacy",
+    "packet": "5c4bfe3f8705",
+    "run": "eb80e25e-4180-45b2-90f3-2f34ca85836c",
+    "scores": [
+      1,
+      0,
+      0,
+      0,
+      0,
+      1
+    ],
+    "observation": "Áo mưa cỡ L và mã MN-L nhận diện đúng biến thể, nhưng bài chưa nêu người đi xe đạp đi làm hoặc cơ sở cho thông tin sản phẩm. Câu «tổng đơn hàng MN-L đã thanh toán trong 28 ngày» đúng sự kiện và kỳ đo. «Đơn vị: 28 ngày» lại nhầm thời gian với số đơn, còn «trang sản phẩm» chưa cho người mua lý do hay bước đặt áo.",
+    "digest": "14fea93a01b28127934b5c964e2abf36d285fd5c0a80eb6ba3989c871b5b2e5c",
+    "state": "awaiting_qa",
+    "first_pass_runtime": true,
+    "input_tokens": 1544,
+    "output_tokens": 361,
+    "provider_fee_usd": 0,
+    "runtime_s": 26.984,
+    "unmetered_attempts": 0,
+    "attempts": [
+      {
+        "attempt_id": "10d1c60b-bdda-454d-8d9b-cc7a8150115a",
+        "schema": "research_director",
+        "request_sha256": "ccf8f0b6b355ba4b698c42db5b81655df4eb9ea0e271b5e143f9e5bb0b7333e9",
+        "input_tokens": 420,
+        "output_tokens": 58,
+        "raw_output": {
+          "research_assignment": "Tăng đơn đặt áo mưa cỡ L tại TP.HCM",
+          "strategy_assignment": "Propose positioning and a measurable KPI for the proposed positioning strategy based on the research findings and the KPI set by the audience. "
+        }
+      },
+      {
+        "attempt_id": "2b319c73-3b2c-4682-9e3d-7146d6e8415d",
+        "schema": "research",
+        "request_sha256": "abd9b884dace76405a305c197c37729c8ed1bf9f428f7714dee4ce64e6b391fb",
+        "input_tokens": 492,
+        "output_tokens": 108,
+        "raw_output": {
+          "source_ids": [
+            "brand",
+            "S1",
+            "S2",
+            "S3"
+          ],
+          "knowledge_gap": "KPI: đơn hàng MN-L đã thanh toán trong 28 ngày.",
+          "observed_fact": "Việc mô tả khả năng quan sát ban đêm có thể giúp người đi làm chọn cỡ.",
+          "audience_hypothesis": "Việc mô tả khả năng quan sát ban đêm có thể giúp người đi làm chọn cỡ."
+        }
+      },
+      {
+        "attempt_id": "37300842-4a43-4b2b-b7ab-8344d05111ae",
+        "schema": "strategy",
+        "request_sha256": "95362ee25914eef54cae7c729b885a0305a8db5fb4714b9297f941ee7b21d377",
+        "input_tokens": 632,
+        "output_tokens": 195,
+        "raw_output": {
+          "unit": "28 ngày",
+          "baseline": "n01",
+          "numerator": "n01",
+          "source_ids": [
+            "brand",
+            "S1",
+            "S2",
+            "S3"
+          ],
+          "denominator": "n01",
+          "metric_kind": "count",
+          "positioning": "tăng đơn đặt áo mưa cỡ L",
+          "success_metric": "count",
+          "baseline_source": "brand",
+          "proposed_target": "tăng đơn đặt áo mưa cỡ L",
+          "proposed_channel": "trang sản phẩm",
+          "measurement_method": "tổng đơn hàng MN-L đã thanh toán trong 28 ngày",
+          "measurement_window": "28 ngày"
+        }
+      }
+    ],
+    "version": "legacy",
+    "release": "WF-03/research-strategy-draft@1",
+    "journal": [
+      {
+        "skill": "director",
+        "attempt": 1,
+        "outcome": "ok",
+        "input_tokens": 420,
+        "output_tokens": 58
+      },
+      {
+        "skill": "research",
+        "attempt": 1,
+        "outcome": "ok",
+        "input_tokens": 492,
+        "output_tokens": 108
+      },
+      {
+        "skill": "strategy",
+        "attempt": 1,
+        "outcome": "ok",
+        "input_tokens": 632,
+        "output_tokens": 195
+      }
+    ],
+    "revision": 1,
+    "deliverable_id": "8d1b621b-f2bf-4317-9098-298db0813951"
+  },
+  {
+    "case": "seller",
+    "workflow": "WF-03",
+    "arm": "projected",
+    "packet": "9c56c2b14ce2",
+    "run": "1d86a44a-05e2-4627-b2b0-28d5386844a9",
+    "scores": [
+      1,
+      1,
+      1,
+      0,
+      0,
+      1
+    ],
+    "observation": "Có thể lần từ dải phản quang sau lưng của áo xanh cỡ L tới F2, và từ giá nhận tại Quận 3 tới F1. Phần thử nghiệm dùng chữ «có thể» và kế hoạch đếm đúng đơn MN-L đã thanh toán trong 28 ngày. Nhưng «mô tả khả năng quan sát ban đêm … giúp người đi làm chọn cỡ» không cho người mua dấu hiệu chọn cỡ L hay giải thích mối liên hệ giữa độ nhìn thấy và kích cỡ.",
+    "digest": "2f7e4a9ba613dc7c53ef6fa9e34f6c9004e84175633ce175aadf4480825a9451",
+    "state": "awaiting_qa",
+    "first_pass_runtime": true,
+    "input_tokens": 1445,
+    "output_tokens": 318,
+    "provider_fee_usd": 0,
+    "runtime_s": 28.859,
+    "unmetered_attempts": 0,
+    "attempts": [
+      {
+        "attempt_id": "951697e9-24c6-4911-9a93-85ac84a43301",
+        "schema": "c3_director",
+        "request_sha256": "b25e4e9e75f6922a8dc22db793b23a6ab60839f25ff257f43a9cba330bb67b9f",
+        "input_tokens": 306,
+        "output_tokens": 47,
+        "raw_output": {
+          "primary_assignment": "Tăng đơn đặt áo mưa cỡ L tại TP.HCM",
+          "secondary_assignment": "Tăng đơn đặt áo mưa cỡ L tại TP.HCM"
+        }
+      },
+      {
+        "attempt_id": "7521c14a-3c45-41c8-ad2c-0561b7951e13",
+        "schema": "c3_research",
+        "request_sha256": "fe2f8d56c0b6b5be9b576491e82b1c3446f910fef3c7ad03074d7487a317a90e",
+        "input_tokens": 495,
+        "output_tokens": 140,
+        "raw_output": {
+          "source_ids": [
+            "F1",
+            "F2"
+          ],
+          "icp_analysis": "Việc mô tả khả năng quan sát ban đêm có thể giúp người đi làm chọn cỡ.",
+          "evidence_needed": "Việc xác minh số liệu nền và kết quả bằng dữ liệu đo thực tế.",
+          "market_analysis": "Việc mô tả khả năng quan sát ban đêm có thể giúp người đi làm chọn cỡ.",
+          "research_question": "Việc mô tả khả năng quan sát ban đêm có thể giúp người đi làm chọn cỡ."
+        }
+      },
+      {
+        "attempt_id": "09c0a976-734d-4585-bc01-481e3bc0aa68",
+        "schema": "c3_strategy",
+        "request_sha256": "50d4babd7900d54aaf148234e8703ab6a41757554db5e7056c2d55297461f534",
+        "input_tokens": 644,
+        "output_tokens": 131,
+        "raw_output": {
+          "source_ids": [
+            "F1",
+            "F2"
+          ],
+          "positioning": "đơn hàng MN-L đã thanh toán trong 28 ngày · đơn hàng · 28 ngày · đơn hàng MN-L đã thanh toán trong 28 ngày",
+          "recommendation": "Việc mô tả khả năng quan sát ban đêm có thể giúp người đi làm chọn cỡ.",
+          "measurement_plan": "đơn hàng MN-L đã thanh toán trong 28 ngày · đơn hàng · 28 ngày · đơn hàng MN-L đã thanh toán trong 28 ngày"
+        }
+      }
+    ],
+    "version": "first",
+    "release": "WF-03/research-strategy-draft@2",
+    "journal": [
+      {
+        "skill": "director",
+        "attempt": 1,
+        "outcome": "ok",
+        "input_tokens": 306,
+        "output_tokens": 47
+      },
+      {
+        "skill": "research",
+        "attempt": 1,
+        "outcome": "ok",
+        "input_tokens": 495,
+        "output_tokens": 140
+      },
+      {
+        "skill": "strategy",
+        "attempt": 1,
+        "outcome": "ok",
+        "input_tokens": 644,
+        "output_tokens": 131
+      }
+    ],
+    "revision": 1,
+    "deliverable_id": "f43315ee-fce4-482a-89c3-f05a96aded82"
+  },
+  {
+    "case": "seller",
+    "workflow": "WF-03",
+    "arm": "projected",
+    "packet": "e7c8ba823093",
+    "run": "79f5634e-4080-4d9e-8349-fd1d7fc839dc",
+    "scores": [
+      1,
+      1,
+      1,
+      0,
+      1,
+      1
+    ],
+    "observation": "Dải phản quang sau lưng và phạm vi áo xanh cỡ L tra được ở F1, còn giá nhận tại Quận 3 và phí giao ở F2. Thử nêu F1 sớm trên trang để người đi xe đạp cân nhắc khả năng nhìn thấy ban đêm là lựa chọn cụ thể. Hai phiên bản cùng nguồn truy cập, đo đơn MN-L đã thanh toán trên lượt truy cập đủ điều kiện trong 28 ngày. Câu «giúp người đi làm chọn cỡ L» vẫn thiếu hướng dẫn chọn cỡ hoặc đặt áo.",
+    "digest": "52b02bd3ffcdf733ff9fbb0d8b722564bf0cb1ee4365ec6750f03dc5ae4492f6",
+    "state": "awaiting_qa",
+    "first_pass_runtime": true,
+    "input_tokens": 1506,
+    "output_tokens": 323,
+    "provider_fee_usd": 0,
+    "runtime_s": 20.453,
+    "unmetered_attempts": 0,
+    "attempts": [
+      {
+        "attempt_id": "c9405e26-7618-48db-9505-fc76afe8ce63",
+        "schema": "c3_director",
+        "request_sha256": "b25e4e9e75f6922a8dc22db793b23a6ab60839f25ff257f43a9cba330bb67b9f",
+        "input_tokens": 306,
+        "output_tokens": 47,
+        "raw_output": {
+          "primary_assignment": "Tăng đơn đặt áo mưa cỡ L tại TP.HCM",
+          "secondary_assignment": "Tăng đơn đặt áo mưa cỡ L tại TP.HCM"
+        }
+      },
+      {
+        "attempt_id": "3608fe62-0337-43ff-b922-bc026e67c32c",
+        "schema": "c3_research",
+        "request_sha256": "c3e6cbdd34efdafab07786ce6d74f4c3d1f31ac31ad1bfaba97331d8c9b56d5b",
+        "input_tokens": 521,
+        "output_tokens": 139,
+        "raw_output": {
+          "source_ids": [
+            "F1",
+            "F2"
+          ],
+          "icp_analysis": "Việc mô tả khả năng quan sát ban đêm có thể giúp người đi làm chọn cỡ L",
+          "evidence_needed": "Việc xác minh số liệu nền và kết quả bằng dữ liệu đo thực tế",
+          "market_analysis": "Việc mô tả khả năng quan sát ban đêm có thể giúp người đi làm chọn cỡ L",
+          "research_question": "Việc mô tả khả năng quan sát ban đêm có thể giúp người đi làm chọn cỡ L tại TP.HCM?"
+        }
+      },
+      {
+        "attempt_id": "6b5b9a47-9948-4fe2-b8d9-50ea5613abf5",
+        "schema": "c3_strategy",
+        "request_sha256": "5751117d3e870a25b047e2c27d6d8fc13e6c30468951e7bfad568c988d7babaf",
+        "input_tokens": 679,
+        "output_tokens": 137,
+        "raw_output": {
+          "source_ids": [
+            "F1",
+            "F2"
+          ],
+          "positioning": "đơn hàng MN-L đã thanh toán trong 28 ngày · đơn hàng · 28 ngày · đơn hàng MN-L đã thanh toán trong 28 ngày",
+          "recommendation": "Việc mô tả khả năng quan sát ban đêm có thể giúp người đi làm chọn cỡ L tại TP.HCM",
+          "measurement_plan": "đơn hàng MN-L đã thanh toán trong 28 ngày · đơn hàng · 28 ngày · đơn hàng MN-L đã thanh toán trong 28 ngày"
+        }
+      }
+    ],
+    "version": "revised",
+    "release": "WF-03/research-strategy-draft@2",
+    "journal": [
+      {
+        "skill": "director",
+        "attempt": 1,
+        "outcome": "ok",
+        "input_tokens": 306,
+        "output_tokens": 47
+      },
+      {
+        "skill": "research",
+        "attempt": 1,
+        "outcome": "ok",
+        "input_tokens": 521,
+        "output_tokens": 139
+      },
+      {
+        "skill": "strategy",
+        "attempt": 1,
+        "outcome": "ok",
+        "input_tokens": 679,
+        "output_tokens": 137
+      }
+    ],
+    "revision": 1,
+    "deliverable_id": "e330dda1-2561-41ad-ba40-1a57bd25ec87"
+  },
+  {
+    "case": "seller",
+    "workflow": "WF-13",
+    "arm": "legacy",
+    "packet": "31395879785a",
+    "run": "befb62d0-6074-4c09-a222-10972c34e8ce",
+    "scores": [
+      1,
+      0,
+      0,
+      1,
+      0,
+      1
+    ],
+    "observation": "Bản viết xác định đúng áo xanh cỡ L có dải phản quang sau lưng. «Đặt áo MN-L» là bước mua cụ thể. Số tiền và đơn vị khớp hồ sơ. Quận 3 và phí giao chỉ xuất hiện trong metadata, còn điều kiện giá đã gồm thuế bị bỏ hẳn. Không có chỉ dẫn tới nguồn. Cụm «Tăng đơn đặt áo mưa» ở cả tiêu đề và ý định tìm kiếm nói từ góc nhìn của cửa hàng. Bản không thêm bảo chứng chống nước hoặc mức giá mới.",
+    "digest": "5016546a444edc490bb753b8703c98a77d4e695879aa9c13a1047938ba9390b5",
+    "state": "awaiting_qa",
+    "first_pass_runtime": true,
+    "input_tokens": 1697,
+    "output_tokens": 442,
+    "provider_fee_usd": 0,
+    "runtime_s": 23.266,
+    "unmetered_attempts": 0,
+    "attempts": [
+      {
+        "attempt_id": "063b2623-9882-4cd1-a4a3-b9b85d89e6a3",
+        "schema": "planner",
+        "request_sha256": "53b6b091ba1cb409ef700a20c85c9f8d9f1d5eb72372e7738b5b9139bb77d34f",
+        "input_tokens": 591,
+        "output_tokens": 141,
+        "raw_output": {
+          "nodes": [
+            {
+              "key": "copy",
+              "skill_type": "content",
+              "assignment": "content: Áo mưa MN-L, màu xanh cỡ L. CTA: đặt áo MN-L",
+              "parents": []
+            },
+            {
+              "key": "seo",
+              "skill_type": "seo",
+              "assignment": "seo: Giả thuyết và khoảng trống, giá 245.000 VND/chiếc khi nhận tại cửa hàng Quận 3, chưa gồm phí giao",
+              "parents": [
+                "copy"
+              ]
+            }
+          ]
+        }
+      },
+      {
+        "attempt_id": "160f09bc-4ee9-40d7-8d96-f8e689c29624",
+        "schema": "content",
+        "request_sha256": "8a6b138a284e540d420ccdff2593d22585253e82362a24e774ecd8211d2532be",
+        "input_tokens": 489,
+        "output_tokens": 126,
+        "raw_output": {
+          "headline": "Tăng đơn đặt áo mưa cỡ L tại TP.HCM",
+          "body_copy": "Tăng đơn đặt áo mưa cỡ L tại TP.HCM với giá 245.000 VND/chiếc khi nhận tại cửa hàng. Áo mưa MN-L có dải phản quang sau lưng và màu xanh cỡ L. CTA: đặt áo MN-L.",
+          "source_ids": [
+            "brand",
+            "S1",
+            "S2",
+            "S3"
+          ],
+          "call_to_action": "Đặt áo MN-L"
+        }
+      },
+      {
+        "attempt_id": "7f8f7b27-290d-42d2-9bd6-2e2b0f6be66f",
+        "schema": "seo",
+        "request_sha256": "b3cfabe78d9debff69235dcf3520d965276af3692cbf0dae38690778fd80ebc5",
+        "input_tokens": 617,
+        "output_tokens": 175,
+        "raw_output": {
+          "page_title": "Tăng đơn đặt áo mưa cỡ L tại TP.HCM",
+          "source_ids": [
+            "brand",
+            "S1",
+            "S2",
+            "S3"
+          ],
+          "search_intent": "Tăng đơn đặt áo mưa cỡ L tại TP.HCM, giá 245.000 VND/chiếc khi nhận tại cửa hàng Quận 3, chưa gồm phí giao",
+          "meta_description": "Tăng đơn đặt áo mưa cỡ L tại TP.HCM với giá 245.000 VND/chiếc khi nhận tại cửa hàng Quận 3, chưa gồm phí giao. Áo mưa MN-L có dải phản quang sau lưng và màu xanh cỡ L. CTA: đặt áo MN-L."
+        }
+      }
+    ],
+    "version": "legacy",
+    "release": "WF-13/landing-seo-draft@4",
+    "journal": [
+      {
+        "skill": "director",
+        "attempt": 1,
+        "outcome": "ok",
+        "input_tokens": 591,
+        "output_tokens": 141
+      },
+      {
+        "skill": "content",
+        "attempt": 1,
+        "outcome": "ok",
+        "input_tokens": 489,
+        "output_tokens": 126
+      },
+      {
+        "skill": "seo",
+        "attempt": 1,
+        "outcome": "ok",
+        "input_tokens": 617,
+        "output_tokens": 175
+      }
+    ],
+    "revision": 1,
+    "deliverable_id": "51d00865-8305-4415-8c77-3e20726c49dc"
+  },
+  {
+    "case": "seller",
+    "workflow": "WF-13",
+    "arm": "projected",
+    "packet": "1b9612b08123",
+    "run": "d3c5a585-c5d2-47b7-b1a2-50eb77be0d79",
+    "scores": [
+      1,
+      1,
+      0,
+      0,
+      0,
+      0
+    ],
+    "observation": "Tiêu đề ghi đúng MN-L xanh cỡ L. Giá nhận tại Quận 3 và dải phản quang sau lưng lần lượt đối chiếu được với F1 và F2. Tuy nhiên, mô tả SEO khẳng định «giúp tiếp cận khách hàng và tăng doanh số» mà cả hai nguồn đều không đo hiệu quả này. CTA lặp lại giả thuyết về khả năng quan sát ban đêm, còn ý định tìm kiếm là mục tiêu tăng đơn của cửa hàng. Người đọc không được mời đặt chiếc áo.",
+    "digest": "917aa017113c9be353062062fca942c67389f9c48177fe67b063d7f86cf1bbb9",
+    "state": "awaiting_qa",
+    "first_pass_runtime": true,
+    "input_tokens": 1364,
+    "output_tokens": 315,
+    "provider_fee_usd": 0,
+    "runtime_s": 20.234,
+    "unmetered_attempts": 0,
+    "attempts": [
+      {
+        "attempt_id": "5655482e-c9d1-4fba-a2c4-7ea26e9cdd66",
+        "schema": "c3_director",
+        "request_sha256": "8f033f7e7c164ef93355376a33b84a2529a4cf172387a62417769cfd0aeb1532",
+        "input_tokens": 306,
+        "output_tokens": 75,
+        "raw_output": {
+          "primary_assignment": "Tăng đơn đặt áo mưa cỡ L tại TP.HCM",
+          "secondary_assignment": "Tăng đơn đặt áo mưa cỡ L tại TP.HCM, tăng số lượng đơn đặt trong thời gian ngắn nhất có thể, tăng khả năng tiếp cận khách hàng và tăng doanh số."
+        }
+      },
+      {
+        "attempt_id": "b10fc6e4-8cb3-4da9-93bb-81999e395467",
+        "schema": "c3_content",
+        "request_sha256": "87815f111170250bbfd6e4a330e6e2d99258002dcc8db7e5c4b83feeda745b13",
+        "input_tokens": 476,
+        "output_tokens": 128,
+        "raw_output": {
+          "benefit": "Tăng đơn đặt áo mưa cỡ L tại TP.HCM",
+          "headline": "Áo mưa MN-L, màu xanh cỡ L",
+          "source_ids": [
+            "F1",
+            "F2"
+          ],
+          "call_to_action": "Việc mô tả khả năng quan sát ban đêm có thể giúp người đi làm chọn cỡ.",
+          "value_proposition": "Áo mưa MN-L có dải phản quang sau lưng, phù hợp với việc đi làm ở TP.HCM."
+        }
+      },
+      {
+        "attempt_id": "6d1798e6-f165-4806-aca4-442aa21be0a3",
+        "schema": "c3_seo",
+        "request_sha256": "6ebc76ba3aed315a957a05964775e9ae1ca8ceda1f9ea7ecc70fe97bbb658cb7",
+        "input_tokens": 582,
+        "output_tokens": 112,
+        "raw_output": {
+          "page_title": "Áo mưa MN-L, màu xanh cỡ L",
+          "source_ids": [
+            "F1",
+            "F2"
+          ],
+          "search_intent": "tăng đơn đặt áo mưa cỡ L tại TP.HCM",
+          "meta_description": "Áo mưa MN-L, màu xanh cỡ L, phù hợp với việc đi làm ở TP.HCM. Tăng đơn đặt áo mưa cỡ L tại TP.HCM giúp tiếp cận khách hàng và tăng doanh số."
+        }
+      }
+    ],
+    "version": "first",
+    "release": "WF-13/landing-seo-draft@5",
+    "journal": [
+      {
+        "skill": "director",
+        "attempt": 1,
+        "outcome": "ok",
+        "input_tokens": 306,
+        "output_tokens": 75
+      },
+      {
+        "skill": "content",
+        "attempt": 1,
+        "outcome": "ok",
+        "input_tokens": 476,
+        "output_tokens": 128
+      },
+      {
+        "skill": "seo",
+        "attempt": 1,
+        "outcome": "ok",
+        "input_tokens": 582,
+        "output_tokens": 112
+      }
+    ],
+    "revision": 1,
+    "deliverable_id": "a5657125-51e8-4331-8d67-94e21d234864"
+  },
+  {
+    "case": "seller",
+    "workflow": "WF-13",
+    "arm": "projected",
+    "packet": "b6bbcc549bd9",
+    "run": "546b8b48-2eda-470a-a67d-ba01905844b2",
+    "scores": [
+      1,
+      1,
+      0,
+      1,
+      0,
+      0
+    ],
+    "observation": "F1 và F2 xác định áo xanh cỡ L có phản quang sau lưng, giá 245.000 VND/chiếc đã gồm thuế khi nhận tại Quận 3, chưa gồm giao hàng. Dòng «Chọn số lượng và kiểm tra điều kiện đặt hàng» là bước mua cụ thể. Trường CTA lặp giả thuyết về cách chọn cỡ. Metadata lại đề nghị «Tạo ra một sản phẩm áo mưa cỡ L mới» và «tăng khả năng tiếp cận khách hàng», những điều hai nguồn không xác nhận. Bản thiếu tiêu đề SEO cùng ý định tìm kiếm hướng tới người mua.",
+    "digest": "a45230fc505b964e87dce282591715be5c982bd90363497853cf31a3fe8471bd",
+    "state": "awaiting_qa",
+    "first_pass_runtime": true,
+    "input_tokens": 1453,
+    "output_tokens": 335,
+    "provider_fee_usd": 0,
+    "runtime_s": 32.921,
+    "unmetered_attempts": 0,
+    "attempts": [
+      {
+        "attempt_id": "21483da4-e4f6-4d32-b214-19bef1bd45ad",
+        "schema": "c3_director",
+        "request_sha256": "8f033f7e7c164ef93355376a33b84a2529a4cf172387a62417769cfd0aeb1532",
+        "input_tokens": 306,
+        "output_tokens": 75,
+        "raw_output": {
+          "primary_assignment": "Tăng đơn đặt áo mưa cỡ L tại TP.HCM",
+          "secondary_assignment": "Tăng đơn đặt áo mưa cỡ L tại TP.HCM, tăng số lượng đơn đặt trong thời gian ngắn nhất có thể, tăng khả năng tiếp cận khách hàng và tăng doanh số."
+        }
+      },
+      {
+        "attempt_id": "f8303c3f-ae29-436d-93e0-ffe0f31ab92c",
+        "schema": "c3_content",
+        "request_sha256": "0728ce8ba216a0afe36a1a0e9668a769ae52f61b9b1543f557fff972f39ffc5d",
+        "input_tokens": 527,
+        "output_tokens": 127,
+        "raw_output": {
+          "benefit": "Tăng đơn đặt áo mưa cỡ L tại TP.HCM",
+          "headline": "Áo mưa MN-L, màu xanh cỡ L",
+          "source_ids": [
+            "F1",
+            "F2"
+          ],
+          "call_to_action": "Mô tả khả năng quan sát ban đêm có thể giúp người đi làm chọn cỡ.",
+          "value_proposition": "Việc mô tả khả năng quan sát ban đêm có thể giúp người đi làm chọn cỡ L, đặc biệt là khi đi làm tại TP.HCM."
+        }
+      },
+      {
+        "attempt_id": "41323923-764b-4368-b6f9-4f413a437238",
+        "schema": "c3_seo",
+        "request_sha256": "fd65f327e5e8af0de580cd36c2b908e265d852ac34d57ea5af2907b8be32262c",
+        "input_tokens": 620,
+        "output_tokens": 133,
+        "raw_output": {
+          "page_title": "Tăng đơn đặt áo mưa cỡ L tại TP.HCM",
+          "source_ids": [
+            "F1",
+            "F2"
+          ],
+          "search_intent": "Tăng đơn đặt áo mưa cỡ L tại TP.HCM",
+          "meta_description": "Tạo ra một sản phẩm áo mưa cỡ L mới với màu xanh cỡ L, giúp người đi làm chọn cỡ phù hợp nhất tại TP.HCM. Tăng số lượng đơn đặt trong thời gian ngắn nhất có thể và tăng khả năng tiếp cận khách hàng."
+        }
+      }
+    ],
+    "version": "revised",
+    "release": "WF-13/landing-seo-draft@5",
+    "journal": [
+      {
+        "skill": "director",
+        "attempt": 1,
+        "outcome": "ok",
+        "input_tokens": 306,
+        "output_tokens": 75
+      },
+      {
+        "skill": "content",
+        "attempt": 1,
+        "outcome": "ok",
+        "input_tokens": 527,
+        "output_tokens": 127
+      },
+      {
+        "skill": "seo",
+        "attempt": 1,
+        "outcome": "ok",
+        "input_tokens": 620,
+        "output_tokens": 133
+      }
+    ],
+    "revision": 1,
+    "deliverable_id": "39b60c61-2841-459e-b846-77fb9511aba5"
+  },
+  {
+    "case": "materials",
+    "workflow": "WF-03",
+    "arm": "legacy",
+    "packet": "6e6961130945",
+    "run": "6e08383a-73f9-4457-b9f5-373743264033",
+    "scores": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      1
+    ],
+    "observation": "Chỉ có nhóm hàng gạch ốp lát và Hà Nội. Nhà thầu không thấy mã GB-6060, dòng nhám, quy cách thùng hay lời mời gửi diện tích. «KPI đề xuất: điểm giá» và «Đơn vị: độ phức tạp» không đo số yêu cầu báo giá có diện tích và quận. Bài cũng không đưa ra tuyên bố giá hay công năng thiếu căn cứ.",
+    "digest": "7247d232453d5082b01ea381c50e1b6126c2397bee1e98e7a3d8fef3d0b5e27f",
+    "state": "awaiting_qa",
+    "first_pass_runtime": true,
+    "input_tokens": 1692,
+    "output_tokens": 361,
+    "provider_fee_usd": 0,
+    "runtime_s": 22.343,
+    "unmetered_attempts": 0,
+    "attempts": [
+      {
+        "attempt_id": "16317197-1669-4a01-a909-c79db8806c55",
+        "schema": "research_director",
+        "request_sha256": "36d22aa83472024123b25085047e92b1ee64aff2342b8dea65948d1980681379",
+        "input_tokens": 462,
+        "output_tokens": 73,
+        "raw_output": {
+          "research_assignment": "Research separates facts, hypotheses, and missing evidence to propose positioning and a measurable KPI for a new gable slab gasket product in the market. The KI",
+          "strategy_assignment": "Propose positioning and a measurable KPI for a new gable slab gasket product in the market. The KI"
+        }
+      },
+      {
+        "attempt_id": "92f391b9-8686-4a49-b4b5-01d46a21ee11",
+        "schema": "research",
+        "request_sha256": "7b75b26b46b24ae466afedb28624443c25bba69155e6c09b44ea937aedfd7567",
+        "input_tokens": 554,
+        "output_tokens": 106,
+        "raw_output": {
+          "source_ids": [
+            "brand",
+            "S1",
+            "S2",
+            "S3"
+          ],
+          "knowledge_gap": "The brand rules do not specify the exact dimensions or the specific location of the product in the market.",
+          "observed_fact": "The brand rules do not provide information about the exact dimensions or the specific location of the product in the market.",
+          "audience_hypothesis": "The brand rules do not specify the exact dimensions or the specific location of the product in the market."
+        }
+      },
+      {
+        "attempt_id": "f991d6af-41ff-4a5e-bed7-58d8c568d441",
+        "schema": "strategy",
+        "request_sha256": "17fc3fbd1a12fc0a7fc33ca90aa640b5c576c302c685604baa3e81e08d782d92",
+        "input_tokens": 676,
+        "output_tokens": 182,
+        "raw_output": {
+          "unit": "độ phức tạp",
+          "baseline": "điểm giá",
+          "numerator": "điểm giá",
+          "source_ids": [
+            "brand",
+            "S1",
+            "S2",
+            "S3"
+          ],
+          "denominator": "điểm giá",
+          "metric_kind": "count",
+          "positioning": "tăng",
+          "success_metric": "điểm giá",
+          "baseline_source": "brand",
+          "proposed_target": "tăng",
+          "proposed_channel": "trang yêu cầu báo giá",
+          "measurement_method": "điểm giá",
+          "measurement_window": "30 ngày"
+        }
+      }
+    ],
+    "version": "legacy",
+    "release": "WF-03/research-strategy-draft@1",
+    "journal": [
+      {
+        "skill": "director",
+        "attempt": 1,
+        "outcome": "ok",
+        "input_tokens": 462,
+        "output_tokens": 73
+      },
+      {
+        "skill": "research",
+        "attempt": 1,
+        "outcome": "ok",
+        "input_tokens": 554,
+        "output_tokens": 106
+      },
+      {
+        "skill": "strategy",
+        "attempt": 1,
+        "outcome": "ok",
+        "input_tokens": 676,
+        "output_tokens": 182
+      }
+    ],
+    "revision": 1,
+    "deliverable_id": "51d96776-28ee-4151-b80c-0d4fb8cbfaf2"
+  },
+  {
+    "case": "materials",
+    "workflow": "WF-03",
+    "arm": "projected",
+    "packet": "a84daa48436a",
+    "run": "5338f373-5dfa-4399-bb3c-9743e7efee31",
+    "scores": [
+      1,
+      0,
+      1,
+      0,
+      0,
+      1
+    ],
+    "observation": "F1/F2 ghi quy cách 1,44 m²/thùng và ngưỡng 50 m² cho nhà thầu ở Hà Nội. Mức 210.000 VND/m² có nguồn nhưng mất chữ «tham khảo». Việc tính số thùng và phí giao được nêu đúng dạng giả thuyết. Đề xuất chỉ nói «Tăng khách hàng yêu cầu báo giá», chưa mời gửi diện tích, quận hoặc giải thích cách dùng hai trường đó để tính số yêu cầu hợp lệ.",
+    "digest": "703a865feffb33044f3bf53f381482d7eb52d7a28346d28451e906351fc42a8f",
+    "state": "awaiting_qa",
+    "first_pass_runtime": true,
+    "input_tokens": 1547,
+    "output_tokens": 300,
+    "provider_fee_usd": 0,
+    "runtime_s": 20.781,
+    "unmetered_attempts": 0,
+    "attempts": [
+      {
+        "attempt_id": "1e6f4212-5d02-48b6-aada-12cae73b9ca0",
+        "schema": "c3_director",
+        "request_sha256": "fd91408a4d7c16c32723951f05179d05c1279a0978f0ef25a442444d03ed9c94",
+        "input_tokens": 325,
+        "output_tokens": 80,
+        "raw_output": {
+          "primary_assignment": "Tạo ra chiến lược và đề xuất sản phẩm cho khách hàng yêu cầu báo giá gạch lát nền GB-6060 tại Hà Nội.",
+          "secondary_assignment": "Tạo ra chiến lược và đề xuất sản phẩm cho khách hàng yêu cầu báo giá gạch lát nền GB-6060 tại Hà Nội."
+        }
+      },
+      {
+        "attempt_id": "6773b0a1-b2e4-4958-a4e0-532dcad3a589",
+        "schema": "c3_research",
+        "request_sha256": "c55fe4087166adc9ca1aef651f148428a64c6da6c476833777f5a652277caa0b",
+        "input_tokens": 537,
+        "output_tokens": 117,
+        "raw_output": {
+          "source_ids": [
+            "F1",
+            "F2"
+          ],
+          "icp_analysis": "Nhà thầu hoàn thiện căn hộ tại Hà Nội",
+          "evidence_needed": "Nhà thầu có thể ưu tiên tính nhanh số thùng và chi phí giao.",
+          "market_analysis": "Việt Nam",
+          "research_question": "Tạo ra chiến lược và đề xuất sản phẩm cho khách hàng yêu cầu báo giá gạch lát nền GB-6060 tại Hà Nội."
+        }
+      },
+      {
+        "attempt_id": "4b51534c-d6bc-4e04-8c36-3d4d5148ad5b",
+        "schema": "c3_strategy",
+        "request_sha256": "962e90fb1c6e36453591ee12a05622e31a2094c97b615e5340805120fbbf1306",
+        "input_tokens": 685,
+        "output_tokens": 103,
+        "raw_output": {
+          "source_ids": [
+            "F1",
+            "F2"
+          ],
+          "positioning": "Gạch lát nền GB-6060 nhám 60×60 cm",
+          "recommendation": "Tăng khách hàng yêu cầu báo giá gạch lát nền GB-6060 tại Hà Nội",
+          "measurement_plan": "Tích hợp dữ liệu đo thực tế và kiểm chứng nhu cầu với khách hàng trong thị trường đã chọn."
+        }
+      }
+    ],
+    "version": "first",
+    "release": "WF-03/research-strategy-draft@2",
+    "journal": [
+      {
+        "skill": "director",
+        "attempt": 1,
+        "outcome": "ok",
+        "input_tokens": 325,
+        "output_tokens": 80
+      },
+      {
+        "skill": "research",
+        "attempt": 1,
+        "outcome": "ok",
+        "input_tokens": 537,
+        "output_tokens": 117
+      },
+      {
+        "skill": "strategy",
+        "attempt": 1,
+        "outcome": "ok",
+        "input_tokens": 685,
+        "output_tokens": 103
+      }
+    ],
+    "revision": 1,
+    "deliverable_id": "49aba7af-2e7f-481e-a062-f1e9f506fb39"
+  },
+  {
+    "case": "materials",
+    "workflow": "WF-03",
+    "arm": "projected",
+    "packet": "0f3e16f39443",
+    "run": "278db816-5636-486f-93e1-d5a8822ddc85",
+    "scores": [
+      1,
+      1,
+      1,
+      0,
+      0,
+      1
+    ],
+    "observation": "F1 cho biết thùng 1,44 m², F2 ghi rõ «Mức giá tham khảo», ngưỡng 50 m², thuế và các khoản chưa gồm. Thử nghiệm đưa quy cách thùng lên trước khá hợp với nhà thầu cần tính số thùng. Tuy nhiên, dưới «Kế hoạch đo» lại là chuỗi «210000 / 1 m² (tax included) / 50 … / 10», trái với việc đếm yêu cầu có diện tích và quận trong 30 ngày đã nêu ở trên. Chưa có bước mời nhà thầu gửi diện tích hoặc tự tính số thùng.",
+    "digest": "e5a848aed455d7d9ee960565af7c0e1fabfaa4e3bc02b6d9fb0acbd05bbe451c",
+    "state": "awaiting_qa",
+    "first_pass_runtime": true,
+    "input_tokens": 1589,
+    "output_tokens": 394,
+    "provider_fee_usd": 0,
+    "runtime_s": 26.062,
+    "unmetered_attempts": 0,
+    "attempts": [
+      {
+        "attempt_id": "63107838-8df2-44e4-bc69-1be0829afb4d",
+        "schema": "c3_director",
+        "request_sha256": "fd91408a4d7c16c32723951f05179d05c1279a0978f0ef25a442444d03ed9c94",
+        "input_tokens": 325,
+        "output_tokens": 80,
+        "raw_output": {
+          "primary_assignment": "Tạo ra chiến lược và đề xuất sản phẩm cho khách hàng yêu cầu báo giá gạch lát nền GB-6060 tại Hà Nội.",
+          "secondary_assignment": "Tạo ra chiến lược và đề xuất sản phẩm cho khách hàng yêu cầu báo giá gạch lát nền GB-6060 tại Hà Nội."
+        }
+      },
+      {
+        "attempt_id": "d73c9865-c771-46d5-b6e6-24836b2f5802",
+        "schema": "c3_research",
+        "request_sha256": "5b3c6da89b9902aefc4bd256484e0bcd7de5c1f03efa32740ba8edc851c7886e",
+        "input_tokens": 562,
+        "output_tokens": 111,
+        "raw_output": {
+          "source_ids": [
+            "F1",
+            "F2"
+          ],
+          "icp_analysis": "Nhà thầu hoàn thiện căn hộ tại Hà Nội",
+          "evidence_needed": "Nhà thầu hoàn thiện căn hộ tại Hà Nội",
+          "market_analysis": "Hà Nội",
+          "research_question": "Nhà thầu có thể ưu tiên tính nhanh số thùng và chi phí giao khi hoàn thiện căn hộ tại Hà Nội?"
+        }
+      },
+      {
+        "attempt_id": "3c31817f-65fe-41d6-9e10-22316cb9db64",
+        "schema": "c3_strategy",
+        "request_sha256": "171dd4aaa6d110646c70afb35dcd974706d7ba816399724a12cd9b898c7d8457",
+        "input_tokens": 702,
+        "output_tokens": 203,
+        "raw_output": {
+          "source_ids": [
+            "F1",
+            "F2"
+          ],
+          "positioning": "F1: Gạch GB-6060 đóng 1,44 m² mỗi thùng",
+          "recommendation": "F2: VND 210000 / 1 m² (tax included)",
+          "measurement_plan": "210000 / 1 m² (tax included) / 50 / 1 m² (tax included) / 50 / 1 m² (tax included) / 50 / 1 m² (tax included) / 50 / 1 m² (tax included) / 50 / 1 m² (tax included) / 50 / 1 m² (tax included) / 50 / 10"
+        }
+      }
+    ],
+    "version": "revised",
+    "release": "WF-03/research-strategy-draft@2",
+    "journal": [
+      {
+        "skill": "director",
+        "attempt": 1,
+        "outcome": "ok",
+        "input_tokens": 325,
+        "output_tokens": 80
+      },
+      {
+        "skill": "research",
+        "attempt": 1,
+        "outcome": "ok",
+        "input_tokens": 562,
+        "output_tokens": 111
+      },
+      {
+        "skill": "strategy",
+        "attempt": 1,
+        "outcome": "ok",
+        "input_tokens": 702,
+        "output_tokens": 203
+      }
+    ],
+    "revision": 1,
+    "deliverable_id": "0ca5e625-bba0-49fe-a826-9e32dfeeb465"
+  },
+  {
+    "case": "materials",
+    "workflow": "WF-13",
+    "arm": "legacy",
+    "packet": "b6a46f2e3e7f",
+    "run": "8981b233-e62b-4386-859f-d79cc036b8de",
+    "scores": [
+      1,
+      0,
+      0,
+      1,
+      0,
+      1
+    ],
+    "observation": "CTA nêu đúng «Gạch lát nền GB-6060 nhám 60×60 cm» và yêu cầu gửi diện tích để báo giá. Bản giữ Hà Nội nhưng không xác định nhà thầu hoàn thiện căn hộ. Không có nguồn tham chiếu. Headline và metadata lặp mục tiêu tăng số yêu cầu, còn ý định tìm kiếm mở đầu «Tạo nội dung cho trang yêu cầu báo giá», là việc của người biên tập. Bản không thêm con số giá, bảo chứng chống trượt hay kết quả bán hàng.",
+    "digest": "3af9bc8de35570a7c68f14363671d4b9363d924b4663823da5bce9665d3dcc71",
+    "state": "awaiting_qa",
+    "first_pass_runtime": true,
+    "input_tokens": 1855,
+    "output_tokens": 485,
+    "provider_fee_usd": 0,
+    "runtime_s": 23.593,
+    "unmetered_attempts": 0,
+    "attempts": [
+      {
+        "attempt_id": "170b5ecd-55ad-4117-b086-4b3e65c8fb97",
+        "schema": "planner",
+        "request_sha256": "9016e287b6fbecd8ed39e21d6574ef9c9a84699ccf7e56e6a534e769ecea54b0",
+        "input_tokens": 633,
+        "output_tokens": 145,
+        "raw_output": {
+          "nodes": [
+            {
+              "key": "copy",
+              "skill_type": "content",
+              "assignment": "content: Gạch lát nền GB-6060 nhám 60×60 cm. CTA: gửi diện tích cần báo giá",
+              "parents": []
+            },
+            {
+              "key": "seo",
+              "skill_type": "seo",
+              "assignment": "seo: Gạch lát nền GB-6060 nhám 60×60 cm. CTA: gửi diện tích cần báo giá",
+              "parents": [
+                "copy"
+              ]
+            }
+          ]
+        }
+      },
+      {
+        "attempt_id": "46a6a6e4-bea2-46bd-902a-6280d5b6277f",
+        "schema": "content",
+        "request_sha256": "f6fc6e64dede97377d82136ec85a9c6370db79dc563c8e427220191c0171a859",
+        "input_tokens": 541,
+        "output_tokens": 155,
+        "raw_output": {
+          "headline": "Tăng khách hàng yêu cầu báo giá gạch ốp lát tại Hà Nội",
+          "body_copy": "Tăng khách hàng yêu cầu báo giá gạch ốp lát tại Hà Nội, với KPI yêu cầu báo giá hợp lệ có diện tích và quận trong 30 ngày. Kênh trang yêu cầu báo giá và nội dung của nội dung của trang yêu cầu báo giá",
+          "source_ids": [
+            "brand",
+            "S1",
+            "S2",
+            "S3"
+          ],
+          "call_to_action": "Gạch lát nền GB-6060 nhám 60×60 cm. CTA: gửi diện tích cần báo giá"
+        }
+      },
+      {
+        "attempt_id": "a22cc3b4-cb17-4da4-8e85-4532d554c7d3",
+        "schema": "seo",
+        "request_sha256": "11f482dd68e8671b40e1199b83b089835a216ff93b34aacf954a909c98c126ca",
+        "input_tokens": 681,
+        "output_tokens": 185,
+        "raw_output": {
+          "page_title": "Tăng khách hàng yêu cầu báo giá gạch ốp lát tại Hà Nội",
+          "source_ids": [
+            "brand",
+            "S1",
+            "S2",
+            "S3"
+          ],
+          "search_intent": "Tạo nội dung cho trang yêu cầu báo giá gạch ốp lát tại Hà Nội, với KPI yêu cầu báo giá hợp lệ có diện tích và quận trong 30 ngày. Kênh trang yêu cầu báo giá và nội dung của trang yêu cầu báo giá",
+          "meta_description": "Tăng khách hàng yêu cầu báo giá gạch ốp lát tại Hà Nội với KPI yêu cầu báo giá hợp lệ có diện tích và quận trong 30 ngày. Kênh trang yêu cầu báo giá và nội dung của trang yêu cầu báo giá"
+        }
+      }
+    ],
+    "version": "legacy",
+    "release": "WF-13/landing-seo-draft@4",
+    "journal": [
+      {
+        "skill": "director",
+        "attempt": 1,
+        "outcome": "ok",
+        "input_tokens": 633,
+        "output_tokens": 145
+      },
+      {
+        "skill": "content",
+        "attempt": 1,
+        "outcome": "ok",
+        "input_tokens": 541,
+        "output_tokens": 155
+      },
+      {
+        "skill": "seo",
+        "attempt": 1,
+        "outcome": "ok",
+        "input_tokens": 681,
+        "output_tokens": 185
+      }
+    ],
+    "revision": 1,
+    "deliverable_id": "8fa01b9e-f6eb-4af6-a136-8fef5e7a2fd2"
+  },
+  {
+    "case": "materials",
+    "workflow": "WF-13",
+    "arm": "projected",
+    "packet": "44a6de81cb48",
+    "run": "6a3c9008-1697-4abb-9308-698d7235e582",
+    "scores": [
+      1,
+      0,
+      1,
+      0,
+      0,
+      1
+    ],
+    "observation": "Tên sản phẩm và F1 giữ đúng dòng nhám 60×60 cm, 1,44 m²/thùng. F2 cho phép đối chiếu đơn vị, thuế, ngưỡng 50 m² và khoản vận chuyển, thi công, nhưng làm mất chữ «tham khảo» của mức 210.000 VND/m². Hồ sơ tách được giả thuyết về tính số thùng, còn mục dữ liệu thiếu vẫn chung chung. Cả bốn trường nội dung đều lặp «Tăng khách hàng yêu cầu báo giá…» thay vì mời nhà thầu gửi diện tích và quận. Phần lời bán hàng không thêm công dụng hoặc bảo chứng cho gạch.",
+    "digest": "e74ff15995ee48831a8b50eae11fb65d9c661382da4d31c9efccaf52f5871d6e",
+    "state": "awaiting_qa",
+    "first_pass_runtime": true,
+    "input_tokens": 1398,
+    "output_tokens": 272,
+    "provider_fee_usd": 0,
+    "runtime_s": 20.906,
+    "unmetered_attempts": 0,
+    "attempts": [
+      {
+        "attempt_id": "c209851c-8baa-4c75-8f15-cf382cb63083",
+        "schema": "c3_director",
+        "request_sha256": "b3c1bd8b66fe4dc9737591c261146ef6c8b7e328971dd80ec8841b692ac0d560",
+        "input_tokens": 325,
+        "output_tokens": 53,
+        "raw_output": {
+          "primary_assignment": "content, seo, director, director",
+          "secondary_assignment": "content, seo, director, director"
+        }
+      },
+      {
+        "attempt_id": "a8f59039-ac4f-4e93-afc2-5b3d14bdf06c",
+        "schema": "c3_content",
+        "request_sha256": "374ca27208de3e97bdb9f27f042999384d30a1393cbbac593e4f298591c4b0d4",
+        "input_tokens": 499,
+        "output_tokens": 116,
+        "raw_output": {
+          "benefit": "Tăng khách hàng yêu cầu báo giá gạch ốp lát tại Hà Nội",
+          "headline": "Tăng khách hàng yêu cầu báo giá gạch ốp lát tại Hà Nội",
+          "source_ids": [
+            "F1",
+            "F2"
+          ],
+          "call_to_action": "Tăng khách hàng yêu cầu báo giá gạch ốp lát tại Hà Nội",
+          "value_proposition": "Tăng khách hàng yêu cầu báo giá gạch ốp lát tại Hà Nội"
+        }
+      },
+      {
+        "attempt_id": "261ec22e-39f9-4d54-b673-0ea72b771ffc",
+        "schema": "c3_seo",
+        "request_sha256": "1f7aaa056692de63aa16d941d16710f5232f7dfa7b65f16094f09dc9600ca89a",
+        "input_tokens": 574,
+        "output_tokens": 103,
+        "raw_output": {
+          "page_title": "Tăng khách hàng yêu cầu báo giá gạch lát nền GB-6060 tại Hà Nội",
+          "source_ids": [
+            "F1",
+            "F2"
+          ],
+          "search_intent": "Gạch lát nền GB-6060",
+          "meta_description": "Tăng khách hàng yêu cầu báo giá gạch lát nền GB-6060 tại Hà Nội để hoàn thiện căn hộ tại Hà Nội."
+        }
+      }
+    ],
+    "version": "first",
+    "release": "WF-13/landing-seo-draft@5",
+    "journal": [
+      {
+        "skill": "director",
+        "attempt": 1,
+        "outcome": "ok",
+        "input_tokens": 325,
+        "output_tokens": 53
+      },
+      {
+        "skill": "content",
+        "attempt": 1,
+        "outcome": "ok",
+        "input_tokens": 499,
+        "output_tokens": 116
+      },
+      {
+        "skill": "seo",
+        "attempt": 1,
+        "outcome": "ok",
+        "input_tokens": 574,
+        "output_tokens": 103
+      }
+    ],
+    "revision": 1,
+    "deliverable_id": "d63ff1b1-ccfa-4967-9308-45d9e5380b5d"
+  },
+  {
+    "case": "materials",
+    "workflow": "WF-13",
+    "arm": "projected",
+    "packet": "ab63239d8102",
+    "run": "9e8e7551-1adc-427a-8c6e-fe024e84e252",
+    "scores": [
+      1,
+      1,
+      1,
+      1,
+      0,
+      1
+    ],
+    "observation": "Nhà thầu đọc được 1,44 m²/thùng ở F1 và giá tham khảo 210.000 VND/m² ở F2, đã gồm thuế, từ 50 m² tại Hà Nội, chưa gồm vận chuyển và thi công. Nhu cầu tính số thùng được ghi là giả thuyết. Dòng «Gửi số lượng và địa điểm để yêu cầu báo giá» có thể thực hiện được. Tuy nhiên, chính trường CTA chỉ ghi khoản loại trừ, còn mô tả SEO «Xác minh số liệu nền» giao việc cho người đo chiến dịch. Bản không thêm bảo chứng chống trượt.",
+    "digest": "1adffb8841cb62178079c21c15b89eb8bfc8ba6775d21675814e5b41e692b649",
+    "state": "awaiting_qa",
+    "first_pass_runtime": true,
+    "input_tokens": 1502,
+    "output_tokens": 337,
+    "provider_fee_usd": 0,
+    "runtime_s": 20.031,
+    "unmetered_attempts": 0,
+    "attempts": [
+      {
+        "attempt_id": "07b8162a-252a-4d09-87dd-df3703fc8c3c",
+        "schema": "c3_director",
+        "request_sha256": "b3c1bd8b66fe4dc9737591c261146ef6c8b7e328971dd80ec8841b692ac0d560",
+        "input_tokens": 325,
+        "output_tokens": 53,
+        "raw_output": {
+          "primary_assignment": "content, seo, director, director",
+          "secondary_assignment": "content, seo, director, director"
+        }
+      },
+      {
+        "attempt_id": "46c2d152-b032-4606-88b9-ef4909a33698",
+        "schema": "c3_content",
+        "request_sha256": "5a48001727372b4b2ca68b8564b13a2ee95d1f4296018535d33675f49471f4e9",
+        "input_tokens": 549,
+        "output_tokens": 145,
+        "raw_output": {
+          "benefit": "Tăng khách hàng yêu cầu báo giá gạch lát nền GB-6060 nhám 60×60 cm tại Hà Nội",
+          "headline": "Tăng khách hàng yêu cầu báo giá gạch lát nền GB-6060 nhám 60×60 cm tại Hà Nội",
+          "source_ids": [
+            "F1",
+            "F2"
+          ],
+          "call_to_action": "Tại Hà Nội, chưa gồm vận chuyển và thi công.",
+          "value_proposition": "Nhà thầu có thể ưu tiên tính nhanh số thùng và chi phí giao."
+        }
+      },
+      {
+        "attempt_id": "c55b29e8-81e2-4588-8f04-7bd8306ba20b",
+        "schema": "c3_seo",
+        "request_sha256": "f001bb0aae4a47bfe6c8cba01606931c327a13f20590e5a3f841a738250cee67",
+        "input_tokens": 628,
+        "output_tokens": 139,
+        "raw_output": {
+          "page_title": "Tăng khách hàng yêu cầu báo giá gạch lát nền GB-6060 nhám 60×60 cm tại Hà Nội",
+          "source_ids": [
+            "F1",
+            "F2"
+          ],
+          "search_intent": "nhà thầu hoàn thiện căn hộ tại Hà Nội",
+          "meta_description": "Xác minh số liệu nền và kết quả bằng dữ liệu đo thực tế để tăng khách hàng yêu cầu báo giá gạch lát nền GB-6060 nhám 60×60 cm tại Hà Nội."
+        }
+      }
+    ],
+    "version": "revised",
+    "release": "WF-13/landing-seo-draft@5",
+    "journal": [
+      {
+        "skill": "director",
+        "attempt": 1,
+        "outcome": "ok",
+        "input_tokens": 325,
+        "output_tokens": 53
+      },
+      {
+        "skill": "content",
+        "attempt": 1,
+        "outcome": "ok",
+        "input_tokens": 549,
+        "output_tokens": 145
+      },
+      {
+        "skill": "seo",
+        "attempt": 1,
+        "outcome": "ok",
+        "input_tokens": 628,
+        "output_tokens": 139
+      }
+    ],
+    "revision": 1,
+    "deliverable_id": "8107bc7d-9334-482a-b3a0-d72017d1af4a"
+  },
+  {
+    "case": "service",
+    "workflow": "WF-03",
+    "arm": "legacy",
+    "packet": "ab54725442ab",
+    "run": "1fa624c6-34f6-45ac-9d96-3fd01bcbb2b2",
+    "scores": [
+      0,
+      0,
+      0,
+      1,
+      0,
+      1
+    ],
+    "observation": "«Chọn giờ sau khi làm» trên trang đặt lịch là việc người bận có thể làm. Tuy nhiên địa bàn viết thành «Họa Châu», thiếu điều kiện một dàn lạnh và không có nguồn cho nhận định. Đầu bài nói đến lịch xác nhận, nhưng tử và mẫu đều là «Họa Châu» nên chưa thể dùng để đo số lịch trong 14 ngày. Sở thích chọn giờ được viết dưới dạng khả năng.",
+    "digest": "c84204f7eac03f1f0be45afc55f62100528e60a26db0927afe127e7552d5ea33",
+    "state": "awaiting_qa",
+    "first_pass_runtime": true,
+    "input_tokens": 1508,
+    "output_tokens": 407,
+    "provider_fee_usd": 0,
+    "runtime_s": 22.422,
+    "unmetered_attempts": 0,
+    "attempts": [
+      {
+        "attempt_id": "32d8b8be-bf12-4bf7-937d-7689bdc5ae88",
+        "schema": "research_director",
+        "request_sha256": "fc760777a2ca40ae60eed3dbc56f468ecc82721b8215e85b520263cdc62a5180",
+        "input_tokens": 397,
+        "output_tokens": 89,
+        "raw_output": {
+          "research_assignment": "Tăng lịch khảo sát máy lạnh đã xác nhận tại Đà Nẵng",
+          "strategy_assignment": "Hướng dẫn positioning và KPI: lịch khảo sát có xác nhận trong 14 ngày, Kênh: trang đặt lịch, Kênh: trang đặt lịch, Kênh: trang đặt lịch, Kênh: trang đặt lịch, K"
+        }
+      },
+      {
+        "attempt_id": "68558019-e05c-4a0f-a5b0-2bd6d6c01153",
+        "schema": "research",
+        "request_sha256": "1136ce5ae6172d6bf02f0206a58facc7371c87f7917bc6832cde05e782d5c86a",
+        "input_tokens": 469,
+        "output_tokens": 110,
+        "raw_output": {
+          "source_ids": [
+            "brand",
+            "S1",
+            "S2",
+            "S3"
+          ],
+          "knowledge_gap": "Họa Châu có thể ưu tiên chọn giờ sau khi làm để đảm bảo vệ sinh máy lạnh.",
+          "observed_fact": "Họa Châu có thể ưu tiên chọn giờ sau khi làm để đảm bảo vệ sinh máy lạnh.",
+          "audience_hypothesis": "Họa Châu có thể ưu tiên chọn giờ sau khi làm để đảm bảo vệ sinh máy lạnh."
+        }
+      },
+      {
+        "attempt_id": "e9d0eba8-6c48-4dc6-aa5a-96c02e132206",
+        "schema": "strategy",
+        "request_sha256": "9506215ee4089633b38c2c6a6e714006da1b32808d8262988b62c87c6c7d596d",
+        "input_tokens": 642,
+        "output_tokens": 208,
+        "raw_output": {
+          "unit": "14 ngày",
+          "baseline": "trang đặt lịch",
+          "numerator": "Họa Châu",
+          "source_ids": [
+            "brand",
+            "S1",
+            "S2",
+            "S3"
+          ],
+          "denominator": "Họa Châu",
+          "metric_kind": "count",
+          "positioning": "Họa Châu có thể ưu tiên chọn giờ sau khi làm để đảm bảo vệ sinh máy lạnh",
+          "success_metric": "count",
+          "baseline_source": "brand",
+          "proposed_target": "Họa Châu có thể ưu tiên chọn giờ sau khi làm để đảm bảo vệ sinh máy lạnh",
+          "proposed_channel": "trang đặt lịch",
+          "measurement_method": "count",
+          "measurement_window": "14 ngày"
+        }
+      }
+    ],
+    "version": "legacy",
+    "release": "WF-03/research-strategy-draft@1",
+    "journal": [
+      {
+        "skill": "director",
+        "attempt": 1,
+        "outcome": "ok",
+        "input_tokens": 397,
+        "output_tokens": 89
+      },
+      {
+        "skill": "research",
+        "attempt": 1,
+        "outcome": "ok",
+        "input_tokens": 469,
+        "output_tokens": 110
+      },
+      {
+        "skill": "strategy",
+        "attempt": 1,
+        "outcome": "ok",
+        "input_tokens": 642,
+        "output_tokens": 208
+      }
+    ],
+    "revision": 1,
+    "deliverable_id": "de7c2658-555f-4f99-af89-d0927135fc5c"
+  },
+  {
+    "case": "service",
+    "workflow": "WF-03",
+    "arm": "projected",
+    "packet": "2760a49236c2",
+    "run": "026f26b6-76d5-4260-a08a-75178dd360d5",
+    "scores": [
+      1,
+      1,
+      0,
+      0,
+      0,
+      0
+    ],
+    "observation": "F1/F2 khoanh đúng gói cho một máy treo tường một dàn lạnh ở Hải Châu, phí gồm thuế và loại trừ linh kiện, gas. Hai nguồn này mô tả dịch vụ, chưa xác lập kết luận «Hộ gia đình tại Hải Châu có nhu cầu». Đề xuất chỉ lặp lại kết luận đó. Chọn giờ sau giờ làm vẫn là giả thuyết và kế hoạch «xác nhận trong 14 ngày» chưa chỉ cách đếm lịch khảo sát đã xác nhận.",
+    "digest": "4e4ad98856b1a4c1eac68c5248cd85dffa949d9c9c5364a158ed3a232b20aa19",
+    "state": "awaiting_qa",
+    "first_pass_runtime": true,
+    "input_tokens": 1413,
+    "output_tokens": 285,
+    "provider_fee_usd": 0,
+    "runtime_s": 19.235,
+    "unmetered_attempts": 0,
+    "attempts": [
+      {
+        "attempt_id": "f7556555-39e1-46c8-a850-d11cad1be3e0",
+        "schema": "c3_director",
+        "request_sha256": "b6d7de484c0bdccc3e8c3468487a0de89ef254e2d8d3d0b36800f25286bf48d5",
+        "input_tokens": 299,
+        "output_tokens": 59,
+        "raw_output": {
+          "primary_assignment": "Tăng lịch khảo sát máy lạnh AN-1 tại Đà Nẵng",
+          "secondary_assignment": "Tăng lịch khảo sát máy lạnh AN-1 tại Đà Nẵng (đo trực tiếp với khách hàng tại Đà Nẵng)"
+        }
+      },
+      {
+        "attempt_id": "045c2335-91d1-4a9f-96d6-9445015bf661",
+        "schema": "c3_research",
+        "request_sha256": "81890c911644f4c14611f2f1a9ce9c5f0c6f5a7a0e9b331406811b8d115d3ba2",
+        "input_tokens": 478,
+        "output_tokens": 128,
+        "raw_output": {
+          "source_ids": [
+            "F1",
+            "F2"
+          ],
+          "icp_analysis": "Hộ gia đình tại Hải Châu có nhu cầu vệ sinh máy lạnh AN-1 có thể ưu tiên chọn giờ sau giờ làm.",
+          "evidence_needed": "Hộ gia đình tại Hải Châu có nhu cầu vệ sinh máy lạnh AN-1.",
+          "market_analysis": "Hộ gia đình tại Hải Châu có nhu cầu vệ sinh máy lạnh AN-1.",
+          "research_question": "Hộ gia đình tại Hải Châu có nhu cầu vệ sinh máy lạnh AN-1?"
+        }
+      },
+      {
+        "attempt_id": "eb5ed60b-c9e6-4006-9e6b-d1db2266773b",
+        "schema": "c3_strategy",
+        "request_sha256": "0242ce3d3054ac33d2e3b96ac8cbf513d86758eed186636b3facc0f9ce14973e",
+        "input_tokens": 636,
+        "output_tokens": 98,
+        "raw_output": {
+          "source_ids": [
+            "F1",
+            "F2"
+          ],
+          "positioning": "Dịch vụ vệ sinh máy lạnh AN-1",
+          "recommendation": "Hộ gia đình tại Hải Châu có nhu cầu vệ sinh máy lạnh AN-1.",
+          "measurement_plan": "Đo trực tiếp với khách hàng tại Đà Nẵng trong 14 ngày, xác nhận trong 14 ngày và xác nhận trong 14 ngày."
+        }
+      }
+    ],
+    "version": "first",
+    "release": "WF-03/research-strategy-draft@2",
+    "journal": [
+      {
+        "skill": "director",
+        "attempt": 1,
+        "outcome": "ok",
+        "input_tokens": 299,
+        "output_tokens": 59
+      },
+      {
+        "skill": "research",
+        "attempt": 1,
+        "outcome": "ok",
+        "input_tokens": 478,
+        "output_tokens": 128
+      },
+      {
+        "skill": "strategy",
+        "attempt": 1,
+        "outcome": "ok",
+        "input_tokens": 636,
+        "output_tokens": 98
+      }
+    ],
+    "revision": 1,
+    "deliverable_id": "1c6d6917-5a2e-47d2-8ac5-5ec7d801cd75"
+  },
+  {
+    "case": "service",
+    "workflow": "WF-03",
+    "arm": "projected",
+    "packet": "7ed68a3dd74b",
+    "run": "38aa024a-ba26-46a2-b2a2-8028791b1a3b",
+    "scores": [
+      1,
+      0,
+      1,
+      0,
+      0,
+      1
+    ],
+    "observation": "F1/F2 phân biệt căn cứ về gói AN-1 một dàn lạnh với giả thuyết hộ có trẻ nhỏ thích lịch sau giờ làm. Bài có cách đếm lịch đã xác nhận trong 14 ngày ở Hải Châu. Phần đề xuất lại chuyển sang khảo sát «hộ gia đình tại Đà Nẵng», mở rộng khỏi nhóm phục vụ và không giúp hộ chọn khung giờ. Lý do thử đưa giá lên trước vẫn chưa gắn với nhu cầu về giờ hẹn.",
+    "digest": "7820ffbabf50cf3ff40076aa21b477f49ca7677491cf0cc09670c0d914dcbc92",
+    "state": "awaiting_qa",
+    "first_pass_runtime": true,
+    "input_tokens": 1500,
+    "output_tokens": 370,
+    "provider_fee_usd": 0,
+    "runtime_s": 21.39,
+    "unmetered_attempts": 0,
+    "attempts": [
+      {
+        "attempt_id": "a12ccbe5-da2c-4cfc-8210-c2f5b246391c",
+        "schema": "c3_director",
+        "request_sha256": "b6d7de484c0bdccc3e8c3468487a0de89ef254e2d8d3d0b36800f25286bf48d5",
+        "input_tokens": 299,
+        "output_tokens": 59,
+        "raw_output": {
+          "primary_assignment": "Tăng lịch khảo sát máy lạnh AN-1 tại Đà Nẵng",
+          "secondary_assignment": "Tăng lịch khảo sát máy lạnh AN-1 tại Đà Nẵng (đo trực tiếp với khách hàng tại Đà Nẵng)"
+        }
+      },
+      {
+        "attempt_id": "04cb1e7c-4678-4c02-a88d-019f3ddc45a6",
+        "schema": "c3_research",
+        "request_sha256": "ceb4316df26e7ee319fd2cf2aee34345ea4187408cc5598c66f25eb9703f8180",
+        "input_tokens": 503,
+        "output_tokens": 164,
+        "raw_output": {
+          "source_ids": [
+            "F1",
+            "F2"
+          ],
+          "icp_analysis": "Hộ gia đình tại Đà Nẵng có nhu cầu về dịch vụ vệ sinh máy lạnh AN-1 có thể được cải thiện thông qua khảo sát.",
+          "evidence_needed": "Hộ gia đình tại Đà Nẵng có nhu cầu về dịch vụ vệ sinh máy lạnh AN-1 có thể được khảo sát.",
+          "market_analysis": "Hộ gia đình tại Đà Nẵng có nhu cầu về dịch vụ vệ sinh máy lạnh AN-1 có thể được xác định thông qua khảo sát.",
+          "research_question": "Hộ gia đình tại Đà Nẵng có nhu cầu về dịch vụ vệ sinh máy lạnh AN-1 có thể được khảo sát không?"
+        }
+      },
+      {
+        "attempt_id": "fa426196-4367-4b01-b46b-a92601bfbe73",
+        "schema": "c3_strategy",
+        "request_sha256": "f0038a29d8660520c0e8b2c4288806c9ea6856b81e125c0c017041965ec392b7",
+        "input_tokens": 698,
+        "output_tokens": 147,
+        "raw_output": {
+          "source_ids": [
+            "F1",
+            "F2"
+          ],
+          "positioning": "Hộ gia đình tại Đà Nẵng có nhu cầu về dịch vụ vệ sinh máy lạnh AN-1 có thể được khảo sát không?",
+          "recommendation": "Hộ gia đình tại Đà Nẵng có nhu cầu về dịch vụ vệ sinh máy lạnh AN-1 có thể được khảo sát.",
+          "measurement_plan": "Hộ gia đình tại Đà Nẵng có nhu cầu về dịch vụ vệ sinh máy lạnh AN-1 có thể được khảo sát không? Hộ gia đình tại Đà Nẵng có nhu cầu về dịch vụ vệ sinh máy lạnh AN-1 có thể được xác định thông qua khảo "
+        }
+      }
+    ],
+    "version": "revised",
+    "release": "WF-03/research-strategy-draft@2",
+    "journal": [
+      {
+        "skill": "director",
+        "attempt": 1,
+        "outcome": "ok",
+        "input_tokens": 299,
+        "output_tokens": 59
+      },
+      {
+        "skill": "research",
+        "attempt": 1,
+        "outcome": "ok",
+        "input_tokens": 503,
+        "output_tokens": 164
+      },
+      {
+        "skill": "strategy",
+        "attempt": 1,
+        "outcome": "ok",
+        "input_tokens": 698,
+        "output_tokens": 147
+      }
+    ],
+    "revision": 1,
+    "deliverable_id": "56e75b6e-9836-4be0-b105-882b017d6e2a"
+  },
+  {
+    "case": "service",
+    "workflow": "WF-13",
+    "arm": "legacy",
+    "packet": "acd79fd2de94",
+    "run": "35aba3a4-d4f1-4639-b124-3bc1fe1bb736",
+    "scores": [
+      0,
+      0,
+      0,
+      1,
+      0,
+      0
+    ],
+    "observation": "«Đặt lịch ngay hôm nay!» phù hợp với trang đặt lịch. Ngoài tên AN-1, bản không nhận diện điều kiện một máy treo tường, một dàn lạnh hoặc giới hạn Hải Châu. Cụm «trải nghiệm dịch vụ chất lượng» không có chứng cứ. Không có dẫn nguồn. Metadata lặp «14 ngày» nhiều lần rồi lẫn «14日期», biến kỳ đo KPI nội bộ thành nội dung tìm kiếm cho khách.",
+    "digest": "6fba8f86e22eb6609968380ea442411555dd2b8015149343d5430c1980f8821d",
+    "state": "awaiting_qa",
+    "first_pass_runtime": true,
+    "input_tokens": 1700,
+    "output_tokens": 548,
+    "provider_fee_usd": 0,
+    "runtime_s": 28.671,
+    "unmetered_attempts": 0,
+    "attempts": [
+      {
+        "attempt_id": "08af962c-40cd-40e2-8e47-74033e687e5d",
+        "schema": "planner",
+        "request_sha256": "c6f0295f4c04bba9647be52620edaf072c02d31b66d00d2727b23f1fca891c0a",
+        "input_tokens": 568,
+        "output_tokens": 199,
+        "raw_output": {
+          "nodes": [
+            {
+              "key": "copy",
+              "skill_type": "content",
+              "assignment": "content: Tăng lịch khảo sát máy lạnh đã xác nhận tại Đà Nẵng. KPI: lịch khảo sát có xác nhận trong 14 ngày. Kênh: trang đặt lịch. 14 ngày: 14 ngày. 14 ngày: 14.",
+              "parents": []
+            },
+            {
+              "key": "seo",
+              "skill_type": "seo",
+              "assignment": "seo: Tăng lịch khảo sát máy lạnh đã xác nhận tại Đà Nẵng. KPI: lịch khảo sát có xác nhận trong 14 ngày. Kênh: trang đặt lịch. 14 ngày: 14 ngày. 14 ngày: 14.",
+              "parents": [
+                "copy"
+              ]
+            }
+          ]
+        }
+      },
+      {
+        "attempt_id": "ae9af81b-2690-4002-9b85-d8a223a5272f",
+        "schema": "content",
+        "request_sha256": "65489b5105a7e7f9c1f82562998cafc06930c855ff8d9a00a1bee9ade3787aa2",
+        "input_tokens": 503,
+        "output_tokens": 142,
+        "raw_output": {
+          "headline": "Tăng lịch khảo sát máy lạnh đã xác nhận tại Đà Nẵng",
+          "body_copy": "Hãy cùng tìm hiểu về dịch vụ vệ sinh máy lạnh AN-1 tại Đà Nẵng. Với KPI: lịch khảo sát có xác nhận trong 14 ngày, bạn sẽ có cơ hội trải nghiệm dịch vụ chất lượng tại một trong những địa điểm đáng tinc",
+          "source_ids": [
+            "brand",
+            "S1",
+            "S2",
+            "S3"
+          ],
+          "call_to_action": "Đến với chúng tôi để nhận được lịch khảo sát máy lạnh đã xác nhận tại Đà Nẵng. Đặt lịch ngay hôm nay!"
+        }
+      },
+      {
+        "attempt_id": "58216f6b-4ca3-4690-865b-c73185f431ba",
+        "schema": "seo",
+        "request_sha256": "62870a76a769e9655dee6ab4784ffc98556913f7ebecf4a42554cf7045c61d5f",
+        "input_tokens": 629,
+        "output_tokens": 207,
+        "raw_output": {
+          "page_title": "Tăng lịch khảo sát máy lạnh đã xác nhận tại Đà Nẵng",
+          "source_ids": [
+            "brand",
+            "S1",
+            "S2",
+            "S3"
+          ],
+          "search_intent": "Điều hướng lịch khảo sát máy lạnh đã xác nhận tại Đà Nẵng, với KPI: lịch khảo sát có xác nhận trong 14 ngày, Kênh: trang đặt lịch, 14 ngày: 14 ngày, 14 ngày: 14 ngày",
+          "meta_description": "Đánh giá dịch vụ vệ sinh máy lạnh AN-1 tại Đà Nẵng với KPI: lịch khảo sát có xác nhận trong 14 ngày. Kênh: trang đặt lịch, 14 ngày: 14 ngày, 14 ngày: 14 ngày, 14 ngày: 14 ngày, 14 ngày: 14 ngày, 14日期:"
+        }
+      }
+    ],
+    "version": "legacy",
+    "release": "WF-13/landing-seo-draft@4",
+    "journal": [
+      {
+        "skill": "director",
+        "attempt": 1,
+        "outcome": "ok",
+        "input_tokens": 568,
+        "output_tokens": 199
+      },
+      {
+        "skill": "content",
+        "attempt": 1,
+        "outcome": "ok",
+        "input_tokens": 503,
+        "output_tokens": 142
+      },
+      {
+        "skill": "seo",
+        "attempt": 1,
+        "outcome": "ok",
+        "input_tokens": 629,
+        "output_tokens": 207
+      }
+    ],
+    "revision": 1,
+    "deliverable_id": "1cf3c847-7c90-48bb-b164-6af75d789af2"
+  },
+  {
+    "case": "service",
+    "workflow": "WF-13",
+    "arm": "projected",
+    "packet": "96fecf4f9279",
+    "run": "fccdb967-87f1-42cd-9f1b-c8dbb2d8e33a",
+    "scores": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "observation": "F2 mô tả gói cho máy treo tường một dàn lạnh, phục vụ Hải Châu theo hẹn. Mô tả SEO lại thêm và lặp «đo trực tuyến», một cách cung cấp dịch vụ không có trong F1 hay F2. Lời bán hàng mở địa bàn ra Đà Nẵng, và bảng giá dùng «1 service» thay cho mỗi máy. «Tạo kế hoạch khảo sát» chưa mời hộ gia đình chọn khung giờ. Tiêu đề SEO chỉ có «Đà Nẵng», thiếu cả nhu cầu vệ sinh máy lạnh.",
+    "digest": "40bcc224c981e384ad318143559c7304f518fbea3d96c331c7a3c310ef5be6c1",
+    "state": "awaiting_qa",
+    "first_pass_runtime": true,
+    "input_tokens": 1290,
+    "output_tokens": 288,
+    "provider_fee_usd": 0,
+    "runtime_s": 15.796,
+    "unmetered_attempts": 0,
+    "attempts": [
+      {
+        "attempt_id": "6c08e7b9-81be-4870-8260-651b151ead6b",
+        "schema": "c3_director",
+        "request_sha256": "21039d3d153c7da16fb329827c8969dc454f27e823011d8c9ecfafebf8b1f91f",
+        "input_tokens": 299,
+        "output_tokens": 53,
+        "raw_output": {
+          "primary_assignment": "Tăng lịch khảo sát máy lạnh AN-1 tại Đà Nẵng",
+          "secondary_assignment": "Tăng lịch khảo sát máy lạnh AN-1 tại Đà Nẵng (đo trực tuyến)"
+        }
+      },
+      {
+        "attempt_id": "99782c07-77b5-4030-9850-a95bc3439450",
+        "schema": "c3_content",
+        "request_sha256": "741d80323fdbf59cd5abd29ade9d6d9f7a61b838bde09aa143749e0e5c1b6bee",
+        "input_tokens": 458,
+        "output_tokens": 104,
+        "raw_output": {
+          "benefit": "Tăng lịch khảo sát máy lạnh AN-1 tại Đà Nẵng",
+          "headline": "Đà Nẵng",
+          "source_ids": [
+            "F1",
+            "F2"
+          ],
+          "call_to_action": "Tạo kế hoạch khảo sát máy lạnh AN-1 tại Đà Nẵng",
+          "value_proposition": "Hộ có trẻ nhỏ có thể ưu tiên chọn giờ sau giờ làm để khảo sát máy lạnh AN-1 tại Đà Nẵng."
+        }
+      },
+      {
+        "attempt_id": "2d704d99-12ca-42af-9c4c-971cd658b54d",
+        "schema": "c3_seo",
+        "request_sha256": "30bf7492b0eadf16ca709829df379d971add43a1975d0ec98eb4d0a75a5213b1",
+        "input_tokens": 533,
+        "output_tokens": 131,
+        "raw_output": {
+          "page_title": "Đà Nẵng",
+          "source_ids": [
+            "F1",
+            "F2"
+          ],
+          "search_intent": "Hộ gia đình tại Đà Nẵng",
+          "meta_description": "Dịch vụ vệ sinh máy lạnh AN-1 tại Đà Nẵng (đo trực tuyến) - khảo sát máy lạnh AN-1 tại Đà Nẵng (đo trực tuyến) - khảo sát máy lạnh AN-1 tại Đà Nẵng (đo trực tuyến) - khảo sát máy lạnh AN-1 tại Đà Nẵng"
+        }
+      }
+    ],
+    "version": "first",
+    "release": "WF-13/landing-seo-draft@5",
+    "journal": [
+      {
+        "skill": "director",
+        "attempt": 1,
+        "outcome": "ok",
+        "input_tokens": 299,
+        "output_tokens": 53
+      },
+      {
+        "skill": "content",
+        "attempt": 1,
+        "outcome": "ok",
+        "input_tokens": 458,
+        "output_tokens": 104
+      },
+      {
+        "skill": "seo",
+        "attempt": 1,
+        "outcome": "ok",
+        "input_tokens": 533,
+        "output_tokens": 131
+      }
+    ],
+    "revision": 1,
+    "deliverable_id": "4750d5a0-77ed-4aaf-9513-88ffb19e04cf"
+  },
+  {
+    "case": "service",
+    "workflow": "WF-13",
+    "arm": "projected",
+    "packet": "cd3dd06c1c6f",
+    "run": "0b6126af-0a65-41f9-a67a-6bdbc178326a",
+    "scores": [
+      1,
+      0,
+      0,
+      1,
+      0,
+      0
+    ],
+    "observation": "F2 giữ đúng máy treo tường một dàn lạnh và giới hạn Hải Châu theo hẹn. Dòng «Gửi khung giờ mong muốn» hướng dẫn đặt lịch. Tuy nhiên F1 đổi 180.000 VND/máy thành mỗi «suất dịch vụ», còn CTA và SEO mở dịch vụ ra Đà Nẵng. Cụm «chất lượng cao» không có căn cứ trong F1 hay F2. Tiêu đề SEO nói về tăng lịch khảo sát cho bên bán, còn ý định tìm kiếm chỉ nêu đối tượng, bỏ nhu cầu tìm dịch vụ vệ sinh máy lạnh ở Hải Châu.",
+    "digest": "c198a642849cf0475e23a3f6847989f1b24c6ecb0ffc5c777b3db83d4bbff19c",
+    "state": "awaiting_qa",
+    "first_pass_runtime": true,
+    "input_tokens": 1406,
+    "output_tokens": 293,
+    "provider_fee_usd": 0,
+    "runtime_s": 22.875,
+    "unmetered_attempts": 0,
+    "attempts": [
+      {
+        "attempt_id": "d9c8f923-36ba-4495-a25a-10b83be09ae8",
+        "schema": "c3_director",
+        "request_sha256": "21039d3d153c7da16fb329827c8969dc454f27e823011d8c9ecfafebf8b1f91f",
+        "input_tokens": 299,
+        "output_tokens": 53,
+        "raw_output": {
+          "primary_assignment": "Tăng lịch khảo sát máy lạnh AN-1 tại Đà Nẵng",
+          "secondary_assignment": "Tăng lịch khảo sát máy lạnh AN-1 tại Đà Nẵng (đo trực tuyến)"
+        }
+      },
+      {
+        "attempt_id": "4e1d52c8-f79f-44e8-8630-1219f7de97dc",
+        "schema": "c3_content",
+        "request_sha256": "df64f7f6c9d5c140631d2551189522af6a9da8cf5b72e795e3c2e805f7bd02b9",
+        "input_tokens": 508,
+        "output_tokens": 140,
+        "raw_output": {
+          "benefit": "Hộ có trẻ nhỏ có thể ưu tiên chọn giờ sau giờ làm.",
+          "headline": "Tăng lịch khảo sát máy lạnh AN-1 tại Đà Nẵng",
+          "source_ids": [
+            "F1",
+            "F2"
+          ],
+          "call_to_action": "Hãy tham gia khảo sát máy lạnh AN-1 tại Đà Nẵng để nhận được dịch vụ vệ sinh máy lạnh AN-1 chất lượng cao.",
+          "value_proposition": "Hộ có trẻ nhỏ có thể ưu tiên chọn giờ sau giờ làm để tận hưởng dịch vụ vệ sinh máy lạnh AN-1 chất lượng cao."
+        }
+      },
+      {
+        "attempt_id": "fb6e7665-3fbe-4f7a-8c2b-f29e5e9b51b6",
+        "schema": "c3_seo",
+        "request_sha256": "23fb3eb78e246e68424633d8304cded573db96ccb524bc01748cfbc1dee7aadd",
+        "input_tokens": 599,
+        "output_tokens": 100,
+        "raw_output": {
+          "page_title": "Tăng lịch khảo sát máy lạnh AN-1 tại Đà Nẵng",
+          "source_ids": [
+            "F1",
+            "F2"
+          ],
+          "search_intent": "Hộ gia đình tại Đà Nẵng",
+          "meta_description": "Hộ gia đình tại Đà Nẵng có thể tận hưởng dịch vụ vệ sinh máy lạnh AN-1 chất lượng cao với lịch khảo sát được tăng lên."
+        }
+      }
+    ],
+    "version": "revised",
+    "release": "WF-13/landing-seo-draft@5",
+    "journal": [
+      {
+        "skill": "director",
+        "attempt": 1,
+        "outcome": "ok",
+        "input_tokens": 299,
+        "output_tokens": 53
+      },
+      {
+        "skill": "content",
+        "attempt": 1,
+        "outcome": "ok",
+        "input_tokens": 508,
+        "output_tokens": 140
+      },
+      {
+        "skill": "seo",
+        "attempt": 1,
+        "outcome": "ok",
+        "input_tokens": 599,
+        "output_tokens": 100
+      }
+    ],
+    "revision": 1,
+    "deliverable_id": "ca878463-f9e1-4ac0-a15c-414f4062e416"
+  },
+  {
+    "case": "agency",
+    "workflow": "WF-03",
+    "arm": "legacy",
+    "packet": "c59631cdf109",
+    "run": "ca07059a-fff4-4eb2-9e28-f60801664859",
+    "scores": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      1
+    ],
+    "observation": "«Trên trang đăng ký mẫu» là ý của dòng chọn kênh, nhưng bài chưa cho nhà sách lý do xem mẫu hoặc dấu hiệu nhận biết SM-A5. Nhóm «đối tác bán lẻ» rộng hơn nhóm nhà sách và văn phòng phẩm ở Huế. «KPI đề xuất: n01» và «Phương pháp đo: countr» bỏ mất yêu cầu nhận mẫu có mã cửa hàng. Bài không hứa chất lượng giấy hoặc khả năng chống xuyên mực.",
+    "digest": "152541af5e404213273a75893ed2db52a0e05c19d5cd463a3f1e4d12b2db0875",
+    "state": "awaiting_qa",
+    "first_pass_runtime": false,
+    "input_tokens": 2090,
+    "output_tokens": 516,
+    "provider_fee_usd": 0,
+    "runtime_s": 37.781,
+    "unmetered_attempts": 0,
+    "attempts": [
+      {
+        "attempt_id": "8966c5b0-17a0-452d-b90d-343e2c40ea73",
+        "schema": "research_director",
+        "request_sha256": "2e4bdd9ffb32dbca0f003e65a147c04fd70b0cf1a75c8518b49d8256b70bdcf0",
+        "input_tokens": 410,
+        "output_tokens": 76,
+        "raw_output": {
+          "research_assignment": "Research separates facts, hypotheses, and missing evidence to propose positioning and a measurable KPI for a new product. The positioning should be based on the",
+          "strategy_assignment": "Develop a positioning strategy that includes a measurable KPI, such as the number of customers who sign up for the product within 30 days, to measure the impact"
+        }
+      },
+      {
+        "attempt_id": "687f6d9a-1c3c-4cb4-8103-b9ac9ba6baf3",
+        "schema": "research",
+        "request_sha256": "f7097580bb87e89205d0f9b10122b678b06a893f583e2bff9ac999bd675049e8",
+        "input_tokens": 498,
+        "output_tokens": 76,
+        "raw_output": {
+          "source_ids": [
+            "brand",
+            "S1",
+            "S2",
+            "S3"
+          ],
+          "knowledge_gap": "S1: ",
+          "observed_fact": "S1: ",
+          "audience_hypothesis": "S1: "
+        }
+      },
+      {
+        "attempt_id": "0a63326d-ad12-4c1f-b226-09f5eb62c489",
+        "schema": "strategy",
+        "request_sha256": "5b576e70758f7aa8f853777f568cd59334420baee30d237b4cdfd868230b2cb2",
+        "input_tokens": 580,
+        "output_tokens": 194,
+        "raw_output": {
+          "unit": "KPI",
+          "baseline": "S1: đăng ký nhận mẫu",
+          "numerator": "30 ngày",
+          "source_ids": [
+            "brand"
+          ],
+          "denominator": "120 trang giấy chấm",
+          "metric_kind": "count",
+          "positioning": "tìm đối tác bán lẻ sổ giấy chấm tại Huế",
+          "success_metric": "count",
+          "baseline_source": "S1",
+          "proposed_target": "tìm đối tác bán lẻ sổ giấy chấm tại Huế",
+          "proposed_channel": "trang đăng ký mẫu",
+          "measurement_method": "count",
+          "measurement_window": "30 ngày"
+        }
+      },
+      {
+        "attempt_id": "201344ce-3947-42f0-ac93-a875d5f0d053",
+        "schema": "strategy",
+        "request_sha256": "9577f839e57f01037b80a8aee0e505e9e5d6bc6947503342ad9de83019d8f3fb",
+        "input_tokens": 602,
+        "output_tokens": 170,
+        "raw_output": {
+          "unit": "KPI",
+          "baseline": "n01",
+          "numerator": "n01",
+          "source_ids": [
+            "brand",
+            "S1",
+            "S2",
+            "S3"
+          ],
+          "denominator": "n01",
+          "metric_kind": "count",
+          "positioning": "positioning strategy",
+          "success_metric": "n01",
+          "baseline_source": "brand",
+          "proposed_target": "strategy",
+          "proposed_channel": "trang đăng ký mẫu",
+          "measurement_method": "countr",
+          "measurement_window": "30 days"
+        }
+      }
+    ],
+    "version": "legacy",
+    "release": "WF-03/research-strategy-draft@1",
+    "journal": [
+      {
+        "skill": "director",
+        "attempt": 1,
+        "outcome": "ok",
+        "input_tokens": 410,
+        "output_tokens": 76
+      },
+      {
+        "skill": "research",
+        "attempt": 1,
+        "outcome": "ok",
+        "input_tokens": 498,
+        "output_tokens": 76
+      },
+      {
+        "skill": "strategy",
+        "attempt": 1,
+        "outcome": "invalid_source",
+        "input_tokens": 580,
+        "output_tokens": 194
+      },
+      {
+        "skill": "strategy",
+        "attempt": 2,
+        "outcome": "ok",
+        "input_tokens": 602,
+        "output_tokens": 170
+      }
+    ],
+    "revision": 1,
+    "deliverable_id": "20759643-de01-4cb4-b820-5f0192416887"
+  },
+  {
+    "case": "agency",
+    "workflow": "WF-03",
+    "arm": "projected",
+    "packet": "20064f277f96",
+    "run": "6b4294dc-cd14-46a7-89a1-07ebf4352e9a",
+    "scores": [
+      1,
+      1,
+      0,
+      1,
+      0,
+      1
+    ],
+    "observation": "Nhà sách ở Huế có lý do để xin mẫu và đánh giá bề mặt giấy trước khi nhập. F1/F2 nêu đúng 24 cuốn, giấy chấm 120 trang và mẫu bìa kraft. Tuy nhiên, «Đơn sỉ tối thiểu 24 cuốn» vừa là điều kiện đã duyệt vừa bị ghi là giả thuyết. Phần đề xuất chỉ lặp tên sổ dù kỳ đo và sự kiện yêu cầu mẫu có mã cửa hàng đều đúng.",
+    "digest": "0c17a47a7821bfe5cb680eaf97119b5c817dbc1b0aecee03188327bea013affb",
+    "state": "awaiting_qa",
+    "first_pass_runtime": true,
+    "input_tokens": 1255,
+    "output_tokens": 271,
+    "provider_fee_usd": 0,
+    "runtime_s": 19.297,
+    "unmetered_attempts": 0,
+    "attempts": [
+      {
+        "attempt_id": "e542a4d6-29df-406e-91cb-ea3dc77e1506",
+        "schema": "c3_director",
+        "request_sha256": "654148a6983858be9130e18feb3c57df35f84b0cb5ed613012318a42f6c18ef0",
+        "input_tokens": 310,
+        "output_tokens": 49,
+        "raw_output": {
+          "primary_assignment": "Tìm đối tác bán lẻ sổ giấy chấm tại Huế",
+          "secondary_assignment": "Tìm đối tác bán lẻ sổ giấy chấm tại Huế"
+        }
+      },
+      {
+        "attempt_id": "4ebd7aff-d399-4a19-992a-ed06c1e89950",
+        "schema": "c3_research",
+        "request_sha256": "9dc1adefd6cdb0625e5a13c25a10859793f81179c8166f06198402165f875330",
+        "input_tokens": 404,
+        "output_tokens": 106,
+        "raw_output": {
+          "source_ids": [
+            "F1",
+            "F2"
+          ],
+          "icp_analysis": "Đơn sỉ tối thiểu 24 cuốn.",
+          "evidence_needed": "Kiểm chứng nhu cầu với khách hàng trong thị trường đã chọn.",
+          "market_analysis": "Xác minh số liệu nền và kết quả bằng dữ liệu đo thực tế.",
+          "research_question": "Bộ mẫu có thể giúp nhà sách đánh giá bề mặt giấy trước khi nhập."
+        }
+      },
+      {
+        "attempt_id": "c6e06cd5-6e69-43cf-abda-9f91c862f3f1",
+        "schema": "c3_strategy",
+        "request_sha256": "d55d9d43145c9a34301f558a860a4ba9312368d50f5e6fec55417f45506dc786",
+        "input_tokens": 541,
+        "output_tokens": 116,
+        "raw_output": {
+          "source_ids": [
+            "F1",
+            "F2"
+          ],
+          "positioning": "Sổ tay SM-A5 giấy chấm 120 trang",
+          "recommendation": "Sổ tay SM-A5 giấy chấm 120 trang",
+          "measurement_plan": "yêu cầu mẫu từ nhà bán lẻ có mã cửa hàng trong 30 ngày · yêu cầu mẫu · 30 ngày · yêu cầu mẫu từ nhà bán lẻ có mã cửa hàng trong 30 ngày"
+        }
+      }
+    ],
+    "version": "first",
+    "release": "WF-03/research-strategy-draft@2",
+    "journal": [
+      {
+        "skill": "director",
+        "attempt": 1,
+        "outcome": "ok",
+        "input_tokens": 310,
+        "output_tokens": 49
+      },
+      {
+        "skill": "research",
+        "attempt": 1,
+        "outcome": "ok",
+        "input_tokens": 404,
+        "output_tokens": 106
+      },
+      {
+        "skill": "strategy",
+        "attempt": 1,
+        "outcome": "ok",
+        "input_tokens": 541,
+        "output_tokens": 116
+      }
+    ],
+    "revision": 1,
+    "deliverable_id": "87623b49-da79-4020-873d-2d47f260aefd"
+  },
+  {
+    "case": "agency",
+    "workflow": "WF-03",
+    "arm": "projected",
+    "packet": "466623517d87",
+    "run": "9caccaf0-0fa6-4200-9a4b-1d2818ba93d3",
+    "scores": [
+      1,
+      1,
+      0,
+      1,
+      0,
+      1
+    ],
+    "observation": "Nhà sách biết có thể đánh giá bề mặt giấy qua mẫu trước khi nhập, được biết báo giá riêng, số lượng 24 cuốn và phí in logo. «Đơn sỉ tối thiểu 24 cuốn» vừa được coi là F1 vừa là giả thuyết. Khối thử nghiệm chọn đúng yêu cầu mẫu có mã cửa hàng trong 30 ngày, nhưng thiếu lý do ưu tiên thông tin đơn sỉ trên trang mẫu. Dòng «Kế hoạch đo: WF-03/research-strategy-draft@2» chỉ là mã kỹ thuật.",
+    "digest": "f17192c30f73f658588b3e7f3fed04ed34851cb06ff2b0cd515849b6e4dd15a3",
+    "state": "awaiting_qa",
+    "first_pass_runtime": true,
+    "input_tokens": 1320,
+    "output_tokens": 258,
+    "provider_fee_usd": 0,
+    "runtime_s": 17.172,
+    "unmetered_attempts": 0,
+    "attempts": [
+      {
+        "attempt_id": "ace2660f-2a05-4d84-b4ce-c6556279e618",
+        "schema": "c3_director",
+        "request_sha256": "654148a6983858be9130e18feb3c57df35f84b0cb5ed613012318a42f6c18ef0",
+        "input_tokens": 310,
+        "output_tokens": 49,
+        "raw_output": {
+          "primary_assignment": "Tìm đối tác bán lẻ sổ giấy chấm tại Huế",
+          "secondary_assignment": "Tìm đối tác bán lẻ sổ giấy chấm tại Huế"
+        }
+      },
+      {
+        "attempt_id": "d94c4123-edce-4fdf-af86-7234492c3c8c",
+        "schema": "c3_research",
+        "request_sha256": "1e6f0d15acf2aee456012a977b92e02d145f59901027392154695d35dbed639b",
+        "input_tokens": 429,
+        "output_tokens": 121,
+        "raw_output": {
+          "source_ids": [
+            "F1",
+            "F2"
+          ],
+          "icp_analysis": "Đơn sỉ tối thiểu 24 cuốn",
+          "evidence_needed": "Kiểm chứng nhu cầu với khách hàng trong thị trường đã chọn.",
+          "market_analysis": "Xác minh số liệu nền và kết quả bằng dữ liệu đo thực tế.",
+          "research_question": "Xem xét nhu cầu của khách hàng trong thị trường đã chọn để tìm đối tác bán lẻ sổ giấy chấm tại Huế."
+        }
+      },
+      {
+        "attempt_id": "d190eadc-db98-4655-9a09-30217d2d5ab8",
+        "schema": "c3_strategy",
+        "request_sha256": "06bc825ebf74f7e112e7eaa72a6c8b53813db6b79e5d3fb6567f1ef247ac3263",
+        "input_tokens": 581,
+        "output_tokens": 88,
+        "raw_output": {
+          "source_ids": [
+            "F1",
+            "F2"
+          ],
+          "positioning": "yêu cầu mẫu từ nhà bán lẻ có mã cửa hàng trong 30 ngày",
+          "recommendation": "Sổ tay SM-A5 giấy chấm 120 trang",
+          "measurement_plan": "WF-03/research-strategy-draft@2"
+        }
+      }
+    ],
+    "version": "revised",
+    "release": "WF-03/research-strategy-draft@2",
+    "journal": [
+      {
+        "skill": "director",
+        "attempt": 1,
+        "outcome": "ok",
+        "input_tokens": 310,
+        "output_tokens": 49
+      },
+      {
+        "skill": "research",
+        "attempt": 1,
+        "outcome": "ok",
+        "input_tokens": 429,
+        "output_tokens": 121
+      },
+      {
+        "skill": "strategy",
+        "attempt": 1,
+        "outcome": "ok",
+        "input_tokens": 581,
+        "output_tokens": 88
+      }
+    ],
+    "revision": 1,
+    "deliverable_id": "bf12e385-3b69-446f-baa7-cb739bf8ddbe"
+  },
+  {
+    "case": "agency",
+    "workflow": "WF-13",
+    "arm": "legacy",
+    "packet": "41a45bb445cf",
+    "run": "5fa5b150-b448-4fd0-84eb-9227a7b079cc",
+    "scores": [
+      1,
+      0,
+      0,
+      1,
+      0,
+      0
+    ],
+    "observation": "Dòng ý định tìm kiếm nhận đúng sổ A5 giấy chấm 120 trang. «Đăng ký nhận mẫu» là hành động phù hợp. Nhưng câu «nhận được sản phẩm chất lượng tốt nhất từ nhà bán lẻ» đảo vai của nhà bán lẻ, vốn là bên xin mẫu, và đưa ra so sánh không có phép thử. Metadata còn thêm «Đào tạo», trong khi hồ sơ dành cho tìm đối tác tại Huế. Bản không dẫn nguồn cho các nội dung này.",
+    "digest": "2809a785491d5ff4f484acdca32adeade11988285fd05a8aa4accf002e6f0055",
+    "state": "awaiting_qa",
+    "first_pass_runtime": true,
+    "input_tokens": 1663,
+    "output_tokens": 401,
+    "provider_fee_usd": 0,
+    "runtime_s": 34.219,
+    "unmetered_attempts": 0,
+    "attempts": [
+      {
+        "attempt_id": "2a45a051-fcd6-48fd-bcd4-48a9939befcb",
+        "schema": "planner",
+        "request_sha256": "3fe945fb44061849a7653fb7f023b46f55a4ed48e523c70da056f6ac83fe208f",
+        "input_tokens": 581,
+        "output_tokens": 119,
+        "raw_output": {
+          "nodes": [
+            {
+              "key": "copy",
+              "skill_type": "content",
+              "assignment": "content: Sổ Mộc - Sổ A5 giấy chấm 120 trang",
+              "parents": []
+            },
+            {
+              "key": "seo",
+              "skill_type": "seo",
+              "assignment": "seo: Sổ Mộc - Sổ A5 giấy chấm 120 trang",
+              "parents": [
+                "copy"
+              ]
+            }
+          ]
+        }
+      },
+      {
+        "attempt_id": "36845ed2-c74d-4c95-a68f-28c32f4faad8",
+        "schema": "content",
+        "request_sha256": "a974543fa2e260500aa3f090cd621e1c2d67e7dc8d07ace0a00525a4ca00446e",
+        "input_tokens": 477,
+        "output_tokens": 145,
+        "raw_output": {
+          "headline": "Tìm đối tác bán lẻ sổ giấy chấm tại Huế",
+          "body_copy": "Để tìm đối tác bán lẻ sổ giấy chấm tại Huế, hãy đăng ký mẫu từ nhà bán lẻ thông qua trang đăng ký mẫu của chúng tôi. KPI: yêu cầu mẫu từ nhà bán lẻ có mã cửa hàng trong 30 ngày. Kênh: trang đăng ký từ",
+          "source_ids": [
+            "brand",
+            "S1",
+            "S2",
+            "S3"
+          ],
+          "call_to_action": "Đăng ký nhận mẫu để nhận được sản phẩm chất lượng tốt nhất từ nhà bán lẻ."
+        }
+      },
+      {
+        "attempt_id": "d24f1218-8a70-4cb6-b01e-ab85703eb73f",
+        "schema": "seo",
+        "request_sha256": "b5162ef0d1813e78fd7c1c7abdeb73529b194b24dbccb17420f9711373670ce2",
+        "input_tokens": 605,
+        "output_tokens": 137,
+        "raw_output": {
+          "page_title": "Tìm đối tác bán lẻ sổ giấy chấm tại Huế",
+          "source_ids": [
+            "brand",
+            "S1",
+            "S2",
+            "S3"
+          ],
+          "search_intent": "Sổ Mộc - Sổ A5 giấy chấm 120 trang",
+          "meta_description": "Đào tạo và tìm đối tác bán lẻ sổ giấy chấm tại Huế, với KPI yêu cầu mẫu từ nhà bán lẻ có mã cửa hàng trong 30 ngày. Đăng ký nhận mẫu để nhận sản phẩm chất lượng tốt nhất từ nhà bán lẻ."
+        }
+      }
+    ],
+    "version": "legacy",
+    "release": "WF-13/landing-seo-draft@4",
+    "journal": [
+      {
+        "skill": "director",
+        "attempt": 1,
+        "outcome": "ok",
+        "input_tokens": 581,
+        "output_tokens": 119
+      },
+      {
+        "skill": "content",
+        "attempt": 1,
+        "outcome": "ok",
+        "input_tokens": 477,
+        "output_tokens": 145
+      },
+      {
+        "skill": "seo",
+        "attempt": 1,
+        "outcome": "ok",
+        "input_tokens": 605,
+        "output_tokens": 137
+      }
+    ],
+    "revision": 1,
+    "deliverable_id": "16265d82-729c-4a85-99f0-752103f8c6b0"
+  },
+  {
+    "case": "agency",
+    "workflow": "WF-13",
+    "arm": "projected",
+    "packet": "bbe91398344f",
+    "run": "25164229-606e-4cfa-a9bd-dd2a0172cdd8",
+    "scores": [
+      1,
+      1,
+      0,
+      0,
+      0,
+      0
+    ],
+    "observation": "Hồ sơ ghi đúng sổ SM-A5 giấy chấm 120 trang, bìa kraft, thị trường Huế và đơn sỉ tối thiểu 24 cuốn. Trong phần giá trị đề xuất, chủ ngữ «Đơn sỉ tối thiểu 24 cuốn» lại được gắn với lợi ích đánh giá bề mặt giấy trước khi nhập. Giả thuyết được cung cấp nói về bộ mẫu, F1 và F2 không xác nhận lợi ích đó cho đơn tối thiểu. Tiêu đề chỉ ghi «Huế» và CTA «Tìm đối tác bán lẻ» không mời nhà sách đăng ký nhận mẫu.",
+    "digest": "2ce528c016bf99c48d67101e3c30b8431b1650789c28afd8611cf030b4bad2b0",
+    "state": "awaiting_qa",
+    "first_pass_runtime": true,
+    "input_tokens": 1159,
+    "output_tokens": 247,
+    "provider_fee_usd": 0,
+    "runtime_s": 18.516,
+    "unmetered_attempts": 0,
+    "attempts": [
+      {
+        "attempt_id": "050ad751-0b4d-4e5c-922d-99675e1089ff",
+        "schema": "c3_director",
+        "request_sha256": "996e0ce9bcd4b3976b4a5d540b3cf921714d0402c1cedc29050229624642f4cd",
+        "input_tokens": 310,
+        "output_tokens": 49,
+        "raw_output": {
+          "primary_assignment": "Tìm đối tác bán lẻ sổ giấy chấm tại Huế",
+          "secondary_assignment": "Tìm đối tác bán lẻ sổ giấy chấm tại Huế"
+        }
+      },
+      {
+        "attempt_id": "8d774ef1-9ac2-4185-83e9-e8019d74ff8c",
+        "schema": "c3_content",
+        "request_sha256": "be357b489bf0472524bff969a69af0fb6c6fadecea50536d3c8d88d563bdcd24",
+        "input_tokens": 386,
+        "output_tokens": 110,
+        "raw_output": {
+          "benefit": "Tìm đối tác bán lẻ sổ giấy chấm tại Huế",
+          "headline": "Huế",
+          "source_ids": [
+            "F1",
+            "F2"
+          ],
+          "call_to_action": "Tìm đối tác bán lẻ sổ giấy chấm tại Huế",
+          "value_proposition": "Đơn sỉ tối thiểu 24 cuốn, chỉ mẫu bìa kraft khổ A5, có thể giúp nhà sách đánh giá bề mặt giấy trước khi nhập."
+        }
+      },
+      {
+        "attempt_id": "2b3ae144-f0c3-463f-bd96-6d6d564241f2",
+        "schema": "c3_seo",
+        "request_sha256": "4e78189dc27d39a4a9ef60262a6cb78d95aeb99696b4710cb48c663d82112e64",
+        "input_tokens": 463,
+        "output_tokens": 88,
+        "raw_output": {
+          "page_title": "Tìm đối tác bán lẻ sổ giấy chấm tại Huế",
+          "source_ids": [
+            "F1",
+            "F2"
+          ],
+          "search_intent": "sỉ giấy chấm",
+          "meta_description": "Tìm đối tác bán lẻ sổ giấy chấm tại Huế để hỗ trợ nhà sách đánh giá bề mặt giấy trước khi nhập sản phẩm."
+        }
+      }
+    ],
+    "version": "first",
+    "release": "WF-13/landing-seo-draft@5",
+    "journal": [
+      {
+        "skill": "director",
+        "attempt": 1,
+        "outcome": "ok",
+        "input_tokens": 310,
+        "output_tokens": 49
+      },
+      {
+        "skill": "content",
+        "attempt": 1,
+        "outcome": "ok",
+        "input_tokens": 386,
+        "output_tokens": 110
+      },
+      {
+        "skill": "seo",
+        "attempt": 1,
+        "outcome": "ok",
+        "input_tokens": 463,
+        "output_tokens": 88
+      }
+    ],
+    "revision": 1,
+    "deliverable_id": "d39e1d16-9ccc-4f5f-9be9-a61b266c3170"
+  },
+  {
+    "case": "agency",
+    "workflow": "WF-13",
+    "arm": "projected",
+    "packet": "c43dbfbabb30",
+    "run": "f7aa3e04-1d1a-460e-8803-ea0b2e6fe5e4",
+    "scores": [
+      1,
+      1,
+      1,
+      1,
+      0,
+      1
+    ],
+    "observation": "F2 xác nhận bìa kraft A5, giấy chấm 120 trang. F1 ghi đơn sỉ từ 24 cuốn, báo giá theo đơn, loại trừ in logo. Giả thuyết về bộ mẫu tách riêng. Dòng «Gửi yêu cầu mẫu kèm thông tin cửa hàng» hướng dẫn được nhà sách, và bản không hứa kết quả thử giấy hay ưu đãi giá. Trong phần viết cho trang, CTA chỉ nhắc «Đơn sỉ tối thiểu 24 cuốn» và tiêu đề SEO trình bày mục tiêu tìm đối tác của nhãn hàng. Người mua phải dựa vào dòng hướng dẫn đầu trang mới biết cách xin mẫu.",
+    "digest": "f864aff0dec5a6af813628b4e255a00ad56d261bd2a9d1a0efcf45bf146094df",
+    "state": "awaiting_qa",
+    "first_pass_runtime": true,
+    "input_tokens": 1226,
+    "output_tokens": 272,
+    "provider_fee_usd": 0,
+    "runtime_s": 20.156,
+    "unmetered_attempts": 0,
+    "attempts": [
+      {
+        "attempt_id": "bbda831c-0dce-4dec-919f-4378f61bc532",
+        "schema": "c3_director",
+        "request_sha256": "996e0ce9bcd4b3976b4a5d540b3cf921714d0402c1cedc29050229624642f4cd",
+        "input_tokens": 310,
+        "output_tokens": 49,
+        "raw_output": {
+          "primary_assignment": "Tìm đối tác bán lẻ sổ giấy chấm tại Huế",
+          "secondary_assignment": "Tìm đối tác bán lẻ sổ giấy chấm tại Huế"
+        }
+      },
+      {
+        "attempt_id": "ef9e7d41-d571-4544-a6f3-30b96a07d0a0",
+        "schema": "c3_content",
+        "request_sha256": "6a4bebfb3d43843d7c674afd42d7dc6d514a068b029c29c0c356f0db58c74317",
+        "input_tokens": 436,
+        "output_tokens": 98,
+        "raw_output": {
+          "benefit": "Để tìm đối tác bán lẻ sổ giấy chấm tại Huế",
+          "headline": "Sổ Mộc",
+          "source_ids": [
+            "F1",
+            "F2"
+          ],
+          "call_to_action": "Đơn sỉ tối thiểu 24 cuốn",
+          "value_proposition": "Đơn sỉ tối thiểu 24 cuốn, giá theo báo giá từng đơn, chưa gồm in logo."
+        }
+      },
+      {
+        "attempt_id": "475de5f2-5ef9-4db9-a85e-b9270e932a02",
+        "schema": "c3_seo",
+        "request_sha256": "c2d7190d5c63939733f0a4cfb5c74109f853fbb30816883d89c02a900380c36c",
+        "input_tokens": 480,
+        "output_tokens": 125,
+        "raw_output": {
+          "page_title": "Sổ Mộc: Tìm đối tác bán lẻ sổ giấy chấm tại Huế",
+          "source_ids": [
+            "F1",
+            "F2"
+          ],
+          "search_intent": "Tìm đối tác bán lẻ sổ giấy chấm tại Huế",
+          "meta_description": "Đơn sỉ tối thiểu 24 cuốn, giá theo báo giá từng đơn, chưa gồm in logo. Tìm đối tác bán lẻ tại Huế để nhận sổ giấy chấm 120 trang."
+        }
+      }
+    ],
+    "version": "revised",
+    "release": "WF-13/landing-seo-draft@5",
+    "journal": [
+      {
+        "skill": "director",
+        "attempt": 1,
+        "outcome": "ok",
+        "input_tokens": 310,
+        "output_tokens": 49
+      },
+      {
+        "skill": "content",
+        "attempt": 1,
+        "outcome": "ok",
+        "input_tokens": 436,
+        "output_tokens": 98
+      },
+      {
+        "skill": "seo",
+        "attempt": 1,
+        "outcome": "ok",
+        "input_tokens": 480,
+        "output_tokens": 125
+      }
+    ],
+    "revision": 1,
+    "deliverable_id": "c69cb1ec-b11b-4bf2-80e4-58f26218a81d"
+  },
+  {
+    "case": "inhouse",
+    "workflow": "WF-03",
+    "arm": "legacy",
+    "packet": "cd5bcbf78ab2",
+    "run": "afb9a3f6-288e-40e0-b05e-b03b35c708ab",
+    "scores": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      1
+    ],
+    "observation": "Bài nhắc workshop portfolio và kỳ 21 ngày, chưa cho biết NS-02 có 90 phút thực hành trực tiếp, dành cho sinh viên năm đầu ở Cần Thơ. «Tử số: 21 ngày» không phải số đăng ký email đã xác nhận hai bước. Mục tiêu tăng đăng ký chưa chuyển thành hành động gắn với nhu cầu làm portfolio của người học và không có cam kết đầu ra chưa đo.",
+    "digest": "811953bf73efdee55d79dc797ac09fe37794b67b543228717bad407f07501fa8",
+    "state": "awaiting_qa",
+    "first_pass_runtime": true,
+    "input_tokens": 1507,
+    "output_tokens": 376,
+    "provider_fee_usd": 0,
+    "runtime_s": 22.187,
+    "unmetered_attempts": 0,
+    "attempts": [
+      {
+        "attempt_id": "06d192d3-1cd7-4966-9156-40e5f13e547d",
+        "schema": "research_director",
+        "request_sha256": "cd22784d03340f5376bff3eb40ee49af889b5f15bcbbbaeac1eec9411f6c5ba7",
+        "input_tokens": 401,
+        "output_tokens": 68,
+        "raw_output": {
+          "research_assignment": "Research facts, hypotheses, and missing evidence for a marketing strategy that proposes a positioning and a measurable KPI for a workshop on portfolio design.",
+          "strategy_assignment": "Propose a positioning and a measurable KPI for a workshop on portfolio design using the research findings from the previous assignment."
+        }
+      },
+      {
+        "attempt_id": "e1203a96-9445-4419-bda7-ca2a85d94d76",
+        "schema": "research",
+        "request_sha256": "d2c1f83df3e2e5168a06b2c4ca6635bf300c80d6148759697f0797268ba4e389",
+        "input_tokens": 488,
+        "output_tokens": 119,
+        "raw_output": {
+          "source_ids": [
+            "brand",
+            "S1",
+            "S2",
+            "S3"
+          ],
+          "knowledge_gap": "Hypothesis: KPI: đăng ký email xác nhận hai bước trong 21 ngày. Kênh: trang đăng ký workshop",
+          "observed_fact": "Họa của KPI: đăng ký email xác nhận hai bước trong 21 ngày",
+          "audience_hypothesis": "Họa của KPI: đăng ký email xác nhận hai bước trong 21 ngày"
+        }
+      },
+      {
+        "attempt_id": "f8bafc13-49dd-415c-a5f8-014c3f334bc4",
+        "schema": "strategy",
+        "request_sha256": "9e128bbea5abcca44bf894d9dc4a63147f94ec560a810fd5ab5a2423f3e56d53",
+        "input_tokens": 618,
+        "output_tokens": 189,
+        "raw_output": {
+          "unit": "KPI",
+          "baseline": "Hypothesis",
+          "numerator": "21 ngày",
+          "source_ids": [
+            "brand",
+            "S1",
+            "S2",
+            "S3"
+          ],
+          "denominator": "Họa của KPI",
+          "metric_kind": "count",
+          "positioning": "tăng đăng ký qua email cho buổi workshop portfolio",
+          "success_metric": "countr",
+          "baseline_source": "brand",
+          "proposed_target": "tăng đăng ký qua email cho buổi workshop portfolio",
+          "proposed_channel": "trang đăng ký workshop",
+          "measurement_method": "countr",
+          "measurement_window": "21 ngày"
+        }
+      }
+    ],
+    "version": "legacy",
+    "release": "WF-03/research-strategy-draft@1",
+    "journal": [
+      {
+        "skill": "director",
+        "attempt": 1,
+        "outcome": "ok",
+        "input_tokens": 401,
+        "output_tokens": 68
+      },
+      {
+        "skill": "research",
+        "attempt": 1,
+        "outcome": "ok",
+        "input_tokens": 488,
+        "output_tokens": 119
+      },
+      {
+        "skill": "strategy",
+        "attempt": 1,
+        "outcome": "ok",
+        "input_tokens": 618,
+        "output_tokens": 189
+      }
+    ],
+    "revision": 1,
+    "deliverable_id": "1e07ed39-e47e-4ae3-a202-089eb695b012"
+  },
+  {
+    "case": "inhouse",
+    "workflow": "WF-03",
+    "arm": "projected",
+    "packet": "70a7adf8c2e0",
+    "run": "bbe6e1a7-d39a-432e-904e-8a75f9886476",
+    "scores": [
+      1,
+      0,
+      1,
+      0,
+      0,
+      1
+    ],
+    "observation": "F2 xác định lớp NS-02 có 90 phút thực hành trực tiếp tại Cần Thơ bằng tiếng Việt. Ví dụ portfolio được ghi rõ là giả thuyết. Học phí lại hiển thị «120000 / 1 service», thiếu đơn vị mỗi người của nguồn. «Đề xuất thực hiện» chép chỉ tiêu xác nhận email hai bước, chưa nói sinh viên sẽ làm gì với portfolio mẫu hoặc vì sao nên đăng ký.",
+    "digest": "846ca4140754ce9dfd7378858cdda14b60bc9afe1d36d3236f311970b06cd2f0",
+    "state": "awaiting_qa",
+    "first_pass_runtime": true,
+    "input_tokens": 1410,
+    "output_tokens": 258,
+    "provider_fee_usd": 0,
+    "runtime_s": 15.0,
+    "unmetered_attempts": 0,
+    "attempts": [
+      {
+        "attempt_id": "e7c00a3d-aa41-4b1b-98d7-cf73da909ea0",
+        "schema": "c3_director",
+        "request_sha256": "8ed54666d9dae6c66b4479eb9fb7960d77a3be67646c128b6b13d1650a0f589e",
+        "input_tokens": 299,
+        "output_tokens": 44,
+        "raw_output": {
+          "primary_assignment": "Tăng đăng ký qua email cho buổi workshop portfolio",
+          "secondary_assignment": "Tăng đăng ký qua email cho buổi workshop portfolio"
+        }
+      },
+      {
+        "attempt_id": "9cca2ab7-c250-4117-ba9f-27e00f7b8fe6",
+        "schema": "c3_research",
+        "request_sha256": "73756607388cfea2c50986faf7d4486d02c623f27638f1de054c37061dd70fca",
+        "input_tokens": 493,
+        "output_tokens": 106,
+        "raw_output": {
+          "source_ids": [
+            "F1",
+            "F2"
+          ],
+          "icp_analysis": "Vị trí của khách hàng trong thị trường đã chọn.",
+          "evidence_needed": "Kiểm chứng nhu cầu với khách hàng trong thị trường đã chọn.",
+          "market_analysis": "Xác minh số liệu nền và kết quả bằng dữ liệu đo thực tế.",
+          "research_question": "Ví dụ portfolio mẫu có thể giảm sự e ngại khi mới bắt đầu."
+        }
+      },
+      {
+        "attempt_id": "6f0a1637-4dcf-439f-9d79-e66689bd5150",
+        "schema": "c3_strategy",
+        "request_sha256": "cff94bfc76af519cfb6acc5a0f8752f1591c70562bdc9b8782b6ecffb65c7cb3",
+        "input_tokens": 618,
+        "output_tokens": 108,
+        "raw_output": {
+          "source_ids": [
+            "F1",
+            "F2"
+          ],
+          "positioning": "Workshop NS-02 thiết kế portfolio",
+          "recommendation": "Đăng ký email xác nhận hai bước trong 21 ngày · đăng ký đã xác nhận · 21 ngày · đăng ký email xác nhận hai bước trong 21 ngày",
+          "measurement_plan": "Tăng đăng ký qua email cho buổi workshop portfolio (Vị trí của khách hàng trong thị trường đã chọn)"
+        }
+      }
+    ],
+    "version": "first",
+    "release": "WF-03/research-strategy-draft@2",
+    "journal": [
+      {
+        "skill": "director",
+        "attempt": 1,
+        "outcome": "ok",
+        "input_tokens": 299,
+        "output_tokens": 44
+      },
+      {
+        "skill": "research",
+        "attempt": 1,
+        "outcome": "ok",
+        "input_tokens": 493,
+        "output_tokens": 106
+      },
+      {
+        "skill": "strategy",
+        "attempt": 1,
+        "outcome": "ok",
+        "input_tokens": 618,
+        "output_tokens": 108
+      }
+    ],
+    "revision": 1,
+    "deliverable_id": "35c3396a-f1e0-4418-8828-3ce4d7487383"
+  },
+  {
+    "case": "inhouse",
+    "workflow": "WF-03",
+    "arm": "projected",
+    "packet": "26e0fccf866c",
+    "run": "cacd1166-c442-42d2-a9a6-8a0a772aaac4",
+    "scores": [
+      1,
+      0,
+      1,
+      0,
+      0,
+      1
+    ],
+    "observation": "F2 ghi rõ 90 phút thực hành trực tiếp bằng tiếng Việt ở Cần Thơ. F1 còn ghi «1 suất dịch vụ», chưa rõ học phí tính cho một người. Thử nghiệm đếm đúng đăng ký email xác nhận hai bước trong 21 ngày. Nhưng thử đưa F1 (giá) lên trước, trong khi lý do duy nhất đưa ra là ví dụ portfolio mẫu có thể giúp sinh viên bớt e ngại. «Để tăng đăng ký» chưa chỉ ra hành động giúp sinh viên bắt đầu làm portfolio.",
+    "digest": "5435e5e498a49de8b41ec70ff7f3d203cbeb0759b05721b1b278e4f7e1410a97",
+    "state": "awaiting_qa",
+    "first_pass_runtime": true,
+    "input_tokens": 1465,
+    "output_tokens": 283,
+    "provider_fee_usd": 0,
+    "runtime_s": 21.406,
+    "unmetered_attempts": 0,
+    "attempts": [
+      {
+        "attempt_id": "ee10b123-cd09-4992-aefc-d67933a5c6c7",
+        "schema": "c3_director",
+        "request_sha256": "8ed54666d9dae6c66b4479eb9fb7960d77a3be67646c128b6b13d1650a0f589e",
+        "input_tokens": 299,
+        "output_tokens": 44,
+        "raw_output": {
+          "primary_assignment": "Tăng đăng ký qua email cho buổi workshop portfolio",
+          "secondary_assignment": "Tăng đăng ký qua email cho buổi workshop portfolio"
+        }
+      },
+      {
+        "attempt_id": "daf92fc6-3f45-4417-9cba-0abd81f1e302",
+        "schema": "c3_research",
+        "request_sha256": "dd5a7b96e9ffb044dd17e5676b7f2770173a28a35f159e140e454628578842d9",
+        "input_tokens": 518,
+        "output_tokens": 112,
+        "raw_output": {
+          "source_ids": [
+            "F1",
+            "F2"
+          ],
+          "icp_analysis": "Vị trí của khách hàng trong thị trường đã chọn.",
+          "evidence_needed": "Xác minh số liệu nền và kết quả bằng dữ liệu đo thực tế.",
+          "market_analysis": "Kiểm chứng nhu cầu với khách hàng trong thị trường đã chọn.",
+          "research_question": "Ví dụ portfolio mẫu có thể giảm sự e ngại khi mới bắt đầu."
+        }
+      },
+      {
+        "attempt_id": "bcf91397-864a-461a-aaa0-e3a8e5dc106c",
+        "schema": "c3_strategy",
+        "request_sha256": "303612474252fbe2acd1960cb7c64c6953d0927725f79cddc5b452bdb30f7a48",
+        "input_tokens": 648,
+        "output_tokens": 127,
+        "raw_output": {
+          "source_ids": [
+            "F1",
+            "F2"
+          ],
+          "positioning": "Đăng ký email xác nhận hai bước trong 21 ngày · đăng ký đã xác nhận · 21 ngày · đăng ký email xác nhận hai bước trong 21 ngày",
+          "recommendation": "Để tăng đăng ký qua email cho buổi workshop portfolio",
+          "measurement_plan": "Đăng ký email xác nhận hai bước trong 21 ngày · đăng ký đã xác nhận · 21 ngày · đăng ký email xác nhận hai bước trong 21 ngày"
+        }
+      }
+    ],
+    "version": "revised",
+    "release": "WF-03/research-strategy-draft@2",
+    "journal": [
+      {
+        "skill": "director",
+        "attempt": 1,
+        "outcome": "ok",
+        "input_tokens": 299,
+        "output_tokens": 44
+      },
+      {
+        "skill": "research",
+        "attempt": 1,
+        "outcome": "ok",
+        "input_tokens": 518,
+        "output_tokens": 112
+      },
+      {
+        "skill": "strategy",
+        "attempt": 1,
+        "outcome": "ok",
+        "input_tokens": 648,
+        "output_tokens": 127
+      }
+    ],
+    "revision": 1,
+    "deliverable_id": "7295a6f2-b11a-4a0c-be49-e84447fa95b3"
+  },
+  {
+    "case": "inhouse",
+    "workflow": "WF-13",
+    "arm": "legacy",
+    "packet": "912fd4285af8",
+    "run": "8f493d11-34db-445d-ad49-16861816a03b",
+    "scores": [
+      0,
+      0,
+      0,
+      1,
+      0,
+      0
+    ],
+    "observation": "«Đăng ký buổi thực hành» cho người đọc một bước rõ ràng. Nội dung lại hẹn «ngày 21 tháng 10» dù hồ sơ không có ngày tổ chức. Con số 21 trong hồ sơ là số ngày đo KPI. Bản bỏ mã NS-02, 90 phút thực hành, nhóm sinh viên năm đầu và phạm vi lớp trực tiếp tại Cần Thơ. Không có căn cứ nguồn đi kèm. Metadata lặp «Kênh này được撰» và diễn đạt yêu cầu tạo chiến dịch thay cho nhu cầu người học.",
+    "digest": "22292aedbff1cf14c116cfa203ddc15500ef6a94d0702306785a845d2acddcac",
+    "state": "awaiting_qa",
+    "first_pass_runtime": true,
+    "input_tokens": 1672,
+    "output_tokens": 474,
+    "provider_fee_usd": 0,
+    "runtime_s": 27.172,
+    "unmetered_attempts": 0,
+    "attempts": [
+      {
+        "attempt_id": "6ac52ad0-7a33-46b6-9ef6-bea71b2712f8",
+        "schema": "planner",
+        "request_sha256": "e426ddd5eab8c0c38c1cd544d00356e9b5b613c779017fa2ac9e878c75b9632f",
+        "input_tokens": 572,
+        "output_tokens": 179,
+        "raw_output": {
+          "nodes": [
+            {
+              "key": "copy",
+              "skill_type": "content",
+              "assignment": "content: content: content: content: content: content: content: content: content: content: content: content: content: content: content: content: content: content",
+              "parents": []
+            },
+            {
+              "key": "seo",
+              "skill_type": "seo",
+              "assignment": "seo: seo: seo: seo: seo: seo: seo: seo: seo: seo: seo: seo: seo: seo: seo: seo: seo: seo: seo: seo: seo: seo: seo: seo: seo: seo: seo: seo: seo: seo: seo: seo: ",
+              "parents": [
+                "copy"
+              ]
+            }
+          ]
+        }
+      },
+      {
+        "attempt_id": "1f946f5a-68d7-404b-976e-acb39881a088",
+        "schema": "content",
+        "request_sha256": "46b4c4a89cfe29c1a24d3d35d2a3f14424ea6080598537fb131eefd223963e5c",
+        "input_tokens": 483,
+        "output_tokens": 120,
+        "raw_output": {
+          "headline": "Tăng đăng ký qua email cho buổi workshop portfolio",
+          "body_copy": "Để tăng đăng ký qua email cho buổi workshop portfolio, hãy đăng ký buổi thực hành vào ngày 21 tháng 10. KPI: Đăng ký email xác nhận hai bước trong 21 ngày. Kênh: Trang đăng ký workshop. Kênh này được撰",
+          "source_ids": [
+            "brand",
+            "S1",
+            "S2",
+            "S3"
+          ],
+          "call_to_action": "Đăng ký buổi thực hành"
+        }
+      },
+      {
+        "attempt_id": "3c33fa97-140c-4b6f-b3d8-062937e8569d",
+        "schema": "seo",
+        "request_sha256": "5300977cfa62926cddc11a01f2e3a5bb3cbafe321d9be1a63d9693a8648b5914",
+        "input_tokens": 617,
+        "output_tokens": 175,
+        "raw_output": {
+          "page_title": "Tăng đăng ký qua email cho buổi workshop portfolio",
+          "source_ids": [
+            "brand",
+            "S1",
+            "S2",
+            "S3"
+          ],
+          "search_intent": "Tạo một chiến dịch tăng đăng ký qua email cho buổi workshop portfolio, với KPI: đăng ký email xác nhận hai bước trong 21 ngày, Kênh: trang đăng ký workshop, Kênh này được撰",
+          "meta_description": "Đoạn草稿: Tăng đăng ký qua email cho buổi workshop portfolio, với KPI: đăng ký email xác nhận hai bước trong 21 ngày, Kênh: trang đăng ký workshop, Kênh này được撰, Kênh này được撰, Kênh này được撰, Kênh "
+        }
+      }
+    ],
+    "version": "legacy",
+    "release": "WF-13/landing-seo-draft@4",
+    "journal": [
+      {
+        "skill": "director",
+        "attempt": 1,
+        "outcome": "ok",
+        "input_tokens": 572,
+        "output_tokens": 179
+      },
+      {
+        "skill": "content",
+        "attempt": 1,
+        "outcome": "ok",
+        "input_tokens": 483,
+        "output_tokens": 120
+      },
+      {
+        "skill": "seo",
+        "attempt": 1,
+        "outcome": "ok",
+        "input_tokens": 617,
+        "output_tokens": 175
+      }
+    ],
+    "revision": 1,
+    "deliverable_id": "2d9fd92e-5983-4d7a-bb22-f3a03740e36a"
+  },
+  {
+    "case": "inhouse",
+    "workflow": "WF-13",
+    "arm": "projected",
+    "packet": "6470aaaa1ee8",
+    "run": "95889f94-867b-4a40-9b5d-cb3a35e9a446",
+    "scores": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "observation": "F2 xác nhận 90 phút thực hành trực tiếp bằng tiếng Việt tại Cần Thơ. Lời bán hàng lại mô tả «chương trình học trực tiếp và mô hình portfolio mẫu» như thành phần có sẵn và gọi môi trường học là «hiệu quả». Nguồn chỉ nêu ví dụ portfolio như giả thuyết. F1 ghi giá theo «1 service», làm mất đơn vị mỗi người của học phí. CTA là mục tiêu tăng đăng ký của đội Marketing, còn ý định tìm kiếm «những sản phẩm» không mô tả nhu cầu tìm workshop.",
+    "digest": "92c3043ca98c65ea214a694a74cb88cc18adc4a4cb209acf3593a9a2f62be294",
+    "state": "awaiting_qa",
+    "first_pass_runtime": true,
+    "input_tokens": 1333,
+    "output_tokens": 290,
+    "provider_fee_usd": 0,
+    "runtime_s": 20.969,
+    "unmetered_attempts": 0,
+    "attempts": [
+      {
+        "attempt_id": "61e9923e-597f-487d-b0fb-bdbc08ffed29",
+        "schema": "c3_director",
+        "request_sha256": "869a5e6d55f51743f3bd9f7995ee0635772f7985481ddeb88ea7a38b0828d72e",
+        "input_tokens": 299,
+        "output_tokens": 45,
+        "raw_output": {
+          "primary_assignment": "WF-13/landing-seo-draft@5",
+          "secondary_assignment": "WF-13/landing-seo-draft@5"
+        }
+      },
+      {
+        "attempt_id": "ff022f6e-02df-4508-892c-e8135f0a60aa",
+        "schema": "c3_content",
+        "request_sha256": "a44145d285e2edd1a38d4bf2dd60608fdc00aa3f1ab4483e47bf17cce5aa225d",
+        "input_tokens": 472,
+        "output_tokens": 121,
+        "raw_output": {
+          "benefit": "Tăng đăng ký qua email cho buổi workshop portfolio",
+          "headline": "Workshop NS-02 thiết kế portfolio",
+          "source_ids": [
+            "F1",
+            "F2"
+          ],
+          "call_to_action": "Tăng đăng ký qua email cho buổi workshop portfolio",
+          "value_proposition": "Tạo môi trường học tập thân thiện và hiệu quả cho sinh viên mới bắt đầu tại Cần Thơ bằng cách tổ chức buổi NS-02 thiết kế portfolio với chương trình học trực tiếp và mô hình portfolio mẫu."
+        }
+      },
+      {
+        "attempt_id": "7511b99b-f553-4192-9bb7-b69e194c2df5",
+        "schema": "c3_seo",
+        "request_sha256": "a803d069fe4be033d299c38969064ec93851806be85ec1c1f717fcef454dbea4",
+        "input_tokens": 562,
+        "output_tokens": 124,
+        "raw_output": {
+          "page_title": "Workshop NS-02 thiết kế portfolio",
+          "source_ids": [
+            "F1",
+            "F2"
+          ],
+          "search_intent": "những sản phẩm",
+          "meta_description": "Workshop NS-02 thiết kế portfolio: tạo môi trường học tập thân thiện và hiệu quả cho sinh viên mới bắt đầu tại Cần Thơ bằng cách tổ chức buổi NS-02 thiết kế portfolio với chương trình học trực tiếp và"
+        }
+      }
+    ],
+    "version": "first",
+    "release": "WF-13/landing-seo-draft@5",
+    "journal": [
+      {
+        "skill": "director",
+        "attempt": 1,
+        "outcome": "ok",
+        "input_tokens": 299,
+        "output_tokens": 45
+      },
+      {
+        "skill": "content",
+        "attempt": 1,
+        "outcome": "ok",
+        "input_tokens": 472,
+        "output_tokens": 121
+      },
+      {
+        "skill": "seo",
+        "attempt": 1,
+        "outcome": "ok",
+        "input_tokens": 562,
+        "output_tokens": 124
+      }
+    ],
+    "revision": 1,
+    "deliverable_id": "64dd9bd3-0322-4703-b14b-18bb240fcbf8"
+  },
+  {
+    "case": "inhouse",
+    "workflow": "WF-13",
+    "arm": "projected",
+    "packet": "05159c18e410",
+    "run": "35ef416a-81a7-4ed5-8830-c021f7503c9b",
+    "scores": [
+      1,
+      0,
+      0,
+      1,
+      0,
+      0
+    ],
+    "observation": "F2 ghi đúng 90 phút thực hành trực tiếp bằng tiếng Việt tại Cần Thơ. F1 giữ thuế, thẻ sinh viên và khoản phần mềm, nhưng đổi học phí mỗi người thành «1 suất dịch vụ». Dòng «Gửi thông tin đăng ký và kiểm tra xác nhận» cho người học một bước cụ thể. CTA tự viết chỉ mời «Tìm hiểu thêm». Mô tả SEO khẳng định cả workshop «giúp sinh viên giảm sự e ngại», trong khi giả thuyết chỉ nói ví dụ portfolio mẫu có thể giúp và F2 chưa đo hiệu quả này.",
+    "digest": "23173feef417902a54ab3c53cbe58bb7dba82a2a75b2b31c50ca8740463539fb",
+    "state": "awaiting_qa",
+    "first_pass_runtime": true,
+    "input_tokens": 1404,
+    "output_tokens": 265,
+    "provider_fee_usd": 0,
+    "runtime_s": 18.406,
+    "unmetered_attempts": 0,
+    "attempts": [
+      {
+        "attempt_id": "4775c151-1fae-4150-b401-18934e5e4c65",
+        "schema": "c3_director",
+        "request_sha256": "869a5e6d55f51743f3bd9f7995ee0635772f7985481ddeb88ea7a38b0828d72e",
+        "input_tokens": 299,
+        "output_tokens": 45,
+        "raw_output": {
+          "primary_assignment": "WF-13/landing-seo-draft@5",
+          "secondary_assignment": "WF-13/landing-seo-draft@5"
+        }
+      },
+      {
+        "attempt_id": "3008e5a9-c31b-4109-b4da-28aa1a13fe0e",
+        "schema": "c3_content",
+        "request_sha256": "a94f1024dbc32292c24b3fe429c0e8fc21cc7ed78ff6f92004b9f4497db3b99c",
+        "input_tokens": 522,
+        "output_tokens": 111,
+        "raw_output": {
+          "benefit": "Tăng đăng ký qua email cho buổi workshop portfolio",
+          "headline": "Workshop NS-02 thiết kế portfolio",
+          "source_ids": [
+            "F2"
+          ],
+          "call_to_action": "Tìm hiểu thêm về Workshop NS-02",
+          "value_proposition": "Workshop NS-02 thiết kế portfolio có thể giúp sinh viên giảm sự e ngại khi bắt đầu, với buổi workshop trực tiếp tại Cần Thơ dạy bằng tiếng Việt."
+        }
+      },
+      {
+        "attempt_id": "76f46ba0-1d21-49f3-8796-3cd22e1ff661",
+        "schema": "c3_seo",
+        "request_sha256": "8cce5ebcc88c7f17ce5e7c0fc0b6ee4d6861f4bc171facd468e84f3444affc55",
+        "input_tokens": 583,
+        "output_tokens": 109,
+        "raw_output": {
+          "page_title": "Workshop NS-02 thiết kế portfolio",
+          "source_ids": [
+            "F1",
+            "F2"
+          ],
+          "search_intent": "sinh viên Cần Thơ",
+          "meta_description": "Workshop NS-02 thiết kế portfolio giúp sinh viên giảm sự e ngại khi bắt đầu, với buổi workshop trực tiếp tại Cần Thơ dạy bằng tiếng Việt. Tăng đăng ký qua email cho buổi workshop portfolio."
+        }
+      }
+    ],
+    "version": "revised",
+    "release": "WF-13/landing-seo-draft@5",
+    "journal": [
+      {
+        "skill": "director",
+        "attempt": 1,
+        "outcome": "ok",
+        "input_tokens": 299,
+        "output_tokens": 45
+      },
+      {
+        "skill": "content",
+        "attempt": 1,
+        "outcome": "ok",
+        "input_tokens": 522,
+        "output_tokens": 111
+      },
+      {
+        "skill": "seo",
+        "attempt": 1,
+        "outcome": "ok",
+        "input_tokens": 583,
+        "output_tokens": 109
+      }
+    ],
+    "revision": 1,
+    "deliverable_id": "f055f7b6-db74-4566-bcc1-a4e71d7c764d"
+  }
+]

@@ -25,4 +25,6 @@ python tests/evaluation/c3/run_comparison.py projected artifacts/c3
 python tests/evaluation/c3/review_packet.py artifacts/c3
 ```
 
+Mỗi người chấm đọc các packet của workflow mình phụ trách và xuất một mảng JSON gồm `id`, `scores` (sáu số 0/1 theo thứ tự bảng) và `observation`. Lưu hai phiếu thành `artifacts/c3/review/ratings-wf03.json` và `ratings-wf13.json` cùng thư mục. Chạy `python tests/evaluation/c3/score_review.py artifacts/c3` để kiểm SHA-256 của packet, digest do API trả về, liên kết run và đủ 20 bản trước khi tính điểm. [Bản giao và kết quả đã đối chiếu ngày 25/11](../../../docs/evaluation/c3-20261125/REPORT.md).
+
 Đối chiếu digest weights và fixture trong hai file conditions trước khi chấm. Các thư mục theo từng ca giữ bản giao nguyên văn, mã run, digest, số token, kết quả từng lượt và SHA request. Đề chấm ở `review/packets`, khóa ánh xạ ở `review/key.json`.

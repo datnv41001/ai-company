@@ -30,19 +30,20 @@ pytestmark = PG
 WORKFLOW = c3_assets.RESEARCH
 
 
-def strategy_draft(lab):
+def agency_draft(lab, workflow, *, rfq=False):
     api = lab.api
     base, owner, recipient, client, campaign = lab.cases[0]
     lab.owner.execute("update workforce_runs set ready_at=now()+interval '1 day' where id=any(%s)", (lab.runs,))
-    manifest = json.loads((Path(__file__).resolve().parents[1] / "catalog/research-strategy-v3.json").read_text(encoding="utf-8"))
+    catalog = "research-strategy-v3.json" if workflow == c3_assets.RESEARCH else "landing-seo-v6.json"
+    manifest = json.loads((Path(__file__).resolve().parents[1] / "catalog" / catalog).read_text(encoding="utf-8"))
     publish_registry(lab.owner, manifest)
-    accepted(policy(lab, "activate", skills=manifest["required"], workflow=WORKFLOW))
+    accepted(policy(lab, "activate", skills=manifest["required"], workflow=workflow))
     bid = accepted(
         api.post(
             base + "/workforce/briefs",
             headers=owner["headers"],
             json={
-                "title": "Marketing strategy for samples",
+                "title": "Marketing materials for sample requests",
                 "recipient_id": recipient["id"],
                 "campaign_id": campaign,
             },
@@ -51,16 +52,23 @@ def strategy_draft(lab):
     brief = base + "/workforce/briefs/" + bid
     path = brief + "/run"
     terms = {"workflow": "dynamic-v1", "budget_microusd": 10000, "max_parallel_nodes": 2}
-    intent = INTENT | {"product": "Fabric sample", "audience": "Independent interior shops", "deliverable_type": "marketing_strategy"}
+    kind = "marketing_strategy" if workflow == c3_assets.RESEARCH else "landing_page"
+    intent = INTENT | {"product": "Fabric sample", "audience": "Independent interior shops", "deliverable_type": kind}
+    case = None
+    if rfq:
+        intent.update(
+            product="Bộ mẫu vải", audience="Xưởng nội thất", purpose="Thông tin nghiệp vụ riêng của đội dự án", buyer_action="rfq", editorial_style="plain"
+        )
+        case = {"product": intent["product"], "audience": intent["audience"], "facts": [{"wording": "Bề mặt mờ", "qualifiers": ["Dùng trong nhà"]}]}
     accepted(api.put(brief + "/submission", headers=recipient["headers"], json=DATA | {"task_intent": intent}))
     brand = lab.owner.execute("select brand_id from campaigns where id=%s", (campaign,)).fetchone()[0]
-    prep = prepared(api, owner, base, client, brand, campaign, brief.split("/")[-1], WORKFLOW)
+    prep = prepared(api, owner, base, client, brand, campaign, bid, workflow, case=case)
     guide = revision(api, owner, prep["path"], "voice", "guidelines", {"guidance": "Use plain words."})
     prep["params"]["guidelines"] = guide["id"]
     snap = capture(api, owner, prep)
-    terms.update(knowledge_manifest={"id": snap["id"], "digest": snap["digest"]}, registry_workflow=WORKFLOW)
+    terms.update(knowledge_manifest={"id": snap["id"], "digest": snap["digest"]}, registry_workflow=workflow)
     rid = accepted(api.post(path, headers=owner["headers"], json=terms))["id"]
-    for stage in ("director", "research", "strategy"):
+    for stage in ("director", *c3_assets.ROLES[workflow]):
         if stage == "director":
             reply = {
                 "primary_assignment": "Examine the buying decision for the fabric sample.",
@@ -88,7 +96,7 @@ def test_agency_studio_signoff_and_revocation_order(pool):
         )
     base, owner, recipient, _, _ = lab.cases[0]
     other_customer = lab.cases[1][2]
-    doc, knowledge, snap = strategy_draft(lab)
+    doc, knowledge, snap = agency_draft(lab, WORKFLOW)
     editor = reader(api, owner, "editor")
     specialist, strategist, final_reviewer = (reader(api, owner, "admin") for _ in range(3))
     with Session(engine) as session:

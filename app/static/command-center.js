@@ -2,16 +2,16 @@
 function deliverableStage(doc) {
   if (doc.status !== 'approved') return ({submitted:'Chờ QA',draft:'Nháp',rejected:'Cần sửa'})[doc.status] || doc.status || 'Chưa xác định';
   const report=doc.qa_evidence;
-  const current=Number.isInteger(doc.qa_revision) && doc.qa_revision>0 && doc.qa_approved_revision===doc.qa_revision &&
+  const current=Boolean(doc.reviewed_by) && Number.isInteger(doc.qa_revision) && doc.qa_revision>0 && doc.qa_approved_revision===doc.qa_revision &&
     report?.qa_revision===doc.qa_revision && /^[a-f0-9]{64}$/.test(doc.qa_approved_digest || '') &&
     doc.qa_approved_digest===report.content_digest && ['current','source_unavailable'].includes(report.state);
   return current ? 'Đã qua QA' : 'Chờ QA';
 }
 
 /* Tenant totals come from the current refresh. Task and department rows belong to one selected campaign. */
-function createCommandCenter(api) {
+function createCommandCenter(api,screens) {
   const by = id => document.getElementById(id);
-  const box = by('command-center'), campaignControl = by('command-campaign');
+  const box = by('command-center'), campaignControl = by('command-campaign'), brandControl=by('toolbar-brand');
   const phases = {
     intake:'Tiếp nhận', research:'Nghiên cứu', strategy:'Chiến lược', content:'Nội dung',
     creative:'Sáng tạo', quality:'Kiểm duyệt', reporting:'Đo lường',
@@ -56,7 +56,7 @@ function createCommandCenter(api) {
     box.hidden = true;
     box.removeAttribute('aria-busy');
     campaignControl.replaceChildren();
-    for (const id of ['command-tasks','command-outcomes','command-departments','command-runs','command-flow','command-scope','command-objective','command-client-total','command-workspace'])
+    for (const id of ['command-tasks','command-outcomes','command-departments','command-runs','command-capabilities','command-flow','command-scope','command-objective','command-client-total','campaign-caption','toolbar-brand'])
       by(id).replaceChildren();
     for (const id of ['command-campaign-count','command-deliverable-count','command-review-count','command-approved-count','command-progress-label'])
       write(id,'—');
@@ -69,15 +69,29 @@ function createCommandCenter(api) {
     for (const task of tasks) {
       const designation = roleMap.get(task.role_slug);
       const group = designation?.group || 'Chưa xác định bộ phận';
-      if (!groups.has(group)) groups.set(group,{count:0,roles:new Set()});
+      if (!groups.has(group)) groups.set(group,[]);
       const entry = groups.get(group);
-      entry.count++;
-      entry.roles.add(designation?.display_name || task.role_slug || 'Chưa có vai trò');
+      entry.push({task,role:designation?.display_name || task.role_slug || 'Chưa có vai trò'});
     }
     const list = by('command-departments');
     if (!groups.size) return note(list,'Chưa có nhiệm vụ để phân công bộ phận.');
-    list.replaceChildren(...Array.from(groups, ([group,entry]) =>
-      row(group,[...entry.roles].join(' · '),entry.count+' việc')));
+    list.replaceChildren(...Array.from(groups, ([group,entries]) => {
+      const li=document.createElement('li'), details=document.createElement('details'), summary=document.createElement('summary');
+      const icon=document.createElementNS('http://www.w3.org/2000/svg','svg');
+      const use=document.createElementNS(icon.namespaceURI,'use');
+      icon.setAttribute('class','icon');icon.setAttribute('aria-hidden','true');
+      const key=entries[0].task.workflow_key;
+      const glyph=({intake:'team',research:'book',strategy:'grid',content:'campaign',creative:'campaign',quality:'review',reporting:'finance'})[key] || 'team';
+      use.setAttribute('href','/static/interface-icons.svg#'+glyph);icon.append(use);
+      summary.append(icon,text('strong',group),text('span',entries.length+' việc','state-chip'),text('small',entries[0].role));
+      details.append(summary);
+      for(const {task,role} of entries){
+        const assignment=text('div','','assignment');
+        assignment.append(text('strong',role),text('span',task.title),text('small',status(task.status)+' · Nhiệm vụ kế hoạch'));
+        details.append(assignment);
+      }
+      li.append(details);return li;
+    }));
   }
   function drawTasks(tasks) {
     const ordering = Object.keys(phases);
@@ -119,7 +133,13 @@ function createCommandCenter(api) {
   function drawOutcomes(id) {
     const items = context.deliverables.filter(d => d.campaign_id === id);
     const list = by('command-outcomes');
-    if (items.length) list.replaceChildren(...items.map(d=>row(d.title||'Bản giao',d.kind||'Tài liệu chiến dịch',deliverableStage(d))));
+    if (items.length) list.replaceChildren(...items.map(d=>{
+      const stage=deliverableStage(d), evidence=d.qa_evidence?.qa_revision===d.qa_revision ? d.qa_evidence : null;
+      const source=evidence?.state==='current' ? 'Đã liên kết nguồn' : evidence?.state==='source_unavailable' ? 'Chưa có nguồn để đối chiếu' : 'Chưa có đánh giá nguồn hiện hành';
+      const access=stage==='Đã qua QA' ? (['owner','admin'].includes(context.role) ? 'Có thể yêu cầu chia sẻ trong Phê duyệt' : 'Cần quản trị viên để chia sẻ') :
+        d.status==='shared' ? 'Đã tạo phiên bản bàn giao' : 'Bản nội bộ';
+      return row(d.title||'Bản giao',source+' · '+access,stage);
+    }));
     else note(list,'Chiến dịch chưa có bản giao.');
   }
   function drawRuns() {
@@ -143,6 +163,21 @@ function createCommandCenter(api) {
     }
     drawRuns();
   }
+  async function capabilities(local,campaign,epoch,signal) {
+    const list=by('command-capabilities');
+    note(list,'Đang đọc quyền workflow…');
+    try {
+      const rows=await api('/api/tenants/'+encodeURIComponent(local.tenant)+'/workforce/registry/'+encodeURIComponent(campaign.id),'GET',null,false,signal);
+      if(epoch!==generation || context!==local) return;
+      if(!rows.length) return note(list,'Chưa có workflow được đăng ký cho môi trường này.');
+      list.replaceChildren(...rows.map(entry=>{
+        const required=entry.manifest.required || [], granted=required.filter(skill=>entry.grants[skill]==='activate');
+        return row(entry.workflow,required.join(' · '),granted.length===required.length && required.length ? 'Đã cấp quyền' : 'Chưa đủ quyền');
+      }));
+    } catch(error) {
+      if(epoch===generation && context===local && error.name!=='AbortError') note(list,'Chưa đọc được năng lực đã đăng ký.');
+    }
+  }
   async function choose() {
     const local = context;
     if (!local) return;
@@ -151,6 +186,7 @@ function createCommandCenter(api) {
     controller = new AbortController();
     const campaign = local.campaigns.find(c=>c.id===campaignControl.value);
     selectedCampaign = campaign?.id || '';
+    write('campaign-caption',campaign?.name || 'Chưa chọn chiến dịch');
     currentTasks = [];
     by('command-flow').replaceChildren();
     by('command-progress').removeAttribute('value');
@@ -168,6 +204,7 @@ function createCommandCenter(api) {
     drawOutcomes(selectedCampaign);
     drawRuns();
     if (!campaign) {
+      note(by('command-capabilities'),'Chọn chiến dịch để xem workflow.');
       drawTasks([]);
       box.removeAttribute('aria-busy');
       write('command-status','');
@@ -178,6 +215,7 @@ function createCommandCenter(api) {
     write('command-progress-caption','Đang tải tiến độ.');
     note(by('command-tasks'),'Đang tải nhiệm vụ.');
     note(by('command-departments'),'Đang tải phân công.');
+    void capabilities(local,campaign,epoch,controller.signal);
     try {
       const result = await api('/api/tenants/'+encodeURIComponent(local.tenant)+'/campaigns/'+encodeURIComponent(campaign.id)+'/tasks','GET',null,false,controller.signal);
       if (epoch !== generation || local !== context) return;
@@ -205,16 +243,22 @@ function createCommandCenter(api) {
     context = data;
     box.hidden = false;
     by('command-refresh').disabled=false;
-    write('command-workspace',data.organization||'Không gian làm việc');
     write('command-client-total',(data.mode==='agency' ? 'Agency · '+data.clients.length+' khách hàng' : 'Marketing nội bộ')+' · '+data.brands.length+' thương hiệu');
     write('command-campaign-count',data.campaigns.length);
     write('command-deliverable-count',data.deliverables.length);
     write('command-review-count',data.deliverables.filter(d=>deliverableStage(d)==='Chờ QA').length);
     write('command-approved-count',data.deliverables.filter(d=>deliverableStage(d)==='Đã qua QA').length);
-    campaignControl.replaceChildren(...(data.campaigns.length ? data.campaigns.map(c=>new Option(c.name,c.id)) : [new Option('Chưa có chiến dịch','')]));
-    campaignControl.disabled = !data.campaigns.length;
-    if (data.campaigns.some(c=>c.id===previous)) campaignControl.value=previous;
-    const work = choose();
+    brandControl.replaceChildren(new Option('Tất cả thương hiệu',''),...data.brands.map(b=>new Option(b.name,b.id)));
+    const params=screens.params();
+    brandControl.value=data.brands.some(b=>b.id===params.get('brand')) ? params.get('brand') : '';
+    const work = filterCampaigns(params.get('campaign') || previous);
+    screens.bindContext(params=>{
+      if(context!==data) return;
+      const brand=data.brands.some(b=>b.id===params.get('brand')) ? params.get('brand') : '';
+      if(brandControl.value===brand && campaignControl.value===params.get('campaign')) return;
+      brandControl.value=brand;
+      filterCampaigns(params.get('campaign'));
+    });
     if (data.campaigns.length) {
       roleAbort=new AbortController();
       void api('/api/catalog/roles','GET',null,false,roleAbort.signal).then(rows => {
@@ -225,6 +269,18 @@ function createCommandCenter(api) {
     }
     await work;
   }
-  campaignControl.addEventListener('change',choose);
+  function filterCampaigns(wanted, replace=true) {
+    if(!context) return;
+    const rows=context.campaigns.filter(c=>!brandControl.value || c.brand_id===brandControl.value);
+    campaignControl.replaceChildren(...(rows.length ? rows.map(c=>new Option(c.name,c.id)) : [new Option('Chưa có chiến dịch','')]));
+    campaignControl.disabled=!rows.length;
+    if(rows.some(c=>c.id===wanted)) campaignControl.value=wanted;
+    screens.context(brandControl.value,campaignControl.value,replace);
+    return choose();
+  }
+  brandControl.addEventListener('change',()=>filterCampaigns(campaignControl.value,false));
+  campaignControl.addEventListener('change',()=>{
+    screens.context(brandControl.value,campaignControl.value,false);choose();
+  });
   return {show,clear,activity};
 }

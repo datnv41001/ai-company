@@ -7,6 +7,7 @@ from datetime import datetime, timedelta, timezone
 from urllib.parse import urlsplit
 from uuid import uuid4
 
+from screen_navigation import screen, select_workspace, switch_account
 from browser_stale_invitation import exercise_stale
 from identity_fixtures import start_registration, capture, verify_registration, invite_member
 import httpx
@@ -117,7 +118,7 @@ def exercise():
                 wrong.get_by_label("Mật khẩu").fill(admin_password)
                 wrong.get_by_role("button").click()
                 expect(visitor.locator("#link-hint")).to_contain_text("email khác")
-                visitor.locator("#switch-account").click()
+                switch_account(visitor)
                 register_and_login(visitor,address)
                 verify = visitor.locator("#verify-form")
                 expect(verify).to_be_visible()
@@ -135,13 +136,15 @@ def exercise():
                 expect(visitor.locator("#workspace-select")).to_have_value(tenant)
                 expect(visitor.locator("#workspace-select option")).to_have_count(1)
                 expect(visitor.locator("#workspace-forms")).to_be_hidden()
+                screen(visitor, "account")
                 new_org = visitor.locator("#new-workspace")
                 new_org.locator("summary").click()
                 new_org.get_by_label("Tên tổ chức").fill("Second workspace")
                 new_org.get_by_role("button").click()
                 expect(visitor.locator("#workspace-select option")).to_have_count(2)
+                screen(visitor, "settings")
                 expect(visitor.locator("#workspace-forms")).to_be_visible()
-                visitor.locator("#workspace-select").select_option(tenant)
+                select_workspace(visitor, tenant)
                 expect(visitor.locator("#workspace-forms")).to_be_hidden()
                 visitor.close()
                 print(f"PASS invitation-first onboarding, explicit workspace and switching at {width}px")
@@ -208,7 +211,8 @@ def exercise():
                 )
                 doc_path = base + "/deliverables/" + draft["id"]
                 editor_page = login_page(editor_email, editor_password, {"width": width, "height": height})
-                editor_page.locator("#workspace-select").select_option(tenant)
+                select_workspace(editor_page, tenant)
+                screen(editor_page,"reviews")
                 form = editor_page.locator("#review-panel")
                 form.get_by_text("Soạn và bàn giao cho khách", exact=True).click()
                 form.get_by_label("Bản làm việc").select_option(draft["id"])
@@ -228,11 +232,13 @@ def exercise():
                 expect(submit).to_have_count(0)
                 editor_page.close()
                 qa_page = login_page(admin_email, admin_password, {"width": width, "height": height})
+                screen(qa_page,"operations")
                 ops = qa_page.locator("#operations-panel")
                 expect(ops).to_be_visible()
                 ops.get_by_role("button", name="Cập nhật số liệu").click()
                 expect(ops.get_by_text("Đang giữ (micro-USD)")).to_be_visible()
                 assert ops.evaluate("(e) => e.scrollWidth <= e.clientWidth + 1")
+                screen(qa_page,"reviews")
                 pane = qa_page.locator("#review-panel")
                 pane.get_by_text("Soạn và bàn giao cho khách", exact=True).click()
                 pane.get_by_label("Bản làm việc").select_option(draft["id"])
@@ -269,6 +275,7 @@ def exercise():
             invite_token, _, invite_id, invited_email, invited_password = user("InvitedReviewer")
             api.put(base+"/operations/budget",headers={"Authorization":"Bearer "+token},json={"enabled":True,"ceiling":1000,"capacity":2}).raise_for_status()
             owner_page = login_page(admin_email, admin_password, {"width": 1280, "height": 850})
+            screen(owner_page,"account")
             admin_panel = owner_page.locator("#recipient-panel")
             admin_panel.get_by_text("Quản lý người nhận và lời mời", exact=True).click()
             invitation_form = admin_panel.locator("form")
@@ -283,6 +290,7 @@ def exercise():
             post(base + "/invitations", {"email": broad_email, "client_id":client["id"], "can_comment":True}, token)
 
             def preview(page, brand_scope, campaign_scope, comment, decide):
+                screen(page,"account")
                 box = page.locator("#recipient-panel > section").filter(has=page.get_by_role("button", name="Chấp nhận lời mời"))
                 for label, value in (
                     ("Vai trò", "Khách hàng"), ("Khách hàng", f"{client['name']} ({client['id']})"),
@@ -308,6 +316,7 @@ def exercise():
             expect(reader.get_by_text("Quản lý người nhận và lời mời", exact=True)).to_have_count(0)
             # Fresh grant now exists. Request the brief from the named recipient only.
             owner_page.locator("#refresh").click()
+            screen(owner_page,"workforce")
             ops = owner_page.locator("#workforce-panel")
             expect(ops.get_by_label("Người giao brief").locator("option").filter(has_text=invited_email.lower())).to_have_count(1)
             ops.get_by_text("Điều phối Marketing AI", exact=True).click()
@@ -317,6 +326,7 @@ def exercise():
             ops.get_by_role("button",name="Yêu cầu khách gửi brief").click()
             expect(ops.get_by_text("Notebook launch · Chờ brief")).to_be_visible()
             reader.locator("#refresh").click()
+            screen(reader,"workforce")
             intake = reader.locator("#workforce-panel")
             intake.get_by_text("Brief Marketing của bạn").click()
             intake.get_by_text("Notebook launch · Chờ brief").click()
@@ -329,6 +339,13 @@ def exercise():
             ops.get_by_text("Notebook launch · Đã nhận brief").click()
             ops.get_by_role("button",name="Giao việc cho AI Director").click()
             expect(ops.get_by_text("Notebook launch · Đang chờ worker")).to_be_visible()
+            screen(owner_page,"overview")
+            owner_page.locator("#command-campaign").select_option(camp["id"])
+            owner_page.locator("#command-refresh").click()
+            actual_run=owner_page.locator("#command-runs li").filter(has_text="Notebook launch")
+            expect(actual_run).to_contain_text("Đang chờ worker")
+            expect(actual_run).to_contain_text("checkpoint")
+            screen(owner_page,"workforce")
             print("PASS browser: named client submitted sourced brief; agency queued local inference")
             registry = "WF-13/landing-seo-draft@1"
             api.put(base+"/workforce/registry/"+camp["id"],headers={"Authorization":"Bearer "+token},
@@ -401,6 +418,7 @@ def exercise():
             for n in range(25):
                 share(f"Later {n}")
             reader.locator("#refresh").click()
+            screen(reader,"reviews")
             portal = reader.locator("#review-panel")
             target = portal.get_by_role("button", name="Review operations · v1 · Chờ khách duyệt")
             expect(target).to_have_count(0)
@@ -414,6 +432,7 @@ def exercise():
             result = api.get(base+"/reviews/"+first["id"],headers={"Authorization":"Bearer "+token}).json()
             assert result["status"] == "changes_requested"
             # Refresh replaces recipient rows asynchronously. Open the newly rendered row.
+            screen(owner_page,"account")
             old_panel = admin_panel.locator(":scope > details").element_handle()
             owner_page.locator("#refresh").click()
             owner_page.wait_for_function("(old) => !old.isConnected", arg=old_panel)

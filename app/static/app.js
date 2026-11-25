@@ -43,7 +43,13 @@
     return withCursor ? {items:result, next:response.headers.get("X-Next-Cursor")} : result;
   };
   const knowledge = createKnowledgePanel($('knowledge-panel'), api);
-  const command = createCommandCenter(api);
+  const screens = createWorkspaceScreens(id => {
+    const membership=state.memberships.find(m=>m.tenant_id===id);
+    if(!membership) return false;
+    enter(state.token,membership,state.email).catch(e=>msg(e.message,true));
+    return true;
+  });
+  const command = createCommandCenter(api,screens);
   const workforce = createWorkforce($('workforce-panel'),api,msg,(tenant,briefs,runs)=>command.activity(tenant,briefs,runs));
   const portal = createReviewPanel($('review-panel'),api,msg);
   const accessPanel = createRecipientPanel($('recipient-panel'), api, msg, async tenantId => {
@@ -91,6 +97,8 @@
     $('workspace').dataset.loading='true';
     document.body.dataset.access = membership.role === 'client_viewer' ? 'portal' : 'staff';
     document.body.dataset.role = membership.role;
+    screens.enter(membership,lostProfile);
+    $('workspace-choice').classList.remove('hidden');
     knowledge.reset();
     $('review-panel').before($('recipient-panel'));
     state.token = token; state.tenantId = tenantId; state.mode = membership.mode; state.email = email;
@@ -210,7 +218,10 @@
   };
   $('workspace-select').addEventListener('change', event => {
     const membership = state.memberships.find(m => m.tenant_id === event.target.value);
-    if (membership) enter(state.token, membership, state.email).catch(e => msg(e.message, true));
+    if (membership) {
+      screens.switching(membership.tenant_id);
+      enter(state.token, membership, state.email).catch(e => msg(e.message, true));
+    }
   });
   process($('client-form'), async data => {
     await api(tenantPath('clients'), 'POST', data);
@@ -241,6 +252,7 @@
     refreshSequence++;
     overviewRequest++;
     profileRemoved=false;
+    screens.reset();
     command.clear(); knowledge.reset(); workforce.reset(); accessPanel.reset(); portal.setContext(null);
     state.clients=[]; state.brands=[]; state.campaigns=[];
     render([],[]);
@@ -295,6 +307,7 @@
       state.clients=clients;state.brands=brands;state.campaigns=campaigns;render(actions,deliverables);
       await Promise.all([dashboardTicket===overviewRequest ? showCommand({clients,brands,campaigns,deliverables}) : null, profileRemoved ? knowledge.permissionChanged() : knowledge.show({
         tenant: tenantId, actor: state.userId, role: state.role,
+        requestedBrand: document.body.dataset.screen==='knowledge' ? screens.params().get('brand') : null,
         organization: state.memberships.find(m => m.tenant_id === tenantId)?.organization_name || '',
         clients, brands
       }), operations(), workforce.show(tenantId,state.role,campaigns.map(c=>({...c,client_id:brands.find(b=>b.id===c.brand_id)?.client_id}))),portal.show(deliverables,campaigns,refresh),

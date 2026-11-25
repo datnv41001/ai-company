@@ -11,6 +11,7 @@
   <script src="/static/claim-desk.js" defer></script>
   <link rel="stylesheet" href="/static/catalog.css">
   <link rel="stylesheet" href="/static/design-system.css">
+  <script src="/static/screens.js" defer></script>
   <script src="/static/command-center.js" defer></script>
   <script src="/static/catalog.js" defer></script>
   <script src="/static/knowledge.js" defer></script>
@@ -26,25 +27,37 @@
       <div class="logo"><b class="logo-mark" aria-hidden="true"><i></i><i></i><i></i></b><div><strong>AMC</strong><small>AI Marketing Company</small></div></div>
       <button type="button" class="secondary" id="menu-close">Đóng menu</button>
       <nav aria-label="Điều hướng chính">
-        <a class="nav guest-nav" href="#auth"><span aria-hidden="true">◇</span>Tài khoản AMC</a>
-        <a class="nav staff-nav" href="#command-center" aria-current="location"><span aria-hidden="true">▦</span>Tổng quan</a>
-        <a id="knowledge-nav" class="nav hidden staff-nav" href="#knowledge-title"><span aria-hidden="true">▤</span>Hồ sơ doanh nghiệp</a>
-        <a class="nav staff-nav" href="#campaigns-list"><span aria-hidden="true">◎</span>Chiến dịch</a>
-        <a class="nav workforce-nav" href="#workforce-panel"><span aria-hidden="true">◈</span>Đội ngũ AI</a>
-        <a class="nav review-nav" href="#review-panel"><span aria-hidden="true">✓</span>Phê duyệt</a>
-        <a class="nav staff-nav" href="#deliverables-list"><span aria-hidden="true">▥</span>Bản giao</a>
-        <a class="nav settings-nav" href="#workspace-forms"><span aria-hidden="true">⊞</span>Thiết lập nghiệp vụ</a>
-        <a class="nav account-nav" href="#onboarding"><span aria-hidden="true">◯</span>Tài khoản</a>
+        <a class="nav guest-nav" href="#auth"><svg class="icon" aria-hidden="true" focusable="false"><use href="/static/interface-icons.svg#profile"/></svg><span>Tài khoản AMC</span></a>
+        <a href="#/overview" data-route="overview" class="nav staff-nav" aria-label="Tổng quan" title="Tổng quan"><svg class="icon" aria-hidden="true" focusable="false"><use href="/static/interface-icons.svg#grid"/></svg><span>Tổng quan</span></a>
+        <a id="knowledge-nav" href="#/knowledge" data-route="knowledge" class="nav hidden staff-nav" aria-label="Hồ sơ doanh nghiệp" title="Hồ sơ doanh nghiệp"><svg class="icon" aria-hidden="true" focusable="false"><use href="/static/interface-icons.svg#book"/></svg><span>Hồ sơ doanh nghiệp</span></a>
+        <a href="#/campaigns" data-route="campaigns" class="nav staff-nav" aria-label="Chiến dịch" title="Chiến dịch"><svg class="icon" aria-hidden="true" focusable="false"><use href="/static/interface-icons.svg#campaign"/></svg><span>Chiến dịch</span></a>
+        <a href="#/workforce" data-route="workforce" class="nav workforce-nav" aria-label="Đội ngũ AI" title="Đội ngũ AI"><svg class="icon" aria-hidden="true" focusable="false"><use href="/static/interface-icons.svg#team"/></svg><span>Đội ngũ AI</span></a>
+        <a href="#/reviews" data-route="reviews" class="nav review-nav" aria-label="Phê duyệt" title="Phê duyệt"><svg class="icon" aria-hidden="true" focusable="false"><use href="/static/interface-icons.svg#review"/></svg><span>Phê duyệt</span></a>
+        <a href="#/deliverables" data-route="deliverables" class="nav staff-nav" aria-label="Bản giao" title="Bản giao"><svg class="icon" aria-hidden="true" focusable="false"><use href="/static/interface-icons.svg#delivery"/></svg><span>Bản giao</span></a>
+        <a href="#/operations" data-route="operations" class="nav operations-nav" aria-label="Điều hành agency" title="Điều hành agency"><svg class="icon" aria-hidden="true" focusable="false"><use href="/static/interface-icons.svg#finance"/></svg><span>Điều hành agency</span></a>
+        <a href="#/settings" data-route="settings" class="nav settings-nav" aria-label="Thiết lập nghiệp vụ" title="Thiết lập nghiệp vụ"><svg class="icon" aria-hidden="true" focusable="false"><use href="/static/interface-icons.svg#settings"/></svg><span>Thiết lập nghiệp vụ</span></a>
+        <a href="#/account" data-route="account" class="nav account-nav" aria-label="Tài khoản" title="Tài khoản"><svg class="icon" aria-hidden="true" focusable="false"><use href="/static/interface-icons.svg#profile"/></svg><span>Tài khoản</span></a>
       </nav>
-      <div class="sidebar-bottom"><span class="dot" aria-hidden="true"></span>Môi trường nội bộ</div>
+      <div class="sidebar-bottom"><button id="rail-toggle" class="rail-toggle" aria-expanded="true" aria-label="Thu gọn thanh điều hướng"><svg class="icon" aria-hidden="true" focusable="false"><use href="/static/interface-icons.svg#collapse"/></svg><span>Thu gọn</span></button></div>
     </aside>
     <button id="nav-backdrop" type="button" aria-label="Đóng điều hướng" hidden tabindex="-1"></button>
     <main class="main" id="main-content" tabindex="-1">
       <header class="topbar">
-        <button type="button" id="menu-toggle" class="secondary" aria-expanded="false" aria-controls="workspace-sidebar">Menu</button>
-        <div class="top-brand"><strong>AI Marketing Company</strong></div>
-        <label id="workspace-choice" class="hidden">Không gian làm việc<select id="workspace-select"></select></label>
-        <div class="top-tools"><label for="theme-mode">Giao diện<select id="theme-mode" aria-label="Giao diện"><option value="system">Theo hệ thống</option><option value="light">Sáng</option><option value="dark">Tối</option></select></label><div id="who" class="top-pill">Chưa đăng nhập</div><button type="button" id="switch-account" class="secondary hidden">Đổi tài khoản</button></div>
+        <button type="button" class="icon-button secondary" id="menu-toggle" aria-label="Mở điều hướng" aria-expanded="false" aria-controls="workspace-sidebar"><svg class="icon" aria-hidden="true" focusable="false"><use href="/static/interface-icons.svg#menu"/></svg></button>
+        <b class="top-brand">AMC</b>
+        <button type="button" class="context-trigger secondary" id="scope-trigger" popovertarget="scope-menu" hidden><svg class="icon" aria-hidden="true" focusable="false"><use href="/static/interface-icons.svg#workspace"/></svg><span id="scope-label">Không gian làm việc</span><svg class="icon" aria-hidden="true" focusable="false"><use href="/static/interface-icons.svg#chevron"/></svg></button>
+        <div id="scope-menu" class="tool-popover" popover>
+          <h3>Phạm vi làm việc</h3>
+          <label id="workspace-choice">Không gian làm việc<select id="workspace-select"></select></label>
+          <label id="toolbar-brand-choice" hidden>Thương hiệu theo dõi<select id="toolbar-brand"></select></label>
+        </div>
+        <div class="top-tools"><button id="refresh" class="icon-button secondary" title="Làm mới workspace" aria-label="Làm mới workspace" hidden><svg class="icon" aria-hidden="true" focusable="false"><use href="/static/interface-icons.svg#refresh"/></svg></button>
+          <button id="account-trigger" type="button" class="icon-button secondary" popovertarget="account-menu" aria-label="Tài khoản và giao diện" title="Tài khoản và giao diện"><svg class="icon" aria-hidden="true" focusable="false"><use href="/static/interface-icons.svg#profile"/></svg></button></div>
+        <div id="account-menu" class="tool-popover" popover>
+          <h3>Tài khoản</h3><p id="who">Chưa đăng nhập</p>
+          <label for="theme-mode">Giao diện<select id="theme-mode"><option value="system">Theo hệ thống</option><option value="light">Sáng</option><option value="dark">Tối</option></select></label>
+          <button type="button" id="switch-account" class="secondary hidden">Đổi tài khoản</button>
+        </div>
       </header>
       <div id="notice" role="status"></div>
       <p id="link-hint" class="panel hidden">Đăng nhập hoặc tạo tài khoản bằng email nhận lời mời.</p>
@@ -66,11 +79,12 @@
           <div class="loading-outline" aria-hidden="true"><i></i><i></i><i></i><i></i><b></b></div>
         </div>
         <p id="client-scope" class="hidden"></p>
-      <section id="command-center" hidden aria-labelledby="command-title">
+      <section id="command-center" data-screen="overview" hidden aria-labelledby="command-title">
         <header class="command-heading">
-          <div><p id="command-workspace" class="context-label"></p><h2 id="command-title">Trung tâm điều hành</h2><p id="command-client-total"></p></div>
+          <div><h2 id="command-title">Trung tâm điều hành</h2><p id="command-client-total"></p></div>
           <button type="button" class="secondary" id="command-refresh">Cập nhật</button>
         </header>
+        <div class="scope-heading"><h3>Toàn workspace</h3></div>
         <div class="command-totals" aria-label="Tổng hợp trong workspace">
           <div class="metric"><span>Chiến dịch</span><strong id="command-campaign-count">—</strong></div>
           <div class="metric"><span>Bản giao</span><strong id="command-deliverable-count">—</strong></div>
@@ -78,7 +92,7 @@
           <div class="metric"><span>Đã qua QA</span><strong id="command-approved-count">—</strong></div>
         </div>
         <section class="command-hero" aria-labelledby="progress-heading"><div class="hero-head">
-          <div><h3 id="progress-heading">Tiến độ chiến dịch</h3><p id="command-scope"></p></div>
+          <div><h3 id="progress-heading">Kế hoạch Marketing</h3><p id="command-scope"></p></div>
           <label for="command-campaign">Chiến dịch theo dõi<select id="command-campaign"></select></label>
         </div><div class="hero-progress"><div><strong id="command-progress-label">—</strong><span id="command-progress-caption"></span></div>
           <p id="command-objective"></p></div>
@@ -86,37 +100,38 @@
           <div class="hero-action"><a id="command-new-link" href="#campaign-form">Tạo chiến dịch</a><a id="command-plan-link" href="#campaigns-list">Mở kế hoạch chiến dịch</a></div>
         </section>
         <div id="command-status" role="status" aria-live="polite"></div>
-        <div class="command-columns"><section class="command-card"><h3>Hàng đợi công việc</h3><ul id="command-tasks"></ul></section>
-          <section class="command-card"><h3>Phân công bộ phận</h3><ul id="command-departments"></ul></section>
-          <section class="command-card"><h3>Kết quả bàn giao</h3><ul id="command-outcomes"></ul><p class="scope-note">Kết quả kinh doanh cần nguồn đo lường của chiến dịch.</p></section>
-          <section class="command-card"><h3>Lượt xử lý AI</h3><ul id="command-runs"></ul></section></div>
+        <div class="scope-heading"><h3>Trong chiến dịch</h3><span id="campaign-caption"></span></div><div class="command-columns"><section class="command-card"><h3>Bộ phận phụ trách</h3><ul id="command-departments"></ul></section>
+          <section class="command-card"><h3>Hàng đợi công việc</h3><ul id="command-tasks"></ul></section>
+          <section class="command-card"><h3>Kết quả bàn giao</h3><ul id="command-outcomes"></ul></section>
+          <section class="command-card"><h3>Thực thi AI</h3><ul id="command-runs"></ul><details class="capability-list"><summary>Workflow đã triển khai</summary><ul id="command-capabilities"></ul></details></section></div>
+        <section class="business-results"><h3>Kết quả kinh doanh</h3><p>Chưa có nguồn đo lead, doanh thu hoặc chuyển đổi cho chiến dịch.</p></section>
       </section>
-        <section id="knowledge-panel" class="knowledge hidden" aria-labelledby="knowledge-title">
+        <section id="knowledge-panel" data-screen="knowledge" class="knowledge hidden" aria-labelledby="knowledge-title">
           <header class="knowledge-heading"><div><p id="knowledge-org"></p><h2 id="knowledge-title" tabindex="-1">Hồ sơ doanh nghiệp</h2></div><span id="knowledge-progress"></span></header>
           <div id="knowledge-context" class="knowledge-grid"></div>
           <div id="knowledge-status" role="status" aria-live="polite"></div>
           <div id="knowledge-content"></div>
           <details id="catalog-drawer"><summary>Danh mục, điều khoản và mục tiêu</summary><section id="catalog-pane" aria-label="Danh mục Marketing"></section></details>
         </section>
-        <section id="operations-panel" class="panel hidden" aria-labelledby="operations-title">
+        <section id="operations-panel" data-screen="operations" class="panel hidden" aria-labelledby="operations-title">
           <h3 id="operations-title">Điều hành agency</h3><p id="operations-month"></p><dl id="operations-values"></dl>
           <button type="button" id="operations-refresh">Cập nhật số liệu</button>
         </section>
-        <section id="workforce-panel" aria-label="Brief Marketing và tiến độ"></section>
-        <section id="recipient-panel" aria-label="Quyền khách hàng"></section>
-        <section id="review-panel" class="panel"></section>
-        <div class="section-head"><div><h3>Thiết lập nghiệp vụ</h3></div><button id="refresh" class="secondary">Làm mới</button></div>
-        <div id="workspace-forms" class="triple">
+        <section id="workforce-panel" data-screen="workforce" aria-label="Brief Marketing và tiến độ"></section>
+        <section data-screen="account" id="recipient-panel" aria-label="Quyền khách hàng"></section>
+        <section id="review-panel" data-screen="reviews" class="panel"></section>
+        <div data-screen="settings" class="section-head"><h2>Thiết lập nghiệp vụ</h2></div>
+        <div id="workspace-forms" data-screen="settings" class="triple">
           <form id="client-form" class="panel"><h4>Khách hàng</h4><p>Thêm doanh nghiệp sẽ được quản lý Marketing.</p><label>Tên khách hàng<input name="name" required minlength="2"></label><label>Lĩnh vực<input name="sector" placeholder="Ví dụ: SaaS, Bán lẻ"></label><button type="submit">Thêm khách hàng</button></form>
           <form id="brand-form" class="panel"><h4>Thương hiệu</h4><p>Ghi rõ sự thật sản phẩm và quy chuẩn thương hiệu.</p><label>Khách hàng<select name="client_id" id="brand-client" required></select></label><label>Tên thương hiệu<input name="name" required minlength="2"></label><label>Quy chuẩn<input name="brand_guidelines" placeholder="Giọng điệu, claims không được dùng"></label><label>Thông tin sản phẩm được xác minh<input name="product_truth" placeholder="Nguồn sự thật sản phẩm"></label><button type="submit">Tạo Brand Kit</button></form>
           <form id="campaign-form" class="panel"><h4>Chiến dịch</h4><p>Đặt mục tiêu và brief để phân rã công việc Marketing.</p><label>Thương hiệu<select name="brand_id" id="campaign-brand" required></select></label><label>Tên chiến dịch<input name="name" required minlength="2"></label><label>Mục tiêu<input name="objective" required minlength="5"></label><label>Brief<textarea name="brief" rows="3" minlength="10" required></textarea></label><button type="submit">Tạo chiến dịch</button></form>
         </div>
-        <div class="section-head"><div><h3>Chiến dịch & nhiệm vụ</h3></div></div>
-        <div class="panel"><div id="campaigns-list" class="empty">Chưa có chiến dịch. Hãy tạo khách hàng, thương hiệu và chiến dịch ở trên.</div></div>
-        <div class="section-head"><div><h3>Thao tác nhạy cảm & bản thảo</h3></div></div>
-        <div class="two-col"><div class="panel"><h4>Yêu cầu thực thi bên ngoài</h4><p>Thiết kế để yêu cầu duyệt trước khi đăng bài, gửi email, thay đổi ngân sách. Gọi API thực tế chưa được bật.</p><div id="actions-list" class="empty">Chưa có yêu cầu hành động.</div></div><div class="panel"><h4>Tài liệu bàn giao</h4><p>Các bản nháp và kết quả AI cần được kiểm duyệt trước khi sử dụng.</p><div id="deliverables-list" class="empty">Chưa có tài liệu.</div></div></div>
+        <div data-screen="campaigns" class="section-head"><div><h2>Chiến dịch & nhiệm vụ</h2></div></div>
+        <div data-screen="campaigns" class="panel"><div id="campaigns-list" class="empty">Chưa có chiến dịch. Hãy tạo khách hàng, thương hiệu và chiến dịch ở trên.</div></div>
+        <div data-screen="deliverables" class="section-head"><div><h2>Bản giao</h2></div></div>
+        <div data-screen="deliverables" class="two-col"><div class="panel"><h4>Yêu cầu thực thi bên ngoài</h4><p>Thiết kế để yêu cầu duyệt trước khi đăng bài, gửi email, thay đổi ngân sách. Gọi API thực tế chưa được bật.</p><div id="actions-list" class="empty">Chưa có yêu cầu hành động.</div></div><div class="panel"><h4>Tài liệu bàn giao</h4><p>Các bản nháp và kết quả AI cần được kiểm duyệt trước khi sử dụng.</p><div id="deliverables-list" class="empty">Chưa có tài liệu.</div></div></div>
       </section>
-      <section id="onboarding" class="section-panel hidden">
+      <section id="onboarding" data-screen="account" class="section-panel hidden">
         <h3 id="entry-title">Tài khoản của bạn</h3>
         <details id="new-workspace"><summary>Tạo workspace</summary>
           <form id="workspace-form" class="panel"><label>Tên tổ chức<input name="organization_name" required minlength="2" maxlength="150"></label>

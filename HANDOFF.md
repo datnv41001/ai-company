@@ -1,5 +1,14 @@
 # Bắt đầu ở đây khi tiếp quản AI Marketing Company
 
+## PR #34 · Màn hình điều hành Marketing
+
+Điều hướng workspace dùng URL của từng màn hình. Đường dẫn giữ workspace, thương hiệu theo dõi và chiến dịch. Khi mở liên kết, ứng dụng xác minh phiên và đối chiếu các ID với danh sách mà tài khoản được phép đọc. Khi lập kế hoạch, người dùng mở thẻ bộ phận để xem vai trò và nhiệm vụ được giao. Các lượt chạy Workforce, quyết định QA, tình trạng nguồn và số liệu kinh doanh được trình bày riêng.
+
+Bộ kiểm thử Chromium chạy qua mục CI `compose-browser`. Artifact `premium-ui-<revision>` có ảnh thật ở 1440, 1280, 820, 390 và 320 CSS px, các cặp trước/sau và `ui-acceptance.json`. Ảnh trước được lấy từ Chromium tại commit `0953285c1c6a70a5c473effb5a69501500e717b5`. Hàm kiểm thử đối chiếu SHA-256 của ảnh trước khi ghép mỗi cặp. [Thiết kế và nghiệm thu](docs/AMC-DESIGN-SYSTEM.md)
+
+Chạy bằng `python tests/browser_premium_ui.py` với `AMC_BROWSER_TEST_URL`, hộp thư phát triển, PostgreSQL thử nghiệm và Chromium đã cài như CI. `AMC_PREMIUM_EVIDENCE` chọn thư mục đầu ra. Các thao tác tài khoản, lịch sử Back/Forward, quyền bị thu hẹp và QA tiếp tục đi qua API đã nghiệm thu. Khi cần quay lại giao diện trước, hoàn nguyên commit tinh chỉnh bằng một PR mới. Thay đổi này chỉ tác động đến ứng dụng và bộ kiểm thử giao diện.
+
+
 ## Trung tâm điều hành và chuẩn giao diện
 
 Mốc nền là PR #32 tại `068b85170cf47106c8d08a8c573548e3f530647c`. Từ tài khoản nhân sự, chọn workspace để mở **Trung tâm điều hành**, chọn chiến dịch và đối chiếu bước kế hoạch với nhiệm vụ, bộ phận, bản giao và lượt xử lý Workforce. Menu **Hồ sơ doanh nghiệp** mở C2. Công tắc **Giao diện** hỗ trợ hệ thống, sáng và tối. [Hợp đồng dữ liệu, component và quy tắc nghiệm thu](docs/AMC-DESIGN-SYSTEM.md)

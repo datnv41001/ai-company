@@ -43,18 +43,20 @@
     toggle.addEventListener('click', () => toggle.getAttribute('aria-expanded') === 'true' ? close(true) : open());
     shade.addEventListener('click', () => close(true));
     document.getElementById('menu-close').addEventListener('click', () => close(true));
-    sidebar.addEventListener('click', event => {
-      const anchor = event.target.closest('a[href^="#"]');
-      if (!anchor) return;
-      const target = document.getElementById(anchor.hash.slice(1));
-      if (!target) return;
-      if (target.closest('[inert], [hidden], .hidden')) return;
-      sidebar.querySelectorAll('a[aria-current]').forEach(link => link.removeAttribute('aria-current'));
-      anchor.setAttribute('aria-current','location');
-      if (mobile.matches) close();
-      target.tabIndex = -1;
-      target.focus({preventScroll:true});
+    const rail = document.getElementById('rail-toggle');
+    rail.addEventListener('click',()=>{
+      const collapsed=document.body.classList.toggle('rail-compact');
+      rail.setAttribute('aria-expanded',String(!collapsed));
+      rail.setAttribute('aria-label',collapsed?'Mở rộng thanh điều hướng':'Thu gọn thanh điều hướng');
     });
+    for(const id of ['account','scope']){
+      const trigger=document.getElementById(id+'-trigger'), menu=document.getElementById(id+'-menu');
+      trigger.setAttribute('aria-controls',menu.id);trigger.setAttribute('aria-expanded','false');
+      menu.addEventListener('toggle',event=>{
+        trigger.setAttribute('aria-expanded',String(event.newState==='open'));
+        if(event.newState==='open') menu.querySelector('select:not([disabled]),button:not([disabled])')?.focus();
+      });
+    }
     document.addEventListener('keydown', event => {
       if (toggle.getAttribute('aria-expanded') !== 'true') return;
       if (event.key === 'Escape') { event.preventDefault(); close(true); }

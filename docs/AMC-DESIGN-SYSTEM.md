@@ -1,5 +1,26 @@
 # Chuẩn giao diện AMC
 
+## Màn hình và phạm vi
+
+Sidebar mở từng màn hình nghiệp vụ. Liên kết `?workspace=<id>#/knowledge` mở hồ sơ sau đăng nhập. Các đường dẫn `#/overview`, `#/campaigns`, `#/workforce`, `#/reviews` và `#/deliverables` mở tổng quan, chiến dịch, điều phối AI, phê duyệt và bàn giao. Cổng khách hàng chỉ có các màn hình thuộc vai trò của người nhận. Khi thu hẹp quyền, ứng dụng xóa dữ liệu cũ và hiển thị thông báo.
+
+Nút tên workspace mở bộ chọn workspace. Trên Tổng quan, người dùng còn có thể lọc chiến dịch theo thương hiệu. Lịch sử trình duyệt giữ màn hình, thương hiệu theo dõi và chiến dịch. Mở Hồ sơ doanh nghiệp từ một thương hiệu đã chọn sẽ đi đến đúng hồ sơ trong phạm vi được cấp. Trên desktop, nút ở chân sidebar thu gọn thanh điều hướng. Trên điện thoại, thanh công cụ có menu, tên workspace, làm mới và tài khoản. Chọn **Tài khoản và giao diện** để đổi chế độ màu.
+
+| Dữ liệu trên Tổng quan | Cách đọc |
+| --- | --- |
+| Toàn workspace | Bốn tổng số giữ nguyên khi đổi chiến dịch hoặc lọc thương hiệu. |
+| Kế hoạch Marketing | Tiến độ lấy từ nhiệm vụ của chiến dịch đang chọn. |
+| Bộ phận phụ trách | Mở thẻ để xem vai trò, tên nhiệm vụ và trạng thái kế hoạch. |
+| Thực thi AI | Lượt chạy, trạng thái và số checkpoint đến từ Workforce. Mở **Workflow đã triển khai** để xem phiên bản, kỹ năng và quyền đã cấp trong chiến dịch. |
+| Kết quả bàn giao | Mỗi bản có trạng thái QA, tình trạng nguồn và bước chia sẻ khả dụng theo quyền. Máy chủ kiểm tra điều kiện tại thời điểm gửi. |
+| Kết quả kinh doanh | Khi chưa có nguồn đo, màn hình ghi rõ dữ liệu còn thiếu. |
+
+### Kiểm tra giao diện PR #34
+
+Job `compose-browser` chạy Chromium trên PostgreSQL ở 1440, 1280, 820, 390 và 320 CSS px. Dữ liệu tổng hợp được tạo qua API. Các phép thử giữ một phản hồi đọc nhiệm vụ thật hơn 650 ms, đo vị trí nút và panel trước, trong, sau khi tải, kiểm tra focus và cuộn. `ui-acceptance.json` ghi riêng điểm dịch chuyển sau thao tác gần nhất và dịch chuyển ngoài cửa sổ 500 ms. CLS tải ban đầu dùng cửa sổ phiên tối đa 5 s và khoảng nghỉ 1 s. Kiểm tra bổ sung gồm bàn phím, vùng chạm, nhãn tiếng Việt dài, email dài, sáng/tối/theo hệ thống và pinch zoom 200% trong Chromium.
+
+Ảnh gốc có mã kiểm tra theo từng viewport. Ảnh mới và ba cặp ảnh trước/sau nằm trong artifact `premium-ui-<revision>`. Hãy xem ảnh, mở liên kết trực tiếp bằng hai vai trò và đọc kết quả đo của đúng revision. Dữ liệu đo trong lab phản ánh máy chạy và bộ dữ liệu tổng hợp tại thời điểm đó. [Ảnh trước và SHA-256](ui-evidence/pr34-before/manifest.json)
+
 Áp dụng chuẩn này cho PR có thay đổi giao diện nhân sự, khách hàng hoặc người dùng chưa đăng nhập. Người triển khai và reviewer dùng cùng các quy tắc trên desktop, tablet và điện thoại. [CSS dùng chung](../app/static/design-system.css) · [Kiểm thử trên Chromium](../tests/browser_premium_ui.py)
 
 ## Mục tiêu của từng màn hình

@@ -1,6 +1,7 @@
 """Exercise the authenticated AMC command center on a loopback PostgreSQL fixture."""
 
 import base64
+from hashlib import sha256
 from collections import Counter
 from datetime import datetime, timezone
 from html import escape
@@ -17,15 +18,16 @@ import httpx
 import psycopg
 from playwright.sync_api import expect, sync_playwright
 
+from screen_navigation import menu, screen, select_workspace, switch_account
 from browser_knowledge import BASE, PROJECT, authenticate, db_counts, post
 from identity_fixtures import invite_member, start_registration, verify_registration
 
 
 OUT = Path(os.getenv("AMC_PREMIUM_EVIDENCE", "premium-ui-evidence"))
-MATRIX = {"desktop": (1440, 900), "tablet": (820, 1180), "mobile": (390, 844)}
+MATRIX = {"desktop": (1440, 900), "laptop": (1280, 850), "tablet": (820, 1180), "mobile": (390, 844), "compact": (320, 700)}
 AUDIT = Path(__file__).with_name("premium_accessibility.js").read_text("utf8")
 OWNER_NAME = "Mộc Studio"
-EMPTY_NAME = "Studio một thành viên"
+EMPTY_NAME = "Studio một thành viên · Trung tâm Thương hiệu và Truyền thông Việt Nam"
 
 
 def request_json(api, method, path, who, body=None):
@@ -42,7 +44,7 @@ def account(api, label, org=None):
 
 
 def fixture(api):
-    owner = account(api, "minh", OWNER_NAME)
+    owner = account(api, "minh.truongphong.truyenthong.thuonghieu", OWNER_NAME)
     editor = account(api, "linh")
     recipient = account(api, "an")
     tenant = owner["tenant_id"]
@@ -160,7 +162,8 @@ def reflow(page):
 def choose_campaign(page, campaign):
     control = page.locator("#command-campaign")
     expect(control).to_be_visible()
-    control.select_option(campaign["id"])
+    if control.input_value() != campaign["id"]:
+        control.select_option(campaign["id"])
     expect(page.locator("#command-objective")).to_have_text(campaign["objective"])
     expect(page.locator("#command-center")).not_to_have_attribute("aria-busy", "true")
 
@@ -206,6 +209,11 @@ def check_dashboard(page, f, dataset):
     expect(page.locator("#command-outcomes li")).to_have_count(len(scoped))
     for doc in scoped:
         expect(page.locator("#command-outcomes")).to_contain_text(doc["title"])
+        outcome = page.locator("#command-outcomes li").filter(has_text=doc["title"])
+        if doc.get("qa_evidence", {}).get("state") == "source_unavailable":
+            expect(outcome).to_contain_text("Chưa có nguồn để đối chiếu")
+        if current_approval(doc):
+            expect(outcome).to_contain_text("Có thể yêu cầu chia sẻ")
     expect(page.locator("#command-runs")).to_contain_text("Chưa thấy lượt xử lý")
     expect(page.locator("#command-outcomes")).not_to_contain_text("Thông báo mở cửa không gian mới")
     return {
@@ -250,7 +258,10 @@ def keyboard(page, view, screenshots):
         return "Tab reached visible focus, drawer wrapped in both directions, Escape returned focus"
     page.keyboard.press("Enter")
     assert page.locator("#knowledge-title").is_visible()
-    assert page.evaluate("window.location.hash==='#knowledge-title' || document.activeElement.id==='knowledge-title'")
+    expect(page.locator("#knowledge-nav")).to_have_attribute("aria-current", "page")
+    expect(page.locator("#knowledge-panel")).to_be_focused()
+    page.go_back()
+    expect(page.locator("#command-center")).to_be_visible()
     page.evaluate("window.scrollTo({top:0,behavior:'instant'})")
     return "workspace navigation activated by keyboard"
 
@@ -287,16 +298,43 @@ def task_network(page, f):
         page.evaluate("window.__amcRouteHeld=true")
 
     page.route(pattern, hold)
-    page.locator("#command-campaign").select_option(cold["id"])
+    control = page.locator("#command-campaign")
+    control.focus()
+
+    def geometry():
+        return page.evaluate("""()=>Object.fromEntries(['command-campaign','command-plan-link','command-tasks','command-outcomes'].map(id=>{
+          const rect=document.getElementById(id).getBoundingClientRect();return [id,Math.round(rect.top+scrollY)]}))""")
+
+    positions = [geometry()]
+    start = page.evaluate("performance.now()")
+    control.select_option(cold["id"])
     expect(page.locator("#command-center")).to_have_attribute("aria-busy", "true")
     page.wait_for_function("window.__amcRouteHeld === true")
     running = no_motion(page)
     assert not running, running
     expect(page.locator("#command-status")).to_contain_text("Đang tải")
+    positions.append(geometry())
+    page.evaluate("window.scrollBy({top:64,behavior:'instant'})")
+    scroll = page.evaluate("scrollY")
+    # Hold the real read past the 500 ms recent-input window.
+    page.wait_for_timeout(650)
     held[0].continue_()
     expect(page.locator("#command-progress-label")).to_have_text("—")
     expect(page.locator("#command-center")).not_to_have_attribute("aria-busy", "true")
     assert not page.locator("#command-progress").evaluate("n=>n.hasAttribute('value')")
+    expect(control).to_be_focused()
+    settle(page)
+    positions.append(geometry())
+    delta = {k: max(pos[k] for pos in positions) - min(pos[k] for pos in positions) for k in positions[0]}
+    assert max(delta.values()) <= 2, (page.viewport_size, positions)
+    assert abs(scroll - page.evaluate("scrollY")) <= 2
+    shifts = page.evaluate(
+        """start=>{const all=window.__amcShifts.filter(e=>e.t>=start);
+      const score=recent=>all.filter(e=>e.recent===recent).reduce((sum,e)=>sum+e.v,0);
+      return {unexpected_sum:score(false),recent_input_sum:score(true),entries:all.length}}""",
+        start,
+    )
+    assert shifts["unexpected_sum"] <= 0.1, shifts
     page.unroute(pattern)
     choose_campaign(page, f["campaigns"][0])
     page.route(pattern, lambda route: route.abort("connectionfailed"), times=1)
@@ -306,14 +344,14 @@ def task_network(page, f):
     page.locator("#command-refresh").click()
     expect(page.locator("#command-progress-caption")).to_contain_text("Chưa có nhiệm vụ")
     choose_campaign(page, f["campaigns"][0])
-    return "real GET paused, network failure then successful readback"
+    return {"task_read": "real delayed GET, failure and successful retry", "document_position_change_px": delta, "scroll_and_focus_retained": True, **shifts}
 
 
 def measurements(page):
     return page.evaluate("""()=>{
        const n=performance.getEntriesByType('navigation')[0], resources=performance.getEntriesByType('resource');
        const fcp=performance.getEntriesByName('first-contentful-paint')[0];
-       const shifts=window.__amcShifts, login=performance.getEntriesByName('amc-login')[0].startTime,
+       const shifts=window.__amcShifts.filter(e=>!e.recent), login=performance.getEntriesByName('amc-login')[0].startTime,
              ready=performance.getEntriesByName('amc-dashboard-ready')[0].startTime;
        function cls(entries) {
          let best=0,score=0,first=-Infinity,last=-Infinity;
@@ -331,6 +369,76 @@ def measurements(page):
     }""")
 
 
+def navigation_and_density(page, f, dev, theme, shots):
+    nav = page.locator("#workspace-sidebar")
+    dept = page.locator("#command-departments details").first
+    dept.locator("summary").click()
+    expect(dept.locator(".assignment").first).to_be_visible()
+    expect(dept).to_contain_text("Nhiệm vụ kế hoạch")
+    if dev in ("desktop", "mobile") and theme == "dark":
+        shots.append(capture(page, f"{dev}-{theme}-department", top="#command-departments"))
+    dept.locator("summary").click()
+    cap = page.locator(".capability-list")
+    cap.locator("summary").click()
+    expect(cap).to_contain_text("WF-13/")
+    expect(cap).to_contain_text("Chưa đủ quyền")
+    cap.locator("summary").click()
+    page.evaluate("scrollTo({top:0,behavior:'instant'})")
+    menu(page, "account")
+    expect(page.locator("#who")).to_have_text(f["owner"]["email"])
+    reflow(page)
+    page.keyboard.press("Escape")
+    menu(page, "scope")
+    page.locator("#toolbar-brand").select_option(f["brands"][1]["id"])
+    expect(page.locator("#command-campaign option")).to_have_count(1)
+    page.keyboard.press("Escape")
+    expect(page.locator("#command-objective")).to_have_text(f["campaigns"][2]["objective"])
+    expect(page.locator("#command-campaign-count")).to_have_text("3")
+    expect(page.locator("#command-outcomes")).not_to_contain_text("Lịch nội dung tuần ra mắt")
+    filtered = page.url
+    screen(page, "knowledge")
+    expect(page.locator("#command-center")).to_be_hidden()
+    expect(page.locator("#knowledge-brand")).to_have_value(f["brands"][1]["id"])
+    expect(nav.locator("[data-route=knowledge]")).to_have_attribute("aria-current", "page")
+    page.go_back()
+    expect(page.locator("#command-center")).to_be_visible()
+    expect(page).to_have_url(filtered)
+    expect(page.locator("#command-campaign")).to_have_value(f["campaigns"][2]["id"])
+    page.go_forward()
+    expect(page.locator("#knowledge-panel")).to_be_visible()
+    screen(page, "overview")
+    menu(page, "scope")
+    page.locator("#toolbar-brand").select_option("")
+    page.keyboard.press("Escape")
+    choose_campaign(page, f["campaigns"][0])
+    if not page.locator("#menu-toggle").is_visible():
+        toggle = page.locator("#rail-toggle")
+        width = nav.bounding_box()["width"]
+        toggle.click()
+        assert nav.bounding_box()["width"] < width
+        expect(toggle).to_have_attribute("aria-expanded", "false")
+        toggle.click()
+    else:
+        assert page.locator(".topbar").bounding_box()["height"] <= 64
+    targets = page.locator("#account-trigger, #scope-trigger, #command-refresh, #command-campaign")
+    assert all(min(t.bounding_box()["width"], t.bounding_box()["height"]) >= 44 for t in targets.all())
+    if dev == "laptop" and theme == "light":
+        cdp = page.context.new_cdp_session(page)
+        cdp.send("Emulation.setPageScaleFactor", {"pageScaleFactor": 2})
+        assert page.evaluate("visualViewport.scale") >= 1.99
+        menu(page, "scope")
+        expect(page.locator("#toolbar-brand")).to_be_visible()
+        page.keyboard.press("Escape")
+        cdp.send("Emulation.setPageScaleFactor", {"pageScaleFactor": 1})
+        cdp.detach()
+    return {
+        "history": "Back/Forward restore view, exact campaign and approved brand filter",
+        "header_height_px": round(page.locator(".topbar").bounding_box()["height"]),
+        "touch_target_min_px": 44,
+        "pinch_zoom_tested": dev == "laptop" and theme == "light",
+    }
+
+
 def run_view(browser, dev, theme, f, dataset):
     w, h = MATRIX[dev]
     ctx = browser.new_context(
@@ -346,8 +454,8 @@ def run_view(browser, dev, theme, f, dataset):
       new PerformanceObserver(list=>{const e=list.getEntries().at(-1);if(e)window.__amcLcp=Math.round(e.startTime)}).
         observe({type:'largest-contentful-paint',buffered:true});
       window.__amcShifts=[];
-      new PerformanceObserver(list=>{for(const e of list.getEntries())if(!e.hadRecentInput)window.__amcShifts.push({
-        t:e.startTime,v:e.value,sources:e.sources?.map(s=>s.node?.id||s.node?.tagName||null)||[]});}).
+      new PerformanceObserver(list=>{for(const e of list.getEntries())window.__amcShifts.push({
+        t:e.startTime,v:e.value,recent:e.hadRecentInput,sources:e.sources?.map(s=>s.node?.id||s.node?.tagName||null)||[]});}).
         observe({type:'layout-shift',buffered:true});
     }""".replace("()=>{", "(()=>{", 1)
         + ")()"
@@ -360,7 +468,9 @@ def run_view(browser, dev, theme, f, dataset):
     try:
         page.goto(source)
         selector = page.locator("#theme-mode")
+        menu(page, "account")
         selector.select_option(theme)
+        page.keyboard.press("Escape")
         expect(page.locator("html")).to_have_attribute("data-theme", theme)
         page.reload()
         expect(selector).to_have_value(theme)
@@ -370,13 +480,16 @@ def run_view(browser, dev, theme, f, dataset):
         start = perf_counter()
         authenticate(page, f["owner"])
         expect(page.locator("#command-center")).to_be_visible()
-        counts = check_dashboard(page, f, dataset)
+        expect(page.locator("#command-campaign-count")).to_have_text(str(len(dataset["campaigns"])))
+        expect(page.locator("#command-center")).not_to_have_attribute("aria-busy", "true")
         ready_ms = round((perf_counter() - start) * 1000)
         settle(page)
         page.evaluate("performance.mark('amc-dashboard-ready')")
         # Observe the loaded layout before any deliberate scroll or navigation.
         page.wait_for_timeout(1100)
         perf = measurements(page)
+        assert perf["cumulative_layout_shift"] <= 0.1, (view, perf["layout_shift_sources"])
+        counts = check_dashboard(page, f, dataset)
         screenshot = capture(page, view + "-overview")
         reflow(page)
         audits.append(contrast(page, "#command-center", view))
@@ -390,9 +503,11 @@ def run_view(browser, dev, theme, f, dataset):
         perf["switch_campaign_ms"] = round((perf_counter() - start) * 1000)
         choose_campaign(page, f["campaigns"][0])
         result = {"device": dev, "theme": theme, "viewport": [w, h], "counts": counts, "performance": perf, "screenshots": [screenshot], "contrast": audits}
+        result["interaction"] = navigation_and_density(page, f, dev, theme, result["screenshots"])
         result["keyboard"] = keyboard(page, view, result["screenshots"])
-        if dev == "desktop" and theme == "light":
+        if theme == "light":
             result["network_states"] = task_network(page, f)
+        screen(page, "knowledge")
         page.locator("#knowledge-client").select_option(f["clients"][0]["id"])
         expect(page.locator("#knowledge-name")).to_have_value(f["clients"][0]["name"])
         result["screenshots"].append(capture(page, view + "-knowledge", top="#knowledge-panel"))
@@ -405,6 +520,7 @@ def run_view(browser, dev, theme, f, dataset):
             audits.append(contrast(page, "#catalog-pane", view))
             result["screenshots"].append(capture(page, view + "-catalog", top="#catalog-drawer"))
             page.locator("#catalog-drawer summary").click()
+        screen(page, "overview")
         result["screenshots"].append(capture(page, view + "-work", top="#command-flow"))
         assert not errors, errors
         return result
@@ -422,7 +538,7 @@ def mode_and_scope(browser, api, f):
         page.emulate_media(color_scheme="dark")
         expect(page.locator("html")).to_have_attribute("data-theme", "dark")
         authenticate(page, f["owner"])
-        page.locator("#workspace-select").select_option(f["empty"])
+        select_workspace(page, f["empty"])
         expect(page.locator("#command-campaign-count")).to_have_text("0")
         expect(page.locator("#command-deliverable-count")).to_have_text("0")
         expect(page.locator("#command-center")).not_to_contain_text(f["campaigns"][0]["name"])
@@ -456,17 +572,17 @@ def mode_and_scope(browser, api, f):
         page.emulate_media(color_scheme="light")
         capture(page, "business-light-tablet")
         page.set_viewport_size({"width": 320, "height": 700})
-        page.locator("#workspace-select").select_option(f["tenant"])
+        select_workspace(page, f["tenant"])
         expect(page.locator("#command-campaign-count")).to_have_text("3")
         reflow(page)
         legacy_transition(page, api, f)
-        page.locator("#switch-account").click()
+        switch_account(page)
         scoped = browser.new_context(viewport={"width": 820, "height": 1180}, locale="vi-VN")
         try:
             portal = scoped.new_page()
             task_requests = []
             portal.on("request", lambda req: task_requests.append(req.url) if req.url.endswith("/tasks") else None)
-            portal.goto(BASE + "/?workspace=" + f["tenant"])
+            portal.goto(BASE + "/?workspace=" + f["tenant"] + "#/overview?brand=" + f["brands"][1]["id"] + "&campaign=" + f["campaigns"][2]["id"])
             authenticate(portal, f["recipient"])
             expect(portal.locator("#command-center")).to_be_hidden()
             expect(portal.locator("#knowledge-panel")).to_be_hidden()
@@ -474,6 +590,7 @@ def mode_and_scope(browser, api, f):
             expect(portal.locator("#knowledge-status")).to_be_empty()
             expect(portal.locator("#workspace")).not_to_contain_text(f["campaigns"][2]["name"])
             assert not task_requests
+            assert "#/reviews" in portal.url and f["brands"][1]["id"] not in portal.url
         finally:
             scoped.close()
         return {
@@ -562,7 +679,7 @@ def contact_sheet(browser, views):
             + '"></figure>'
         )
 
-    ordered = [next(v for v in views if v["theme"] == theme and v["device"] == dev) for theme in ("light", "dark") for dev in MATRIX]
+    ordered = [next(v for v in views if v["theme"] == theme and v["device"] == dev) for theme in ("light", "dark") for dev in ("desktop", "tablet", "mobile")]
     page.set_content(
         '<meta charset="utf-8"><style>*{box-sizing:border-box}body{margin:0;background:#e9eef4;color:#172433;padding:22px;font:16px system-ui}main{display:grid;grid-template-columns:1.65fr 1fr .75fr;gap:18px}figure{margin:0}figcaption{font-weight:600;margin:0 0 6px}img{object-fit:contain;object-position:top left;width:100%;height:545px;display:block}</style><h1>AMC · AI Command Center</h1><main>'
         + "".join(map(tile, ordered))
@@ -571,6 +688,32 @@ def contact_sheet(browser, views):
     )
     page.screenshot(path=str(OUT / "overview-contact.png"))
     page.close()
+
+
+def compare_screens(browser):
+    baseline = Path(__file__).resolve().parents[1] / "docs/ui-evidence/pr34-before"
+    manifest = json.loads((baseline / "manifest.json").read_text(encoding="utf8"))
+    assert manifest["revision"] == "0953285c1c6a70a5c473effb5a69501500e717b5"
+    page = browser.new_page(viewport={"width": 1460, "height": 950}, device_scale_factor=1)
+    try:
+        for size in ("desktop", "tablet", "mobile"):
+            name = size + "-light-overview.png"
+            old = (baseline / name).read_bytes()
+            assert sha256(old).hexdigest() == manifest["images"][name]["sha256"]
+            panels = []
+            for title, data in (("Trước", old), ("Sau", (OUT / name).read_bytes())):
+                img = base64.b64encode(data).decode("ascii")
+                panels.append(f'<figure><figcaption>{title}</figcaption><img src="data:image/png;base64,{img}"></figure>')
+            html = (
+                '<meta charset="utf-8"><style>*{box-sizing:border-box}body{margin:0;padding:20px;background:#eef1ed;color:#142d24;'
+                "font:18px system-ui}h1{font-size:24px;margin:0 0 12px}main{display:grid;grid-template-columns:1fr 1fr;gap:16px}"
+                "figure{margin:0}figcaption{margin:0 0 8px;font-weight:bold}img{display:block;max-width:100%;max-height:840px;"
+                "object-fit:contain;object-position:top left}</style><h1>AMC · " + size + "</h1><main>" + "".join(panels) + "</main>"
+            )
+            page.set_content(html, wait_until="load")
+            page.screenshot(path=str(OUT / ("before-after-" + size + ".png")))
+    finally:
+        page.close()
 
 
 def foreground_membership(browser, api, f):
@@ -609,6 +752,7 @@ def foreground_membership(browser, api, f):
         page.evaluate("window.__amcCollectionHeld=false")
         expect(page.locator("#command-campaign-count")).to_have_text("3")
         choose_campaign(page, f["campaigns"][2])
+        screen(page, "knowledge")
         page.locator("#knowledge-client").select_option(f["clients"][1]["id"])
         expect(page.locator("#knowledge-brand")).to_have_value(f["brands"][1]["id"])
         page.locator("#refresh").click()
@@ -681,12 +825,16 @@ def run():
             assert db_counts(f["tenant"]) == before and before["runs"] == before["ledger_entries"] == 0
             report["postgresql"] = before
             contact_sheet(browser, report["views"])
+            compare_screens(browser)
             failures = [{"view": a["view"], "surface": a["surface"], **row} for v in report["views"] for a in v["contrast"] for row in a["failed"]]
             report["failed_contrast_count"] = len(failures)
             unresolved = [row for v in report["views"] for a in v["contrast"] for row in a["unresolved"]]
             report["unresolved_contrast_count"] = len(unresolved)
             required = {f"{dev}-{theme}-{surface}.png" for dev in MATRIX for theme in ("light", "dark") for surface in ("overview", "work", "knowledge")}
             required.add("desktop-cold-loading.png")
+            required.update(
+                {"before-after-desktop.png", "before-after-tablet.png", "before-after-mobile.png", "desktop-dark-department.png", "mobile-dark-department.png"}
+            )
             required.update(
                 {"mobile-light-navigation.png", "mobile-dark-catalog.png", "overview-contact.png", "business-light-tablet.png", "solo-dark-empty.png"}
             )

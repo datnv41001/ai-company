@@ -1,0 +1,50 @@
+{
+  "J1": {
+    "verdict": "revise",
+    "source": "A",
+    "reason": 0,
+    "repair": 0
+  },
+  "J2": {
+    "verdict": "revise",
+    "source": "B",
+    "reason": 0,
+    "repair": 1
+  },
+  "J3": {
+    "verdict": "insufficient",
+    "source": "A",
+    "reason": 2,
+    "repair": 0
+  },
+  "J4": {
+    "verdict": "keep",
+    "source": "B",
+    "reason": 0,
+    "repair": 1
+  },
+  "J5": {
+    "verdict": "revise",
+    "source": "A",
+    "reason": 1,
+    "repair": 2
+  },
+  "J6": {
+    "verdict": "keep",
+    "source": "B",
+    "reason": 0,
+    "repair": 1
+  },
+  "J7": {
+    "verdict": "insufficient",
+    "source": "A",
+    "reason": 1,
+    "repair": 2
+  },
+  "J8": {
+    "verdict": "keep",
+    "source": "B",
+    "reason": 2,
+    "repair": 0
+  }
+}

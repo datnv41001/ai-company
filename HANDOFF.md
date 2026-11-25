@@ -1,5 +1,9 @@
 # Bắt đầu ở đây khi tiếp quản AI Marketing Company
 
+## AIRC · Kiểm định theo năng lực v5
+
+Tám ca mới so một reviewer với phản biện chéo cùng ngân sách. Có 20 invocation ký trên hai checkpoint local; kết quả chưa đủ để mở rộng. Chạy replay offline và xem các giới hạn trước khi tiếp quản. [Kết quả theo reviewer/model](engineering/airc500/joint-v5/REPORT.md) · [Lệnh kiểm và rollback](engineering/airc500/joint-v5/RUNBOOK.md).
+
 ## AIRC · Research Broker công khai và holdout năng lực v4
 
 Trên nền main sau PR #23 `5dc4ebc73c9423f360d63287d52350e2ef21a31a`, tooling engineering thu thập các trích đoạn Marketing công khai đã duyệt, ghi cả các nguồn bị chặn, và so sánh cùng holdout có/không có packet. Chạy `python engineering/airc500/research_release.py` trong venv engineering trên máy mới. [Runbook, phạm vi quyền và rollback](engineering/airc500/PUBLIC-RESEARCH.md) · [Phép đo đã ghim](engineering/airc500/research-v4/REPORT.md).

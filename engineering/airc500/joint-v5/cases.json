@@ -1,0 +1,186 @@
+[
+  {
+    "id": "J1",
+    "subject": "Lead quality",
+    "observation": "A brief says campaign Indigo cost 900 USD per qualified lead.",
+    "sources": [
+      "A: Indigo spent USD 900 for 30 leads, of which 9 qualified.",
+      "B: Orange qualified 4 leads."
+    ],
+    "reasons": [
+      "USD 100 per qualified lead",
+      "USD 30 per qualified lead",
+      "USD 900 per qualified lead"
+    ],
+    "repairs": [
+      "replace with 100 USD and name the denominator",
+      "replace with 30 USD",
+      "retain the draft"
+    ],
+    "capabilities": [
+      "Marketing reasoning",
+      "Actionable repair"
+    ]
+  },
+  {
+    "id": "J2",
+    "subject": "Retail returns",
+    "observation": "A weekend sale headline promises free returns for ALL products.",
+    "sources": [
+      "A: A different January event covered every category.",
+      "B: For this weekend all apparel except custom apparel has free returns."
+    ],
+    "reasons": [
+      "this sale excludes custom apparel",
+      "the January policy governs this weekend",
+      "all merchandise in this event qualifies"
+    ],
+    "repairs": [
+      "retain the blanket headline",
+      "limit the line to eligible apparel and show the exception",
+      "remove the whole weekend offer"
+    ],
+    "capabilities": [
+      "Semantic contradiction",
+      "Source attribution"
+    ]
+  },
+  {
+    "id": "J3",
+    "subject": "Course attendance",
+    "observation": "An editor asks how many unique people attended the virtual session.",
+    "sources": [
+      "A: The room recorded 165 connections including reconnects; deduplicated attendee counts are unavailable.",
+      "B: 180 invitation emails were delivered."
+    ],
+    "reasons": [
+      "connections are unique people",
+      "invites cap verified attendance at 180",
+      "connections and invitations cannot establish unique attendance"
+    ],
+    "repairs": [
+      "obtain deduplicated attendance before reporting",
+      "publish 165 attendees",
+      "publish 180 attendees"
+    ],
+    "capabilities": [
+      "Marketing reasoning",
+      "Source attribution"
+    ]
+  },
+  {
+    "id": "J4",
+    "subject": "Channel exclusions",
+    "observation": "Copy says the free installation offer applies only to showroom orders in July.",
+    "sources": [
+      "A: Online orders continue to use a paid installer.",
+      "B: A July showroom order qualifies for free installation. Other channels and dates are excluded."
+    ],
+    "reasons": [
+      "this matches the approved channel and period",
+      "free installation applies online",
+      "the period is missing from the copy"
+    ],
+    "repairs": [
+      "extend to online customers",
+      "keep the scoped line",
+      "request evidence of audience age"
+    ],
+    "capabilities": [
+      "Semantic contradiction",
+      "Actionable repair"
+    ]
+  },
+  {
+    "id": "J5",
+    "subject": "Job accounting",
+    "observation": "A synthetic batch review says a second request with the same command ID should allocate another reservation.",
+    "sources": [
+      "A: Each successful distinct command reserves one unit. Duplicate command IDs return the existing reservation.",
+      "B: The worker processes up to five jobs per cycle."
+    ],
+    "reasons": [
+      "capacity determines idempotency",
+      "duplicate IDs reuse the first reservation",
+      "every HTTP delivery creates a reservation"
+    ],
+    "repairs": [
+      "keep the second allocation",
+      "raise the job limit",
+      "reuse the existing reservation and assert one row"
+    ],
+    "capabilities": [
+      "Code logic",
+      "Regression analysis"
+    ]
+  },
+  {
+    "id": "J6",
+    "subject": "Service isolation",
+    "observation": "A design summary says an analytics outage leaves transactional profile reads available.",
+    "sources": [
+      "A: Both services are hosted in one region.",
+      "B: Transactional reads use the primary database directly. Analytics receives queued events; reads do not contact it."
+    ],
+    "reasons": [
+      "the reads have no dependency on analytics",
+      "events must be replayed before reads",
+      "a common region means any individual service outage stops both"
+    ],
+    "repairs": [
+      "move all analytics calls into reads",
+      "keep the stated service-outage boundary",
+      "guarantee all regional outages are harmless"
+    ],
+    "capabilities": [
+      "Architecture",
+      "Source attribution"
+    ]
+  },
+  {
+    "id": "J7",
+    "subject": "Staff reports",
+    "observation": "A brief asks whether contract staff may download the internal weekly report.",
+    "sources": [
+      "A: Full-time staff may read this report. The published policy does not address contractors.",
+      "B: Contractors are allowed to view a different public dashboard."
+    ],
+    "reasons": [
+      "the public dashboard grants internal downloads",
+      "contractor entitlement for this report is unspecified",
+      "every staff category inherits the same access"
+    ],
+    "repairs": [
+      "declare contractors eligible",
+      "publish the internal report",
+      "ask the report owner to confirm the specific entitlement"
+    ],
+    "capabilities": [
+      "Security",
+      "Source attribution"
+    ]
+  },
+  {
+    "id": "J8",
+    "subject": "Conversion cohort",
+    "observation": "A dashboard summary describes 25 percent conversion of trial signups from May after 30 days.",
+    "sources": [
+      "A: April recorded 100 signups and 50 upgrades.",
+      "B: May's 160 signups were followed for 30 days; 40 distinct signups upgraded."
+    ],
+    "reasons": [
+      "April sets May's denominator",
+      "40 upgrades imply 40 percent",
+      "40 of the same 160 equals 25 percent"
+    ],
+    "repairs": [
+      "keep with the cohort and window attached",
+      "replace by 50 percent",
+      "request a new billing product"
+    ],
+    "capabilities": [
+      "Marketing reasoning",
+      "Regression analysis"
+    ]
+  }
+]

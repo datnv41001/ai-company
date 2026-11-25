@@ -13,8 +13,8 @@ from .knowledge_store import canonical, digest
 
 
 VERSION = "amc.content-evidence/1"
-HANDLE = re.compile(r"(?<!\w)F[1-9][0-9]*(?!\w)", re.I)
-BRACKET = re.compile(r"\[\s*(F[1-9][0-9]*)\s*\]", re.I)
+HANDLE = re.compile(r"(?<!\w)F[0-9]+(?!\w)", re.I)
+BRACKET = re.compile(r"\[\s*(F[0-9]+)\s*\]", re.I)
 NUMERIC = re.compile(r"\d|[%$€£¥₫₱]")
 COMMERCIAL = re.compile(
     r"\b(discount|rebate|sale price|free shipping|vat|tax|moq|prepaid|warranty|giảm giá|khuyến mãi|miễn phí|thuế|bảo hành|chiết khấu|trả trước|tối thiểu|tối đa|giao miễn phí|giá bán|báo giá cố định)\b",
@@ -25,6 +25,9 @@ TERRITORY = re.compile(
     re.I,
 )
 CHANNEL = re.compile(r"\b(all channels|mọi kênh|tất cả các kênh|offline|tại cửa hàng|marketplace|trên sàn|in.store.only)\b", re.I)
+RESEARCH_GAP = re.compile(
+    r"(?:buyer|customer|audience|user|market) (?:needs?|preferences?|expectations?) (?:require|need) (?:further )?(?:research|interviews|validation|testing)"
+)
 SEMANTIC = (
     ("comparison", re.compile(r"\b(hơn|nhất|đối thủ|cheaper|than|best|competing|competitors?|superior)\b", re.I)),
     ("regulated", re.compile(r"\b(bác sĩ|chữa|điều trị|cures?|medical|doctor|clinically)\b", re.I)),
@@ -67,23 +70,46 @@ def clean_handle(line):
     return normalized(BRACKET.sub("", line))
 
 
+def protected_phrases(projection):
+    return [*(projection.get("brand_guidelines") or {}).get("prohibited_claims", []), *(projection.get("task_intent") or {}).get("exclusions", [])]
+
+
 def content_shapes(workflow, projection):
     """Derive exact public fact blocks and fixed layout from the release-specific renderer."""
     if workflow not in c3_marketing.ROLES:
         from . import c3_assets
 
         render = c3_assets.render
-        blocks = {f["id"]: [" ".join(c3_assets.fact_lines(f, projection))] for f in projection["facts"]}
+        blocks = {f["id"]: " ".join(c3_assets.fact_lines(f, projection)) for f in projection["facts"]}
     else:
         render = c3_marketing.render
-        blocks = {f["id"]: [c3_marketing.fact_line(f)] for f in projection["facts"]}
+        blocks = {f["id"]: c3_marketing.fact_line(f) for f in projection["facts"]}
     baseline = render(workflow, projection, {})
     # These are generated from the pinned data with no model replies. Arbitrary text after
     # a label (including an invented citation), or added after a fixed CTA, is not exempted.
     fixed = {normalized(line) for line in baseline["body"].splitlines() if line.strip()}
-    for lines in blocks.values():
-        fixed.difference_update(normalized(line) for line in lines)
-    return blocks, {"title": {normalized(baseline["title"]), normalized(projection["product"])}, "client_preview": fixed}
+    # A rendered line can contain unverified profile or research prose. Being in the
+    # scaffold is no proof of a buyer-facing promise. Research labels are checked in
+    # their own section, outside the set of trusted layout lines.
+    free_prose = [*projection.get("hypotheses", []), *projection.get("gaps", [])]
+    fixed.difference_update(normalized(v) for v in free_prose)
+    # Historical templates interpolate business goals and KPI text into prose. Those fields
+    # can describe a plan, but cannot establish a price, a geographic promise or a benefit.
+    for key in ("audience", "objective", "kpi"):
+        term = normalized(projection.get(key, ""))
+        if term and (
+            COMMERCIAL.search(term)
+            or TERRITORY.search(term)
+            or CHANNEL.search(term)
+            or any(pattern.search(term) for _, pattern in SEMANTIC)
+            or re.search(r"[%$€£¥₫]|\b(?:vnd|usd|eur)\b", term)
+        ):
+            fixed = {line for line in fixed if term not in line}
+    declarations = {}
+    for handle, text in blocks.items():
+        fixed.discard(normalized(text))
+        declarations.setdefault(clean_handle(text), []).append(handle)
+    return declarations, {"title": {normalized(baseline["title"]), normalized(projection["product"])}, "client_preview": fixed}
 
 
 def spans(value):
@@ -99,42 +125,24 @@ def sentences(start, line):
     yield start + left, start + len(line), line[left:]
 
 
-def source_map(facts, blocks, lines):
-    """A multi-line price only verifies when all lines and qualifiers occur together."""
-    complete = {}
-    text = [clean_handle(line) for _, _, line in lines]
-    for fact in facts:
-        key = fact["id"]
-        expected = [clean_handle(line) for line in blocks[key] if line.strip()]
-        if not expected:
-            continue
-        for i, value in enumerate(text):
-            if value != expected[0] or text[i : i + len(expected)] != expected:
-                continue
-            for j in range(i, i + len(expected)):
-                cites = {c.upper() for c in HANDLE.findall(lines[j][2])}
-                if cites and cites != {key}:
-                    break
-            else:
-                for j in range(i, i + len(expected)):
-                    complete.setdefault(j, []).append(key)
-    return complete
-
-
 def classify(line, facts, complete, fixed, projection):
     text = normalized(line)
     bare = clean_handle(line)
     cited = list(dict.fromkeys(h.upper() for h in HANDLE.findall(line)))
     handles = set(f["id"] for f in facts)
-    forbidden = [*(projection.get("brand_guidelines") or {}).get("prohibited_claims", []), *(projection.get("task_intent") or {}).get("exclusions", [])]
+    forbidden = protected_phrases(projection)
     if any(normalized(term) and normalized(term) in text for term in forbidden):
         return "prohibited", "contradiction", "prohibited", cited
     if any(h not in handles for h in cited):
         return "citation", "contradiction", "unknown_handle", cited
-    if complete and len(complete) > 1:
-        return "unclassified", "unresolved", "ambiguous_evidence", complete
     if complete:
-        return "fact", "verified", "exact_declaration", complete
+        if set(cited) - set(complete):
+            return "citation", "contradiction", "wrong_handle", cited
+        selected = cited or complete
+        if len(selected) > 1:
+            return "unclassified", "unresolved", "ambiguous_evidence", selected
+        fact = next(f for f in facts if f["id"] == selected[0])
+        return fact["category"], "verified", "exact_declaration", selected
     for fact in facts:
         if bare == normalized(fact["wording"]) and not fact.get("price") and not fact.get("applicability"):
             if cited and cited != [fact["id"]]:
@@ -165,6 +173,9 @@ def classify(line, facts, complete, fixed, projection):
     if NUMERIC.search(bare) or COMMERCIAL.search(bare):
         return "structured", "contradiction", "commercial_terms", cited
     for fact in facts:
+        wording = normalized(fact["wording"])
+        if wording and any(negation + wording in bare for negation in ("not ", "no ", "không ", "không phải ")):
+            return fact["category"], "contradiction", "negated_fact", [fact["id"]]
         if normalized(fact["wording"]) in bare and any(normalized(q) not in bare for q in fact.get("qualifiers", [])):
             return fact["category"], "contradiction", "missing_qualifier", [fact["id"]]
     cat = next((kind for kind, pattern in SEMANTIC if pattern.search(bare)), "unclassified")
@@ -177,18 +188,38 @@ def assess_document(doc, run, signature):
     if not run.knowledge.get("c3_manifest", {}).get("digest") or not run.knowledge.get("c3_projection"):
         conflict("The Marketing run has no pinned content evidence")
     projection = run.knowledge["c3_projection"]
-    blocks, fixed = content_shapes(run.knowledge["registry"]["workflow"], projection)
+    declarations, fixed = content_shapes(run.knowledge["registry"]["workflow"], projection)
     facts = projection["facts"]
     statements = []
     for field, value in (("title", doc.title), ("client_preview", doc.content.get("client_preview", ""))):
         lines = spans(value)
-        complete = source_map(facts, blocks, lines)
-        for i, (start, end, line) in enumerate(lines):
+        # A protected phrase may straddle a line break. Mark every overlapping span
+        # so a decision on two separate paraphrases cannot authorize the full phrase.
+        forbidden_spans = [
+            m.span()
+            for phrase in protected_phrases(projection)
+            if phrase.strip()
+            for m in re.finditer(r"\s+".join(re.escape(word) for word in phrase.split()), value, re.I)
+        ]
+        section = ""
+        for start, end, line in lines:
+            if field == "client_preview" and normalized(line) in ("giả thuyết cần kiểm chứng", "dữ liệu cần bổ sung"):
+                section = normalized(line)
             # A canonical fact and its qualifiers form one indivisible assertion. Other novel
             # prose gets individual sentence spans even when multiple claims share a paragraph.
-            pieces = [(start, end, line)] if i in complete or normalized(line) in fixed[field] else sentences(start, line)
+            pieces = [(start, end, line)] if clean_handle(line) in declarations or normalized(line) in fixed[field] else sentences(start, line)
             for left, right, sentence in pieces:
-                category, state, reason, handles = classify(sentence, facts, complete.get(i), fixed[field], projection)
+                category, state, reason, handles = classify(sentence, facts, declarations.get(clean_handle(sentence)), fixed[field], projection)
+                if section == "giả thuyết cần kiểm chứng" and RESEARCH_GAP.fullmatch(normalized(sentence)) and sentence in projection.get("hypotheses", []):
+                    category, state, reason, handles = "editorial", "editorial", "research_question", []
+                if (
+                    section == "dữ liệu cần bổ sung"
+                    and sentence in projection.get("gaps", [])
+                    and sentence in {"Kiểm chứng nhu cầu với khách hàng trong thị trường đã chọn.", "Xác minh số liệu nền và kết quả bằng dữ liệu đo thực tế."}
+                ):
+                    category, state, reason, handles = "editorial", "editorial", "research_question", []
+                if any(begin < right and left < finish for begin, finish in forbidden_spans):
+                    category, state, reason, handles = "prohibited", "contradiction", "prohibited", []
                 if len(statements) >= 200:
                     category, state, reason, handles = "scope", "contradiction", "statement_limit", []
                     right, sentence = len(value), value[left:]

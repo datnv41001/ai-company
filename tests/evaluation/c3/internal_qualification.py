@@ -219,7 +219,23 @@ def main():
     mode = parser.add_mutually_exclusive_group()
     mode.add_argument("--study", action="store_true")
     mode.add_argument("--recovery", action="store_true")
+    mode.add_argument("--director-regression", action="store_true", help="Replay three recorded invalid plans without changing their study results")
     args = parser.parse_args()
+    if args.director_regression:
+        args.out.mkdir(parents=True, exist_ok=False)
+        for filename, cid, recovery in [(FROZEN, "v2-05", False), (FROZEN, "v2-07", False), (CASES.with_name("holdout-v1.json"), "service-05", True)]:
+            meta, url = conditions(filename)
+            expected_hash = "c497ff707c986acaa3c48ba799ab1a378f194d3e7cd4262834d41a4aae0fe477" if recovery else FROZEN_HASH
+            assert meta["cases_sha256"] == expected_hash
+            case = next(row for row in json.loads(filename.read_bytes())["cases"] if row["id"] == cid)
+            folder = args.out / cid
+            folder.mkdir()
+            with lab_client(app) as api:
+                result = run_internal(api, case, url, folder, False, recovery)
+            dump(folder / "result.json", meta | result | {"study_checkout": "a2dbe4566415fe28226b014ffb8785a1cc2cd9d6", "series": "post-study regression"})
+            assert result["state"] == "awaiting_qa" and result["edited_example"] and result["unmetered_attempts"] == 0
+            print("Director regression", cid, result["state"], len(result["attempts"]), flush=True)
+        return
     source = FROZEN if args.study else CASES.with_name("holdout-v1.json") if args.recovery else CASES
     meta, url = conditions(source)
     cases = json.loads(source.read_bytes())["cases"]

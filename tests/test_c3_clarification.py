@@ -142,3 +142,31 @@ def test_v2_buyer_action_reaches_public_model_prompt(action, monkeypatch):
     assert json.loads(user)["reference"] == c3_releases.role_view(run.knowledge["registry"]["workflow"], "content", projection)
     assert json.loads(user)["reference"]["buyer_action"] == action and "PRIVATE-" not in user
     assert json.loads(user)["reference"]["buyer_input"] == "photo"
+
+
+@pytest.mark.parametrize("workflow", c3_releases.c3_assets.ROLES)
+def test_v2_director_assignments_compile_for_each_approved_role(workflow, monkeypatch):
+    from itertools import product
+    from app.dynamic_plan import compile_plan, InvalidPlan
+
+    data = {"registry": {"workflow": workflow, "contracts": {"director": {}}}, "sources": {"F1": {}}, "c3_projection": {"task_intent": {}}}
+    run = SimpleNamespace(knowledge=data)
+    monkeypatch.setattr(registry_adapters, "resolve", lambda _: SimpleNamespace(request=c3_skill_library.request))
+    node = SimpleNamespace(skill="director")
+
+    def properties():
+        body = registry_adapters.specialist_request(run, "local", node=node)
+        return body["response_format"]["json_schema"]["schema"]["properties"]
+
+    assert all("enum" not in spec for spec in properties().values())
+    data["c3_projection"]["task_intent"].update(buyer_action="rfq", editorial_style="plain")
+    schema = properties()
+    roles = c3_releases.roles(workflow)
+    options = [schema[key]["enum"] for key in c3_skill_library.ASSIGNMENTS]
+    assert options == [list(c3_releases.DIRECTOR_ASSIGNMENTS[role]) for role in roles]
+    for answers in product(*options):
+        raw = dict(zip(c3_skill_library.ASSIGNMENTS, answers, strict=True))
+        assert compile_plan(c3_skill_library.director_proposal(workflow, raw), roles)
+    malformed = {"primary_assignment": "research_and_strategy} {", "secondary_assignment": "research_and_strategy}, "}
+    with pytest.raises(InvalidPlan):
+        compile_plan(c3_skill_library.director_proposal(workflow, malformed), roles)

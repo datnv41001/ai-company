@@ -11,6 +11,8 @@ Bản tích hợp [`a2dbe4566415fe28226b014ffb8785a1cc2cd9d6`](https://github.co
 
 ## Phạm vi đo
 
+Sau khi khóa số liệu lần đầu, smoke độc lập phát hiện Director có thể lặp chỉ dẫn quá ngắn suốt ba lần thử. PR đã bổ sung lựa chọn công việc theo vai trò cho task intent v2. Ba ca từng dừng được chạy lại dưới nhãn hồi quy. Đọc riêng receipt `c3-director-regression` trên CI của head bàn giao. [Cách tái lập](../C3-PRODUCT-QUALIFICATION.md)
+
 | Nhóm | Có biên nhận / giao | Bản sinh | Đã sửa, QA đúng revision | Trạng thái run | Trung vị hành trình (giây) |
 | --- | --- | --- | --- | --- | --- |
 | Nghiên cứu giữ kín | 10/10 | 8 | 8 | awaiting_qa 8, failed 2 | 20.94 |

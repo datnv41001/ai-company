@@ -320,6 +320,8 @@ jobs:
           if [[ "${{ matrix.revision }}" == integration && "$GITHUB_HEAD_REF" == feature/marketing-product-qualification && ! -f docs/evaluation/c3-product-v2/RESULTS.md ]]; then
             python tests/evaluation/c3/internal_qualification.py c3-product-v2 --study
             python tests/evaluation/c3/internal_qualification.py c3-unit-recovery --recovery
+          elif [[ "${{ matrix.revision }}" == integration && "$GITHUB_HEAD_REF" == feature/marketing-product-qualification ]]; then
+            AMC_LIVE_STUDIO_SCREENSHOTS= python tests/evaluation/c3/internal_qualification.py c3-director-regression --director-regression
           fi
           test "$single_result" -eq 0 && test "$pool_result" -eq 0
       - uses: actions/upload-artifact@v4
@@ -340,6 +342,7 @@ jobs:
             c3-internal-receipts/
             c3-product-v2/
             c3-unit-recovery/
+            c3-director-regression/
           if-no-files-found: ignore
 
   matched-model:

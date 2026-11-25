@@ -28,6 +28,12 @@ Smoke lịch sử dùng hai release @2/@5. Smoke nội bộ dùng hai release @3
 
 ## Căn cứ cho người chấm
 
+### Hồi quy sau khi mở bộ đề
+
+Lượt smoke sau nghiên cứu ghi nhận Qwen có thể sinh cùng một cặp chỉ dẫn hỏng cả ba lần. Cụ thể, chuỗi thứ hai còn dưới 24 ký tự sau khi bỏ khoảng trắng cuối. Với task intent v2, yêu cầu Director hiện đưa hai lựa chọn nghiệp vụ vào JSON Schema cho mỗi vai trò được workflow cho phép. Model chọn chỉ dẫn, bộ biên dịch tiếp tục kiểm tra nhiệm vụ và thứ tự phụ thuộc. Giao thức task cũ vẫn đọc được các assignment đã lưu.
+
+Trong cùng môi trường Qwen/PostgreSQL nêu trên, chạy `python tests/evaluation/c3/internal_qualification.py director-replay --director-regression` để kiểm tra lại v2-05, v2-07 và service-05. Các kết quả lần đầu vẫn nằm trong [hồ sơ nghiên cứu](c3-product-v2/RESULTS.md). Mỗi bản ghi mới đánh dấu hồi quy sau nghiên cứu, lưu checkout, phí, nội dung và quyết định của worker. CI integration của PR #38 lưu chúng trong thư mục `c3-director-regression` của artifact model.
+
 - Xem CTA có khớp với hành động được ủy quyền và định nghĩa KPI hay không. Chẳng hạn yêu cầu báo giá là lead, còn giao dịch mua có bước ghi nhận riêng. Hướng dẫn chính thức của nền tảng được đọc ngày 25/11/2026. [Sự kiện GA4](https://developers.google.com/analytics/devguides/collection/ga4/reference/events)
 - Chấm xem mô tả SEO có tóm tắt được nội dung trang, có căn cứ và giúp người mua chọn bước tiếp theo. Google có thể lấy snippet từ nội dung trang. [Google Search Central](https://developers.google.com/search/docs/appearance/snippet)
 - Giữ nguồn gốc, tách ghi chú diễn giải, cho phép tra lại tại từng quyết định biên tập. Ý tưởng tổ chức kho tham khảo đến từ bài viết công khai của Trần Quốc Huy, có liên kết video đi kèm. Đợt này đọc phần văn bản. [Wecommit](https://www.wecommit.com.vn/bai-viet/second-brain-voi-agentic-ai-va-obsidian)

@@ -1,5 +1,19 @@
 # Bắt đầu ở đây khi tiếp quản AI Marketing Company
 
+## Nghiệm thu bản nháp Marketing trên máy khác
+
+Xem [hồ sơ 10 brief mới, 20 brief khôi phục và hai smoke nội bộ](docs/evaluation/c3-product-v2/RESULTS.md) để đọc số liệu, bản Marketing hoàn chỉnh, nhận xét mù của AI và các phép đo còn thiếu.
+
+PR #37 đã merge nội bộ tại `b23497dcce9719fa3d413ad0c7215d751fba3b9f`. Commit tích hợp được kiểm thử là `c17b5882afd157bade6bcebe9c985c0bba2c385f`. Hai commit có cùng cây `19eb3cdfe2805cf50b199e72c15a96d72a0f695c` và cùng hai parent `9bfbabca`, `a4f728d3`. Sau merge, PostgreSQL xác nhận cả ba thao tác kiểm tra từ phiên cũ bị từ chối, giữ nguyên dữ liệu khi phục hồi 34 bảng. Ba job trên main đều đạt, bộ API ghi 386 đạt và 2 bỏ qua ở cấu hình SQLite. [PR #37](https://github.com/datnv41001/ai-company/pull/37) · [CI sau merge](https://github.com/datnv41001/ai-company/actions/runs/45580265243) · [Log API và chuyển đổi](https://github.com/datnv41001/ai-company/actions/runs/45580265243/job/139088245348)
+
+Bắt đầu từ [giao thức thí nghiệm và lệnh chạy lại](docs/evaluation/C3-PRODUCT-QUALIFICATION.md). Hai smoke nội bộ chạy Qwen 0.5B trước. Nhánh thử nghiệm lưu riêng đầu vào của vai trò Strategy hoặc Content để [đối chiếu Qwen 7B](docs/evaluation/C3_STRONGER_ROLE.md) trên runner có đủ bộ nhớ. Mỗi kết quả gắn với commit tích hợp thực chạy. Khi đo thời gian hoàn thành và mức chấp nhận nghề nghiệp, giữ phiếu chấm mù và thời gian thao tác của từng người theo [bộ pilot](docs/evaluation/C3-PRACTITIONER-KIT.md).
+
+## Chuyển sang Marketing Studio
+
+Studio dùng core v25, Business v3 và module C3 v2. Trước cutover, dừng xếp việc, drain các worker, dừng API cũ, lưu backup cùng image tương ứng. Chạy publisher mới trên database đã sao lưu, sau đó khởi động API và worker cùng bản. Migration `002_studio_writer.sql` khóa ba bảng bàn giao, thay các trigger trong một giao dịch và ghi module v2. Các API từng khai báo `c3/1` mất quyền ghi ngay sau commit. Publisher v1 từ chối module v2 và API v1 từ chối bộ trigger v2. Studio chỉ khởi động khi kiểm tra đúng ba trigger còn hiệu lực. Chữ ký giao thức dùng cho tương thích binary; quyền nguồn, quyền người dùng và quyết định QA của từng bản vẫn do ứng dụng và RLS kiểm tra.
+
+CI chạy lại kiểm thử cutover v24 cùng `python tests/check_studio_cutover.py` trên PostgreSQL loopback dùng riêng. Giao dịch thử nghiệm tác động 0 dòng qua tiến trình C3 v1 mở từ trước. Rehearsal còn kiểm snapshot khách, lịch sử quyết định và dữ liệu nguồn sau rollback/replay. Để quay lại C3 v1, cô lập DB mới và khôi phục backup trước cutover vào DB riêng, dùng restore-fence tạo generation mới rồi khởi động lại với image v1 sau khi đã đối soát các thay đổi phát sinh kể từ thời điểm backup. [Migration](migrations/c3_tasks/002_studio_writer.sql) · [Kiểm thử](tests/check_studio_cutover.py)
+
 ## Chuyển database C3 từ core v24 sang v25
 
 Core v25 giữ Business v3 và module nhiệm vụ C3 v1. Checkpoint kỹ thuật trước chuyển đổi là main `9bfbabcaddf9818eb4030cb0c5337e65e794ebfe` và PR #37 `58258de5c802f1af3ad19d3491d63cf9f7b49e8a`. Chỉ chạy quy trình sau trên môi trường phát triển được phép.
@@ -10,6 +24,10 @@ Core v25 giữ Business v3 và module nhiệm vụ C3 v1. Checkpoint kỹ thuậ
 4. Để quay lại phiên bản cũ, dừng tiếp nhận việc, giữ bản sao đầy đủ của DB đã nâng cấp để đối soát thay đổi sau thời điểm backup. Khôi phục backup v24 vào DB riêng, tạo generation mới với `--identity-operation restore-fence` theo runbook phiên đăng nhập, kiểm tra dữ liệu rồi trỏ API và worker v24 vào DB đã khôi phục. Việc xóa marker hoặc sửa lịch sử migration sẽ làm mất bảo đảm cutover.
 
 CI chạy `python tests/check_c3_cutover.py observation` và `python tests/check_c3_cutover.py qualification` trên hai DB loopback `amc_test*` trống với migration DSN và runtime DSN như job API. Lượt đầu đối chiếu dấu hiệu tương thích của đúng hai bản đã review bằng thao tác tác động 0 dòng. Lượt sau giữ kết nối cũ sống qua migration, kiểm tra từ chối writer, startup, replay, rollback của một lần nâng cấp bị ngắt, lịch sử và các trường hợp nội dung mâu thuẫn qua API hiện tại. [Migration 025](migrations/025_c3_writer_protocol.sql) · [Kiểm thử chuyển đổi](tests/check_c3_cutover.py)
+
+Nếu brief dừng vì giá ghi theo “dịch vụ”, xem [cách làm rõ đơn vị bán và tiếp tục nhiệm vụ](docs/business-profile/C3-UNIT-CLARIFICATION.md). Tài liệu ghi cách đối chiếu 20 brief cũ, tạo manifest cho Qwen và kiểm tra ý định người mua qua các phiên bản nhiệm vụ.
+
+Xem [Marketing Studio, từ bản hoàn tất tới bàn giao](docs/business-profile/C3-MARKETING-STUDIO.md) để tái lập luồng biên tập, ký từng nhóm nội dung, kiểm thử revision và chụp kết quả WF-03/WF-13 trên máy mới.
 
 ## PR #37 — nhiệm vụ Marketing, kiểm chứng nội dung và đánh giá chất lượng
 

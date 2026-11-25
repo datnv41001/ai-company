@@ -202,20 +202,28 @@ def rights(tenant_id: str, uid: str, body: Rights, user: User = Depends(current_
 def edit_draft(tenant_id: str, did: str, body: Edit, user: User = Depends(current_user), db: Session = Depends(get_db)):
     require_tenant(db, user, tenant_id, "editor")
     doc = working_copy(db, tenant_id, did)
+    if doc.content.get("studio") and doc.content["studio"]["groups"].get("copy"):
+        raise HTTPException(409, "Edit the buyer-facing copy in Marketing Studio to keep its version and preview together")
+    save_working_revision(db, doc, user.id, body.title, body.client_preview)
+    db.commit()
+    return {"id": did, "status": "draft"}
+
+
+def save_working_revision(db, doc, actor, title, preview):
+    """Caller holds the working-copy lock and commits all revision-specific events together."""
+    did = doc.id
     previous = db.scalar(select(ClientReview).where(ClientReview.deliverable_id == did).order_by(ClientReview.version.desc()).limit(1))
     if previous and status(previous, event_list(db, previous)) == "pending":
         # The document lock also guards decisions. A decision committed first stays final.
-        append(db, previous, user.id, "cancelled", "Agency bắt đầu sửa bản làm việc.", str(uuid4()))
-    doc.title, doc.content = body.title, {**doc.content, "client_preview": body.client_preview}
+        append(db, previous, actor, "cancelled", "Agency bắt đầu sửa bản làm việc.", str(uuid4()))
+    doc.title, doc.content = title, {**doc.content, "client_preview": preview}
     # The same bytes can recur after multiple edits. Only this save owns the new revision.
     doc.qa_revision += 1
     doc.qa_approved_revision = None
     doc.qa_approved_digest = None
-    evaluate(db, doc, user.id)
-    doc.last_editor_id, doc.status, doc.reviewed_by, doc.review_note = user.id, "draft", None, None
-    db.add(AuditEvent(tenant_id=tenant_id, user_id=user.id, subject_id=did, event="deliverable.edited", details={}))
-    db.commit()
-    return {"id": did, "status": "draft"}
+    evaluate(db, doc, actor)
+    doc.last_editor_id, doc.status, doc.reviewed_by, doc.review_note = actor, "draft", None, None
+    db.add(AuditEvent(tenant_id=doc.tenant_id, user_id=actor, subject_id=did, event="deliverable.edited", details={}))
 
 
 def append(db, review, actor, kind, note, key):

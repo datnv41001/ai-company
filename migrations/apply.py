@@ -171,6 +171,8 @@ def migrate(dsn: str, runtime_password: str | None = None):
             conn.execute((HERE / "024_combined_publisher.sql").read_text(encoding="utf-8"))
         if 25 not in versions:
             conn.execute((HERE / "025_c3_writer_protocol.sql").read_text(encoding="utf-8"))
+        if conn.execute("SELECT version FROM amc_c3.versions ORDER BY version").fetchall() == [(1,)]:
+            conn.execute((HERE / "c3_tasks" / "002_studio_writer.sql").read_text(encoding="utf-8"))
         from migrations.c3_writer_contract import WRITER_FENCE
         if not conn.execute(WRITER_FENCE).fetchone()[0]:
             raise ValueError("Incomplete C3 delivery writer fence")
@@ -210,7 +212,7 @@ def install_business_workspace(conn):
     install_claim_display(conn)
     if not conn.execute("SELECT to_regclass('amc_c3.versions')").fetchone()[0]:
         conn.execute((HERE / "c3_tasks" / "001_internal.sql").read_text(encoding="utf-8"))
-    if conn.execute("SELECT version FROM amc_c3.versions ORDER BY version").fetchall() != [(1,)]:
+    if conn.execute("SELECT version FROM amc_c3.versions ORDER BY version").fetchall() not in ([(1,)], [(1,), (2,)]):
         raise ValueError("Unsupported C3 task schema version")
 
 

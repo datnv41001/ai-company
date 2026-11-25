@@ -31,25 +31,34 @@ LIVE = """
 import sys
 from fastapi.testclient import TestClient
 from sqlalchemy.exc import DBAPIError
+from sqlalchemy.orm import Session
+from app.access import set_context
 from app.main import app
 from app.database import engine
-with TestClient(app) as client, engine.connect() as db:
+with TestClient(app) as client, engine.connect() as connection, Session(connection) as db:
     assert client.get('/api/health').status_code==200
-    pid=db.exec_driver_sql('SELECT pg_backend_pid()').scalar_one()
+    set_context(db, actor='cutover-probe')
+    def execute(sql):
+        return db.connection().exec_driver_sql(sql)
+    pid=execute('SELECT pg_backend_pid()').scalar_one()
+    protocol=execute("SELECT current_setting('amc.delivery_protocol',true)").scalar_one()
     print('ready',flush=True)
     for request in sys.stdin:
         if request.strip()=='stop': break
-        assert db.exec_driver_sql('SELECT pg_backend_pid()').scalar_one()==pid
+        if request.strip()=='protocol':
+            print(protocol or 'undeclared',flush=True)
+            continue
+        assert execute('SELECT pg_backend_pid()').scalar_one()==pid
         outcomes=[]
         for table in ('deliverables','client_reviews','review_entries'):
             try:
                 with db.begin_nested():
-                    result=db.exec_driver_sql('INSERT INTO public.'+table+' (id) SELECT id FROM public.'+table+' WHERE false')
+                    result=execute('INSERT INTO public.'+table+' (id) SELECT id FROM public.'+table+' WHERE false')
                     assert result.rowcount==0
             except DBAPIError as error:
                 outcomes.append(error.orig.sqlstate)
             else:
-                outcomes.append('unfenced')
+                outcomes.append('allowed-zero')
         db.commit()
         print(','.join(outcomes),flush=True)
 """
@@ -71,8 +80,8 @@ def running_api(old, env):
                           stdin=subprocess.PIPE, stdout=subprocess.PIPE) as proc:
         try:
             assert proc.stdout.readline().strip() == "ready"
-            def probe():
-                proc.stdin.write("probe\n")
+            def probe(command="probe"):
+                proc.stdin.write(command+"\n")
                 proc.stdin.flush()
                 return proc.stdout.readline().strip()
             yield probe
@@ -124,7 +133,7 @@ def run(phase):
                 subprocess.run(PUBLISH, cwd=reviewed, env=env, check=True)
                 subprocess.run(STARTUP, cwd=old, env=env, check=True)
                 observed = probe()
-                assert observed == "unfenced,unfenced,unfenced", observed
+                assert observed == "allowed-zero,allowed-zero,allowed-zero", observed
                 with psycopg.connect(dsn) as db:
                     assert db.execute("SELECT version FROM amc_c3.versions").fetchall() == [(1,)]
                 print(f"RED observed {MAIN} API starts after {REVIEWED} migration; live API has no writer fence on 3 zero-row statements")

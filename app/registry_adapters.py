@@ -3,6 +3,7 @@
 from dataclasses import dataclass
 from functools import lru_cache
 from hashlib import sha256
+import json
 from pathlib import Path
 from types import SimpleNamespace
 from typing import Callable
@@ -83,7 +84,19 @@ def resolve(contract):
 def specialist_request(run, model, *, node, **kwargs):
     binding = run.knowledge.get("registry")
     builder = resolve(binding["contracts"][node.skill]).request if binding else gateway.request_body
-    return builder(run, model, node=node, **kwargs)
+    body = builder(run, model, node=node, **kwargs)
+    projection = run.knowledge.get("c3_projection", {})
+    if builder == c3_skill_library.request and "buyer_action" in projection.get("task_intent", {}):
+        from .c3_releases import constrain_director_assignments, role_view
+        # The v2 task envelope admits controlled editorial fields on the reviewed runtime.
+        # Never forward the free-text task or planner messages to a buyer-facing role.
+        message = body["messages"][-1]
+        context = json.loads(message["content"])
+        context["reference"] = role_view(binding["workflow"], node.skill, projection)
+        message["content"] = json.dumps(context, ensure_ascii=False)
+        if node.skill == "director":
+            constrain_director_assignments(body, binding["workflow"])
+    return body
 
 
 def node_request(run, model, *, node, predecessors, assignment):

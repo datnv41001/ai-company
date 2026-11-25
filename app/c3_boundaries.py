@@ -64,6 +64,9 @@ def boundary(db, user, doc, content_digest, stage):
               "manifest_digest":snap.digest, "release_digest":binding["manifest_digest"]}
     from .c3_evidence_review import decision_evidence
     values.update(decision_evidence(store, snap, doc, run, content_digest))
+    if doc.content.get("studio"):
+        from .c3_studio_routes import require_all_approved
+        values["studio_approvals"] = require_all_approved(db,doc,run)
     if stage in ("share", "replay_qa"):
         key = decision_key(run.id, doc.qa_revision, content_digest)
         query = store.query(KnowledgeCommand).filter_by(snapshot_id=snap.id, operation="c3_qa", actor=doc.reviewed_by)

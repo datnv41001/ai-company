@@ -10,7 +10,7 @@ from test_business_workspace import post
 from test_company_objectives import decision
 
 
-def prepared(api, admin, base, client, brand, campaign, bid, workflow=c3_marketing.LANDING, *, case=None):
+def prepared(api, admin, base, client, brand, campaign, bid, workflow=c3_marketing.LANDING, *, case=None, project=None):
     company = base + "/clients/" + client
     scope = company + "/brands/" + brand
     ui, path = scope + "/business-workspace", scope + "/knowledge"
@@ -124,7 +124,7 @@ def prepared(api, admin, base, client, brand, campaign, bid, workflow=c3_marketi
         claim = make(f"fact-{i}", "claim", {"binding": binding["id"], "assertion": statement}, approve=not category)
         if category:
             if reviewer is None:
-                reviewer = reader(api, admin, "admin")
+                reviewer = reader(api, admin, "admin", project)
             if category not in mandates:
                 mandate = make(
                     f"mandate-{i}",
@@ -172,6 +172,7 @@ def prepared(api, admin, base, client, brand, campaign, bid, workflow=c3_marketi
         "selections": selections,
         "placement": placement,
         "mandates": mandates,
+        "commercial_reviewer": reviewer,
     }
 
 

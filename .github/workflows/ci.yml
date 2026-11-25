@@ -146,6 +146,10 @@ jobs:
             export DATABASE_URL="${DATABASE_URL%/*}/$database"
             python tests/check_c3_cutover.py "$phase"
           done
+          docker exec amc-test-pg createdb -U postgres amc_test_studio_cutover
+          export AMC_MIGRATION_DSN="${AMC_MIGRATION_DSN%/*}/amc_test_studio_cutover"
+          export DATABASE_URL="${DATABASE_URL%/*}/amc_test_studio_cutover"
+          python tests/check_studio_cutover.py
           docker exec amc-test-pg createdb -U postgres amc_test_populated_v22
           export AMC_MIGRATION_DSN="${AMC_MIGRATION_DSN%/*}/amc_test_populated_v22"
           export DATABASE_URL="${DATABASE_URL%/*}/amc_test_populated_v22"
@@ -212,7 +216,9 @@ jobs:
           AMC_C2_ACCEPTANCE_EVIDENCE="$RUNNER_TEMP/knowledge-center-journeys" AMC_BROWSER_MAILBOX_PROJECT=amc-acceptance AMC_BROWSER_TEST_URL=http://127.0.0.1:8000 python tests/browser_knowledge_center.py
           AMC_KNOWLEDGE_EVIDENCE="$RUNNER_TEMP/knowledge-center-journeys/marketing-workflows" AMC_BROWSER_MAILBOX_PROJECT=amc-acceptance AMC_BROWSER_TEST_URL=http://127.0.0.1:8000 python tests/browser_c3.py
           AMC_KNOWLEDGE_EVIDENCE="$RUNNER_TEMP/knowledge-center-journeys/marketing-tasks" AMC_BROWSER_MAILBOX_PROJECT=amc-acceptance AMC_BROWSER_TEST_URL=http://127.0.0.1:8000 python tests/browser_c3_task.py
-          AMC_KNOWLEDGE_EVIDENCE="$RUNNER_TEMP/knowledge-center-journeys" AMC_DEV_MAILBOX_DIR="$RUNNER_TEMP/c3-gate-mail" python -m pytest -q tests/browser_c3_content_gate.py -k sqlite --basetemp="$RUNNER_TEMP/c3-gate-db"
+          AMC_KNOWLEDGE_EVIDENCE="$RUNNER_TEMP/knowledge-center-journeys" AMC_DEV_MAILBOX_DIR="$RUNNER_TEMP/c3-gate-mail" python -m pytest -q tests/browser_c3_content_gate.py tests/browser_c3_clarification.py -k sqlite --basetemp="$RUNNER_TEMP/c3-gate-db"
+
+          AMC_STUDIO_EVIDENCE="$RUNNER_TEMP/knowledge-center-journeys/marketing-studio-replay" AMC_DEV_MAILBOX_DIR="$RUNNER_TEMP/c3-studio-mail" python -m pytest -q tests/browser_marketing_studio.py --basetemp="$RUNNER_TEMP/c3-studio-db"
           AMC_PREMIUM_EVIDENCE="$RUNNER_TEMP/premium-ui" AMC_BROWSER_MAILBOX_PROJECT=amc-acceptance AMC_BROWSER_TEST_URL=http://127.0.0.1:8000 python tests/browser_premium_ui.py
       - uses: actions/upload-artifact@v4
         if: always()
@@ -259,6 +265,8 @@ jobs:
         with:
           python-version: '3.12.16'
       - run: python -m pip install -r requirements-dev.txt
+      - if: matrix.revision == 'integration'
+        run: python -m pip install -r requirements-browser.txt
       - name: Verify real local inference and client-approved delivery
         shell: bash
         run: |
@@ -299,6 +307,22 @@ jobs:
           AMC_V1_SOURCE="$PWD/.ci/adapter-v1" AMC_SOURCE_SHA="$(git rev-parse HEAD)" \
             AMC_LOCAL_MODEL_URL="http://127.0.0.1:$model_port/v1" python tests/registry_model_smoke.py
           AMC_LOCAL_MODEL_URL="http://127.0.0.1:$model_port/v1" AMC_EVAL_MODEL_FILE="$PWD/models/workforce.gguf" python tests/evaluation/c3/qualification.py c3-model-receipts
+          export AMC_LOCAL_MODEL_URL="http://127.0.0.1:$model_port/v1" AMC_EVAL_MODEL_FILE="$PWD/models/workforce.gguf"
+          if [[ "${{ matrix.revision }}" == integration ]]; then
+            if command -v google-chrome >/dev/null; then
+              export AMC_BROWSER_EXECUTABLE="$(command -v google-chrome)"
+            else
+              python -m playwright install chromium
+            fi
+            export AMC_LIVE_STUDIO_SCREENSHOTS=1
+          fi
+          python tests/evaluation/c3/internal_qualification.py c3-internal-receipts
+          if [[ "${{ matrix.revision }}" == integration && "$GITHUB_HEAD_REF" == feature/marketing-product-qualification && ! -f docs/evaluation/c3-product-v2/RESULTS.md ]]; then
+            python tests/evaluation/c3/internal_qualification.py c3-product-v2 --study
+            python tests/evaluation/c3/internal_qualification.py c3-unit-recovery --recovery
+          elif [[ "${{ matrix.revision }}" == integration && "$GITHUB_HEAD_REF" == feature/marketing-product-qualification ]]; then
+            AMC_LIVE_STUDIO_SCREENSHOTS= python tests/evaluation/c3/internal_qualification.py c3-director-regression --director-regression
+          fi
           test "$single_result" -eq 0 && test "$pool_result" -eq 0
       - uses: actions/upload-artifact@v4
         if: always()
@@ -315,4 +339,18 @@ jobs:
             wait-diagnostics-measurements.json
             research-strategy-measurements.json
             c3-model-receipts/
+            c3-internal-receipts/
+            c3-product-v2/
+            c3-unit-recovery/
+            c3-director-regression/
           if-no-files-found: ignore
+
+  matched-model:
+    needs: workforce-model
+    if: github.event_name == 'pull_request' && github.event.repository.private == false && github.head_ref == 'feature/marketing-product-qualification'
+    permissions:
+      contents: read
+      actions: read
+    uses: ./.github/workflows/c3-stronger-role.yml
+    with:
+      source_sha: ${{ github.sha }}

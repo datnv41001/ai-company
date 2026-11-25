@@ -17,7 +17,7 @@ from .security import current_user, require_tenant
 from .workforce_gateway import CORE, EXTRA, PROMPT_VERSION
 from . import workforce_authority  # noqa: F401 - install SQLite triggers on fresh schema
 from .workforce_models import WorkforceBrief, WorkforceRun
-from .c3_tasks import TaskIntent
+from .c3_tasks import ActionIntent, SubmittedIntent, task_payload
 
 router = APIRouter(prefix="/api/tenants/{tenant_id}/workforce", tags=["Marketing workforce"])
 Short = Annotated[str, StringConstraints(strip_whitespace=True, min_length=3, max_length=150)]
@@ -44,7 +44,7 @@ class BriefData(Input):
     audience: Paragraph
     offer: Paragraph
     sources: list[Source] = Field(min_length=1, max_length=4)
-    task_intent: TaskIntent | None = None
+    task_intent: SubmittedIntent | None = None
 
 
 class ManifestID(Input):
@@ -106,13 +106,15 @@ def open_brief(tenant_id: str, body: OpenBrief, user: User = Depends(current_use
 
 @router.put("/briefs/{bid}/submission")
 def submit(tenant_id: str, bid: str, body: BriefData, user: User = Depends(current_user), db: Session = Depends(get_db)):
-    return save_submission(db,user,tenant_id,bid,body.model_dump(exclude_none=True))
+    payload = body.model_dump(exclude_none=True)
+    if isinstance(body.task_intent, ActionIntent):
+        payload.update(task_payload(body.task_intent))
+    return save_submission(db,user,tenant_id,bid,payload)
 
 
 @router.put("/briefs/{bid}/task-submission")
-def submit_task(tenant_id: str, bid: str, body: TaskIntent, user: User = Depends(current_user), db: Session = Depends(get_db)):
-    from .c3_tasks import TASK_VERSION
-    return save_submission(db,user,tenant_id,bid,{"task_version":TASK_VERSION,"task_intent":body.model_dump()})
+def submit_task(tenant_id: str, bid: str, body: SubmittedIntent, user: User = Depends(current_user), db: Session = Depends(get_db)):
+    return save_submission(db,user,tenant_id,bid,task_payload(body))
 
 
 def save_submission(db,user,tenant_id,bid,payload):
@@ -303,13 +305,17 @@ def runs(tenant_id: str, user: User = Depends(current_user), db: Session = Depen
 
 def marketing_artifacts(run, doc):
     """Project staff work from frozen checkpoints and the latest editable preview from its document."""
-    from . import c3_assets, c3_content_evidence, c3_skill_library
+    from . import c3_assets, c3_content_evidence, c3_order_units, c3_skill_library
     from .revision_qa import content_digest
 
     workflow = run.knowledge["registry"]["workflow"]
     outcomes = {step["skill"]: step["output"] for step in run.checkpoints}
-    sections = c3_assets.artifacts(workflow, run.knowledge["c3_projection"], outcomes)
+    sections = c3_order_units.artifacts(workflow, run.knowledge["c3_projection"], outcomes)
     generated = sections["customer_preview"] if doc else None
+    if doc and (doc.content.get("studio") or {}).get("origin") == "worker":
+        from . import c3_studio
+        groups = c3_studio.compose(workflow,run.knowledge["c3_projection"],outcomes)
+        generated = c3_studio.preview(workflow,groups,generated)
     current = None
     bound = False
     if doc:

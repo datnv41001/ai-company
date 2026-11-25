@@ -14,8 +14,8 @@ from identity_fixtures import invite_member
 from knowledge_fixtures import accepted, bundle, call, revision, scope
 
 
-def reader(api, owner, role):
-    actor = account(api, "Desk" + role)
+def reader(api, owner, role, project=None):
+    actor = account(api, "Desk" + role, project)
     invite_member(api, "/api/tenants/" + owner["tenant"], owner["headers"], actor["headers"], email=actor["email"], role=role)
     return actor
 

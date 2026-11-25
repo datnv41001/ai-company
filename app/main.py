@@ -19,6 +19,7 @@ from .identity_quota import admit
 from .business_knowledge import router as knowledge_router
 from . import c3_boundaries
 from .c3_evidence_review import router as content_evidence_router
+from .c3_studio_routes import router as studio_router
 from .c3_projection import router as marketing_projection_router
 from .claim_desk import router as claim_desk_router
 from .business_workspace import router as workspace_router
@@ -67,6 +68,7 @@ app.include_router(operations_router)
 app.include_router(knowledge_router)
 app.include_router(marketing_projection_router)
 app.include_router(content_evidence_router)
+app.include_router(studio_router)
 app.include_router(claim_desk_router)
 app.include_router(workspace_router)
 app.include_router(catalog_router)
@@ -340,7 +342,7 @@ def get_working_deliverable(tenant_id: str, deliverable_id: str, user: User = De
 def create_deliverable(tenant_id: str, body: DeliverableIn, user: User = Depends(current_user), db: Session = Depends(get_db)):
     member(db, user, tenant_id, "editor")
     campaign_of(db, tenant_id, body.campaign_id)
-    reserved = {'qa_claims', 'qa_evidence', 'workforce_run_id', 'source_ids', 'qa_approved_digest', 'qa_revision', 'qa_approved_revision'}
+    reserved = {'studio', 'qa_claims', 'qa_evidence', 'workforce_run_id', 'source_ids', 'qa_approved_digest', 'qa_revision', 'qa_approved_revision'}
     content = {key: value for key, value in body.content.items() if key not in reserved}
     item = Deliverable(tenant_id=tenant_id, campaign_id=body.campaign_id, title=body.title, content=content, created_by=user.id)
     db.add(item)

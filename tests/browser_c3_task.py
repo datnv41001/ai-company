@@ -30,6 +30,7 @@ def exercise(api, browser, width, height):
         panel.get_by_text("Chuẩn bị Marketing từ brief này", exact=True).click()
         entry = panel.locator("[data-task-entry]")
         entry.locator("summary").click()
+        entry.locator("[name=buyer_action]").select_option("sample_request")
         for key in ("purpose", "product", "audience", "channel", "region", "locale", "requirements", "exclusions", "acceptance_criteria"):
             value = INTENT[key]
             entry.locator(f"[name={key}]").fill("\n".join(value) if isinstance(value, list) else value)
@@ -65,7 +66,7 @@ def exercise(api, browser, width, height):
             queue.click()
         assert result.value.status == 200, result.value.text()
         snapshot = manifest.value.json()
-        assert snapshot["projection"]["task_intent"] == INTENT
+        assert snapshot["projection"]["task_intent"] == {**INTENT, "buyer_action":"sample_request", "editorial_style":"plain"}
         assert snapshot["projection"]["brand_guidelines"]["digest"] == guide["digest"]
         run = result.value.json()
         expect(status).to_contain_text(run["id"])

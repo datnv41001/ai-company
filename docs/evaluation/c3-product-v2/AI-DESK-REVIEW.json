@@ -1,0 +1,150 @@
+{
+  "scope": "AI desk review, one blinded reader per discipline, synthetic tasks, unedited groups only. No practitioner timing or approval.",
+  "checkout": "a2dbe4566415fe28226b014ffb8785a1cc2cd9d6",
+  "codebook": {
+    "v2-01": {
+      "A": "0.5b",
+      "B": "rules"
+    },
+    "v2-02": {
+      "A": "rules",
+      "B": "0.5b"
+    },
+    "v2-03": {
+      "A": "0.5b",
+      "B": "rules"
+    },
+    "v2-04": {
+      "A": "0.5b",
+      "B": "rules"
+    },
+    "v2-06": {
+      "A": "0.5b",
+      "B": "rules"
+    },
+    "v2-08": {
+      "A": "rules",
+      "B": "0.5b"
+    },
+    "v2-09": {
+      "A": "0.5b",
+      "B": "rules"
+    },
+    "v2-10": {
+      "A": "0.5b",
+      "B": "rules"
+    }
+  },
+  "sheets": {
+    "strategy": "572dbbf0ad3577bc8dd77869227cb5f9bb0ad6be8c8eff9b07ea1a4ac9d4f6d8",
+    "content": "08f32d810d4c451bc26b3571561dda1dd58f919ee20bc714e9b008b650919dec"
+  },
+  "judgments": {
+    "strategy": {
+      "review_type": "AI desk review of blinded synthetic outputs",
+      "cases": {
+        "v2-01": {
+          "A": {
+            "decision": "substantive edit",
+            "key_reason": "Định vị bám đúng việc chọn đệm theo kích thước ghế. Dữ kiện chỉ xác nhận vỏ tháo rời và giá. Câu hỏi nghiên cứu lặp lại nhận định về nhu cầu kiểm chứng mà chưa hỏi người thuê đo phần nào của ghế.",
+            "unresolved_risks": "Cần xác minh số đo đệm để hướng dẫn chọn. Lý do chọn web chưa sát hành vi đo ghế. Kế hoạch chưa nêu hai bản khác nhau ở đâu. Cụm “yêu cầu được xác nhận” trong 14 ngày cần gắn với đơn mua thành công và số phiên từng bản."
+          },
+          "B": {
+            "decision": "substantive edit",
+            "key_reason": "Có thể triển khai phép thử đặt dữ kiện trước hoặc sau lời mời mua. Cách đối chiếu mã đơn với phiên và theo dõi đơn hủy phù hợp mục tiêu mua hàng. Tuy nhiên, câu hỏi về sản phẩm từng so sánh bỏ qua vấn đề chọn cỡ đệm.",
+            "unresolved_risks": "Chưa có kích thước để thực hiện lời hứa về quy cách có thể đối chiếu. Cần kiểm chứng người thuê gặp khó ở bước đo nào và vì sao trang web có thể hỗ trợ bước đó. Việc web được duyệt chỉ giải thích phạm vi."
+          }
+        },
+        "v2-03": {
+          "A": {
+            "decision": "cannot use",
+            "key_reason": "“web_search” không ghi nhận yêu cầu mẫu SL-817. Định vị chép lại mục tiêu chọn mẫu, còn câu hỏi nghiên cứu lặp nhận định về việc đối chiếu điều kiện. Hai bản web chưa có khác biệt cụ thể để thử.",
+            "unresolved_risks": "Cần tìm hiểu đội thi công muốn kiểm tra gì trên mẫu sọc mảnh và vì sao họ yêu cầu mẫu trên web. Mức tối thiểu 12 m² là điều kiện đặt vật liệu. Điều kiện nhận mẫu vẫn chưa rõ."
+          },
+          "B": {
+            "decision": "substantive edit",
+            "key_reason": "Có phép thử vị trí dữ kiện và ý tưởng đối chiếu lựa chọn với yêu cầu gốc. “Tỷ lệ gửi lựa chọn mẫu” vẫn để ngỏ mẫu số và thời điểm một lựa chọn trở thành yêu cầu nhận mẫu. Câu hỏi về lần mua gần nhất chưa khai thác quyết định xin mẫu trước khi đặt sàn.",
+            "unresolved_risks": "Cần phân biệt điều kiện mua 12 m² với điều kiện xin mẫu, tìm hiểu tiêu chí duyệt bề mặt và giải thích web hỗ trợ đội thi công gửi yêu cầu ra sao."
+          }
+        },
+        "v2-09": {
+          "A": {
+            "decision": "cannot use",
+            "key_reason": "Phần đo lường lặp cụm so sánh rồi dừng ở “so các quy mã”. Không xác định được sự kiện tải thành công. Định vị nhắc lại yêu cầu so quy cách và kế hoạch chưa cho biết hai bản web sẽ khác nhau thế nào.",
+            "unresolved_risks": "Dữ kiện mô tả một bộ giấy màu ngà với mức mua tối thiểu 8 hộp. Cần xác minh các quy cách thực có trong danh mục, hỏi quản lý cửa hàng cần so tiêu chí nào rồi gắn phép thử với lượt tải."
+          },
+          "B": {
+            "decision": "substantive edit",
+            "key_reason": "Đặt dữ kiện trước hoặc sau lời mời tải là khác biệt có thể thử. Quy tắc loại sự kiện trùng có ích, nhưng gộp cả gửi biểu mẫu lẫn tải tài liệu sẽ cho phép tính một người chưa tải danh mục vào kết quả.",
+            "unresolved_risks": "Cần chọn sự kiện tải thành công, xác định mẫu số từng bản và xác minh danh mục có các quy cách quản lý cửa hàng muốn so. Câu hỏi về phương án mua trước đây và lý do web được duyệt chưa giải thích giá trị của danh mục trong quyết định này."
+          }
+        }
+      }
+    },
+    "content": {
+      "review_type": "blinded_ai_desk_review",
+      "cases": {
+        "v2-02": {
+          "A": {
+            "decision": "substantive edit",
+            "reason": "Nút “Yêu cầu bảng màu” đúng hành động. Giá 285.000 đồng/chiếc đã gồm thuế và khoản khắc tên chưa tính đều đúng nguồn. Tuy nhiên, câu “Đối chiếu quy cách” và mô tả “Xem thông tin” bỏ mất lý do khách mua quà cần bảng màu. Cần nói rõ họ có thể yêu cầu bảng màu để đối chiếu màu mặt gỗ dầu trước khi chọn quà."
+          },
+          "B": {
+            "decision": "cannot use",
+            "reason": "“Không cần khắc tên” suy diễn từ điều kiện giá chưa gồm khắc tên. Mô tả tìm kiếm còn bảo khách “Đặt hàng qua colour_card_request” trong khi nút trên trang dùng để xin bảng màu. “VND 285000 đồng” lặp đơn vị và xuất hiện ở cả tiêu đề lẫn phần lợi ích. Các câu khách đọc đầu tiên đưa sai thông điệp dù bảng giá bên dưới ghi đúng."
+          }
+        },
+        "v2-04": {
+          "A": {
+            "decision": "cannot use",
+            "reason": "Cam kết “đảm bảo bạn hoàn thiện sản phẩm đúng thời hạn” không có căn cứ trong dữ kiện về lớp phủ và đơn giá. Nút yêu cầu báo giá đúng, nhưng mô tả tìm kiếm lặp giá bằng tiếng Anh rồi đứt ở “Giá chưa bao込”. Nhà thầu đọc đoạn này còn bỏ lỡ mức tối thiểu 15 thanh và khoản cắt theo kích thước chưa tính."
+          },
+          "B": {
+            "decision": "substantive edit",
+            "reason": "Phần điều kiện ghi đủ 92.000 đồng/chiếc, từ 15 chiếc, đã gồm thuế và chưa gồm cắt theo kích thước. Nút “Yêu cầu báo giá” phù hợp. Cả câu mở đầu lẫn mô tả tìm kiếm chỉ nói xem điều kiện. Với nhà thầu cần so giá, nên đưa đơn giá theo thanh và ngưỡng 15 thanh lên đầu, rồi mời họ gửi số thanh cần báo giá."
+          }
+        },
+        "v2-06": {
+          "A": {
+            "decision": "substantive edit",
+            "reason": "Giá và khoản loại trừ khớp nguồn, nút “Đặt lịch” đúng. Hai câu về lợi ích trùng nhau, dùng “giá bán chỉ bằng” cho dịch vụ. Mô tả tìm kiếm lại lặp câu rồi đứt ở “LO-”. Cần nói rõ người vận hành đặt lịch để xác nhận giờ kỹ thuật viên tới và có phiếu ghi ngày bảo trì sau dịch vụ, tránh hứa một giờ đến cụ thể."
+          },
+          "B": {
+            "decision": "substantive edit",
+            "reason": "Tiêu đề tìm kiếm có Long Xuyên, nút “Đặt lịch” và thông tin về phiếu ghi ngày bảo trì đều có ích. Tuy nhiên “đối chiếu quy cách” nghe như chọn vật tư. Câu đó và đoạn “Xem thông tin” chưa cho người vận hành biết họ có thể yêu cầu xác nhận thời gian kỹ thuật viên đến, dù đây là mục đích chính của trang."
+          }
+        },
+        "v2-08": {
+          "A": {
+            "decision": "usable first pass",
+            "reason": "Người học biết tại lớp có giấy để in thử, thấy phí 390.000 đồng/người đã gồm thuế, biết bộ dụng cụ mang về tính riêng và có nút “Đăng ký”. Tiêu đề tìm kiếm có Vĩnh Long. Có thể đổi cụm “đối chiếu quy cách” và đưa chi tiết giấy thử vào đoạn mô tả để lời mời tự nhiên hơn. Các thông tin chính đã đủ cho lần đọc đầu."
+          },
+          "B": {
+            "decision": "substantive edit",
+            "reason": "Chi tiết có giấy thử, phí mỗi người và nút đăng ký dùng được. “Đoạn học in thủ công” sai nghĩa, còn “có thể tham gia ngay” gợi có chỗ học ngay dù chưa có lịch trong nguồn. Đoạn mô tả trộn “1 participant (tax included)” với cả câu tiếng Anh. Cần viết lại lời mời và mô tả bằng tiếng Việt, gắn với việc chọn buổi in thử."
+          }
+        },
+        "v2-10": {
+          "A": {
+            "decision": "substantive edit",
+            "reason": "Phần điều kiện có đơn tối thiểu 4 hộp và khoản giao tới từng cửa hàng chưa tính. Câu giới thiệu và mô tả tìm kiếm lại cùng ghi “Đa lý” và “1 box (tax included)”, chỉ nêu đơn giá mà thiếu ngưỡng áp dụng. Cần đưa mức 128.000 đồng/hộp cho đơn từ 4 hộp vào câu dành cho đại lý, giữ nút yêu cầu báo giá."
+          },
+          "B": {
+            "decision": "usable first pass",
+            "reason": "Đại lý có thể tính số tiền cần cho quầy từ đơn giá 128.000 đồng/hộp và mức tối thiểu 4 hộp ghi cùng chỗ. Điều khoản giao tới từng cửa hàng được nêu rõ. Nút yêu cầu báo giá và tiêu đề có Tuy Hòa đều phù hợp. Nên rút phần lặp số lượng và đưa mức tối thiểu vào đoạn mô tả tìm kiếm hiện chỉ ghi “Xem thông tin”."
+          }
+        }
+      }
+    }
+  },
+  "counts": {
+    "rules": {
+      "substantive edit": 6,
+      "usable first pass": 2
+    },
+    "0.5b": {
+      "substantive edit": 4,
+      "cannot use": 4
+    }
+  }
+}

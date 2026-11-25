@@ -1,0 +1,126 @@
+{
+  "blind_digest": "3d69275432a8f25a4c1b9d266de667793c77c0541e21f341b89f90be20a516f9",
+  "assessor": "Root Codex AI reviewer, distinct from the Qwen respondent and study implementer. Scored anonymized answer text against a pre-inference case assessment. No human annotations.",
+  "observations": {
+    "093e448043d1e6be": {
+      "scope_reason_valid": false,
+      "attribution_valid": true,
+      "recommendation_useful": true,
+      "note": "W is relevant and supporting the bounded statement is consistent with WooCommerce. The reasoning does not explain optional items. Checking the merchant's minimum is concrete."
+    },
+    "09d41b232154bde0": {
+      "scope_reason_valid": false,
+      "attribution_valid": false,
+      "recommendation_useful": true,
+      "note": "There is a question about persistence, not an observed false claim. E is unrelated. A controlled client experiment with measurements is an appropriate next step."
+    },
+    "162dae4ac2941193": {
+      "scope_reason_valid": false,
+      "attribution_valid": false,
+      "recommendation_useful": true,
+      "note": "Calling it false misses the inference from one participant to all merchants. H is the correct discussion but the reason fails to distinguish its limits. A controlled experiment is useful."
+    },
+    "23f4db01b3fab39c": {
+      "scope_reason_valid": false,
+      "attribution_valid": false,
+      "recommendation_useful": true,
+      "note": "No explanation of grouped-product semantics, and G is the wrong authority. Asking about this group's actual minimum is an appropriate check."
+    },
+    "383624a36d36f745": {
+      "scope_reason_valid": false,
+      "attribution_valid": true,
+      "recommendation_useful": false,
+      "note": "G supports this bounded session verdict, but no qualifying criterion is explained. The default timer is already given; rechecking it does not resolve the case."
+    },
+    "3ddafe9cd2d9c686": {
+      "scope_reason_valid": false,
+      "attribution_valid": false,
+      "recommendation_useful": false,
+      "note": "No national-versus-store distinction, GA4 is unrelated, and the advice does not identify comparable store periods."
+    },
+    "450eeaa3628bfc5b": {
+      "scope_reason_valid": false,
+      "attribution_valid": false,
+      "recommendation_useful": false,
+      "note": "The answer omits the universal inference from one observation. G is unrelated and no specific redesign or outcome is suggested."
+    },
+    "5b8d49c7e2207afa": {
+      "scope_reason_valid": false,
+      "attribution_valid": false,
+      "recommendation_useful": false,
+      "note": "No national-versus-store distinction, GA4 is unrelated, and the advice does not identify comparable store periods."
+    },
+    "5ee1f9ef88e2aea0": {
+      "scope_reason_valid": false,
+      "attribution_valid": true,
+      "recommendation_useful": true,
+      "note": "Correctly rejects duration as a disqualifier and cites the applicable GA4 source, but does not explain the two pageviews. The proposed correction fixes the assertion about duration."
+    },
+    "694a459224751403": {
+      "scope_reason_valid": false,
+      "attribution_valid": false,
+      "recommendation_useful": false,
+      "note": "Unsupported is too generic. G does not establish Denver store sales. The recommendation does not ask for that store's comparable sales records."
+    },
+    "6bdd2268c09eaa99": {
+      "scope_reason_valid": false,
+      "attribution_valid": false,
+      "recommendation_useful": false,
+      "note": "It identifies a merchant discussion but misses that asking a supplier is justified. C is the wrong source; a transaction audit is unnecessary for making that inquiry."
+    },
+    "75368a35328953a9": {
+      "scope_reason_valid": false,
+      "attribution_valid": false,
+      "recommendation_useful": false,
+      "note": "It treats four seconds as sufficient to rule out engagement and contradicts itself in the fix. G does not support the stated general rule. It never evaluates one pageview and no key event."
+    },
+    "785df035d46649c8": {
+      "scope_reason_valid": false,
+      "attribution_valid": false,
+      "recommendation_useful": false,
+      "note": "It neither explains optional grouped items nor cites WooCommerce. Generic information about minimum orders does not fix the claim that both items must be purchased."
+    },
+    "792d0b4f7167b9d7": {
+      "scope_reason_valid": false,
+      "attribution_valid": true,
+      "recommendation_useful": false,
+      "note": "G applies and the response does not overstate support for the disputed claim. No two-pageview criterion or specific correction is provided; the default setup is already given."
+    },
+    "7d33d6cade00722c": {
+      "scope_reason_valid": true,
+      "attribution_valid": false,
+      "recommendation_useful": true,
+      "note": "Combined with its abstention and request for local terms, the response correctly limits one merchant's discussion to that merchant. C is the wrong source. Checking local terms is concrete."
+    },
+    "96acd7182b166c8c": {
+      "scope_reason_valid": false,
+      "attribution_valid": false,
+      "recommendation_useful": false,
+      "note": "The answer does not explain why another client's experiment cannot establish persistence here. G is unrelated and no local comparison or time horizon is requested."
+    },
+    "a320b7b112a82621": {
+      "scope_reason_valid": false,
+      "attribution_valid": false,
+      "recommendation_useful": false,
+      "note": "Unsupported is too generic. G does not establish Denver store sales. The recommendation does not ask for that store's comparable sales records."
+    },
+    "a597c0e54137763c": {
+      "scope_reason_valid": false,
+      "attribution_valid": false,
+      "recommendation_useful": false,
+      "note": "The merchant anecdote does not establish a minimum, but the copy only proposes an inquiry. E is unrelated. The answer misses this distinction and gives no concrete check."
+    },
+    "bdf7ac53382b210f": {
+      "scope_reason_valid": false,
+      "attribution_valid": false,
+      "recommendation_useful": true,
+      "note": "W is relevant but the explanation wrongly affirms mandatory purchase, so the citation fails. Advising separate purchase is directionally correct for the specified core group."
+    },
+    "f06e5fb09a14ec92": {
+      "scope_reason_valid": true,
+      "attribution_valid": false,
+      "recommendation_useful": false,
+      "note": "Explains why a third-party merchant discussion leaves the client's minimum unknown. C is unrelated and 'further research' does not identify the store policy, configuration or supplier terms."
+    }
+  }
+}

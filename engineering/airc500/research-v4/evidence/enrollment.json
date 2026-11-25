@@ -1,0 +1,38 @@
+{
+  "version": 4,
+  "source": {
+    "base": "92f577d85bee5a3b8256923349fcffef70183b4d",
+    "head": "da748cf625dead3cd24f670fec9afd5b5a1a6c06",
+    "blobs": {
+      "sources.jsonl": "bbf48b071834446ef459a46048877b33e5673e67b01e3fecafe780e15ab8dd6f",
+      "draft.jsonl": "f4a74dc65c51e312cfda376dc7ca6adb4c12fd8c3098680dac2726690a9a0fdd"
+    },
+    "bundle": "4118473a91fcc97ebc3fb907739cbd2563483f2666783c26655863d861e14c9d",
+    "snapshot_sha256": [
+      "7d6ca848c709d9e7e57dce5b80caaaed06ee69d6d06c22ab61379e17f82b8834",
+      "8bfc1dabed48ab78863d891dd77a1b1beba77e5b6dfc30ea6849c0fd0fe3b74b"
+    ],
+    "frozen_at": "2026-11-25T00:43:50.398714+00:00",
+    "case_sha256": "02f301b5a6e456650f681bbeba00912608f3265ec2db33f5ed58d434873de679"
+  },
+  "oracle": "004e0a591702d91c8fdaa4326470af4c3e91586ec572f4f88ae23fe03dcde0d2",
+  "trust": {
+    "q15": {
+      "8e450759eea2975cbe4ac9438f0dcf90ec4e32675d023e56a025773eebb5072f": {
+        "public_key": "CiJlYTf4LuLZgAkxrEkfQgjcGN7rc+C5RtY1UxPRpLo=",
+        "adapter_identity": "research-v4-local",
+        "model": "Qwen2.5-1.5B-Instruct-Q4_K_M",
+        "model_version": "91cad51170dc346986eccefdc2dd33a9da36ead9",
+        "model_digest": "6a1a2eb6d15622bf3c96857206351ba97e1af16c30d7a74ee38970e434e9407e",
+        "family": "Qwen2.5"
+      }
+    }
+  },
+  "verifier_key": "0/ZVx5J/2ofI8AoQktU9478gtY7sGMhyhsFYsDfBf2A=",
+  "plan_pin": "02453731484465da958edb1ad1dbbc631d7292619c3cb954067e8d68961d3b4e",
+  "catalog": "13682e00ca2a19d0ae36c7add059fe3aacb874cdabba54cc7c4bea58b8fc8a67",
+  "runtime": "34231eb5a24c45c5fa34ad5c2b3cb443073b94392d25800a24d982bea1dc2e19",
+  "token_cap": 16000,
+  "seed": 61,
+  "reviewer": "MK-022"
+}

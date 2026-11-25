@@ -1,0 +1,453 @@
+{
+  "arms": {
+    "without": {
+      "cases": 10,
+      "calls": 5,
+      "input_tokens": 1451,
+      "output_tokens": 543,
+      "exact": {
+        "verdict_correct": 2,
+        "relevant_source_choice": 2,
+        "source_in_context": 0,
+        "literal_repair_match": 0,
+        "scope_reason_valid": 1,
+        "attribution_valid": 1,
+        "recommendation_useful": 3
+      },
+      "confusion": {
+        "flag": {
+          "flag": 0,
+          "keep": 0,
+          "insufficient": 4
+        },
+        "keep": {
+          "flag": 0,
+          "keep": 0,
+          "insufficient": 4
+        },
+        "insufficient": {
+          "flag": 0,
+          "keep": 0,
+          "insufficient": 2
+        }
+      },
+      "correct_findings": [],
+      "false_findings": [],
+      "useful_correct_findings": []
+    },
+    "with": {
+      "cases": 10,
+      "calls": 5,
+      "input_tokens": 1831,
+      "output_tokens": 538,
+      "exact": {
+        "verdict_correct": 2,
+        "relevant_source_choice": 5,
+        "source_in_context": 5,
+        "literal_repair_match": 0,
+        "scope_reason_valid": 1,
+        "attribution_valid": 3,
+        "recommendation_useful": 4
+      },
+      "confusion": {
+        "flag": {
+          "flag": 1,
+          "keep": 0,
+          "insufficient": 3
+        },
+        "keep": {
+          "flag": 0,
+          "keep": 0,
+          "insufficient": 4
+        },
+        "insufficient": {
+          "flag": 1,
+          "keep": 0,
+          "insufficient": 1
+        }
+      },
+      "correct_findings": [
+        "L10"
+      ],
+      "false_findings": [
+        "L8"
+      ],
+      "useful_correct_findings": [
+        "L10"
+      ]
+    }
+  },
+  "paired": {
+    "verdict_correct": {
+      "gain": [
+        "L10"
+      ],
+      "loss": [
+        "L8"
+      ]
+    },
+    "relevant_source_choice": {
+      "gain": [
+        "L10",
+        "L3",
+        "L4"
+      ],
+      "loss": []
+    },
+    "source_in_context": {
+      "gain": [
+        "L1",
+        "L10",
+        "L2",
+        "L3",
+        "L4"
+      ],
+      "loss": []
+    },
+    "literal_repair_match": {
+      "gain": [],
+      "loss": []
+    },
+    "scope_reason_valid": {
+      "gain": [],
+      "loss": []
+    },
+    "attribution_valid": {
+      "gain": [
+        "L2",
+        "L4"
+      ],
+      "loss": []
+    },
+    "recommendation_useful": {
+      "gain": [
+        "L10",
+        "L3",
+        "L8"
+      ],
+      "loss": [
+        "L1",
+        "L7"
+      ]
+    }
+  },
+  "case_results": {
+    "without": {
+      "L4": {
+        "gold": "keep",
+        "observed": "insufficient",
+        "topic": "catalog",
+        "verdict_correct": false,
+        "relevant_source_choice": false,
+        "source_in_context": false,
+        "literal_repair_match": false,
+        "scope_reason_valid": false,
+        "attribution_valid": false,
+        "recommendation_useful": true,
+        "grader_note": "No explanation of grouped-product semantics, and G is the wrong authority. Asking about this group's actual minimum is an appropriate check."
+      },
+      "L10": {
+        "gold": "flag",
+        "observed": "insufficient",
+        "topic": "experiments",
+        "verdict_correct": false,
+        "relevant_source_choice": false,
+        "source_in_context": false,
+        "literal_repair_match": false,
+        "scope_reason_valid": false,
+        "attribution_valid": false,
+        "recommendation_useful": false,
+        "grader_note": "The answer omits the universal inference from one observation. G is unrelated and no specific redesign or outcome is suggested."
+      },
+      "L6": {
+        "gold": "keep",
+        "observed": "insufficient",
+        "topic": "market",
+        "verdict_correct": false,
+        "relevant_source_choice": false,
+        "source_in_context": false,
+        "literal_repair_match": false,
+        "scope_reason_valid": false,
+        "attribution_valid": false,
+        "recommendation_useful": false,
+        "grader_note": "No national-versus-store distinction, GA4 is unrelated, and the advice does not identify comparable store periods."
+      },
+      "L1": {
+        "gold": "flag",
+        "observed": "insufficient",
+        "topic": "analytics",
+        "verdict_correct": false,
+        "relevant_source_choice": true,
+        "source_in_context": false,
+        "literal_repair_match": false,
+        "scope_reason_valid": false,
+        "attribution_valid": true,
+        "recommendation_useful": true,
+        "grader_note": "Correctly rejects duration as a disqualifier and cites the applicable GA4 source, but does not explain the two pageviews. The proposed correction fixes the assertion about duration."
+      },
+      "L5": {
+        "gold": "flag",
+        "observed": "insufficient",
+        "topic": "market",
+        "verdict_correct": false,
+        "relevant_source_choice": false,
+        "source_in_context": false,
+        "literal_repair_match": false,
+        "scope_reason_valid": false,
+        "attribution_valid": false,
+        "recommendation_useful": false,
+        "grader_note": "Unsupported is too generic. G does not establish Denver store sales. The recommendation does not ask for that store's comparable sales records."
+      },
+      "L9": {
+        "gold": "keep",
+        "observed": "insufficient",
+        "topic": "community",
+        "verdict_correct": false,
+        "relevant_source_choice": false,
+        "source_in_context": false,
+        "literal_repair_match": false,
+        "scope_reason_valid": false,
+        "attribution_valid": false,
+        "recommendation_useful": false,
+        "grader_note": "It identifies a merchant discussion but misses that asking a supplier is justified. C is the wrong source; a transaction audit is unnecessary for making that inquiry."
+      },
+      "L2": {
+        "gold": "keep",
+        "observed": "insufficient",
+        "topic": "analytics",
+        "verdict_correct": false,
+        "relevant_source_choice": true,
+        "source_in_context": false,
+        "literal_repair_match": false,
+        "scope_reason_valid": false,
+        "attribution_valid": false,
+        "recommendation_useful": false,
+        "grader_note": "It treats four seconds as sufficient to rule out engagement and contradicts itself in the fix. G does not support the stated general rule. It never evaluates one pageview and no key event."
+      },
+      "L3": {
+        "gold": "flag",
+        "observed": "insufficient",
+        "topic": "catalog",
+        "verdict_correct": false,
+        "relevant_source_choice": false,
+        "source_in_context": false,
+        "literal_repair_match": false,
+        "scope_reason_valid": false,
+        "attribution_valid": false,
+        "recommendation_useful": false,
+        "grader_note": "It neither explains optional grouped items nor cites WooCommerce. Generic information about minimum orders does not fix the claim that both items must be purchased."
+      },
+      "L7": {
+        "gold": "insufficient",
+        "observed": "insufficient",
+        "topic": "community",
+        "verdict_correct": true,
+        "relevant_source_choice": false,
+        "source_in_context": false,
+        "literal_repair_match": false,
+        "scope_reason_valid": true,
+        "attribution_valid": false,
+        "recommendation_useful": true,
+        "grader_note": "Combined with its abstention and request for local terms, the response correctly limits one merchant's discussion to that merchant. C is the wrong source. Checking local terms is concrete."
+      },
+      "L8": {
+        "gold": "insufficient",
+        "observed": "insufficient",
+        "topic": "experiments",
+        "verdict_correct": true,
+        "relevant_source_choice": false,
+        "source_in_context": false,
+        "literal_repair_match": false,
+        "scope_reason_valid": false,
+        "attribution_valid": false,
+        "recommendation_useful": false,
+        "grader_note": "The answer does not explain why another client's experiment cannot establish persistence here. G is unrelated and no local comparison or time horizon is requested."
+      }
+    },
+    "with": {
+      "L4": {
+        "gold": "keep",
+        "observed": "insufficient",
+        "topic": "catalog",
+        "verdict_correct": false,
+        "relevant_source_choice": true,
+        "source_in_context": true,
+        "literal_repair_match": false,
+        "scope_reason_valid": false,
+        "attribution_valid": true,
+        "recommendation_useful": true,
+        "grader_note": "W is relevant and supporting the bounded statement is consistent with WooCommerce. The reasoning does not explain optional items. Checking the merchant's minimum is concrete."
+      },
+      "L8": {
+        "gold": "insufficient",
+        "observed": "flag",
+        "topic": "experiments",
+        "verdict_correct": false,
+        "relevant_source_choice": false,
+        "source_in_context": false,
+        "literal_repair_match": false,
+        "scope_reason_valid": false,
+        "attribution_valid": false,
+        "recommendation_useful": true,
+        "grader_note": "There is a question about persistence, not an observed false claim. E is unrelated. A controlled client experiment with measurements is an appropriate next step."
+      },
+      "L10": {
+        "gold": "flag",
+        "observed": "flag",
+        "topic": "experiments",
+        "verdict_correct": true,
+        "relevant_source_choice": true,
+        "source_in_context": true,
+        "literal_repair_match": false,
+        "scope_reason_valid": false,
+        "attribution_valid": false,
+        "recommendation_useful": true,
+        "grader_note": "Calling it false misses the inference from one participant to all merchants. H is the correct discussion but the reason fails to distinguish its limits. A controlled experiment is useful."
+      },
+      "L2": {
+        "gold": "keep",
+        "observed": "insufficient",
+        "topic": "analytics",
+        "verdict_correct": false,
+        "relevant_source_choice": true,
+        "source_in_context": true,
+        "literal_repair_match": false,
+        "scope_reason_valid": false,
+        "attribution_valid": true,
+        "recommendation_useful": false,
+        "grader_note": "G supports this bounded session verdict, but no qualifying criterion is explained. The default timer is already given; rechecking it does not resolve the case."
+      },
+      "L6": {
+        "gold": "keep",
+        "observed": "insufficient",
+        "topic": "market",
+        "verdict_correct": false,
+        "relevant_source_choice": false,
+        "source_in_context": false,
+        "literal_repair_match": false,
+        "scope_reason_valid": false,
+        "attribution_valid": false,
+        "recommendation_useful": false,
+        "grader_note": "No national-versus-store distinction, GA4 is unrelated, and the advice does not identify comparable store periods."
+      },
+      "L1": {
+        "gold": "flag",
+        "observed": "insufficient",
+        "topic": "analytics",
+        "verdict_correct": false,
+        "relevant_source_choice": true,
+        "source_in_context": true,
+        "literal_repair_match": false,
+        "scope_reason_valid": false,
+        "attribution_valid": true,
+        "recommendation_useful": false,
+        "grader_note": "G applies and the response does not overstate support for the disputed claim. No two-pageview criterion or specific correction is provided; the default setup is already given."
+      },
+      "L5": {
+        "gold": "flag",
+        "observed": "insufficient",
+        "topic": "market",
+        "verdict_correct": false,
+        "relevant_source_choice": false,
+        "source_in_context": false,
+        "literal_repair_match": false,
+        "scope_reason_valid": false,
+        "attribution_valid": false,
+        "recommendation_useful": false,
+        "grader_note": "Unsupported is too generic. G does not establish Denver store sales. The recommendation does not ask for that store's comparable sales records."
+      },
+      "L9": {
+        "gold": "keep",
+        "observed": "insufficient",
+        "topic": "community",
+        "verdict_correct": false,
+        "relevant_source_choice": false,
+        "source_in_context": false,
+        "literal_repair_match": false,
+        "scope_reason_valid": false,
+        "attribution_valid": false,
+        "recommendation_useful": false,
+        "grader_note": "The merchant anecdote does not establish a minimum, but the copy only proposes an inquiry. E is unrelated. The answer misses this distinction and gives no concrete check."
+      },
+      "L3": {
+        "gold": "flag",
+        "observed": "insufficient",
+        "topic": "catalog",
+        "verdict_correct": false,
+        "relevant_source_choice": true,
+        "source_in_context": true,
+        "literal_repair_match": false,
+        "scope_reason_valid": false,
+        "attribution_valid": false,
+        "recommendation_useful": true,
+        "grader_note": "W is relevant but the explanation wrongly affirms mandatory purchase, so the citation fails. Advising separate purchase is directionally correct for the specified core group."
+      },
+      "L7": {
+        "gold": "insufficient",
+        "observed": "insufficient",
+        "topic": "community",
+        "verdict_correct": true,
+        "relevant_source_choice": false,
+        "source_in_context": false,
+        "literal_repair_match": false,
+        "scope_reason_valid": true,
+        "attribution_valid": false,
+        "recommendation_useful": false,
+        "grader_note": "Explains why a third-party merchant discussion leaves the client's minimum unknown. C is unrelated and 'further research' does not identify the store policy, configuration or supplier terms."
+      }
+    }
+  },
+  "qualification": {
+    "marketing_reasoning": {
+      "measured": 10,
+      "correct": 1,
+      "status": "insufficient sample",
+      "promotion": false
+    },
+    "source_attribution": {
+      "measured": 10,
+      "correct": 0,
+      "status": "insufficient sample",
+      "promotion": false
+    },
+    "semantic_contradiction": {
+      "measured": 4,
+      "correct": 1,
+      "status": "insufficient sample",
+      "promotion": false
+    },
+    "product_scope": {
+      "measured": 2,
+      "correct": 0,
+      "status": "insufficient sample",
+      "promotion": false
+    },
+    "code_logic": {
+      "measured": 0,
+      "correct": 0,
+      "status": "unmeasured",
+      "promotion": false
+    },
+    "security_and_regression": {
+      "measured": 0,
+      "correct": 0,
+      "status": "unmeasured",
+      "promotion": false
+    },
+    "actionable_repairs": {
+      "measured": 4,
+      "correct": 1,
+      "status": "insufficient sample",
+      "promotion": false
+    }
+  },
+  "reviewer_ids": [
+    "MK-022"
+  ],
+  "paid_microusd": 0,
+  "calls": 10,
+  "treatment_without_fresh_sources": [
+    "L5",
+    "L6"
+  ]
+}

@@ -55,8 +55,14 @@ def boundary(db, user, doc, content_digest, stage):
     if author and (stage == "share" or author == user.id):
         conflict("Internal Marketing drafts require independent QA and cannot be shared through the client portal")
     binding = run.knowledge["registry"]
+    if stage == "share" and run.knowledge["c3_projection"].get("task_intent", {}).get("buyer_action"):
+        from .c3_customer_assets import PUBLIC, VERSION
+        if binding["workflow"] in PUBLIC and (doc.content.get("studio") or {}).get("delivery_version") != VERSION:
+            conflict("Prepare the customer asset edition in Marketing Studio and review it before sharing")
     ref = run.knowledge["c3_manifest"]
     store, snap, _ = checked(db, user, brief, ref, binding["workflow"], stage)
+    if doc.content.get("studio") and not store.approver:
+        conflict("Current approval authority is required for this Studio decision")
     from .registry import pin
     if pin(db, brief, binding["workflow"]) != binding:
         conflict("The approved campaign registry binding changed")
@@ -67,7 +73,13 @@ def boundary(db, user, doc, content_digest, stage):
     if doc.content.get("studio"):
         from .c3_studio_routes import require_all_approved
         values["studio_approvals"] = require_all_approved(db,doc,run)
+        if doc.content["studio"].get("delivery_version"):
+            from .c3_customer_assets import manifest
+            values["customer_delivery"] = manifest(doc, run, values["studio_approvals"])
     if stage in ("share", "replay_qa"):
+        from .c3_reviewer import active_approver
+        if doc.content.get("studio") and not active_approver(db, doc.tenant_id, doc.reviewed_by, lock=True):
+            conflict("The final Studio reviewer no longer has approval authority")
         key = decision_key(run.id, doc.qa_revision, content_digest)
         query = store.query(KnowledgeCommand).filter_by(snapshot_id=snap.id, operation="c3_qa", actor=doc.reviewed_by)
         row = db.scalar(query.where((KnowledgeCommand.key == key) | KnowledgeCommand.key.startswith(key + ":"))

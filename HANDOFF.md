@@ -1,5 +1,20 @@
 # Bắt đầu ở đây khi tiếp quản AI Marketing Company
 
+## Mốc tích hợp nền của Studio và Campaign Lab
+
+| PR | Head đã duyệt → head đồng bộ | Bản tích hợp đã test → merge trên main | Bằng chứng |
+| --- | --- | --- | --- |
+| #39 · Product Mission | `73721efa` | `9e8ad14f` → `428b5ed95ce284b5818e3e1512910ab95ae991b2` | Cùng tree `75b38ab8` và parent `b23497dc`, `73721efa`. [CI trên main](https://github.com/datnv41001/ai-company/actions/runs/45603608382) |
+| #38 · Qualification nội bộ | `eb64af43` → `49cdd0cf` | `37c88280` → `220d7aa11914d1f732415478b00a230c37d6f36f` | Cùng tree `2fd9d442` và parent `428b5ed9`, `49cdd0cf`. Bản tích hợp đạt 484 test, bỏ qua 2, restore 34 bảng. [CI tích hợp](https://github.com/datnv41001/ai-company/actions/runs/45603772718) · [CI sau merge](https://github.com/datnv41001/ai-company/actions/runs/45606255271) |
+
+Nhánh tài sản giao khách kế thừa cơ chế khóa quyền của [STUDIO-G02](https://github.com/datnv41001/ai-company/pull/40). [Campaign Lab](https://github.com/datnv41001/ai-company/pull/41) và [composer theo hành trình mua](https://github.com/datnv41001/ai-company/pull/42) có phạm vi và bằng chứng độc lập. Khi kết hợp nhiều thay đổi runtime, cần đối chiếu lại fingerprint của đúng cây tích hợp và chạy lại bộ hồi quy trước khi nghiệm thu.
+
+## Chạy Campaign Execution Lab
+
+Trong màn hình **Chiến dịch**, chọn một chiến dịch mà nhân viên được phép chỉnh sửa và bấm **Chạy kịch bản B2B**. Kịch bản vật liệu xây dựng cố định cung cấp kế hoạch, sáu tài sản, biên nhận mô phỏng và báo cáo từ RFQ đến doanh thu. Kết quả hiển thị chỉ thuộc lần diễn tập. Với Docker, chạy `docker compose exec -T api python -m scripts.campaign_execution_lab` để nhận JSON. Trên host đã cài dependencies, dùng `python -m scripts.campaign_execution_lab --output rfq.json`. [Hợp đồng và bản replay](docs/campaign-lab/RFQ-LAB.md) · [Cách đếm công việc](docs/evaluation/RFQ-WORK-UNITS.md)
+
+Để chụp lại giao diện, cài Chromium của Playwright rồi chạy `python -m pytest -q tests/browser_campaign_lab.py`. Biến `AMC_LAB_EVIDENCE` trỏ tới thư mục lưu PNG và kết quả từng viewport. Windows cũng hỗ trợ `AMC_BROWSER_EXECUTABLE` trỏ vào Chrome đã cài. CI lưu ảnh cho cả head và bản tích hợp. [Ảnh phiên chạy nội bộ](docs/campaign-lab/ui/README.md)
+
 ## Nghiệm thu bản nháp Marketing trên máy khác
 
 Để so sánh composer theo hành trình mua với 10 brief đã có biên nhận, dùng [kết quả, phép thử có giới hạn và lệnh chạy ngoại tuyến](docs/evaluation/buyer-journey-v1/RESULTS.md). Từng ca giữ cả bản tất định, bản model nếu có và ứng viên, cùng người nhận hành động và cách đối soát. Phiếu chuyên viên và phép đo chi phí lao động vẫn cần pilot riêng.
@@ -10,9 +25,27 @@ PR #37 đã merge nội bộ tại `b23497dcce9719fa3d413ad0c7215d751fba3b9f`. C
 
 Bắt đầu từ [giao thức thí nghiệm và lệnh chạy lại](docs/evaluation/C3-PRODUCT-QUALIFICATION.md). Hai smoke nội bộ chạy Qwen 0.5B trước. Nhánh thử nghiệm lưu riêng đầu vào của vai trò Strategy hoặc Content để [đối chiếu Qwen 7B](docs/evaluation/C3_STRONGER_ROLE.md) trên runner có đủ bộ nhớ. Mỗi kết quả gắn với commit tích hợp thực chạy. Khi đo thời gian hoàn thành và mức chấp nhận nghề nghiệp, giữ phiếu chấm mù và thời gian thao tác của từng người theo [bộ pilot](docs/evaluation/C3-PRACTITIONER-KIT.md).
 
-## Chuyển sang Marketing Studio
+## Kích hoạt hợp đồng giao khách trên PostgreSQL
 
-Studio dùng core v25, Business v3 và module C3 v2. Trước cutover, dừng xếp việc, drain các worker, dừng API cũ, lưu backup cùng image tương ứng. Chạy publisher mới trên database đã sao lưu, sau đó khởi động API và worker cùng bản. Migration `002_studio_writer.sql` khóa ba bảng bàn giao, thay các trigger trong một giao dịch và ghi module v2. Các API từng khai báo `c3/1` mất quyền ghi ngay sau commit. Publisher v1 từ chối module v2 và API v1 từ chối bộ trigger v2. Studio chỉ khởi động khi kiểm tra đúng ba trigger còn hiệu lực. Chữ ký giao thức dùng cho tương thích binary; quyền nguồn, quyền người dùng và quyết định QA của từng bản vẫn do ứng dụng và RLS kiểm tra.
+Trước khi kích hoạt, dừng tiếp nhận việc, để worker kết thúc, dừng API cũ và lưu backup nhất quán cùng image tương ứng. Chạy publisher mới bằng owner trên DB sandbox được phép, xác minh startup của binary mới rồi mới mở lại API và worker. Giao thức `c3/4` đổi hàm kiểm tra của bốn trigger dưới cùng một khóa giao dịch. Cấu trúc working copy, snapshot, quyết định khách và core v25 không cần backfill. Binary #40 và bản #43 trước cutover khai báo `c3/3`; tiến trình còn sống vẫn đọc được dữ liệu nó có quyền đọc, nhưng các ghi thuộc ranh giới giao khách bị từ chối. [Migration C3 v4](migrations/c3_tasks/004_customer_edition_writer.sql)
+
+Nếu publisher lỗi trước commit, giao dịch rollback nguyên khối và API cũ tiếp tục làm việc trên giao thức cũ. Sau commit, dừng ghi nếu cần phục hồi. Phương án ưu tiên là chạy lại image tương thích v4 để giữ cả bản giao mới. Khi phải quay về #40, phục hồi backup trước cutover sang DB cô lập, đối chiếu bản giao, quyết định và thay đổi phát sinh sau backup rồi thực hiện quy trình restore-fence trước khi chuyển lưu lượng. Không hạ marker trực tiếp trên DB đã chứa customer edition.
+
+Với SQLite phát triển trên file, dừng các tiến trình đang dùng file và sao lưu bằng công cụ SQLite hoặc đóng toàn bộ kết nối trước khi sao chép. API mới cài kiểm tra cho các thao tác ghi lên bảng bản nháp, snapshot, quyết định khách và biên nhận. Một kết nối SQLite từ binary cũ thiếu hàm writer sẽ bị từ chối khi ghi. Khi cần khôi phục, mở bản sao lưu trước cutover bằng binary tương ứng. Không trộn bản sao dữ liệu với các file WAL/SHM của một phiên khác. [Ca kiểm tra kết nối cũ và mở lại file](tests/test_edition_sqlite_cutover.py)
+
+## Duyệt theo nhóm trên PostgreSQL (STUDIO-G02)
+
+Cơ chế G02 được nghiệm thu ở core v25, Business v3 và C3 v3. Người QA duyệt đúng nhóm nghiên cứu, chiến lược và đo lường của một bản. Khi quyết định phụ thuộc vào một người đã ký trước đó, PostgreSQL giữ khóa đọc trên membership của người đó đến hết giao dịch. Nếu hạ quyền trước, quyết định mới phải chờ và đánh giá theo quyền đã đổi. Nếu chia sẻ trước, snapshot và biên nhận cùng commit rồi giao dịch hạ quyền mới tiếp tục. Quyết định và nội dung khách đã nhận được giữ trong lịch sử.
+
+Trên database kiểm thử PostgreSQL mới, cấu hình bộ biến môi trường của job `api-tests` trong [CI](.github/workflows/ci.yml), chạy `python migrations/apply.py` rồi `python -m pytest -q tests/test_studio_postgres.py`. Ca này dùng `amc_runtime` có RLS, dispatcher và worker login riêng, phản hồi vai trò tất định. Test kiểm tra duyệt độc lập, trường thiếu bằng chứng, nhóm chưa ký, sửa bản, thu hồi chuyên môn/quyền, hai thứ tự khóa, khách đúng phạm vi và snapshot sau khi khách duyệt. Nhóm Marketing và QA có thể kiểm tra vì sao hệ thống cho phép hoặc từ chối bàn giao. Công biên tập, thời gian tiết kiệm và chi phí trên bản được duyệt vẫn chưa đo với chuyên viên.
+
+Dùng ba database loopback `amc_test*` riêng, mỗi database trống. Chọn `python tests/check_studio_cutover.py --from-version 1`, `--from-version 2` hoặc `--from-version 3` tương ứng. Trường hợp v3 chạy đúng binary #40 ở SHA `159afde2a56e61722db49a08b14724af63d74ec8`. Giữ tiến trình đã kết nối trước khi nâng cấp và gửi lại các lệnh Studio, sửa draft, QA và chia sẻ sau khi chuyển phiên bản. [Diễn tập chuyển phiên bản](tests/check_studio_cutover.py) · [Ca giao tiếp giữa hai API](tests/check_edition_actions.py)
+
+## Lịch sử chuyển sang Marketing Studio
+
+Để nghiệm thu bộ tài liệu giao khách từ WF-03/WF-13, dùng [hợp đồng, hai bản giao thực trên dữ liệu tổng hợp và lệnh chạy Chromium](docs/evaluation/studio-customer-assets/README.md). Bản web và API phải dùng cùng build. Bản tích hợp dùng core v25, Business v3 và C3 v4 với kiểm tra thẩm quyền tại thời điểm ký và chia sẻ. Khi rollback về build thiếu hợp đồng giao khách, giữ các snapshot để đọc và dừng ghi Studio/chia sẻ đến khi quay lại build hỗ trợ hợp đồng. Các run và workflow đã ghim giữ nguyên phiên bản cũ.
+
+Ở bản tiền nhiệm của quy trình này, Studio dùng core v25, Business v3 và module C3 v2. Trước cutover, dừng xếp việc, drain các worker, dừng API cũ, lưu backup cùng image tương ứng. Chạy publisher mới trên database đã sao lưu, sau đó khởi động API và worker cùng bản. Migration `002_studio_writer.sql` khóa ba bảng bàn giao, thay các trigger trong một giao dịch và ghi module v2. Các API từng khai báo `c3/1` mất quyền ghi ngay sau commit. Publisher v1 từ chối module v2 và API v1 từ chối bộ trigger v2. Studio chỉ khởi động khi kiểm tra đúng ba trigger còn hiệu lực. Chữ ký giao thức dùng cho tương thích binary; quyền nguồn, quyền người dùng và quyết định QA của từng bản vẫn do ứng dụng và RLS kiểm tra.
 
 CI chạy lại kiểm thử cutover v24 cùng `python tests/check_studio_cutover.py` trên PostgreSQL loopback dùng riêng. Giao dịch thử nghiệm tác động 0 dòng qua tiến trình C3 v1 mở từ trước. Rehearsal còn kiểm snapshot khách, lịch sử quyết định và dữ liệu nguồn sau rollback/replay. Để quay lại C3 v1, cô lập DB mới và khôi phục backup trước cutover vào DB riêng, dùng restore-fence tạo generation mới rồi khởi động lại với image v1 sau khi đã đối soát các thay đổi phát sinh kể từ thời điểm backup. [Migration](migrations/c3_tasks/002_studio_writer.sql) · [Kiểm thử](tests/check_studio_cutover.py)
 

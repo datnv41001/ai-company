@@ -235,7 +235,17 @@ def assess_document(doc, run, signature):
             cta = baseline["copy"]["call_to_action"]
             if cta:
                 fixed["client_preview"].add(normalized(cta))
-        for group, fields in FIELDS[workflow].items():
+        schema = dict(FIELDS[workflow])
+        customer = bundle.get("delivery_version")
+        if customer:
+            from . import c3_assets, c3_customer_assets
+            if customer != c3_customer_assets.VERSION:
+                conflict("Unsupported customer asset contract")
+            schema.update(c3_customer_assets.PUBLIC[workflow])
+            if workflow == c3_assets.RESEARCH:
+                baseline.update(c3_customer_assets.strategy(projection))
+            fixed["client_preview"].update(normalized(s) for s in c3_customer_assets.labels(projection["locale"]).values())
+        for group, fields in schema.items():
             for key in fields:
                 field = f"studio.{group}.{key}"
                 values[field] = bundle["groups"][group][key]
@@ -245,8 +255,14 @@ def assess_document(doc, run, signature):
                 procedural = key in ("call_to_action","measurable_action","measurement_method","test_hypothesis") or (
                     not dangerous_slot and key in ("research_question","buyer_problem","hypothesis","positioning","rationale",
                                                     "execution","channel_choice","page_title","meta_description","search_intent","value_proposition"))
+                if group in ("client_strategy", "client_measurement"):
+                    procedural = not dangerous_slot and key != "target"
+                    if key == "target":
+                        procedural = not dangerous_slot and proposed == projection["audience"]
                 fixed[field] = {normalized(proposed)} if proposed and procedural else set()
                 if group == "copy" and key == "value_proposition" and procedural:
+                    fixed["client_preview"].add(normalized(proposed))
+                if customer and group in c3_customer_assets.PUBLIC[workflow] and procedural and proposed:
                     fixed["client_preview"].add(normalized(proposed))
     for field, value in values.items():
         lines = spans(value)

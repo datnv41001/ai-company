@@ -202,7 +202,8 @@ def rights(tenant_id: str, uid: str, body: Rights, user: User = Depends(current_
 def edit_draft(tenant_id: str, did: str, body: Edit, user: User = Depends(current_user), db: Session = Depends(get_db)):
     require_tenant(db, user, tenant_id, "editor")
     doc = working_copy(db, tenant_id, did)
-    if doc.content.get("studio") and doc.content["studio"]["groups"].get("copy"):
+    studio = doc.content.get("studio") or {}
+    if studio.get("delivery_version") or studio.get("groups", {}).get("copy"):
         raise HTTPException(409, "Edit the buyer-facing copy in Marketing Studio to keep its version and preview together")
     save_working_revision(db, doc, user.id, body.title, body.client_preview)
     db.commit()

@@ -1,0 +1,44 @@
+[
+  {
+    "viewport": [
+      1280,
+      850
+    ],
+    "themes": [
+      "light",
+      "dark"
+    ],
+    "render_ms": 47,
+    "browser": "157.0.8103.52",
+    "payload": "campaign-execution-lab/rfq@1",
+    "scenario_digest": "771f6ea44df7ed382cc47f52a708ecfd7b0ddd732ea393755f6c4d822cbddafb"
+  },
+  {
+    "viewport": [
+      820,
+      1180
+    ],
+    "themes": [
+      "light",
+      "dark"
+    ],
+    "render_ms": 47,
+    "browser": "157.0.8103.52",
+    "payload": "campaign-execution-lab/rfq@1",
+    "scenario_digest": "771f6ea44df7ed382cc47f52a708ecfd7b0ddd732ea393755f6c4d822cbddafb"
+  },
+  {
+    "viewport": [
+      390,
+      844
+    ],
+    "themes": [
+      "light",
+      "dark"
+    ],
+    "render_ms": 78,
+    "browser": "157.0.8103.52",
+    "payload": "campaign-execution-lab/rfq@1",
+    "scenario_digest": "771f6ea44df7ed382cc47f52a708ecfd7b0ddd732ea393755f6c4d822cbddafb"
+  }
+]

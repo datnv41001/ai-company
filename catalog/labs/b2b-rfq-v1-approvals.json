@@ -1,0 +1,74 @@
+{
+  "goal": {
+    "subject": "goal",
+    "digest": "70587f3d6f27b0435ea287e4580c8ba32999d71ad60a1fbc5b8b8c5f55470640",
+    "reviewer": "fixture:business-owner",
+    "synthetic": true
+  },
+  "knowledge": {
+    "subject": "knowledge",
+    "digest": "9c6fa900d328777c11c86facc8a9cf98c557a394f5729ddc5f638ccc9193d33f",
+    "reviewer": "fixture:business-owner",
+    "synthetic": true
+  },
+  "plan": {
+    "subject": "plan",
+    "digest": "4daf5112fc8f4adc76fc9d8d87522067168ce2eba903cd1b0734f284a2c93e36",
+    "reviewer": "fixture:budget-owner",
+    "synthetic": true
+  },
+  "landing": {
+    "subject": "landing",
+    "digest": "e8d75c8ea6a8b69c0fb9ba952ece2f2e0d923ffc73d05b1927b1486306c3eff0",
+    "reviewer": "fixture:marketing-qa",
+    "synthetic": true
+  },
+  "social": {
+    "subject": "social",
+    "digest": "ffc76d0281c3076a19e9dc1377f4dd689074953fc768d8585a4b2f1d8ec845fd",
+    "reviewer": "fixture:marketing-qa",
+    "synthetic": true
+  },
+  "ad": {
+    "subject": "ad",
+    "digest": "0cbacea4a894a8fdb3f76d4a2570e640101c64b533fa91877e4b9815afc565c0",
+    "reviewer": "fixture:marketing-qa",
+    "synthetic": true
+  },
+  "seo": {
+    "subject": "seo",
+    "digest": "300ac031fa50c40038fff57c941fa4fa69a1b3f93bb14cae1f43bdda79c03403",
+    "reviewer": "fixture:marketing-qa",
+    "synthetic": true
+  },
+  "creative": {
+    "subject": "creative",
+    "digest": "b2f3e261df2d0c4e5e4aaea188c870be4deb1740e9a8ffed5bc061f8c8fcb8a8",
+    "reviewer": "fixture:marketing-qa",
+    "synthetic": true
+  },
+  "calendar": {
+    "subject": "calendar",
+    "digest": "4d436fd468de832e92faf4673229f27d8fead7ce3be1d3fcdadba76ddf46597e",
+    "reviewer": "fixture:marketing-qa",
+    "synthetic": true
+  },
+  "landing-slot": {
+    "subject": "landing-slot",
+    "digest": "da8bb45145d10e47aca9a3fc975f8fb372fd88cdb799cc432e07c87dd7d4ec54",
+    "reviewer": "fixture:channel-approver",
+    "synthetic": true
+  },
+  "ad-slot": {
+    "subject": "ad-slot",
+    "digest": "a3ab7ae2df129726cb46fd1e3fda99e09888b3f7f3d6b33aca29fcaf0d0ffd87",
+    "reviewer": "fixture:channel-approver",
+    "synthetic": true
+  },
+  "social-slot": {
+    "subject": "social-slot",
+    "digest": "a8d8dc3441edc74025a179bc27f10b1dc17a0c3fd634bce2a1b644a728fc42d2",
+    "reviewer": "fixture:channel-approver",
+    "synthetic": true
+  }
+}

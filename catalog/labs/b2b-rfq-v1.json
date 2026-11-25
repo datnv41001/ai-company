@@ -1,0 +1,237 @@
+{
+  "scenario_id": "tile-rfq-hanoi-v1",
+  "goal": {
+    "revision": 1,
+    "objective": "Tăng yêu cầu báo giá đủ thông tin để Sales lập báo giá gạch cho dự án tại Hà Nội.",
+    "budget_vnd": 3000000,
+    "buyer": "Bộ phận thu mua của nhà thầu tại Hà Nội",
+    "offer": "Báo giá theo diện tích, địa bàn giao và tiến độ công trình"
+  },
+  "knowledge": {
+    "revision": 1,
+    "sku": "LAB-TILE-3060",
+    "product": "Gạch ốp tường 30 × 60 cm",
+    "market": "Hà Nội",
+    "unit": "m²",
+    "unknown": [
+      "Tồn kho theo lô",
+      "Phí vận chuyển theo công trình",
+      "Tỷ lệ RFQ thành đơn thực tế"
+    ]
+  },
+  "actions": [
+    {
+      "id": "landing-slot",
+      "asset_id": "landing",
+      "day": 3,
+      "cost_vnd": 0
+    },
+    {
+      "id": "ad-slot",
+      "asset_id": "ad",
+      "day": 4,
+      "cost_vnd": 1200000
+    },
+    {
+      "id": "social-slot",
+      "asset_id": "social",
+      "day": 5,
+      "cost_vnd": 0
+    }
+  ],
+  "events": [
+    {
+      "event_id": "v1",
+      "type": "session",
+      "at": 5,
+      "session_id": "s1",
+      "action_id": "ad-slot",
+      "visitor_id": "visitor-a"
+    },
+    {
+      "event_id": "v2",
+      "type": "session",
+      "at": 5,
+      "session_id": "s2",
+      "action_id": "landing-slot",
+      "visitor_id": "visitor-b"
+    },
+    {
+      "event_id": "v3",
+      "type": "session",
+      "at": 5,
+      "session_id": "s3",
+      "action_id": null,
+      "visitor_id": "visitor-c"
+    },
+    {
+      "event_id": "v4",
+      "type": "session",
+      "at": 5,
+      "session_id": "s4",
+      "action_id": "ad-slot",
+      "visitor_id": "visitor-a"
+    },
+    {
+      "event_id": "r1",
+      "type": "rfq",
+      "at": 6,
+      "rfq_id": "rfq-1",
+      "session_id": "s1",
+      "area_m2": 200,
+      "district": "Hà Nội",
+      "required_by": "2026-12-20",
+      "consent_to_quote": true
+    },
+    {
+      "event_id": "r2",
+      "type": "rfq",
+      "at": 6,
+      "rfq_id": "rfq-2",
+      "session_id": "s2",
+      "area_m2": 200,
+      "district": "Hà Nội",
+      "required_by": "2026-12-20",
+      "consent_to_quote": true
+    },
+    {
+      "event_id": "r3",
+      "type": "rfq",
+      "at": 6,
+      "rfq_id": "rfq-3",
+      "session_id": "s3",
+      "area_m2": 200,
+      "district": "Hà Nội",
+      "required_by": "2026-12-20",
+      "consent_to_quote": true
+    },
+    {
+      "event_id": "r4",
+      "type": "rfq",
+      "at": 6,
+      "rfq_id": "rfq-4",
+      "session_id": "s4",
+      "area_m2": 0,
+      "district": "Hà Nội",
+      "required_by": "2026-12-20",
+      "consent_to_quote": true
+    },
+    {
+      "event_id": "r5",
+      "type": "rfq",
+      "at": 6,
+      "rfq_id": "rfq-5",
+      "session_id": null,
+      "area_m2": 50,
+      "district": "Hà Nội",
+      "required_by": "2026-12-20",
+      "consent_to_quote": false
+    },
+    {
+      "event_id": "h1",
+      "type": "sales_handoff",
+      "at": 7,
+      "rfq_id": "rfq-1"
+    },
+    {
+      "event_id": "h2",
+      "type": "sales_handoff",
+      "at": 7,
+      "rfq_id": "rfq-2"
+    },
+    {
+      "event_id": "h3",
+      "type": "sales_handoff",
+      "at": 7,
+      "rfq_id": "rfq-3"
+    },
+    {
+      "event_id": "q2",
+      "type": "quotation",
+      "at": 8,
+      "rfq_id": "rfq-2"
+    },
+    {
+      "event_id": "q3",
+      "type": "quotation",
+      "at": 8,
+      "rfq_id": "rfq-3"
+    },
+    {
+      "event_id": "o1",
+      "type": "order",
+      "at": 9,
+      "rfq_id": "rfq-1"
+    },
+    {
+      "event_id": "o2",
+      "type": "order",
+      "at": 9,
+      "rfq_id": "rfq-2"
+    },
+    {
+      "event_id": "o3",
+      "type": "order",
+      "at": 9,
+      "rfq_id": "rfq-3"
+    },
+    {
+      "event_id": "c1",
+      "type": "confirmed",
+      "at": 10,
+      "rfq_id": "rfq-1",
+      "revenue_vnd": 8000000
+    },
+    {
+      "event_id": "c2",
+      "type": "confirmed",
+      "at": 10,
+      "rfq_id": "rfq-2",
+      "revenue_vnd": 3500000
+    },
+    {
+      "event_id": "c3",
+      "type": "confirmed",
+      "at": 10,
+      "rfq_id": "rfq-3",
+      "revenue_vnd": 2000000
+    },
+    {
+      "event_id": "x2",
+      "type": "cancelled",
+      "at": 12,
+      "rfq_id": "rfq-2"
+    },
+    {
+      "event_id": "z5",
+      "type": "rejected",
+      "at": 9,
+      "rfq_id": "rfq-5"
+    },
+    {
+      "event_id": "v1",
+      "type": "session",
+      "at": 5,
+      "session_id": "s1",
+      "action_id": "ad-slot",
+      "visitor_id": "visitor-a"
+    },
+    {
+      "event_id": "resubmitted-r1",
+      "type": "rfq",
+      "at": 6,
+      "rfq_id": "rfq-1",
+      "session_id": "s1",
+      "area_m2": 200,
+      "district": "Hà Nội",
+      "required_by": "2026-12-20",
+      "consent_to_quote": true
+    },
+    {
+      "event_id": "q1",
+      "type": "quotation",
+      "at": 8,
+      "rfq_id": "rfq-1"
+    }
+  ]
+}

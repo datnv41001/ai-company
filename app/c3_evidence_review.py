@@ -15,7 +15,8 @@ from .knowledge_authority import eligible
 from .knowledge_contracts import Input, Ref
 from .knowledge_models import KnowledgeCommand, KnowledgeRevision
 from .knowledge_store import Store, canonical, digest, conflict, missing
-from .models import AuditEvent, Membership, User
+from .models import AuditEvent, User
+from .c3_reviewer import active_approver
 from .revision_qa import content_digest
 from .security import current_user, require_tenant
 from .workforce_models import WorkforceBrief
@@ -73,13 +74,13 @@ def chain(store, payload):
     return result
 
 
-def approved_mandate(store, id_, actor, category):
+def approved_mandate(store, id_, actor, category, *, lock=False):
     row = store.get(KnowledgeRevision, id_)
     if (
         row.kind != "qualification"
         or row.data["approver_id"] != actor
         or row.data["category"] != category
-        or store.db.scalar(select(Membership.role).filter_by(tenant_id=store.scope["tenant_id"], user_id=actor)) not in ("admin", "owner")
+        or not active_approver(store.db, store.scope["tenant_id"], actor, lock=lock)
     ):
         conflict("The reviewer needs an active qualification for this claim category")
     eligible(store, row, store.now(), {})
@@ -90,7 +91,7 @@ def receipt_scope(doc, signature):
     return dict(document_id=doc.id, qa_revision=doc.qa_revision, content_digest=signature, version=evidence.VERSION)
 
 
-def current_report(store, snap, doc, run, signature, *, include_sources=False):
+def current_report(store, snap, doc, run, signature, *, include_sources=False, lock_reviewers=False):
     report = evidence.assess_document(doc, run, signature)
     _, payload = unpack(store, snap.id)
     if snap.digest != run.knowledge["c3_manifest"]["digest"] or payload["projection"] != run.knowledge["c3_projection"]:
@@ -115,7 +116,7 @@ def current_report(store, snap, doc, run, signature, *, include_sources=False):
             for choice in by_span.get(row["id"], ()):
                 body = choice.result
                 try:
-                    approved_mandate(store, body["qualification_revision"], choice.actor, row["claim_type"])
+                    approved_mandate(store, body["qualification_revision"], choice.actor, row["claim_type"], lock=lock_reviewers)
                 except HTTPException as exc:
                     if exc.status_code in (404, 409):
                         continue
@@ -134,17 +135,28 @@ def current_report(store, snap, doc, run, signature, *, include_sources=False):
 
 
 def decision_evidence(store, snap, doc, run, signature):
-    report = current_report(store, snap, doc, run, signature, include_sources=True)
+    report = current_report(store, snap, doc, run, signature, include_sources=True, lock_reviewers=True)
     if not report["ready"]:
         conflict("Content evidence requires a correction or a qualified decision on unsupported claims")
     # Private per-span source revisions/digests remain reconstructible from the immutable
     # manifest and signed resolutions. Pin the exact full assessment in the decision.
-    return {
+    decision = {
         "content_gate_version": evidence.VERSION,
         "content_gate_digest": digest(canonical(report)),
         "content_sources": {key: {k: ref[k] for k in ("claim_revision", "source_revision", "source_digest")} for key, ref in report["references"].items()},
         "reviewed_statements": {r["id"]: r["resolution_id"] for r in report["statements"] if r.get("resolution_id")},
     }
+    if (doc.content.get("studio") or {}).get("delivery_version"):
+        from .c3_customer_assets import PUBLIC
+        public = PUBLIC[run.knowledge["registry"]["workflow"]]
+        decision["customer_field_evidence"] = {
+            group: {field: [
+                {k: row[k] for k in ("id", "claim_type", "outcome", "handles")}
+                for row in report["statements"] if row["field"] == f"studio.{group}.{field}"
+            ] for field in fields}
+            for group, fields in public.items()
+        }
+    return decision
 
 
 def staff_document(db, user, tenant_id, did):

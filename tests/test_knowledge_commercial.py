@@ -86,7 +86,11 @@ def test_prices_quantity_conditions_and_multiple_skus(api):
     write(
         "overlap",
         "offer",
-        dict(placement=place | {"region": "Hà Nội"}, price=base_price | {"amount_minor": 1200, "basis_quantity": "1.00"}, policy=policy["id"]),
+        dict(
+            placement=place | {"region": "Hà Nội"},
+            price=base_price | {"amount_minor": 1200, "basis_quantity": "1.00", "conditions": ["Trả trước"]},
+            policy=policy["id"],
+        ),
     )
     assert call(api, user, path, "/previews", claims=[claim["id"]]).status_code == 409
     assert call(api, user, path, "/authorize", operation="queue", snapshot_id=preview["id"], digest=preview["digest"]).status_code == 409

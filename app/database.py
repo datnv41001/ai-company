@@ -106,6 +106,11 @@ def prepare_database(bind):
         from migrations.knowledge_commerce import RULE_IS_CURRENT
         if not conn.scalar(text(RULE_IS_CURRENT)):
             raise RuntimeError("Rerun the v22 migration publisher to install the commercial authority rule")
+        if not conn.scalar(text("SELECT to_regclass('amc_business.versions') IS NOT NULL")) or list(conn.scalars(text("SELECT version FROM amc_business.versions ORDER BY version"))) != [1, 2, 3]:
+            raise RuntimeError("Apply the compatible business workspace migration")
+        from migrations.claim_display import CURRENT as claim_display_current
+        if not conn.scalar(text(claim_display_current)):
+            raise RuntimeError("Apply the current claim desk read capability")
         from .access import set_context
         from .security import sign_actor
         with Session(conn) as session:

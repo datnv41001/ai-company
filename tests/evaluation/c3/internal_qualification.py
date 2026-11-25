@@ -2,6 +2,7 @@
 
 # ruff: noqa: E402 -- run_comparison sets the repository/test fixture import path.
 import argparse
+import hashlib
 from copy import deepcopy
 from dataclasses import replace
 import json
@@ -106,6 +107,8 @@ def instruction_control(lab, request, treatment, projection, workflow, native):
         "Use the selected locale. Complete the required fields from supplied facts. Never invent factual claims. Use only supplied evidence handles."
     )
     assert control["messages"][1:] == request["messages"][1:]
+    actual_worker_digest = hashlib.sha256(json.dumps(request, sort_keys=True, ensure_ascii=False).encode()).hexdigest()
+    assert actual_worker_digest == treatment["request_sha256"]
     role = "strategy" if workflow == c3_assets.RESEARCH else "content"
     result = {
         "scope": role,
@@ -114,6 +117,9 @@ def instruction_control(lab, request, treatment, projection, workflow, native):
         "model": request["model"],
         "same_user_input_digest": canonical_hash(request["messages"][1:]),
         "schema_digest": canonical_hash(request["response_format"]),
+        "control_schema_digest": canonical_hash(control["response_format"]),
+        "control_user_input_digest": canonical_hash(control["messages"][1:]),
+        "treatment_attempt_request_sha256": actual_worker_digest,
         "control_request_digest": canonical_hash(control),
         "treatment_request_digest": canonical_hash(request),
         "paired_treatment_attempt_id": treatment["attempt_id"],

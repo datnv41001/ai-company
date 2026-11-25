@@ -169,10 +169,6 @@ def test_lost_worker_offer_and_duplicate_queue(pool):
 @PG
 @pytest.mark.parametrize("stage", ["queue", "qa", "share"])
 def test_revoked_device_cannot_act_when_session_api_installed(pool, stage):
-    import importlib.util
-
-    if importlib.util.find_spec("app.device_api") is None:
-        pytest.skip("Core v23 revocable sessions are tested in the combined integration checkout")
     from test_claim_desk import reader
 
     lab = pool

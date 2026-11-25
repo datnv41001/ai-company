@@ -26,6 +26,9 @@ jobs:
           export POSTGRES_PASSWORD="$(openssl rand -hex 32)"
           export AMC_RUNTIME_PASSWORD="$(openssl rand -hex 32)"
           export JWT_SECRET="$(openssl rand -hex 48)"
+          export AMC_DB_PROOF_KEY="$(openssl rand -hex 32)"
+          export AMC_SESSION_GENERATION="$(openssl rand -hex 32)"
+          export AMC_QUOTA_KEY="$(python -c 'import hmac,os;print(hmac.digest(os.environ["JWT_SECRET"].encode(),b"amc/identity-quota/v1","sha256").hex())')"
           docker run --detach --rm --name amc-test-pg -e POSTGRES_PASSWORD -e POSTGRES_DB=amc_test_ci \
             -p 127.0.0.1::5432 postgres:16-alpine
           trap 'docker stop amc-test-pg >/dev/null' EXIT
@@ -39,7 +42,7 @@ jobs:
           export AMC_TEST_PG=1 PYTHONPATH=.
           python migrations/apply.py
           AMC_WF03_HOLD_EVIDENCE="$RUNNER_TEMP/wf03-holds" python -m pytest -q
-          python -c 'import os, sys; sys.path.insert(0, "tests"); from check_postgres_upgrade import rehearse_archive; rehearse_archive(os.environ["AMC_MIGRATION_DSN"], "amc-test-pg", 22)'
+          python -c 'import os, sys; sys.path.insert(0, "tests"); from check_postgres_upgrade import rehearse_archive; rehearse_archive(os.environ["AMC_MIGRATION_DSN"], "amc-test-pg", 24)'
           docker exec amc-test-pg createdb -U postgres amc_test_upgrade
           export AMC_MIGRATION_DSN="${AMC_MIGRATION_DSN%/*}/amc_test_upgrade"
           export DATABASE_URL="${DATABASE_URL%/*}/amc_test_upgrade"
@@ -129,6 +132,17 @@ jobs:
           export AMC_MIGRATION_DSN="${AMC_MIGRATION_DSN%/*}/amc_test_workspace_upgrade"
           export DATABASE_URL="${DATABASE_URL%/*}/amc_test_workspace_upgrade"
           python tests/check_workspace_upgrade.py
+          for prior in c2 a1; do
+            database="amc_test_combined_$prior"
+            docker exec amc-test-pg createdb -U postgres "$database"
+            export AMC_MIGRATION_DSN="${AMC_MIGRATION_DSN%/*}/$database"
+            export DATABASE_URL="${DATABASE_URL%/*}/$database"
+            python tests/check_combined_upgrade.py "$prior"
+          done
+          docker exec amc-test-pg createdb -U postgres amc_test_populated_v22
+          export AMC_MIGRATION_DSN="${AMC_MIGRATION_DSN%/*}/amc_test_populated_v22"
+          export DATABASE_URL="${DATABASE_URL%/*}/amc_test_populated_v22"
+          AMC_UPGRADE_BACKUP_CONTAINER=amc-test-pg python tests/check_postgres_upgrade.py --from-v22
           docker exec amc-test-pg createdb -U postgres amc_test_isolated_v16
           export AMC_MIGRATION_DSN="${AMC_MIGRATION_DSN%/*}/amc_test_isolated_v16"
           export DATABASE_URL="${DATABASE_URL%/*}/amc_test_isolated_v16"
@@ -162,6 +176,7 @@ jobs:
               env=service.get('environment',{})
               assert 'OPENAI_API_KEY' not in env
               assert ('AMC_WORKER_KEY_FILE' in env)==(name=='worker')
+              if name=='worker': assert not {'JWT_SECRET','AMC_DB_PROOF_KEY','AMC_QUOTA_KEY','AMC_SESSION_GENERATION'} & set(env)
               assert any(v.get('target')=='/run/amc-worker-secrets' and v.get('read_only') for v in service.get('volumes',[]))==(name=='worker')"
           trap 'docker compose -p amc-acceptance down' EXIT
           docker compose -p amc-acceptance up -d --build
@@ -176,6 +191,7 @@ jobs:
           docker compose -p amc-acceptance run --rm migrate python migrations/apply.py --publish-registry catalog/research-strategy-v1.json
           docker compose -p amc-acceptance run --rm migrate python migrations/apply.py --publish-registry catalog/research-strategy-v2.json
           docker compose -p amc-acceptance run --rm migrate python migrations/apply.py --publish-registry catalog/landing-seo-v5.json
+          docker compose -p amc-acceptance run --rm migrate python migrations/apply.py --publish-registry catalog/landing-seo-v6.json
           AMC_ONBOARDING_SCREENSHOTS="$RUNNER_TEMP/onboarding" AMC_BROWSER_MAILBOX_PROJECT=amc-acceptance AMC_BROWSER_TEST_URL=http://127.0.0.1:8000 python tests/browser_delivery.py
           AMC_KNOWLEDGE_EVIDENCE="$RUNNER_TEMP/knowledge-workspace" AMC_BROWSER_MAILBOX_PROJECT=amc-acceptance AMC_BROWSER_TEST_URL=http://127.0.0.1:8000 python tests/browser_knowledge.py
           AMC_CLAIM_SCREENSHOTS="$RUNNER_TEMP/knowledge-workspace/claim-desk" AMC_BROWSER_MAILBOX_PROJECT=amc-acceptance AMC_BROWSER_TEST_URL=http://127.0.0.1:8000 python tests/browser_claim_desk.py
@@ -183,7 +199,15 @@ jobs:
           AMC_KNOWLEDGE_EVIDENCE="$RUNNER_TEMP/knowledge-workspace/objectives" AMC_BROWSER_MAILBOX_PROJECT=amc-acceptance AMC_BROWSER_TEST_URL=http://127.0.0.1:8000 python tests/browser_objectives.py
           AMC_C2_ACCEPTANCE_EVIDENCE="$RUNNER_TEMP/knowledge-center-journeys" AMC_BROWSER_MAILBOX_PROJECT=amc-acceptance AMC_BROWSER_TEST_URL=http://127.0.0.1:8000 python tests/browser_knowledge_center.py
           AMC_KNOWLEDGE_EVIDENCE="$RUNNER_TEMP/knowledge-center-journeys/marketing-workflows" AMC_BROWSER_MAILBOX_PROJECT=amc-acceptance AMC_BROWSER_TEST_URL=http://127.0.0.1:8000 python tests/browser_c3.py
+          AMC_KNOWLEDGE_EVIDENCE="$RUNNER_TEMP/knowledge-center-journeys/marketing-tasks" AMC_BROWSER_MAILBOX_PROJECT=amc-acceptance AMC_BROWSER_TEST_URL=http://127.0.0.1:8000 python tests/browser_c3_task.py
           AMC_KNOWLEDGE_EVIDENCE="$RUNNER_TEMP/knowledge-center-journeys" AMC_DEV_MAILBOX_DIR="$RUNNER_TEMP/c3-gate-mail" python -m pytest -q tests/browser_c3_content_gate.py -k sqlite --basetemp="$RUNNER_TEMP/c3-gate-db"
+          AMC_PREMIUM_EVIDENCE="$RUNNER_TEMP/premium-ui" AMC_BROWSER_MAILBOX_PROJECT=amc-acceptance AMC_BROWSER_TEST_URL=http://127.0.0.1:8000 python tests/browser_premium_ui.py
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: premium-ui-${{ matrix.revision }}
+          path: ${{ runner.temp }}/premium-ui
+          if-no-files-found: error
       - uses: actions/upload-artifact@v4
         if: always()
         with:

@@ -1,0 +1,48 @@
+{
+  "revision": "0953285c1c6a70a5c473effb5a69501500e717b5",
+  "synthetic": true,
+  "images": {
+    "desktop-light-overview.png": {
+      "viewport": [
+        1440,
+        900
+      ],
+      "sha256": "3fcd442c61961aea0e8787a842d0bfddef639f623a1ebbd89cb519b96336e8a8"
+    },
+    "desktop-dark-overview.png": {
+      "viewport": [
+        1440,
+        900
+      ],
+      "sha256": "0b2125d86a547853906b9c960840ca5508a5c192103d56e6c1e7ce91447bd1f0"
+    },
+    "tablet-light-overview.png": {
+      "viewport": [
+        820,
+        1180
+      ],
+      "sha256": "2a963afc5a1f51ddd7ef70235193a64cdbbf5032335b6692a5ec07be2381f81c"
+    },
+    "tablet-dark-overview.png": {
+      "viewport": [
+        820,
+        1180
+      ],
+      "sha256": "037b6e4152c397d1ef76d706bf991f2230a521c7bdc86c3715640d46d5e80928"
+    },
+    "mobile-light-overview.png": {
+      "viewport": [
+        390,
+        844
+      ],
+      "sha256": "da92b095d3300ef11486104efe04c1f38f9449d9a1a663963e8531b20342462e"
+    },
+    "mobile-dark-overview.png": {
+      "viewport": [
+        390,
+        844
+      ],
+      "sha256": "3c811a6c2d7b959116c222225090d7ddfc9cc436277378aa2e1dbea444a3da39"
+    }
+  }
+}

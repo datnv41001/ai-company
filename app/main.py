@@ -5,7 +5,7 @@ from contextlib import asynccontextmanager
 from pathlib import Path
 from typing import Any
 
-from fastapi import Depends, FastAPI, HTTPException, Query, Request
+from fastapi import Depends, FastAPI, HTTPException, Query, Request, Response
 from fastapi.exception_handlers import request_validation_exception_handler
 from fastapi.exceptions import RequestValidationError
 from fastapi.responses import FileResponse, JSONResponse
@@ -39,6 +39,8 @@ from .database import APP_ENV, engine, get_db, prepare_database
 from .models import IdentityChallenge, User, Tenant, Membership, Client, Brand, Campaign, WorkTask, Deliverable, ActionRequest, AuditEvent, new_id
 from .schemas import RegisterIn, LoginIn, ClientIn, BrandIn, CampaignIn, AddMemberIn, DeliverableIn, DeliverableReviewIn, ReviewIn, ActionIn, ClientScopeIn
 from .security import DUMMY_HASH, sign_actor, hash_password, check_password, make_token, current_user, require_tenant
+from .device_api import login_cookies, reauthenticate, router as devices_router
+from .session_state import issue as issue_device
 from .services.marketing import WORKFLOW_STEPS
 
 ROOT = Path(__file__).resolve().parent
@@ -55,6 +57,7 @@ async def lifespan(_app: FastAPI):
 
 app = FastAPI(title="AI Marketing Company - Engineering Bootstrap", version="0.1.0", lifespan=lifespan)
 app.include_router(identity_router)
+app.include_router(devices_router)
 app.include_router(delivery_router)
 app.include_router(recipients_router)
 app.include_router(workforce_router)
@@ -159,7 +162,7 @@ def register(payload: RegisterIn, request: Request, db: Session = Depends(get_db
 
 
 @app.post("/api/auth/login")
-def login(payload: LoginIn, request: Request, db: Session = Depends(get_db)):
+def login(payload: LoginIn, request: Request, response: Response, db: Session = Depends(get_db)):
     email = str(payload.email).lower().strip()
     admit(db, request, "login", address=email)
     set_context(db, email=email)
@@ -169,15 +172,19 @@ def login(payload: LoginIn, request: Request, db: Session = Depends(get_db)):
         raise HTTPException(status_code=401, detail="Incorrect email or password")
     set_context(db, actor=user.id)
     sign_actor(db, user.id)
+    device, secret, csrf = issue_device(db,user,user.password_hash,request.headers.get("user-agent",""))
     pending = db.get(IdentityChallenge, user.id) if user.verified_at is None else None
-    return {
-        "access_token": make_token(user),
+    result = {
+        "access_token": make_token(device),
         "token_type": "bearer",
         "user_id": user.id,
         "pending_workspace_id": pending.workspace_id if pending else None,
         "email_verified": user.verified_at is not None,
         "tenants": workspaces(db, user),
     }
+    result["browser_context"] = login_cookies(request,response,device,secret,csrf)
+    db.commit()
+    return result
 
 
 @app.get("/api/me")
@@ -471,7 +478,7 @@ def role_catalog(user: User = Depends(current_user)):
 
 @app.exception_handler(RequestValidationError)
 async def validation_error(request: Request, exc: RequestValidationError):
-    if request.scope.get("endpoint") not in (register, login, verify_email, preview_link, accept_link):
+    if request.scope.get("endpoint") not in (register, login, verify_email, preview_link, accept_link, reauthenticate):
         return await request_validation_exception_handler(request, exc)
     # Validation inputs can contain a password or the entire submitted body.
     errors = [

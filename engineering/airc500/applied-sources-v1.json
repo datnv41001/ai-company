@@ -1,0 +1,42 @@
+{
+  "version": 1,
+  "adapter": "amc-applied-public/1",
+  "sources": [
+    {
+      "id": "SRC-GA",
+      "card": "K-08",
+      "publisher": "Google Analytics Help",
+      "url": "https://support.google.com/analytics/answer/9267735?hl=en",
+      "locator": "For all properties",
+      "match": "generate_lead submits a form or a request for information",
+      "excerpt": "",
+      "rights": "identifier_metadata_only",
+      "reference": "generate_lead",
+      "limitation": "A recommended event definition cannot establish collection, lead quality or revenue for an AMC client."
+    },
+    {
+      "id": "SRC-SC",
+      "card": "K-08",
+      "publisher": "Google Search Central",
+      "url": "https://developers.google.com/search/docs/monitor-debug/google-analytics-search-console",
+      "locator": "Comparing data in Google Analytics and Search Console",
+      "match": "Clicks and sessions are calculated differently",
+      "excerpt": "Clicks and sessions are calculated differently",
+      "rights": "cc_by_4_0_short_attributed_excerpt",
+      "reference": "Clicks and sessions",
+      "limitation": "The definition alone cannot diagnose a property-specific discrepancy or attribute a lead."
+    },
+    {
+      "id": "SRC-PF",
+      "card": "K-06",
+      "publisher": "Google Search Central",
+      "url": "https://developers.google.com/search/docs/fundamentals/creating-helpful-content",
+      "locator": "Content and quality questions",
+      "match": "Does the content provide original information, reporting, research, or analysis?",
+      "excerpt": "Does the content provide original information, reporting, research, or analysis?",
+      "rights": "cc_by_4_0_short_attributed_excerpt",
+      "reference": "Originality self-assessment",
+      "limitation": "An editorial review question cannot establish a ranking, sales result or business claim."
+    }
+  ]
+}

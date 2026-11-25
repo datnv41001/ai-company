@@ -7,6 +7,8 @@
 
 ## 0. Product charter — các nguyên tắc không được thay đổi âm thầm
 
+Dùng tôn chỉ chính thức khi lựa chọn năng lực và nghiệm thu giá trị đối với khách hàng. Các module và workflow trong đặc tả này cung cấp phạm vi để đối chiếu. [Product Mission & Commercial North Star](PRODUCT_MISSION.md)
+
 1. Chỉ phát triển **AI Marketing Company**: phần mềm công ty Marketing vận hành với đội ngũ AI Agent; không xây công ty đa ngành ngoài Marketing. Phục vụ khách hàng ở nhiều ngành.
 2. Phần mềm dùng cho hai chế độ **Agency Mode** (agency cung cấp dịch vụ cho nhiều khách) và **In-house Mode** (phòng Marketing AI của doanh nghiệp). Một bộ máy chuyên môn, hai mô hình quản trị.
 3. Kinh doanh **B2B SaaS multi-tenant**; có thể có Private Deployment/Enterprise và white-label sau đánh giá hợp đồng.

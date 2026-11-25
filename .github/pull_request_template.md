@@ -3,6 +3,9 @@
 - Hành vi trước và sau, vai trò được phép và entry point API/UI:
 - Tệp thực thi, invariant và mục HANDOFF/ADR đã cập nhật:
 
+- Ai đang làm công việc này, AMC đảm nhiệm bước nào và ai sử dụng đầu ra? Với PR hạ tầng hoặc tài liệu, nêu công việc mà thay đổi hỗ trợ.
+- Chất lượng lần đầu, công biên tập/QA, thời gian và chi phí trên bản được chấp nhận đã được đo thế nào so với cách làm hiện tại? Gắn bằng chứng nếu có. Với chỉ tiêu liên quan còn thiếu, ghi “chưa đo” và phép thử tiếp theo. [Chuẩn nghiệm thu giá trị](../docs/PRODUCT_MISSION.md)
+
 ## Kiểm thử và bàn giao
 
 - SHA/nhánh gốc, schema trước/sau:

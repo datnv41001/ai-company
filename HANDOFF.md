@@ -19,6 +19,10 @@ Mốc nền là PR #32 tại `068b85170cf47106c8d08a8c573548e3f530647c`. Từ t�
 
 Dùng Compose và tài khoản tổng hợp theo hướng dẫn Docker bên dưới. Chạy browser test trong job Chromium với `python tests/browser_premium_ui.py` và các biến môi trường của workflow. Kiểm tra cả ảnh, số đo và nguồn API trên cùng SHA. Để rollback riêng giao diện, dùng lại image API đã build ở SHA nền cùng publisher và DB core v22, module doanh nghiệp v3. Thay đổi giao diện này chỉ đọc các endpoint hiện hữu. [Job kiểm thử](.github/workflows/ci.yml)
 
+## Publisher kết hợp C2 và A1
+
+Core v24 kết hợp business module v3 với phiên thiết bị A1. Publisher kiểm tra hai định nghĩa SQL thực tế, quyền thực thi, liên tục quota và các khóa A1 trước khi commit. Hai đường nâng từ C2 v22 và A1 v23 dùng đúng mã đã duyệt và dữ liệu tổng hợp. Khi chuyển máy, làm theo [runbook publisher, kiểm thử và khôi phục](docs/COMBINED-C2-A1.md). Các mục bên dưới lưu hợp đồng lịch sử từng nhánh.
+
 ## C2.5 · Mục tiêu thật cấp công ty và liên kết thương hiệu, chiến dịch
 
 Chạy publisher module `amc_business` v3 trên core v22. Chọn **Mục tiêu chung doanh nghiệp** để lập cùng một mục tiêu cho nhiều thương hiệu của một khách hàng. API và giao diện dùng ID phiên bản, CAS và lịch sử quyết định khi cha được thay thế hoặc thu hồi. [Các bước dùng, nâng cấp và ca chạy lại](docs/business-profile/C2-OBJECTIVES-RUNBOOK.md)
@@ -38,6 +42,11 @@ Nhánh `feature/business-knowledge-catalog` xuất phát từ PR #27. Mở Hồ 
 ## C2 · Hồ sơ chung và brief nội bộ
 
 Increment đầu tiên của C2.1/C2.5 trên C1 `c847f910` cho phép lưu một phần bốn field theo doanh nghiệp, kế thừa/ghi đè/để trống theo thương hiệu và tạo brief cá nhân khi chưa đủ thông tin. Publisher cài `amc_business` v1 bên cạnh core v22. Core 023 dành cho Identity A1. Chạy Compose rồi đối chiếu hai brand, thử lại lệnh sau mất phản hồi và đọc brief sau khi hồ sơ gốc đổi. PostgreSQL native 16.16 và SQLite đã qua năm ca API đầu tiên. Bộ điều phối Marketing và nghiệm thu thương mại giữ gate riêng. [Hợp đồng, quyền, chạy kiểm thử và rollback trên máy mới](docs/business-profile/C2-WORKSPACE-RUNBOOK.md)
+## A1 · Phiên thiết bị, phụ thuộc Business Profile C1
+
+Draft A1 dành migration 023 sau C1 v22. Người dùng có thể xem thiết bị, xác thực lại, refresh và thu hồi phiên. Khi tiếp quản, kiểm tra hai thứ tự commit trên PostgreSQL, diễn tập restore, chuyển riêng ba loại khóa và xác nhận vẫn ký được append C1. Thử nghiệm Keycloak chạy trong lab độc lập. [API, lệnh chạy, rollback và giới hạn](docs/DEVICE-SESSIONS-A1.md)
+
+A1-P1-01 sửa luồng refresh của hai tab. Browser gửi SID đang hiển thị, PostgreSQL đối chiếu trước rotation. Cookie grant theo SID giữ response đến muộn của A tách khỏi phiên B. Khi nâng từ draft cũ hãy đăng nhập lại. Kiểm bằng `tests/test_device_sessions.py` và `tests/browser_device_context.py` trên dữ liệu tổng hợp. [Hợp đồng native, cách chạy và backlog Identity](docs/DEVICE-SESSIONS-A1.md)
 
 ## AIRC · Research Broker công khai và holdout năng lực v4
 

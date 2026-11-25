@@ -56,6 +56,8 @@ def rehearse_archive(dsn, container, version=16):
     knowledge = ("knowledge_revisions", "knowledge_links", "knowledge_events", "knowledge_snapshots", "knowledge_dependencies", "knowledge_commands")
     if version >= 22:
         tables += knowledge + ("amc_acl.knowledge_target_epochs",)
+    if version >= 23:
+        tables += ("device_sessions","used_refresh_grants","amc_acl.session_keys")
 
     def snapshot(conn):
         return [conn.execute(f"SELECT to_jsonb(t) FROM {table} t ORDER BY to_jsonb(t)").fetchall()
@@ -74,13 +76,23 @@ def rehearse_archive(dsn, container, version=16):
             tables += workspace_tables
             assert {r[0] for r in source.execute("SELECT DISTINCT kind FROM business_workspace_records")} == {"company","brand","brief"}
         before = snapshot(source)
-    required = before[-(len(knowledge) + 1 + len(workspace_tables)):] if version == 22 else before
+    if version >= 22:
+        # Older fixtures need only the data introduced at their boundary.
+        # On the combined test database both branches must contain real rows.
+        required = before[len(tables) - len(workspace_tables) - (3 if version >= 23 else 0) - len(knowledge) - 1:]
+    else:
+        required = before
     assert all(required), "Restore rehearsal requires populated fixture tables"
     # Both the archive and restore are inside this disposable CI container.
     target = "amc_test_restore_" + uuid4().hex
     archive = "/tmp/" + target + ".dump"
     command = ["docker", "exec", container]
     subprocess.run([*command, "pg_dump", "-U", owner, "-Fc", "-f", archive, db], check=True)
+    if version >= 23:
+        with psycopg.connect(dsn) as source:
+            saved = source.execute("SELECT id,user_id,epoch,credential_epoch FROM device_sessions WHERE NOT revoked ORDER BY created DESC LIMIT 1").fetchone()
+            assert saved, "restore test requires an active synthetic device"
+            source.execute("UPDATE device_sessions SET revoked=true,epoch=epoch+1 WHERE id=%s",(saved[0],))
     subprocess.run([*command, "createdb", "-U", owner, target], check=True)
     subprocess.run([*command, "pg_restore", "-U", owner, "--single-transaction", "--exit-on-error", "-d", target, archive], check=True)
     with psycopg.connect(make_conninfo(dsn, dbname=target)) as restored:
@@ -116,11 +128,39 @@ def rehearse_archive(dsn, container, version=16):
                     runtime.dispose()
             before_authority=current_claims(db)
             assert any(before_authority) and current_claims(target)==before_authority
+        if version >= 23:
+            import secrets
+            from migrations.apply import maintain_identity
+            fresh = secrets.token_hex(32)
+            maintain_identity(restored,"restore-fence",fresh)
+            assert restored.execute("SELECT revoked,epoch FROM device_sessions WHERE id=%s",(saved[0],)).fetchone()==(True,saved[2]+1)
+            assert restored.execute("SELECT count(*) FROM used_refresh_grants").fetchone()==(0,)
+    if version >= 23:
+        from app.access import set_context
+        from app.security import sign_actor
+        from app.session_state import active
+        from fastapi import HTTPException
+        from sqlalchemy.engine import make_url
+        from sqlalchemy.orm import Session
+        from unittest.mock import patch
+        bound=create_engine(make_url(os.environ["DATABASE_URL"]).set(database=target))
+        with Session(bound) as session:
+            set_context(session,actor=saved[1])
+            sign_actor(session,saved[1])
+            with pytest.raises(HTTPException) as stale_worker:
+                active(session,saved[1],saved[0],saved[2],saved[3])
+            assert stale_worker.value.status_code==503
+            with patch.dict(os.environ,{"AMC_SESSION_GENERATION":fresh}), pytest.raises(HTTPException) as retired:
+                active(session,saved[1],saved[0],saved[2],saved[3])
+            assert retired.value.status_code==401
+        bound.dispose()
+        print("PASS restored pre-revocation backup denies stale worker and previously active device")
     print(f"PASS: pg_dump/pg_restore v{version} into a separate database; identical rows in {len(tables)} tables")
 
 
 def verify():
-    from_v21 = "--from-v21" in sys.argv
+    from_v22 = "--from-v22" in sys.argv
+    from_v21 = "--from-v21" in sys.argv or from_v22
     from_v20 = "--from-v20" in sys.argv or from_v21
     from_v19 = "--from-v19" in sys.argv or from_v20
     from_v18 = "--from-v18" in sys.argv or from_v19
@@ -351,7 +391,12 @@ def verify():
                     print("RED v21: knowledge tables absent; populated identity admission windows")
             if os.getenv("AMC_UPGRADE_BACKUP_CONTAINER"):
                 rehearse_archive(dsn, os.environ["AMC_UPGRADE_BACKUP_CONTAINER"], 21 if from_v21 else 20 if from_v20 else 19 if from_v19 else 18)
-        prior_version = 21 if from_v21 else 20 if from_v20 else 19 if from_v19 else 18 if from_v18 else 17 if from_v17 else 16
+        if from_v22:
+            migrate_historical_fixture("d367edb9cc05c9c4699c4ba34a418445fa98e8e0")
+            with psycopg.connect(dsn) as owner:
+                owner.execute("INSERT INTO amc_acl.knowledge_target_epochs VALUES ('campaign','session-upgrade-fixture',7)")
+                assert owner.execute("SELECT to_regclass('public.device_sessions')").fetchone()==(None,)
+        prior_version = 22 if from_v22 else 21 if from_v21 else 20 if from_v20 else 19 if from_v19 else 18 if from_v18 else 17 if from_v17 else 16
         # Fail at the next genuine marker and verify atomic rollback.
         with psycopg.connect(dsn) as owner:
             owner.execute(f"alter table upgrade_marker_probe add constraint synthetic_failure check (version <= {prior_version})")
@@ -374,10 +419,12 @@ def verify():
     if from_v21:
         with psycopg.connect(dsn) as observer:
             assert tenant_state_before_c1(observer) == existing_v21
+            if from_v22:
+                assert observer.execute("SELECT epoch FROM amc_acl.knowledge_target_epochs WHERE id='session-upgrade-fixture'").fetchone()==(7,)
             print("GREEN v22: existing deliverables, reviews, runs, attempts, ledger, releases and quotas preserved")
             # Early v22 installations have the same marker but lack the scoped decision.
             observer.execute("DROP FUNCTION amc_acl.knowledge_commercial_conflict(text,text,text,text,text,timestamptz)")
-        with pytest.raises(RuntimeError, match="Rerun the v22 migration publisher"):
+        with pytest.raises(RuntimeError, match="Rerun the combined migration publisher"):
             prepare_database(runtime)
         migrate(dsn)
         migrate(dsn)
@@ -387,7 +434,7 @@ def verify():
             original_oid = observer.execute("SELECT to_regprocedure(%s)::oid", (SIGNATURE,)).fetchone()[0]
             # The next v22 build had a callable of the same name but an older predicate.
             observer.execute(f"COMMENT ON FUNCTION {SIGNATURE} IS NULL")
-        with pytest.raises(RuntimeError, match="Rerun the v22 migration publisher"):
+        with pytest.raises(RuntimeError, match="Rerun the combined migration publisher"):
             prepare_database(runtime)
         migrate(dsn)
         migrate(dsn)
@@ -419,7 +466,7 @@ def verify():
     with runtime.connect() as c:
         if from_v14:
             with psycopg.connect(dsn) as owner:
-                assert owner.execute("select version from upgrade_marker_probe order by seq").fetchall() == [(v,) for v in range(16 if from_v15 else 15, 23)]
+                assert owner.execute("select version from upgrade_marker_probe order by seq").fetchall() == [(v,) for v in range(16 if from_v15 else 15, 25)]
                 if from_v16:
                     assert owner.execute("select state,role,client_id,can_comment,can_decide from portal_invitations where id='legacy-invite'").fetchone() == ("pending","client_viewer","a",True,False)
                     assert owner.execute("select brand_name,campaign_name from portal_invitations where id='legacy-invite'").fetchone() == ("Brand","Name")
@@ -442,7 +489,7 @@ def verify():
             owner.execute("UPDATE memberships SET role='client_viewer',client_id='a' WHERE user_id='alice'")
         identify()
         assert set(c.scalars(text("SELECT id FROM clients"))) == {"a"}
-        assert set(c.scalars(text("SELECT version FROM amc_schema_versions"))) == set(range(2,23))
+        assert set(c.scalars(text("SELECT version FROM amc_schema_versions"))) == set(range(2,25))
         if "--from-v2" in sys.argv or from_v3:
             c.rollback()
             c.execute(text("SELECT set_config('amc.user_id','external',true),set_config('amc.tenant_id','agency',true)"))
@@ -484,7 +531,7 @@ def verify():
                 assert owner.execute("SELECT title FROM deliverables WHERE id='doc'").fetchone() == ("Internal",)
     runtime.dispose()
     baseline = "v13" if from_v13 else "v12" if from_v12 else "v11" if from_v11 else "v10" if from_v10 else "v9" if from_v9 else "v8" if from_v8 else "v7" if from_v7 else "v6" if from_v6 else "v5" if from_v5 else "v4" if from_v4 else "v3" if from_v3 else "v2" if "--from-v2" in sys.argv else "v1"
-    print(f"PASS: populated {'v21' if from_v21 else 'v20' if from_v20 else 'v19' if from_v19 else 'v18' if from_v18 else 'v17' if from_v17 else 'v16' if from_v16 else 'v15' if from_v15 else 'v14' if from_v14 else baseline} to v22, repeated migration, privileged API login refused, client isolated")
+    print(f"PASS: populated {'v22' if from_v22 else 'v21' if from_v21 else 'v20' if from_v20 else 'v19' if from_v19 else 'v18' if from_v18 else 'v17' if from_v17 else 'v16' if from_v16 else 'v15' if from_v15 else 'v14' if from_v14 else baseline} to v24, repeated migration, privileged API login refused, client isolated")
 
 
 if __name__ == "__main__":

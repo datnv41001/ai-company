@@ -83,7 +83,7 @@ def verify():
     with psycopg.connect(dsn) as db:
         assert db.execute(CURRENT).fetchone()==(True,)
         assert db.execute("SELECT version FROM amc_business.versions ORDER BY version").fetchall() == [(1,), (2,), (3,)]
-        assert db.execute("SELECT version FROM amc_schema_versions ORDER BY version").fetchall() == core
+        assert db.execute("SELECT version FROM amc_schema_versions ORDER BY version").fetchall() == core + [(23,), (24,)]
         assert db.execute("SELECT to_jsonb(k) FROM knowledge_revisions k ORDER BY id").fetchall() == before
         assert db.execute("SELECT count(*) FROM business_company_objectives").fetchone()==(0,)
         assert db.execute("SELECT to_jsonb(w) FROM business_workspace_records w").fetchall() == workspace_before
@@ -93,7 +93,7 @@ def verify():
     with pytest.raises(RuntimeError, match="compatible business workspace"):
         prepare_database(engine)
     engine.dispose()
-    print("PASS core v22, workspace v1 and catalog v2 to workspace v3. Repeated publication preserved legacy objectives, company profile and core markers.")
+    print("PASS core v22, workspace v1 and catalog v2 to workspace v3. Repeated publication preserved legacy objectives, company profile and existing core markers through v22. Combined v24 is current.")
 
 
 if __name__ == "__main__":

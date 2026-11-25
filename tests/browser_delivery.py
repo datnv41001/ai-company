@@ -9,6 +9,7 @@ from uuid import uuid4
 
 from screen_navigation import screen, select_workspace, switch_account
 from browser_stale_invitation import exercise_stale
+from browser_device_context import exercise_device_context
 from identity_fixtures import start_registration, capture, verify_registration, invite_member
 import httpx
 from playwright.sync_api import expect, sync_playwright
@@ -75,6 +76,7 @@ def exercise():
         browser = pw.chromium.launch(executable_path=os.getenv("AMC_BROWSER_EXECUTABLE") or None)
         try:
             for width, height in [(1280, 850), (390, 844)]:
+                exercise_device_context(browser, origin, {"width":width, "height":height})
                 exercise_stale(browser, origin, {"width":width, "height":height}, user, token, tenant, client, brand, camp)
                 print(f"PASS stale screen, replacement scope and pre-existing workspace at {width}px")
                 onboarding = browser.new_page(viewport={"width": width, "height": height})

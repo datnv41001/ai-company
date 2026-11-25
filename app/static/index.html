@@ -56,12 +56,20 @@
         <div id="account-menu" class="tool-popover" popover>
           <h3>Tài khoản</h3><p id="who">Chưa đăng nhập</p>
           <label for="theme-mode">Giao diện<select id="theme-mode"><option value="system">Theo hệ thống</option><option value="light">Sáng</option><option value="dark">Tối</option></select></label>
+      <details id="device-panel" class="panel hidden">
+        <summary>Phiên đăng nhập trên thiết bị</summary>
+        <ul id="device-list"></ul>
+        <form id="device-reauth"><label>Xác thực lại để thu hồi phiên khác
+          <input name="password" type="password" autocomplete="current-password" required maxlength="128"></label>
+          <button type="submit">Xác thực mật khẩu</button></form>
+      </details>
           <button type="button" id="switch-account" class="secondary hidden">Đổi tài khoản</button>
         </div>
       </header>
       <div id="notice" role="status"></div>
       <p id="link-hint" class="panel hidden">Đăng nhập hoặc tạo tài khoản bằng email nhận lời mời.</p>
       <button type="button" id="leave-invite" class="secondary hidden">Vào tài khoản của tôi</button>
+      <button type="button" id="leave-tab" class="secondary hidden">Về đăng nhập trên tab này</button>
       <section id="auth" class="section-panel">
         <div class="section-head"><div><h3>Tài khoản AMC</h3></div></div>
         <div class="auth-grid">

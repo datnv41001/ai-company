@@ -403,7 +403,10 @@ def exercise(api, browser, size, code):
             enter_item(pane, "icp", {"name": audience, "description": "Giả thuyết của nhóm Marketing", "basis": "hypothesis", "needs": "Học linh hoạt"})
             icp = catalog_record(api, base, owner, "icp", label=audience)
             expect(pane).to_contain_text("Chưa liên kết chứng cứ.")
-            enter_item(pane, "objective", {"name": objective, "owner": "Trưởng nhóm Marketing", "level": "brand"})
+            company_goal = "Phát triển số người học"
+            enter_item(pane, "objective", {"name": company_goal, "owner": "Giám đốc", "level": "company"})
+            parent = catalog_record(api, base, owner, "objective", label=company_goal)
+            enter_item(pane, "objective", {"name": objective, "owner": "Trưởng nhóm Marketing", "level": "brand", "parent": parent["id"]})
             goal = catalog_record(api, base, owner, "objective", label=objective)
             enter_item(
                 pane,

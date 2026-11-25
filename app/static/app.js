@@ -83,9 +83,10 @@
   const process = (form, handler) => form.addEventListener('submit', async event => { event.preventDefault(); try { await handler(fromForm(form)); } catch (e) { msg(e.message, true); } });
   const enter = async (token, membership, email='') => {
     const tenantId = membership.tenant_id;
-    workspaceGeneration++;
+    const entry = ++workspaceGeneration;
     overviewRequest++;
     command.clear();
+    $('workspace').dataset.loading='true';
     document.body.dataset.access = membership.role === 'client_viewer' ? 'portal' : 'staff';
     document.body.dataset.role = membership.role;
     knowledge.reset();
@@ -104,7 +105,10 @@
     $('who').textContent = email || `Tenant ${tenantId.slice(0,8)}`;
     $('auth').classList.add('hidden'); $('workspace').classList.remove('hidden');
     msg('');
-    await refresh();
+    try { await refresh(); }
+    finally {
+      if (entry===workspaceGeneration) delete $('workspace').dataset.loading;
+    }
   };
   const session = async (result, email) => {
     clearWorkspacePresentation();
@@ -241,6 +245,7 @@
     $('operations-values').replaceChildren();
     $('operations-month').textContent='';
     $('workspace').classList.add('hidden');
+    delete $('workspace').dataset.loading;
     $('workspace-choice').classList.add('hidden');
   }
   function authLost() {

@@ -96,6 +96,15 @@ body[data-access] .guest-nav,body[data-role=viewer] .settings-nav{display:none}
 #switch-account{margin:0;padding:4px 8px;min-height:38px;color:var(--muted);border:0;background:transparent;text-decoration:underline;text-underline-offset:3px;font-size:.78rem}
 #verify-form,#onboarding{margin:24px 0}.section-head h3{margin:0}
 #command-center{margin:0 0 38px}
+#workspace-loading{display:none}
+#workspace[data-loading]{min-height:calc(100svh - 76px)}
+#workspace[data-loading] > :not(#workspace-loading){display:none!important}
+#workspace[data-loading] > #workspace-loading{display:block;padding-block:clamp(12px,3vw,34px)}
+#workspace-loading p{color:var(--muted);font-weight:600;margin:0 0 19px}
+.loading-outline{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
+.loading-outline i,.loading-outline b{display:block;border-radius:var(--radius);border:1px solid var(--border);background:var(--layer)}
+.loading-outline i{height:84px}.loading-outline b{grid-column:1/-1;height:clamp(220px,26vh,320px)}
+@media(max-width:630px){.loading-outline{grid-template-columns:repeat(2,minmax(0,1fr))}.loading-outline i{height:60px}}
 .command-heading{display:flex;gap:16px;align-items:flex-end;justify-content:space-between;margin:0 0 18px}
 .command-heading h2{margin:.1em 0 .13em;font-size:clamp(1.9rem,3.7vw,3.4rem);font-weight:650;line-height:1.12;letter-spacing:-.056em}
 .command-heading p{margin:0;color:var(--muted);font-size:.88rem}

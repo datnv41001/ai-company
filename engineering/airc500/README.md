@@ -1,5 +1,8 @@
 # AIRC-500 · Đề xuất hội đồng kiểm định độc lập của AMC
 
+[Hợp nhất deterministic-first, nguồn công khai và ba trạng thái · nghiên cứu v3](UNION-STUDY.md) · [Kết quả đo trên ba checkpoint](evidence/union-v3/REPORT.md).
+
+
 **Nghiên cứu kế tiếp sau pilot #17.** [So sánh năm cấu hình và từng vòng phản biện](QUALITY-EVALUATION.md) · [Runtime, admission và tiến trình vật lý](RUNTIME-HARDENING.md).
 
 **Trạng thái ngày 24/11/2026:** đã chạy pilot Qwen cục bộ trên dữ liệu Marketing tổng hợp, đang chờ phản biện nội bộ. Mốc đối chiếu AMC là `ece8ecc84b4938900821ff85403bb5b8243534c6`, schema sản phẩm v18. Commercial GA giữ quyết định **NO-GO** theo [release gates](../../docs/SECURITY_AND_GA_BLOCKERS.md). PR #16 tiếp tục theo phạm vi riêng.

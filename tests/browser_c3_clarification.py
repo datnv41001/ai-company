@@ -100,7 +100,9 @@ def exercise(api, browser, origin, out, width, height):
             panel.get_by_role("button", name=re.compile("dùng giá đã duyệt")).click()
         assert ready.value.json()["status"] == "ready"
         selection = ready.value.request.post_data_json
-        assert selection["claims"] == [replacement if value == issue["claim"] else value for value in selected["claims"]]
+        expected_claims = [replacement if value == issue["claim"] else value for value in selected["claims"]]
+        # The manifest assigns evidence handles in sorted revision-ID order.
+        assert sorted(selection["claims"]) == sorted(expected_claims)
         snap = api.post(setup["marketing"] + "/manifests", headers=owner["headers"], json=selection)
         assert snap.status_code in (200, 201), snap.text
         expect(panel.locator(f"input[value='{replacement}']")).to_be_checked()

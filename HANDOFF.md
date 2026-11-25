@@ -1,5 +1,9 @@
 # Bắt đầu ở đây khi tiếp quản AI Marketing Company
 
+## C3 · Marketing từ tri thức đã duyệt
+
+Hai release WF-03 @2 và WF-13 @5 dùng brief C2 đã ghim, kiểm tra lại căn cứ tại queue, QA và chia sẻ. [Thiết lập, chọn nguồn, chạy worker, kiểm thử và rollback](docs/business-profile/C3-MARKETING-RUNBOOK.md).
+
 ## C2.5 · Mục tiêu thật cấp công ty và liên kết thương hiệu, chiến dịch
 
 Chạy publisher module `amc_business` v3 trên core v22. Chọn **Mục tiêu chung doanh nghiệp** để lập cùng một mục tiêu cho nhiều thương hiệu của một khách hàng. API và giao diện dùng ID phiên bản, CAS và lịch sử quyết định khi cha được thay thế hoặc thu hồi. [Các bước dùng, nâng cấp và ca chạy lại](docs/business-profile/C2-OBJECTIVES-RUNBOOK.md)

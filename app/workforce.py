@@ -196,7 +196,7 @@ def start(tenant_id: str, bid: str, body: Start, user: User = Depends(current_us
             store, snap, public = c3_boundaries.checked(db, user, b, body.knowledge_manifest.model_dump(), body.registry_workflow, "queue")
             facts = {fact["id"]: {"label": fact["id"], "excerpt": c3_marketing.fact_line(fact)} for fact in public["facts"]}
             knowledge = {"title": public["product"], "objective":public["objective"], "audience":public["audience"],
-                         "offer":public["product"], "brand_rules":"", "sources":facts, "prompt_version":"amc.marketing-manifest/1",
+                         "offer":public["product"], "brand_rules":"", "sources":facts, "prompt_version":PROMPT_VERSION,
                          "c3_manifest":body.knowledge_manifest.model_dump(), "c3_projection":public}
         binding = pin(db, b, body.registry_workflow)
         manifest = db.scalar(text("select manifest from amc_ops.registry_releases where workflow=:w and digest=:d"),

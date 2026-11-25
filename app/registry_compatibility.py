@@ -53,7 +53,7 @@ def check_workflow(manifest):
                 "research-strategy": ("WF-03/research-strategy-draft", ["research","strategy"], ["strategy"])}
     workflow = f"{manifest['workflow_id']}@{manifest['workflow_version']}"
     backed = workflow in c3_marketing.ROLES
-    if (manifest.get("knowledge_projection") == "amc.marketing-manifest/1") != backed or profile not in profiles:
+    if manifest.get("knowledge_projection") != ("amc.marketing-manifest/1" if backed else None) or profile not in profiles:
         raise ValueError("Unknown executable workflow profile")
     identity, stages, outputs = profiles[profile]
     if (
@@ -68,6 +68,8 @@ def check_workflow(manifest):
         raise ValueError("Unsupported workflow contract")
 
     for skill, contract in contracts.items():
+        if not backed and skill in c3_marketing.VERSIONS and contract["adapter"] == f"{skill}@{c3_marketing.VERSIONS[skill]}":
+            raise ValueError("Knowledge-backed adapter requires a scoped projection release")
         if backed and (skill not in required or contract["adapter"] != f"{skill}@{c3_marketing.VERSIONS[skill]}"):
             raise ValueError("Unsupported knowledge projection adapter")
         if not backed and profile == "research-strategy" and (skill not in required or contract["adapter"] != skill+"@2"):

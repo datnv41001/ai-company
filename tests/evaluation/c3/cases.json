@@ -1,0 +1,176 @@
+{
+  "version": 1,
+  "synthetic": true,
+  "cases": [
+    {
+      "id": "seller",
+      "company": "Cửa hàng Mưa Nhẹ",
+      "brand": "Mưa Nhẹ",
+      "product": "Áo mưa xe đạp MN-L, màu xanh cỡ L",
+      "audience": "người đi xe đạp đi làm",
+      "objective": "Tăng đơn đặt áo mưa cỡ L tại TP.HCM",
+      "kpi": "đơn hàng MN-L đã thanh toán trong 28 ngày",
+      "region": "TP.HCM",
+      "market": "Việt Nam",
+      "locale": "vi-VN",
+      "channel": "trang sản phẩm",
+      "sku": "MN-L",
+      "cta": "đặt áo MN-L",
+      "facts": [
+        {
+          "id": "product-card",
+          "wording": "Áo mưa MN-L có dải phản quang sau lưng.",
+          "qualifiers": "Chỉ áp dụng màu xanh cỡ L."
+        },
+        {
+          "id": "commercial-sheet",
+          "wording": "Giá 245.000 VND/chiếc khi nhận tại cửa hàng.",
+          "qualifiers": "Nhận tại cửa hàng Quận 3, chưa gồm phí giao."
+        }
+      ],
+      "hypotheses": [
+        "Việc mô tả khả năng quan sát ban đêm có thể giúp người đi làm chọn cỡ."
+      ],
+      "gaps": [
+        "Chưa đo độ chống nước theo tiêu chuẩn độc lập."
+      ],
+      "unsupported_example": "chống nước 100%"
+    },
+    {
+      "id": "materials",
+      "company": "Vật liệu Gốm Bắc",
+      "brand": "Gốm Bắc",
+      "product": "Gạch lát nền GB-6060 nhám 60×60 cm",
+      "audience": "nhà thầu hoàn thiện căn hộ tại Hà Nội",
+      "objective": "Tăng khách hàng yêu cầu báo giá gạch ốp lát tại Hà Nội",
+      "kpi": "yêu cầu báo giá hợp lệ có diện tích và quận trong 30 ngày",
+      "region": "Hà Nội",
+      "market": "Việt Nam",
+      "locale": "vi-VN",
+      "channel": "trang yêu cầu báo giá",
+      "sku": "GB-6060",
+      "cta": "gửi diện tích cần báo giá",
+      "facts": [
+        {
+          "id": "product-card",
+          "wording": "Gạch GB-6060 đóng 1,44 m² mỗi thùng.",
+          "qualifiers": "Chỉ dòng nhám 60×60 cm."
+        },
+        {
+          "id": "commercial-sheet",
+          "wording": "Giá tham khảo 210.000 VND/m² cho đơn từ 50 m².",
+          "qualifiers": "Tại Hà Nội, chưa gồm vận chuyển và thi công."
+        }
+      ],
+      "hypotheses": [
+        "Nhà thầu có thể ưu tiên tính nhanh số thùng và chi phí giao."
+      ],
+      "gaps": [
+        "Chưa có chứng nhận chống trượt hoặc số liệu thị phần."
+      ],
+      "unsupported_example": "chống trượt tuyệt đối"
+    },
+    {
+      "id": "service",
+      "company": "Chăm nhà An Nhiên",
+      "brand": "An Nhiên",
+      "product": "Dịch vụ vệ sinh máy lạnh AN-1",
+      "audience": "hộ gia đình tại Hải Châu",
+      "objective": "Tăng lịch khảo sát máy lạnh đã xác nhận tại Đà Nẵng",
+      "kpi": "lịch khảo sát có xác nhận trong 14 ngày",
+      "region": "Đà Nẵng",
+      "market": "Việt Nam",
+      "locale": "vi-VN",
+      "channel": "trang đặt lịch",
+      "sku": "AN-1",
+      "cta": "chọn khung giờ khảo sát",
+      "facts": [
+        {
+          "id": "product-card",
+          "wording": "Gói AN-1 dành cho máy treo tường một dàn lạnh.",
+          "qualifiers": "Chỉ phục vụ Hải Châu theo lịch hẹn."
+        },
+        {
+          "id": "commercial-sheet",
+          "wording": "Phí vệ sinh 180.000 VND/máy.",
+          "qualifiers": "Chưa gồm linh kiện hoặc nạp gas."
+        }
+      ],
+      "hypotheses": [
+        "Hộ có trẻ nhỏ có thể ưu tiên chọn giờ sau giờ làm."
+      ],
+      "gaps": [
+        "Chưa đo hiệu quả tiết kiệm điện sau vệ sinh."
+      ],
+      "unsupported_example": "tiết kiệm 30% điện"
+    },
+    {
+      "id": "agency",
+      "company": "Khách hàng Sổ Mộc",
+      "brand": "Sổ Mộc",
+      "product": "Sổ tay SM-A5 giấy chấm 120 trang",
+      "audience": "nhà sách và cửa hàng văn phòng phẩm",
+      "objective": "Tìm đối tác bán lẻ sổ giấy chấm tại Huế",
+      "kpi": "yêu cầu mẫu từ nhà bán lẻ có mã cửa hàng trong 30 ngày",
+      "region": "Huế",
+      "market": "Việt Nam",
+      "locale": "vi-VN",
+      "channel": "trang đăng ký mẫu",
+      "sku": "SM-A5",
+      "cta": "đăng ký nhận mẫu",
+      "facts": [
+        {
+          "id": "product-card",
+          "wording": "Sổ SM-A5 có 120 trang giấy chấm.",
+          "qualifiers": "Chỉ mẫu bìa kraft khổ A5."
+        },
+        {
+          "id": "commercial-sheet",
+          "wording": "Đơn sỉ tối thiểu 24 cuốn.",
+          "qualifiers": "Giá theo báo giá từng đơn, chưa gồm in logo."
+        }
+      ],
+      "hypotheses": [
+        "Bộ mẫu có thể giúp nhà sách đánh giá bề mặt giấy trước khi nhập."
+      ],
+      "gaps": [
+        "Chưa có phép thử chống xuyên mực."
+      ],
+      "unsupported_example": "không xuyên mực"
+    },
+    {
+      "id": "inhouse",
+      "company": "Đội Marketing Nắng",
+      "brand": "Nắng Lab",
+      "product": "Workshop NS-02 thiết kế portfolio",
+      "audience": "sinh viên năm đầu tại Cần Thơ",
+      "objective": "Tăng đăng ký qua email cho buổi workshop portfolio",
+      "kpi": "đăng ký email xác nhận hai bước trong 21 ngày",
+      "region": "Cần Thơ",
+      "market": "Việt Nam",
+      "locale": "vi-VN",
+      "channel": "trang đăng ký workshop",
+      "sku": "NS-02",
+      "cta": "đăng ký buổi thực hành",
+      "facts": [
+        {
+          "id": "product-card",
+          "wording": "Buổi NS-02 có 90 phút thực hành portfolio.",
+          "qualifiers": "Chỉ lớp trực tiếp tại Cần Thơ, dạy bằng tiếng Việt."
+        },
+        {
+          "id": "commercial-sheet",
+          "wording": "Học phí 120.000 VND/người.",
+          "qualifiers": "Ưu đãi sinh viên cần xuất trình thẻ; chưa gồm phần mềm."
+        }
+      ],
+      "hypotheses": [
+        "Ví dụ portfolio mẫu có thể giảm sự e ngại khi mới bắt đầu."
+      ],
+      "gaps": [
+        "Chưa theo dõi việc làm hoặc thu nhập sau khóa."
+      ],
+      "unsupported_example": "cam kết việc làm"
+    }
+  ]
+}

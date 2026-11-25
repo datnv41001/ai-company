@@ -42,7 +42,7 @@ jobs:
           export AMC_TEST_PG=1 PYTHONPATH=.
           python migrations/apply.py
           AMC_WF03_HOLD_EVIDENCE="$RUNNER_TEMP/wf03-holds" python -m pytest -q -rs --junitxml="$RUNNER_TEMP/api-regression.xml"
-          python -c 'import os, sys; sys.path.insert(0, "tests"); from check_postgres_upgrade import rehearse_archive; rehearse_archive(os.environ["AMC_MIGRATION_DSN"], "amc-test-pg", 24)'
+          python -c 'import os, sys; sys.path.insert(0, "tests"); from check_postgres_upgrade import rehearse_archive; rehearse_archive(os.environ["AMC_MIGRATION_DSN"], "amc-test-pg", 25)'
           docker exec amc-test-pg createdb -U postgres amc_test_upgrade
           export AMC_MIGRATION_DSN="${AMC_MIGRATION_DSN%/*}/amc_test_upgrade"
           export DATABASE_URL="${DATABASE_URL%/*}/amc_test_upgrade"
@@ -139,6 +139,17 @@ jobs:
             export DATABASE_URL="${DATABASE_URL%/*}/$database"
             python tests/check_combined_upgrade.py "$prior"
           done
+          for phase in observation qualification; do
+            database="amc_test_c3_cutover_$phase"
+            docker exec amc-test-pg createdb -U postgres "$database"
+            export AMC_MIGRATION_DSN="${AMC_MIGRATION_DSN%/*}/$database"
+            export DATABASE_URL="${DATABASE_URL%/*}/$database"
+            python tests/check_c3_cutover.py "$phase"
+          done
+          docker exec amc-test-pg createdb -U postgres amc_test_studio_cutover
+          export AMC_MIGRATION_DSN="${AMC_MIGRATION_DSN%/*}/amc_test_studio_cutover"
+          export DATABASE_URL="${DATABASE_URL%/*}/amc_test_studio_cutover"
+          python tests/check_studio_cutover.py
           docker exec amc-test-pg createdb -U postgres amc_test_populated_v22
           export AMC_MIGRATION_DSN="${AMC_MIGRATION_DSN%/*}/amc_test_populated_v22"
           export DATABASE_URL="${DATABASE_URL%/*}/amc_test_populated_v22"

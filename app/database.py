@@ -109,7 +109,7 @@ def prepare_database(bind, *, verify_identity=True):
         versions = set(conn.scalars(text("SELECT version FROM public.amc_schema_versions")))
         if 16 in versions and 15 not in versions:
             raise RuntimeError("Isolated schema v16 is missing migration 015; restore a pre-016 backup before upgrading")
-        if versions != set(range(2, 25)):
+        if versions != set(range(2, 26)):
             raise RuntimeError("Apply the PostgreSQL schema migrations before starting the API")
         from migrations.combined_contract import COMMERCIAL_CURRENT, DESK_CURRENT
         if not conn.scalar(text(COMMERCIAL_CURRENT)):
@@ -118,8 +118,9 @@ def prepare_database(bind, *, verify_identity=True):
             raise RuntimeError("Apply the compatible business workspace migration")
         if not conn.scalar(text(DESK_CURRENT)):
             raise RuntimeError("Apply the current claim desk read capability")
-        # The approved combined publisher and the task-aware publisher both use core v24.
-        # Check the actual task capability before ORM queries begin selecting the origin column.
+        from migrations.c3_writer_contract import WRITER_FENCE
+        if not conn.scalar(text(WRITER_FENCE)):
+            raise RuntimeError("Apply the compatible C3 delivery writer fence")
         if not conn.scalar(text("""
             SELECT EXISTS (SELECT FROM pg_attribute WHERE attrelid='public.workforce_briefs'::regclass
                             AND attname='origin' AND NOT attisdropped)

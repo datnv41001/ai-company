@@ -91,8 +91,16 @@ def remaining(deadline):
 
 
 def get_page(source_id, deadline):
-    spec = BY_ID[source_id]
-    url = urlsplit(spec["url"])
+    return _fetch_reviewed(BY_ID[source_id]["url"], deadline)
+
+
+class PublisherRestriction(ValueError):
+    """The reviewed publisher has restricted reuse of this representation."""
+
+
+def _fetch_reviewed(destination, deadline, *, media_type="text/html", byte_limit=MAX_BYTES, check_directives=False):
+    """Internal transport. Callers choose destinations exclusively from their reviewed enrollment."""
+    url = urlsplit(destination)
     if url.scheme != "https" or url.port or url.username or url.password or url.fragment:
         raise ValueError("Invalid reviewed destination")
     family, socktype, proto, _, address = resolve_public(url.hostname, deadline)
@@ -122,21 +130,25 @@ def get_page(source_id, deadline):
             conn.request(
                 "GET",
                 url.path + ("?" + url.query if url.query else ""),
-                headers={"Accept": "text/html", "Accept-Encoding": "identity", "User-Agent": "AMC-PublicResearch/1.0"},
+                headers={"Accept": media_type, "Accept-Encoding": "identity", "User-Agent": "AMC-PublicResearch/1.0"},
             )
             reply = conn.getresponse()
-            if reply.status != 200 or reply.headers.get_content_type() != "text/html" or reply.getheader("Content-Encoding", "identity") != "identity":
+            if reply.status != 200 or reply.headers.get_content_type() != media_type or reply.getheader("Content-Encoding", "identity") != "identity":
                 raise ValueError(f"Unexpected response status, type or encoding ({reply.status})")
+            if check_directives:
+                for directive in reply.headers.get_all("X-Robots-Tag", []):
+                    if directive.strip().lower() not in {"all", "index", "follow", "index, follow"}:
+                        raise PublisherRestriction("Publisher restricts indexing or reuse")
             # read1 returns after one underlying read and lets slow senders hit the total deadline.
             declared = reply.getheader("Content-Length")
-            if declared is not None and (not declared.isdecimal() or int(declared) > MAX_BYTES):
+            if declared is not None and (not declared.isdecimal() or int(declared) > byte_limit):
                 raise ValueError("Invalid or excessive declared length")
             data = bytearray()
-            while len(data) <= MAX_BYTES:
+            while len(data) <= byte_limit:
                 if conn.sock:
                     conn.sock.settimeout(remaining(deadline))
                 remaining(deadline)
-                part = reply.read1(min(65536, MAX_BYTES + 1 - len(data)))
+                part = reply.read1(min(65536, byte_limit + 1 - len(data)))
                 if not part:
                     if declared is not None and len(data) != int(declared):
                         raise ValueError("Incomplete public page")

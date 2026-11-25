@@ -1,5 +1,9 @@
 # Bắt đầu ở đây khi tiếp quản AI Marketing Company
 
+## Nghiên cứu ứng dụng cho AMC và AIRC
+
+Bắt đầu từ [sổ nguồn](docs/research/SOURCE_REGISTRY.md), mở [thẻ kiến thức](docs/research/KNOWLEDGE_CARDS.md), [đối chiếu với mã hiện hành](docs/research/APPLICABILITY_MATRIX.md) rồi chọn [cải tiến có tiêu chí nghiệm thu](docs/research/PRODUCT_OPPORTUNITIES.md). Đọc [các giả thuyết đã hoãn hoặc bác bỏ](docs/research/REJECTED_HYPOTHESES.md) trước khi lặp lại nghiên cứu. Công cụ engineering chạy độc lập ở [runbook Research Broker](engineering/airc500/APPLIED-RESEARCH.md). Receipt lần đầu có hai nguồn quan sát được và một nguồn bị publisher hạn chế. Có thể replay ngoại tuyến bằng mã băm trong runbook. Rollback bằng dùng phiên bản catalog/adapter trước cho đợt đọc mới, giữ lại biên nhận cũ để đối soát. C2/C3 tiếp tục theo thứ tự sản phẩm.
+
 ## AIRC · Research Broker công khai và holdout năng lực v4
 
 Trên nền main sau PR #23 `5dc4ebc73c9423f360d63287d52350e2ef21a31a`, tooling engineering thu thập các trích đoạn Marketing công khai đã duyệt, ghi cả các nguồn bị chặn, và so sánh cùng holdout có/không có packet. Chạy `python engineering/airc500/research_release.py` trong venv engineering trên máy mới. [Runbook, phạm vi quyền và rollback](engineering/airc500/PUBLIC-RESEARCH.md) · [Phép đo đã ghim](engineering/airc500/research-v4/REPORT.md).

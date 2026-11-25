@@ -1,0 +1,91 @@
+{
+  "scope": "Synthetic signed SQLite RFQ edition",
+  "digest": "a91c2ebf9372ddcdf4270a0544f90b14a6dcb9c1711dbd1ccac5151df57522f3",
+  "snapshot_version": 1,
+  "sessions": [
+    {
+      "role": "studio",
+      "viewport": [
+        1280,
+        850
+      ],
+      "themes": [
+        "light",
+        "dark"
+      ],
+      "browser": "157.0.8103.52",
+      "observed_ready_ms": 828,
+      "scroll_width": 1280
+    },
+    {
+      "role": "studio",
+      "viewport": [
+        820,
+        1180
+      ],
+      "themes": [
+        "light",
+        "dark"
+      ],
+      "browser": "157.0.8103.52",
+      "observed_ready_ms": 687,
+      "scroll_width": 820
+    },
+    {
+      "role": "studio",
+      "viewport": [
+        390,
+        844
+      ],
+      "themes": [
+        "light",
+        "dark"
+      ],
+      "browser": "157.0.8103.52",
+      "observed_ready_ms": 609,
+      "scroll_width": 390
+    },
+    {
+      "role": "portal",
+      "viewport": [
+        1280,
+        850
+      ],
+      "themes": [
+        "light",
+        "dark"
+      ],
+      "browser": "157.0.8103.52",
+      "observed_ready_ms": 375,
+      "scroll_width": 1280
+    },
+    {
+      "role": "portal",
+      "viewport": [
+        820,
+        1180
+      ],
+      "themes": [
+        "light",
+        "dark"
+      ],
+      "browser": "157.0.8103.52",
+      "observed_ready_ms": 407,
+      "scroll_width": 820
+    },
+    {
+      "role": "portal",
+      "viewport": [
+        390,
+        844
+      ],
+      "themes": [
+        "light",
+        "dark"
+      ],
+      "browser": "157.0.8103.52",
+      "observed_ready_ms": 313,
+      "scroll_width": 390
+    }
+  ]
+}

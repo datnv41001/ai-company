@@ -23,6 +23,8 @@ function createKnowledgePanel(root, api) {
   const modes = {inherit:'Từ hồ sơ doanh nghiệp', override:'Điều chỉnh cho thương hiệu', empty:'Chủ động để trống'};
   const html = value => String(value ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
   const fields = Object.keys(names);
+  const briefSlots = {product:'Sản phẩm hoặc dịch vụ', audience:'Hồ sơ khách hàng', objective:'Mục tiêu đã khai báo'};
+  const statusNames = {draft:'Bản nháp', approved:'Đã duyệt', superseded:'Đã thay thế', withdrawn:'Đã thu hồi', disputed:'Tranh chấp', expired:'Hết hạn', pending_effective:'Chưa có hiệu lực'};
   let scope, client, brand, view, data, edit, command, brief, conflict, reentry;
   let generation = 0;
   let reading;
@@ -36,7 +38,7 @@ function createKnowledgePanel(root, api) {
   const read = path => api(path,'GET',null,false,reading.signal);
   const current = token => token === generation;
   const hasChanges = () => edit && (view === 'briefs'
-    ? edit.title !== undefined && edit.title !== 'Brief nghiên cứu · '+objectName(scope.brands,brand)
+    ? Object.keys(edit.picks || {}).length > 0 || (edit.title !== undefined && edit.title !== 'Brief nghiên cứu · '+objectName(scope.brands,brand))
     : Object.keys(changes()).length > 0);
   const mayLeave = () => !hasChanges() || Boolean(command) || window.confirm('Bạn có thay đổi chưa lưu. Bỏ những thay đổi này để chuyển mục?');
   const valueText = value => value || 'Chưa có thông tin';
@@ -198,12 +200,51 @@ function createKnowledgePanel(root, api) {
   function summary() {
     return `<dl class="knowledge-summary">${fields.map(k=>`<div><dt>${names[k]}</dt><dd>${html(valueText(brief.fields[k]?.value ?? (typeof brief.fields[k]==='string'?brief.fields[k]:'')))}</dd></div>`).join('')}</dl>`;
   }
+  async function chooseBriefData() {
+    const host = byId('brief-options');
+    if (!host) return;
+    const token = generation;
+    const serial = String(Number(host.dataset.request || 0) + 1);
+    host.dataset.request = serial;
+    const query = byId('brief-search')?.value || '';
+    try {
+      const slots = Object.keys(briefSlots);
+      const lists = await Promise.all(slots.map(slot => read(brandPath()+'/brief-options?slot='+slot+'&q='+encodeURIComponent(query))));
+      if (!current(token) || !host.isConnected || host.dataset.request !== serial) return;
+      if (!byId('brief-search')) {
+        host.innerHTML = '<label>Tìm trong danh mục<input id="brief-search" maxlength="100"></label><button class="secondary" type="button" data-action="brief-options">Tìm dữ liệu</button><div id="brief-selectors" class="knowledge-grid"></div>';
+      }
+      byId('brief-selectors').innerHTML = slots.map((slot, index) => {
+        const list = lists[index];
+        const chosen = edit.picks?.[slot];
+        const rows = list.items.filter(r => r.state === 'draft' || r.state === 'approved');
+        let choices = rows.map(r=>`<option value="${html(r.id)}" ${r.id===chosen?'selected':''}>${html(r.name)}</option>`).join('');
+        if (chosen && !rows.some(r=>r.id===chosen)) {
+          choices += `<option selected value="${html(chosen)}">${html(edit.pickNames[slot])}</option>`;
+        }
+        return `<label>${briefSlots[slot]}<select id="brief-${slot}" data-brief-slot="${slot}"><option value="">Chưa chọn</option>${choices}</select></label>${list.more?'<small>Nhập tên để thu hẹp kết quả.</small>':''}`;
+      }).join('');
+      tell('Đã tải danh mục của thương hiệu.');
+    } catch(error) {
+      if (current(token) && host.isConnected) failed(error,token);
+    }
+  }
+  function attachedRecords() {
+    const selections = Object.entries(brief.selections || {});
+    if (!selections.length) return '';
+    return '<h5>Dữ liệu danh mục đã ghim</h5><dl class="knowledge-summary">'+selections.map(([slot,r])=>{
+      const basis = r.basis==='hypothesis' ? ' · Giả thuyết' : r.basis==='fact' ? ' · Dữ kiện do doanh nghiệp khai báo' : '';
+      const state = r.current_state!==r.saved_state ? ' · Hiện tại: '+(statusNames[r.current_state] || r.current_state) : '';
+      const value = r.available ? r.label+' · Bản '+r.revision+' · '+(statusNames[r.saved_state] || r.saved_state)+basis+state : 'Không còn quyền xem';
+      return `<div><dt>${html(briefSlots[slot])}</dt><dd>${html(value)}</dd></div>`;
+    }).join('')+'</dl>';
+  }
   function briefScreen() {
     const checks={source_validation:'Chưa đối chiếu giá, điều kiện bán và nguồn xác nhận.',kpi_baseline:'KPI ban đầu · Chưa có số liệu.',kpi_target:'KPI mục tiêu · Chưa có chỉ tiêu đã xác nhận.',kpi_actual:'KPI thực tế · Chưa có số liệu.'};
     const list = data.briefs.map(b=>`<li><button type="button" class="knowledge-link" data-brief="${html(b.id)}">${html(b.title)}</button></li>`).join('');
     return `${brief?`<article class="knowledge-brief"><h4 tabindex="-1" id="knowledge-open-title">${html(brief.title)}</h4><p>Nháp nội bộ · Từ bản doanh nghiệp ${Number(brief.company_revision)} và bản thương hiệu ${Number(brief.brand_revision)}.</p>
-      ${summary()}<h5>Cần làm rõ trước khi sử dụng</h5><ul>${brief.missing.map(k=>`<li>${html(hints[k])}</li>`).join('')}${brief.pending_checks.map(k=>`<li>${html(checks[k] || 'Cần xác nhận bổ sung.')}</li>`).join('')}</ul></article>`:''}
-      ${data.can_edit?`<form id="knowledge-new-brief"><h4>Chuẩn bị brief</h4><p>Ghim thông tin đã lưu cho ${html(objectName(scope.brands,brand))}. Bạn có thể tạo nháp khi hồ sơ còn thiếu.</p><label>Tên brief<input name="title" required maxlength="160" value="${html(edit?.title??'Brief nghiên cứu · '+objectName(scope.brands,brand))}"></label><button type="submit">Tạo brief nháp</button></form>`:''}
+      ${summary()}${attachedRecords()}<h5>Cần làm rõ trước khi sử dụng</h5><ul>${brief.missing.map(k=>`<li>${html(hints[k])}</li>`).join('')}${brief.pending_checks.map(k=>`<li>${html(checks[k] || 'Cần xác nhận bổ sung.')}</li>`).join('')}</ul></article>`:''}
+      ${data.can_edit?`<form id="knowledge-new-brief"><h4>Chuẩn bị brief</h4><p>Ghim thông tin đã lưu cho ${html(objectName(scope.brands,brand))}. Bạn có thể tạo nháp khi hồ sơ còn thiếu.</p><label>Tên brief<input name="title" required maxlength="160" value="${html(edit?.title??'Brief nghiên cứu · '+objectName(scope.brands,brand))}"></label><button class="secondary" type="button" data-action="brief-options">Chọn dữ liệu từ danh mục</button><div id="brief-options"></div><button type="submit">Tạo brief nháp</button></form>`:''}
       <h4>Brief đã lưu của bạn</h4>${list?`<ul class="knowledge-list">${list}</ul>`:'<p>Bạn chưa có brief nào ở thương hiệu này.</p>'}`;
   }
   function render() {
@@ -221,13 +262,14 @@ function createKnowledgePanel(root, api) {
       void claimDesk.show({actor:scope.actor,tenant:scope.tenant,client,brand,role:scope.role});
       return;
     }
-    edit = view==='briefs' ? {title:edit?.title} : baseValues(view);
+    edit = view==='briefs' ? (edit || {}) : baseValues(view);
     content.innerHTML = `<div class="knowledge-tabs" role="group" aria-label="Nội dung hồ sơ">${Object.entries(tabs).map(([id,label])=>`<button type="button" data-view="${id}" aria-pressed="${view===id}">${label}</button>`).join('')}</div>
       <div class="knowledge-body">${view==='briefs'?briefScreen():`<form id="knowledge-edit"><h3>${view==='company'?'Thiết lập nhanh':'Thông tin theo thương hiệu'}</h3>
         <p>${view==='company'?`Các thương hiệu của ${html(objectName(scope.clients,client))} có thể dùng chung bốn trường này. Bạn có thể lưu từng phần.`:`Chọn dữ liệu riêng cho ${html(objectName(scope.brands,brand))} hoặc dùng giá trị hiện tại của doanh nghiệp.`}</p>
         <div class="knowledge-grid">${fields.map(k=>`<div>${fieldBlock(k)}</div>`).join('')}</div>
         ${data.can_edit?'<button type="submit" disabled>Lưu thay đổi</button>':'<p>Bạn có quyền xem hồ sơ này.</p>'}
         <span id="knowledge-dirty" role="status"></span></form>`}</div>`;
+    if (view==='briefs' && Object.keys(edit?.picks || {}).length) chooseBriefData();
   }
   function edited() {
     if(view==='claims')return;
@@ -266,18 +308,21 @@ function createKnowledgePanel(root, api) {
         <p>${kind==='briefs'?'Bản trước khi tạo':'Bản bạn đang sửa'} · ${html(serverEquivalent(kind,k,mine,before))}</p>
         ${kind==='briefs'?'':`<label><input type="checkbox" value="${k}">Áp dụng lại ${names[k].toLowerCase()}</label>`}</div>`;
     }).join('');
-    conflict={kind,patch,title:local.body?.title};
+    conflict={kind,patch,title:local.body?.title,picks:local.body?.selections};
     command=null;
     data=after;
     content.innerHTML=`<section class="knowledge-body"><h3>Đối chiếu thay đổi</h3><p>Một bản mới đã được lưu trước thao tác của bạn.</p>${rows}
       <div class="knowledge-actions"><button type="button" data-action="keep">Dùng bản máy chủ</button><button type="button" class="secondary" data-action="apply">${kind==='briefs'?'Tạo nháp theo bản mới':'Áp dụng các trường đã chọn'}</button></div></section>`;
     tell('Hồ sơ đã thay đổi. Kiểm tra các giá trị trước khi tiếp tục.',true);
   }
-  function begin(kind,patch,title) {
+  function begin(kind,patch,title,picks) {
     const key=reentry?.key || crypto.randomUUID();
     const body={key,expected_revision:reentry?.expected_revision ?? (kind==='company'?data.company_revision:data.brand_revision)};
     if(kind!=='company')body.expected_company_revision=reentry?.expected_company_revision ?? data.company_revision;
-    if(kind==='briefs')body.title=title;
+    if(kind==='briefs'){
+      body.title=title;
+      if (picks && Object.keys(picks).length) body.selections={...picks};
+    }
     else body.fields=patch;
     const pointer={kind,key,expected_revision:body.expected_revision,expected_company_revision:body.expected_company_revision};
     reentry=null;
@@ -393,14 +438,26 @@ function createKnowledgePanel(root, api) {
     void loading;
   });
   content.addEventListener('input',edited);
-  content.addEventListener('change',edited);
+  content.addEventListener('change',e=>{
+    const slot=e.target.dataset.briefSlot;
+    if(view==='briefs' && edit && slot in briefSlots){
+      edit.picks ||= {}; edit.pickNames ||= {};
+      if(e.target.value){
+        edit.picks[slot]=e.target.value;
+        edit.pickNames[slot]=e.target.selectedOptions[0].textContent;
+      } else {
+        delete edit.picks[slot]; delete edit.pickNames[slot];
+      }
+    }
+    edited();
+  });
   content.addEventListener('submit',e=>{
     e.preventDefault();
     if(command || conflict || !data?.can_edit)return;
     if(view==='briefs'){
       const title=e.target.elements.title.value.trim();
       if(!title){tell('Hãy nhập tên brief.',true);e.target.elements.title.focus();return;}
-      begin('briefs',null,title);
+      begin('briefs',null,title,edit?.picks);
     } else {
       const patch=changes();
       if(!Object.keys(patch).length)return;
@@ -431,6 +488,7 @@ function createKnowledgePanel(root, api) {
       if(next!=='briefs'){brief=null;remember(scopeKey()+'.brief',null);}
       render();tell('');content.querySelector(`[data-view="${view}"]`).focus();
     } else if(id)openBrief(id);
+    else if(action==='brief-options')chooseBriefData();
     else if(action==='load')loadWorkspace();
     else if(action==='recover')recover(generation);
     else if(action==='reenter'){
@@ -438,8 +496,8 @@ function createKnowledgePanel(root, api) {
     }
     else if(action==='keep'){conflict=edit=null;render();tell('Đã mở bản mới trên máy chủ.');content.querySelector(`[data-view="${view}"]`)?.focus();}
     else if(action==='apply' && conflict){
-      const {kind,patch,title}=conflict;
-      if(kind==='briefs'){conflict=null;begin(kind,null,title);return;}
+      const {kind,patch,title,picks}=conflict;
+      if(kind==='briefs'){conflict=null;begin(kind,null,title,picks);return;}
       const selected=Array.from(content.querySelectorAll('input:checked'),el=>el.value);
       if(!selected.length)return tell('Chọn ít nhất một trường để áp dụng lại.',true);
       conflict=null;begin(kind,Object.fromEntries(selected.map(k=>[k,patch[k]])));

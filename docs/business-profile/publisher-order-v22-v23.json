@@ -1,0 +1,45 @@
+{
+  "c2_sha": "84e2034ce5845fdf26e81a66bc425c18f7c2de92",
+  "identity_sha": "322752384813b959515eb9bbb677199326a4fb74",
+  "postgres": 160016,
+  "disposable_databases_removed": 2,
+  "cases": [
+    {
+      "order": "C2 then A1",
+      "before": {
+        "core": 22,
+        "amc_business": [
+          1,
+          2
+        ],
+        "commercial_rule": "a128b3f132420f59419a484ef2c1f6998616f768bb1d5e5a93050ad8077f7dd6",
+        "commercial_sql": "afcbc23b34578a645722898042da43f0146cfc167d4481613bc0d4a0bd84ff53"
+      },
+      "after_a1": {
+        "core": 23,
+        "amc_business": [
+          1,
+          2
+        ],
+        "commercial_rule": "b76ebcda230c5ca15fe26fb3199fb25111b1fe5acd0b3274cffa80d223545418",
+        "commercial_sql": "047568ace1c38165673e9edf336c510cd8897b2d47c798a1fe261f2b7266a097"
+      },
+      "workspace_row_and_desk_catalog_definitions_grants_preserved": true,
+      "v23_identity_domains_checked": true,
+      "a1_replay_unchanged": true,
+      "c2_refused_core23_observed_state_unchanged": true
+    },
+    {
+      "order": "A1 then C2",
+      "after_a1": {
+        "core": 23,
+        "amc_business": [],
+        "commercial_rule": "b76ebcda230c5ca15fe26fb3199fb25111b1fe5acd0b3274cffa80d223545418",
+        "commercial_sql": "047568ace1c38165673e9edf336c510cd8897b2d47c798a1fe261f2b7266a097"
+      },
+      "v23_identity_domains_checked": true,
+      "a1_replay_unchanged": true,
+      "c2_refused_core23_observed_state_unchanged": true
+    }
+  ]
+}

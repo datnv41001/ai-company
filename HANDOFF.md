@@ -1,5 +1,9 @@
 # Bắt đầu ở đây khi tiếp quản AI Marketing Company
 
+## Business Knowledge Center · review tích hợp
+
+[Mở bản bàn giao C2](docs/business-profile/C2-REVIEW-HANDOFF.md) để chạy trên máy mới, kiểm tra luồng từ hồ sơ đến brief, tải ảnh và đối chiếu commit, CI, giới hạn migration.
+
 ## C2.4 · Nguồn và nhận định Marketing
 
 Trong hồ sơ thương hiệu, mở **Nguồn và nhận định** để ghi nguồn, chọn locator, so sánh câu và điều kiện, kiểm quyền chuyên môn, duyệt, xử lý tranh chấp và xem ảnh hưởng. Câu công khai dùng được qua nguồn hạn chế được tính trên server tại lúc đọc. Editor chỉ nhận phần được phép xem. Publisher cài predicate riêng trong `amc_business`, không tăng version core hoặc sidecar hồ sơ. Kiểm lại API, Chromium desktop/mobile và ranh giới kiểm chứng theo [runbook C2.4](docs/business-profile/C2-CLAIM-DESK.md).

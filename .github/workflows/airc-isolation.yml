@@ -3,6 +3,9 @@ on:
   pull_request:
     paths:
       - "engineering/airc500/sandbox_*"
+      - "engineering/airc500/union_*.py"
+      - "engineering/airc500/generation_inbox.py"
+      - "engineering/airc500/review_plan.py"
       - "engineering/airc500/test_sandbox_container.py"
       - "engineering/airc500/fixtures/marketing-pr.json"
       - ".github/workflows/airc-isolation.yml"

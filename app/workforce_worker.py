@@ -294,9 +294,9 @@ def main():
             os.environ.setdefault(name, value)
     scope, config = Scope.configured(), Gateway.configured()
     # Load the full model inventory before checking migration readiness.
-    from .main import app  # noqa: F401
+    from . import delivery_models, knowledge_models, session_state  # noqa: F401
 
-    prepare_database(engine)
+    prepare_database(engine, verify_identity=False)
     while True:
         worked = process_one(engine, scope, config)
         if args.once:

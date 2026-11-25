@@ -4,6 +4,25 @@
 
 Bắt đầu từ [sổ nguồn](docs/research/SOURCE_REGISTRY.md), mở [thẻ kiến thức](docs/research/KNOWLEDGE_CARDS.md), [đối chiếu với mã hiện hành](docs/research/APPLICABILITY_MATRIX.md) rồi chọn [cải tiến có tiêu chí nghiệm thu](docs/research/PRODUCT_OPPORTUNITIES.md). Đọc [các giả thuyết đã hoãn hoặc bác bỏ](docs/research/REJECTED_HYPOTHESES.md) trước khi lặp lại nghiên cứu. Công cụ engineering chạy độc lập ở [runbook Research Broker](engineering/airc500/APPLIED-RESEARCH.md). Receipt lần đầu có hai nguồn quan sát được và một nguồn bị publisher hạn chế. Có thể replay ngoại tuyến bằng mã băm trong runbook. Rollback bằng dùng phiên bản catalog/adapter trước cho đợt đọc mới, giữ lại biên nhận cũ để đối soát. C2/C3 tiếp tục theo thứ tự sản phẩm.
 
+## PR #34 · Màn hình điều hành Marketing
+
+Điều hướng workspace dùng URL của từng màn hình. Đường dẫn giữ workspace, thương hiệu theo dõi và chiến dịch. Khi mở liên kết, ứng dụng xác minh phiên và đối chiếu các ID với danh sách mà tài khoản được phép đọc. Khi lập kế hoạch, người dùng mở thẻ bộ phận để xem vai trò và nhiệm vụ được giao. Các lượt chạy Workforce, quyết định QA, tình trạng nguồn và số liệu kinh doanh được trình bày riêng.
+
+Bộ kiểm thử Chromium chạy qua mục CI `compose-browser`. Artifact `premium-ui-<revision>` có ảnh thật ở 1440, 1280, 820, 390 và 320 CSS px, các cặp trước/sau và `ui-acceptance.json`. Ảnh trước được lấy từ Chromium tại commit `0953285c1c6a70a5c473effb5a69501500e717b5`. Hàm kiểm thử đối chiếu SHA-256 của ảnh trước khi ghép mỗi cặp. [Thiết kế và nghiệm thu](docs/AMC-DESIGN-SYSTEM.md)
+
+Chạy bằng `python tests/browser_premium_ui.py` với `AMC_BROWSER_TEST_URL`, hộp thư phát triển, PostgreSQL thử nghiệm và Chromium đã cài như CI. `AMC_PREMIUM_EVIDENCE` chọn thư mục đầu ra. Các thao tác tài khoản, lịch sử Back/Forward, quyền bị thu hẹp và QA tiếp tục đi qua API đã nghiệm thu. Khi cần quay lại giao diện trước, hoàn nguyên commit tinh chỉnh bằng một PR mới. Thay đổi này chỉ tác động đến ứng dụng và bộ kiểm thử giao diện.
+
+
+## Trung tâm điều hành và chuẩn giao diện
+
+Mốc nền là PR #32 tại `068b85170cf47106c8d08a8c573548e3f530647c`. Từ tài khoản nhân sự, chọn workspace để mở **Trung tâm điều hành**, chọn chiến dịch và đối chiếu bước kế hoạch với nhiệm vụ, bộ phận, bản giao và lượt xử lý Workforce. Menu **Hồ sơ doanh nghiệp** mở C2. Công tắc **Giao diện** hỗ trợ hệ thống, sáng và tối. [Hợp đồng dữ liệu, component và quy tắc nghiệm thu](docs/AMC-DESIGN-SYSTEM.md)
+
+Dùng Compose và tài khoản tổng hợp theo hướng dẫn Docker bên dưới. Chạy browser test trong job Chromium với `python tests/browser_premium_ui.py` và các biến môi trường của workflow. Kiểm tra cả ảnh, số đo và nguồn API trên cùng SHA. Để rollback riêng giao diện, dùng lại image API đã build ở SHA nền cùng publisher và DB core v22, module doanh nghiệp v3. Thay đổi giao diện này chỉ đọc các endpoint hiện hữu. [Job kiểm thử](.github/workflows/ci.yml)
+
+## Publisher kết hợp C2 và A1
+
+Core v24 kết hợp business module v3 với phiên thiết bị A1. Publisher kiểm tra hai định nghĩa SQL thực tế, quyền thực thi, liên tục quota và các khóa A1 trước khi commit. Hai đường nâng từ C2 v22 và A1 v23 dùng đúng mã đã duyệt và dữ liệu tổng hợp. Khi chuyển máy, làm theo [runbook publisher, kiểm thử và khôi phục](docs/COMBINED-C2-A1.md). Các mục bên dưới lưu hợp đồng lịch sử từng nhánh.
+
 ## C2.5 · Mục tiêu thật cấp công ty và liên kết thương hiệu, chiến dịch
 
 Chạy publisher module `amc_business` v3 trên core v22. Chọn **Mục tiêu chung doanh nghiệp** để lập cùng một mục tiêu cho nhiều thương hiệu của một khách hàng. API và giao diện dùng ID phiên bản, CAS và lịch sử quyết định khi cha được thay thế hoặc thu hồi. [Các bước dùng, nâng cấp và ca chạy lại](docs/business-profile/C2-OBJECTIVES-RUNBOOK.md)
@@ -23,6 +42,11 @@ Nhánh `feature/business-knowledge-catalog` xuất phát từ PR #27. Mở Hồ 
 ## C2 · Hồ sơ chung và brief nội bộ
 
 Increment đầu tiên của C2.1/C2.5 trên C1 `c847f910` cho phép lưu một phần bốn field theo doanh nghiệp, kế thừa/ghi đè/để trống theo thương hiệu và tạo brief cá nhân khi chưa đủ thông tin. Publisher cài `amc_business` v1 bên cạnh core v22. Core 023 dành cho Identity A1. Chạy Compose rồi đối chiếu hai brand, thử lại lệnh sau mất phản hồi và đọc brief sau khi hồ sơ gốc đổi. PostgreSQL native 16.16 và SQLite đã qua năm ca API đầu tiên. Bộ điều phối Marketing và nghiệm thu thương mại giữ gate riêng. [Hợp đồng, quyền, chạy kiểm thử và rollback trên máy mới](docs/business-profile/C2-WORKSPACE-RUNBOOK.md)
+## A1 · Phiên thiết bị, phụ thuộc Business Profile C1
+
+Draft A1 dành migration 023 sau C1 v22. Người dùng có thể xem thiết bị, xác thực lại, refresh và thu hồi phiên. Khi tiếp quản, kiểm tra hai thứ tự commit trên PostgreSQL, diễn tập restore, chuyển riêng ba loại khóa và xác nhận vẫn ký được append C1. Thử nghiệm Keycloak chạy trong lab độc lập. [API, lệnh chạy, rollback và giới hạn](docs/DEVICE-SESSIONS-A1.md)
+
+A1-P1-01 sửa luồng refresh của hai tab. Browser gửi SID đang hiển thị, PostgreSQL đối chiếu trước rotation. Cookie grant theo SID giữ response đến muộn của A tách khỏi phiên B. Khi nâng từ draft cũ hãy đăng nhập lại. Kiểm bằng `tests/test_device_sessions.py` và `tests/browser_device_context.py` trên dữ liệu tổng hợp. [Hợp đồng native, cách chạy và backlog Identity](docs/DEVICE-SESSIONS-A1.md)
 
 ## AIRC · Research Broker công khai và holdout năng lực v4
 

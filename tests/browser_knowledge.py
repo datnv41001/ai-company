@@ -12,6 +12,7 @@ import httpx
 from playwright.sync_api import expect, sync_playwright
 import psycopg
 
+from screen_navigation import screen, select_workspace, switch_account
 from identity_fixtures import invite_member, start_registration, verify_registration
 
 
@@ -77,7 +78,7 @@ def fixture(api, owner):
 
 
 def login(page, who, tenant):
-    page.goto(BASE + "/?workspace=" + tenant)
+    page.goto(BASE + "/?workspace=" + tenant + "#/knowledge")
     authenticate(page, who)
 
 
@@ -100,6 +101,7 @@ def authenticate(page, who):
 
 
 def select_scope(page, client, brand):
+    screen(page, "knowledge")
     choose = page.locator("#knowledge-client")
     expect(choose).to_be_visible()
     if choose.input_value() != client:
@@ -324,10 +326,10 @@ def extra_cases(browser, api, owner, reader, rows, size):
     port.locator("#refresh").click()
     expect(port.locator("#knowledge-status")).to_contain_text("Quyền xem hồ sơ đã thay đổi")
     expect(port.locator("#knowledge-edit")).to_have_count(0)
-    port.locator("#switch-account").click()
+    switch_account(port)
     authenticate(port, reader)
     if port.locator("#workspace-select").input_value() != tenant:
-        port.locator("#workspace-select").select_option(tenant)
+        select_workspace(port, tenant)
     expect(port.locator("#knowledge-panel")).to_be_hidden()
     assert PERSONAS["service"][1] not in port.locator("#knowledge-panel").inner_text()
     port.close()
@@ -351,7 +353,7 @@ def extra_cases(browser, api, owner, reader, rows, size):
     )
     switching.locator("#knowledge-client").select_option(rows["materials"][0])
     switching.wait_for_function("window.previousUserReadArrived === true")
-    switching.locator("#switch-account").click()
+    switch_account(switching)
     authenticate(switching, reader)
     expect(switching.locator("#knowledge-panel")).to_be_hidden()
     assert PERSONAS["materials"][1] not in switching.locator("body").inner_text()

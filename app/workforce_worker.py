@@ -171,7 +171,7 @@ def save_checkpoint(db, scope, run, stage, output, node):
         from .registry_qa import assess_role
         contract = binding["contracts"][stage]
         from . import c3_marketing
-        if binding["workflow"] in c3_marketing.ROLES:
+        if binding.get("workflow") in c3_marketing.ROLES:
             record["quality"]["role_qa"] = {"policy": contract["qa_policy"], "findings": record["quality"]["claims"],
                                           "manifest_digest":run.knowledge["c3_manifest"]["digest"], "source_ids":output["source_ids"]}
         elif stage in ("research","strategy") and contract["adapter"] == stage+"@2":
@@ -192,7 +192,7 @@ def save_checkpoint(db, scope, run, stage, output, node):
         if binding and binding["contracts"]["director"]["adapter"] == "director@2":
             preview = research_strategy.proposal(run.checkpoints)
         title = run.knowledge["title"]
-        if binding and binding["workflow"] in c3_marketing.ROLES:
+        if binding and binding.get("workflow") in c3_marketing.ROLES:
             draft = c3_marketing.render(binding["workflow"], run.knowledge["c3_projection"], {p["skill"]:p["output"] for p in run.checkpoints})
             title, preview = draft["title"], draft["body"]
             if len(title) > 160:

@@ -70,6 +70,7 @@ function mountMarketingBrief(root, api, context) {
     const controls = {}, items = {}, labels = {brief:'Brief chiến dịch đã gửi', market:'Thị trường', kpi:'KPI chiến dịch', claim:'Nhận định được phép dùng'};
     let terms = null, captured = null, ticket = 0, active = false;
     const check = button('Kiểm tra mức sẵn sàng'), activate = button('Bật quy trình cho chiến dịch'), queue = button('Xếp việc cho AI');
+    check.disabled = true;
     queue.disabled = true;
     activate.hidden = true;
     function field(label, node) {
@@ -175,6 +176,8 @@ function mountMarketingBrief(root, api, context) {
     };
     try {
       await Promise.all(['brief','market','kpi','claim'].map(k=>load(k)));
+      if(!alive())return;
+      check.disabled = false;
       feedback(items.brief.length?'Chọn dữ liệu để kiểm tra căn cứ của brief.':'Chưa có brief chiến dịch đã gửi trong thương hiệu này.');
     } catch(e){if(alive()){feedback(e.message);const retry=button('Tải lại lựa chọn');retry.onclick=()=>mountMarketingBrief(root,api,context);details.append(retry);}}
   });

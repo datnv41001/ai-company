@@ -77,10 +77,10 @@ def protected_phrases(projection):
 def content_shapes(workflow, projection):
     """Derive exact public fact blocks and fixed layout from the release-specific renderer."""
     if workflow not in c3_marketing.ROLES:
-        from . import c3_assets
+        from . import c3_order_units
 
-        render = c3_assets.render
-        blocks = {f["id"]: " ".join(c3_assets.fact_lines(f, projection)) for f in projection["facts"]}
+        render = c3_order_units.render
+        blocks = {f["id"]: " ".join(c3_order_units.fact_lines(f, projection)) for f in projection["facts"]}
     else:
         render = c3_marketing.render
         blocks = {f["id"]: c3_marketing.fact_line(f) for f in projection["facts"]}

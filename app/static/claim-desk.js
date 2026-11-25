@@ -2,7 +2,7 @@ function createClaimDesk(root, api, notify) {
   const states = {draft:'Nháp', approved:'Đã duyệt', disputed:'Có tranh chấp', withdrawn:'Đã thu hồi', superseded:'Đã thay thế', expired:'Hết hạn', pending_effective:'Chưa có hiệu lực'};
   const kinds = {description:'Mô tả', price:'Giá', availability:'Tình trạng hàng', payment:'Thanh toán', warranty:'Bảo hành', performance:'Hiệu năng', regulated:'Nội dung có quy định chuyên ngành', comparison:'So sánh', unclassified:'Nội dung cần chuyên môn'};
   const options = {retail:'Bán lẻ', wholesale:'Bán sỉ', prepaid:'Trả trước', credit:'Trả sau', standard:'Tiêu chuẩn', extended:'Mở rộng'};
-  const units = {piece:'Cái',box:'Hộp','m²':'m²',tonne:'Tấn',kg:'kg',service:'Dịch vụ',machine:'Máy',participant:'Người',subscription_month:'Tháng',subscription_year:'Năm'};
+  const units = {piece:'Cái',box:'Hộp','m²':'m²',tonne:'Tấn',kg:'kg',service:'Dịch vụ',visit:'Lượt',machine:'Máy',participant:'Người',subscription_month:'Tháng',subscription_year:'Năm'};
   const axes={buyer:['Nhóm người mua',['retail','wholesale']],payment_type:['Cách thanh toán',['prepaid','credit']],service_level:['Mức dịch vụ',['standard','extended']]};
   let generation = 0, requestNo = 0, scope, ctl, board, data, src, entry, mandates, selectedMandate, pending, busy;
   let claimOffset = 0, sourceOffset = 0, captureChoices, qualificationOffset=0;
@@ -256,6 +256,46 @@ function createClaimDesk(root, api, notify) {
     }));
   }
   function localDate(date){if(!date)return '';const t=new Date(date);return new Date(t.getTime()-t.getTimezoneOffset()*60000).toISOString().slice(0,16);}
+  function correctionQueue(container){
+    const result=field('div');container.append(button('Duyệt đơn vị bán',()=>load(0)),result);
+    async function load(offset){
+      const g=generation;
+      const base='/api/tenants/'+scope.tenant+'/clients/'+scope.client+'/brands/'+scope.brand+'/business-workspace/marketing/clarifications';
+      const page=await api(base+'?offset='+offset,'GET',null,false,ctl.signal);
+      if(g!==generation||!result.isConnected)return;
+      if(!offset)result.replaceChildren();
+      for(const issue of page.items){
+        const p=issue.proposal,entry=box(issue.product);
+        const t=issue.terms, scale=['VND','JPY'].includes(t.currency)?1:100;
+        const money=new Intl.NumberFormat('vi-VN',{style:'currency',currency:t.currency}).format(t.amount_minor/scale);
+        entry.append(field('p',money+' / '+t.basis_quantity+' '+issue.choices[p.unit]+'. Tối thiểu '+t.moq+
+          ', bậc '+t.tier_min+(t.tier_max?'–'+t.tier_max:' trở lên')+'. '+
+          ({included:'Đã gồm thuế',excluded:'Chưa gồm thuế',unknown:'Chưa rõ thuế'}[t.tax])+'. '+[...new Set([...t.conditions,...issue.qualifiers])].join(' ')),
+          field('p',issue.document+' · '+issue.locator+' · '+issue.excerpt));
+        if(p.required_qualification && (p.own||!p.qualifications.length)){
+          entry.append(field('p','Chờ người có ủy quyền độc lập với tác giả.'));
+        }else{
+          const mandate=p.required_qualification?select(entry,'Ủy quyền cho nhận định',p.qualifications.map(id=>({id,label:id.slice(0,8)})),p.qualifications[0]):null;
+          const reason=input(entry,'Lý do duyệt đơn vị bán');
+          let key=crypto.randomUUID();
+          entry.addEventListener('input',()=>{key=crypto.randomUUID();});
+          const approve=button('Xác nhận giá và đơn vị',async()=>{
+            if(!reason.value.trim())throw Error('Ghi căn cứ duyệt.');
+            approve.disabled=true;
+            try{
+              await api(base+'/approve','POST',{key,proposal:p.id,reason:reason.value.trim(),qualification_revision:mandate?.value||null},false,ctl.signal);
+              if(g===generation)await load(0);
+            }finally{approve.disabled=false;}
+          });
+          entry.append(approve);
+        }
+        result.append(entry);
+      }
+      if(page.next_offset!==null){
+        const more=button('Xem tiếp đề xuất',async()=>{more.remove();await load(page.next_offset);});result.append(more);
+      }else if(!result.childElementCount)result.append(field('p','Không có đề xuất đơn vị đang chờ duyệt.'));
+    }
+  }
   function render(){
     root.replaceChildren();root.append(field('h3','Nguồn và nhận định Marketing'));
     const index=box('Nhận định theo thương hiệu');
@@ -263,6 +303,7 @@ function createClaimDesk(root, api, notify) {
     choose.onchange=()=>action(()=>choose.value?open(choose.value):(data=src=entry=null,render()));
     if(board.can_edit)index.append(button('Soạn nhận định mới',()=>{++requestNo;data=src=entry=null;render();}));
     index.append(button('Kiểm tra lại hiệu lực',revalidate));pager(index,'claim');root.append(index);
+    if(board.can_approve)correctionQueue(index);
     if(data) {
       const projection=box('Câu chữ công khai còn hiệu lực');
       if(data.public_wording){const p=data.public_wording;projection.append(field('p',p.wording),field('p',p.qualifiers.join(' · ')),field('p',describe(p)));}

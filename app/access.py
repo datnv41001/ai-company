@@ -4,7 +4,7 @@ from sqlalchemy.orm import Session
 
 from .models import Client, Membership
 
-_CONTEXT = text("""SELECT set_config('amc.delivery_protocol','c3/1',true),
+_CONTEXT = text("""SELECT set_config('amc.delivery_protocol','c3/2',true),
     set_config('amc.user_id',:actor,true),
     set_config('amc.tenant_id',:tenant,true), set_config('amc.lookup_email',:email,true)""")
 

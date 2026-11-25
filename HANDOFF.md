@@ -1,5 +1,11 @@
 # Bắt đầu ở đây khi tiếp quản AI Marketing Company
 
+## Chuyển sang Marketing Studio
+
+Studio dùng core v25, Business v3 và module C3 v2. Trước cutover, dừng xếp việc, drain các worker, dừng API cũ, lưu backup cùng image tương ứng. Chạy publisher mới trên database đã sao lưu, sau đó khởi động API và worker cùng bản. Migration `002_studio_writer.sql` khóa ba bảng bàn giao, thay các trigger trong một giao dịch và ghi module v2. Các API từng khai báo `c3/1` mất quyền ghi ngay sau commit. Publisher v1 từ chối module v2 và API v1 từ chối bộ trigger v2. Studio chỉ khởi động khi kiểm tra đúng ba trigger còn hiệu lực. Chữ ký giao thức dùng cho tương thích binary; quyền nguồn, quyền người dùng và quyết định QA của từng bản vẫn do ứng dụng và RLS kiểm tra.
+
+CI chạy lại kiểm thử cutover v24 cùng `python tests/check_studio_cutover.py` trên PostgreSQL loopback dùng riêng. Giao dịch thử nghiệm tác động 0 dòng qua tiến trình C3 v1 mở từ trước. Rehearsal còn kiểm snapshot khách, lịch sử quyết định và dữ liệu nguồn sau rollback/replay. Để quay lại C3 v1, cô lập DB mới và khôi phục backup trước cutover vào DB riêng, dùng restore-fence tạo generation mới rồi khởi động lại với image v1 sau khi đã đối soát các thay đổi phát sinh kể từ thời điểm backup. [Migration](migrations/c3_tasks/002_studio_writer.sql) · [Kiểm thử](tests/check_studio_cutover.py)
+
 ## Chuyển database C3 từ core v24 sang v25
 
 Core v25 giữ Business v3 và module nhiệm vụ C3 v1. Checkpoint kỹ thuật trước chuyển đổi là main `9bfbabcaddf9818eb4030cb0c5337e65e794ebfe` và PR #37 `58258de5c802f1af3ad19d3491d63cf9f7b49e8a`. Chỉ chạy quy trình sau trên môi trường phát triển được phép.

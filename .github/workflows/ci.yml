@@ -146,6 +146,10 @@ jobs:
             export DATABASE_URL="${DATABASE_URL%/*}/$database"
             python tests/check_c3_cutover.py "$phase"
           done
+          docker exec amc-test-pg createdb -U postgres amc_test_studio_cutover
+          export AMC_MIGRATION_DSN="${AMC_MIGRATION_DSN%/*}/amc_test_studio_cutover"
+          export DATABASE_URL="${DATABASE_URL%/*}/amc_test_studio_cutover"
+          python tests/check_studio_cutover.py
           docker exec amc-test-pg createdb -U postgres amc_test_populated_v22
           export AMC_MIGRATION_DSN="${AMC_MIGRATION_DSN%/*}/amc_test_populated_v22"
           export DATABASE_URL="${DATABASE_URL%/*}/amc_test_populated_v22"

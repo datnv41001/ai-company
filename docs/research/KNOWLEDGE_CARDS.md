@@ -111,3 +111,5 @@ Linear giảm cạnh tranh thị giác giữa navigation và vùng nội dung. G
 **Áp dụng thử.** Cùng một tác vụ tạo brief giữ tên và thứ tự focus trong hai theme. Agency nhìn rõ khách/brand đang chọn. Biểu đồ tiến độ có số và chữ đọc được kể cả khi bỏ màu. Khi nguồn lỗi, hiển thị lỗi thay vì giá trị 0.
 
 **Giới hạn.** Các case thiết kế không chứng minh AMC dễ dùng. Phải thử dữ liệu thật qua API, cả workspace rỗng, trên desktop/tablet/mobile và đo riêng với người dùng. [Đối chiếu mã và yêu cầu](APPLICABILITY_MATRIX.md#k-11)
+
+Đợt áp dụng tiếp theo bổ sung transcript YC, ca SEO của Rakuten và phương pháp so sánh bản giao cho K-06 đến K-10. [Xem nguồn, quyết định, tiêu chí và phương án bác bỏ](C3-QUALITY-AND-REVIEWER-CAPACITY.md).

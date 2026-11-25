@@ -11,9 +11,10 @@ import struct
 import subprocess
 from time import perf_counter
 from urllib.parse import urlsplit
-from uuid import uuid4
+from uuid import UUID, uuid4
 
 import httpx
+import psycopg
 from playwright.sync_api import expect, sync_playwright
 
 from browser_knowledge import BASE, PROJECT, authenticate, db_counts, post
@@ -110,7 +111,15 @@ def fixture(api):
             },
         },
     )
-    return dict(owner=owner, recipient=recipient, tenant=tenant, empty=empty, base=base, clients=clients, brands=brands, campaigns=campaigns)
+    catalog = base + "/clients/" + clients[0]["id"] + "/brands/" + brands[0]["id"] + "/catalog/items"
+    request_json(
+        api,
+        "POST",
+        catalog,
+        owner,
+        {"key": uuid4().hex, "expected_revision": 0, "kind": "product", "code": "MUA-HA", "visibility": "internal", "data": {"name": "Bộ gốm Mùa Hạ"}},
+    )
+    return dict(owner=owner, editor=editor, recipient=recipient, tenant=tenant, empty=empty, base=base, clients=clients, brands=brands, campaigns=campaigns)
 
 
 def source_data(api, f):
@@ -150,20 +159,33 @@ def reflow(page):
 
 def choose_campaign(page, campaign):
     control = page.locator("#command-campaign")
+    expect(control).to_be_visible()
     control.select_option(campaign["id"])
     expect(page.locator("#command-objective")).to_have_text(campaign["objective"])
     expect(page.locator("#command-center")).not_to_have_attribute("aria-busy", "true")
+
+
+def current_approval(doc):
+    evidence = doc.get("qa_evidence") or {}
+    return bool(
+        doc["status"] == "approved"
+        and doc.get("reviewed_by")
+        and doc["qa_revision"] == doc.get("qa_approved_revision") == evidence.get("qa_revision")
+        and doc.get("qa_approved_digest")
+        and doc["qa_approved_digest"] == evidence.get("content_digest")
+    )
 
 
 def check_dashboard(page, f, dataset):
     counts = {
         "campaign": len(dataset["campaigns"]),
         "deliverable": len(dataset["deliverables"]),
-        "review": sum(d["status"] == "submitted" for d in dataset["deliverables"]),
-        "approved": sum(d["status"] == "approved" for d in dataset["deliverables"]),
+        "review": sum(d["status"] == "submitted" or (d["status"] == "approved" and not current_approval(d)) for d in dataset["deliverables"]),
+        "approved": sum(map(current_approval, dataset["deliverables"])),
     }
     for key, value in counts.items():
         expect(page.locator("#command-" + key + "-count")).to_have_text(str(value))
+    expect(page.locator("#command-client-total")).to_contain_text(f"Agency · {len(dataset['clients'])} khách hàng · {len(dataset['brands'])} thương hiệu")
     choose_campaign(page, f["campaigns"][0])
     tasks = dataset["tasks"]
     expect(page.locator("#command-tasks li")).to_have_count(len(tasks))
@@ -184,6 +206,7 @@ def check_dashboard(page, f, dataset):
     expect(page.locator("#command-outcomes li")).to_have_count(len(scoped))
     for doc in scoped:
         expect(page.locator("#command-outcomes")).to_contain_text(doc["title"])
+    expect(page.locator("#command-runs")).to_contain_text("Chưa thấy lượt xử lý")
     expect(page.locator("#command-outcomes")).not_to_contain_text("Thông báo mở cửa không gian mới")
     return {
         **counts,
@@ -196,23 +219,35 @@ def check_dashboard(page, f, dataset):
     }
 
 
-def keyboard(page):
+def keyboard(page, view, screenshots):
     toggle = page.locator("#menu-toggle")
+    start = toggle if toggle.is_visible() else page.locator("#knowledge-nav")
+    page.locator(".skip-link").focus()
+    for _ in range(24):
+        page.keyboard.press("Tab")
+        if start.evaluate("n=>n===document.activeElement"):
+            break
+    expect(start).to_be_focused()
+    assert start.evaluate("""n=>{const s=getComputedStyle(n);return n.matches(':focus-visible') &&
+       ((s.outlineStyle!=='none' && parseFloat(s.outlineWidth)>=1) || s.boxShadow!=='none')}""")
     if toggle.is_visible():
-        toggle.focus()
         page.keyboard.press("Enter")
         expect(toggle).to_have_attribute("aria-expanded", "true")
         sidebar = page.locator("#workspace-sidebar")
         assert sidebar.evaluate("el=>el.contains(document.activeElement)")
-        for _ in range(3):
-            page.keyboard.press("Tab")
-            assert sidebar.evaluate("el=>el.contains(document.activeElement)")
+        links = sidebar.locator("a[href]:visible, button:visible:enabled, select:visible:enabled")
+        first, last = links.first, links.last
+        first.focus()
+        page.keyboard.press("Shift+Tab")
+        expect(last).to_be_focused()
+        page.keyboard.press("Tab")
+        expect(first).to_be_focused()
+        if view == "mobile-light":
+            screenshots.append(capture(page, view + "-navigation"))
         page.keyboard.press("Escape")
         expect(toggle).to_have_attribute("aria-expanded", "false")
         expect(toggle).to_be_focused()
-        return "drawer opened, focus contained, Escape returned focus"
-    link = page.locator("#knowledge-nav")
-    link.focus()
+        return "Tab reached visible focus, drawer wrapped in both directions, Escape returned focus"
     page.keyboard.press("Enter")
     assert page.locator("#knowledge-title").is_visible()
     assert page.evaluate("window.location.hash==='#knowledge-title' || document.activeElement.id==='knowledge-title'")
@@ -278,11 +313,21 @@ def measurements(page):
     return page.evaluate("""()=>{
        const n=performance.getEntriesByType('navigation')[0], resources=performance.getEntriesByType('resource');
        const fcp=performance.getEntriesByName('first-contentful-paint')[0];
+       const shifts=window.__amcShifts, login=performance.getEntriesByName('amc-login')[0].startTime,
+             ready=performance.getEntriesByName('amc-dashboard-ready')[0].startTime;
+       function cls(entries) {
+         let best=0,score=0,first=-Infinity,last=-Infinity;
+         for(const e of entries){if(e.t-last>=1000 || e.t-first>=5000){score=0; first=e.t;}
+           score+=e.v;last=e.t;best=Math.max(best,score);}return Number(best.toFixed(4));
+       }
+       const phase=t=>t<login?'login_page':t<ready?'login_to_dashboard':'dashboard_idle';
        return {document_dom_content_loaded_ms:Math.round(n.domContentLoadedEventEnd),document_load_ms:Math.round(n.loadEventEnd),
          document_first_contentful_paint_ms:fcp?Math.round(fcp.startTime):null,document_lcp_ms:window.__amcLcp||null,
          same_origin_requests:resources.filter(e=>new URL(e.name).origin===location.origin).length,
          static_transfer_bytes:resources.filter(e=>new URL(e.name).pathname.startsWith('/static/')).reduce((s,e)=>s+e.transferSize,0),
-         cumulative_layout_shift:window.__amcCls??null};
+         cumulative_layout_shift:cls(shifts), cls_by_phase:Object.fromEntries(['login_page','login_to_dashboard','dashboard_idle']
+           .map(k=>[k,cls(shifts.filter(e=>phase(e.t)===k))])),dashboard_idle_observation_ms:Math.round(performance.now()-ready),
+         layout_shift_sources:shifts.map(e=>({phase:phase(e.t),ms:Math.round(e.t),score:e.v,elements:e.sources}))};
     }""")
 
 
@@ -300,8 +345,9 @@ def run_view(browser, dev, theme, f, dataset):
         """()=>{
       new PerformanceObserver(list=>{const e=list.getEntries().at(-1);if(e)window.__amcLcp=Math.round(e.startTime)}).
         observe({type:'largest-contentful-paint',buffered:true});
-      window.__amcCls=0;
-      new PerformanceObserver(list=>{for(const e of list.getEntries())if(!e.hadRecentInput)window.__amcCls+=e.value;}).
+      window.__amcShifts=[];
+      new PerformanceObserver(list=>{for(const e of list.getEntries())if(!e.hadRecentInput)window.__amcShifts.push({
+        t:e.startTime,v:e.value,sources:e.sources?.map(s=>s.node?.id||s.node?.tagName||null)||[]});}).
         observe({type:'layout-shift',buffered:true});
     }""".replace("()=>{", "(()=>{", 1)
         + ")()"
@@ -320,19 +366,23 @@ def run_view(browser, dev, theme, f, dataset):
         expect(selector).to_have_value(theme)
         expect(page.locator("html")).to_have_attribute("data-theme", theme)
         audits = [contrast(page, "#auth", view)]
+        page.evaluate("performance.mark('amc-login')")
         start = perf_counter()
         authenticate(page, f["owner"])
         expect(page.locator("#command-center")).to_be_visible()
         counts = check_dashboard(page, f, dataset)
         ready_ms = round((perf_counter() - start) * 1000)
         settle(page)
+        page.evaluate("performance.mark('amc-dashboard-ready')")
+        # Observe the loaded layout before any deliberate scroll or navigation.
+        page.wait_for_timeout(1100)
+        perf = measurements(page)
         screenshot = capture(page, view + "-overview")
         reflow(page)
         audits.append(contrast(page, "#command-center", view))
         if page.locator("#workspace-sidebar").is_visible() and not page.locator("#menu-toggle").is_visible():
             audits.append(contrast(page, "#workspace-sidebar", view))
         assert not no_motion(page)
-        perf = measurements(page)
         perf["login_to_verified_dashboard_ms"] = ready_ms
         start = perf_counter()
         choose_campaign(page, f["campaigns"][1])
@@ -340,7 +390,7 @@ def run_view(browser, dev, theme, f, dataset):
         perf["switch_campaign_ms"] = round((perf_counter() - start) * 1000)
         choose_campaign(page, f["campaigns"][0])
         result = {"device": dev, "theme": theme, "viewport": [w, h], "counts": counts, "performance": perf, "screenshots": [screenshot], "contrast": audits}
-        result["keyboard"] = keyboard(page)
+        result["keyboard"] = keyboard(page, view, result["screenshots"])
         if dev == "desktop" and theme == "light":
             result["network_states"] = task_network(page, f)
         page.locator("#knowledge-client").select_option(f["clients"][0]["id"])
@@ -348,6 +398,13 @@ def run_view(browser, dev, theme, f, dataset):
         result["screenshots"].append(capture(page, view + "-knowledge", top="#knowledge-panel"))
         reflow(page)
         audits.append(contrast(page, "#knowledge-panel", view))
+        if dev == "mobile" and theme == "dark":
+            page.locator("#catalog-drawer summary").click()
+            expect(page.locator("#catalog-pane")).to_contain_text("Bộ gốm Mùa Hạ")
+            reflow(page)
+            audits.append(contrast(page, "#catalog-pane", view))
+            result["screenshots"].append(capture(page, view + "-catalog", top="#catalog-drawer"))
+            page.locator("#catalog-drawer summary").click()
         result["screenshots"].append(capture(page, view + "-work", top="#command-flow"))
         assert not errors, errors
         return result
@@ -375,9 +432,34 @@ def mode_and_scope(browser, api, f):
         capture(page, "solo-dark-empty")
         page.set_viewport_size({"width": 320, "height": 700})
         assert reflow(page) == 320
+        link = page.locator("#command-new-link")
+        root = "/api/tenants/" + f["empty"]
+        # In-house provisioning already creates the internal client used for the first brand.
+        companies = request_json(api, "GET", root + "/clients", f["owner"])
+        assert len(companies) == 1 and not request_json(api, "GET", root + "/brands", f["owner"])
+        company = companies[0]
+        expect(link).to_have_attribute("href", "#brand-form")
+        brand = post(api, root + "/brands", f["owner"], {"name": "Hạt Mầm Studio", "client_id": company["id"]})
+        page.locator("#command-refresh").click()
+        expect(link).to_have_attribute("href", "#campaign-form")
+        goal = "Tăng đăng ký buổi trải nghiệm sản phẩm mới."
+        business = post(api, root + "/campaigns", f["owner"], {"name": "Tuần trải nghiệm", "brand_id": brand["id"], "objective": goal, "brief": goal})
+        page.locator("#command-refresh").click()
+        expect(page.locator("#command-campaign-count")).to_have_text("1")
+        choose_campaign(page, business)
+        expect(page.locator("#command-client-total")).to_have_text("Marketing nội bộ · 1 thương hiệu")
+        expect(page.locator("#command-scope")).to_contain_text(brand["name"])
+        expect(page.locator("#command-center")).not_to_contain_text(f["campaigns"][2]["name"])
+        membership_modes = {m["tenant_id"]: m["mode"] for m in request_json(api, "GET", "/api/me", f["owner"])["tenants"]}
+        assert membership_modes == {f["tenant"]: "agency", f["empty"]: "inhouse"}
+        page.set_viewport_size({"width": 820, "height": 1180})
+        page.emulate_media(color_scheme="light")
+        capture(page, "business-light-tablet")
+        page.set_viewport_size({"width": 320, "height": 700})
         page.locator("#workspace-select").select_option(f["tenant"])
         expect(page.locator("#command-campaign-count")).to_have_text("3")
         reflow(page)
+        legacy_transition(page, api, f)
         page.locator("#switch-account").click()
         scoped = browser.new_context(viewport={"width": 820, "height": 1180}, locale="vi-VN")
         try:
@@ -392,9 +474,77 @@ def mode_and_scope(browser, api, f):
             assert not task_requests
         finally:
             scoped.close()
-        return {"system_preference": True, "checks_at_320px": 2, "empty_totals_zero": True, "recipient_staff_task_requests": 0}
+        return {
+            "system_preference": True,
+            "checks_at_320px": 2,
+            "empty_totals_zero": True,
+            "recipient_staff_task_requests": 0,
+            "server_modes": sorted(membership_modes.values()),
+            "inhouse_setup": ["provisioned_internal_client", "brand", "campaign", "objective"],
+            "legacy_qa": "New PostgreSQL migration-shaped fixture, current assessment, independent reapproval, dashboard refresh",
+        }
     finally:
         ctx.close()
+
+
+def legacy_transition(page, api, f):
+    campaign = f["campaigns"][0]
+    row = post(
+        api,
+        f["base"] + "/deliverables",
+        f["editor"],
+        {"campaign_id": campaign["id"], "title": "Bản giao trước khi cập nhật QA", "content": {"client_preview": "Thông tin cho đội nội bộ."}},
+    )
+    # Reproduce the legacy row covered by check_postgres_upgrade. Guard each identifier
+    # and the original draft status; this fixture exists only inside our disposable tenant.
+    tid, did, reviewer = (str(UUID(x)) for x in (f["tenant"], row["id"], f["owner"]["user_id"]))
+    sql = f"""UPDATE public.deliverables SET status='approved', reviewed_by='{reviewer}', qa_evidence=NULL
+               WHERE id='{did}' AND tenant_id='{tid}' AND status='draft' RETURNING id"""
+    if PROJECT:
+        assert PROJECT == "amc-acceptance"
+        res = subprocess.run(
+            ["docker", "compose", "-p", PROJECT, "exec", "-T", "db", "psql", "-XAtq", "-v", "ON_ERROR_STOP=1", "-U", "amc", "-d", "amc"],
+            input=sql,
+            text=True,
+            capture_output=True,
+            check=True,
+        )
+        assert res.stdout.strip() == did
+    else:
+        with psycopg.connect(os.environ["AMC_MIGRATION_DSN"]) as db:
+            assert db.info.dbname.startswith("amc_test")
+            assert str(db.execute(sql).fetchone()[0]) == did
+    path = f["base"] + "/deliverables/" + did
+    legacy = request_json(api, "GET", path, f["owner"])
+    assert legacy["status"] == "approved" and not current_approval(legacy) and not legacy["qa_evidence"]
+    page.locator("#command-refresh").click()
+    expect(page.locator("#command-deliverable-count")).to_have_text("5")
+    choose_campaign(page, campaign)
+    outcome = page.locator("#command-outcomes li").filter(has_text=row["title"])
+    expect(outcome).to_contain_text("Chờ QA")
+    expect(page.locator("#command-review-count")).to_have_text("2")
+    expect(page.locator("#command-approved-count")).to_have_text("1")
+    fresh = request_json(api, "POST", path + "/assessment", f["owner"], {})
+    assert not current_approval(fresh) and fresh["qa_evidence"]["qa_revision"] == fresh["qa_revision"]
+    page.locator("#command-refresh").click()
+    expect(outcome).to_contain_text("Chờ QA")
+    accepted = request_json(
+        api,
+        "POST",
+        path + "/review",
+        f["owner"],
+        {
+            "decision": "approved",
+            "expected_qa_revision": fresh["qa_revision"],
+            "expected_content_digest": fresh["qa_evidence"]["content_digest"],
+            "note": "Đã đối chiếu bản hiện tại.",
+        },
+    )
+    assert current_approval(accepted)
+    page.locator("#command-refresh").click()
+    expect(page.locator("#command-review-count")).to_have_text("1")
+    expect(page.locator("#command-approved-count")).to_have_text("2")
+    expect(outcome).to_contain_text("Đã qua QA")
 
 
 def contact_sheet(browser, views):
@@ -421,12 +571,81 @@ def contact_sheet(browser, views):
     page.close()
 
 
+def foreground_membership(browser, api, f):
+    viewer = account(api, "thu")
+    invite_member(api, f["base"], f["owner"]["headers"], viewer["headers"], email=viewer["email"], role="viewer")
+    scope = f["base"] + "/members/" + viewer["user_id"] + "/client-scope"
+    page = browser.new_page(viewport={"width": 1280, "height": 900})
+    held = {}
+
+    def collection(route):
+        if "collection" in held:
+            route.continue_()
+            return
+        held["collection"] = (route, route.fetch())
+        page.evaluate("window.__amcCollectionHeld=true")
+
+    def identity(route):
+        if "identity" in held:
+            route.continue_()
+            return
+        held["identity"] = route
+        page.evaluate("window.__amcIdentityHeld=true")
+
+    try:
+        page.goto(BASE + "/?workspace=" + f["tenant"])
+        page.route("**" + f["base"] + "/actions", collection)
+        authenticate(page, viewer)
+        page.wait_for_function("window.__amcCollectionHeld === true")
+        expect(page.locator("#workspace-loading")).to_be_visible()
+        expect(page.locator("#command-center")).to_be_hidden()
+        expect(page.locator("#campaigns-list")).to_be_hidden()
+        assert page.locator("#workspace").bounding_box()["height"] >= 800
+        capture(page, "desktop-cold-loading")
+        initial, answer = held.pop("collection")
+        initial.fulfill(response=answer)
+        page.evaluate("window.__amcCollectionHeld=false")
+        expect(page.locator("#command-campaign-count")).to_have_text("3")
+        choose_campaign(page, f["campaigns"][2])
+        page.locator("#refresh").click()
+        page.wait_for_function("window.__amcCollectionHeld === true")
+        # Dispatch both lifecycle states deterministically. Both HTTP responses are real.
+        page.evaluate(
+            """()=>{Object.defineProperty(document,'hidden',{configurable:true,get:()=>true}); document.dispatchEvent(new Event('visibilitychange'))}"""
+        )
+        page.route("**/api/me", identity)
+        page.evaluate(
+            """()=>{Object.defineProperty(document,'hidden',{configurable:true,get:()=>false}); document.dispatchEvent(new Event('visibilitychange'))}"""
+        )
+        page.wait_for_function("window.__amcIdentityHeld === true")
+        request_json(api, "PUT", scope, f["owner"], {"client_id": f["clients"][0]["id"]})
+        old_route, authorized_before_change = held["collection"]
+        with page.expect_response(lambda response: response.url.endswith(f["base"] + "/actions")) as finished:
+            old_route.fulfill(response=authorized_before_change)
+        finished.value.finished()
+        settle(page)
+        expect(page.locator("#command-center")).not_to_contain_text(f["campaigns"][2]["name"])
+        assert not page.locator("#campaigns-list button[data-action]:visible").count()
+        held["identity"].continue_()
+        expect(page.locator("body")).to_have_attribute("data-access", "portal")
+        expect(page.locator("#command-center")).to_be_hidden()
+        expect(page.locator("#knowledge-panel")).to_be_hidden()
+        expect(page.locator("#workspace")).not_to_contain_text(f["campaigns"][2]["name"])
+        current = request_json(api, "GET", "/api/me", viewer)
+        assert any(m["tenant_id"] == f["tenant"] and m["role"] == "client_viewer" for m in current["tenants"])
+        return "Delayed real collection and membership reads, changed viewer to client portal, no stale private campaign restored"
+    finally:
+        page.close()
+
+
 def run():
     assert urlsplit(BASE).hostname in {"localhost", "127.0.0.1", "::1"}
     OUT.mkdir(parents=True, exist_ok=True)
     report = {
         "tested_revision": subprocess.check_output(["git", "rev-parse", "HEAD"], text=True).strip(),
         "synthetic": True,
+        "measurement_notes": "Loopback PostgreSQL and headless Chromium, device scale 1, no network or CPU throttling. Document timings cover the reloaded login page. Dashboard readiness includes login, API reads and assertions. Campaign switch is a separate interaction.",
+        "contrast_scope": "Rendered text pairs in the named surfaces, normal text 4.5:1 and large text 3:1 (WCAG 2.2 SC 1.4.3).",
         "started_at_utc": datetime.now(timezone.utc).isoformat(),
         "views": [],
     }
@@ -448,13 +667,25 @@ def run():
                     write()
                     print(f"Captured and verified {dev} {theme}", flush=True)
             report["scope_and_reflow"] = mode_and_scope(browser, api, f)
+            report["foreground_membership"] = foreground_membership(browser, api, f)
             assert db_counts(f["tenant"]) == before and before["runs"] == before["ledger_entries"] == 0
             report["postgresql"] = before
             contact_sheet(browser, report["views"])
             failures = [{"view": a["view"], "surface": a["surface"], **row} for v in report["views"] for a in v["contrast"] for row in a["failed"]]
             report["failed_contrast_count"] = len(failures)
+            unresolved = [row for v in report["views"] for a in v["contrast"] for row in a["unresolved"]]
+            report["unresolved_contrast_count"] = len(unresolved)
+            required = {f"{dev}-{theme}-{surface}.png" for dev in MATRIX for theme in ("light", "dark") for surface in ("overview", "work", "knowledge")}
+            required.add("desktop-cold-loading.png")
+            required.update(
+                {"mobile-light-navigation.png", "mobile-dark-catalog.png", "overview-contact.png", "business-light-tablet.png", "solo-dark-empty.png"}
+            )
+            report["screenshots"] = sorted(required)
             write()
             assert not failures, failures[:8]
+            assert not unresolved, unresolved[:8]
+            assert all((OUT / image).read_bytes()[:8] == b"\x89PNG\r\n\x1a\n" for image in required)
+            assert json.loads((OUT / "ui-acceptance.json").read_text(encoding="utf8")) == report
         finally:
             browser.close()
     print("PASS real-data command center on desktop, tablet and mobile in both color modes")

@@ -191,7 +191,22 @@ def run_internal(api, case, url, folder, study, recovery):
             if study:
                 stage = "strategy" if workflow == c3_assets.RESEARCH else "content"
                 success = next(a for a in reversed(record["attempts"]) if a["schema"] == "c3_skills_" + stage and "raw_output" in a)
-                record["matched_instruction_control"] = instruction_control(lab, requests[success["attempt_id"]], success, projection, workflow, native)
+                request = requests[success["attempt_id"]]
+                dump(
+                    folder / "paired-role.json",
+                    {
+                        "case": case["id"],
+                        "workflow": workflow,
+                        "role": stage,
+                        "request": request,
+                        "attempt_id": success["attempt_id"],
+                        "request_sha256": success["request_sha256"],
+                        "projection": projection,
+                        "checkpoints": native,
+                        "treatment_groups": composed,
+                    },
+                )
+                record["matched_instruction_control"] = instruction_control(lab, request, success, projection, workflow, native)
         record["automated_journey_seconds"] = round(monotonic() - start, 3)
         return record
     finally:

@@ -67,7 +67,7 @@ def exercise(api, browser, width, height):
         },
     )
     expect(pane.locator(".catalog-detail dd").get_by_text("12.34", exact=True)).to_be_visible()
-    pane.scroll_into_view_if_needed()
+    pane.locator(".catalog-detail").evaluate("element => element.scrollIntoView({block:'start'})")
     assert page.evaluate("document.documentElement.scrollWidth <= window.innerWidth")
     page.screenshot(path=str(OUT / f"catalog-{width}-offer.png"))
     catalog = prefix + f"/clients/{client}/brands/{brand}/catalog"
@@ -84,6 +84,7 @@ def exercise(api, browser, width, height):
     pane.get_by_label("Loại dữ liệu").select_option("icp")
     pane.get_by_role("button", name="Thợ lát gạch", exact=True).click()
     expect(pane.get_by_text("Chưa liên kết chứng cứ.", exact=True)).to_be_visible()
+    pane.locator(".catalog-detail").evaluate("element => element.scrollIntoView({block:'start'})")
     page.screenshot(path=str(OUT / f"catalog-{width}-audience.png"))
     after = db_counts(tenant)
     assert before == after and before["runs"] == before["ledger_entries"] == 0

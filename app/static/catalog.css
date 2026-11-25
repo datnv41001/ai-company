@@ -1,7 +1,7 @@
 .marketing-catalog {
   margin-block: 1.5rem;
   padding-top: 1rem;
-  border-top: 1px solid #bacbc6;
+  border-top: 1px solid #425574;
 }
 .catalog-tools,
 .marketing-catalog nav {
@@ -14,15 +14,22 @@
   padding: 0;
   list-style: none;
 }
+.catalog-tools > select,
+.catalog-tools > input {
+  flex: 1 1 12rem;
+  min-width: 0;
+  width: auto;
+}
 .catalog-list li {
   display: flex;
   gap: 0.6rem;
   align-items: center;
-  border-bottom: 1px solid #dce4e0;
+  border-bottom: 1px solid #425574;
   padding: 0.35rem 0;
 }
 .catalog-list li span {
-  color: #456057;
+  color: #bbcadb;
+  overflow-wrap: anywhere;
 }
 .catalog-detail dl {
   display: grid;
@@ -55,6 +62,7 @@
 @media (max-width: 480px) {
   .catalog-tools > * {
     width: 100%;
+    flex-basis: 100%;
   }
   .catalog-detail dl {
     grid-template-columns: minmax(6rem, 1fr) 1.6fr;

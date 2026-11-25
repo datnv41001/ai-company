@@ -209,7 +209,9 @@ function createCatalogPane(root, api) {
           root.textContent = 'Quyền truy cập hoặc phạm vi đã thay đổi. Mở lại hồ sơ để xem dữ liệu hiện tại.';
           return;
         }
-        message.textContent = err.message || 'Chưa tải được dữ liệu. Thử lại.';
+        message.textContent = err.message === 'Revision is outside its validity interval'
+          ? 'Chỉ có thể duyệt trong khoảng hiệu lực đã lưu. Hãy kiểm tra ngày bắt đầu và ngày kết thúc.'
+          : err.message || 'Chưa tải được dữ liệu. Thử lại.';
       });
   }
   function reset() {

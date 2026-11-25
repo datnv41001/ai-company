@@ -6,7 +6,7 @@ import subprocess
 from datetime import datetime, timedelta, timezone
 from decimal import Decimal
 from pathlib import Path
-from time import perf_counter
+from time import perf_counter, sleep
 from urllib.parse import urlsplit
 from uuid import uuid4
 
@@ -210,9 +210,15 @@ def offer_scenarios(api, owner, base, pane, prod, market, code, page, size):
             "valid_from": local_field(future),
             "valid_until": local_field(future + timedelta(days=10)),
         },
+        approve=False,
     )
+    pane.get_by_label("Lý do quyết định").fill("Thử duyệt trong khi giá chưa có hiệu lực.")
+    with page.expect_response(lambda r: r.request.method == "POST" and r.url.endswith("/events")) as denied:
+        pane.get_by_role("button", name="Duyệt", exact=True).click()
+    assert denied.value.status == 409
+    expect(pane.get_by_role("status")).to_contain_text("Chỉ có thể duyệt trong khoảng hiệu lực")
     row = catalog_record(api, base, owner, "offer")
-    assert row["state"] == "pending_effective", row["state"]
+    assert row["state"] == "draft"
     local_scope = {**scope, "region": "VN-SG"}
     enter_item(pane, "policy", {**local_scope, "warranty": "3 months", "buyer": "retail"})
     local_policy = catalog_record(api, base, owner, "policy", label="3 months")
@@ -232,8 +238,19 @@ def offer_scenarios(api, owner, base, pane, prod, market, code, page, size):
     )
     cards = get(api, base + "/catalog/items", owner, kind="offer")["items"]
     offer_scopes = {get(api, base + "/catalog/items/" + card["id"], owner)["data"]["placement"]["region"]: card["state"] for card in cards}
-    assert offer_scopes == {"VN-DN": "pending_effective", "VN-SG": "approved"}
-    return {"offers_by_region": offer_scopes}
+    assert offer_scopes == {"VN-DN": "draft", "VN-SG": "approved"}
+    active = next(card for card in cards if card["state"] == "approved")
+    raw = get(api, base + "/knowledge/revisions/" + active["id"], owner)["data"]
+    expires = datetime.now(timezone.utc) + timedelta(seconds=25)
+    expiring = revision(
+        api,
+        owner,
+        base + "/knowledge",
+        "short-service-window",
+        "offer",
+        {**raw, "valid_until": expires.isoformat(), "price": {**raw["price"], "amount_minor": 360000}},
+    )
+    return {"offers_by_region": offer_scopes, "advance_approval_http": 409, "expiry_fixture": {"id": expiring["id"], "until": expires.isoformat()}}
 
 
 def editor_projection(api, browser, size, owner, t, c, b, prefix, claim, source, markers, wording):
@@ -457,6 +474,19 @@ def exercise(api, browser, size, code):
             expect(page.locator(".knowledge-brief")).to_contain_text(label)
         assert current_brief(api, base, owner) == draft
         report["screenshots"].append(capture(page, size, code, "pinned-brief", page.locator(".knowledge-brief")))
+        if code == "service":
+            window = report["commerce"].pop("expiry_fixture")
+            remaining = (datetime.fromisoformat(window["until"]) - datetime.now(timezone.utc)).total_seconds()
+            if remaining > 0:
+                sleep(remaining + 0.1)
+            expired = get(api, base + "/catalog/items/" + window["id"], owner)
+            assert expired["state"] == "expired"
+            pane = open_catalog(page)
+            pane.get_by_label("Loại dữ liệu").select_option("offer")
+            pane.get_by_role("button", name=expired["label"], exact=True).click()
+            expect(pane.locator(".catalog-detail")).to_contain_text("Hết hạn · Phiên bản")
+            report["commerce"]["approved_offer_expired"] = True
+            report["screenshots"].append(capture(page, size, code, "expired-offer", pane.locator(".catalog-detail")))
         assert get(api, "/api/me", owner)["tenants"] == original
         assert db_counts(t) == before and before["runs"] == before["ledger_entries"] == 0
         for kind, prior in deliveries_before.items():

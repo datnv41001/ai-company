@@ -1,7 +1,9 @@
 import os
+import sqlite3
 from collections.abc import Generator
 from dotenv import dotenv_values
 from sqlalchemy import create_engine, event, inspect, text
+from sqlalchemy.engine import Engine
 from sqlalchemy.orm import DeclarativeBase, Session
 
 # Only shared application settings cross the native API startup boundary.
@@ -25,6 +27,13 @@ if DATABASE_URL.startswith("sqlite"):
         cursor = dbapi_conn.cursor()
         cursor.execute("PRAGMA foreign_keys=ON")
         cursor.close()
+
+
+@event.listens_for(Engine, "connect")
+def identify_sqlite_edition_writer(dbapi_conn, _record):
+    # Workers can use their own SQLAlchemy engine against the same local file.
+    if isinstance(dbapi_conn, sqlite3.Connection):
+        dbapi_conn.create_function("amc_edition_writer_v4", 0, lambda: 4)
 
 
 class Base(DeclarativeBase):
@@ -80,6 +89,14 @@ def prepare_database(bind, *, verify_identity=True):
                 conn.exec_driver_sql("ALTER TABLE workforce_briefs ADD COLUMN origin VARCHAR(12) NOT NULL DEFAULT 'agency'")
                 conn.exec_driver_sql("DROP TRIGGER IF EXISTS workforce_check_intake")
             Base.metadata.create_all(conn)
+            if bind.url.database not in (None, "", ":memory:"):
+                # A file can outlive the process that opened it. A predecessor lacking
+                # the connection function cannot commit delivery writes after this cutover.
+                for table in ("deliverables", "client_reviews", "review_entries", "knowledge_commands"):
+                    verbs = ("INSERT",) if table == "knowledge_commands" else ("INSERT", "UPDATE", "DELETE")
+                    for verb in verbs:
+                        conn.exec_driver_sql(f"""CREATE TRIGGER IF NOT EXISTS edition_v4_{table}_{verb}
+                            BEFORE {verb} ON {table} BEGIN SELECT amc_edition_writer_v4(); END""")
             from .session_state import install_epoch_trigger
             install_epoch_trigger(conn)
             for index in Base.metadata.tables["workforce_runs"].indexes:

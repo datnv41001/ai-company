@@ -1,0 +1,115 @@
+{
+  "provenance": "Synthetic Agency, restricted PostgreSQL runtime and distinct dispatcher and worker logins. Deterministic role replies and scripted QA.",
+  "source_sha": "14e162faa3cb3de54ff39e6e6f71c7db8109444a",
+  "postgres": "16.16",
+  "workflow": "WF-03/research-strategy-draft@3",
+  "snapshot": {
+    "id": "ec36d688-babe-407f-9050-73451aee1451",
+    "version": 1,
+    "title": "Bộ mẫu vải",
+    "preview": "Chiến lược Marketing\n\nĐối tượng\nXưởng nội thất\n\nLựa chọn chiến lược\nĐề xuất giúp Xưởng nội thất đối chiếu quy cách của Bộ mẫu vải trước khi gửi yêu cầu báo giá.\n\nTriển khai trên kênh\nTrên web, đặt điều kiện áp dụng cạnh lời mời báo giá. Chuyển yêu cầu đủ thông tin cho Sales.\n\nQuyết định tiếp theo\nNếu nhiều người gửi nhưng Sales còn phải hỏi lại, ưu tiên sửa trường thông tin thiếu trước khi mở rộng kênh.\n\nKế hoạch đo lường\n\nGiả thuyết cần thử\nThử đặt quy cách trước biểu mẫu để người mua có thể gửi yêu cầu đủ thông tin hơn.\n\nHành động của người mua\nYêu cầu báo giá\n\nPhương pháp đo\nĐối soát mã yêu cầu duy nhất với yêu cầu Sales đủ thông tin để báo giá. So sánh trên lượt vào trang cùng nhóm khách.",
+    "digest": "a91c2ebf9372ddcdf4270a0544f90b14a6dcb9c1711dbd1ccac5151df57522f3"
+  },
+  "decisions": {
+    "c3_qa": "8e6f77db-0b67-4450-9501-9b1191b5d81c",
+    "c3_share": "b1202baa-c865-44c3-8908-a57c941e304f"
+  },
+  "staff_evidence": {
+    "customer_delivery": {
+      "scope": {
+        "brand_id": "fe285686-5225-4bf5-b10d-760bea9cedaf",
+        "client_id": "996c6ab1-a40d-4821-9435-1b2964cd5208",
+        "tenant_id": "69f0cc30-a746-4825-8808-4ee7ff66bb0b",
+        "campaign_id": "5016b633-dccf-4243-a2a4-ad1b1ff9a4d3"
+      },
+      "assets": {
+        "client_strategy": {
+          "digest": "e5885b906924094a4b307ff9b4bd058525c2cb94d343eeea297829653c23261a",
+          "fields": {
+            "target": "Xưởng nội thất",
+            "decision": "Đề xuất giúp Xưởng nội thất đối chiếu quy cách của Bộ mẫu vải trước khi gửi yêu cầu báo giá.",
+            "activation": "Trên web, đặt điều kiện áp dụng cạnh lời mời báo giá. Chuyển yêu cầu đủ thông tin cho Sales.",
+            "next_decision": "Nếu nhiều người gửi nhưng Sales còn phải hỏi lại, ưu tiên sửa trường thông tin thiếu trước khi mở rộng kênh."
+          },
+          "approval_receipt": "f5ba8dd4-fcbd-46bc-b05f-6cad5d429a06"
+        },
+        "client_measurement": {
+          "digest": "da1c9bdcb6dec91d447c5bb09ab6ef923a39791d8b055cce6f24553b0e92173f",
+          "fields": {
+            "method": "Đối soát mã yêu cầu duy nhất với yêu cầu Sales đủ thông tin để báo giá. So sánh trên lượt vào trang cùng nhóm khách.",
+            "conversion": "Yêu cầu báo giá",
+            "hypothesis": "Thử đặt quy cách trước biểu mẫu để người mua có thể gửi yêu cầu đủ thông tin hơn."
+          },
+          "approval_receipt": "41169d7c-23d9-4e57-afb6-ad7b69fd4fdf"
+        }
+      },
+      "contract": "amc.customer-marketing-assets/1",
+      "revision": 2
+    },
+    "customer_field_evidence": {
+      "client_strategy": {
+        "target": [
+          {
+            "id": "4b8add5458212686da4a7b2c62f6877837155f1e4eae696ceb59293fc88ec6bc",
+            "handles": [],
+            "outcome": "editorial",
+            "claim_type": "editorial"
+          }
+        ],
+        "decision": [
+          {
+            "id": "d00bcf2b2d5075658a7102717f357f2092702e7147fdd7bc5a68dc785cd9751d",
+            "handles": [],
+            "outcome": "editorial",
+            "claim_type": "editorial"
+          }
+        ],
+        "activation": [
+          {
+            "id": "b1ff88f85523258a126f61a31bfbe76c2b9f081ce7697da35293f87e68ba7d11",
+            "handles": [],
+            "outcome": "editorial",
+            "claim_type": "editorial"
+          }
+        ],
+        "next_decision": [
+          {
+            "id": "1d2209d424b86c1883454cf38e62d41b791b30272bbff4e9f219f4808c2e6f35",
+            "handles": [],
+            "outcome": "editorial",
+            "claim_type": "editorial"
+          }
+        ]
+      },
+      "client_measurement": {
+        "method": [
+          {
+            "id": "c683da981acc17183fc99ebccb460fc2516538f5c9eb949dc201be2fb1def7ca",
+            "handles": [],
+            "outcome": "editorial",
+            "claim_type": "editorial"
+          }
+        ],
+        "conversion": [
+          {
+            "id": "44ec46aac73662c94f4fc208df25a0a941007f80a170ac594531732a1cf71a92",
+            "handles": [],
+            "outcome": "editorial",
+            "claim_type": "editorial"
+          }
+        ],
+        "hypothesis": [
+          {
+            "id": "cb670549c4e96a77ad4f9e608c99acfbfaf9c622795c80ad1b1e992d8db1059b",
+            "handles": [],
+            "outcome": "editorial",
+            "claim_type": "editorial"
+          }
+        ]
+      }
+    },
+    "content_gate_digest": "9f4cf4255cdeda8283021ff303af40638ec5c2087896057ef14d6bc035b6c315",
+    "manifest_digest": "60af49547af6de06c240509398c14e05366df27f0cc75828b9dac308dd512da3",
+    "release_digest": "cf9078f2aa283cc7a9e9c273abd3077338c94ebe0f51a65e0a30c33254d94969"
+  }
+}

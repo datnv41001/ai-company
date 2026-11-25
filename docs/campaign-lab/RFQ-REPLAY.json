@@ -1,0 +1,662 @@
+{
+  "contract_version": "campaign-execution-lab/rfq@1",
+  "synthetic": true,
+  "scenario_id": "tile-rfq-hanoi-v1",
+  "scenario_digest": "771f6ea44df7ed382cc47f52a708ecfd7b0ddd732ea393755f6c4d822cbddafb",
+  "goal": {
+    "revision": 1,
+    "objective": "Tăng yêu cầu báo giá đủ thông tin để Sales lập báo giá gạch cho dự án tại Hà Nội.",
+    "budget_vnd": 3000000,
+    "buyer": "Bộ phận thu mua của nhà thầu tại Hà Nội",
+    "offer": "Báo giá theo diện tích, địa bàn giao và tiến độ công trình"
+  },
+  "knowledge": {
+    "revision": 1,
+    "sku": "LAB-TILE-3060",
+    "product": "Gạch ốp tường 30 × 60 cm",
+    "market": "Hà Nội",
+    "unit": "m²",
+    "unknown": [
+      "Tồn kho theo lô",
+      "Phí vận chuyển theo công trình",
+      "Tỷ lệ RFQ thành đơn thực tế"
+    ]
+  },
+  "plan": {
+    "status": "approved",
+    "revision": 1,
+    "objective": "Tăng yêu cầu báo giá đủ thông tin để Sales lập báo giá gạch cho dự án tại Hà Nội.",
+    "buyer": "Bộ phận thu mua của nhà thầu tại Hà Nội",
+    "product": "Gạch ốp tường 30 × 60 cm",
+    "offer": "Báo giá theo diện tích, địa bàn giao và tiến độ công trình",
+    "budget_vnd": 3000000,
+    "missing_information": [
+      "Tồn kho theo lô",
+      "Phí vận chuyển theo công trình",
+      "Tỷ lệ RFQ thành đơn thực tế"
+    ],
+    "channels": [
+      "Trang yêu cầu báo giá",
+      "Quảng cáo tìm kiếm",
+      "Bài đăng mạng xã hội"
+    ],
+    "strategy": "Ưu tiên người phụ trách thu mua đã có công trình. Dùng tìm kiếm để tiếp cận nhu cầu báo giá, dẫn về một biểu mẫu ngắn và chuyển yêu cầu đủ thông tin cho Sales.",
+    "hypothesis": "Hỏi diện tích, địa bàn và thời điểm cần hàng ngay trên trang có thể giảm số lần Sales phải hỏi lại.",
+    "budget_proposal": "Dành 1.200.000 VND chi phí mô phỏng cho thử nghiệm tìm kiếm. Giữ phần còn lại chờ đối soát RFQ.",
+    "work_packages": [
+      {
+        "id": "intake",
+        "owner": "ai-account-director",
+        "acceptance": "Approved client brief with explicit missing-information list",
+        "milestone_day": 1
+      },
+      {
+        "id": "research",
+        "owner": "ai-market-researcher",
+        "acceptance": "Source-linked research and evidence log",
+        "milestone_day": 1
+      },
+      {
+        "id": "strategy",
+        "owner": "ai-marketing-strategist",
+        "acceptance": "Campaign strategy proposal with assumptions",
+        "milestone_day": 2
+      },
+      {
+        "id": "content",
+        "owner": "ai-copywriter-content-strategist",
+        "acceptance": "Editorial calendar and editable content drafts",
+        "milestone_day": 2
+      },
+      {
+        "id": "creative",
+        "owner": "ai-creative-director",
+        "acceptance": "Creative brief and asset checklist",
+        "milestone_day": 2
+      },
+      {
+        "id": "quality",
+        "owner": "ai-content-qa",
+        "acceptance": "QA findings and approval-ready assets",
+        "milestone_day": 3
+      },
+      {
+        "id": "reporting",
+        "owner": "ai-marketing-data-analyst",
+        "acceptance": "KPI measurement plan and data-source mapping",
+        "milestone_day": 12
+      }
+    ],
+    "knowledge_digest": "9c6fa900d328777c11c86facc8a9cf98c557a394f5729ddc5f638ccc9193d33f",
+    "goal_digest": "70587f3d6f27b0435ea287e4580c8ba32999d71ad60a1fbc5b8b8c5f55470640",
+    "workflow_contracts": [
+      {
+        "id": "WF-06 Campaign Factory",
+        "trigger": "approved strategy",
+        "steps": "breakdown -> tasks -> content/creative/media -> timeline -> review -> publish plan",
+        "approval_and_errors": "quản lý phụ thuộc, scope, deadline",
+        "status": "specification_only"
+      },
+      {
+        "id": "WF-07 Content Calendar",
+        "trigger": "content brief",
+        "steps": "pillar -> content variants -> per-channel edit -> brand QA -> preview -> approve",
+        "approval_and_errors": "sửa có version, không xuất bản thiếu duyệt",
+        "status": "specification_only"
+      },
+      {
+        "id": "WF-17 Analytics Ingestion",
+        "trigger": "schedule/API sync/CSV",
+        "steps": "fetch -> validation -> raw snapshot -> normalize -> reconciliation -> store",
+        "approval_and_errors": "lỗi nguồn phát cảnh báo, không bịa dữ liệu",
+        "status": "specification_only"
+      },
+      {
+        "id": "WF-18 Marketing Reporting",
+        "trigger": "period close",
+        "steps": "compute KPI deterministic -> narrative evidence -> exceptions -> review -> PDF/HTML/export -> client portal",
+        "approval_and_errors": "trace raw source, thiếu nguồn = null/not available",
+        "status": "specification_only"
+      },
+      {
+        "id": "WF-19 Optimization Loop",
+        "trigger": "performance anomaly",
+        "steps": "threshold -> root cause hypotheses -> recommendation -> simulation -> approval -> action -> measurement",
+        "approval_and_errors": "không tự chi vượt ngân sách",
+        "status": "specification_only"
+      },
+      {
+        "id": "WF-20 Lead-to-Sales",
+        "trigger": "qualified opt-in lead",
+        "steps": "score -> dedup -> route CRM -> activity -> status feedback -> attribution",
+        "approval_and_errors": "privacy/consent, dữ liệu chuyển giao phải đúng quyền",
+        "status": "specification_only"
+      }
+    ],
+    "proposal_digest": "4daf5112fc8f4adc76fc9d8d87522067168ce2eba903cd1b0734f284a2c93e36"
+  },
+  "assets": [
+    {
+      "id": "landing",
+      "kind": "landing_page",
+      "title": "Yêu cầu báo giá gạch ốp tường 30 × 60 cm",
+      "body": "Bộ phận thu mua của nhà thầu tại Hà Nội: đang lập dự toán cho công trình? Báo giá theo diện tích, địa bàn giao và tiến độ công trình. Hãy chọn mã LAB-TILE-3060. Gửi diện tích (m²), quận/huyện giao hàng và ngày cần hàng để nhận báo giá. Sales sẽ cần xác nhận tồn kho theo lô và phí giao trước khi chốt báo giá.",
+      "revision": 1,
+      "digest": "4854d4027f43fb2b4bd51258f59a970da3adcc956343347c6a691fd42f6f743d",
+      "status": "approved",
+      "context_digest": "ed908a0fe887071f0b70a39596c17f30d623e6d282918f6d3a05271181e35f2b",
+      "sku": "LAB-TILE-3060",
+      "buyer": "Bộ phận thu mua của nhà thầu tại Hà Nội",
+      "offer": "Báo giá theo diện tích, địa bàn giao và tiến độ công trình",
+      "objective": "Tăng yêu cầu báo giá đủ thông tin để Sales lập báo giá gạch cho dự án tại Hà Nội."
+    },
+    {
+      "id": "social",
+      "kind": "social_content",
+      "title": "Chuẩn bị yêu cầu báo giá cho công trình",
+      "body": "Anh/chị phụ trách thu mua đang so sánh phương án gạch ốp tường 30 × 60 cm tại Hà Nội? Chuẩn bị ba thông tin để Sales trao đổi đúng công trình. Gửi diện tích (m²), quận/huyện giao hàng và ngày cần hàng để nhận báo giá.",
+      "revision": 1,
+      "digest": "ceba7703d5296a95734b26440b1f85d592a9b84815a9a792180a90ba99e3a450",
+      "status": "approved",
+      "context_digest": "ed908a0fe887071f0b70a39596c17f30d623e6d282918f6d3a05271181e35f2b",
+      "sku": "LAB-TILE-3060",
+      "buyer": "Bộ phận thu mua của nhà thầu tại Hà Nội",
+      "offer": "Báo giá theo diện tích, địa bàn giao và tiến độ công trình",
+      "objective": "Tăng yêu cầu báo giá đủ thông tin để Sales lập báo giá gạch cho dự án tại Hà Nội."
+    },
+    {
+      "id": "ad",
+      "kind": "advertising_copy",
+      "title": "Gửi RFQ gạch ốp công trình",
+      "body": "Gạch ốp tường 30 × 60 cm cho dự án tại Hà Nội. Gửi diện tích (m²), quận/huyện giao hàng và ngày cần hàng để nhận báo giá.",
+      "revision": 1,
+      "digest": "5de36370bf88413bba444d485397282624b5ade1c2956c8d1f9116f19f2b882b",
+      "status": "approved",
+      "context_digest": "ed908a0fe887071f0b70a39596c17f30d623e6d282918f6d3a05271181e35f2b",
+      "sku": "LAB-TILE-3060",
+      "buyer": "Bộ phận thu mua của nhà thầu tại Hà Nội",
+      "offer": "Báo giá theo diện tích, địa bàn giao và tiến độ công trình",
+      "objective": "Tăng yêu cầu báo giá đủ thông tin để Sales lập báo giá gạch cho dự án tại Hà Nội."
+    },
+    {
+      "id": "seo",
+      "kind": "seo_metadata",
+      "title": "Báo giá gạch ốp tường 30 × 60 cm cho nhà thầu tại Hà Nội",
+      "body": "Mô tả tìm kiếm: Chuẩn bị yêu cầu báo giá gạch ốp tường 30 × 60 cm theo diện tích và kế hoạch giao. Gửi diện tích (m²), quận/huyện giao hàng và ngày cần hàng để nhận báo giá.",
+      "revision": 1,
+      "digest": "66e31385d501ed6af80caba36fbf7b05d9c43c1af3cbcbc6dafeb72bcf59aec6",
+      "status": "approved",
+      "context_digest": "ed908a0fe887071f0b70a39596c17f30d623e6d282918f6d3a05271181e35f2b",
+      "sku": "LAB-TILE-3060",
+      "buyer": "Bộ phận thu mua của nhà thầu tại Hà Nội",
+      "offer": "Báo giá theo diện tích, địa bàn giao và tiến độ công trình",
+      "objective": "Tăng yêu cầu báo giá đủ thông tin để Sales lập báo giá gạch cho dự án tại Hà Nội."
+    },
+    {
+      "id": "creative",
+      "kind": "creative_brief",
+      "title": "Brief hình minh họa cho trang báo giá",
+      "body": "Đối tượng: Bộ phận thu mua của nhà thầu tại Hà Nội. Hình chính: bố cục mô tả quy cách gạch ốp tường 30 × 60 cm và vị trí biểu mẫu. Chỉ dùng ảnh có quyền, giữ mã LAB-TILE-3060 đọc được ở kích thước di động. Bàn giao brief cho thiết kế. Hình ảnh cần sản xuất và duyệt riêng.",
+      "revision": 1,
+      "digest": "f537253fa09200f1476576bb1892c3712681855da5f4dc2546fcf6554ca442e3",
+      "status": "approved",
+      "context_digest": "ed908a0fe887071f0b70a39596c17f30d623e6d282918f6d3a05271181e35f2b",
+      "sku": "LAB-TILE-3060",
+      "buyer": "Bộ phận thu mua của nhà thầu tại Hà Nội",
+      "offer": "Báo giá theo diện tích, địa bàn giao và tiến độ công trình",
+      "objective": "Tăng yêu cầu báo giá đủ thông tin để Sales lập báo giá gạch cho dự án tại Hà Nội."
+    },
+    {
+      "id": "calendar",
+      "kind": "content_calendar",
+      "title": "Lịch nội dung và điểm duyệt",
+      "body": "Ngày 2: Copywriter hoàn tất bản trang, SEO và quảng cáo. Ngày 3: QA đối chiếu quy cách và duyệt CTA, mở trang mô phỏng. Ngày 4: Media chạy quảng cáo tìm kiếm mô phỏng. Ngày 5: rà soát bài mạng xã hội trước khi phát. Ngày 12: Analytics đối soát đơn bị hủy rồi đề xuất thử nghiệm.",
+      "revision": 1,
+      "digest": "e62c459aa55ffdb8893e433edbf7099e7df1c57ef73d41735a4bac531b0877a4",
+      "status": "approved",
+      "context_digest": "ed908a0fe887071f0b70a39596c17f30d623e6d282918f6d3a05271181e35f2b",
+      "sku": "LAB-TILE-3060",
+      "buyer": "Bộ phận thu mua của nhà thầu tại Hà Nội",
+      "offer": "Báo giá theo diện tích, địa bàn giao và tiến độ công trình",
+      "objective": "Tăng yêu cầu báo giá đủ thông tin để Sales lập báo giá gạch cho dự án tại Hà Nội."
+    }
+  ],
+  "actions": [
+    {
+      "id": "landing-slot",
+      "asset_id": "landing",
+      "slot": {
+        "id": "landing-slot",
+        "asset_id": "landing",
+        "day": 3,
+        "cost_vnd": 0
+      },
+      "state": "executed",
+      "history": [
+        "scheduled",
+        "authorized",
+        "executed"
+      ],
+      "attempts": 1,
+      "receipt": {
+        "id": "11654c8de1c9e67b7c8ed9fc89e508fddf451c17aacecc406c2697b35b6863c6",
+        "adapter": "synthetic-only",
+        "slot_id": "landing-slot",
+        "cost_vnd": 0,
+        "day": 3,
+        "asset_digest": "4854d4027f43fb2b4bd51258f59a970da3adcc956343347c6a691fd42f6f743d",
+        "approval_digest": "da8bb45145d10e47aca9a3fc975f8fb372fd88cdb799cc432e07c87dd7d4ec54"
+      }
+    },
+    {
+      "id": "ad-slot",
+      "asset_id": "ad",
+      "slot": {
+        "id": "ad-slot",
+        "asset_id": "ad",
+        "day": 4,
+        "cost_vnd": 1200000
+      },
+      "state": "executed",
+      "history": [
+        "scheduled",
+        "authorized",
+        "failed",
+        "executed"
+      ],
+      "attempts": 2,
+      "receipt": {
+        "id": "84fd418a82812d1bd44931eb1ca88188fc55bef140b12e45d6dc0da53235acea",
+        "adapter": "synthetic-only",
+        "slot_id": "ad-slot",
+        "cost_vnd": 1200000,
+        "day": 4,
+        "asset_digest": "5de36370bf88413bba444d485397282624b5ade1c2956c8d1f9116f19f2b882b",
+        "approval_digest": "a3ab7ae2df129726cb46fd1e3fda99e09888b3f7f3d6b33aca29fcaf0d0ffd87"
+      }
+    },
+    {
+      "id": "social-slot",
+      "asset_id": "social",
+      "slot": {
+        "id": "social-slot",
+        "asset_id": "social",
+        "day": 5,
+        "cost_vnd": 0
+      },
+      "state": "cancelled",
+      "history": [
+        "scheduled",
+        "authorized",
+        "cancelled"
+      ],
+      "attempts": 0,
+      "receipt": null
+    }
+  ],
+  "report": {
+    "visitors": 3,
+    "sessions": 4,
+    "rfqs": 5,
+    "qualified_leads": 3,
+    "sales_handoffs": 3,
+    "quotations": 3,
+    "orders": 3,
+    "confirmed_orders": 2,
+    "cancelled_orders": 1,
+    "confirmed_revenue_vnd": 10000000,
+    "attributed_revenue_vnd": 8000000,
+    "marketing_cost_vnd": 1200000,
+    "duplicates": 2,
+    "delayed_event_ids": [
+      "z5",
+      "resubmitted-r1",
+      "q1"
+    ],
+    "incomplete_rfqs": 1,
+    "missing_attribution": 2,
+    "received_events": 25,
+    "qualified_definition": "area_m2, district, required_by and consent_to_quote"
+  },
+  "leads": [
+    {
+      "rfq_id": "rfq-1",
+      "session_id": "s1",
+      "action_id": "ad-slot",
+      "state": "confirmed",
+      "qualified": true,
+      "complete": true,
+      "handed_off": true,
+      "quoted": true,
+      "ordered": true,
+      "revenue_vnd": 8000000,
+      "sales_payload": {
+        "source_request_id": "rfq-1",
+        "idempotency_key": "h1",
+        "area_m2": 200,
+        "district": "Hà Nội",
+        "required_by": "2026-12-20",
+        "consent_scope": "respond_to_rfq",
+        "recipient": "fixture:sales-desk"
+      },
+      "history": [
+        "r1",
+        "h1",
+        "q1",
+        "o1",
+        "c1"
+      ]
+    },
+    {
+      "rfq_id": "rfq-2",
+      "session_id": "s2",
+      "action_id": "landing-slot",
+      "state": "cancelled",
+      "qualified": true,
+      "complete": true,
+      "handed_off": true,
+      "quoted": true,
+      "ordered": true,
+      "revenue_vnd": 0,
+      "sales_payload": {
+        "source_request_id": "rfq-2",
+        "idempotency_key": "h2",
+        "area_m2": 200,
+        "district": "Hà Nội",
+        "required_by": "2026-12-20",
+        "consent_scope": "respond_to_rfq",
+        "recipient": "fixture:sales-desk"
+      },
+      "history": [
+        "r2",
+        "h2",
+        "q2",
+        "o2",
+        "c2",
+        "x2"
+      ]
+    },
+    {
+      "rfq_id": "rfq-3",
+      "session_id": "s3",
+      "action_id": null,
+      "state": "confirmed",
+      "qualified": true,
+      "complete": true,
+      "handed_off": true,
+      "quoted": true,
+      "ordered": true,
+      "revenue_vnd": 2000000,
+      "sales_payload": {
+        "source_request_id": "rfq-3",
+        "idempotency_key": "h3",
+        "area_m2": 200,
+        "district": "Hà Nội",
+        "required_by": "2026-12-20",
+        "consent_scope": "respond_to_rfq",
+        "recipient": "fixture:sales-desk"
+      },
+      "history": [
+        "r3",
+        "h3",
+        "q3",
+        "o3",
+        "c3"
+      ]
+    },
+    {
+      "rfq_id": "rfq-4",
+      "session_id": "s4",
+      "action_id": "ad-slot",
+      "state": "received",
+      "qualified": false,
+      "complete": false,
+      "handed_off": false,
+      "quoted": false,
+      "ordered": false,
+      "revenue_vnd": 0,
+      "sales_payload": null,
+      "history": [
+        "r4"
+      ]
+    },
+    {
+      "rfq_id": "rfq-5",
+      "session_id": null,
+      "action_id": null,
+      "state": "rejected",
+      "qualified": false,
+      "complete": true,
+      "handed_off": false,
+      "quoted": false,
+      "ordered": false,
+      "revenue_vnd": 0,
+      "sales_payload": null,
+      "history": [
+        "r5",
+        "z5"
+      ]
+    }
+  ],
+  "exceptions": [
+    {
+      "event_id": "r3",
+      "reason": "missing_attribution"
+    },
+    {
+      "event_id": "r4",
+      "reason": "missing_fields_or_consent"
+    },
+    {
+      "event_id": "r5",
+      "reason": "missing_attribution"
+    },
+    {
+      "event_id": "r5",
+      "reason": "missing_fields_or_consent"
+    }
+  ],
+  "recommendation": "Đối chiếu nguồn cho 2 RFQ và làm rõ 1 yêu cầu thiếu thông tin trước khi xin thêm ngân sách. Dùng doanh thu có nguồn 8,000,000 VND làm mốc của bộ dữ liệu mô phỏng.",
+  "approvals": [
+    {
+      "subject": "goal",
+      "digest": "70587f3d6f27b0435ea287e4580c8ba32999d71ad60a1fbc5b8b8c5f55470640",
+      "reviewer": "fixture:business-owner",
+      "synthetic": true
+    },
+    {
+      "subject": "knowledge",
+      "digest": "9c6fa900d328777c11c86facc8a9cf98c557a394f5729ddc5f638ccc9193d33f",
+      "reviewer": "fixture:business-owner",
+      "synthetic": true
+    },
+    {
+      "subject": "plan",
+      "digest": "4daf5112fc8f4adc76fc9d8d87522067168ce2eba903cd1b0734f284a2c93e36",
+      "reviewer": "fixture:budget-owner",
+      "synthetic": true
+    },
+    {
+      "subject": "landing",
+      "digest": "e8d75c8ea6a8b69c0fb9ba952ece2f2e0d923ffc73d05b1927b1486306c3eff0",
+      "reviewer": "fixture:marketing-qa",
+      "synthetic": true
+    },
+    {
+      "subject": "social",
+      "digest": "ffc76d0281c3076a19e9dc1377f4dd689074953fc768d8585a4b2f1d8ec845fd",
+      "reviewer": "fixture:marketing-qa",
+      "synthetic": true
+    },
+    {
+      "subject": "ad",
+      "digest": "0cbacea4a894a8fdb3f76d4a2570e640101c64b533fa91877e4b9815afc565c0",
+      "reviewer": "fixture:marketing-qa",
+      "synthetic": true
+    },
+    {
+      "subject": "seo",
+      "digest": "300ac031fa50c40038fff57c941fa4fa69a1b3f93bb14cae1f43bdda79c03403",
+      "reviewer": "fixture:marketing-qa",
+      "synthetic": true
+    },
+    {
+      "subject": "creative",
+      "digest": "b2f3e261df2d0c4e5e4aaea188c870be4deb1740e9a8ffed5bc061f8c8fcb8a8",
+      "reviewer": "fixture:marketing-qa",
+      "synthetic": true
+    },
+    {
+      "subject": "calendar",
+      "digest": "4d436fd468de832e92faf4673229f27d8fead7ce3be1d3fcdadba76ddf46597e",
+      "reviewer": "fixture:marketing-qa",
+      "synthetic": true
+    },
+    {
+      "subject": "landing-slot",
+      "digest": "da8bb45145d10e47aca9a3fc975f8fb372fd88cdb799cc432e07c87dd7d4ec54",
+      "reviewer": "fixture:channel-approver",
+      "synthetic": true
+    },
+    {
+      "subject": "ad-slot",
+      "digest": "a3ab7ae2df129726cb46fd1e3fda99e09888b3f7f3d6b33aca29fcaf0d0ffd87",
+      "reviewer": "fixture:channel-approver",
+      "synthetic": true
+    },
+    {
+      "subject": "social-slot",
+      "digest": "a8d8dc3441edc74025a179bc27f10b1dc17a0c3fd634bce2a1b644a728fc42d2",
+      "reviewer": "fixture:channel-approver",
+      "synthetic": true
+    }
+  ],
+  "runtime_ms": 5.3578,
+  "work_units": {
+    "contract": "rfq-work-units/v1",
+    "synthetic": true,
+    "rows": [
+      {
+        "unit_id": "tile-rfq-hanoi-v1/landing",
+        "category": "conversion_copy",
+        "complexity": "multi_section",
+        "requested_outcome": "Trang tiếp nhận yêu cầu báo giá",
+        "receiver": "Sales",
+        "completion_criteria": "locked-fixture-asset-and-qa/v1",
+        "status": "fixture_accepted",
+        "acceptance_actor": "fixture:marketing-qa",
+        "approval_digest": "e8d75c8ea6a8b69c0fb9ba952ece2f2e0d923ffc73d05b1927b1486306c3eff0",
+        "accepted_revision": 1,
+        "accepted_content_digest": "4854d4027f43fb2b4bd51258f59a970da3adcc956343347c6a691fd42f6f743d",
+        "manual_baseline_seconds": null,
+        "assisted_elapsed_seconds": null,
+        "clarification_seconds": null,
+        "editing_seconds": null,
+        "qa_seconds": null,
+        "allocated_cost_vnd": null
+      },
+      {
+        "unit_id": "tile-rfq-hanoi-v1/social",
+        "category": "channel_copy",
+        "complexity": "single_asset",
+        "requested_outcome": "Bài đăng theo brief người mua",
+        "receiver": "Social",
+        "completion_criteria": "locked-fixture-asset-and-qa/v1",
+        "status": "fixture_accepted",
+        "acceptance_actor": "fixture:marketing-qa",
+        "approval_digest": "ffc76d0281c3076a19e9dc1377f4dd689074953fc768d8585a4b2f1d8ec845fd",
+        "accepted_revision": 1,
+        "accepted_content_digest": "ceba7703d5296a95734b26440b1f85d592a9b84815a9a792180a90ba99e3a450",
+        "manual_baseline_seconds": null,
+        "assisted_elapsed_seconds": null,
+        "clarification_seconds": null,
+        "editing_seconds": null,
+        "qa_seconds": null,
+        "allocated_cost_vnd": null
+      },
+      {
+        "unit_id": "tile-rfq-hanoi-v1/ad",
+        "category": "channel_copy",
+        "complexity": "single_asset",
+        "requested_outcome": "Mẫu quảng cáo dẫn tới RFQ",
+        "receiver": "Media",
+        "completion_criteria": "locked-fixture-asset-and-qa/v1",
+        "status": "fixture_accepted",
+        "acceptance_actor": "fixture:marketing-qa",
+        "approval_digest": "0cbacea4a894a8fdb3f76d4a2570e640101c64b533fa91877e4b9815afc565c0",
+        "accepted_revision": 1,
+        "accepted_content_digest": "5de36370bf88413bba444d485397282624b5ade1c2956c8d1f9116f19f2b882b",
+        "manual_baseline_seconds": null,
+        "assisted_elapsed_seconds": null,
+        "clarification_seconds": null,
+        "editing_seconds": null,
+        "qa_seconds": null,
+        "allocated_cost_vnd": null
+      },
+      {
+        "unit_id": "tile-rfq-hanoi-v1/seo",
+        "category": "channel_copy",
+        "complexity": "single_asset",
+        "requested_outcome": "Tiêu đề và mô tả tìm kiếm",
+        "receiver": "SEO",
+        "completion_criteria": "locked-fixture-asset-and-qa/v1",
+        "status": "fixture_accepted",
+        "acceptance_actor": "fixture:marketing-qa",
+        "approval_digest": "300ac031fa50c40038fff57c941fa4fa69a1b3f93bb14cae1f43bdda79c03403",
+        "accepted_revision": 1,
+        "accepted_content_digest": "66e31385d501ed6af80caba36fbf7b05d9c43c1af3cbcbc6dafeb72bcf59aec6",
+        "manual_baseline_seconds": null,
+        "assisted_elapsed_seconds": null,
+        "clarification_seconds": null,
+        "editing_seconds": null,
+        "qa_seconds": null,
+        "allocated_cost_vnd": null
+      },
+      {
+        "unit_id": "tile-rfq-hanoi-v1/creative",
+        "category": "production_plan",
+        "complexity": "single_asset",
+        "requested_outcome": "Brief thiết kế có điều kiện sử dụng hình",
+        "receiver": "Design",
+        "completion_criteria": "locked-fixture-asset-and-qa/v1",
+        "status": "fixture_accepted",
+        "acceptance_actor": "fixture:marketing-qa",
+        "approval_digest": "b2f3e261df2d0c4e5e4aaea188c870be4deb1740e9a8ffed5bc061f8c8fcb8a8",
+        "accepted_revision": 1,
+        "accepted_content_digest": "f537253fa09200f1476576bb1892c3712681855da5f4dc2546fcf6554ca442e3",
+        "manual_baseline_seconds": null,
+        "assisted_elapsed_seconds": null,
+        "clarification_seconds": null,
+        "editing_seconds": null,
+        "qa_seconds": null,
+        "allocated_cost_vnd": null
+      },
+      {
+        "unit_id": "tile-rfq-hanoi-v1/calendar",
+        "category": "production_plan",
+        "complexity": "multi_channel",
+        "requested_outcome": "Lịch nội dung gồm kênh và điểm duyệt",
+        "receiver": "Campaign Manager",
+        "completion_criteria": "locked-fixture-asset-and-qa/v1",
+        "status": "fixture_accepted",
+        "acceptance_actor": "fixture:marketing-qa",
+        "approval_digest": "4d436fd468de832e92faf4673229f27d8fead7ce3be1d3fcdadba76ddf46597e",
+        "accepted_revision": 1,
+        "accepted_content_digest": "e62c459aa55ffdb8893e433edbf7099e7df1c57ef73d41735a4bac531b0877a4",
+        "manual_baseline_seconds": null,
+        "assisted_elapsed_seconds": null,
+        "clarification_seconds": null,
+        "editing_seconds": null,
+        "qa_seconds": null,
+        "allocated_cost_vnd": null
+      }
+    ],
+    "requested": 6,
+    "fixture_accepted": 6,
+    "business_accepted": 0,
+    "cost_per_business_accepted_vnd": null
+  },
+  "model_invocations": 0,
+  "manual_minutes": null,
+  "real_spend_vnd": 0
+}

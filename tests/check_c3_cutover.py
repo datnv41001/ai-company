@@ -28,6 +28,7 @@ STARTUP = [sys.executable, "-c", "from fastapi.testclient import TestClient; fro
 # Keep the same API process, pool connection and open transaction across cutover.
 # Zero-row statements only probe protocol enforcement. No client object is mutated.
 LIVE = """
+import json
 import sys
 from fastapi.testclient import TestClient
 from sqlalchemy.exc import DBAPIError
@@ -45,6 +46,17 @@ with TestClient(app) as client, engine.connect() as connection, Session(connecti
     print('ready',flush=True)
     for request in sys.stdin:
         if request.strip()=='stop': break
+        if request.startswith('{'):
+            # Only the test controller can write this private pipe. Exercise the pinned
+            # binary's ordinary FastAPI routes; return the refusal code, never credentials.
+            args=json.loads(request)
+            try:
+                response=client.request(**args)
+                result=str(response.status_code)
+            except DBAPIError as error:
+                result=str(error.orig.sqlstate)
+            print(result,flush=True)
+            continue
         if request.strip()=='protocol':
             print(protocol or 'undeclared',flush=True)
             continue

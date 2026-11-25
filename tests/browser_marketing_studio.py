@@ -78,6 +78,15 @@ def capture_completed(browser, origin, tenant, email, password, document_id, wor
                 expect(panel.get_by_label("Tiêu đề SEO", exact=True)).not_to_have_value("")
                 nav.evaluate("e=>e.scrollIntoView({block:'start'})")
                 capture_themes(page, out / f"{prefix}-seo-{width}.png")
+            # Preview an explicitly selected edition through the real UI. Do not save
+            # here: the model smoke measures exactly one editorial revision across devices.
+            panel.get_by_role("button", name="Soạn bộ tài liệu giao khách").click()
+            public.locator("summary").first.press("Enter")
+            expected = "Kế hoạch đo lường" if strategy else "Thông tin SEO"
+            expect(public.locator(".studio-edition-preview")).to_contain_text(expected)
+            assert "PRIVATE" not in public.locator(".studio-edition-preview").inner_text()
+            public.locator("summary").first.evaluate("e=>e.scrollIntoView({block:'start'})")
+            capture_themes(page, out / f"{prefix}-customer-{width}.png")
             sessions.append(
                 {
                     "viewport": [width, height],

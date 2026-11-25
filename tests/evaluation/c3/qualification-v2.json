@@ -1,0 +1,566 @@
+{
+  "version": 2,
+  "scope": "Held-out synthetic engineering evaluation. Ten new briefs; one per persona/workflow cell. Frozen before tuning. No practitioner labels. No spending.",
+  "cases": [
+    {
+      "id": "v2-01",
+      "persona": "seller",
+      "workflow": "WF-03",
+      "company": "Góc Sợi",
+      "brand": "Góc Sợi",
+      "product": "Đệm tựa ghế TUA-412",
+      "sku": "TUA-412",
+      "market": "Việt Nam",
+      "locale": "vi-VN",
+      "region": "Hạ Long",
+      "audience": "người thuê căn hộ",
+      "objective": "Giúp người thuê căn hộ chọn đệm theo kích thước ghế",
+      "channel": "web",
+      "buyer_action": "purchase",
+      "editorial_style": "plain",
+      "cta": "Đặt đệm theo kích thước ghế",
+      "kpi": "Yêu cầu đã xác nhận cho TUA-412",
+      "kpi_unit": "yêu cầu",
+      "kpi_method": "Đếm một lần mỗi yêu cầu được xác nhận cho TUA-412 trong 14 ngày, loại trùng theo mã yêu cầu.",
+      "kpi_window": "14 ngày",
+      "facts": [
+        {
+          "id": "material-scope",
+          "wording": "Đệm tựa ghế TUA-412 vỏ tháo rời.",
+          "qualifiers": "Áp dụng tại Hạ Long."
+        },
+        {
+          "id": "approved-terms",
+          "category": "price",
+          "wording": "Giá 165.000 VND/chiếc.",
+          "qualifiers": "Áp dụng tại Hạ Long. Chưa gồm gói quà.",
+          "price": {
+            "amount_minor": 165000,
+            "currency": "VND",
+            "unit": "piece",
+            "basis_quantity": "1",
+            "moq": "1",
+            "tier_min": "1",
+            "tier_max": null,
+            "tax": "included",
+            "conditions": [
+              "Áp dụng tại Hạ Long. Chưa gồm gói quà."
+            ]
+          },
+          "quantity": "1"
+        }
+      ],
+      "hypotheses": [
+        "Người mua có thể cần đối chiếu điều kiện trước khi chọn đệm theo kích thước ghế."
+      ],
+      "gaps": [
+        "Chưa đo tỷ lệ hoàn tất bước tiếp theo."
+      ],
+      "unsupported_example": "đảm bảo rẻ nhất thị trường"
+    },
+    {
+      "id": "v2-02",
+      "persona": "seller",
+      "workflow": "WF-13",
+      "company": "Bến Mộc",
+      "brand": "Bến Mộc",
+      "product": "Khay trà tròn KTR-75",
+      "sku": "KTR-75",
+      "market": "Việt Nam",
+      "locale": "vi-VN",
+      "region": "Vinh",
+      "audience": "khách mua quà",
+      "objective": "Giúp khách mua quà đối chiếu màu gỗ trước khi mua",
+      "channel": "web",
+      "buyer_action": "colour_card_request",
+      "editorial_style": "plain",
+      "cta": "Yêu cầu thẻ màu gỗ",
+      "kpi": "Yêu cầu đã xác nhận cho KTR-75",
+      "kpi_unit": "yêu cầu",
+      "kpi_method": "Đếm một lần mỗi yêu cầu được xác nhận cho KTR-75 trong 14 ngày, loại trùng theo mã yêu cầu.",
+      "kpi_window": "14 ngày",
+      "facts": [
+        {
+          "id": "material-scope",
+          "wording": "Khay trà tròn KTR-75 mặt gỗ dầu.",
+          "qualifiers": "Áp dụng tại Vinh."
+        },
+        {
+          "id": "approved-terms",
+          "category": "price",
+          "wording": "Giá 285.000 VND/chiếc.",
+          "qualifiers": "Áp dụng tại Vinh. Chưa gồm khắc tên.",
+          "price": {
+            "amount_minor": 285000,
+            "currency": "VND",
+            "unit": "piece",
+            "basis_quantity": "1",
+            "moq": "1",
+            "tier_min": "1",
+            "tier_max": null,
+            "tax": "included",
+            "conditions": [
+              "Áp dụng tại Vinh. Chưa gồm khắc tên."
+            ]
+          },
+          "quantity": "1"
+        }
+      ],
+      "hypotheses": [
+        "Người mua có thể cần đối chiếu điều kiện trước khi đối chiếu màu gỗ trước khi mua."
+      ],
+      "gaps": [
+        "Chưa đo tỷ lệ hoàn tất bước tiếp theo."
+      ],
+      "unsupported_example": "đảm bảo rẻ nhất thị trường"
+    },
+    {
+      "id": "v2-03",
+      "persona": "materials",
+      "workflow": "WF-03",
+      "company": "Xưởng Lát",
+      "brand": "Xưởng Lát",
+      "product": "Tấm sàn màu tro SL-817",
+      "sku": "SL-817",
+      "market": "Việt Nam",
+      "locale": "vi-VN",
+      "region": "Pleiku",
+      "audience": "đội thi công phòng đọc",
+      "objective": "Giúp đội thi công phòng đọc chọn mẫu trước khi đặt vật liệu",
+      "channel": "web",
+      "buyer_action": "sample_request",
+      "editorial_style": "plain",
+      "cta": "Yêu cầu mẫu tấm sàn",
+      "kpi": "Yêu cầu đã xác nhận cho SL-817",
+      "kpi_unit": "yêu cầu",
+      "kpi_method": "Đếm một lần mỗi yêu cầu được xác nhận cho SL-817 trong 14 ngày, loại trùng theo mã yêu cầu.",
+      "kpi_window": "14 ngày",
+      "facts": [
+        {
+          "id": "material-scope",
+          "wording": "Tấm sàn màu tro SL-817 bề mặt sọc mảnh.",
+          "qualifiers": "Áp dụng tại Pleiku."
+        },
+        {
+          "id": "approved-terms",
+          "category": "price",
+          "wording": "Giá 290.000 VND/m².",
+          "qualifiers": "Áp dụng tại Pleiku. Chưa gồm vận chuyển và lắp đặt.",
+          "price": {
+            "amount_minor": 290000,
+            "currency": "VND",
+            "unit": "m²",
+            "basis_quantity": "1",
+            "moq": "12",
+            "tier_min": "12",
+            "tier_max": null,
+            "tax": "included",
+            "conditions": [
+              "Áp dụng tại Pleiku. Chưa gồm vận chuyển và lắp đặt."
+            ]
+          },
+          "quantity": "12"
+        }
+      ],
+      "hypotheses": [
+        "Người mua có thể cần đối chiếu điều kiện trước khi chọn mẫu trước khi đặt vật liệu."
+      ],
+      "gaps": [
+        "Chưa đo tỷ lệ hoàn tất bước tiếp theo."
+      ],
+      "unsupported_example": "đảm bảo rẻ nhất thị trường"
+    },
+    {
+      "id": "v2-04",
+      "persona": "materials",
+      "workflow": "WF-13",
+      "company": "Sắc Kẽm",
+      "brand": "Sắc Kẽm",
+      "product": "Thanh nẹp góc NK-73",
+      "sku": "NK-73",
+      "market": "Việt Nam",
+      "locale": "vi-VN",
+      "region": "Biên Hòa",
+      "audience": "nhà thầu hoàn thiện",
+      "objective": "Giúp nhà thầu hoàn thiện so báo giá theo số thanh",
+      "channel": "web",
+      "buyer_action": "rfq",
+      "editorial_style": "plain",
+      "cta": "Gửi số lượng để yêu cầu báo giá",
+      "kpi": "Yêu cầu đã xác nhận cho NK-73",
+      "kpi_unit": "yêu cầu",
+      "kpi_method": "Đếm một lần mỗi yêu cầu được xác nhận cho NK-73 trong 14 ngày, loại trùng theo mã yêu cầu.",
+      "kpi_window": "14 ngày",
+      "facts": [
+        {
+          "id": "material-scope",
+          "wording": "Thanh nẹp góc NK-73 lớp phủ mờ.",
+          "qualifiers": "Áp dụng tại Biên Hòa."
+        },
+        {
+          "id": "approved-terms",
+          "category": "price",
+          "wording": "Giá 92.000 VND/chiếc.",
+          "qualifiers": "Áp dụng tại Biên Hòa. Báo giá chưa gồm cắt theo kích thước.",
+          "price": {
+            "amount_minor": 92000,
+            "currency": "VND",
+            "unit": "piece",
+            "basis_quantity": "1",
+            "moq": "15",
+            "tier_min": "15",
+            "tier_max": null,
+            "tax": "included",
+            "conditions": [
+              "Áp dụng tại Biên Hòa. Báo giá chưa gồm cắt theo kích thước."
+            ]
+          },
+          "quantity": "15"
+        }
+      ],
+      "hypotheses": [
+        "Người mua có thể cần đối chiếu điều kiện trước khi so báo giá theo số thanh."
+      ],
+      "gaps": [
+        "Chưa đo tỷ lệ hoàn tất bước tiếp theo."
+      ],
+      "unsupported_example": "đảm bảo rẻ nhất thị trường"
+    },
+    {
+      "id": "v2-05",
+      "persona": "service",
+      "workflow": "WF-03",
+      "company": "Nhịp Quạt",
+      "brand": "Nhịp Quạt",
+      "product": "Kiểm tra quạt hút KQ-64",
+      "sku": "KQ-64",
+      "market": "Việt Nam",
+      "locale": "vi-VN",
+      "region": "Cần Thơ",
+      "audience": "chủ bếp ăn nhỏ",
+      "objective": "Giúp chủ bếp ăn nhỏ chọn khung giờ kiểm tra thiết bị",
+      "channel": "web",
+      "buyer_action": "appointment",
+      "editorial_style": "plain",
+      "cta": "Đặt lịch kiểm tra thiết bị",
+      "kpi": "Yêu cầu đã xác nhận cho KQ-64",
+      "kpi_unit": "yêu cầu",
+      "kpi_method": "Đếm một lần mỗi yêu cầu được xác nhận cho KQ-64 trong 14 ngày, loại trùng theo mã yêu cầu.",
+      "kpi_window": "14 ngày",
+      "facts": [
+        {
+          "id": "material-scope",
+          "wording": "Kiểm tra quạt hút KQ-64 có phiếu ghi hiện trạng.",
+          "qualifiers": "Áp dụng tại Cần Thơ."
+        },
+        {
+          "id": "approved-terms",
+          "category": "price",
+          "wording": "Giá 240.000 VND/máy.",
+          "qualifiers": "Áp dụng tại Cần Thơ. Không bao gồm thay linh kiện.",
+          "price": {
+            "amount_minor": 240000,
+            "currency": "VND",
+            "unit": "machine",
+            "basis_quantity": "1",
+            "moq": "1",
+            "tier_min": "1",
+            "tier_max": null,
+            "tax": "included",
+            "conditions": [
+              "Áp dụng tại Cần Thơ. Không bao gồm thay linh kiện."
+            ]
+          },
+          "quantity": "1"
+        }
+      ],
+      "hypotheses": [
+        "Người mua có thể cần đối chiếu điều kiện trước khi chọn khung giờ kiểm tra thiết bị."
+      ],
+      "gaps": [
+        "Chưa đo tỷ lệ hoàn tất bước tiếp theo."
+      ],
+      "unsupported_example": "đảm bảo rẻ nhất thị trường"
+    },
+    {
+      "id": "v2-06",
+      "persona": "service",
+      "workflow": "WF-13",
+      "company": "Soi Nước",
+      "brand": "Soi Nước",
+      "product": "Vệ sinh bộ lọc LO-914",
+      "sku": "LO-914",
+      "market": "Việt Nam",
+      "locale": "vi-VN",
+      "region": "Long Xuyên",
+      "audience": "người vận hành quầy đồ uống",
+      "objective": "Giúp người vận hành quầy đồ uống xác nhận thời gian kỹ thuật viên tới",
+      "channel": "web",
+      "buyer_action": "appointment",
+      "editorial_style": "plain",
+      "cta": "Đặt hẹn theo số máy",
+      "kpi": "Yêu cầu đã xác nhận cho LO-914",
+      "kpi_unit": "yêu cầu",
+      "kpi_method": "Đếm một lần mỗi yêu cầu được xác nhận cho LO-914 trong 14 ngày, loại trùng theo mã yêu cầu.",
+      "kpi_window": "14 ngày",
+      "facts": [
+        {
+          "id": "material-scope",
+          "wording": "Vệ sinh bộ lọc LO-914 có phiếu ghi ngày bảo trì.",
+          "qualifiers": "Áp dụng tại Long Xuyên."
+        },
+        {
+          "id": "approved-terms",
+          "category": "price",
+          "wording": "Giá 310.000 VND/máy.",
+          "qualifiers": "Áp dụng tại Long Xuyên. Chưa gồm lõi lọc mới.",
+          "price": {
+            "amount_minor": 310000,
+            "currency": "VND",
+            "unit": "machine",
+            "basis_quantity": "1",
+            "moq": "1",
+            "tier_min": "1",
+            "tier_max": null,
+            "tax": "included",
+            "conditions": [
+              "Áp dụng tại Long Xuyên. Chưa gồm lõi lọc mới."
+            ]
+          },
+          "quantity": "1"
+        }
+      ],
+      "hypotheses": [
+        "Người mua có thể cần đối chiếu điều kiện trước khi xác nhận thời gian kỹ thuật viên tới."
+      ],
+      "gaps": [
+        "Chưa đo tỷ lệ hoàn tất bước tiếp theo."
+      ],
+      "unsupported_example": "đảm bảo rẻ nhất thị trường"
+    },
+    {
+      "id": "v2-07",
+      "persona": "inhouse",
+      "workflow": "WF-03",
+      "company": "Nếp Xanh",
+      "brand": "Nếp Xanh",
+      "product": "Lớp đóng khung ảnh KA-82",
+      "sku": "KA-82",
+      "market": "Việt Nam",
+      "locale": "vi-VN",
+      "region": "Quy Nhơn",
+      "audience": "người mới làm đồ gỗ",
+      "objective": "Giúp người mới làm đồ gỗ đăng ký buổi thực hành phù hợp",
+      "channel": "web",
+      "buyer_action": "registration",
+      "editorial_style": "plain",
+      "cta": "Đăng ký chỗ thực hành",
+      "kpi": "Yêu cầu đã xác nhận cho KA-82",
+      "kpi_unit": "yêu cầu",
+      "kpi_method": "Đếm một lần mỗi yêu cầu được xác nhận cho KA-82 trong 14 ngày, loại trùng theo mã yêu cầu.",
+      "kpi_window": "14 ngày",
+      "facts": [
+        {
+          "id": "material-scope",
+          "wording": "Lớp đóng khung ảnh KA-82 có bàn thao tác riêng.",
+          "qualifiers": "Áp dụng tại Quy Nhơn."
+        },
+        {
+          "id": "approved-terms",
+          "category": "price",
+          "wording": "Giá 340.000 VND/người.",
+          "qualifiers": "Áp dụng tại Quy Nhơn. Học phí chưa gồm kính khung.",
+          "price": {
+            "amount_minor": 340000,
+            "currency": "VND",
+            "unit": "participant",
+            "basis_quantity": "1",
+            "moq": "1",
+            "tier_min": "1",
+            "tier_max": null,
+            "tax": "included",
+            "conditions": [
+              "Áp dụng tại Quy Nhơn. Học phí chưa gồm kính khung."
+            ]
+          },
+          "quantity": "1"
+        }
+      ],
+      "hypotheses": [
+        "Người mua có thể cần đối chiếu điều kiện trước khi đăng ký buổi thực hành phù hợp."
+      ],
+      "gaps": [
+        "Chưa đo tỷ lệ hoàn tất bước tiếp theo."
+      ],
+      "unsupported_example": "đảm bảo rẻ nhất thị trường"
+    },
+    {
+      "id": "v2-08",
+      "persona": "inhouse",
+      "workflow": "WF-13",
+      "company": "In Mùa",
+      "brand": "In Mùa",
+      "product": "Buổi in mộc bản MB-706",
+      "sku": "MB-706",
+      "market": "Việt Nam",
+      "locale": "vi-VN",
+      "region": "Vĩnh Long",
+      "audience": "người học in thủ công",
+      "objective": "Giúp người học in thủ công chọn buổi in thử",
+      "channel": "web",
+      "buyer_action": "registration",
+      "editorial_style": "plain",
+      "cta": "Đăng ký buổi in thử",
+      "kpi": "Yêu cầu đã xác nhận cho MB-706",
+      "kpi_unit": "yêu cầu",
+      "kpi_method": "Đếm một lần mỗi yêu cầu được xác nhận cho MB-706 trong 14 ngày, loại trùng theo mã yêu cầu.",
+      "kpi_window": "14 ngày",
+      "facts": [
+        {
+          "id": "material-scope",
+          "wording": "Buổi in mộc bản MB-706 có giấy thử tại lớp.",
+          "qualifiers": "Áp dụng tại Vĩnh Long."
+        },
+        {
+          "id": "approved-terms",
+          "category": "price",
+          "wording": "Giá 390.000 VND/người.",
+          "qualifiers": "Áp dụng tại Vĩnh Long. Phí chưa gồm bộ dụng cụ mang về.",
+          "price": {
+            "amount_minor": 390000,
+            "currency": "VND",
+            "unit": "participant",
+            "basis_quantity": "1",
+            "moq": "1",
+            "tier_min": "1",
+            "tier_max": null,
+            "tax": "included",
+            "conditions": [
+              "Áp dụng tại Vĩnh Long. Phí chưa gồm bộ dụng cụ mang về."
+            ]
+          },
+          "quantity": "1"
+        }
+      ],
+      "hypotheses": [
+        "Người mua có thể cần đối chiếu điều kiện trước khi chọn buổi in thử."
+      ],
+      "gaps": [
+        "Chưa đo tỷ lệ hoàn tất bước tiếp theo."
+      ],
+      "unsupported_example": "đảm bảo rẻ nhất thị trường"
+    },
+    {
+      "id": "v2-09",
+      "persona": "agency",
+      "workflow": "WF-03",
+      "company": "Mực Hương",
+      "brand": "Mực Hương",
+      "product": "Bộ bao bì trà HG-54",
+      "sku": "HG-54",
+      "market": "Việt Nam",
+      "locale": "vi-VN",
+      "region": "Phan Thiết",
+      "audience": "quản lý cửa hàng trà",
+      "objective": "Giúp quản lý cửa hàng trà so các quy cách bao bì",
+      "channel": "web",
+      "buyer_action": "catalogue_download",
+      "editorial_style": "plain",
+      "cta": "Tải catalogue quy cách",
+      "kpi": "Yêu cầu đã xác nhận cho HG-54",
+      "kpi_unit": "yêu cầu",
+      "kpi_method": "Đếm một lần mỗi yêu cầu được xác nhận cho HG-54 trong 14 ngày, loại trùng theo mã yêu cầu.",
+      "kpi_window": "14 ngày",
+      "facts": [
+        {
+          "id": "material-scope",
+          "wording": "Bộ bao bì trà HG-54 giấy màu ngà.",
+          "qualifiers": "Áp dụng tại Phan Thiết."
+        },
+        {
+          "id": "approved-terms",
+          "category": "price",
+          "wording": "Giá 95.000 VND/hộp.",
+          "qualifiers": "Áp dụng tại Phan Thiết. Chưa gồm thiết kế nhãn riêng.",
+          "price": {
+            "amount_minor": 95000,
+            "currency": "VND",
+            "unit": "box",
+            "basis_quantity": "1",
+            "moq": "8",
+            "tier_min": "8",
+            "tier_max": null,
+            "tax": "included",
+            "conditions": [
+              "Áp dụng tại Phan Thiết. Chưa gồm thiết kế nhãn riêng."
+            ]
+          },
+          "quantity": "8"
+        }
+      ],
+      "hypotheses": [
+        "Người mua có thể cần đối chiếu điều kiện trước khi so các quy cách bao bì."
+      ],
+      "gaps": [
+        "Chưa đo tỷ lệ hoàn tất bước tiếp theo."
+      ],
+      "unsupported_example": "đảm bảo rẻ nhất thị trường"
+    },
+    {
+      "id": "v2-10",
+      "persona": "agency",
+      "workflow": "WF-13",
+      "company": "Lụa Biển",
+      "brand": "Lụa Biển",
+      "product": "Hộp thiệp nổi TN-304",
+      "sku": "TN-304",
+      "market": "Việt Nam",
+      "locale": "vi-VN",
+      "region": "Tuy Hòa",
+      "audience": "đại lý văn phòng phẩm",
+      "objective": "Giúp đại lý văn phòng phẩm chọn số hộp cho quầy bán",
+      "channel": "web",
+      "buyer_action": "rfq",
+      "editorial_style": "plain",
+      "cta": "Yêu cầu báo giá theo số hộp",
+      "kpi": "Yêu cầu đã xác nhận cho TN-304",
+      "kpi_unit": "yêu cầu",
+      "kpi_method": "Đếm một lần mỗi yêu cầu được xác nhận cho TN-304 trong 14 ngày, loại trùng theo mã yêu cầu.",
+      "kpi_window": "14 ngày",
+      "facts": [
+        {
+          "id": "material-scope",
+          "wording": "Hộp thiệp nổi TN-304 mặt thiệp dập nổi.",
+          "qualifiers": "Áp dụng tại Tuy Hòa."
+        },
+        {
+          "id": "approved-terms",
+          "category": "price",
+          "wording": "Giá 128.000 VND/hộp.",
+          "qualifiers": "Áp dụng tại Tuy Hòa. Chưa gồm giao tới từng cửa hàng.",
+          "price": {
+            "amount_minor": 128000,
+            "currency": "VND",
+            "unit": "box",
+            "basis_quantity": "1",
+            "moq": "4",
+            "tier_min": "4",
+            "tier_max": null,
+            "tax": "included",
+            "conditions": [
+              "Áp dụng tại Tuy Hòa. Chưa gồm giao tới từng cửa hàng."
+            ]
+          },
+          "quantity": "4"
+        }
+      ],
+      "hypotheses": [
+        "Người mua có thể cần đối chiếu điều kiện trước khi chọn số hộp cho quầy bán."
+      ],
+      "gaps": [
+        "Chưa đo tỷ lệ hoàn tất bước tiếp theo."
+      ],
+      "unsupported_example": "đảm bảo rẻ nhất thị trường"
+    }
+  ]
+}

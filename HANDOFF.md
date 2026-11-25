@@ -1,5 +1,9 @@
 # Bắt đầu ở đây khi tiếp quản AI Marketing Company
 
+## C2 · Hồ sơ chung và brief nội bộ
+
+Increment đầu tiên của C2.1/C2.5 trên C1 `c847f910` cho phép lưu một phần bốn field theo doanh nghiệp, kế thừa/ghi đè/để trống theo thương hiệu và tạo brief cá nhân khi chưa đủ thông tin. Publisher cài `amc_business` v1 bên cạnh core v22. Core 023 dành cho Identity A1. Chạy Compose rồi đối chiếu hai brand, thử lại lệnh sau mất phản hồi và đọc brief sau khi hồ sơ gốc đổi. PostgreSQL native 16.16 và SQLite đã qua năm ca API đầu tiên. Bộ điều phối Marketing và nghiệm thu thương mại giữ gate riêng. [Hợp đồng, quyền, chạy kiểm thử và rollback trên máy mới](docs/business-profile/C2-WORKSPACE-RUNBOOK.md)
+
 ## Business Profile C1 · backend v22 đang review nội bộ
 
 Sau phản biện trên `b9edc99`, C1 so khớp bí danh Hà Nội, TP.HCM và Đà Nẵng ở selector tồn kho, điều khoản và giá. Có thể có đơn vừa bán lẻ vừa trả trước. Hai chính sách áp dụng đồng thời cho đơn đó cần được đối chiếu. Hãy chạy lại publisher kể cả khi hàm SQL kiểm tồn kho đã tồn tại. API kiểm dấu SHA-256 của phiên bản quy tắc. [Danh mục và các ca hồi quy](tests/test_knowledge_scope_aliases.py)

@@ -59,3 +59,7 @@ Schema đề xuất v21 cho đăng ký, đăng nhập, xác minh và cấp/gửi
 ## Business Profile và Brand Intelligence · gate đang mở
 
 C0 có fixture tổng hợp cho dữ kiện thương mại và tính hợp lệ của nguồn. Để đóng gate sử dụng dữ liệu Marketing, C1 phải chứng minh cô lập tenant/client/brand, đúng SKU/variant/offer, quyền sử dụng nguồn và hai thứ tự transaction thu hồi/share. C2–C4 cần bằng chứng desktop/mobile, WF-03/WF-13 trên đúng snapshot và thẩm định nghiệp vụ độc lập. Commercial GA giữ NO-GO. [Kế hoạch và phép đo](business-profile/README.md)
+
+## SAA-02 · session và recovery
+
+[Thiết kế và tiêu chí nghiệm thu](IDENTITY-SESSION-RECOVERY.md) bao gồm thu hồi giữa hai worker, recovery khi cooldown, xoay khóa và so sánh OIDC. Những gate này chờ triển khai và kiểm thử độc lập.

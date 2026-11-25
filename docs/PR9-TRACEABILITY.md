@@ -158,3 +158,7 @@ Hạng mục onboarding có nhánh v21 chờ review cho admission theo tài kho�
 ## Business Profile C0 · phạm vi thiết kế
 
 MKT-03 Brand Management, MKT-20 Localization & Regional và AIO-06 Knowledge & Memory có [hợp đồng C0 và fixture](business-profile/README.md) cho dữ kiện theo sản phẩm/variant/market, source revision và hiệu lực khi share. WF-03/WF-13 tiếp tục dùng các release đã duyệt đến khi C1/C3 chứng minh adapter mới. Nhãn tiến độ là design + synthetic contract checks; tính năng và business acceptance còn chờ.
+
+## SAA-02 · session và recovery
+
+[Thiết kế và tiêu chí nghiệm thu](IDENTITY-SESSION-RECOVERY.md) bao gồm thu hồi giữa hai worker, recovery khi cooldown, xoay khóa và so sánh OIDC. Những gate này chờ triển khai và kiểm thử độc lập.

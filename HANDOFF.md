@@ -1,5 +1,9 @@
 # Bắt đầu ở đây khi tiếp quản AI Marketing Company
 
+## Thiết kế phiên đăng nhập và khôi phục sau PR #19
+
+Đề xuất SAA-02 mô tả thu hồi phiên trên nhiều worker, đổi refresh grant, recovery trong cooldown, chuyển khóa duy trì quota, so sánh Keycloak/Auth0 với credential local và ca nghiệm thu cho sáu rủi ro. Tài liệu giữ hợp đồng đăng ký HTTP 202 của v21. Hạng mục triển khai đầu tiên là xem và thu hồi phiên trên hai thiết bị với PostgreSQL runtime bị giới hạn. [Quyết định, quy trình kiểm thử và rollback](docs/IDENTITY-SESSION-RECOVERY.md)
+
 ## AIRC · Hợp nhất verifier và nghiên cứu ngữ nghĩa v3
 
 Trên main sau PR #20 `16fea3d45aff62dc4ba80243fcf0791627ffb90f`, schema sản phẩm v21. Chạy `python engineering/airc500/union_release.py` để tái dựng toàn bộ phép đo từ archive đã ghim. [Phương pháp, rollback và hướng dẫn máy mới](engineering/airc500/UNION-STUDY.md) · [Kết quả và giới hạn](engineering/airc500/evidence/union-v3/REPORT.md).

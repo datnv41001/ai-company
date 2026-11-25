@@ -160,11 +160,15 @@ def commercial_dispute(api, owner, base, pane, scope, page, size):
     ):
         pane.get_by_label("Lý do quyết định").fill(reason)
         if name == "Thay thế":
-            pane.get_by_label("Nguồn ưu tiên", exact=True).select_option(by_status["available"])
+            preferred = pane.locator(".catalog-detail select")
+            expect(preferred.locator(f'option[value="{by_status["available"]}"]')).to_have_count(1)
+            preferred.select_option(by_status["available"])
         with page.expect_response(lambda r: r.request.method == "POST" and r.url.endswith("/events")) as saved:
             pane.get_by_role("button", name=name, exact=True).click()
         assert saved.value.status in (200, 201)
         expect(pane.get_by_role("status")).to_have_text("Đã ghi quyết định vào lịch sử.")
+        label = {"Ghi tranh chấp": "Tranh chấp", "Thay thế": "Đã thay thế", "Thu hồi": "Đã thu hồi"}[name]
+        expect(pane.locator(".catalog-detail")).to_contain_text(label + " · Phiên bản")
         if name == "Ghi tranh chấp":
             capture(page, size, "materials", "stock-disputed", pane.locator(".catalog-detail"))
     history = get(api, base + "/knowledge/revisions/" + by_status["unavailable"] + "/events", owner)

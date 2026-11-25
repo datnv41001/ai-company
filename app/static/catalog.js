@@ -374,6 +374,7 @@ function createCatalogPane(root, api) {
       draft: ['approved', 'disputed', 'withdrawn'],
       approved: ['disputed', 'superseded', 'withdrawn'],
       disputed: ['withdrawn', 'superseded'],
+      superseded: ['withdrawn'],
     };
     if (canApprove && allowed[record.state]) {
       const entry = el('div');

@@ -46,6 +46,9 @@ def evaluate(db, doc, actor):
     from . import c3_content_evidence
     if c3_content_evidence.marketing_run(run):
         report["content_evidence"] = c3_content_evidence.assess_document(doc, run, report["content_digest"])
+        from . import c3_assets
+        if run.knowledge["registry"]["workflow"] in c3_assets.ROLES:
+            report["marketing_studio_available"] = True
     doc.qa_evidence = report
     db.add(AuditEvent(tenant_id=doc.tenant_id, user_id=actor, subject_id=doc.id, event="deliverable.qa_evaluated", details=report))
     return report

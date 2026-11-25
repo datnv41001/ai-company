@@ -310,6 +310,10 @@ def marketing_artifacts(run, doc):
     outcomes = {step["skill"]: step["output"] for step in run.checkpoints}
     sections = c3_assets.artifacts(workflow, run.knowledge["c3_projection"], outcomes)
     generated = sections["customer_preview"] if doc else None
+    if doc and (doc.content.get("studio") or {}).get("origin") == "worker":
+        from . import c3_studio
+        groups = c3_studio.compose(workflow,run.knowledge["c3_projection"],outcomes)
+        generated = c3_studio.preview(workflow,groups,generated)
     current = None
     bound = False
     if doc:

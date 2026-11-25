@@ -206,6 +206,7 @@ jobs:
           AMC_KNOWLEDGE_EVIDENCE="$RUNNER_TEMP/knowledge-center-journeys/marketing-workflows" AMC_BROWSER_MAILBOX_PROJECT=amc-acceptance AMC_BROWSER_TEST_URL=http://127.0.0.1:8000 python tests/browser_c3.py
           AMC_KNOWLEDGE_EVIDENCE="$RUNNER_TEMP/knowledge-center-journeys/marketing-tasks" AMC_BROWSER_MAILBOX_PROJECT=amc-acceptance AMC_BROWSER_TEST_URL=http://127.0.0.1:8000 python tests/browser_c3_task.py
           AMC_KNOWLEDGE_EVIDENCE="$RUNNER_TEMP/knowledge-center-journeys" AMC_DEV_MAILBOX_DIR="$RUNNER_TEMP/c3-gate-mail" python -m pytest -q tests/browser_c3_content_gate.py -k sqlite --basetemp="$RUNNER_TEMP/c3-gate-db"
+          AMC_STUDIO_EVIDENCE="$RUNNER_TEMP/knowledge-center-journeys/marketing-studio-replay" AMC_DEV_MAILBOX_DIR="$RUNNER_TEMP/c3-studio-mail" python -m pytest -q tests/browser_marketing_studio.py --basetemp="$RUNNER_TEMP/c3-studio-db"
           AMC_PREMIUM_EVIDENCE="$RUNNER_TEMP/premium-ui" AMC_BROWSER_MAILBOX_PROJECT=amc-acceptance AMC_BROWSER_TEST_URL=http://127.0.0.1:8000 python tests/browser_premium_ui.py
       - uses: actions/upload-artifact@v4
         if: always()

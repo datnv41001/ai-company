@@ -1,5 +1,8 @@
 # Ma trận truy vết V1.0 · Mốc 2846c174
 
+B1–B8 AIRC sau PR #20 được kiểm theo ma trận engineering, riêng với chức năng Marketing sản phẩm. [Acceptance, journal và outbox](../engineering/airc500/UNION-STUDY.md).
+
+
 Đối soát theo [PRD](PRODUCT_SPEC_V1.md), [37 vai trò](../catalog/agent_roles.json) và [24 workflow](../catalog/workflows.json). Đơn vị đếm là một yêu cầu đầy đủ. Tại mốc gốc, số hàng có đủ bằng chứng và quyết định `verified` trong ma trận là **0/49 module, 0/37 vai trò và 0/24 workflow**. Các luồng đã được nghiệm thu nội bộ ở v13 có bằng chứng riêng dưới đây. Không quy đổi tỷ lệ nghiệm thu thành phần trăm công sức đã hoàn thành.
 
 ## Cách đọc và cập nhật

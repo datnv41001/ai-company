@@ -289,7 +289,8 @@ class EventTests(unittest.TestCase):
             "dacc572f1d25c18c491c0c6364111603a2038dab13e8d89df0d6997f147a6167",
             "400f86483df5c4521ace9c26c5f83975f2e45415d56c8af1a6e684e259948ca9",
         )
-        self.assertEqual({x["unit"] for x in draft["assignments"]}, {"H01", "H04"})
+        self.assertEqual(draft["assignments"], [])
+        self.assertTrue({"H01", "H04"} <= set(draft["unresolved"]))
         self.head = "a" * 40
         with self.assertRaises(ValueError):
             self.box.handoff("fixture", path, "dummy", "dummy")

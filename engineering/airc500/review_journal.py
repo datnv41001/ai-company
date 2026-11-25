@@ -180,7 +180,19 @@ class Journal:
     def _admit(state, ass, key_id):
         validate("assignment", ass)
         if state.plan:
-            review_plan.planned_job(state.plan, ass)
+            job = review_plan.planned_job(state.plan, ass)
+            if state.plan["version"] == 2:
+                from pilot_fixture import encoded
+                from union_protocol import authorized_context
+
+                body = authorized_context(job, state.plan, state.attempts)
+                if (
+                    key_id != job["model_key"]
+                    or ass["principal"] != job["principal"]
+                    or ass["tool_grant_digest"] != job["tool_grant_digest"]
+                    or ass["context_digest"] != digest(encoded(body))
+                ):
+                    raise ValueError("assignment violates enrolled context, tool grant or signing identity")
         budget = state.manifest["budget"]
         if (
             key_id not in state.trust

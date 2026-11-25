@@ -4,6 +4,10 @@
 
 Đề xuất SAA-02 mô tả thu hồi phiên trên nhiều worker, đổi refresh grant, recovery trong cooldown, chuyển khóa duy trì quota, so sánh Keycloak/Auth0 với credential local và ca nghiệm thu cho sáu rủi ro. Tài liệu giữ hợp đồng đăng ký HTTP 202 của v21. Hạng mục triển khai đầu tiên là xem và thu hồi phiên trên hai thiết bị với PostgreSQL runtime bị giới hạn. [Quyết định, quy trình kiểm thử và rollback](docs/IDENTITY-SESSION-RECOVERY.md)
 
+## AIRC · Hợp nhất verifier và nghiên cứu ngữ nghĩa v3
+
+Trên main sau PR #20 `16fea3d45aff62dc4ba80243fcf0791627ffb90f`, schema sản phẩm v21. Chạy `python engineering/airc500/union_release.py` để tái dựng toàn bộ phép đo từ archive đã ghim. [Phương pháp, rollback và hướng dẫn máy mới](engineering/airc500/UNION-STUDY.md) · [Kết quả và giới hạn](engineering/airc500/evidence/union-v3/REPORT.md).
+
 ## AIRC · Kiểm định chất lượng v2 và runtime
 
 Từ main `bdc2441914478b918ea96e861aeb21f2d61655cd` (schema AMC v20), công cụ dùng kế hoạch pin, bằng chứng ký và đối chứng năm cấu hình. Trên máy mới chạy `python -m unittest discover -s engineering/airc500 -p "test_*.py" -v` trong venv engineering. [Phép đo và cách replay](engineering/airc500/QUALITY-EVALUATION.md) · [Kết quả và public pins](engineering/airc500/evidence/quality-v2/README.md) · [So hai checkpoint local](engineering/airc500/stronger/README.md) · [Giới hạn trust và intake](engineering/airc500/RUNTIME-HARDENING.md) · [Docker probe Linux](engineering/airc500/SANDBOX-CONTAINER.md). Commercial GA NO-GO, nguồn repository thực tiếp tục HOLD.

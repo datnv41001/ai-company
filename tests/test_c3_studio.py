@@ -137,6 +137,7 @@ def test_independent_asset_decisions_bind_to_one_submitted_revision(api, workfor
     studio = path + "/studio"
     proposal = accepted(api.get(studio, headers=editor["headers"]))
     groups = proposal["groups"]
+    groups["research"]["hypothesis"] = "Test whether buyers prefer the matte finish."
     groups["measurement"]["measurable_action"] = snap["projection"]["product"]
     view = accepted(api.patch(studio, headers=editor["headers"], json={"groups": groups, "expected_revision": 1}))
 
@@ -157,6 +158,36 @@ def test_independent_asset_decisions_bind_to_one_submitted_revision(api, workfor
     terms = {"expected_qa_revision": view["revision"], "expected_content_digest": submitted["qa_evidence"]["content_digest"]}
     assert approve(api, path, owner, terms).status_code == 409
     assert sign("research", editor).status_code in (403, 404)
+    assert sign("research").status_code == 409
+    specialist = reader(api, owner, "admin")
+    mandate = revision(
+        api,
+        owner,
+        state["path"],
+        "studio-content-qualification",
+        "qualification",
+        {"approver_id": specialist["id"], "category": "unclassified", "basis": "Synthetic materials specialist", "valid_until": "2099-01-01T00:00:00Z"},
+        visibility="restricted",
+    )
+    report = accepted(api.get(studio, headers=specialist["headers"]))
+    hypothesis = next(s for s in report["findings"] if s["field"] == "studio.research.hypothesis")
+    assert hypothesis["outcome"] == "unresolved"
+    handle = snap["projection"]["facts"][0]["id"]
+    accepted(
+        api.post(
+            path + "/content-evidence/resolutions",
+            headers=specialist["headers"],
+            json=terms
+            | {
+                "statement_id": hypothesis["id"],
+                "handle": handle,
+                "qualification_revision": mandate["id"],
+                "reason": "Matched the matte finish to the approved source. The wording proposes a test of preference.",
+            },
+        )
+    )
+    reopened = accepted(api.get(studio, headers=owner["headers"]))
+    assert next(s for s in reopened["findings"] if s["id"] == hypothesis["id"])["outcome"] == "reviewed"
     for group in groups:
         signed = accepted(sign(group))
         assert signed["approvals"][group]["actor"] == owner["id"]

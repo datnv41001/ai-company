@@ -192,10 +192,17 @@ def save_checkpoint(db, scope, run, stage, output, node):
         if binding and binding["contracts"]["director"]["adapter"] == "director@2":
             preview = research_strategy.proposal(run.checkpoints)
         title = run.knowledge["title"]
+        studio = None
         if binding and binding.get("workflow") in c3_releases.WORKFLOWS:
             from . import c3_marketing, c3_order_units
             renderer = c3_order_units.render if c3_releases.is_current(binding["workflow"]) else c3_marketing.render
             draft = renderer(binding["workflow"], run.knowledge["c3_projection"], {p["skill"]:p["output"] for p in run.checkpoints})
+            projection = run.knowledge["c3_projection"]
+            if c3_releases.is_current(binding["workflow"]) and projection.get("task_intent", {}).get("buyer_action"):
+                from . import c3_studio
+                groups = c3_studio.compose(binding["workflow"],projection,{p["skill"]:p["output"] for p in run.checkpoints})
+                draft = c3_studio.preview(binding["workflow"],groups,draft)
+                studio = {"version":c3_studio.VERSION,"origin":"worker","groups":groups}
             title, preview = draft["title"], draft["body"]
             if len(title) > 160:
                 title = run.knowledge["c3_projection"]["product"]
@@ -203,7 +210,7 @@ def save_checkpoint(db, scope, run, stage, output, node):
             tenant_id=run.tenant_id,
             campaign_id=run.campaign_id,
             title=title,
-            content={"client_preview": preview, "workforce_run_id": run.id},
+            content={"client_preview": preview, "workforce_run_id": run.id, **({"studio":studio} if studio else {})},
             created_by=scope.operator,
             status="submitted",
         )
@@ -218,6 +225,9 @@ def save_checkpoint(db, scope, run, stage, output, node):
         run.deliverable_id, run.state = doc.id, "awaiting_qa"
         db.flush()  # The evidence lookup follows the persisted worker-to-draft link.
         evaluate(db, doc, scope.operator)
+        if studio:
+            db.add(AuditEvent(tenant_id=run.tenant_id,user_id=scope.operator,subject_id=doc.id,event="studio.saved",
+                              details={"revision":doc.qa_revision,"groups":studio["groups"],"version":studio["version"]}))
         db.add(
             AuditEvent(tenant_id=run.tenant_id, user_id=scope.operator, subject_id=doc.id, event="workforce.submitted_to_qa", details={"run_id": run.id})
         )

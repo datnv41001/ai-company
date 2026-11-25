@@ -49,11 +49,12 @@ function createReviewPanel(root, api, notify) {
     const area=el('div',null,panel);
     area.dataset.privateEvidence='';
     const outcomes={verified:'Khớp công bố đã duyệt',editorial:'Nội dung biên tập',reviewed:'Chuyên gia đã xác minh',
-      unresolved:'Cần chuyên gia xác minh',contradiction:'Cần sửa nội dung'};
+      unresolved:'Cần chuyên gia xác minh',contradiction:'Cần sửa nội dung',needs_correction:'Cần đối chiếu định dạng'};
     const reasons={missing_qualifier:'Thiếu điều kiện áp dụng.',geography:'Địa bàn vượt phạm vi đã duyệt.',
       commercial_terms:'Đối chiếu lại số liệu, đơn vị và toàn bộ điều kiện.',channel:'Kênh khác phạm vi được phép.',
       wrong_handle:'Nguồn trích dẫn khác nguồn của câu.',unknown_handle:'Mã nguồn không có trong bản đã ghim.',
       prohibited:'Có nội dung bị cấm công bố.',product_identity:'Đối chiếu SKU và biến thể.',unsupported:'Nguồn chưa chứng minh nhận định này.',
+      unsupported_format:'Chưa đối chiếu được cách viết với dữ kiện đã duyệt. Hãy dùng cách trình bày trong nguồn.',
       ambiguous_evidence:'Có nhiều nguồn phù hợp; cần xác định nguồn.',statement_limit:'Chia ngắn tài sản để có thể kiểm từng nhận định.'};
     let request=0;
     const visible=()=>panel.open && area.isConnected && context===ctx && !dirty() && !document.hidden;
@@ -77,7 +78,8 @@ function createReviewPanel(root, api, notify) {
           const copy=el('div',null,group), proof=el('div',null,group);
           el('h5',outcomes[row.outcome],copy);
           el('blockquote',row.text,copy);
-          el('small',(row.field==='title'?'Tiêu đề':'Nội dung')+' · ký tự '+(row.start+1)+'–'+row.end,copy);
+          const fieldName=row.field.startsWith('studio.')?studioLabels[row.field.split('.')[2]]:(row.field==='title'?'Tiêu đề':'Nội dung');
+          el('small',fieldName+' · ký tự '+(row.start+1)+'–'+row.end,copy);
           if(reasons[row.reason])el('p',reasons[row.reason],copy);
           el('h5','Bằng chứng đã ghim',proof);
           if(!row.sources?.length)el('p',row.handles.length?row.handles.join(', '):'Chưa xác định được nguồn hỗ trợ.',proof);
@@ -85,7 +87,7 @@ function createReviewPanel(root, api, notify) {
             el('p',source.handle+' · '+source.statement,proof);
             for(const qualifier of source.qualifiers)el('p',qualifier,proof);
             el('p',source.document+' · '+source.locator,proof);
-            el('small','SHA-256 '+source.source_digest,proof);
+            const trace=el('details',null,proof);el('summary','Mã đối chiếu nguồn',trace);el('small','SHA-256 '+source.source_digest,trace);
           }
           if(row.outcome==='unresolved' && report.references && doc.status==='submitted'){
             const mandates=report.qualifications.filter(q=>q.category===row.claim_type);
@@ -194,7 +196,7 @@ function createReviewPanel(root, api, notify) {
         if(context===ctx) await reload();
       };
       if(doc?.status==='shared') el('p','Lưu bản sửa sẽ hủy yêu cầu đang chờ của phiên bản đã chia sẻ.',form);
-      button(form,doc?'Lưu bản sửa':'Tạo bản nháp',()=>{
+      const savePreview=button(form,doc?'Lưu bản sửa':'Tạo bản nháp',()=>{
         if(!title.value.trim() || !preview.value.trim() || !campaign.value) throw new Error('Chọn chiến dịch, nhập tiêu đề và nội dung.');
         return doc?update('deliverables/'+doc.id+'/draft','PATCH',{title:title.value,client_preview:preview.value})
           :update('deliverables','POST',{title:title.value,campaign_id:campaign.value,content:{client_preview:preview.value}});
@@ -203,6 +205,20 @@ function createReviewPanel(root, api, notify) {
       const path='deliverables/'+doc.id;
       const report=doc.qa_evidence?.qa_revision===doc.qa_revision ? doc.qa_evidence : null;
       const evidence=el('section',null,form);
+      let studioHost;
+      if(report?.marketing_studio_available || doc.content?.studio){
+        studioHost=el('div',null,form);
+        form.insertBefore(studioHost,evidence);
+        let refresh;
+        const updated=view=>{
+          title.value=view.preview.title;preview.value=view.preview.body;
+          title.readOnly=true;preview.readOnly=true;savePreview.hidden=true;
+          for(const sibling of Array.from(form.children).slice(Array.from(form.children).indexOf(evidence)))sibling.hidden=true;
+          if(!refresh)refresh=button(studioHost,'Tải bản vừa lưu để tiếp tục phê duyệt',()=>reload());
+        };
+        mountMarketingStudio(studioHost,api,url(ctx,path+'/studio'),ctx.role,updated);
+        if(doc.content.studio?.groups.copy){title.readOnly=true;preview.readOnly=true;savePreview.hidden=true;}
+      }
       el('h4','Kiểm tra phiên bản đang xem',evidence);
       if(!report){
         el('p','Phiên bản cũ chưa được đánh giá.',evidence);
@@ -211,7 +227,11 @@ function createReviewPanel(root, api, notify) {
         if(!report.content_evidence && doc.content?.workforce_run_id)
           button(evidence,'Đánh giá lại bản đang lưu',()=>update(path+'/assessment','POST',{}));
         if(report.scope==='delivery_revision')el('p','Đánh giá tiêu đề và nội dung đang gửi khách. QA đầu ra AI được lưu ở từng checkpoint trong báo cáo run.',evidence);
-        el('p','Lần lưu '+doc.qa_revision+' · SHA-256 '+report.content_digest.slice(0,12)+' · '+(report.content_evidence?.version || report.ruleset_version),evidence);
+        if(studioHost){
+          el('p','Lần lưu '+doc.qa_revision,evidence);
+          const trace=el('details',null,evidence);el('summary','Dấu kiểm toán phiên bản',trace);
+          el('code',report.content_digest,trace);el('p',report.content_evidence?.version || report.ruleset_version,trace);
+        }else el('p','Lần lưu '+doc.qa_revision+' · SHA-256 '+report.content_digest.slice(0,12)+' · '+(report.content_evidence?.version || report.ruleset_version),evidence);
         if(!report.content_evidence)el('p',report.state==='current'?'Đã đối chiếu với nguồn của Workforce.':'Chưa có nguồn liên kết để đối chiếu.',evidence);
         for(const f of report.content_evidence ? [] : report.findings){
           const status=f.status==='needs_evidence'?'Cần bổ sung bằng chứng':'Trùng câu trong nguồn '+f.matching_ids.join(', ');
@@ -233,6 +253,7 @@ function createReviewPanel(root, api, notify) {
         if(unsaved && closeClaims) closeClaims();
         dirty.hidden=!unsaved;
         evidence.hidden=unsaved;
+        if(studioHost)studioHost.hidden=unsaved;
         if(submit) submit.disabled=unsaved;
       };
       title.addEventListener('input',updateDisplay);

@@ -1,0 +1,15 @@
+.marketing-studio { margin-block: 1rem; }
+.marketing-studio > div { padding-block: .5rem; }
+.studio-nav { display: flex; flex-wrap: wrap; gap: .5rem; margin-block: .75rem; }
+.studio-nav [aria-pressed=true] { text-decoration: underline; text-underline-offset: .25em; }
+.studio-layout { display: grid; grid-template-columns: minmax(0, 3fr) minmax(14rem, 2fr); gap: clamp(.75rem, 2vw, 2rem); }
+.studio-layout > * { min-width: 0; overflow-wrap: anywhere; }
+.studio-layout aside { padding-inline-start: 1rem; border-inline-start: 1px solid var(--line, currentColor); }
+.studio-layout label { display: grid; gap: .2rem; margin-block: .65rem .2rem; }
+.studio-layout textarea { width: 100%; box-sizing: border-box; resize: vertical; }
+.studio-layout small { display: block; }
+.studio-layout p { white-space: pre-line; }
+@media(max-width: 740px) {
+  .studio-layout { grid-template-columns: minmax(0, 1fr); }
+  .studio-layout aside { border-inline-start: 0; border-top: 1px solid var(--line, currentColor); padding: .75rem 0; }
+}

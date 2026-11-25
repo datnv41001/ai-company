@@ -252,6 +252,8 @@ function createWorkforce(root, api, notify, onActivity=()=>{}) {
             if(v.marketing_provenance)attachMarketingProvenance(info,v.marketing_provenance,api,()=>ticket===revision);
             let checkpointHost=info;
             if(v.marketing_artifacts){
+              if(v.deliverable_id && ['owner','admin','editor'].includes(role))
+                mountMarketingStudio(info,api,'/api/tenants/'+encodeURIComponent(tenant)+'/deliverables/'+encodeURIComponent(v.deliverable_id)+'/studio',role);
               showMarketingAssets(info,v.marketing_artifacts);
               checkpointHost=node(info,'details');node(checkpointHost,'summary','Nhật ký đầu ra từng vai trò');
             }

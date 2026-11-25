@@ -19,6 +19,8 @@ CI chạy `python tests/check_c3_cutover.py observation` và `python tests/check
 
 Nếu brief dừng vì giá ghi theo “dịch vụ”, xem [cách làm rõ đơn vị bán và tiếp tục nhiệm vụ](docs/business-profile/C3-UNIT-CLARIFICATION.md). Tài liệu ghi cách đối chiếu 20 brief cũ, tạo manifest cho Qwen và kiểm tra ý định người mua qua các phiên bản nhiệm vụ.
 
+Xem [Marketing Studio, từ bản hoàn tất tới bàn giao](docs/business-profile/C3-MARKETING-STUDIO.md) để tái lập luồng biên tập, ký từng nhóm nội dung, kiểm thử revision và chụp kết quả WF-03/WF-13 trên máy mới.
+
 ## PR #37 — nhiệm vụ Marketing, kiểm chứng nội dung và đánh giá chất lượng
 
 Để phản biện WF-03 và WF-13, bắt đầu với [bản giao thật, bản biên tập và receipt từng brief](docs/evaluation/c3-holdout-v1/README.md). Để đo công biên tập, dùng [bộ pilot tiếng Việt có chấm mù](docs/evaluation/C3-PRACTITIONER-KIT.md). Trong GitHub Actions, artifact `api-regression-integration` ghi tên từng ca đạt hoặc bỏ qua trên bản tích hợp, gồm các thứ tự thu hồi quyền, phiên đăng nhập, phân quyền cùng agency và kiểm chứng từng nhận định.

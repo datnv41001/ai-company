@@ -125,7 +125,7 @@ def sentences(start, line):
     yield start + left, start + len(line), line[left:]
 
 
-def classify(line, facts, complete, fixed, projection):
+def classify(line, facts, complete, fixed, projection, *, precise=False):
     text = normalized(line)
     bare = clean_handle(line)
     cited = list(dict.fromkeys(h.upper() for h in HANDLE.findall(line)))
@@ -169,9 +169,34 @@ def classify(line, facts, complete, fixed, projection):
     if CHANNEL.search(bare):
         return "channel", "contradiction", "channel", cited
     if re.search(r"\b(sku|mã sản phẩm|variant|biến thể)\b", bare):
-        return "product", "contradiction", "product_identity", cited
-    if NUMERIC.search(bare) or COMMERCIAL.search(bare):
-        return "structured", "contradiction", "commercial_terms", cited
+        if not precise:
+            return "product", "contradiction", "product_identity", cited
+        identified = re.fullmatch(r"(?:sku|mã sản phẩm)\s+([\w.-]+)", bare)
+        if identified and projection.get("sku") and identified[1] != normalized(projection["sku"]):
+            return "product", "contradiction", "product_identity", cited
+        return "product", "needs_correction", "unsupported_format", cited
+    material_text = bare
+    if precise and projection.get("sku"):
+        # A catalog identifier can contain digits. Remaining quantities, currencies
+        # and commercial promises still need their complete canonical declaration.
+        material_text = re.sub(r"(?<!\w)" + re.escape(normalized(projection["sku"])) + r"(?!\w)", "", bare)
+    if NUMERIC.search(material_text) or COMMERCIAL.search(bare):
+        if not precise:
+            return "structured", "contradiction", "commercial_terms", cited
+        # A noncanonical number can be a model number or an alternative display of
+        # the licensed price. It still cannot authorize a claim or a human waiver.
+        money = re.search(r"(?<!\w)(\d[\d,. ]*)\s*(vnd|usd|eur|jpy|₫)(?!\w)", bare)
+        if money:
+            digits = re.sub(r"\D", "", money[1])
+            currency = "VND" if money[2] == "₫" else money[2].upper()
+            prices = [f["price"] for f in facts if f.get("price") and f["price"]["currency"] == currency]
+            token = money[1].strip()
+            integer = token.isdecimal() or re.fullmatch(r"\d{1,3}([., ])\d{3}(?:\1\d{3})*", token)
+            if integer and currency in ("VND", "JPY") and prices and all(int(p["amount_minor"]) != int(digits) for p in prices):
+                return "structured", "contradiction", "commercial_terms", cited
+        if re.search(r"\b(giảm giá|discount|chiết khấu)\s+\d+[,.]?\d*\s*%", bare):
+            return "structured", "needs_correction", "unsupported_assertion", cited
+        return "structured", "needs_correction", "unsupported_format", cited
     for fact in facts:
         wording = normalized(fact["wording"])
         if wording and any(negation + wording in bare for negation in ("not ", "no ", "không ", "không phải ")):
@@ -191,7 +216,39 @@ def assess_document(doc, run, signature):
     declarations, fixed = content_shapes(run.knowledge["registry"]["workflow"], projection)
     facts = projection["facts"]
     statements = []
-    for field, value in (("title", doc.title), ("client_preview", doc.content.get("client_preview", ""))):
+    values = {"title":doc.title, "client_preview":doc.content.get("client_preview", "")}
+    bundle = doc.content.get("studio")
+    if bundle:
+        from .c3_studio import FIELDS, VERSION as STUDIO_VERSION, compose
+        workflow = run.knowledge["registry"]["workflow"]
+        if workflow not in FIELDS or bundle.get("version") != STUDIO_VERSION:
+            conflict("Unsupported Marketing Studio contract")
+        baseline = compose(workflow,projection)
+        # Only recognise the exact, locale-specific instructions composed by this
+        # version. A claim embedded in an approved profile name is still a claim.
+        slots = [str(projection.get(k,"")) for k in ("audience","product","region","channel")]
+        sku = normalized(projection.get("sku") or "")
+        dangerous_slot = any(COMMERCIAL.search(v) or TERRITORY.search(v) or CHANNEL.search(v) or "\n" in v or
+                             NUMERIC.search(normalized(v).replace(sku, "") if sku else normalized(v)) or
+                             any(rx.search(v) for _,rx in SEMANTIC) for v in slots)
+        if workflow in FIELDS and "copy" in baseline:
+            cta = baseline["copy"]["call_to_action"]
+            if cta:
+                fixed["client_preview"].add(normalized(cta))
+        for group, fields in FIELDS[workflow].items():
+            for key in fields:
+                field = f"studio.{group}.{key}"
+                values[field] = bundle["groups"][group][key]
+                # Only the pinned action and authored test-method instruction are
+                # editorial. Product-specific claims still traverse the normal gate.
+                proposed = baseline[group][key]
+                procedural = key in ("call_to_action","measurable_action","measurement_method","test_hypothesis") or (
+                    not dangerous_slot and key in ("research_question","buyer_problem","hypothesis","positioning","rationale",
+                                                    "execution","channel_choice","page_title","meta_description","search_intent","value_proposition"))
+                fixed[field] = {normalized(proposed)} if proposed and procedural else set()
+                if group == "copy" and key == "value_proposition" and procedural:
+                    fixed["client_preview"].add(normalized(proposed))
+    for field, value in values.items():
         lines = spans(value)
         # A protected phrase may straddle a line break. Mark every overlapping span
         # so a decision on two separate paraphrases cannot authorize the full phrase.
@@ -209,7 +266,8 @@ def assess_document(doc, run, signature):
             # prose gets individual sentence spans even when multiple claims share a paragraph.
             pieces = [(start, end, line)] if clean_handle(line) in declarations or normalized(line) in fixed[field] else sentences(start, line)
             for left, right, sentence in pieces:
-                category, state, reason, handles = classify(sentence, facts, declarations.get(clean_handle(sentence)), fixed[field], projection)
+                category, state, reason, handles = classify(sentence, facts, declarations.get(clean_handle(sentence)), fixed[field], projection,
+                                                           precise=bool(bundle))
                 if section == "giả thuyết cần kiểm chứng" and RESEARCH_GAP.fullmatch(normalized(sentence)) and sentence in projection.get("hypotheses", []):
                     category, state, reason, handles = "editorial", "editorial", "research_question", []
                 if (
@@ -224,8 +282,13 @@ def assess_document(doc, run, signature):
                     category, state, reason, handles = "scope", "contradiction", "statement_limit", []
                     right, sentence = len(value), value[left:]
                 key = digest(canonical([VERSION, doc.id, doc.qa_revision, signature, field, left, right]))
+                diagnostic = reason if reason in ("missing_qualifier", "unsupported_format", "unsupported_assertion") else None
+                if not diagnostic and state in ("contradiction","unresolved"):
+                    diagnostic = ("known_contradiction" if state == "contradiction" else
+                                  "semantic_interpretation" if category in ("comparison","regulated","performance") else "unsupported_assertion")
                 statements.append(
-                    dict(id=key, field=field, start=left, end=right, text=sentence, claim_type=category, outcome=state, reason=reason, handles=handles)
+                    dict(id=key, field=field, start=left, end=right, text=sentence, claim_type=category, outcome=state, reason=reason, handles=handles,
+                         **({"diagnostic":diagnostic} if bundle and diagnostic else {}))
                 )
                 if reason == "statement_limit":
                     break
@@ -233,6 +296,7 @@ def assess_document(doc, run, signature):
                 break
     return dict(
         version=VERSION,
+        **({"studio_version":bundle["version"]} if bundle else {}),
         qa_revision=doc.qa_revision,
         content_digest=signature,
         manifest_digest=run.knowledge["c3_manifest"]["digest"],

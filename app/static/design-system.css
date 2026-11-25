@@ -305,3 +305,7 @@ body[data-screen=account] #workspace:has(> #recipient-panel:empty){min-height:0}
   .command-columns{grid-template-columns:minmax(0,1fr)}
   .hero-action a{min-height:44px}
 }
+@media(max-width:360px){
+  /* Reserve both rows when a phase number and its two-line label stack on narrow screens. */
+  #command-flow,#command-flow:empty{grid-auto-rows:minmax(3.25rem,auto);min-height:6.5rem}
+}

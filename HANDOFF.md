@@ -1,5 +1,9 @@
 # Bắt đầu ở đây khi tiếp quản AI Marketing Company
 
+## Nghiệm thu bản nháp Marketing trên máy khác
+
+Bắt đầu từ [giao thức thí nghiệm và lệnh chạy lại](docs/evaluation/C3-PRODUCT-QUALIFICATION.md). Hai smoke nội bộ chạy Qwen 0.5B trước. Nhánh thử nghiệm lưu riêng đầu vào của vai trò Strategy hoặc Content để [đối chiếu Qwen 7B](docs/evaluation/C3_STRONGER_ROLE.md) trên runner có đủ bộ nhớ. Mỗi kết quả gắn với commit tích hợp thực chạy. Khi đo thời gian hoàn thành và mức chấp nhận nghề nghiệp, giữ phiếu chấm mù và thời gian thao tác của từng người theo [bộ pilot](docs/evaluation/C3-PRACTITIONER-KIT.md).
+
 ## Chuyển sang Marketing Studio
 
 Studio dùng core v25, Business v3 và module C3 v2. Trước cutover, dừng xếp việc, drain các worker, dừng API cũ, lưu backup cùng image tương ứng. Chạy publisher mới trên database đã sao lưu, sau đó khởi động API và worker cùng bản. Migration `002_studio_writer.sql` khóa ba bảng bàn giao, thay các trigger trong một giao dịch và ghi module v2. Các API từng khai báo `c3/1` mất quyền ghi ngay sau commit. Publisher v1 từ chối module v2 và API v1 từ chối bộ trigger v2. Studio chỉ khởi động khi kiểm tra đúng ba trigger còn hiệu lực. Chữ ký giao thức dùng cho tương thích binary; quyền nguồn, quyền người dùng và quyết định QA của từng bản vẫn do ứng dụng và RLS kiểm tra.

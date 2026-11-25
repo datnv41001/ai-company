@@ -8,7 +8,7 @@ from sqlalchemy.orm import Session
 
 from . import knowledge_models as m
 from .database import get_db
-from .knowledge_authority import change_state, check_assertion, eligible, invalid, new_revision
+from .knowledge_authority import change_state, check_assertion, eligible, invalid, new_revision, scoped_references
 from .knowledge_contracts import AuthorizeIn, Command, EventIn, Kind, PreviewIn, RevisionIn, Target
 from .knowledge_target import describe
 from .knowledge_store import Store, aware, canonical, conflict, digest, missing, restrictive, stamp
@@ -35,6 +35,10 @@ def revise(body: RevisionIn, s=Depends(writer)):
 @router.get("/revisions/{revision_id}")
 def detail(revision_id: str, s=Depends(reader)):
     row = s.get(m.KnowledgeRevision, revision_id)
+    if not s.approver and row.kind in ("source", "binding", "claim"):
+        refs = scoped_references(s, row.data)
+        if row.kind == "claim":
+            scoped_references(s, refs["binding", row.data["binding"]].data)
     return {**s.summary(row), "data": row.data, "created_at": stamp(row.created_at), "author": row.author}
 
 
@@ -54,7 +58,7 @@ def transition(revision_id: str, body: EventIn, s=Depends(writer)):
 
 @router.get("/revisions/{revision_id}/events")
 def history(revision_id: str, s=Depends(reader)):
-    s.get(m.KnowledgeRevision, revision_id)
+    row = s.get(m.KnowledgeRevision, revision_id)
     preferred = s.db.scalar(s.query(m.KnowledgeLink).filter_by(revision_id=revision_id, relation="preferred_authority"))
     rows = s.db.scalars(s.query(m.KnowledgeEvent).filter_by(revision_id=revision_id).order_by(m.KnowledgeEvent.sequence))
     return [
@@ -62,8 +66,7 @@ def history(revision_id: str, s=Depends(reader)):
             sequence=r.sequence,
             event="knowledge.approved" if r.state == "approved" else "knowledge.invalidated",
             state=r.state,
-            reason=r.reason,
-            actor=r.actor,
+            **({"reason":r.reason,"actor":r.actor} if s.approver or row.kind not in ("source","binding","claim") else {}),
             effective_at=stamp(r.effective_at),
             **({"preferred_revision": preferred.target_id} if preferred and r.state == "superseded" else {}),
         )

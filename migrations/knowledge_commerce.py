@@ -2,7 +2,7 @@
 
 import hashlib
 
-from app.commercial_scope import OPTION_AXES, TERRITORIES
+from app.commercial_scope import ORDER_AXES, TERRITORIES
 
 TABLES = ("knowledge_revisions", "knowledge_links", "knowledge_events")
 SIGNATURE = "amc_acl.knowledge_commercial_conflict(text,text,text,text,text,timestamptz)"
@@ -49,9 +49,13 @@ def conflict_query(postgres):
 
     # Two unequal choices exclude each other only if they constrain the same
     # dimension. For example, a retail buyer can also choose prepayment.
-    left, right = prop("a", "option"), prop("b", "option")
-    shared_axis = " OR ".join(f"({left} IN ({literals(axis)}) AND {right} IN ({literals(axis)}))" for axis in OPTION_AXES)
-    options_overlap = f"NOT COALESCE(({left}<>{right} AND ({shared_axis})), FALSE)"
+    def axis_value(row, axis, choices):
+        legacy = prop(row, "option")
+        return f"COALESCE({prop(row, axis)},CASE WHEN {legacy} IN ({literals(choices)}) THEN {legacy} END)"
+
+    options_overlap = " AND ".join(
+        f"NOT COALESCE({axis_value('a', axis, choices)}<>{axis_value('b', axis, choices)}, FALSE)" for axis, choices in ORDER_AXES.items()
+    )
 
     def meaning(row):
         # Only declared equivalent spellings collapse. Other prose needs an explicit decision.

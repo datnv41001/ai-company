@@ -17,6 +17,8 @@ Trong màn hình **Chiến dịch**, chọn một chiến dịch mà nhân viên
 
 ## Nghiệm thu bản nháp Marketing trên máy khác
 
+Để so sánh composer theo hành trình mua với 10 brief đã có biên nhận, dùng [kết quả, phép thử có giới hạn và lệnh chạy ngoại tuyến](docs/evaluation/buyer-journey-v1/RESULTS.md). Từng ca giữ cả bản tất định, bản model nếu có và ứng viên, cùng người nhận hành động và cách đối soát. Phiếu chuyên viên và phép đo chi phí lao động vẫn cần pilot riêng.
+
 Xem [hồ sơ 10 brief mới, 20 brief khôi phục và hai smoke nội bộ](docs/evaluation/c3-product-v2/RESULTS.md) để đọc số liệu, bản Marketing hoàn chỉnh, nhận xét mù của AI và các phép đo còn thiếu.
 
 PR #37 đã merge nội bộ tại `b23497dcce9719fa3d413ad0c7215d751fba3b9f`. Commit tích hợp được kiểm thử là `c17b5882afd157bade6bcebe9c985c0bba2c385f`. Hai commit có cùng cây `19eb3cdfe2805cf50b199e72c15a96d72a0f695c` và cùng hai parent `9bfbabca`, `a4f728d3`. Sau merge, PostgreSQL xác nhận cả ba thao tác kiểm tra từ phiên cũ bị từ chối, giữ nguyên dữ liệu khi phục hồi 34 bảng. Ba job trên main đều đạt, bộ API ghi 386 đạt và 2 bỏ qua ở cấu hình SQLite. [PR #37](https://github.com/datnv41001/ai-company/pull/37) · [CI sau merge](https://github.com/datnv41001/ai-company/actions/runs/45580265243) · [Log API và chuyển đổi](https://github.com/datnv41001/ai-company/actions/runs/45580265243/job/139088245348)

@@ -7,6 +7,8 @@ from typing import Annotated, Literal
 
 from pydantic import BaseModel, ConfigDict, Field, PlainSerializer, StrictInt, field_validator, model_validator
 
+from .commercial_scope import CommercialOption, TERRITORY_BY_LABEL
+
 Key = Annotated[str, Field(min_length=1, max_length=96)]
 Name = Annotated[str, Field(min_length=1, max_length=160)]
 Note = Annotated[str, Field(min_length=1, max_length=1800)]
@@ -171,7 +173,7 @@ class Offer(Window):
 class CommercialApplicability(Input):
     """A published promise covers every order inside its declared range."""
 
-    option: Literal["standard", "extended", "retail", "wholesale", "prepaid", "credit"] | None = None
+    option: CommercialOption | None = None
     unit: Unit | None = None
     minimum: Amount | None = None
     maximum: Amount | None = None
@@ -306,7 +308,6 @@ SENSITIVE = {"comparison", "regulated", "performance"}
 # values. Other markets and prose remain usable after independent review.
 COMMERCIAL_CONDITIONS = {"Prepaid", "Cash on delivery", "Pickup", "Delivery", "Trả trước", "Thanh toán khi nhận hàng", "Nhận tại cửa hàng"}
 PLACEMENT_CHANNELS = {"web", "store", "email", "retail", "wholesale", "search", "social", "marketplace"}
-REGIONAL_LABELS = {"HCM", "Hà Nội", "TP.HCM", "Đà Nẵng"}
 
 
 def approval_category(assertion):
@@ -319,7 +320,7 @@ def approval_category(assertion):
     terms = (assertion.get("price") or {}).get("conditions", [])
     free_context = (
         place["channel"] not in PLACEMENT_CHANNELS
-        or (place["region"] not in REGIONAL_LABELS and not re.fullmatch(r"[A-Z]{2}(?:-[A-Z0-9]{1,3})?", place["region"]))
+        or (place["region"] not in TERRITORY_BY_LABEL and not re.fullmatch(r"[A-Z]{2}(?:-[A-Z0-9]{1,3})?", place["region"]))
         or not re.fullmatch(r"[a-z]{2}(?:-[A-Z]{2})?", place["locale"])
         or any(value not in COMMERCIAL_CONDITIONS for value in [*assertion["qualifiers"], *terms])
     )

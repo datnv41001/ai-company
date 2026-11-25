@@ -103,10 +103,8 @@ def prepare_database(bind):
             raise RuntimeError("Isolated schema v16 is missing migration 015; restore a pre-016 backup before upgrading")
         if versions != set(range(2, 23)):
             raise RuntimeError("Apply the PostgreSQL schema migrations before starting the API")
-        has_commerce_rule = conn.scalar(text(
-            "SELECT to_regprocedure('amc_acl.knowledge_commercial_conflict(text,text,text,text,text,timestamptz)') IS NOT NULL"
-        ))
-        if not has_commerce_rule:
+        from migrations.knowledge_commerce import RULE_IS_CURRENT
+        if not conn.scalar(text(RULE_IS_CURRENT)):
             raise RuntimeError("Rerun the v22 migration publisher to install the commercial authority rule")
         from .access import set_context
         from .security import sign_actor

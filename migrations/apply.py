@@ -15,7 +15,7 @@ from psycopg import sql
 if not __package__:
     sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 from app.registry_compatibility import validate_manifest  # noqa: E402
-from migrations.knowledge_commerce import install as install_knowledge_commerce  # noqa: E402
+from migrations.knowledge_commerce import RULE_IS_CURRENT, install as install_knowledge_commerce  # noqa: E402
 
 HERE = Path(__file__).resolve().parent
 BASE = {"tenants", "users", "memberships", "clients", "brands", "campaigns",
@@ -71,7 +71,7 @@ def migrate(dsn: str, runtime_password: str | None = None):
         if versions and versions != set(range(2, max(versions) + 1)):
             raise ValueError("Incomplete migration history; restore a consistent backup before upgrading")
         if 22 in versions:
-            if not conn.execute("SELECT to_regprocedure('amc_acl.knowledge_commercial_conflict(text,text,text,text,text,timestamptz)')").fetchone()[0]:
+            if not conn.execute(RULE_IS_CURRENT).fetchone()[0]:
                 install_knowledge_commerce(conn)
             return
         if 2 not in versions:

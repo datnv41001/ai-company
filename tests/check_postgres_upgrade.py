@@ -343,9 +343,21 @@ def verify():
         migrate(dsn)
         migrate(dsn)
         prepare_database(runtime)
+        from migrations.knowledge_commerce import SIGNATURE, RULE_IS_CURRENT
+        with psycopg.connect(dsn) as observer:
+            original_oid = observer.execute("SELECT to_regprocedure(%s)::oid", (SIGNATURE,)).fetchone()[0]
+            # The next v22 build had a callable of the same name but an older predicate.
+            observer.execute(f"COMMENT ON FUNCTION {SIGNATURE} IS NULL")
+        with pytest.raises(RuntimeError, match="Rerun the v22 migration publisher"):
+            prepare_database(runtime)
+        migrate(dsn)
+        migrate(dsn)
+        prepare_database(runtime)
         with psycopg.connect(dsn) as observer:
             assert tenant_state_before_c1(observer) == existing_v21
-        print("GREEN v22 repair: startup requires the commercial rule; repeated publisher preserves populated tables")
+            assert observer.execute(RULE_IS_CURRENT).fetchone()[0]
+            assert observer.execute("SELECT to_regprocedure(%s)::oid", (SIGNATURE,)).fetchone()[0] == original_oid
+        print("GREEN v22 repair: missing and stale commercial predicates reject startup; repeat publisher preserves function identity and populated tables")
     if from_v19:
         with runtime.connect() as observer:
             assert observer.scalar(text("select to_regprocedure('amc_acl.lock_recipient(text,text)') is not null"))

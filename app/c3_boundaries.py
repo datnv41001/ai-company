@@ -55,6 +55,10 @@ def boundary(db, user, doc, content_digest, stage):
     if author and (stage == "share" or author == user.id):
         conflict("Internal Marketing drafts require independent QA and cannot be shared through the client portal")
     binding = run.knowledge["registry"]
+    if stage == "share" and run.knowledge["c3_projection"].get("task_intent", {}).get("buyer_action"):
+        from .c3_customer_assets import PUBLIC, VERSION
+        if binding["workflow"] in PUBLIC and (doc.content.get("studio") or {}).get("delivery_version") != VERSION:
+            conflict("Prepare the customer asset edition in Marketing Studio and review it before sharing")
     ref = run.knowledge["c3_manifest"]
     store, snap, _ = checked(db, user, brief, ref, binding["workflow"], stage)
     from .registry import pin
@@ -67,6 +71,9 @@ def boundary(db, user, doc, content_digest, stage):
     if doc.content.get("studio"):
         from .c3_studio_routes import require_all_approved
         values["studio_approvals"] = require_all_approved(db,doc,run)
+        if doc.content["studio"].get("delivery_version"):
+            from .c3_customer_assets import manifest
+            values["customer_delivery"] = manifest(doc, run, values["studio_approvals"])
     if stage in ("share", "replay_qa"):
         key = decision_key(run.id, doc.qa_revision, content_digest)
         query = store.query(KnowledgeCommand).filter_by(snapshot_id=snap.id, operation="c3_qa", actor=doc.reviewed_by)

@@ -139,12 +139,23 @@ def decision_evidence(store, snap, doc, run, signature):
         conflict("Content evidence requires a correction or a qualified decision on unsupported claims")
     # Private per-span source revisions/digests remain reconstructible from the immutable
     # manifest and signed resolutions. Pin the exact full assessment in the decision.
-    return {
+    decision = {
         "content_gate_version": evidence.VERSION,
         "content_gate_digest": digest(canonical(report)),
         "content_sources": {key: {k: ref[k] for k in ("claim_revision", "source_revision", "source_digest")} for key, ref in report["references"].items()},
         "reviewed_statements": {r["id"]: r["resolution_id"] for r in report["statements"] if r.get("resolution_id")},
     }
+    if (doc.content.get("studio") or {}).get("delivery_version"):
+        from .c3_customer_assets import PUBLIC
+        public = PUBLIC[run.knowledge["registry"]["workflow"]]
+        decision["customer_field_evidence"] = {
+            group: {field: [
+                {k: row[k] for k in ("id", "claim_type", "outcome", "handles")}
+                for row in report["statements"] if row["field"] == f"studio.{group}.{field}"
+            ] for field in fields}
+            for group, fields in public.items()
+        }
+    return decision
 
 
 def staff_document(db, user, tenant_id, did):

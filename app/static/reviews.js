@@ -217,7 +217,7 @@ function createReviewPanel(root, api, notify) {
           if(!refresh)refresh=button(studioHost,'Tải bản vừa lưu để tiếp tục phê duyệt',()=>reload());
         };
         mountMarketingStudio(studioHost,api,url(ctx,path+'/studio'),ctx.role,updated);
-        if(doc.content.studio?.groups.copy){title.readOnly=true;preview.readOnly=true;savePreview.hidden=true;}
+        if(doc.content.studio?.groups.copy || doc.content.studio?.delivery_version){title.readOnly=true;preview.readOnly=true;savePreview.hidden=true;}
       }
       el('h4','Kiểm tra phiên bản đang xem',evidence);
       if(!report){
@@ -240,7 +240,8 @@ function createReviewPanel(root, api, notify) {
         el('p','Người QA chịu trách nhiệm kiểm tra nguồn và ngữ cảnh.',evidence);
       }
       const originalTitle=title.value, originalPreview=preview.value;
-      const modified=()=>title.value!==originalTitle || preview.value!==originalPreview;
+      const modifiedPreview=()=>title.value!==originalTitle || preview.value!==originalPreview;
+      const modified=()=>modifiedPreview() || studioHost?.dataset.studioDirty==='true';
       const closeClaims=report?.content_evidence ? claimDesk(evidence,ctx,path,doc,modified) : null;
       const dirty=el('p','Hãy lưu thay đổi trước khi gửi hoặc duyệt bản này.',form);
       dirty.hidden=true;
@@ -253,11 +254,12 @@ function createReviewPanel(root, api, notify) {
         if(unsaved && closeClaims) closeClaims();
         dirty.hidden=!unsaved;
         evidence.hidden=unsaved;
-        if(studioHost)studioHost.hidden=unsaved;
+        if(studioHost)studioHost.hidden=!preview.readOnly && modifiedPreview();
         if(submit) submit.disabled=unsaved;
       };
       title.addEventListener('input',updateDisplay);
       preview.addEventListener('input',updateDisplay);
+      studioHost?.addEventListener('studiochange',updateDisplay);
       if(!['owner','admin'].includes(ctx.role))return;
       if(report && (doc.status==='submitted' || (doc.status==='approved' && !doc.qa_approved_revision))){
         const note=field(form,'Ghi chú QA nội bộ','textarea');

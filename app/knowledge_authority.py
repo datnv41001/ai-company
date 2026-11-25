@@ -10,6 +10,7 @@ from migrations.knowledge_commerce import conflict_query
 
 from . import knowledge_models as m
 from .catalog_identity import check_master
+from .company_objectives import check_company_reference
 from .commercial_scope import same_placement, condition_keys, commercial_basis
 from .knowledge_contracts import TYPES, approval_category, price_wording
 from .knowledge_store import canonical, conflict, digest, in_window, parse_time, restrictive
@@ -66,6 +67,9 @@ def scoped_references(store, data):
 
 def check_business_data(store, kind, subject, data):
     refs = scoped_references(store, data)
+    shared = data.get("company_parent") or data.get("company_objective")
+    if shared:
+        check_company_reference(store, shared, require_approved=False)
     if kind == "objective":
         if data["campaign_id"]:
             campaign = store.db.get(Campaign, data["campaign_id"])
@@ -105,6 +109,8 @@ def new_revision(store, body, at):
         conflict("Revision changed or subject has another type")
     if prior and prior.visibility != body.visibility:
         conflict("Visibility is pinned to the subject")
+    if prior and body.kind == "objective" and any(prior.data.get(k) != data.get(k) for k in ("level", "campaign_id")):
+        conflict("Objective level and campaign are pinned. Create a separate objective for a different scope")
     check_master(store, body.kind, body.subject, data, prior)
     refs = check_business_data(store, body.kind, body.subject, data)
     if body.kind == "qualification":
@@ -146,6 +152,9 @@ def eligible(store, row, at, seen, *, include_root=True):
         conflict("Dependency budget exceeded")
     if include_root and store.summary(row, at)["state"] != "approved":
         conflict("Revision lacks current approved authority")
+    shared = row.data.get("company_parent") or row.data.get("company_objective")
+    if shared:
+        check_company_reference(store, shared, require_approved=True)
     if not in_window(row.data, at):
         conflict("Revision is outside its validity interval")
     if row.kind == "availability" and parse_time(row.data["observed_at"]) > at:

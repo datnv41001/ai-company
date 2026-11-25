@@ -112,18 +112,21 @@ class Objective(Input):
     name: Name
     level: Literal["company", "brand", "campaign"]
     parent: Ref | None = None
+    company_parent: Ref | None = Field(default=None, exclude_if=lambda v: v is None)
     campaign_id: Ref | None = None
     owner: Name
 
     @model_validator(mode="after")
     def has_scope(self):
-        if (self.level == "campaign") != bool(self.campaign_id) or (self.level == "company") == bool(self.parent):
+        parents = int(bool(self.parent)) + int(bool(self.company_parent))
+        if (self.level == "campaign") != bool(self.campaign_id) or parents != int(self.level != "company") or (self.company_parent and self.level != "brand"):
             raise ValueError("Check the objective's parent and campaign scope")
         return self
 
 
 class KPI(Input):
-    objective: Ref
+    objective: Ref | None = Field(default=None, exclude_if=lambda v: v is None)
+    company_objective: Ref | None = Field(default=None, exclude_if=lambda v: v is None)
     name: Name
     unit: Name
     method: Note
@@ -133,6 +136,12 @@ class KPI(Input):
     baseline: Measure | None = Field(default=None, exclude_if=lambda v: v is None)
     target: Measure | None = Field(default=None, exclude_if=lambda v: v is None)
     actual: Measure | None = Field(default=None, exclude_if=lambda v: v is None)
+
+    @model_validator(mode="after")
+    def objective_scope(self):
+        if bool(self.objective) == bool(self.company_objective):
+            raise ValueError("Select one exact brand, campaign or shared company objective")
+        return self
 
 
 class Guidelines(Input):

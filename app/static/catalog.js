@@ -12,6 +12,7 @@ function createCatalogPane(root, api) {
     icp: 'Chân dung khách hàng',
     segment: 'Phân khúc',
     objective: 'Mục tiêu',
+    company_objective: 'Mục tiêu chung doanh nghiệp',
     kpi: 'Chỉ số KPI',
   };
   const states = {
@@ -64,7 +65,9 @@ function createCatalogPane(root, api) {
     needs: 'Nhu cầu',
     source: 'Nguồn chứng cứ',
     owner: 'Người phụ trách',
-    parent: 'Mục tiêu cha',
+    parent: 'Mục tiêu cha trong thương hiệu',
+    company_parent: 'Mục tiêu chung làm cha',
+    company_objective: 'Mục tiêu chung để đo',
     campaign_id: 'Chiến dịch',
     level: 'Cấp mục tiêu',
     objective: 'Mục tiêu',
@@ -135,8 +138,9 @@ function createCatalogPane(root, api) {
     guidelines: ['guidance', 'tone?'],
     icp: ['name', 'description', 'needs?', 'basis', 'source?', 'market?'],
     segment: ['name', 'description', 'needs?', 'basis', 'source?', 'market?'],
-    objective: ['name', 'level', 'parent?', 'campaign_id?', 'owner'],
-    kpi: ['name', 'objective', 'unit', 'method', 'window', 'owner', 'source?', 'baseline?', 'target?', 'actual?'],
+    company_objective: ['name', 'owner'],
+    objective: ['name', 'level', 'parent?', 'company_parent?', 'campaign_id?', 'owner'],
+    kpi: ['name', 'objective?', 'company_objective?', 'unit', 'method', 'window', 'owner', 'source?', 'baseline?', 'target?', 'actual?'],
     offer: [
       ...placement,
       'policy',
@@ -165,11 +169,14 @@ function createCatalogPane(root, api) {
     source: 'source',
     objective: 'objective',
     parent: 'objective',
+    company_parent: 'company_objective',
+    company_objective: 'company_objective',
   };
   let scope,
     epoch = 0,
     controller,
     clientRoot,
+    companyPath,
     path,
     canWrite = false,
     canApprove = false,
@@ -235,6 +242,9 @@ function createCatalogPane(root, api) {
   async function get(url) {
     return api(url, 'GET', null, false, controller.signal);
   }
+  function collection(itemKind) {
+    return itemKind === 'company_objective' ? companyPath : path + '/items';
+  }
   function selected(ctx) {
     return ctx === epoch && scope;
   }
@@ -249,6 +259,7 @@ function createCatalogPane(root, api) {
     if (!tenant || !client || !brand || context.role === 'client_viewer') return;
     actorKey = ['catalog', context.actor?.id || context.actor, tenant, client, brand].join('/');
     clientRoot = '/api/tenants/' + encodeURIComponent(tenant);
+    companyPath = clientRoot + '/clients/' + encodeURIComponent(client) + '/company-objectives';
     path =
       clientRoot + '/clients/' + encodeURIComponent(client) + '/brands/' + encodeURIComponent(brand) + '/catalog';
     canWrite = ['editor', 'admin', 'owner'].includes(context.role);
@@ -284,8 +295,12 @@ function createCatalogPane(root, api) {
     const key = sessionStorage.getItem(actorKey + '/pending');
     if (!key || !selected(life)) return;
     try {
-      const record = await get(path + '/commands/' + encodeURIComponent(key));
+      const savedKind = sessionStorage.getItem(actorKey + '/kind');
+      const base = savedKind === 'company_objective' ? companyPath : path;
+      const record = await get(base + '/commands/' + encodeURIComponent(key));
       if (selected(life)) {
+        kindSelect.value = record.kind;
+        await reload(true);
         await inspect(record.id);
         note('Đã khôi phục lần lưu trước.');
         sessionStorage.removeItem(actorKey + '/pending');
@@ -305,7 +320,7 @@ function createCatalogPane(root, api) {
     }
     kind = kindSelect.value;
     const q = new URLSearchParams({ kind, q: typedSearch.value, after: cursor || '', limit: '12' });
-    const result = await get(path + '/items?' + q);
+    const result = await get(collection(kind) + '?' + q);
     if (!selected(life) || queryId !== filter) return;
     list.replaceChildren();
     pager.replaceChildren();
@@ -346,8 +361,9 @@ function createCatalogPane(root, api) {
   }
   async function inspect(id) {
     const life = epoch,
-      record = await get(path + '/items/' + encodeURIComponent(id));
+      record = await get(collection(kind) + '/' + encodeURIComponent(id));
     if (!selected(life)) return;
+    record.references ??= {};
     details.replaceChildren(el('h4', record.label));
     const lines = el('dl'),
       flat = values(record.data);
@@ -374,6 +390,7 @@ function createCatalogPane(root, api) {
       draft: ['approved', 'disputed', 'withdrawn'],
       approved: ['disputed', 'superseded', 'withdrawn'],
       disputed: ['withdrawn', 'superseded'],
+      superseded: ['withdrawn'],
     };
     if (canApprove && allowed[record.state]) {
       const entry = el('div');
@@ -403,7 +420,7 @@ function createCatalogPane(root, api) {
               const intention = JSON.stringify([state, why.value.trim(), preferredId]);
               if (!decisionKeys.has(intention)) decisionKeys.set(intention, crypto.randomUUID());
               await api(
-                path.replace(/\/catalog$/, '/knowledge') + '/revisions/' + record.id + '/events',
+                (record.kind === 'company_objective' ? companyPath : path.replace(/\/catalog$/, '/knowledge') + '/revisions') + '/' + record.id + '/events',
                 'POST',
                 {
                   key: decisionKeys.get(intention),
@@ -437,7 +454,9 @@ function createCatalogPane(root, api) {
     const load = async () => {
       const seq = ++call;
       let rows;
-      if (key === 'campaign_id') {
+      if (refs[key] === 'company_objective') {
+        rows = (await get(companyPath + '?' + new URLSearchParams({approved_only: 'true', q: search.value, limit: '40'}))).items;
+      } else if (key === 'campaign_id') {
         const all = await get(clientRoot + '/campaigns');
         rows = all
           .filter(
@@ -454,6 +473,10 @@ function createCatalogPane(root, api) {
             ),
           );
         rows = sets.flatMap((s) => s.items);
+        if (key === 'parent') {
+          const level = form?.elements.namedItem('level')?.value;
+          rows = rows.filter((r) => r.level === (level === 'campaign' ? 'brand' : 'company'));
+        }
         if (key === 'preferred_revision') rows = rows.filter((r) => r.id !== excluded && r.state === 'approved');
       }
       if (!selected(life) || !input.isConnected || seq !== call) return;
@@ -517,7 +540,7 @@ function createCatalogPane(root, api) {
     const v = record ? values(record.data) : {},
       controls = {},
       loads = [];
-    for (const raw of [...forms[kind], 'visibility']) {
+    for (const raw of kind === 'company_objective' ? forms[kind] : [...forms[kind], 'visibility']) {
       const optional = raw.endsWith('?'),
         key = raw.replace('?', '');
       let input;
@@ -579,6 +602,27 @@ function createCatalogPane(root, api) {
       }
       if (key === 'code' && record) input.readOnly = true;
     }
+    if (kind === 'objective') {
+      const scopeHint = el('p');
+      form.prepend(scopeHint);
+      const adjust = () => {
+        const level = controls.level.value;
+        scopeHint.textContent = {
+          company: 'Mục tiêu này chỉ dùng trong hồ sơ thương hiệu. Để các thương hiệu cùng dùng, chọn loại “Mục tiêu chung doanh nghiệp”.',
+          brand: 'Chọn một mục tiêu chung đã duyệt hoặc một mục tiêu cha cũ trong hồ sơ thương hiệu.',
+          campaign: 'Chọn chiến dịch và mục tiêu cha cấp thương hiệu của chiến dịch này.',
+        }[level];
+        for (const [key, active] of Object.entries({
+          company_parent: level === 'brand', parent: level !== 'company', campaign_id: level === 'campaign',
+        })) {
+          controls[key].closest('.catalog-form > div').hidden = !active;
+          if (!active) controls[key].value = '';
+        }
+        controls.parent.parentElement.parentElement.querySelector('input[type=search]').dispatchEvent(new Event('input'));
+      };
+      controls.level.addEventListener('change', adjust);
+      adjust();
+    }
     const submit = el('button', 'Lưu bản nháp');
     submit.type = 'submit';
     form.append(submit);
@@ -592,11 +636,15 @@ function createCatalogPane(root, api) {
             value = value === input.dataset.initialDisplay ? v[key] : new Date(value).toISOString();
           if (value !== '' && value !== null) raw[key] = value;
         }
+        if (kind === 'objective' && raw.level === 'brand' && Boolean(raw.parent) === Boolean(raw.company_parent))
+          return note('Chọn đúng một mục tiêu cha cho thương hiệu.');
+        if (kind === 'objective' && raw.level === 'campaign' && (!raw.campaign_id || !raw.parent))
+          return note('Chọn chiến dịch và mục tiêu cha cấp thương hiệu.');
+        if (kind === 'kpi' && Boolean(raw.objective) === Boolean(raw.company_objective))
+          return note('Chọn đúng một mục tiêu để đo KPI.');
         const body = {
-          kind,
-          data: pack(raw),
+          ...(kind === 'company_objective' ? { name: raw.name, owner: raw.owner } : { kind, data: pack(raw), visibility: raw.visibility }),
           expected_revision: record?.revision || 0,
-          visibility: raw.visibility,
           ...(raw.code ? { code: raw.code } : {}),
           ...(record ? { subject: record.subject } : {}),
         };
@@ -606,10 +654,11 @@ function createCatalogPane(root, api) {
         const old = sessionStorage.getItem(actorKey + '/pending');
         const key = old && sessionStorage.getItem(actorKey + '/digest') === fp ? old : crypto.randomUUID();
         sessionStorage.setItem(actorKey + '/pending', key);
+        sessionStorage.setItem(actorKey + '/kind', kind);
         sessionStorage.setItem(actorKey + '/digest', fp);
         submit.disabled = true;
         try {
-          const saved = await api(path + '/items', 'POST', { ...body, key }, false, controller.signal);
+          const saved = await api(collection(kind), 'POST', { ...body, key }, false, controller.signal);
           if (!selected(life)) return;
           sessionStorage.removeItem(actorKey + '/pending');
           await reload();

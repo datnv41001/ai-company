@@ -19,6 +19,7 @@ from .identity_quota import admit
 from .business_knowledge import router as knowledge_router
 from .business_workspace import router as workspace_router
 from .marketing_catalog import router as catalog_router
+from .company_objectives import router as objective_router
 from .identity import MailboxConfigurationError, issue, router as identity_router, verify_email
 from .revision_qa import content_digest, evaluate
 from .workforce_evidence import RULESET
@@ -57,6 +58,7 @@ app.include_router(operations_router)
 app.include_router(knowledge_router)
 app.include_router(workspace_router)
 app.include_router(catalog_router)
+app.include_router(objective_router)
 app.mount("/static", StaticFiles(directory=ROOT / "static"), name="static")
 
 

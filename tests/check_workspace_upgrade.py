@@ -49,13 +49,26 @@ def verify():
         workspace_before = db.execute("SELECT to_jsonb(w) FROM business_workspace_records w").fetchall()
     with pytest.raises(RuntimeError):
         prepare_database(engine)
+    migrate_historical_fixture("727a344be4c387a612a74c69fafdac8b966f1fa2")
+    with psycopg.connect(dsn) as db:
+        assert db.execute("SELECT version FROM amc_business.versions ORDER BY version").fetchall() == [(1,), (2,)]
+        old_objective = {"name":"Local company target","owner":"Brand lead","level":"company","parent":None,"campaign_id":None}
+        db.execute(
+            """INSERT INTO knowledge_revisions(subject,kind,revision,data,digest,author,created_at,id,tenant_id,client_id,brand_id,visibility)
+            VALUES('local-goal','objective',1,%s,%s,'fixture-author',now(),'legacy-goal','t','c','b','internal')""",
+            (Jsonb(old_objective), digest(canonical(old_objective))),
+        )
+        before = db.execute("SELECT to_jsonb(k) FROM knowledge_revisions k ORDER BY id").fetchall()
+    with pytest.raises(RuntimeError):
+        prepare_database(engine)
     migrate(dsn)
     migrate(dsn)
     prepare_database(engine)
     with psycopg.connect(dsn) as db:
-        assert db.execute("SELECT version FROM amc_business.versions ORDER BY version").fetchall() == [(1,), (2,)]
+        assert db.execute("SELECT version FROM amc_business.versions ORDER BY version").fetchall() == [(1,), (2,), (3,)]
         assert db.execute("SELECT version FROM amc_schema_versions ORDER BY version").fetchall() == core
-        assert db.execute("SELECT to_jsonb(k) FROM knowledge_revisions k").fetchall() == before
+        assert db.execute("SELECT to_jsonb(k) FROM knowledge_revisions k ORDER BY id").fetchall() == before
+        assert db.execute("SELECT count(*) FROM business_company_objectives").fetchone()==(0,)
         assert db.execute("SELECT to_jsonb(w) FROM business_workspace_records w").fetchall() == workspace_before
         db.execute("INSERT INTO amc_business.versions VALUES(99)")
     with pytest.raises(ValueError, match="Unsupported business workspace"):
@@ -63,7 +76,7 @@ def verify():
     with pytest.raises(RuntimeError, match="compatible business workspace"):
         prepare_database(engine)
     engine.dispose()
-    print("PASS core v22 at c847f910 to business workspace v2, repeat publication preserved populated C1 history and core markers; unsupported module refused")
+    print("PASS core v22, workspace v1 and catalog v2 to workspace v3. Repeated publication preserved legacy objectives, company profile and core markers.")
 
 
 if __name__ == "__main__":

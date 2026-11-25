@@ -177,6 +177,7 @@ jobs:
           AMC_ONBOARDING_SCREENSHOTS="$RUNNER_TEMP/onboarding" AMC_BROWSER_MAILBOX_PROJECT=amc-acceptance AMC_BROWSER_TEST_URL=http://127.0.0.1:8000 python tests/browser_delivery.py
           AMC_KNOWLEDGE_EVIDENCE="$RUNNER_TEMP/knowledge-workspace" AMC_BROWSER_MAILBOX_PROJECT=amc-acceptance AMC_BROWSER_TEST_URL=http://127.0.0.1:8000 python tests/browser_knowledge.py
           AMC_KNOWLEDGE_EVIDENCE="$RUNNER_TEMP/knowledge-workspace/catalog" AMC_BROWSER_MAILBOX_PROJECT=amc-acceptance AMC_BROWSER_TEST_URL=http://127.0.0.1:8000 python tests/browser_catalog.py
+          AMC_KNOWLEDGE_EVIDENCE="$RUNNER_TEMP/knowledge-workspace/objectives" AMC_BROWSER_MAILBOX_PROJECT=amc-acceptance AMC_BROWSER_TEST_URL=http://127.0.0.1:8000 python tests/browser_objectives.py
       - uses: actions/upload-artifact@v4
         with:
           name: knowledge-workspace-${{ matrix.revision }}

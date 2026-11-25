@@ -68,6 +68,9 @@ def rehearse_archive(dsn, container, version=16):
         workspace_tables = ()
         if version >= 22 and source.execute("SELECT to_regclass('amc_business.versions')").fetchone()[0]:
             workspace_tables = ("amc_business.versions", "business_workspace_records")
+            if source.execute("SELECT to_regclass('public.business_company_objectives')").fetchone()[0]:
+                workspace_tables += ("business_company_objectives", "business_company_objective_edges")
+                assert {"draft","approved","withdrawn"} <= {r[0] for r in source.execute("SELECT DISTINCT state FROM business_company_objectives")}
             tables += workspace_tables
             assert {r[0] for r in source.execute("SELECT DISTINCT kind FROM business_workspace_records")} == {"company","brand","brief"}
         before = snapshot(source)

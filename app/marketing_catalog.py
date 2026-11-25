@@ -10,12 +10,13 @@ from sqlalchemy import func, or_
 
 from .business_knowledge import reader, writer
 from .catalog_identity import MASTERS, master_subject
+from .company_objectives import check_company_reference, current_state, latest_decision
 from .commercial_scope import CONDITION_LABELS, CONDITION_BY_LABEL, TERRITORIES
 from .knowledge_authority import new_revision, invalid
 from .knowledge_contracts import Code, Command, RevisionIn, Subject, Visibility
 from .knowledge_models import KnowledgeCommand, KnowledgeRevision as Row
 from .knowledge_store import missing
-from .models import new_id
+from .models import Campaign, new_id
 
 CatalogKind = Literal["product", "service", "variant", "market", "policy", "availability", "offer", "guidelines", "segment", "icp", "objective", "kpi"]
 LookupKind = Literal["product", "service", "variant", "market", "policy", "availability", "source", "objective", "kpi", "offer", "guidelines", "segment", "icp"]
@@ -107,6 +108,7 @@ def card(s, row):
         "label": label(row)[:160],
         "code": row.data.get("catalog_code"),
         "sku": row.data.get("sku"),
+        **({"level": row.data["level"]} if row.kind == "objective" else {}),
         "identity": "registered" if row.data.get("catalog_code") else ("unmapped" if row.kind in MASTERS else None),
     }
 
@@ -156,7 +158,17 @@ def details(revision_id: str, s=Depends(reader)):
             return node
         out = {}
         for k, v in node.items():
-            if k in REFS and isinstance(v, str):
+            if k in ("company_parent", "company_objective") and isinstance(v, str):
+                company = check_company_reference(s, v, require_approved=False)
+                refs[k] = {
+                    "id": v,
+                    "label": company.name,
+                    "revision": company.revision,
+                    "scope": "company",
+                    "state": current_state(s.db, company, latest_decision(s.db, company)),
+                }
+                out[k] = v
+            elif k in REFS and isinstance(v, str):
                 r = s.db.scalar(s.query(Row).where(Row.id == v))
                 if r:
                     refs[k] = {"id": v, "label": label(r)[:160], "revision": r.revision}
@@ -169,6 +181,10 @@ def details(revision_id: str, s=Depends(reader)):
         return out
 
     data = redact(data)
+    if row.kind == "objective" and data.get("campaign_id"):
+        campaign = s.db.get(Campaign, data["campaign_id"])
+        if campaign and campaign.brand_id == row.brand_id and campaign.tenant_id == row.tenant_id:
+            refs["campaign_id"] = {"id": campaign.id, "label": campaign.name}
     if row.kind == "offer" and data.get("price"):
         price = data["price"].copy()
         price["amount"] = display_money(price.pop("amount_minor"), price["currency"])

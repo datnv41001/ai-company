@@ -7,7 +7,7 @@ from typing import Annotated, Literal
 
 from pydantic import BaseModel, ConfigDict, Field, PlainSerializer, StrictInt, field_validator, model_validator
 
-from .commercial_scope import CommercialOption, TERRITORY_BY_LABEL
+from .commercial_scope import CommercialOption, TERRITORY_BY_LABEL, OrderChannel, PaymentOption, ServiceLevel, ORDER_AXES, CONDITION_BY_LABEL
 
 Key = Annotated[str, Field(min_length=1, max_length=96)]
 Name = Annotated[str, Field(min_length=1, max_length=160)]
@@ -70,7 +70,15 @@ class Profile(Input):
     goal: Note
 
 
-class Product(Input):
+Code = Annotated[str, Field(pattern=r"^[A-Z0-9][A-Z0-9._-]{0,39}$")]
+Measure = Annotated[Decimal, Field(max_digits=18, decimal_places=6), PlainSerializer(lambda x: format(x, "f"), when_used="json")]
+
+
+class Master(Input):
+    catalog_code: Code | None = Field(default=None, exclude_if=lambda v: v is None)
+
+
+class Product(Master):
     name: Name
     sku: Name | None = None
 
@@ -80,7 +88,7 @@ class Variant(Product):
     sku: Name
 
 
-class Market(Input):
+class Market(Master):
     name: Name
     locales: Annotated[list[Name], Field(min_length=1, max_length=12)]
 
@@ -90,6 +98,8 @@ class Segment(Input):
     description: Note
     basis: Literal["hypothesis", "fact"]
     source: Ref | None = None
+    market: Ref | None = Field(default=None, exclude_if=lambda v: v is None)
+    needs: Note | None = Field(default=None, exclude_if=lambda v: v is None)
 
     @model_validator(mode="after")
     def factual(self):
@@ -118,12 +128,16 @@ class KPI(Input):
     unit: Name
     method: Note
     window: Name
-    source: Ref
+    source: Ref | None = Field(default=None, exclude_if=lambda v: v is None)
     owner: Name
+    baseline: Measure | None = Field(default=None, exclude_if=lambda v: v is None)
+    target: Measure | None = Field(default=None, exclude_if=lambda v: v is None)
+    actual: Measure | None = Field(default=None, exclude_if=lambda v: v is None)
 
 
 class Guidelines(Input):
     guidance: Note
+    tone: Note | None = Field(default=None, exclude_if=lambda v: v is None)
 
 
 class Placement(Input):
@@ -174,6 +188,9 @@ class CommercialApplicability(Input):
     """A published promise covers every order inside its declared range."""
 
     option: CommercialOption | None = None
+    buyer: OrderChannel | None = Field(default=None, exclude_if=lambda v: v is None)
+    payment_type: PaymentOption | None = Field(default=None, exclude_if=lambda v: v is None)
+    service_level: ServiceLevel | None = Field(default=None, exclude_if=lambda v: v is None)
     unit: Unit | None = None
     minimum: Amount | None = None
     maximum: Amount | None = None
@@ -184,7 +201,10 @@ class CommercialApplicability(Input):
             raise ValueError("Quantity conditions require a unit")
         if self.maximum is not None and self.minimum is not None and self.maximum < self.minimum:
             raise ValueError("Empty commercial quantity range")
-        if not self.option and not self.unit:
+        for axis, choices in ORDER_AXES.items():
+            if self.option in choices and getattr(self, axis) not in (None, self.option):
+                raise ValueError("A legacy order option conflicts with the typed dimension")
+        if not self.option and not self.unit and not any(getattr(self, axis) for axis in ORDER_AXES):
             raise ValueError("Declare an option or a selling unit")
         return self
 
@@ -306,7 +326,7 @@ SENSITIVE = {"comparison", "regulated", "performance"}
 
 # The Solo path covers exact structured values and legacy spellings of those
 # values. Other markets and prose remain usable after independent review.
-COMMERCIAL_CONDITIONS = {"Prepaid", "Cash on delivery", "Pickup", "Delivery", "Trả trước", "Thanh toán khi nhận hàng", "Nhận tại cửa hàng"}
+COMMERCIAL_CONDITIONS = set(CONDITION_BY_LABEL)
 PLACEMENT_CHANNELS = {"web", "store", "email", "retail", "wholesale", "search", "social", "marketplace"}
 
 

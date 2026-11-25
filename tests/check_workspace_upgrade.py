@@ -36,21 +36,34 @@ def verify():
         core = db.execute("SELECT version FROM amc_schema_versions ORDER BY version").fetchall()
     with pytest.raises(RuntimeError):
         prepare_database(engine)
+    migrate_historical_fixture("923a89050325ff05a6980f1ebeb392da367bb140")
+    with psycopg.connect(dsn) as db:
+        assert db.execute("SELECT version FROM amc_business.versions ORDER BY version").fetchall() == [(1,)]
+        payload = {"name": {"value": "Synthetic company", "revision": 1}}
+        db.execute(
+            """INSERT INTO public.business_workspace_records
+            (id,tenant_id,client_id,scope,kind,revision,actor,command_key,request_digest,payload,created_at)
+            VALUES('w1','t','c','company','company',1,'fixture-author','one',%s,%s,now())""",
+            (digest(canonical(payload)), Jsonb(payload)),
+        )
+        workspace_before = db.execute("SELECT to_jsonb(w) FROM business_workspace_records w").fetchall()
+    with pytest.raises(RuntimeError):
+        prepare_database(engine)
     migrate(dsn)
     migrate(dsn)
     prepare_database(engine)
     with psycopg.connect(dsn) as db:
-        assert db.execute("SELECT version FROM amc_business.versions").fetchall() == [(1,)]
+        assert db.execute("SELECT version FROM amc_business.versions ORDER BY version").fetchall() == [(1,), (2,)]
         assert db.execute("SELECT version FROM amc_schema_versions ORDER BY version").fetchall() == core
         assert db.execute("SELECT to_jsonb(k) FROM knowledge_revisions k").fetchall() == before
-        assert db.execute("SELECT count(*) FROM business_workspace_records").fetchone() == (0,)
+        assert db.execute("SELECT to_jsonb(w) FROM business_workspace_records w").fetchall() == workspace_before
         db.execute("INSERT INTO amc_business.versions VALUES(99)")
     with pytest.raises(ValueError, match="Unsupported business workspace"):
         migrate(dsn)
     with pytest.raises(RuntimeError, match="compatible business workspace"):
         prepare_database(engine)
     engine.dispose()
-    print("PASS core v22 at c847f910 to business workspace v1, repeat publication preserved populated C1 history and core markers; unsupported module refused")
+    print("PASS core v22 at c847f910 to business workspace v2, repeat publication preserved populated C1 history and core markers; unsupported module refused")
 
 
 if __name__ == "__main__":

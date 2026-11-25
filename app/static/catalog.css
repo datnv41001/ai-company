@@ -1,0 +1,66 @@
+.marketing-catalog {
+  margin-block: 1.5rem;
+  padding-top: 1rem;
+  border-top: 1px solid #bacbc6;
+}
+.catalog-tools,
+.marketing-catalog nav {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+  align-items: center;
+}
+.catalog-list {
+  padding: 0;
+  list-style: none;
+}
+.catalog-list li {
+  display: flex;
+  gap: 0.6rem;
+  align-items: center;
+  border-bottom: 1px solid #dce4e0;
+  padding: 0.35rem 0;
+}
+.catalog-list li span {
+  color: #456057;
+}
+.catalog-detail dl {
+  display: grid;
+  grid-template-columns: minmax(9rem, 1fr) 2fr;
+  gap: 0.3rem 1rem;
+}
+.catalog-detail dd {
+  margin: 0;
+  overflow-wrap: anywhere;
+}
+.catalog-form {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(15rem, 100%), 1fr));
+  gap: 0.75rem;
+}
+.catalog-form label {
+  display: grid;
+  gap: 0.25rem;
+}
+.catalog-form input,
+.catalog-form select,
+.catalog-form textarea {
+  min-width: 0;
+  width: 100%;
+  box-sizing: border-box;
+}
+.catalog-form button {
+  align-self: end;
+}
+@media (max-width: 480px) {
+  .catalog-tools > * {
+    width: 100%;
+  }
+  .catalog-detail dl {
+    grid-template-columns: minmax(6rem, 1fr) 1.6fr;
+  }
+  .catalog-list li {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+}

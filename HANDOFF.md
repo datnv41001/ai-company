@@ -4,6 +4,21 @@
 
 Bắt đầu từ [sổ nguồn](docs/research/SOURCE_REGISTRY.md), mở [thẻ kiến thức](docs/research/KNOWLEDGE_CARDS.md), [đối chiếu với mã hiện hành](docs/research/APPLICABILITY_MATRIX.md) rồi chọn [cải tiến có tiêu chí nghiệm thu](docs/research/PRODUCT_OPPORTUNITIES.md). Đọc [các giả thuyết đã hoãn hoặc bác bỏ](docs/research/REJECTED_HYPOTHESES.md) trước khi lặp lại nghiên cứu. Công cụ engineering chạy độc lập ở [runbook Research Broker](engineering/airc500/APPLIED-RESEARCH.md). Receipt lần đầu có hai nguồn quan sát được và một nguồn bị publisher hạn chế. Có thể replay ngoại tuyến bằng mã băm trong runbook. Rollback bằng dùng phiên bản catalog/adapter trước cho đợt đọc mới, giữ lại biên nhận cũ để đối soát. C2/C3 tiếp tục theo thứ tự sản phẩm.
 
+## PR #34 · Màn hình điều hành Marketing
+
+Điều hướng workspace dùng URL của từng màn hình. Đường dẫn giữ workspace, thương hiệu theo dõi và chiến dịch. Khi mở liên kết, ứng dụng xác minh phiên và đối chiếu các ID với danh sách mà tài khoản được phép đọc. Khi lập kế hoạch, người dùng mở thẻ bộ phận để xem vai trò và nhiệm vụ được giao. Các lượt chạy Workforce, quyết định QA, tình trạng nguồn và số liệu kinh doanh được trình bày riêng.
+
+Bộ kiểm thử Chromium chạy qua mục CI `compose-browser`. Artifact `premium-ui-<revision>` có ảnh thật ở 1440, 1280, 820, 390 và 320 CSS px, các cặp trước/sau và `ui-acceptance.json`. Ảnh trước được lấy từ Chromium tại commit `0953285c1c6a70a5c473effb5a69501500e717b5`. Hàm kiểm thử đối chiếu SHA-256 của ảnh trước khi ghép mỗi cặp. [Thiết kế và nghiệm thu](docs/AMC-DESIGN-SYSTEM.md)
+
+Chạy bằng `python tests/browser_premium_ui.py` với `AMC_BROWSER_TEST_URL`, hộp thư phát triển, PostgreSQL thử nghiệm và Chromium đã cài như CI. `AMC_PREMIUM_EVIDENCE` chọn thư mục đầu ra. Các thao tác tài khoản, lịch sử Back/Forward, quyền bị thu hẹp và QA tiếp tục đi qua API đã nghiệm thu. Khi cần quay lại giao diện trước, hoàn nguyên commit tinh chỉnh bằng một PR mới. Thay đổi này chỉ tác động đến ứng dụng và bộ kiểm thử giao diện.
+
+
+## Trung tâm điều hành và chuẩn giao diện
+
+Mốc nền là PR #32 tại `068b85170cf47106c8d08a8c573548e3f530647c`. Từ tài khoản nhân sự, chọn workspace để mở **Trung tâm điều hành**, chọn chiến dịch và đối chiếu bước kế hoạch với nhiệm vụ, bộ phận, bản giao và lượt xử lý Workforce. Menu **Hồ sơ doanh nghiệp** mở C2. Công tắc **Giao diện** hỗ trợ hệ thống, sáng và tối. [Hợp đồng dữ liệu, component và quy tắc nghiệm thu](docs/AMC-DESIGN-SYSTEM.md)
+
+Dùng Compose và tài khoản tổng hợp theo hướng dẫn Docker bên dưới. Chạy browser test trong job Chromium với `python tests/browser_premium_ui.py` và các biến môi trường của workflow. Kiểm tra cả ảnh, số đo và nguồn API trên cùng SHA. Để rollback riêng giao diện, dùng lại image API đã build ở SHA nền cùng publisher và DB core v22, module doanh nghiệp v3. Thay đổi giao diện này chỉ đọc các endpoint hiện hữu. [Job kiểm thử](.github/workflows/ci.yml)
+
 ## Publisher kết hợp C2 và A1
 
 Core v24 kết hợp business module v3 với phiên thiết bị A1. Publisher kiểm tra hai định nghĩa SQL thực tế, quyền thực thi, liên tục quota và các khóa A1 trước khi commit. Hai đường nâng từ C2 v22 và A1 v23 dùng đúng mã đã duyệt và dữ liệu tổng hợp. Khi chuyển máy, làm theo [runbook publisher, kiểm thử và khôi phục](docs/COMBINED-C2-A1.md). Các mục bên dưới lưu hợp đồng lịch sử từng nhánh.

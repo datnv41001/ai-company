@@ -40,6 +40,8 @@ def exercise_device_context(browser, origin, viewport):
         return selected["__Host-amc-context"], hashlib.sha256(raw.encode()).digest()
 
     def open_devices(page):
+        if not page.locator("#account-menu").is_visible():
+            page.locator("#account-trigger").click()
         page.locator("#device-panel summary").click()
 
     def renew_and_display(page):

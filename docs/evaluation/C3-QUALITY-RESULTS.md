@@ -21,6 +21,40 @@ Mẫu cố định trước gồm ca 01 và 02 của mỗi nhóm. Người đán
 
 Đối với mười bản trên, AI đánh giá **0/10 có thể nhận dùng ngay**. Thông tin thương mại được renderer khôi phục ở phần trên có thể đúng, trong khi nội dung do model viết thêm ở CTA hoặc SEO vẫn sai. Đây là hai lớp cần kiểm tra riêng.
 
+## So sánh trên cùng phiên bản phần mềm
+
+Hai cấu hình chạy trên commit `08cc65b4de4ae637d3a3bbd70b7e1e0eb6128f32`, cùng Qwen 0.5B, weights `74a4da8c…`, llama.cpp `b12649-1f8baae28` và cùng holdout. Cấu hình mới thay đồng thời skill, hợp đồng nhập liệu và renderer. Thí nghiệm này đo tác động gộp của các thay đổi đó. Điểm dưới đây do AI đọc trực tiếp mười cặp 01/02 đã chọn trước.
+
+| Chỉ số trên 10 brief đại diện | WF-03@2 / WF-13@5 | WF-03@3 / WF-13@6 |
+| --- | ---: | ---: |
+| Bản nháp đã lưu qua API ngay lần đầu | 10 | 6 |
+| Cần làm rõ đơn vị bán trước khi gọi model | 0 | 4 |
+| Lượt gọi model | 30 | 18 |
+| Token vào / ra | 15.273 / 3.367 | 11.577 / 1.656 |
+| Có tên sản phẩm và SKU, giá trích được khớp tiền tệ và giá trị | 10/10 nháp | 6/6 nháp |
+| Ghi đúng đơn vị bán của brief cùng MOQ và bậc giá | 6/10 nháp | 6/6 nháp |
+| Bản xem trước chứa nhãn công việc nội bộ | 10/10 nháp | 0/6 nháp |
+| AI thấy bản đầu đủ để người làm Marketing nhận dùng | 0/10 brief | 0/10 brief |
+
+Cả sáu nháp mới đều cần sửa nghiệp vụ. Bốn ca còn lại chưa có bản giao. Hai nhóm dịch vụ và lớp học dùng chung mã giá `service`, trong khi brief viết rõ “lượt” hoặc “người”. Cấu hình mới yêu cầu sửa bản giá đã được phê duyệt. Mỗi bản cần làm rõ vẫn tính vào mười brief được giao. Số token giảm một phần do bốn ca dừng sớm.
+
+| Ca | Nhận xét sau đối chiếu hai lần chạy trên cùng commit |
+| --- | --- |
+| Agency 01 | Cả hai chiến lược còn thiếu định vị riêng. Bản mới xác định được hành động đăng ký bộ mẫu và loại trùng trong 21 ngày; giả thuyết chỉ nhắc lại nhu cầu kiểm tra nắp gập, chưa đề xuất biến thử hay kết quả kỳ vọng. Trường phân khúc chỉ ghi địa bàn Hải Phòng. |
+| Agency 02 | Bản cũ đưa ra hotline và email ngoài nguồn. Bản mới bỏ các kênh liên hệ đó và có CTA “Đặt mẫu”, nhưng brief yêu cầu xin bảng màu. Tiêu đề chỉ ghi nhóm đại lý. Phần lợi ích lặp đơn giá bằng tiếng Anh mà thiếu điều kiện tại chính câu đó. |
+| Inhouse 01 | Bản cũ biến giả thuyết về học viên thành khẳng định đã có người đăng ký lớp. Bản mới dừng ở khâu phê duyệt đơn vị học phí. |
+| Inhouse 02 | Bản cũ đưa lệnh lập trình vào CTA. Bản mới hỏi lại đơn vị giá trước khi lập nội dung ghi danh. |
+| Materials 01 | Bản cũ lặp giả thuyết về mặt đá và thiếu lý do chọn kênh. Bản mới chọn đúng trang báo giá nhưng chép câu hướng dẫn “Nêu điều kiện áp dụng và bước tiếp theo cho đúng người mua” vào cả hành động lẫn phương pháp đo. |
+| Materials 02 | Tiêu đề mới nêu đúng sản phẩm và Hà Nội. Bản cũ có CTA xem báo giá; CTA mới chỉ ghi “Đội hoàn thiện công trình tại Hà Nội”. Mục search intent cũng chỉ nêu đối tượng thay vì nhu cầu báo giá theo chiều dài. |
+| Seller 01 | Bản mới ghi rõ hành động đặt túi, nhưng định vị, giả thuyết và cơ sở quyết định đều lặp nhu cầu xác nhận vải nâu. Phương pháp đo của model chỉ ghi tùy yêu cầu và thời gian đặt hàng. |
+| Seller 02 | Bản cũ nêu được kệ sách và lựa chọn ba tầng, nhưng CTA mới chỉ là mô tả. Bản nâng cấp đưa thông báo “Điều chỉnh giá thành công” vào cả tiêu đề trang và SEO title; brief không cung cấp sự kiện điều chỉnh giá. |
+| Service 01 | Bản cũ hiển thị “suất dịch vụ” cho giá bảo trì quạt. Bản mới yêu cầu đơn vị bán đã được phê duyệt và chưa sinh bản chiến lược. |
+| Service 02 | Bản cũ lặp mục tiêu gửi ảnh rèm ở CTA và đưa việc thiết kế/sản xuất sản phẩm vào mô tả SEO dịch vụ. Bản mới dừng trước khi sinh trang đích. |
+
+Ba bản chiến lược mới hoàn thành có tổng cộng 15 đoạn tiêu đề và preview được cổng ứng dụng đánh dấu verified. Tài liệu chiến lược, ghi chú nghiên cứu và phép đo được xuất riêng; cả ba vẫn cần biên tập. Ba bản trang đích mới đều còn đoạn mâu thuẫn hoặc chưa giải quyết theo cổng ứng dụng. Đánh giá chuyên môn và duyệt chứng cứ của preview vì thế có mẫu số và đối tượng khác nhau.
+
+Trên bộ đủ 50 brief, nhánh lịch sử tại `6a2d65f3` đã có 50 receipt, 150 lời gọi, 75.451 token vào, 16.251 token ra và thời gian sinh trung vị 17,63 giây. Cả 50 preview có giá trị tiền tệ khớp giá nguồn; chỉ 30/50 khớp đơn vị bán cụ thể và MOQ theo brief. Một preview có số điện thoại ngoài nguồn. Ba preview khớp từ khóa cam kết hoặc khuyến mãi cần đọc lại. Phí nhà cung cấp bằng 0.
+
 ## Cách kiểm tra bằng máy
 
 ```bash

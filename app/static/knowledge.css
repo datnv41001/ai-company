@@ -38,7 +38,7 @@
 .knowledge-summary { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: .75rem; }
 .knowledge-summary dt { color: #acbdd5; font-size: .8rem; }
 .knowledge-summary dd { margin: .25rem 0; }
-.knowledge-body .knowledge-brief, #knowledge-new-brief { border-bottom: 1px solid #354865; padding-bottom: 16px; margin-bottom: 18px; }
+.knowledge-body .knowledge-brief, .knowledge-body [data-task-entry], #knowledge-new-brief { border-bottom: 1px solid #354865; padding-bottom: 16px; margin-bottom: 18px; }
 #knowledge-status:not(:empty) { margin: 12px 0; padding: 10px 12px; background: #1d2d48; border-radius: 8px; font-size: .86rem; }
 #knowledge-status.knowledge-error { color: #ffdfdc; background: #512b35; }
 #knowledge-dirty { color: #f6d68c; font-size: .8rem; margin-left: 12px; }

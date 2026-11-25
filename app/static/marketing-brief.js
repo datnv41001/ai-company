@@ -28,7 +28,7 @@ function attachMarketingProvenance(parent, path, read, active) {
 /* A client or staff author explicitly approves this bounded summary for the Marketing team. */
 function taskIntentForm(parent, seed, onSubmit, options={}) {
   const box=document.createElement('details'), heading=document.createElement('summary'), fields=document.createElement('div');
-  heading.textContent=options.title || 'Giao nhiệm vụ cho AI Director'; box.className='knowledge-brief'; box.dataset.taskEntry='';
+  heading.textContent=options.title || 'Giao nhiệm vụ cho AI Director'; box.dataset.taskEntry='';
   const tip=document.createElement('p');tip.textContent='Chỉ nhập nội dung được phép gửi cho đội Marketing. Ghi rõ đầu ra và cách biết công việc đã đạt.';
   box.append(heading,tip,fields);parent.append(box);
   const controls={};

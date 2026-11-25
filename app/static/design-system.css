@@ -254,6 +254,10 @@ body[data-access=staff] .top-brand,body[data-access=portal] .top-brand{display:n
 .command-card{padding:15px;border-radius:12px}
 .command-card h3{margin:0 0 8px;font-size:1rem}
 .command-card ul:not(#command-capabilities){block-size:clamp(12.5rem,24vh,17rem);overflow:auto;scrollbar-gutter:stable}
+.pending-rows{display:grid;gap:14px;padding:15px 0}
+.pending-rows i{display:block;height:9px;width:82%;border-radius:4px;background:var(--layer-2)}
+.pending-rows i:nth-child(2){width:64%}
+.pending-rows i:nth-child(3){width:74%}
 .command-card li:not(.empty){padding-block:7px}
 #command-departments li:not(.empty){display:block;border-top:0;padding:0}
 #command-departments details{border-bottom:1px solid var(--border)}

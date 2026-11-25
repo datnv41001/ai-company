@@ -313,6 +313,10 @@ def task_network(page, f):
     running = no_motion(page)
     assert not running, running
     expect(page.locator("#command-status")).to_contain_text("Đang tải")
+    expect(page.locator("#command-tasks .pending-rows i")).to_have_count(3)
+    expect(page.locator("#command-departments .pending-rows")).to_have_attribute("aria-hidden", "true")
+    if page.viewport_size["width"] == 820:
+        capture(page, "tablet-light-campaign-loading")
     positions.append(geometry())
     page.evaluate("window.scrollBy({top:64,behavior:'instant'})")
     scroll = page.evaluate("scrollY")
@@ -396,6 +400,16 @@ def navigation_and_density(page, f, dev, theme, shots):
     expect(page.locator("#command-campaign-count")).to_have_text("3")
     expect(page.locator("#command-outcomes")).not_to_contain_text("Lịch nội dung tuần ra mắt")
     filtered = page.url
+    if dev == "tablet" and theme == "light":
+        fresh = page.context.new_page()
+        try:
+            fresh.goto(filtered)
+            authenticate(fresh, f["owner"])
+            expect(fresh.locator("#command-campaign")).to_have_value(f["campaigns"][2]["id"])
+            screen(fresh, "knowledge")
+            expect(fresh.locator("#knowledge-brand")).to_have_value(f["brands"][1]["id"])
+        finally:
+            fresh.close()
     screen(page, "knowledge")
     expect(page.locator("#command-center")).to_be_hidden()
     expect(page.locator("#knowledge-brand")).to_have_value(f["brands"][1]["id"])
@@ -697,21 +711,23 @@ def compare_screens(browser):
     page = browser.new_page(viewport={"width": 1460, "height": 950}, device_scale_factor=1)
     try:
         for size in ("desktop", "tablet", "mobile"):
-            name = size + "-light-overview.png"
-            old = (baseline / name).read_bytes()
-            assert sha256(old).hexdigest() == manifest["images"][name]["sha256"]
-            panels = []
-            for title, data in (("Trước", old), ("Sau", (OUT / name).read_bytes())):
-                img = base64.b64encode(data).decode("ascii")
-                panels.append(f'<figure><figcaption>{title}</figcaption><img src="data:image/png;base64,{img}"></figure>')
-            html = (
-                '<meta charset="utf-8"><style>*{box-sizing:border-box}body{margin:0;padding:20px;background:#eef1ed;color:#142d24;'
-                "font:18px system-ui}h1{font-size:24px;margin:0 0 12px}main{display:grid;grid-template-columns:1fr 1fr;gap:16px}"
-                "figure{margin:0}figcaption{margin:0 0 8px;font-weight:bold}img{display:block;max-width:100%;max-height:840px;"
-                "object-fit:contain;object-position:top left}</style><h1>AMC · " + size + "</h1><main>" + "".join(panels) + "</main>"
-            )
-            page.set_content(html, wait_until="load")
-            page.screenshot(path=str(OUT / ("before-after-" + size + ".png")))
+            for theme in ("light", "dark"):
+                name = size + "-" + theme + "-overview.png"
+                old = (baseline / name).read_bytes()
+                assert sha256(old).hexdigest() == manifest["images"][name]["sha256"]
+                panels = []
+                for title, data in (("Trước", old), ("Sau", (OUT / name).read_bytes())):
+                    img = base64.b64encode(data).decode("ascii")
+                    panels.append(f'<figure><figcaption>{title}</figcaption><img src="data:image/png;base64,{img}"></figure>')
+                html = (
+                    '<meta charset="utf-8"><style>*{box-sizing:border-box}body{margin:0;padding:20px;background:#eef1ed;color:#142d24;'
+                    "font:18px system-ui}h1{font-size:24px;margin:0 0 12px}main{display:grid;grid-template-columns:1fr 1fr;gap:16px}"
+                    "figure{margin:0}figcaption{margin:0 0 8px;font-weight:bold}img{display:block;max-width:100%;max-height:840px;"
+                    "object-fit:contain;object-position:top left}</style><h1>AMC · " + size + "</h1><main>" + "".join(panels) + "</main>"
+                )
+                page.set_content(html, wait_until="load")
+                suffix = "" if theme == "light" else "-dark"
+                page.locator("body").screenshot(path=str(OUT / ("before-after-" + size + suffix + ".png")))
     finally:
         page.close()
 
@@ -831,7 +847,8 @@ def run():
             unresolved = [row for v in report["views"] for a in v["contrast"] for row in a["unresolved"]]
             report["unresolved_contrast_count"] = len(unresolved)
             required = {f"{dev}-{theme}-{surface}.png" for dev in MATRIX for theme in ("light", "dark") for surface in ("overview", "work", "knowledge")}
-            required.add("desktop-cold-loading.png")
+            required.update({"desktop-cold-loading.png", "tablet-light-campaign-loading.png"})
+            required.update({"before-after-desktop-dark.png", "before-after-tablet-dark.png", "before-after-mobile-dark.png"})
             required.update(
                 {"before-after-desktop.png", "before-after-tablet.png", "before-after-mobile.png", "desktop-dark-department.png", "mobile-dark-department.png"}
             )

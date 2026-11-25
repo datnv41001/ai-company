@@ -42,6 +42,14 @@ function createCommandCenter(api,screens) {
     return li;
   };
   const note = (list,message) => list.replaceChildren(text('li',message,'empty'));
+  function loadingRows(list,message) {
+    note(list,message);
+    const placeholders=document.createElement('span');
+    placeholders.className='pending-rows';
+    placeholders.setAttribute('aria-hidden','true');
+    for(let n=0;n<3;n++) placeholders.append(document.createElement('i'));
+    list.firstElementChild.append(placeholders);
+  }
   let context = null, controller = null, roleAbort = null, roleMap = new Map(), currentTasks = [], generation = 0;
   let selectedCampaign = '', runs = null, activityFailed = false;
   function clear() {
@@ -213,8 +221,8 @@ function createCommandCenter(api,screens) {
     box.setAttribute('aria-busy','true');
     write('command-status','Đang tải nhiệm vụ…');
     write('command-progress-caption','Đang tải tiến độ.');
-    note(by('command-tasks'),'Đang tải nhiệm vụ.');
-    note(by('command-departments'),'Đang tải phân công.');
+    loadingRows(by('command-tasks'),'Đang tải nhiệm vụ.');
+    loadingRows(by('command-departments'),'Đang tải phân công.');
     void capabilities(local,campaign,epoch,controller.signal);
     try {
       const result = await api('/api/tenants/'+encodeURIComponent(local.tenant)+'/campaigns/'+encodeURIComponent(campaign.id)+'/tasks','GET',null,false,controller.signal);

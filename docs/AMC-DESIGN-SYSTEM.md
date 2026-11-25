@@ -19,7 +19,7 @@ Nút tên workspace mở bộ chọn workspace. Trên Tổng quan, người dùn
 
 Job `compose-browser` chạy Chromium trên PostgreSQL ở 1440, 1280, 820, 390 và 320 CSS px. Dữ liệu tổng hợp được tạo qua API. Các phép thử giữ một phản hồi đọc nhiệm vụ thật hơn 650 ms, đo vị trí nút và panel trước, trong, sau khi tải, kiểm tra focus và cuộn. `ui-acceptance.json` ghi riêng điểm dịch chuyển sau thao tác gần nhất và dịch chuyển ngoài cửa sổ 500 ms. CLS tải ban đầu dùng cửa sổ phiên tối đa 5 s và khoảng nghỉ 1 s. Kiểm tra bổ sung gồm bàn phím, vùng chạm, nhãn tiếng Việt dài, email dài, sáng/tối/theo hệ thống và pinch zoom 200% trong Chromium.
 
-Ảnh gốc có mã kiểm tra theo từng viewport. Ảnh mới và ba cặp ảnh trước/sau nằm trong artifact `premium-ui-<revision>`. Hãy xem ảnh, mở liên kết trực tiếp bằng hai vai trò và đọc kết quả đo của đúng revision. Dữ liệu đo trong lab phản ánh máy chạy và bộ dữ liệu tổng hợp tại thời điểm đó. [Ảnh trước và SHA-256](ui-evidence/pr34-before/manifest.json)
+Ảnh gốc có mã kiểm tra theo từng viewport. Ảnh mới và sáu cặp ảnh trước/sau nằm trong artifact `premium-ui-<revision>`. Hãy xem ảnh, mở liên kết trực tiếp bằng hai vai trò và đọc kết quả đo của đúng revision. Dữ liệu đo trong lab phản ánh máy chạy và bộ dữ liệu tổng hợp tại thời điểm đó. [Ảnh trước và SHA-256](ui-evidence/pr34-before/manifest.json)
 
 Áp dụng chuẩn này cho PR có thay đổi giao diện nhân sự, khách hàng hoặc người dùng chưa đăng nhập. Người triển khai và reviewer dùng cùng các quy tắc trên desktop, tablet và điện thoại. [CSS dùng chung](../app/static/design-system.css) · [Kiểm thử trên Chromium](../tests/browser_premium_ui.py)
 

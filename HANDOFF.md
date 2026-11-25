@@ -1,5 +1,16 @@
 # Bắt đầu ở đây khi tiếp quản AI Marketing Company
 
+## Chuyển database C3 từ core v24 sang v25
+
+Core v25 giữ Business v3 và module nhiệm vụ C3 v1. Checkpoint kỹ thuật trước chuyển đổi là main `9bfbabcaddf9818eb4030cb0c5337e65e794ebfe` và PR #37 `58258de5c802f1af3ad19d3491d63cf9f7b49e8a`. Chỉ chạy quy trình sau trên môi trường phát triển được phép.
+
+1. Dừng nhận việc mới, drain worker, dừng API cũ và tạm chặn kết nối đến ứng dụng. Sao lưu database cùng cấu hình phát hành; giữ secret ngoài Git. Xác minh bản sao bằng thủ tục restore riêng.
+2. Chạy `docker compose build`, sau đó `docker compose run --rm migrate`. Publisher cài ba trigger cho bản giao, snapshot khách và nhật ký quyết định trong cùng giao dịch với marker 25. PostgreSQL chờ giao dịch ghi trước đó kết thúc trước khi chuyển quyền ghi sang giao thức mới. Khi publisher lỗi, kiểm tra nguyên nhân và chạy lại.
+3. Khởi động API v25 và worker tương thích, chạy health check rồi mở lại đầu vào. Yêu cầu xác thực của API mới khai báo giao thức trên từng giao dịch. Kết nối của tiến trình v24 còn sống nhận SQLSTATE `55000` khi ghi một trong ba bảng, kể cả sau khi mượn lại kết nối. Publisher và API v24 từ chối marker 25. Kiểm soát này xử lý tương thích giữa các binary đã phát hành; xác thực, RLS, cổng QA và kiểm chứng nguồn tiếp tục kiểm tra quyền và nội dung.
+4. Để quay lại phiên bản cũ, dừng tiếp nhận việc, giữ bản sao đầy đủ của DB đã nâng cấp để đối soát thay đổi sau thời điểm backup. Khôi phục backup v24 vào DB riêng, tạo generation mới với `--identity-operation restore-fence` theo runbook phiên đăng nhập, kiểm tra dữ liệu rồi trỏ API và worker v24 vào DB đã khôi phục. Việc xóa marker hoặc sửa lịch sử migration sẽ làm mất bảo đảm cutover.
+
+CI chạy `python tests/check_c3_cutover.py observation` và `python tests/check_c3_cutover.py qualification` trên hai DB loopback `amc_test*` trống với migration DSN và runtime DSN như job API. Lượt đầu đối chiếu dấu hiệu tương thích của đúng hai bản đã review bằng thao tác tác động 0 dòng. Lượt sau giữ kết nối cũ sống qua migration, kiểm tra từ chối writer, startup, replay, rollback của một lần nâng cấp bị ngắt, lịch sử và các trường hợp nội dung mâu thuẫn qua API hiện tại. [Migration 025](migrations/025_c3_writer_protocol.sql) · [Kiểm thử chuyển đổi](tests/check_c3_cutover.py)
+
 ## PR #37 — nhiệm vụ Marketing, kiểm chứng nội dung và đánh giá chất lượng
 
 Để phản biện WF-03 và WF-13, bắt đầu với [bản giao thật, bản biên tập và receipt từng brief](docs/evaluation/c3-holdout-v1/README.md). Để đo công biên tập, dùng [bộ pilot tiếng Việt có chấm mù](docs/evaluation/C3-PRACTITIONER-KIT.md). Trong GitHub Actions, artifact `api-regression-integration` ghi tên từng ca đạt hoặc bỏ qua trên bản tích hợp, gồm các thứ tự thu hồi quyền, phiên đăng nhập, phân quyền cùng agency và kiểm chứng từng nhận định.

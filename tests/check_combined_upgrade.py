@@ -119,7 +119,7 @@ def run(line):
         with psycopg.connect(dsn) as db:
             assert snapshot(db, line) == before
             assert db.execute("SELECT version FROM amc_business.versions ORDER BY version").fetchall() == [(1,), (2,), (3,)]
-            assert db.execute("SELECT max(version) FROM amc_schema_versions").fetchone() == (24,)
+            assert db.execute("SELECT max(version) FROM amc_schema_versions").fetchone() == (25,)
             assert db.execute("SELECT version FROM amc_c3.versions ORDER BY version").fetchall() == [(1,)]
             assert db.execute(COMMERCIAL_CURRENT).fetchone()[0] and db.execute(DESK_CURRENT).fetchone()[0]
             if line == "a1":
@@ -132,7 +132,7 @@ def run(line):
         with psycopg.connect(dsn) as db:
             assert fingerprint(db) == joined
     runtime.dispose()
-    print(f"PASS {line} {PINS[line]} to combined v24, populated table rows",
+    print(f"PASS {line} {PINS[line]} to C3 v25, populated table rows",
           {t: len(rows) for t, rows in before.items()}, "atomic failure, replay and both predecessor refusals")
 
 

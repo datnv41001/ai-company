@@ -494,7 +494,7 @@ def verify():
             owner.execute("UPDATE memberships SET role='client_viewer',client_id='a' WHERE user_id='alice'")
         identify()
         assert set(c.scalars(text("SELECT id FROM clients"))) == {"a"}
-        assert set(c.scalars(text("SELECT version FROM amc_schema_versions"))) == set(range(2,25))
+        assert set(c.scalars(text("SELECT version FROM amc_schema_versions"))) == set(range(2,26))
         if "--from-v2" in sys.argv or from_v3:
             c.rollback()
             c.execute(text("SELECT set_config('amc.user_id','external',true),set_config('amc.tenant_id','agency',true)"))
@@ -536,7 +536,7 @@ def verify():
                 assert owner.execute("SELECT title FROM deliverables WHERE id='doc'").fetchone() == ("Internal",)
     runtime.dispose()
     baseline = "v13" if from_v13 else "v12" if from_v12 else "v11" if from_v11 else "v10" if from_v10 else "v9" if from_v9 else "v8" if from_v8 else "v7" if from_v7 else "v6" if from_v6 else "v5" if from_v5 else "v4" if from_v4 else "v3" if from_v3 else "v2" if "--from-v2" in sys.argv else "v1"
-    print(f"PASS: populated {'v22' if from_v22 else 'v21' if from_v21 else 'v20' if from_v20 else 'v19' if from_v19 else 'v18' if from_v18 else 'v17' if from_v17 else 'v16' if from_v16 else 'v15' if from_v15 else 'v14' if from_v14 else baseline} to v24, repeated migration, privileged API login refused, client isolated")
+    print(f"PASS: populated {'v22' if from_v22 else 'v21' if from_v21 else 'v20' if from_v20 else 'v19' if from_v19 else 'v18' if from_v18 else 'v17' if from_v17 else 'v16' if from_v16 else 'v15' if from_v15 else 'v14' if from_v14 else baseline} to v25, repeated migration, privileged API login refused, client isolated")
 
 
 if __name__ == "__main__":

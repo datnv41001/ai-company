@@ -39,6 +39,7 @@ jobs:
           export AMC_TEST_PG=1 PYTHONPATH=.
           python migrations/apply.py
           AMC_WF03_HOLD_EVIDENCE="$RUNNER_TEMP/wf03-holds" python -m pytest -q
+          python -c 'import os, sys; sys.path.insert(0, "tests"); from check_postgres_upgrade import rehearse_archive; rehearse_archive(os.environ["AMC_MIGRATION_DSN"], "amc-test-pg", 22)'
           docker exec amc-test-pg createdb -U postgres amc_test_upgrade
           export AMC_MIGRATION_DSN="${AMC_MIGRATION_DSN%/*}/amc_test_upgrade"
           export DATABASE_URL="${DATABASE_URL%/*}/amc_test_upgrade"
@@ -120,6 +121,10 @@ jobs:
           export AMC_MIGRATION_DSN="${AMC_MIGRATION_DSN%/*}/amc_test_populated_v20"
           export DATABASE_URL="${DATABASE_URL%/*}/amc_test_populated_v20"
           AMC_UPGRADE_BACKUP_CONTAINER=amc-test-pg python tests/check_postgres_upgrade.py --from-v20
+          docker exec amc-test-pg createdb -U postgres amc_test_populated_v21
+          export AMC_MIGRATION_DSN="${AMC_MIGRATION_DSN%/*}/amc_test_populated_v21"
+          export DATABASE_URL="${DATABASE_URL%/*}/amc_test_populated_v21"
+          AMC_UPGRADE_BACKUP_CONTAINER=amc-test-pg python tests/check_postgres_upgrade.py --from-v21
           docker exec amc-test-pg createdb -U postgres amc_test_isolated_v16
           export AMC_MIGRATION_DSN="${AMC_MIGRATION_DSN%/*}/amc_test_isolated_v16"
           export DATABASE_URL="${DATABASE_URL%/*}/amc_test_isolated_v16"

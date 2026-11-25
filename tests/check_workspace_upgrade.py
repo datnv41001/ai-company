@@ -11,6 +11,7 @@ from app.database import prepare_database
 from app.knowledge_store import canonical, digest
 from check_postgres_upgrade import migrate_historical_fixture
 from migrations.apply import migrate
+from migrations.claim_display import CURRENT, SIGNATURE
 
 
 def verify():
@@ -52,7 +53,17 @@ def verify():
     migrate(dsn)
     migrate(dsn)
     prepare_database(engine)
+    # A previously installed catalog v2 can lack the desk or carry an older
+    # predicate. Republish without changing either version line or its data.
     with psycopg.connect(dsn) as db:
+        db.execute(f"COMMENT ON FUNCTION {SIGNATURE} IS NULL")
+    with pytest.raises(RuntimeError,match="claim desk read capability"):
+        prepare_database(engine)
+    migrate(dsn)
+    migrate(dsn)
+    prepare_database(engine)
+    with psycopg.connect(dsn) as db:
+        assert db.execute(CURRENT).fetchone()==(True,)
         assert db.execute("SELECT version FROM amc_business.versions ORDER BY version").fetchall() == [(1,), (2,)]
         assert db.execute("SELECT version FROM amc_schema_versions ORDER BY version").fetchall() == core
         assert db.execute("SELECT to_jsonb(k) FROM knowledge_revisions k").fetchall() == before

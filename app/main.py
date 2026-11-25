@@ -17,6 +17,7 @@ from sqlalchemy.orm import Session
 
 from .identity_quota import admit
 from .business_knowledge import router as knowledge_router
+from .claim_desk import router as claim_desk_router
 from .business_workspace import router as workspace_router
 from .marketing_catalog import router as catalog_router
 from .identity import MailboxConfigurationError, issue, router as identity_router, verify_email
@@ -55,6 +56,7 @@ app.include_router(workforce_router)
 app.include_router(registry_router)
 app.include_router(operations_router)
 app.include_router(knowledge_router)
+app.include_router(claim_desk_router)
 app.include_router(workspace_router)
 app.include_router(catalog_router)
 app.mount("/static", StaticFiles(directory=ROOT / "static"), name="static")

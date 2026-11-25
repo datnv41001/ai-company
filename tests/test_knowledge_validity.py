@@ -22,8 +22,11 @@ def test_expiry_during_preview_uses_current_db_clock_and_preserves_bytes(api):
     fresh = accepted(call(api, user, path, "/previews", claims=[claim["id"]], ttl_seconds=120))
     terms = dict(operation="queue", snapshot_id=fresh["id"], digest=fresh["digest"])
     receipt = accepted(call(api, user, path, "/authorize", **terms))
+    desk = path + "/claim-desk/" + claim["id"]
+    assert api.get(desk, headers=user["headers"]).json()["public_wording"]["wording"] == statement["wording"]
     assert datetime.fromisoformat(receipt["effective_at"]) <= datetime.fromisoformat(receipt["queued_at"]) < until
     time.sleep(max(0, (until - datetime.now(timezone.utc)).total_seconds()) + 0.05)
+    assert api.get(desk, headers=user["headers"]).json()["public_wording"] is None
     assert call(api, user, path, "/authorize", **terms).status_code == 409
     assert api.get(path + "/revisions/" + source["id"], headers=user["headers"]).json()["state"] == "expired"
     historical = api.get(path + "/snapshots/" + fresh["id"], headers=user["headers"]).json()

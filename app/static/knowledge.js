@@ -26,6 +26,7 @@ function createKnowledgePanel(root, api) {
   let scope, client, brand, view, data, edit, command, brief, conflict, reentry;
   let generation = 0;
   let reading;
+  let claimDesk;
   const contextKey = () => `amc.knowledge.${scope.actor}.${scope.tenant}`;
   const scopeKey = () => `${contextKey()}.${client}.${brand}`;
   const profilePath = () => `/api/tenants/${scope.tenant}/clients/${client}/business-profile`;
@@ -54,6 +55,8 @@ function createKnowledgePanel(root, api) {
     if (error) { status.tabIndex = -1; status.focus(); }
   }
   function clearView() {
+    claimDesk?.reset();
+    claimDesk=null;
     catalog.reset();
     catalogContext=null;
     catalogDrawer.hidden=true;
@@ -104,6 +107,7 @@ function createKnowledgePanel(root, api) {
     content.innerHTML = `<button type="button" data-action="${retry}">Thử lại</button>`;
   }
   async function revalidate() {
+    if(claimDesk)await claimDesk.revalidate();
     if(!scope || !brand || !data)return;
     const token=generation, previous=data;
     try {
@@ -204,10 +208,19 @@ function createKnowledgePanel(root, api) {
   }
   function render() {
     if (!data) return;
+    claimDesk?.reset();
+    claimDesk=null;
     catalogDrawer.hidden=false;
     openCatalog();
     progress.textContent = `${data.completion.filled}/${data.completion.total} trường đã lưu cho thương hiệu`;
-    const tabs = {company:'Hồ sơ chung',brand:'Theo thương hiệu',briefs:'Brief nháp'};
+    const tabs = {company:'Hồ sơ chung',brand:'Theo thương hiệu',briefs:'Brief nháp',claims:'Nguồn và nhận định'};
+    if(view==='claims'){
+      edit=null;
+      content.innerHTML=`<div class="knowledge-tabs" role="group" aria-label="Nội dung hồ sơ">${Object.entries(tabs).map(([id,label])=>`<button type="button" data-view="${id}" aria-pressed="${view===id}">${label}</button>`).join('')}</div><div id="knowledge-claim-desk"></div>`;
+      claimDesk=createClaimDesk(byId('knowledge-claim-desk'),api,tell);
+      void claimDesk.show({actor:scope.actor,tenant:scope.tenant,client,brand,role:scope.role});
+      return;
+    }
     edit = view==='briefs' ? {title:edit?.title} : baseValues(view);
     content.innerHTML = `<div class="knowledge-tabs" role="group" aria-label="Nội dung hồ sơ">${Object.entries(tabs).map(([id,label])=>`<button type="button" data-view="${id}" aria-pressed="${view===id}">${label}</button>`).join('')}</div>
       <div class="knowledge-body">${view==='briefs'?briefScreen():`<form id="knowledge-edit"><h3>${view==='company'?'Thiết lập nhanh':'Thông tin theo thương hiệu'}</h3>
@@ -217,6 +230,7 @@ function createKnowledgePanel(root, api) {
         <span id="knowledge-dirty" role="status"></span></form>`}</div>`;
   }
   function edited() {
+    if(view==='claims')return;
     if (!edit || !data || conflict || command) return;
     if(view==='briefs') {edit.title=content.querySelector('[name=title]')?.value;return;}
     fields.forEach(k=>{

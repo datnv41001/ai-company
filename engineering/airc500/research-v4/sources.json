@@ -1,0 +1,77 @@
+[
+  {
+    "id": "G",
+    "topic": "analytics",
+    "kind": "platform_documentation",
+    "publisher": "Google Analytics Help",
+    "url": "https://support.google.com/analytics/answer/12195621?hl=en",
+    "locator": "About the metrics",
+    "excerpts": [
+      "Lasts longer than 10 seconds",
+      "Has a key event",
+      "Has 2 or more screen or page views"
+    ],
+    "limitations": "Platform definition for GA4 default engagement. Confirm the property configuration separately."
+  },
+  {
+    "id": "W",
+    "topic": "catalog",
+    "kind": "competitor_documentation",
+    "publisher": "WooCommerce",
+    "url": "https://woocommerce.com/document/managing-products/",
+    "locator": "Grouped Products",
+    "excerpts": [
+      "Each item within a grouped product can be added to the cart individually"
+    ],
+    "limitations": "First-party description of core grouped products. Extensions or shop-specific restrictions can differ."
+  },
+  {
+    "id": "C",
+    "topic": "market",
+    "kind": "market_methodology",
+    "publisher": "U.S. Census Bureau",
+    "url": "https://www.census.gov/retail/how_surveys_are_collected.html",
+    "locator": "Monthly Retail Trade methodology",
+    "excerpts": [
+      "information concerning how the Census Bureau uses statistics to generate the estimates",
+      "U.S. Retail economic activity"
+    ],
+    "limitations": "National retail estimation methodology. No evidence of an individual store's growth."
+  },
+  {
+    "id": "E",
+    "topic": "market",
+    "kind": "market_study",
+    "publisher": "U.S. Census Bureau",
+    "url": "https://www.census.gov/retail/ecommerce.html",
+    "locator": "Quarterly report title",
+    "excerpts": [
+      "Quarterly Retail E-Commerce Sales"
+    ],
+    "limitations": "Public release series with national quarterly estimates. No individual store observations are published here."
+  },
+  {
+    "id": "S",
+    "topic": "community",
+    "kind": "community_feedback",
+    "publisher": "Shopify Community",
+    "url": "https://community.shopify.com/t/sell-products-with-minimum-quantity-and-increment-quantity-with-fixed-number-of-units/39933",
+    "locator": "Original merchant question on package sizes",
+    "excerpts": [
+      "add 6 bottles at a time, or 3 bottles at time depending on the product"
+    ],
+    "limitations": "A single self-selected merchant request. Use as a question to investigate, never as proof about another merchant."
+  },
+  {
+    "id": "H",
+    "topic": "experiments",
+    "kind": "marketing_discussion",
+    "publisher": "Hacker News",
+    "url": "https://news.ycombinator.com/item?id=41679891",
+    "locator": "Participant discussing retargeting measurement",
+    "excerpts": [
+      "the cost of the ads netted it all to zero or less than zero"
+    ],
+    "limitations": "One participant's retrospective experience, without verified measurements. Cannot establish an effect for a client or a population."
+  }
+]

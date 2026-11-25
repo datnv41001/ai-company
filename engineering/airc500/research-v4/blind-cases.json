@@ -1,0 +1,62 @@
+{
+  "instructions": "Classify actual claim as flag (contradiction or unsupported assertion), keep (correct bounded claim), or insufficient (requested conclusion cannot be determined). For each, name the applicable published authority or evidence limit and one concrete, scoped recommendation. Synthetic marketing cases only.",
+  "sources": {
+    "analytics": "Google Analytics Help, GA4 engagement rate and bounce rate",
+    "catalog": "WooCommerce Managing Products, core grouped products",
+    "market": "U.S. Census monthly retail methodology",
+    "community": "Shopify Community merchant discussion, only an individual merchant opinion",
+    "experiments": "Hacker News discussion of A/B testing variance, anecdotal observations"
+  },
+  "cases": [
+    {
+      "id": "L1",
+      "topic": "analytics",
+      "case_text": "A synthetic GA4 report uses the default timer. One four-second session has two pageviews and no key event. Draft: 'This session cannot count as engaged because it lasted only four seconds.'"
+    },
+    {
+      "id": "L2",
+      "topic": "analytics",
+      "case_text": "A synthetic GA4 report uses the default timer. One four-second session has one pageview and no key event. Draft: 'This particular session did not qualify as engaged.'"
+    },
+    {
+      "id": "L3",
+      "topic": "catalog",
+      "case_text": "A synthetic store enables only WooCommerce core grouped products and groups a lamp and a shade. Draft: 'Creating this group forces every buyer to buy both items.'"
+    },
+    {
+      "id": "L4",
+      "topic": "catalog",
+      "case_text": "A synthetic WooCommerce store uses a core grouped product. Draft: 'Grouping can present the lamp and shade together. Ask the merchant separately about any minimum-order policy.'"
+    },
+    {
+      "id": "L5",
+      "topic": "market",
+      "case_text": "A synthetic shop provides no local sales history. Draft: 'A U.S. Census retail survey estimate by itself establishes that our specific store in Denver grew.'"
+    },
+    {
+      "id": "L6",
+      "topic": "market",
+      "case_text": "A synthetic shop reports: 'U.S. retail estimates provide national context. We need our store's own comparable data to assess its growth.'"
+    },
+    {
+      "id": "L7",
+      "topic": "community",
+      "case_text": "Only a public discussion of one merchant's pack-size request is available. A client asks what minimum their own shop enforces. No local terms, configuration or transactions are provided."
+    },
+    {
+      "id": "L8",
+      "topic": "experiments",
+      "case_text": "Only a public discussion of a retargeting experiment is available. A different synthetic client asks whether their own short-term uplift will persist. No local experimental outcomes are available."
+    },
+    {
+      "id": "L9",
+      "topic": "community",
+      "case_text": "Copy says: 'A merchant's public question suggests asking our supplier about quantity increments before designing the listing.' It makes no claim about our shop's minimum."
+    },
+    {
+      "id": "L10",
+      "topic": "experiments",
+      "case_text": "Draft: 'A discussion participant reported an early advantage disappearing over time. That proves long-term retargeting always loses money for all merchants.'"
+    }
+  ]
+}

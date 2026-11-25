@@ -126,6 +126,15 @@ def execute(out, private, pin, label, binary, weight):
             tariff_digest=None,
         ),
     )
+    execute_bound_plan(out, private, label, binary, weight, e, kid, p, run, signer)
+
+
+def execute_bound_plan(out, private, label, binary, weight, e, kid, p, run, signer):
+    """Execute an enrolled synthetic plan using the journal and owned local adapter."""
+    src, rid = e["source"], run["run_id"]
+    target, partial = out / (label + ".json.gz"), out / (label + "-partial.json")
+    if target.exists() or partial.exists():
+        raise ValueError("study arm already started")
     j = Journal(private / (label + ".sqlite"))
     previous = {}
     times = {}
@@ -202,6 +211,12 @@ def execute(out, private, pin, label, binary, weight):
 
 def replay(out, pin, label):
     e, rows, labels, kid, p = open_enrollment(out, pin, label)
+    data, checked, records, ids = replay_bound_plan(out, label, e, p)
+    return score_union_run(rows, labels, label, data, checked, records, ids)
+
+
+def replay_bound_plan(out, label, e, p):
+    """Verify measured receipts, raw outputs, usage, runtime and the complete plan."""
     data = json.loads(gzip.decompress((out / (label + ".json.gz")).read_bytes()))
     run = data["run"]
     src = e["source"]
@@ -260,6 +275,10 @@ def replay(out, pin, label):
         )
     if set(data["latencies"]) != {r["id"] for r in records} or len(accepted) != len(records):
         raise ValueError("incomplete study")
+    return data, checked, records, ids
+
+
+def score_union_run(rows, labels, label, data, checked, records, ids):
     sem = [r for r in rows if r["kind"] == "semantic"]
     arms = {"blind": ("common",)}
     if label == "q05":

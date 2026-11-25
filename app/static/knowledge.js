@@ -126,6 +126,13 @@ function createKnowledgePanel(root, api) {
     root.classList.remove('hidden');
     byId('knowledge-nav').classList.remove('hidden');
     byId('knowledge-org').textContent = next.organization;
+    if(same && client && brand && (!next.clients.some(row=>row.id===client) || !scopedBrands().some(row=>row.id===brand))){
+      // A narrower directory can be the first response after a grant changes.
+      // Purge old content and explain why it disappeared even without a detail GET.
+      remember(contextKey(),null);
+      client=brand=null;
+      return lockout();
+    }
     if (same && client && next.clients.some(row=>row.id===client) && scopedBrands().some(row=>row.id===brand)) {
       // A whole-workspace refresh revalidates access without erasing an in-progress edit.
       selectors();

@@ -158,6 +158,10 @@ def validate_enrolled_fixture(run, supplied, trust):
     """Only the enrolled safe fixture broker may authorize v2 template contents."""
     from union_cases import holdout, manifest
 
+    if run["repository"] == "fixture/public-research-v4":
+        from research_study import validate_fixture
+
+        return validate_fixture(run, supplied, trust)
     if run["repository"] != "fixture/meridian-offers" or len(trust) != 1:
         raise ValueError("v2 admits only the fixed local fixture and one signer")
     rows, _ = holdout()

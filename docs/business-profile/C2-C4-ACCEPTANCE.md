@@ -1,5 +1,7 @@
 # C2 trải nghiệm và C4 nghiệm thu Marketing
 
+Khi chuẩn bị triển khai, dùng [thiết kế workspace và ma trận năm persona](C2-WORKSPACE.md) cùng [hợp đồng projection WF-03/WF-13](C3-KNOWLEDGE-PROJECTION.md). Hai tài liệu phân định dữ liệu công ty và thương hiệu, phép thử trình duyệt trên PostgreSQL và ranh giới kiểm lại quyền.
+
 ## Từ bốn thông tin tới brief đầu tiên
 
 1. **Thiết lập nhanh** dùng tên doanh nghiệp, sản phẩm/dịch vụ chính, nhóm khách dự kiến và mục tiêu. Lưu nháp từng bước, quay lại đúng bản đã lưu. Cho phép Solo/In-house tạo draft brief nghiên cứu khi thương hiệu chưa có nguồn. Output ghi rõ câu hỏi và giả thuyết. Nếu cần public price/efficacy claim, UI chỉ ra dữ kiện và người có thể duyệt còn thiếu.

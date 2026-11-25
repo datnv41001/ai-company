@@ -5,7 +5,9 @@ import hashlib
 import os
 import secrets
 import subprocess
+import threading
 import time
+from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 from pathlib import Path
 from urllib.parse import parse_qs, urlencode, urlsplit
 from uuid import uuid4
@@ -15,12 +17,27 @@ import jwt
 from playwright.sync_api import sync_playwright
 
 
-CALLBACK = "http://127.0.0.1:18421/callback"
 CLIENT = "amc-synthetic-browser"
 USERNAME = "synthetic-operator"
 
 
-def realm_setup(api, origin, admin_password, user_password):
+class CallbackHandler(BaseHTTPRequestHandler):
+    def do_GET(self):
+        if urlsplit(self.path).path != "/callback":
+            self.send_error(404)
+            return
+        self.send_response(200)
+        self.send_header("Cache-Control", "no-store")
+        self.send_header("Referrer-Policy", "no-referrer")
+        self.end_headers()
+        self.wfile.write(b"Lab callback complete")
+
+    def log_message(self, *args):
+        # The callback query contains a one-time authorization code.
+        pass
+
+
+def realm_setup(api, origin, admin_password, user_password, callback):
     admin = api.post(
         origin + "/realms/master/protocol/openid-connect/token",
         data={"grant_type": "password", "client_id": "admin-cli",
@@ -34,7 +51,7 @@ def realm_setup(api, origin, admin_password, user_password):
         "clients": [{
             "clientId": CLIENT, "protocol": "openid-connect", "publicClient": True,
             "standardFlowEnabled": True, "directAccessGrantsEnabled": False,
-            "redirectUris": [CALLBACK], "attributes": {"pkce.code.challenge.method": "S256"},
+            "redirectUris": [callback], "attributes": {"pkce.code.challenge.method": "S256"},
         }],
         "users": [{
             "username": USERNAME, "enabled": True, "email": "operator@example.invalid",
@@ -50,31 +67,29 @@ def realm_setup(api, origin, admin_password, user_password):
     return headers, user["id"]
 
 
-def login(api, discovery, password):
+def login(api, discovery, password, callback):
     verifier = secrets.token_urlsafe(64)
     challenge = base64.urlsafe_b64encode(hashlib.sha256(verifier.encode()).digest()).rstrip(b"=").decode()
     state, nonce = secrets.token_urlsafe(24), secrets.token_urlsafe(24)
     arguments = {"response_type": "code", "scope": "openid", "client_id": CLIENT,
-                 "redirect_uri": CALLBACK, "code_challenge": challenge, "code_challenge_method": "S256",
+                 "redirect_uri": callback, "code_challenge": challenge, "code_challenge_method": "S256",
                  "state": state, "nonce": nonce}
     with sync_playwright() as pw:
         browser = pw.chromium.launch(executable_path=os.getenv("AMC_BROWSER_EXECUTABLE") or None)
         try:
             page = browser.new_page()
-            # This callback belongs only to the lab client, even if a host process uses its port.
-            page.route(CALLBACK + "?**", lambda route: route.fulfill(status=200, body="Lab callback"))
             page.goto(discovery["authorization_endpoint"] + "?" + urlencode(arguments))
             page.locator("#username").fill(USERNAME)
             page.locator("#password").fill(password)
             page.locator("#kc-login").click()
-            page.wait_for_url(CALLBACK + "?**", timeout=15000)
+            page.wait_for_url(lambda uri: uri.partition("?")[0] == callback, timeout=15000)
             query = parse_qs(urlsplit(page.url).query)
         finally:
             browser.close()
     assert query["state"] == [state]
     tokens = api.post(discovery["token_endpoint"], data={
         "grant_type": "authorization_code", "client_id": CLIENT, "code": query["code"][0],
-        "code_verifier": verifier, "redirect_uri": CALLBACK,
+        "code_verifier": verifier, "redirect_uri": callback,
     })
     tokens.raise_for_status()
     result = tokens.json()
@@ -88,9 +103,9 @@ def login(api, discovery, password):
     return result, claims["sub"]
 
 
-def experiment(api, origin, admin_password):
+def experiment(api, origin, admin_password, callback):
     password = secrets.token_urlsafe(32)
-    headers, subject = realm_setup(api, origin, admin_password, password)
+    headers, subject = realm_setup(api, origin, admin_password, password, callback)
     issuer = origin + "/realms/amc-lab"
     metadata = api.get(issuer + "/.well-known/openid-configuration")
     metadata.raise_for_status()
@@ -99,7 +114,7 @@ def experiment(api, origin, admin_password):
     assert "S256" in discovery["code_challenge_methods_supported"]
     for endpoint in ("authorization_endpoint", "token_endpoint", "jwks_uri"):
         assert discovery[endpoint].startswith(issuer + "/")
-    initial, observed_subject = login(api, discovery, password)
+    initial, observed_subject = login(api, discovery, password, callback)
     assert observed_subject == subject
     print("PASS browser login, PKCE S256, signature, issuer, audience, state, nonce and subject")
 
@@ -122,7 +137,7 @@ def experiment(api, origin, admin_password):
     else:
         assert after_reset.status_code == 400 and after_reset.json().get("error") == "invalid_grant"
         print("OBSERVED provider refused existing device refresh after administrative password reset")
-    active, reset_subject = login(api, discovery, reset_password)
+    active, reset_subject = login(api, discovery, reset_password, callback)
     assert reset_subject == subject
     print("PASS new password login preserves issuer and subject")
     api.post(user_url + "/logout", headers=headers).raise_for_status()
@@ -153,7 +168,15 @@ def main():
                 time.sleep(2)
             else:
                 raise RuntimeError("New lab provider did not become ready")
-            experiment(api, origin, env["LAB_ADMIN_PASSWORD"])
+            with ThreadingHTTPServer(("127.0.0.1", 0), CallbackHandler) as server:
+                listener = threading.Thread(target=server.serve_forever, daemon=True)
+                listener.start()
+                try:
+                    callback = f"http://127.0.0.1:{server.server_port}/callback"
+                    experiment(api, origin, env["LAB_ADMIN_PASSWORD"], callback)
+                finally:
+                    server.shutdown()
+                    listener.join()
     finally:
         subprocess.run([*command, "down", "--volumes"], env=env, check=True)
 

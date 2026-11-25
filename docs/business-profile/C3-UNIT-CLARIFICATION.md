@@ -13,6 +13,8 @@ Mẫu nội bộ và mẫu gửi khách tạo hợp đồng `amc.task-intent/2`.
 
 ## Chạy lại trên máy mới
 
+[Bằng chứng phục hồi tại commit 1f4fa15](../evaluation/c3-unit-recovery-v1.json) ghi thời gian từng bước, mã manifest của 20 ca đã sửa và kết quả trình duyệt ở ba kích thước màn hình. Ảnh đầy đủ nằm trong artifact của job Chromium, thư mục `unit-clarification`.
+
 Từ checkout đã cài dependency thử nghiệm của AMC, chạy các lệnh sau.
 
 ```sh

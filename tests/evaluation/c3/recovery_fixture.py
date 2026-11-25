@@ -97,6 +97,12 @@ def prepare_recovered(api, case, owner, base, client, brand, campaign, *, projec
     correction = attestation(case, issue)
     proposed = send("clarifications/propose", {"selection": selected, "correction": correction})
     submitted = monotonic()
+
+    def prior_revision(rid):
+        return accepted(api.get(s["path"] + "/revisions/" + rid, headers=owner["headers"]))
+
+    original_binding = prior_revision(proposed["original_claim"])["data"]["binding"]
+    original_source = prior_revision(original_binding)["data"]["source"]
     (issue,) = accepted(api.get(path + "/clarifications", headers=reviewer["headers"]))["items"]
     pending = issue["proposal"]
     assert pending["id"] and pending["claim"] == proposed["claim"] and not pending["own"]
@@ -127,6 +133,9 @@ def prepare_recovered(api, case, owner, base, client, brand, campaign, *, projec
             "original_claim": issue["claim"],
             "original_offer": proposed["original_offer"],
             "original_offer_digest": issue["offer_digest"],
+            "original_source": original_source,
+            "original_binding": original_binding,
+            "proposal_receipt": pending["id"],
             "offer": proposed["offer"],
             "source": proposed["source"],
             "binding": proposed["binding"],

@@ -86,11 +86,12 @@ class PublicResearchTest(unittest.TestCase):
 
 
 class TransportPolicyTest(unittest.TestCase):
-    def response(self, status, content_type, headers, chunks):
+    def response(self, status, content_type, headers, chunks, *, applied=False):
         conn = MagicMock()
         reply = conn.getresponse.return_value
         reply.status = status
         reply.headers.get_content_type.return_value = content_type
+        reply.headers.get_all.return_value = [headers["X-Robots-Tag"]] if "X-Robots-Tag" in headers else []
         reply.getheader.side_effect = lambda key, default=None: headers.get(key, default)
         reply.read1.side_effect = chunks
         with (
@@ -99,6 +100,10 @@ class TransportPolicyTest(unittest.TestCase):
             patch("public_research.socket.socket") as sock,
             patch("public_research.ssl.create_default_context") as ctx,
         ):
+            if applied:
+                from public_research import _fetch_reviewed
+                return _fetch_reviewed("https://support.google.com/analytics/answer/9267735?hl=en",
+                                       time.monotonic() + 2, check_directives=True)
             result = get_page("G", time.monotonic() + 2)
             sock.return_value.__enter__.return_value.connect.assert_called_once_with(("8.8.8.8", 443))
             self.assertEqual(ctx.return_value.wrap_socket.call_args.kwargs["server_hostname"], "support.google.com")
@@ -109,6 +114,12 @@ class TransportPolicyTest(unittest.TestCase):
 
     def test_only_preapproved_get_with_pinned_transport(self):
         self.assertEqual(self.response(200, "text/html", {"Content-Length": "2"}, [b"ok", b""]), b"ok")
+
+    def test_applied_publisher_can_restrict_reuse_in_response_headers(self):
+        from public_research import PublisherRestriction
+        with self.assertRaises(PublisherRestriction):
+            self.response(200, "text/html", {"X-Robots-Tag": "nosnippet"}, [], applied=True)
+        self.assertEqual(self.response(200, "text/html", {"X-Robots-Tag": "all"}, [b"ok", b""], applied=True), b"ok")
 
     def test_redirect_binary_encoding_short_or_large_body_fails(self):
         for status, typ, headers, chunks in [

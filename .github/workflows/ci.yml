@@ -180,6 +180,13 @@ jobs:
           AMC_KNOWLEDGE_EVIDENCE="$RUNNER_TEMP/knowledge-workspace/catalog" AMC_BROWSER_MAILBOX_PROJECT=amc-acceptance AMC_BROWSER_TEST_URL=http://127.0.0.1:8000 python tests/browser_catalog.py
           AMC_KNOWLEDGE_EVIDENCE="$RUNNER_TEMP/knowledge-workspace/objectives" AMC_BROWSER_MAILBOX_PROJECT=amc-acceptance AMC_BROWSER_TEST_URL=http://127.0.0.1:8000 python tests/browser_objectives.py
           AMC_C2_ACCEPTANCE_EVIDENCE="$RUNNER_TEMP/knowledge-center-journeys" AMC_BROWSER_MAILBOX_PROJECT=amc-acceptance AMC_BROWSER_TEST_URL=http://127.0.0.1:8000 python tests/browser_knowledge_center.py
+          AMC_PREMIUM_EVIDENCE="$RUNNER_TEMP/premium-ui" AMC_BROWSER_MAILBOX_PROJECT=amc-acceptance AMC_BROWSER_TEST_URL=http://127.0.0.1:8000 python tests/browser_premium_ui.py
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: premium-ui-${{ matrix.revision }}
+          path: ${{ runner.temp }}/premium-ui
+          if-no-files-found: warn
       - uses: actions/upload-artifact@v4
         if: always()
         with:

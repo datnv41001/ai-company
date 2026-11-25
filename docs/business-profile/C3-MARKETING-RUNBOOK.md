@@ -12,6 +12,8 @@ docker compose run --rm migrate python migrations/apply.py --publish-registry ca
 docker compose run --rm migrate python migrations/apply.py --publish-registry catalog/landing-seo-v5.json
 ```
 
+Những database pilot đã publish hai ID này từ commit thử nghiệm trước khi đổi renderer vẫn giữ bản catalog và digest lúc đó. Để chạy lại pilot mới, tạo database tổng hợp riêng. Nếu cần giữ cùng database, chạy nốt việc cũ bằng image tương ứng rồi cấp version mới cho nội dung đã thay đổi; publisher sẽ từ chối ghi đè version đã tồn tại.
+
 1. Trong Hồ sơ doanh nghiệp, lưu bốn trường chung và ít nhất một revision thương hiệu. Tạo mục tiêu cấp công ty, nối mục tiêu thương hiệu và mục tiêu của đúng chiến dịch. Chọn KPI đã duyệt, có nguồn định nghĩa. Tạo sản phẩm hoặc biến thể, thị trường, audience và nhận định công khai kèm nguồn. Với nhận định cần chuyên môn, người phê duyệt khác tác giả phải có ủy quyền còn hiệu lực.
 2. Trong Brief nháp, ghim sản phẩm, audience và mục tiêu chiến dịch rồi lưu. Trong AI Workforce, mở yêu cầu cho người nhận có quyền. Người nhận đăng nhập và gửi brief chiến dịch.
 3. Mở lại brief nội bộ. Trong **Chuẩn bị Marketing từ brief này**, chọn WF-03 hoặc WF-13, brief chiến dịch, thị trường, KPI và nhận định. Nhập đầy đủ phạm vi, gồm tiền tệ và số lượng khi chọn giá. **Kiểm tra mức sẵn sàng** hiển thị dữ liệu cần bổ sung. Với nguồn chứng minh hạn chế, quản trị viên phụ trách cần thực hiện bước này.

@@ -1,0 +1,441 @@
+{
+  "runtime_commit": "1f4fa1508dae465bc25c4e7903b2fd5c6486b0ac",
+  "fixture_sha256": "c497ff707c986acaa3c48ba799ab1a378f194d3e7cd4262834d41a4aae0fe477",
+  "scope": "Previously disclosed synthetic corpus, disposable SQLite. Automated time from blocked readiness through approved corrected manifest. Model runs and practitioner time are tracked separately.",
+  "cases": [
+    {
+      "case": "inhouse-01",
+      "workflow": "WF-03/research-strategy-draft@3",
+      "from_unit": "service",
+      "attested_unit": "participant",
+      "task_id": "a9d370db-a2a4-5c72-b20b-59a6fb553eac",
+      "new_manifest": "1989dc4e-5fd7-4a18-8a70-c5c3d2990719",
+      "manifest_digest": "da95fc9de4e286429d7bb1c9fb9c27afe608b9e2eb02d4fc33fe83e00945d464",
+      "unit_source_excerpt": "Giá 137.000 VND/người.",
+      "price_fields_preserved": true,
+      "status": "ready_for_generation",
+      "test_seconds": {
+        "propose": 0.219,
+        "review": 0.14,
+        "resume": 0.141,
+        "overall": 0.5
+      },
+      "model_invocations": 0,
+      "practitioner_minutes": null
+    },
+    {
+      "case": "inhouse-02",
+      "workflow": "WF-13/landing-seo-draft@6",
+      "from_unit": "service",
+      "attested_unit": "participant",
+      "task_id": "efe016e1-529c-5f1e-bfa9-a39bb2686ab4",
+      "new_manifest": "6be788c7-1803-433d-8927-acabe5ff0e83",
+      "manifest_digest": "10179554360856d98c8689d225858ee7b963d71078f295087d0fdf49d1e94e42",
+      "unit_source_excerpt": "Giá 161.000 VND/người.",
+      "price_fields_preserved": true,
+      "status": "ready_for_generation",
+      "test_seconds": {
+        "propose": 0.281,
+        "review": 0.109,
+        "resume": 0.125,
+        "overall": 0.515
+      },
+      "model_invocations": 0,
+      "practitioner_minutes": null
+    },
+    {
+      "case": "inhouse-03",
+      "workflow": "WF-03/research-strategy-draft@3",
+      "from_unit": "service",
+      "attested_unit": "participant",
+      "task_id": "315778bd-9eda-5558-868e-30ec2ff843d7",
+      "new_manifest": "ffc62120-4a76-41b7-8e58-7fa9447f0d98",
+      "manifest_digest": "9f4675c02bac3dd1a9dc3dad2c8e41c4f72226223047403080cea3e35ed79281",
+      "unit_source_excerpt": "Giá 185.000 VND/người.",
+      "price_fields_preserved": true,
+      "status": "ready_for_generation",
+      "test_seconds": {
+        "propose": 0.187,
+        "review": 0.11,
+        "resume": 0.14,
+        "overall": 0.437
+      },
+      "model_invocations": 0,
+      "practitioner_minutes": null
+    },
+    {
+      "case": "inhouse-04",
+      "workflow": "WF-13/landing-seo-draft@6",
+      "from_unit": "service",
+      "attested_unit": "participant",
+      "task_id": "1fd70727-a84f-58c3-969f-9733b4b5c4d9",
+      "new_manifest": "936b392d-bb2a-4066-af16-d1e67ee7b026",
+      "manifest_digest": "9d198ba7578166cbdbbd1a1a9e5126dfb5b10ad39add2f6090988d07a05a2385",
+      "unit_source_excerpt": "Giá 209.000 VND/người.",
+      "price_fields_preserved": true,
+      "status": "ready_for_generation",
+      "test_seconds": {
+        "propose": 0.187,
+        "review": 0.141,
+        "resume": 0.14,
+        "overall": 0.468
+      },
+      "model_invocations": 0,
+      "practitioner_minutes": null
+    },
+    {
+      "case": "inhouse-05",
+      "workflow": "WF-03/research-strategy-draft@3",
+      "from_unit": "service",
+      "attested_unit": "participant",
+      "task_id": "c3f0a506-ebee-5e09-bbc7-804c6731b77c",
+      "new_manifest": "56f06aef-b872-4477-be9e-d5d9a58663d2",
+      "manifest_digest": "05fd7288846e958189279d55f7b3bcd64282159827ac70bbda554359019e6798",
+      "unit_source_excerpt": "Giá 233.000 VND/người.",
+      "price_fields_preserved": true,
+      "status": "ready_for_generation",
+      "test_seconds": {
+        "propose": 0.203,
+        "review": 0.109,
+        "resume": 0.203,
+        "overall": 0.515
+      },
+      "model_invocations": 0,
+      "practitioner_minutes": null
+    },
+    {
+      "case": "inhouse-06",
+      "workflow": "WF-13/landing-seo-draft@6",
+      "from_unit": "service",
+      "attested_unit": "participant",
+      "task_id": "2921b428-2765-5a29-99f2-eeb81b3a37ef",
+      "new_manifest": "680be6d3-7a68-4254-aa82-5a83520547f7",
+      "manifest_digest": "5634dbed06e596c1226299389cc782f032f8b77244cca36b6cb11693152fdfdb",
+      "unit_source_excerpt": "Giá 257.000 VND/người.",
+      "price_fields_preserved": true,
+      "status": "ready_for_generation",
+      "test_seconds": {
+        "propose": 0.141,
+        "review": 0.125,
+        "resume": 0.125,
+        "overall": 0.391
+      },
+      "model_invocations": 0,
+      "practitioner_minutes": null
+    },
+    {
+      "case": "inhouse-07",
+      "workflow": "WF-03/research-strategy-draft@3",
+      "from_unit": "service",
+      "attested_unit": "participant",
+      "task_id": "168c8113-3c14-5d80-86fc-36440fdb5860",
+      "new_manifest": "960cffea-8426-4f03-ac4e-331bd49ea698",
+      "manifest_digest": "ea39519331476b9825e698255de744c7353c41210ffaa679339c07ea63c260a2",
+      "unit_source_excerpt": "Giá 281.000 VND/người.",
+      "price_fields_preserved": true,
+      "status": "ready_for_generation",
+      "test_seconds": {
+        "propose": 0.172,
+        "review": 0.109,
+        "resume": 0.141,
+        "overall": 0.422
+      },
+      "model_invocations": 0,
+      "practitioner_minutes": null
+    },
+    {
+      "case": "inhouse-08",
+      "workflow": "WF-13/landing-seo-draft@6",
+      "from_unit": "service",
+      "attested_unit": "participant",
+      "task_id": "6252d245-3b04-5d72-a01c-70b17051f3aa",
+      "new_manifest": "2a33afbe-ac2e-4474-9229-c415002c3ef6",
+      "manifest_digest": "5922b2f89367f9f2280fb5c24096bc0bb4781115f81bf04bfa635a5245f1b811",
+      "unit_source_excerpt": "Giá 305.000 VND/người.",
+      "price_fields_preserved": true,
+      "status": "ready_for_generation",
+      "test_seconds": {
+        "propose": 0.235,
+        "review": 0.14,
+        "resume": 0.157,
+        "overall": 0.532
+      },
+      "model_invocations": 0,
+      "practitioner_minutes": null
+    },
+    {
+      "case": "inhouse-09",
+      "workflow": "WF-03/research-strategy-draft@3",
+      "from_unit": "service",
+      "attested_unit": "participant",
+      "task_id": "9ab97789-4535-5af7-af08-c11c7a8a59c0",
+      "new_manifest": "944867ad-328e-4237-ba44-ee35eb51bce3",
+      "manifest_digest": "9cb0bc01b6169c2b0b443b825ee518b2b5be1695d8c629cb1996e0b90737b8a9",
+      "unit_source_excerpt": "Giá 329.000 VND/người.",
+      "price_fields_preserved": true,
+      "status": "ready_for_generation",
+      "test_seconds": {
+        "propose": 0.219,
+        "review": 0.141,
+        "resume": 0.156,
+        "overall": 0.516
+      },
+      "model_invocations": 0,
+      "practitioner_minutes": null
+    },
+    {
+      "case": "inhouse-10",
+      "workflow": "WF-13/landing-seo-draft@6",
+      "from_unit": "service",
+      "attested_unit": "participant",
+      "task_id": "d8cfb66e-e863-5c4b-83cc-899a8a170b70",
+      "new_manifest": "824b78b7-9a4f-4bc8-bb16-6a358fc565d8",
+      "manifest_digest": "563f722b5e13e70d7aeaa730a6db3b81e14cd5c06d4b8dc094ab7352c1af9569",
+      "unit_source_excerpt": "Giá 353.000 VND/người.",
+      "price_fields_preserved": true,
+      "status": "ready_for_generation",
+      "test_seconds": {
+        "propose": 0.234,
+        "review": 0.125,
+        "resume": 0.25,
+        "overall": 0.609
+      },
+      "model_invocations": 0,
+      "practitioner_minutes": null
+    },
+    {
+      "case": "service-01",
+      "workflow": "WF-03/research-strategy-draft@3",
+      "from_unit": "service",
+      "attested_unit": "visit",
+      "task_id": "cce38c4e-c09d-54e9-8f4c-2b6f2d31c5b0",
+      "new_manifest": "507211fe-9756-4423-adb3-de24e630f69c",
+      "manifest_digest": "d8339cf861a7eafddd9a223bd3eca004526f74526fec64d3ce70442c50a98c7d",
+      "unit_source_excerpt": "Giá 117.000 VND/lượt.",
+      "price_fields_preserved": true,
+      "status": "ready_for_generation",
+      "test_seconds": {
+        "propose": 1.062,
+        "review": 0.172,
+        "resume": 0.141,
+        "overall": 1.375
+      },
+      "model_invocations": 0,
+      "practitioner_minutes": null
+    },
+    {
+      "case": "service-02",
+      "workflow": "WF-13/landing-seo-draft@6",
+      "from_unit": "service",
+      "attested_unit": "visit",
+      "task_id": "55baefc1-1d43-53b1-bb06-749d22e22938",
+      "new_manifest": "fc69fa21-687c-4634-b14d-e8c63741e025",
+      "manifest_digest": "d3044e455932a29fc9b8bb7492495b9327601c29ebca27374c5b7af29ad4b03f",
+      "unit_source_excerpt": "Giá 141.000 VND/lượt.",
+      "price_fields_preserved": true,
+      "status": "ready_for_generation",
+      "test_seconds": {
+        "propose": 0.235,
+        "review": 0.156,
+        "resume": 0.312,
+        "overall": 0.703
+      },
+      "model_invocations": 0,
+      "practitioner_minutes": null
+    },
+    {
+      "case": "service-03",
+      "workflow": "WF-03/research-strategy-draft@3",
+      "from_unit": "service",
+      "attested_unit": "visit",
+      "task_id": "819a5317-bbd2-56ed-8fda-33bf92350b44",
+      "new_manifest": "d104c676-1349-4ebe-b787-7218002b7bbb",
+      "manifest_digest": "1a2d856bd5a21716206e77adb50533a7367b1d1b03bde8877efaf3e8e615bdd8",
+      "unit_source_excerpt": "Giá 165.000 VND/lượt.",
+      "price_fields_preserved": true,
+      "status": "ready_for_generation",
+      "test_seconds": {
+        "propose": 0.609,
+        "review": 0.344,
+        "resume": 0.234,
+        "overall": 1.187
+      },
+      "model_invocations": 0,
+      "practitioner_minutes": null
+    },
+    {
+      "case": "service-04",
+      "workflow": "WF-13/landing-seo-draft@6",
+      "from_unit": "service",
+      "attested_unit": "visit",
+      "task_id": "590e6616-34a8-5bfb-b39d-300da074a2b8",
+      "new_manifest": "ed254ccd-25af-41b1-a874-802aa4d6cf88",
+      "manifest_digest": "f439190e7718fae393e5e17b94967fa7ed35dfd70f2e645a79de3627c75614eb",
+      "unit_source_excerpt": "Giá 189.000 VND/lượt.",
+      "price_fields_preserved": true,
+      "status": "ready_for_generation",
+      "test_seconds": {
+        "propose": 0.406,
+        "review": 0.204,
+        "resume": 0.234,
+        "overall": 0.844
+      },
+      "model_invocations": 0,
+      "practitioner_minutes": null
+    },
+    {
+      "case": "service-05",
+      "workflow": "WF-03/research-strategy-draft@3",
+      "from_unit": "service",
+      "attested_unit": "visit",
+      "task_id": "f7a36759-c46c-5b0c-84ac-0879d5541748",
+      "new_manifest": "1432204f-b84f-4d1d-a9ec-5a4018ec1c44",
+      "manifest_digest": "5451146e6268d01dcbd5afb1e31ad3fd097db6ac4ae02bc171ef27494196993e",
+      "unit_source_excerpt": "Giá 213.000 VND/lượt.",
+      "price_fields_preserved": true,
+      "status": "ready_for_generation",
+      "test_seconds": {
+        "propose": 0.328,
+        "review": 0.218,
+        "resume": 0.204,
+        "overall": 0.75
+      },
+      "model_invocations": 0,
+      "practitioner_minutes": null
+    },
+    {
+      "case": "service-06",
+      "workflow": "WF-13/landing-seo-draft@6",
+      "from_unit": "service",
+      "attested_unit": "visit",
+      "task_id": "a1c775d2-2ebc-53e9-a097-0ad211848047",
+      "new_manifest": "dcb3def0-5f4b-4a15-8009-95e80bd04505",
+      "manifest_digest": "863d60f0688e3d87ae80716bdf721696e53e84afc33b38677e884b03eade72bf",
+      "unit_source_excerpt": "Giá 237.000 VND/lượt.",
+      "price_fields_preserved": true,
+      "status": "ready_for_generation",
+      "test_seconds": {
+        "propose": 0.437,
+        "review": 0.266,
+        "resume": 0.281,
+        "overall": 0.984
+      },
+      "model_invocations": 0,
+      "practitioner_minutes": null
+    },
+    {
+      "case": "service-07",
+      "workflow": "WF-03/research-strategy-draft@3",
+      "from_unit": "service",
+      "attested_unit": "visit",
+      "task_id": "4ad2e35b-4ed7-5dc4-a161-2c44eadfb576",
+      "new_manifest": "00493cfa-bea7-41a3-99e4-99d2ba4a1fa7",
+      "manifest_digest": "00018e0d3c30d059843b3eaa55938925d324074d3b4bc95503244d0ad8df67b2",
+      "unit_source_excerpt": "Giá 261.000 VND/lượt.",
+      "price_fields_preserved": true,
+      "status": "ready_for_generation",
+      "test_seconds": {
+        "propose": 0.266,
+        "review": 0.156,
+        "resume": 0.141,
+        "overall": 0.563
+      },
+      "model_invocations": 0,
+      "practitioner_minutes": null
+    },
+    {
+      "case": "service-08",
+      "workflow": "WF-13/landing-seo-draft@6",
+      "from_unit": "service",
+      "attested_unit": "visit",
+      "task_id": "83f01d5c-7d1e-510f-a34a-d8e8063c931d",
+      "new_manifest": "b55b0424-4fc2-4bc9-803b-fd20887648d8",
+      "manifest_digest": "6b189a273b119a2e035d75b3aff2f6e300665dcd5777ae1496b95ff6e9112236",
+      "unit_source_excerpt": "Giá 285.000 VND/lượt.",
+      "price_fields_preserved": true,
+      "status": "ready_for_generation",
+      "test_seconds": {
+        "propose": 0.344,
+        "review": 0.219,
+        "resume": 0.219,
+        "overall": 0.782
+      },
+      "model_invocations": 0,
+      "practitioner_minutes": null
+    },
+    {
+      "case": "service-09",
+      "workflow": "WF-03/research-strategy-draft@3",
+      "from_unit": "service",
+      "attested_unit": "visit",
+      "task_id": "35df3b17-a7b6-5806-a503-bb30f05db753",
+      "new_manifest": "2de9c7bd-1285-4db7-b534-757eddc44bbf",
+      "manifest_digest": "fef0b4143c00bff5f1130cc374fdfeb93965f6b28a77d4896fb0071298f0b1e1",
+      "unit_source_excerpt": "Giá 309.000 VND/lượt.",
+      "price_fields_preserved": true,
+      "status": "ready_for_generation",
+      "test_seconds": {
+        "propose": 0.219,
+        "review": 0.281,
+        "resume": 0.422,
+        "overall": 0.922
+      },
+      "model_invocations": 0,
+      "practitioner_minutes": null
+    },
+    {
+      "case": "service-10",
+      "workflow": "WF-13/landing-seo-draft@6",
+      "from_unit": "service",
+      "attested_unit": "visit",
+      "task_id": "b22266a4-f6d3-5f67-a09a-4c04697fc7ef",
+      "new_manifest": "1770167c-f93a-44fc-ae66-41a836771177",
+      "manifest_digest": "72bff205bd74806103a1a06d953770dd55798fe8e17db386682f7e3f755b6158",
+      "unit_source_excerpt": "Giá 333.000 VND/lượt.",
+      "price_fields_preserved": true,
+      "status": "ready_for_generation",
+      "test_seconds": {
+        "propose": 0.172,
+        "review": 0.188,
+        "resume": 0.156,
+        "overall": 0.516
+      },
+      "model_invocations": 0,
+      "practitioner_minutes": null
+    }
+  ],
+  "browser": {
+    "browser": "157.0.8103.52",
+    "synthetic": true,
+    "cases": [
+      {
+        "viewport": {
+          "width": 1280,
+          "height": 850
+        },
+        "machine_state": "ready",
+        "attested_unit": "visit",
+        "manifest": "deb6867fa234b1e077e92d2251ff82e272d00c7548da47fca991f530fa9b68da"
+      },
+      {
+        "viewport": {
+          "width": 820,
+          "height": 1180
+        },
+        "machine_state": "ready",
+        "attested_unit": "visit",
+        "manifest": "dae44b43f48672b30c0db4787185c8b7f67dec00a6208124591a0d6a83f3de96"
+      },
+      {
+        "viewport": {
+          "width": 390,
+          "height": 844
+        },
+        "machine_state": "ready",
+        "attested_unit": "visit",
+        "manifest": "1f3ab4980de0f3be290848c176481073dc2ba35c3aa85074e726180a77e4f429"
+      }
+    ]
+  },
+  "fixture_digest_encoding": "UTF-8, LF newlines"
+}

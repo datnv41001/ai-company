@@ -122,6 +122,9 @@ def test_recovery_generation_handoff(api, case):
     intent = handoff["manifest"]["projection"]["task_intent"]
     assert (intent["buyer_action"], intent["buyer_input"]) == expected
     assert handoff["correction"]["requested_cta"] == case["cta"]
+    receipt = handoff["correction"]
+    assert receipt["original_source"] != receipt["source"] and receipt["original_binding"] != receipt["binding"]
+    assert receipt["proposal_receipt"]
 
 
 @pytest.mark.parametrize("action", c3_actions.ACTIONS)

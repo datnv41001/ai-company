@@ -1,0 +1,141 @@
+{
+  "provenance": "Synthetic SQLite API acceptance; worker association seeded, no model or practitioner invocation.",
+  "workflow": "WF-03/research-strategy-draft@3",
+  "snapshot": {
+    "id": "275ef880-b8e2-425c-851b-2ae478e904be",
+    "version": 1,
+    "title": "Bộ mẫu vải",
+    "preview": "Chiến lược Marketing\n\nĐối tượng\nXưởng nội thất\n\nLựa chọn chiến lược\nĐề xuất giúp Xưởng nội thất đối chiếu quy cách của Bộ mẫu vải trước khi gửi yêu cầu báo giá.\n\nTriển khai trên kênh\nTrên web, đặt điều kiện áp dụng cạnh lời mời báo giá. Chuyển yêu cầu đủ thông tin cho Sales.\n\nQuyết định tiếp theo\nNếu nhiều người gửi nhưng Sales còn phải hỏi lại, ưu tiên sửa trường thông tin thiếu trước khi mở rộng kênh.\n\nKế hoạch đo lường\n\nGiả thuyết cần thử\nThử đặt quy cách trước biểu mẫu để người mua có thể gửi yêu cầu đủ thông tin hơn.\n\nHành động của người mua\nYêu cầu báo giá\n\nPhương pháp đo\nĐối soát mã yêu cầu duy nhất với yêu cầu Sales đủ thông tin để báo giá. So sánh trên lượt vào trang cùng nhóm khách.",
+    "digest": "a91c2ebf9372ddcdf4270a0544f90b14a6dcb9c1711dbd1ccac5151df57522f3"
+  },
+  "staff_receipt": {
+    "id": "93c864ad-2ff8-46d1-bf5f-a51fa9f21a1a",
+    "run_id": "9e0abf44-dc23-4b17-a69e-ecd0cd8b3f19",
+    "document_id": "b6214711-35d0-4f99-879a-8c94acc6ee7e",
+    "qa_revision": 3,
+    "content_digest": "a91c2ebf9372ddcdf4270a0544f90b14a6dcb9c1711dbd1ccac5151df57522f3",
+    "manifest_digest": "b0b8bb377ccbb0feee9305499bc04a6963b664ef5ee73743d664c7f6e4770acb",
+    "release_digest": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+    "content_gate_version": "amc.content-evidence/1",
+    "content_gate_digest": "3615316991d2eae59b63ac50e5c5cb4ce9638b687fd59164dd3224870df83e9e",
+    "content_sources": {
+      "F1": {
+        "claim_revision": "753a1774-5fca-4868-a584-ba5965714a85",
+        "source_revision": "c01a6f79-3a7f-42e2-8e7f-6f0c2269c629",
+        "source_digest": "4ff5f919f648d7fea42cb75a31a3f94c5d3a098daefef80001bbca709389be0f"
+      },
+      "PRODUCT": {
+        "claim_revision": null,
+        "source_revision": "7be5e408-dabe-43ba-b24b-645f25c95116",
+        "source_digest": "156358663eaf243d06ec78c61a4a6076c0e8f70164298d7ed2d2dec1fa8dd921"
+      },
+      "MARKET": {
+        "claim_revision": null,
+        "source_revision": "a2cdf498-bdb5-49df-b7e8-31d44a79f5b0",
+        "source_digest": "a92dff1069af09712a2b5041f0213d903f247ff8c8bd1c596749084c47f94431"
+      }
+    },
+    "reviewed_statements": {},
+    "customer_field_evidence": {
+      "client_strategy": {
+        "target": [
+          {
+            "id": "c3952504166dc3bda7317fb10508f27c218ad53fdcec2f758704e3701b5dcb32",
+            "claim_type": "editorial",
+            "outcome": "editorial",
+            "handles": []
+          }
+        ],
+        "decision": [
+          {
+            "id": "13ab92312692d79844c9d4131e764402fd7932fd6c3b8fd1d897580c4948061a",
+            "claim_type": "editorial",
+            "outcome": "editorial",
+            "handles": []
+          }
+        ],
+        "activation": [
+          {
+            "id": "0b054509ea89f761351b8a47b2713554a59894ce83e45f85fdcf6f6171482557",
+            "claim_type": "editorial",
+            "outcome": "editorial",
+            "handles": []
+          }
+        ],
+        "next_decision": [
+          {
+            "id": "34a70ef03af5374f8e407c908683a98fc7705351061358fd22bdad191f0eb499",
+            "claim_type": "editorial",
+            "outcome": "editorial",
+            "handles": []
+          }
+        ]
+      },
+      "client_measurement": {
+        "hypothesis": [
+          {
+            "id": "ba9e133ddf58a14c4dd5433d15d9b14fadf8d82c98cda6707d0179f21936953e",
+            "claim_type": "editorial",
+            "outcome": "editorial",
+            "handles": []
+          }
+        ],
+        "conversion": [
+          {
+            "id": "90ae13538a0c21192b606dd7b5626aa815c8c33122f101934572c9ec06c182d3",
+            "claim_type": "editorial",
+            "outcome": "editorial",
+            "handles": []
+          }
+        ],
+        "method": [
+          {
+            "id": "f4ea8ca2c9b03fff14a596e4804bed60cc5df219768dc5aef146d4ba420d78d8",
+            "claim_type": "editorial",
+            "outcome": "editorial",
+            "handles": []
+          }
+        ]
+      }
+    },
+    "studio_approvals": {
+      "research": "e1ac49d8-c020-4422-8c9c-c04c9a9af26e",
+      "strategy": "05562254-e56d-438b-a699-c6425f439b76",
+      "measurement": "8d21cc00-e673-4c9d-9de8-0c66426134d1",
+      "client_strategy": "c7ad4f07-3123-42cf-ab74-e098d9e43376",
+      "client_measurement": "96ff7d85-b1fb-45b9-9ddf-dc97b570f8b6"
+    },
+    "customer_delivery": {
+      "contract": "amc.customer-marketing-assets/1",
+      "scope": {
+        "tenant_id": "d0225c91-c54e-4e9e-bc6e-c1ea71b1d62a",
+        "client_id": "1c1bd9f2-d8b1-4bf2-8daa-8b113a1d616f",
+        "brand_id": "b9463126-8145-457a-bade-8fec845031a8",
+        "campaign_id": "f6a6a9e1-40fd-459a-8ed9-9440d5e4b7ed"
+      },
+      "revision": 3,
+      "assets": {
+        "client_strategy": {
+          "fields": {
+            "target": "Xưởng nội thất",
+            "decision": "Đề xuất giúp Xưởng nội thất đối chiếu quy cách của Bộ mẫu vải trước khi gửi yêu cầu báo giá.",
+            "activation": "Trên web, đặt điều kiện áp dụng cạnh lời mời báo giá. Chuyển yêu cầu đủ thông tin cho Sales.",
+            "next_decision": "Nếu nhiều người gửi nhưng Sales còn phải hỏi lại, ưu tiên sửa trường thông tin thiếu trước khi mở rộng kênh."
+          },
+          "digest": "e5885b906924094a4b307ff9b4bd058525c2cb94d343eeea297829653c23261a",
+          "approval_receipt": "c7ad4f07-3123-42cf-ab74-e098d9e43376"
+        },
+        "client_measurement": {
+          "fields": {
+            "hypothesis": "Thử đặt quy cách trước biểu mẫu để người mua có thể gửi yêu cầu đủ thông tin hơn.",
+            "conversion": "Yêu cầu báo giá",
+            "method": "Đối soát mã yêu cầu duy nhất với yêu cầu Sales đủ thông tin để báo giá. So sánh trên lượt vào trang cùng nhóm khách."
+          },
+          "digest": "da1c9bdcb6dec91d447c5bb09ab6ef923a39791d8b055cce6f24553b0e92173f",
+          "approval_receipt": "96ff7d85-b1fb-45b9-9ddf-dc97b570f8b6"
+        }
+      }
+    },
+    "review_id": "275ef880-b8e2-425c-851b-2ae478e904be"
+  }
+}

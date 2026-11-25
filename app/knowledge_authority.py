@@ -9,6 +9,7 @@ from sqlalchemy import text
 from migrations.knowledge_commerce import conflict_query
 
 from . import knowledge_models as m
+from .commercial_scope import same_placement
 from .knowledge_contracts import TYPES, approval_category, price_wording
 from .knowledge_store import canonical, conflict, digest, in_window, parse_time, restrictive
 from .models import Campaign, Membership
@@ -79,7 +80,7 @@ def check_business_data(store, kind, subject, data):
             parent = store.get(m.KnowledgeRevision, parent.data["parent"]) if parent.data.get("parent") else None
     if kind == "offer":
         for field in ("availability", "policy"):
-            if data.get(field) and refs[field, data[field]].data["placement"] != data["placement"]:
+            if data.get(field) and not same_placement(refs[field, data[field]].data["placement"], data["placement"]):
                 invalid("Offer terms refer to another subject or market")
     if kind == "binding":
         src = refs["source", data["source"]]
@@ -170,7 +171,7 @@ def check_assertion(store, assertion, at):
         if qty < max(Decimal(requested["moq"]), Decimal(requested["tier_min"])) or requested["tier_max"] and qty > Decimal(requested["tier_max"]):
             conflict("Quantity is outside the authorized commercial tier")
         chosen = store.get(m.KnowledgeRevision, assertion["offer"])
-        if chosen.data["placement"] != assertion["placement"] or chosen.data["price"] != requested:
+        if not same_placement(chosen.data["placement"], assertion["placement"]) or chosen.data["price"] != requested:
             conflict("Quoted price differs from the exact offered terms")
         if assertion["wording"] != price_wording(requested):
             conflict("Published price wording differs from its typed amount, currency, unit or tax basis")
@@ -190,7 +191,7 @@ def check_assertion(store, assertion, at):
             conflict("Offer selector requires operator reconciliation")
         for other in candidates:
             terms = other.data["price"]
-            if other.data["placement"] != assertion["placement"] or not terms or store.summary(other, at)["state"] != "approved":
+            if not same_placement(other.data["placement"], assertion["placement"]) or not terms or store.summary(other, at)["state"] != "approved":
                 continue
             if any(terms[k] != requested[k] for k in ("currency", "unit", "basis_quantity", "tax")) or not set(terms["conditions"]).issubset(
                 assertion["qualifiers"]
@@ -207,7 +208,7 @@ def check_assertion(store, assertion, at):
         name = "availability" if field == "availability" else "policy"
         row = store.get(m.KnowledgeRevision, assertion[name])
         observed = row.data["status" if field == "availability" else field]
-        if row.data["placement"] != assertion["placement"] or not observed or observed == "unknown":
+        if not same_placement(row.data["placement"], assertion["placement"]) or not observed or observed == "unknown":
             conflict("Unknown or mismatched availability or policy")
         if observed != assertion["wording"]:
             conflict("Copy does not match the approved policy or stock declaration")
@@ -260,7 +261,7 @@ def change_state(store, row, command, at):
         if (
             preferred.id == row.id
             or preferred.kind != row.kind
-            or preferred.data["placement"] != row.data["placement"]
+            or not same_placement(preferred.data["placement"], row.data["placement"])
             or preferred.data.get("applicability") != row.data.get("applicability")
         ):
             conflict("Preferred authority must cover the same placement and order conditions")

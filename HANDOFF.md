@@ -6,6 +6,8 @@ Draft A1 dành migration 023 sau C1 v22. Người dùng có thể xem thiết b�
 
 ## Business Profile C1 · backend v22 đang review nội bộ
 
+Sau phản biện trên `b9edc99`, C1 so khớp bí danh Hà Nội, TP.HCM và Đà Nẵng ở selector tồn kho, điều khoản và giá. Có thể có đơn vừa bán lẻ vừa trả trước. Hai chính sách áp dụng đồng thời cho đơn đó cần được đối chiếu. Hãy chạy lại publisher kể cả khi hàm SQL kiểm tồn kho đã tồn tại. API kiểm dấu SHA-256 của phiên bản quy tắc. [Danh mục và các ca hồi quy](tests/test_knowledge_scope_aliases.py)
+
 Bản sửa sau phản biện PR #22 đã đồng bộ với `main@5dc4ebc73c9423f360d63287d52350e2ef21a31a`. Trên database v22 hiện hữu, chạy lại publisher trước khi khởi động API. Người tiếp quản có thể dùng cùng fixture để kiểm tra câu công khai cần người duyệt đủ chuyên môn và trường hợp hai nguồn tồn kho, bảo hành hoặc thanh toán mâu thuẫn. Hai ca này là điều kiện review lại C1. C2/C3 và Commercial GA tiếp tục theo gate riêng. [Cách chạy và đối chiếu kết quả](docs/business-profile/C1-RUNBOOK.md#kiểm-tra-lại-hai-phản-biện-của-pr-22)
 
 Nhánh `feature/business-profile-knowledge-v22` tích hợp main `16fea3d45`. Staff có thể ghi hồ sơ, SKU, offer và chứng cứ, tự duyệt dữ kiện thông thường hoặc yêu cầu người thứ hai đủ quyền. API tạo snapshot và cấp receipt nội bộ cho queue/QA/share. Local PostgreSQL 16.16 và SQLite đã đạt 29 ca C1, gồm tranh chấp thật, hết hạn, idempotency và quyền đọc nguồn. Mốc tiếp là giao diện C2, adapter WF-03/WF-13 C3 và nghiệm thu nghiệp vụ. Commercial GA giữ NO-GO. [Lệnh Docker, API, ma trận nghiệm thu và rollback](docs/business-profile/C1-RUNBOOK.md) · [SHA và CI của các mốc đã hợp nhất](docs/business-profile/INTEGRATION-BASE.md)

@@ -1,6 +1,11 @@
 """One conflict predicate for SQLite evaluation and PostgreSQL's scoped boolean function."""
 
+import hashlib
+
+from app.commercial_scope import OPTION_AXES, TERRITORIES
+
 TABLES = ("knowledge_revisions", "knowledge_links", "knowledge_events")
+SIGNATURE = "amc_acl.knowledge_commercial_conflict(text,text,text,text,text,timestamptz)"
 
 
 def conflict_query(postgres):
@@ -28,9 +33,25 @@ def conflict_query(postgres):
         a, b = prop(first, "minimum"), prop(second, "maximum")
         return f"({a} IS NULL OR {b} IS NULL OR CAST({a} AS NUMERIC)<=CAST({b} AS NUMERIC))"
 
+    def literals(labels):
+        # These are repository-owned constants, shared with the Python selector.
+        return ", ".join("'" + label.replace("'", "''") + "'" for label in labels)
+
+    def territory(row):
+        value = f"({row}.data->'placement'->>'region')"
+        choices = " ".join(f"WHEN {value} IN ({literals(aliases)}) THEN '{code}'" for code, aliases in TERRITORIES.items())
+        return f"(CASE {choices} ELSE {value} END)"
+
     location = " AND ".join(
-        f"(a.data->'placement'->>'{k}') {equal} (b.data->'placement'->>'{k}')" for k in ("product", "market", "variant", "channel", "locale", "region")
+        f"(a.data->'placement'->>'{k}') {equal} (b.data->'placement'->>'{k}')" for k in ("product", "market", "variant", "channel", "locale")
     )
+    location += f" AND {territory('a')}={territory('b')}"
+
+    # Two unequal choices exclude each other only if they constrain the same
+    # dimension. For example, a retail buyer can also choose prepayment.
+    left, right = prop("a", "option"), prop("b", "option")
+    shared_axis = " OR ".join(f"({left} IN ({literals(axis)}) AND {right} IN ({literals(axis)}))" for axis in OPTION_AXES)
+    options_overlap = f"NOT COALESCE(({left}<>{right} AND ({shared_axis})), FALSE)"
 
     def meaning(row):
         # Only declared equivalent spellings collapse. Other prose needs an explicit decision.
@@ -54,7 +75,7 @@ def conflict_query(postgres):
       JOIN {link} l ON (l.tenant_id,l.client_id,l.brand_id)=(a.tenant_id,a.client_id,a.brand_id)
         AND l.relation='product' AND l.target_id=(a.data->'placement'->>'product')
       JOIN {rev} b ON b.id=l.revision_id AND b.kind=a.kind AND b.id<>a.id
-      WHERE {location} AND {overlap("option")} AND {overlap("unit")}
+      WHERE {location} AND {options_overlap} AND {overlap("unit")}
         AND {range_meets("a", "b")} AND {range_meets("b", "a")}
         AND b.data->>{facet} IS NOT NULL AND b.data->>{facet}<>'unknown'
         AND {meaning("a")}<>{meaning("b")}
@@ -75,12 +96,18 @@ def install(conn):
     conn.execute(
         "CREATE INDEX IF NOT EXISTS ix_knowledge_commerce_product ON public.knowledge_links(tenant_id,client_id,brand_id,target_id,revision_id) WHERE relation='product'"
     )
-    signature = "amc_acl.knowledge_commercial_conflict(text,text,text,text,text,timestamptz)"
     conn.execute(
         "CREATE OR REPLACE FUNCTION amc_acl.knowledge_commercial_conflict(p_tenant text,p_client text,p_brand text,p_revision text,p_facet text,p_at timestamptz)"
         + " RETURNS boolean LANGUAGE sql STABLE SECURITY DEFINER SET search_path=pg_catalog AS $rule$ "
         + conflict_query(True)
         + " $rule$"
     )
-    conn.execute(f"REVOKE ALL ON FUNCTION {signature} FROM PUBLIC")
-    conn.execute(f"GRANT EXECUTE ON FUNCTION {signature} TO amc_runtime")
+    conn.execute(f"REVOKE ALL ON FUNCTION {SIGNATURE} FROM PUBLIC")
+    conn.execute(f"GRANT EXECUTE ON FUNCTION {SIGNATURE} TO amc_runtime")
+    conn.execute(f"COMMENT ON FUNCTION {SIGNATURE} IS '{RULE_DIGEST}'")
+
+
+# Comparing the installer's SQL digest repairs previously published v22 rules
+# in place and also gates startup against old definitions with this same name.
+RULE_DIGEST = hashlib.sha256(conflict_query(True).encode("utf-8")).hexdigest()
+RULE_IS_CURRENT = f"SELECT obj_description(to_regprocedure('{SIGNATURE}'), 'pg_proc') IS NOT DISTINCT FROM '{RULE_DIGEST}'"

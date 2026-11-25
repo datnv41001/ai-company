@@ -83,7 +83,11 @@ def test_prices_quantity_conditions_and_multiple_skus(api):
     write("price-vn", "claim", dict(binding=vb["id"], assertion=price_vn))
     write("large-order", "offer", dict(placement=place, price=base_price | {"tier_min": "21", "tier_max": None}, policy=policy["id"]))
     assert call(api, user, path, "/previews", claims=[claim["id"]]).status_code == 201
-    write("overlap", "offer", dict(placement=place, price=base_price | {"amount_minor": 1200, "basis_quantity": "1.00"}, policy=policy["id"]))
+    write(
+        "overlap",
+        "offer",
+        dict(placement=place | {"region": "Hà Nội"}, price=base_price | {"amount_minor": 1200, "basis_quantity": "1.00"}, policy=policy["id"]),
+    )
     assert call(api, user, path, "/previews", claims=[claim["id"]]).status_code == 409
     assert call(api, user, path, "/authorize", operation="queue", snapshot_id=preview["id"], digest=preview["digest"]).status_code == 409
 

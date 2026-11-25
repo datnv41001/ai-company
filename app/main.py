@@ -31,6 +31,7 @@ from .delivery import router as delivery_router, working_copy
 from .operations import router as operations_router
 from .registry import router as registry_router
 from .workforce import router as workforce_router
+from .c3_tasks import router as marketing_task_router
 from .recipients import router as recipients_router, lock_recipient, revoke_pending, preview_link, accept_link
 from .delivery_models import PortalGrant
 from .access import set_context, visible
@@ -57,6 +58,7 @@ app.include_router(identity_router)
 app.include_router(delivery_router)
 app.include_router(recipients_router)
 app.include_router(workforce_router)
+app.include_router(marketing_task_router)
 app.include_router(registry_router)
 app.include_router(operations_router)
 app.include_router(knowledge_router)

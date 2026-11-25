@@ -73,15 +73,15 @@ function createWorkforce(root, api, notify) {
     }
   }
   const states={queued:'Đang chờ worker',running:'Đang xử lý',failed:'Đã dừng',awaiting_qa:'Đã chuyển sang QA'};
-  async function show(tenant,role,campaigns,expanded) {
+  async function show(tenant,role,campaigns,expanded,mode) {
     const ticket=++revision; root.inert=true;
     const base='/api/tenants/'+encodeURIComponent(tenant)+'/workforce';
     const admin=['owner','admin'].includes(role), external=role==='client_viewer';
-    const reload=()=>ticket===revision && show(tenant,role,campaigns,true);
+    const reload=()=>ticket===revision && show(tenant,role,campaigns,true,mode);
     let briefs,runs,recipients;
     try {
       [briefs,runs,recipients]=await Promise.all([api(base+'/briefs'),external?[]:api(base+'/runs'),
-        admin?api('/api/tenants/'+encodeURIComponent(tenant)+'/recipients'):[]]);
+        admin && mode!=='inhouse'?api('/api/tenants/'+encodeURIComponent(tenant)+'/recipients'):[]]);
     } catch(e) {
       if(ticket!==revision)return;
       root.inert=false;root.replaceChildren();action(root,'Tải lại brief và tiến độ',reload);return;
@@ -93,7 +93,15 @@ function createWorkforce(root, api, notify) {
     if(external&&!briefs.length)return;
     const box=node(root,'details');box.className='panel';box.open=Boolean(keepOpen);
     node(box,'summary',external?'Brief Marketing của bạn':'Điều phối Marketing AI');
-    if(admin) {
+    if(mode==='inhouse' && ['owner','admin','editor'].includes(role)){
+      taskIntentForm(box,{},async(intent,campaign,key)=>{
+        await api(base+'/internal-tasks','POST',{key,campaign_id:campaign,intent});
+        if(ticket===revision)await reload();
+      },{campaigns});
+      const guide=node(box,'p','Sau khi ghi nhận mục đích, mở brief đã ghim sản phẩm trong Hồ sơ doanh nghiệp để kiểm tra căn cứ và giao việc.');
+        const link=node(guide,'a','Mở hồ sơ doanh nghiệp');link.href='#knowledge-panel';
+    }
+    if(admin && mode!=='inhouse') {
       const title=field(box,'Tên bộ tài sản','input');
       const campaign=field(box,'Chiến dịch nhận brief','select');
       campaigns.forEach(c=>campaign.add(new Option(c.name,c.id)));
@@ -135,12 +143,14 @@ function createWorkforce(root, api, notify) {
     for(const b of briefs) {
       const row=node(box,'details');node(row,'summary',b.title+(b.submitted?' · Đã nhận brief':' · Chờ brief'));
       if(external&&!b.submitted) {
+        taskIntentForm(row,{},async intent=>{await api(base+'/briefs/'+b.id+'/task-submission','PUT',intent);await reload();},
+          {title:'Yêu cầu cho AI Director',button:'Gửi yêu cầu cho đội Marketing'});
         const goal=field(row,'Mục tiêu','textarea'), audience=field(row,'Khách hàng mục tiêu','textarea');
         const offer=field(row,'Sản phẩm và đề nghị','textarea'), label=field(row,'Tên nguồn','input'), excerpt=field(row,'Trích dẫn từ nguồn','textarea');
         action(row,'Gửi brief',async()=>{
           await api(base+'/briefs/'+b.id+'/submission','PUT',{objective:goal.value,audience:audience.value,offer:offer.value,sources:[{label:label.value,excerpt:excerpt.value}]});await reload();
         });
-      } else if (!external && role!=='viewer' && b.submitted && !runs.some(r=>r.brief_id===b.id)) {
+      } else if (!external && role!=='viewer' && b.submitted && b.origin!=='internal' && !runs.some(r=>r.brief_id===b.id)) {
         const workflow=field(row,'Mẫu workflow','select');
         workflow.add(new Option('Tuyến tính','linear'));workflow.add(new Option('Content và SEO sau Strategy (diamond-v1)','diamond-v1'));
         const versions=await api(base+'/registry/'+encodeURIComponent(b.campaign_id));

@@ -17,6 +17,7 @@ from .security import current_user, require_tenant
 from .workforce_gateway import CORE, EXTRA, PROMPT_VERSION
 from . import workforce_authority  # noqa: F401 - install SQLite triggers on fresh schema
 from .workforce_models import WorkforceBrief, WorkforceRun
+from .c3_tasks import TaskIntent
 
 router = APIRouter(prefix="/api/tenants/{tenant_id}/workforce", tags=["Marketing workforce"])
 Short = Annotated[str, StringConstraints(strip_whitespace=True, min_length=3, max_length=150)]
@@ -43,6 +44,7 @@ class BriefData(Input):
     audience: Paragraph
     offer: Paragraph
     sources: list[Source] = Field(min_length=1, max_length=4)
+    task_intent: TaskIntent | None = None
 
 
 class ManifestID(Input):
@@ -65,7 +67,7 @@ def brief_query(db, member):
         grant = db.get(PortalGrant, (member.tenant_id, member.user_id))
         if not grant or grant.client_id != member.client_id:
             return q.where(False)
-        q = q.where(WorkforceBrief.recipient_id == member.user_id, WorkforceBrief.client_id == grant.client_id)
+        q = q.where(WorkforceBrief.origin == "agency", WorkforceBrief.recipient_id == member.user_id, WorkforceBrief.client_id == grant.client_id)
         if grant.brand_id:
             q = q.where(WorkforceBrief.brand_id == grant.brand_id)
         if grant.campaign_id:
@@ -74,7 +76,8 @@ def brief_query(db, member):
 
 
 def public_brief(b):
-    return {"id": b.id, "title": b.title, "submitted": b.payload is not None, "campaign_id": b.campaign_id}
+    return {"id": b.id, "title": b.title, "submitted": b.payload is not None, "campaign_id": b.campaign_id,
+            **({"origin":"internal"} if b.origin == "internal" else {})}
 
 
 @router.get("/briefs")
@@ -103,6 +106,16 @@ def open_brief(tenant_id: str, body: OpenBrief, user: User = Depends(current_use
 
 @router.put("/briefs/{bid}/submission")
 def submit(tenant_id: str, bid: str, body: BriefData, user: User = Depends(current_user), db: Session = Depends(get_db)):
+    return save_submission(db,user,tenant_id,bid,body.model_dump(exclude_none=True))
+
+
+@router.put("/briefs/{bid}/task-submission")
+def submit_task(tenant_id: str, bid: str, body: TaskIntent, user: User = Depends(current_user), db: Session = Depends(get_db)):
+    from .c3_tasks import TASK_VERSION
+    return save_submission(db,user,tenant_id,bid,{"task_version":TASK_VERSION,"task_intent":body.model_dump()})
+
+
+def save_submission(db,user,tenant_id,bid,payload):
     m = require_tenant(db, user, tenant_id)
     if m.role != "client_viewer":
         raise HTTPException(404, "Brief unavailable")
@@ -116,14 +129,14 @@ def submit(tenant_id: str, bid: str, body: BriefData, user: User = Depends(curre
         changed = db.execute(
             update(WorkforceBrief)
             .where(WorkforceBrief.id == bid, WorkforceBrief.payload.is_(None))
-            .values(payload=body.model_dump())
+            .values(payload=payload)
             .execution_options(synchronize_session=False)
         )
         db.commit()
         if changed.rowcount:
             return {"submitted": True}
         db.refresh(b)
-    if b.payload == body.model_dump():
+    if b.payload == payload:
         return {"submitted": True}
     raise HTTPException(409, "Brief already submitted")
 
@@ -131,7 +144,8 @@ def submit(tenant_id: str, bid: str, body: BriefData, user: User = Depends(curre
 @router.post("/briefs/{bid}/run")
 def start(tenant_id: str, bid: str, body: Start, user: User = Depends(current_user), db: Session = Depends(get_db)):
     from . import c3_boundaries, c3_marketing
-    backed = body.registry_workflow in c3_marketing.ROLES
+    from .c3_projection import TASK_RELEASES
+    backed = body.registry_workflow in c3_marketing.ROLES or body.registry_workflow in TASK_RELEASES
     if backed != bool(body.knowledge_manifest):
         raise HTTPException(422, "Knowledge-backed releases require an exact business knowledge manifest")
     m = require_tenant(db, user, tenant_id, "editor")
@@ -139,6 +153,8 @@ def start(tenant_id: str, bid: str, body: Start, user: User = Depends(current_us
     b = db.scalar(brief_query(db, m).where(WorkforceBrief.id == bid))
     if not b:
         raise HTTPException(404, "Brief unavailable")
+    if b.payload and "sources" not in b.payload and body.registry_workflow not in TASK_RELEASES:
+        raise HTTPException(409, "Nhiệm vụ này cần quy trình Marketing và manifest yêu cầu công việc đã ghim.")
     if body.max_parallel_nodes == 2 and body.workflow != 'dynamic-v1':
         raise HTTPException(422, 'Two leases require a dynamic workflow')
     plan = CORE + [s for s in EXTRA if s in body.extra_skills]
@@ -178,26 +194,27 @@ def start(tenant_id: str, bid: str, body: Start, user: User = Depends(current_us
         raise HTTPException(422, "Brand Kit needs verified product facts")
     if not backed and max(len(brand.product_truth), len(brand.brand_guidelines)) > 4000:
         raise HTTPException(422, "Summarize each Brand Kit field to 4000 characters for this workflow")
-    facts = {"brand": {"label": brand.name, "excerpt": brand.product_truth}}
-    facts.update({f"S{n}": s for n, s in enumerate(b.payload["sources"], 1)})
-    knowledge = {
-        "title": b.title,
-        "objective": b.payload["objective"],
-        "audience": b.payload["audience"],
-        "offer": b.payload["offer"],
-        "brand_rules": brand.brand_guidelines,
-        "sources": facts,
-        "prompt_version": PROMPT_VERSION,
-    }
+    if not backed:
+        facts = {"brand": {"label": brand.name, "excerpt": brand.product_truth}}
+        facts.update({f"S{n}": s for n, s in enumerate(b.payload["sources"], 1)})
+        knowledge = {"title": b.title, "objective":b.payload["objective"], "audience":b.payload["audience"],
+                     "offer":b.payload["offer"], "brand_rules":brand.brand_guidelines,"sources":facts,"prompt_version":PROMPT_VERSION}
     if body.registry_workflow:
         from .registry import pin
         from .registry_compatibility import required_outputs
         if backed:
             store, snap, public = c3_boundaries.checked(db, user, b, body.knowledge_manifest.model_dump(), body.registry_workflow, "queue")
-            facts = {fact["id"]: {"label": fact["id"], "excerpt": c3_marketing.fact_line(fact)} for fact in public["facts"]}
+            if body.registry_workflow in TASK_RELEASES:
+                from .c3_releases import fact_text
+                facts = {fact["id"]: {"label":fact["id"],"excerpt":fact_text(body.registry_workflow,fact,public)} for fact in public["facts"]}
+            else:
+                facts = {fact["id"]: {"label": fact["id"], "excerpt": c3_marketing.fact_line(fact)} for fact in public["facts"]}
             knowledge = {"title": public["product"], "objective":public["objective"], "audience":public["audience"],
                          "offer":public["product"], "brand_rules":"", "sources":facts, "prompt_version":PROMPT_VERSION,
                          "c3_manifest":body.knowledge_manifest.model_dump(), "c3_projection":public}
+            if body.registry_workflow in TASK_RELEASES:
+                knowledge.update(objective=public["task_intent"]["purpose"],brand_rules=public["brand_guidelines"]["guidance"],
+                                 internal_task=b.origin == "internal")
         binding = pin(db, b, body.registry_workflow)
         manifest = db.scalar(text("select manifest from amc_ops.registry_releases where workflow=:w and digest=:d"),
                              {"w":body.registry_workflow, "d":binding["manifest_digest"]})

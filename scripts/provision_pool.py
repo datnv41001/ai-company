@@ -3,6 +3,7 @@
 import argparse
 import os
 import re
+from uuid import uuid4
 
 import psycopg
 from psycopg import sql
@@ -46,6 +47,29 @@ def route(conn, worker, tenant, client, brand, campaign, operator):
     )
 
 
+def internal_route(conn, worker, tenant, client, brand, campaign):
+    """Bind an infrastructure-only editor without a mailbox, user session, or sibling workspace."""
+    scope = conn.execute("""select t.id from tenants t join clients c on c.tenant_id=t.id
+        join brands b on (b.tenant_id,b.client_id)=(t.id,c.id)
+        join campaigns k on (k.tenant_id,k.brand_id)=(t.id,b.id)
+        where t.mode='inhouse' and (t.id,c.id,b.id,k.id)=(%s,%s,%s,%s) for update of t""",
+        (tenant, client, brand, campaign)).fetchone()
+    if not scope:
+        raise ValueError("Expected an exact inhouse campaign scope")
+    record = conn.execute("select user_id from amc_c3.worker_operators where tenant_id=%s", (tenant,)).fetchone()
+    if record:
+        operator = record[0]
+    else:
+        operator = str(uuid4())
+        # No credential is ever generated. Web login explicitly rejects this reserved non-hash.
+        conn.execute("""insert into users(id,email,password_hash,created_at) values (%s,%s,'!amc-worker',now())""",
+                     (operator, f"{operator}@operator.invalid"))
+        conn.execute("insert into memberships(tenant_id,user_id,role) values(%s,%s,'editor')", (tenant, operator))
+        conn.execute("insert into amc_c3.worker_operators values(%s,%s)", (tenant, operator))
+    route(conn, worker, tenant, client, brand, campaign, operator)
+    return operator
+
+
 def inventory(conn, names):
     if not names or len(set(names)) != len(names):
         raise ValueError("List one dedicated dispatcher login per replica")
@@ -68,6 +92,9 @@ def main():
     routes = sub.add_parser("route")
     for key in ("worker", "tenant", "client", "brand", "campaign", "operator"):
         routes.add_argument(key)
+    internal = sub.add_parser("internal-route", help="Bind an inhouse campaign to a non-interactive worker operator")
+    for key in ("worker", "tenant", "client", "brand", "campaign"):
+        internal.add_argument(key)
     args = vars(parser.parse_args())
     with psycopg.connect(os.environ["AMC_MIGRATION_DSN"]) as conn:
         mode = args.pop("mode")
@@ -75,6 +102,8 @@ def main():
             inventory(conn,args["names"])
         elif mode == "login":
             provision(conn, **args, password=os.environ["AMC_POOL_PASSWORD"])
+        elif mode == "internal-route":
+            internal_route(conn, **args)
         else:
             route(conn, **args)
 

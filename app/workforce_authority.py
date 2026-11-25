@@ -12,22 +12,41 @@ CANCEL = (
     """UPDATE workforce_runs SET state='failed',lease=NULL,last_error='recipient_revoked',
     journal=CASE WHEN state='running' THEN json_set(journal,'$[#-1].outcome','recipient_revoked',
         '$[#-1].usage_unconfirmed',json('true'),'$[#-1].finished_at',strftime('%Y-%m-%dT%H:%M:%fZ','now'))
-        ELSE journal END WHERE state IN ('queued','running') AND NOT EXISTS ("""
+        ELSE journal END WHERE state IN ('queued','running') AND brief_id IN
+        (SELECT id FROM workforce_briefs WHERE origin='agency') AND NOT EXISTS ("""
     + MATCH.format(brief="workforce_runs.brief_id")
     + ")"
 )
 
 
 def install_sqlite(conn):
+    for verb, name, condition in (
+        ("DELETE", "deleted", "1"),
+        ("UPDATE OF role", "changed", "NEW.role NOT IN ('owner','admin','editor')"),
+    ):
+        conn.exec_driver_sql(f"""CREATE TRIGGER IF NOT EXISTS c3_internal_author_{name} AFTER {verb} ON memberships
+         WHEN OLD.role IN ('owner','admin','editor') AND {condition}
+         BEGIN UPDATE workforce_runs SET state='failed',lease=NULL,last_error='recipient_revoked',
+          journal=CASE WHEN state='running' THEN json_set(journal,'$[#-1].outcome','recipient_revoked',
+           '$[#-1].usage_unconfirmed',json('true'),'$[#-1].finished_at',strftime('%Y-%m-%dT%H:%M:%fZ','now'))
+           ELSE journal END WHERE state IN ('queued','running') AND tenant_id=OLD.tenant_id AND brief_id IN
+           (SELECT id FROM workforce_briefs WHERE tenant_id=OLD.tenant_id AND recipient_id=OLD.user_id AND origin='internal');
+         END""")
     for verb, name in (("DELETE", "deleted"), ("UPDATE OF brand_id,campaign_id", "changed")):
         conn.exec_driver_sql(f"""CREATE TRIGGER IF NOT EXISTS workforce_grant_{name} AFTER {verb} ON portal_grants
           BEGIN {CANCEL} AND tenant_id=OLD.tenant_id AND brief_id IN
           (SELECT id FROM workforce_briefs WHERE tenant_id=OLD.tenant_id AND recipient_id=OLD.user_id); END""")
     conn.exec_driver_sql(
         """CREATE TRIGGER IF NOT EXISTS workforce_check_intake BEFORE INSERT ON workforce_runs
-        WHEN NOT EXISTS ("""
+        WHEN NOT COALESCE((SELECT CASE WHEN b.origin='internal' THEN
+          json_extract(NEW.knowledge,'$.internal_task')=1 AND tenant.mode='inhouse'
+          AND json_extract(NEW.knowledge,'$.registry.workflow') IN ('WF-03/research-strategy-draft@3','WF-13/landing-seo-draft@6')
+          AND member.role IN ('owner','admin','editor')
+         ELSE COALESCE(json_extract(NEW.knowledge,'$.internal_task'),0)=0 AND EXISTS ("""
         + MATCH.format(brief="NEW.brief_id")
-        + """)
+        + """) END FROM workforce_briefs b JOIN tenants tenant ON tenant.id=b.tenant_id
+          LEFT JOIN memberships member ON member.tenant_id=b.tenant_id AND member.user_id=b.recipient_id
+          WHERE b.id=NEW.brief_id AND b.tenant_id=NEW.tenant_id),0)
         BEGIN SELECT RAISE(ABORT,'workforce_recipient_required'); END"""
     )
     conn.exec_driver_sql("""CREATE TRIGGER IF NOT EXISTS workforce_audit_withdrawal AFTER UPDATE OF last_error ON workforce_runs

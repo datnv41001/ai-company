@@ -273,7 +273,8 @@ function createKnowledgePanel(root, api) {
       const mount=document.createElement('div');
       mount.id='knowledge-marketing-workflow';
       content.querySelector('.knowledge-brief').append(mount);
-      mountMarketingBrief(mount,api,{tenant:scope.tenant,client,brand,brief:brief.id,role:scope.role,signal:reading.signal});
+      mountMarketingBrief(mount,api,{tenant:scope.tenant,client,brand,brief:brief.id,role:scope.role,signal:reading.signal,
+        mode:scope.mode,campaigns:(scope.campaigns||[]).filter(row=>row.brand_id===brand),selections:brief.selections||{}});
     }
     if (view==='briefs' && Object.keys(edit?.picks || {}).length) chooseBriefData();
   }

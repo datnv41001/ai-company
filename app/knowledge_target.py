@@ -5,7 +5,7 @@ from sqlalchemy import event, select, text
 from .database import Base
 from .delivery_models import PortalGrant
 from .knowledge_store import conflict, digest, canonical, missing
-from .models import Campaign, Membership
+from .models import Campaign, Membership, Tenant
 from .workforce_models import WorkforceBrief
 
 
@@ -32,24 +32,29 @@ def describe(store, target, *, lock):
     db = store.db
     t, c, b = (store.scope[k] for k in ("tenant_id", "client_id", "brand_id"))
     k, i = target.campaign_id, target.brief_id
-    if store.postgres and lock and not db.scalar(text("SELECT amc_acl.lock_knowledge_target(:t,:c,:b,:k,:i)"), dict(t=t, c=c, b=b, k=k, i=i)):
-        missing()
-    campaign = db.scalar(select(Campaign).filter_by(tenant_id=t, brand_id=b, id=k))
     brief = db.scalar(select(WorkforceBrief).filter_by(tenant_id=t, client_id=c, brand_id=b, campaign_id=k, id=i))
-    if not campaign or not brief:
+    if not brief:
+        missing()
+    internal = brief.origin == "internal"
+    if store.postgres and lock:
+        statement = ("SELECT amc_acl.lock_c3_internal_target(:t,:c,:b,:k,:i)" if internal
+                     else "SELECT amc_acl.lock_knowledge_target(:t,:c,:b,:k,:i)")
+        if not db.scalar(text(statement), dict(t=t, c=c, b=b, k=k, i=i)):
+            missing()
+        db.refresh(brief)
+    campaign = db.scalar(select(Campaign).filter_by(tenant_id=t, brand_id=b, id=k))
+    if not campaign:
         missing()
     member = db.get(Membership, (t, brief.recipient_id))
-    grant = db.get(PortalGrant, (t, brief.recipient_id))
-    if (
-        not member
-        or member.role != "client_viewer"
-        or member.client_id != c
-        or not grant
-        or grant.client_id != c
-        or grant.brand_id not in (None, b)
-        or grant.campaign_id not in (None, k)
-    ):
-        conflict("Brief recipient no longer has this scope")
+    if internal:
+        tenant = db.get(Tenant,t)
+        if not tenant or tenant.mode != "inhouse" or not member or member.role not in ("owner","admin","editor"):
+            conflict("Người giao nhiệm vụ nội bộ không còn quyền trong workspace.")
+    else:
+        grant = db.get(PortalGrant, (t, brief.recipient_id))
+        if (not member or member.role != "client_viewer" or member.client_id != c or not grant or grant.client_id != c
+                or grant.brand_id not in (None,b) or grant.campaign_id not in (None,k)):
+            conflict("Brief recipient no longer has this scope")
     if store.postgres:
         epochs = list(db.scalar(text("SELECT amc_acl.knowledge_target_epoch(:t,:c,:b,:k,:i)"), dict(t=t, c=c, b=b, k=k, i=i)))
     else:
@@ -58,7 +63,7 @@ def describe(store, target, *, lock):
             for g, id_ in (("campaign", k), ("brief", i))
         ]
     return {
-        "kind": "campaign_brief",
+        "kind": "internal_task" if internal else "campaign_brief",
         "campaign_id": k,
         "brief_id": i,
         "campaign_generation": epochs[0],

@@ -73,6 +73,9 @@ def prepare_database(bind):
                 conn.exec_driver_sql("""UPDATE portal_invitations AS i SET campaign_name=c.name FROM campaigns AS c
                     WHERE i.state='pending' AND (c.tenant_id,c.brand_id,c.id)=(i.tenant_id,i.brand_id,i.campaign_id)""")
             from .workforce_authority import install_sqlite
+            if inspector.has_table("workforce_briefs") and "origin" not in {column["name"] for column in inspector.get_columns("workforce_briefs")}:
+                conn.exec_driver_sql("ALTER TABLE workforce_briefs ADD COLUMN origin VARCHAR(12) NOT NULL DEFAULT 'agency'")
+                conn.exec_driver_sql("DROP TRIGGER IF EXISTS workforce_check_intake")
             Base.metadata.create_all(conn)
             for index in Base.metadata.tables["workforce_runs"].indexes:
                 index.create(conn, checkfirst=True)

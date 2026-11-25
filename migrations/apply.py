@@ -180,6 +180,10 @@ def install_business_workspace(conn):
     elif versions != [(1,), (2,), (3,)]:
         raise ValueError("Unsupported business workspace schema version")
     install_claim_display(conn)
+    if not conn.execute("SELECT to_regclass('amc_c3.versions')").fetchone()[0]:
+        conn.execute((HERE / "c3_tasks" / "001_internal.sql").read_text(encoding="utf-8"))
+    if conn.execute("SELECT version FROM amc_c3.versions ORDER BY version").fetchall() != [(1,)]:
+        raise ValueError("Unsupported C3 task schema version")
 
 
 

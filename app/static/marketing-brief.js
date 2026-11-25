@@ -25,6 +25,59 @@ function attachMarketingProvenance(parent, path, read, active) {
   };
 }
 
+/* A client or staff author explicitly approves this bounded summary for the Marketing team. */
+function taskIntentForm(parent, seed, onSubmit, options={}) {
+  const box=document.createElement('details'), heading=document.createElement('summary'), fields=document.createElement('div');
+  heading.textContent=options.title || 'Giao nhiệm vụ cho AI Director'; box.className='knowledge-brief'; box.dataset.taskEntry='';
+  const tip=document.createElement('p');tip.textContent='Chỉ nhập nội dung được phép gửi cho đội Marketing. Ghi rõ đầu ra và cách biết công việc đã đạt.';
+  box.append(heading,tip,fields);parent.append(box);
+  const controls={};
+  function field(key,label,tag='input') {
+    const wrap=document.createElement('label'), input=document.createElement(tag);
+    wrap.textContent=label;input.name=key;wrap.append(input);fields.append(wrap);controls[key]=input;
+    if(tag!=='select'){input.maxLength=tag==='textarea'?1450:240;input.value=seed[key]||'';}
+    return input;
+  }
+  if(options.campaigns) {
+    const campaign=field('campaign','Chiến dịch của nhiệm vụ','select');
+    campaign.add(new Option('Chọn chiến dịch…',''));
+    for(const row of options.campaigns)campaign.add(new Option(row.name,row.id));
+    if(options.campaigns.length===1)campaign.selectedIndex=1;
+  }
+  const type=field('deliverable_type','Đầu ra cần nhận','select');
+  type.add(new Option('Trang đích và metadata SEO','landing_page'));type.add(new Option('Nghiên cứu và chiến lược','marketing_strategy'));
+  field('purpose','Mục đích của công việc lần này');
+  field('product','Sản phẩm của nhiệm vụ');field('audience','Nhóm khách hàng của nhiệm vụ');
+  field('channel','Kênh của nhiệm vụ');field('region','Địa bàn của nhiệm vụ');field('locale','Ngôn ngữ của nhiệm vụ');
+  field('requirements','Yêu cầu thực hiện, mỗi dòng một ý','textarea');
+  field('exclusions','Cụm từ cấm xuất hiện, mỗi dòng một cụm (tuỳ chọn)','textarea');
+  field('acceptance_criteria','Tiêu chí chấp nhận, mỗi dòng một ý','textarea');
+  const save=document.createElement('button'), note=document.createElement('p');
+  save.type='button';save.textContent=options.button || 'Xác nhận yêu cầu công việc';note.setAttribute('role','status');
+  box.append(save,note);
+  let key=crypto.randomUUID();
+  fields.addEventListener('input',()=>{key=crypto.randomUUID();save.disabled=false;});
+  save.onclick=async()=>{
+    const intent={};
+    for(const [k,control] of Object.entries(controls)){
+      const v=control.value.trim();
+      if(!v && k!=='exclusions'){note.textContent='Bổ sung trường '+control.parentElement.firstChild.textContent+'.';control.focus();return;}
+      if(k==='campaign')continue;
+      if(['requirements','exclusions','acceptance_criteria'].includes(k)){
+        const lines=v.split('\n').map(s=>s.trim()).filter(Boolean);
+        if(lines.length>6 || lines.some(s=>s.length>240)){
+          note.textContent='Mỗi mục có tối đa sáu dòng, mỗi dòng tối đa 240 ký tự.';control.focus();return;
+        }
+        intent[k]=lines;
+      }else intent[k]=v;
+    }
+    save.disabled=true;
+    try{await onSubmit(intent,controls.campaign?.value,key);note.textContent='Đã ghi nhận yêu cầu. Hãy kiểm tra mức sẵn sàng trước khi giao việc.';}
+    catch(e){note.textContent=e.message;save.disabled=false;}
+  };
+  return box;
+}
+
 /* Attach Marketing readiness to an immutable internal brief. Only explicit clicks enqueue work. */
 function mountMarketingBrief(root, api, context) {
   const {tenant, client, brand, brief, role, signal} = context;
@@ -67,7 +120,8 @@ function mountMarketingBrief(root, api, context) {
       'Locale and audience must match the selected market':'Kiểm tra thị trường của hồ sơ khách hàng và ngôn ngữ áp dụng.',
       'Brief recipient no longer has this scope':'Kiểm tra lại quyền của người nhận brief chiến dịch.'
     })[reason] || reason;
-    const controls = {}, items = {}, labels = {brief:'Brief chiến dịch đã gửi', market:'Thị trường', kpi:'KPI chiến dịch', claim:'Nhận định được phép dùng'};
+    const controls = {}, items = {}, labels = {brief:'Brief chiến dịch đã gửi', market:'Thị trường', kpi:'KPI chiến dịch', claim:'Nhận định được phép dùng',
+      guidelines:'Hướng dẫn thương hiệu đã duyệt'};
     let terms = null, captured = null, ticket = 0, active = false;
     const check = button('Kiểm tra mức sẵn sàng'), activate = button('Bật quy trình cho chiến dịch'), queue = button('Xếp việc cho AI');
     check.disabled = true;
@@ -84,6 +138,9 @@ function mountMarketingBrief(root, api, context) {
       return node;
     }
     const workflow = select('workflow','Loại công việc');
+    const currentResearch='WF-03/research-strategy-draft@3',currentLanding='WF-13/landing-seo-draft@6';
+    workflow.add(new Option('Chiến lược theo yêu cầu · WF-03 v3',currentResearch));
+    workflow.add(new Option('Trang đích theo yêu cầu · WF-13 v6',currentLanding));
     workflow.add(new Option('Chiến lược nghiên cứu · WF-03','WF-03/research-strategy-draft@2'));
     workflow.add(new Option('Trang đích và SEO · WF-13','WF-13/landing-seo-draft@5'));
     workflow.selectedIndex=1;
@@ -107,7 +164,23 @@ function mountMarketingBrief(root, api, context) {
         next.onclick=()=>{next.remove();load(kind,page.next_offset).catch(e=>feedback(e.message));};
       }
     }
-    for(const kind of ['brief','market','kpi']) { select(kind,labels[kind]); items[kind]=[]; }
+    for(const kind of ['brief','guidelines','market','kpi']) { select(kind,labels[kind]); items[kind]=[]; }
+    function recommend(row){
+      if(row?.deliverable_type)workflow.value=row.deliverable_type==='landing_page'?currentLanding:currentResearch;
+    }
+    controls.brief.addEventListener('change',()=>recommend(items.brief.find(row=>row.id===controls.brief.value)));
+    if(context.mode==='inhouse'){
+      const entry=taskIntentForm(details,{product:context.selections.product?.label,audience:context.selections.audience?.label},
+        async(intent,campaign,key)=>{
+          const row=await send(base+'/workforce/internal-tasks','POST',{key,campaign_id:campaign,intent});
+          if(!alive())return;
+          if(!items.brief.some(r=>r.id===row.id)){items.brief.push({...row,label:row.title,deliverable_type:intent.deliverable_type});
+            controls.brief.add(new Option(row.title,row.id));}
+          controls.brief.value=row.id;recommend({deliverable_type:intent.deliverable_type});
+          form.dispatchEvent(new Event('input'));feedback('Đã chọn nhiệm vụ nội bộ. Ghim hướng dẫn thương hiệu và căn cứ để kiểm tra.');
+        },{campaigns:context.campaigns});
+      details.insertBefore(entry,form);
+    }
     picks.append(create('legend',labels.claim)); form.append(picks); items.claim=[];
     for(const [k,label] of Object.entries({locale:'Ngôn ngữ và thị trường',region:'Khu vực áp dụng',channel:'Kênh',currency:'Tiền tệ (nếu báo giá)',quantity:'Số lượng báo giá'})) {
       controls[k]=field(label,create('input')); controls[k].name=k;
@@ -120,8 +193,10 @@ function mountMarketingBrief(root, api, context) {
       if(!briefTarget || !claims.length || ['market','kpi','locale','region','channel'].some(k=>!val(k))) {
         throw Error('Chọn brief chiến dịch, thị trường, KPI, ít nhất một nhận định và phạm vi áp dụng.');
       }
+      const current=[currentLanding,currentResearch].includes(val('workflow'));
       return {key:crypto.randomUUID(),workspace_brief_id:brief,target:{campaign_id:briefTarget.campaign_id,brief_id:briefTarget.id},
               workflow:val('workflow'), market:val('market'),kpi:val('kpi'),claims, locale:val('locale'),region:val('region'),channel:val('channel'),
+              ...(current && val('guidelines') ? {guidelines:val('guidelines')} : {}),
               currency:val('currency') || null,quantity:val('quantity') || null};
     }
     form.addEventListener('input', e=>{
@@ -175,10 +250,11 @@ function mountMarketingBrief(root, api, context) {
       } catch(e){if(alive() && token===ticket){feedback(e.message);queue.disabled=false;}}
     };
     try {
-      await Promise.all(['brief','market','kpi','claim'].map(k=>load(k)));
+      await Promise.all(['brief','guidelines','market','kpi','claim'].map(k=>load(k)));
       if(!alive())return;
       check.disabled = false;
-      feedback(items.brief.length?'Chọn dữ liệu để kiểm tra căn cứ của brief.':'Chưa có brief chiến dịch đã gửi trong thương hiệu này.');
+      feedback(items.brief.length?'Chọn dữ liệu để kiểm tra căn cứ của brief.':
+        context.mode==='inhouse'?'Tạo nhiệm vụ nội bộ cho chiến dịch của thương hiệu này.':'Chưa có brief chiến dịch đã gửi trong thương hiệu này.');
     } catch(e){if(alive()){feedback(e.message);const retry=button('Tải lại lựa chọn');retry.onclick=()=>mountMarketingBrief(root,api,context);details.append(retry);}}
   });
 }

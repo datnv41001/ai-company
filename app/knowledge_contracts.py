@@ -147,6 +147,7 @@ class KPI(Input):
 class Guidelines(Input):
     guidance: Note
     tone: Note | None = Field(default=None, exclude_if=lambda v: v is None)
+    prohibited_claims: ListNotes = Field(default_factory=list, exclude_if=lambda value: not value)
 
 
 class Placement(Input):

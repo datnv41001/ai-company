@@ -28,6 +28,8 @@ def hash_password(password: str) -> str:
 
 
 def check_password(password: str, encoded: str) -> bool:
+    if encoded == "!amc-worker":
+        return False
     try:
         return hasher.verify(encoded, password)
     except (VerifyMismatchError, VerificationError):

@@ -81,6 +81,27 @@ def approve(api, path, actor, terms):
 
 
 @pytest.mark.parametrize("api", ["sqlite"], indirect=True)
+def test_separated_staff_report_denies_both_agency_clients(api, workforce):
+    from app import c3_assets
+    from test_c3_skill_library import projection
+    owner, assigned, other, _, root, scope, engine, brief = workforce
+    accepted(api.put(root + "/briefs/" + brief["id"] + "/submission", headers=assigned["headers"], json=DATA))
+    # SQLite has no registry publisher. Seed the frozen worker association only; authorization
+    # goes through ordinary signed sessions and the same GET route as PostgreSQL.
+    with Session(engine) as db:
+        run = WorkforceRun(tenant_id=scope.tenant,client_id=scope.client,brand_id=scope.brand,campaign_id=scope.campaign,
+                           brief_id=brief["id"],plan=[],budget_microusd=0,knowledge={"registry":{"workflow":c3_assets.LANDING},
+                           "sources":{},"c3_projection":projection("materials")})
+        db.add(run)
+        db.commit()
+        url = root + "/runs/" + run.id
+    assert len(accepted(api.get(url,headers=owner["headers"]))["marketing_artifacts"]["sections"]) == 7
+    for actor in (assigned, other):
+        response = api.get(url,headers=actor["headers"])
+        assert response.status_code == 404 and "marketing_artifacts" not in response.text
+
+
+@pytest.mark.parametrize("api", ["sqlite"], indirect=True)
 def test_content_contradictions_through_api(api, content_lab):
     owner, _, editor, path, _, snap = content_lab
     # Collect all RED responses before checking the new field, so the pre-amend failure identifies every accepted example.

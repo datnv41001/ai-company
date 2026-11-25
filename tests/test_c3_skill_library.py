@@ -116,6 +116,34 @@ def test_wf03_strategy_and_measurement_are_internal_and_distinct():
     assert all(v not in visible for v in result["strategy_decisions"].values())
 
 
+def test_staff_report_tracks_saved_preview_and_keeps_checkpoint_proposals():
+    from app import c3_content_evidence
+    from app.workforce import marketing_artifacts
+    from app.revision_qa import content_digest
+
+    data = projection("materials")
+    checkpoint = {"skill":"content", "output":{"sections":{"headline":"Gạch cho nhà thầu","benefit":"FORBIDDEN PROMISE",
+                    "value_proposition":"Chi phí cần đối chiếu","call_to_action":"Chi phí cần đối chiếu"},"source_ids":["F1"],
+                    "raw_reply":{"origin":"immutable"}}}
+    run = SimpleNamespace(knowledge={"registry":{"workflow":assets.LANDING},"c3_projection":data,
+                                    "c3_manifest":{"digest":"a"*64}},checkpoints=[checkpoint])
+    pending = marketing_artifacts(run,None)
+    assert pending["sections"]["customer_preview"] == {"current":None,"generated":None}
+    doc = SimpleNamespace(id="fixture",qa_revision=4,title="Bản sau sửa",content={"client_preview":"Nội dung đã sửa"},qa_evidence={})
+    current = marketing_artifacts(run,doc)
+    preview = current["sections"]["customer_preview"]
+    assert preview["current"]["digest"] == content_digest(doc.title,doc.content["client_preview"])
+    assert preview["generated"]["title"] == "Gạch cho nhà thầu" and preview["current"]["title"] == "Bản sau sửa"
+    assert current["field_issues"] == [{"role":"content","field":"benefit","reason":"withheld"},
+                                       {"role":"content","field":"call_to_action","reason":"same_text","other_field":"value_proposition"}]
+    assert not current["evidence_coverage"]["current_assessment"] and checkpoint["output"]["raw_reply"] == {"origin":"immutable"}
+    doc.qa_evidence = {"content_evidence":{"version":c3_content_evidence.VERSION, "qa_revision":4,
+                                           "content_digest":preview["current"]["digest"], "manifest_digest":"a"*64}}
+    assert marketing_artifacts(run,doc)["evidence_coverage"]["current_assessment"]
+    doc.qa_revision += 1
+    assert not marketing_artifacts(run,doc)["evidence_coverage"]["current_assessment"]
+
+
 def test_service_price_requires_approved_unit_and_unsupported_locale_fails_closed():
     data = projection("service")
     releases.check_capacity(historical.LANDING, data)

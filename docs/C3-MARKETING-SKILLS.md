@@ -16,6 +16,10 @@ Một lượt gọi role có thể xử lý nhiều kỹ năng. Khi đóng gói,
 
 ## Bản giao và quyền đọc
 
+Trong **Đội ngũ AI → Điều phối Marketing AI**, chọn **Xem kết quả và chi phí** trên lần chạy @3 hoặc @6. Mở từng phần trong **Tài liệu Marketing của lần chạy** để đọc nghiên cứu, quyết định chiến lược, nội dung trang, SEO, nguồn, phép đo hoặc bản xem trước. API nhân sự `GET /api/tenants/{tenant_id}/workforce/runs/{rid}` trả cùng bảy phần trong `marketing_artifacts.sections`. Khi công việc chưa tạo tài liệu, bản xem trước ở trạng thái chờ.
+
+Trong **Bản xem trước cho khách**, bản làm việc hiện tại mang revision và digest của lần lưu mới nhất. Mở **Xem bản khi AI tạo** để đối chiếu với nội dung từ checkpoint đầu tiên của bản giao. Kiểm tra QA từng nhận định gắn với tiêu đề và nội dung của lần lưu hiện tại. Các mục dành cho nhân sự vẫn là đề xuất cần biên tập. Danh sách trường cần biên tập ghi các trường rỗng, nội dung trùng nhau và trường bị giữ lại khỏi phần dành cho khách.
+
 Người làm việc nội bộ đọc bảy phần qua `app.c3_assets.artifacts(workflow, projection, checkpoints)`. Research có câu hỏi, phân khúc, giả thuyết và dữ liệu thiếu. Strategy có định vị, lý do, kênh và giả thuyết thử. Measurement có KPI được duyệt, hành động đo và quy tắc đếm. WF-13 có nội dung trang đích và metadata SEO riêng. Evidence giữ câu được phép công bố và các handle role đã viện dẫn; trạng thái `source_handles_only` chờ đối chiếu từng nhận định ở Evidence Gate. Phần do workflow kia đảm trách có thể để rỗng.
 
 Preview ban đầu của WF-03 chỉ chiếu các dữ kiện sản phẩm cho phép khách xem. Người duyệt chiến lược cần mở Research, Strategy và Measurement. Với WF-13, preview ghép nội dung hướng tới người mua với giá và điều kiện đã duyệt. Những sửa đổi sau đó dùng tiêu đề và nội dung trên revision hiện tại của deliverable. Snapshot khách lưu đúng revision đã được duyệt.

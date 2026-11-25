@@ -12,7 +12,7 @@ from sqlalchemy.orm import Session
 from .database import get_db
 from .delivery import lock_document
 from .delivery_models import ClientReview, PortalGrant, ReviewEntry
-from .models import AuditEvent, Brand, Campaign, User
+from .models import AuditEvent, Brand, Campaign, Deliverable, User
 from .security import current_user, require_tenant
 from .workforce_gateway import CORE, EXTRA, PROMPT_VERSION
 from . import workforce_authority  # noqa: F401 - install SQLite triggers on fresh schema
@@ -301,14 +301,70 @@ def runs(tenant_id: str, user: User = Depends(current_user), db: Session = Depen
     return summaries
 
 
+def marketing_artifacts(run, doc):
+    """Project staff work from frozen checkpoints and the latest editable preview from its document."""
+    from . import c3_assets, c3_content_evidence, c3_skill_library
+    from .revision_qa import content_digest
+
+    workflow = run.knowledge["registry"]["workflow"]
+    outcomes = {step["skill"]: step["output"] for step in run.checkpoints}
+    sections = c3_assets.artifacts(workflow, run.knowledge["c3_projection"], outcomes)
+    generated = sections["customer_preview"] if doc else None
+    current = None
+    bound = False
+    if doc:
+        body = doc.content.get("client_preview", "")
+        digest = content_digest(doc.title, body)
+        current = {"title": doc.title, "body": body, "revision": doc.qa_revision, "digest": digest, "document_id": doc.id}
+        evidence = (doc.qa_evidence or {}).get("content_evidence") or {}
+        bound = (evidence.get("version"), evidence.get("qa_revision"), evidence.get("content_digest"), evidence.get("manifest_digest")) == (
+            c3_content_evidence.VERSION, doc.qa_revision, digest, run.knowledge["c3_manifest"]["digest"]
+        )
+    sections["customer_preview"] = {"generated": generated, "current": current}
+    issues = []
+    for role in c3_assets.ROLES[workflow]:
+        if role not in outcomes:
+            continue
+        fields = outcomes[role]["sections"]
+        previously_seen = {}
+        for key in c3_skill_library.fields(role):
+            value = c3_assets.normalized(fields.get(key, ""))
+            if not value:
+                issues.append({"role":role, "field":key, "reason":"missing"})
+                continue
+            visible = {"content": sections["buyer_copy"], "seo": sections["seo_fields"]}.get(role)
+            if visible is not None and key not in visible:
+                issues.append({"role":role, "field":key, "reason":"withheld"})
+            if value in previously_seen:
+                issues.append({"role":role, "field":key, "reason":"same_text", "other_field":previously_seen[value]})
+            else:
+                previously_seen[value] = key
+    return {"workflow":workflow, "sections":sections, "completed_roles":list(outcomes),
+            "editorial_status":"unreviewed_suggestions", "field_issues":issues,
+            "evidence_coverage":{"fields":["title","client_preview"], "current_assessment":bound}}
+
+
 @router.get("/runs/{rid}")
 def report(tenant_id: str, rid: str, user: User = Depends(current_user), db: Session = Depends(get_db)):
+    from .c3_assets import ROLES as separated_releases
     m = require_tenant(db, user, tenant_id)
     if m.role == "client_viewer":
         raise HTTPException(404, "Run unavailable")
     run = db.scalar(select(WorkforceRun).where(WorkforceRun.tenant_id == tenant_id, WorkforceRun.id == rid))
     if not run:
         raise HTTPException(404, "Run unavailable")
+    extra = {}
+    if run.knowledge.get("registry", {}).get("workflow") in separated_releases:
+        doc = None
+        if run.deliverable_id:
+            doc = db.scalar(select(Deliverable).join(Campaign, Campaign.id == Deliverable.campaign_id)
+                            .join(Brand, Brand.id == Campaign.brand_id)
+                            .where(Deliverable.id == run.deliverable_id, Deliverable.tenant_id == tenant_id,
+                                   Campaign.tenant_id == tenant_id, Campaign.id == run.campaign_id,
+                                   Brand.tenant_id == tenant_id, Brand.id == run.brand_id, Brand.client_id == run.client_id))
+            if doc is None:
+                raise HTTPException(404, "Run unavailable")
+        extra["marketing_artifacts"] = marketing_artifacts(run, doc)
     archived = (
         db.execute(
             select(ClientReview.id, ClientReview.version, ClientReview.digest)
@@ -334,6 +390,7 @@ def report(tenant_id: str, rid: str, user: User = Depends(current_user), db: Ses
         "plan": display_plan(run, graph),
         "state": display_state(run, graph),
         "source_registry": run.knowledge["sources"],
+        **extra,
         **({"marketing_provenance": f"/api/tenants/{tenant_id}/clients/{run.client_id}/brands/{run.brand_id}"
               f"/business-workspace/marketing/manifests/{run.knowledge['c3_manifest']['id']}/provenance"}
            if m.role in ("owner", "admin") and run.knowledge.get("c3_manifest") else {}),

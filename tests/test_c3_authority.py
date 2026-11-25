@@ -128,6 +128,9 @@ def test_real_boundaries(pool, workflow, withdraw_stage):
 
     assert queue({k: v for k, v in terms.items() if k != "knowledge_manifest"}).status_code == 422
     rid = accepted(queue(terms))["id"]
+    report_url = base + "/workforce/runs/" + rid
+    assert "marketing_artifacts" not in accepted(api.get(report_url, headers=owner["headers"]))
+    assert api.get(report_url, headers=reader["headers"]).status_code == 404
     knowledge = lab.owner.execute("select knowledge from workforce_runs where id=%s", (rid,)).fetchone()[0]
     for role in ("director", *c3_marketing.ROLES[workflow]):
         envelope = c3_marketing.request(SimpleNamespace(knowledge=knowledge), "synthetic", node=SimpleNamespace(skill=role))

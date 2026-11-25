@@ -150,9 +150,15 @@ def run_one(lab, kind, arm, folder):
             record.update(runtime_fingerprint=runtime_fingerprint(), manifest=knowledge["c3_manifest"],
                           binding=knowledge["registry"])
             if arm == "improved":
-                from app.c3_assets import artifacts
-                nodes = {c["skill"]: c["output"] for c in value["checkpoints"]}
-                record["assets"] = artifacts(release, knowledge["c3_projection"], nodes)
+                staff = value["marketing_artifacts"]
+                sections = staff["sections"]
+                assert set(sections) == {"research_notes","strategy_decisions","buyer_copy","seo_fields","evidence_report","measurement_plan","customer_preview"}
+                preview = sections["customer_preview"]
+                assert preview["current"]["digest"] == record["deliverable"]["digest"]
+                assert preview["generated"] == {"title":draft["title"], "body":draft["content"]["client_preview"]}
+                assert staff["evidence_coverage"]["fields"] == ["title","client_preview"]
+                # Retain the frozen evaluation artifact format while exercising the actual staff API.
+                record["assets"] = sections | {"customer_preview":preview["generated"]}
         (folder / "deliverable.md").write_text("# " + draft["title"] + "\n\n" + draft["content"]["client_preview"] + "\n", encoding="utf8")
     return record
 

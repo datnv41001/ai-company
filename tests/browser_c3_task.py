@@ -12,6 +12,7 @@ from playwright.sync_api import expect, sync_playwright
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 from browser_knowledge import BASE, PROJECT, login, select_scope  # noqa: E402
 from c3_task_fixtures import INTENT, LANDING, fixture  # noqa: E402
+from screen_navigation import screen  # noqa: E402
 
 OUT = Path(os.getenv("AMC_KNOWLEDGE_EVIDENCE", "knowledge-browser-evidence"))
 
@@ -72,6 +73,19 @@ def exercise(api, browser, width, height):
         assert page.evaluate("document.documentElement.scrollWidth<=innerWidth+1")
         assert "PRIVATE_SYNTHETIC" not in panel.inner_text()
         capture_themes(page, OUT / f"c3-task-queued-{width}.png")
+        screen(page,"workforce")
+        workforce = page.locator("#workforce-panel")
+        if not workforce.locator(":scope > details").evaluate("el=>el.open"):
+            workforce.get_by_text("Điều phối Marketing AI",exact=True).click()
+        workforce.get_by_role("button",name="Xem kết quả và chi phí").click()
+        package = workforce.get_by_role("region",name="Tài liệu Marketing của lần chạy")
+        expect(package.locator("details[data-marketing-asset]")).to_have_count(7)
+        package.get_by_text("Nguồn cho từng dữ kiện",exact=True).click()
+        expect(package.locator('[data-marketing-asset="evidence_report"]')).to_contain_text("F1")
+        package.get_by_text("Bản xem trước cho khách",exact=True).click()
+        expect(package.locator('[data-marketing-asset="customer_preview"]')).to_contain_text("Chưa có tài liệu để xem trước.")
+        package.locator("h4").evaluate("el=>el.scrollIntoView({block:'start'})")
+        capture_themes(page, OUT / f"c3-staff-artifacts-{width}.png")
         return {
             "viewport": [width, height],
             "mode": "inhouse",

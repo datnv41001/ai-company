@@ -116,11 +116,26 @@ def test_postgres_internal_task_to_editable_draft(persona):
             run = accepted(api.post(uri, headers=author["headers"], json=terms))
             complete(lab, run["id"])
             doc, qa = doc_and_decision(lab, base, owner, run["id"])
-            assert accepted(api.get(base + "/workforce/runs/" + run["id"], headers=admin))["state"] == "awaiting_qa"
+            report_url = base + "/workforce/runs/" + run["id"]
+            staff_report = accepted(api.get(report_url, headers=author["headers"]))
+            assert staff_report["state"] == "awaiting_qa"
+            sections = staff_report["marketing_artifacts"]["sections"]
+            original = sections["customer_preview"]["generated"]
+            assert original["body"] == sections["customer_preview"]["current"]["body"] and sections["seo_fields"]
+            assert staff_report["marketing_artifacts"]["editorial_status"] == "unreviewed_suggestions"
+            if persona == "business":
+                assert api.get("/api/tenants/" + author["tenant"] + "/workforce/runs/" + run["id"], headers=author["headers"]).status_code == 404
             accepted(api.patch(doc + "/draft", headers=author["headers"], json={"title": "Bộ mẫu vải", "client_preview": "Bề mặt mờ"}))
             accepted(api.post(doc + "/submit", headers=author["headers"]))
             doc, qa = doc_and_decision(lab, base, owner, run["id"])
             assert accepted(api.get(doc, headers=admin))["content"]["client_preview"] == "Bề mặt mờ"
+            edited = accepted(api.get(report_url, headers=admin))["marketing_artifacts"]
+            current = edited["sections"]["customer_preview"]["current"]
+            assert (current["body"],current["revision"],current["digest"]) == ("Bề mặt mờ",qa["expected_qa_revision"],qa["expected_content_digest"])
+            assert original != {"title":current["title"], "body":current["body"]}
+            assert edited["sections"]["customer_preview"]["generated"] == original
+            assert edited["sections"]["seo_fields"] == sections["seo_fields"]
+            assert edited["evidence_coverage"] == {"fields":["title","client_preview"], "current_assessment":True}
             assert api.post(doc + "/review", headers=author["headers"], json=qa).status_code in (403, 404, 409)
             if persona == "business":
                 evidence = accepted(api.get(doc + "/content-evidence", headers=admin))

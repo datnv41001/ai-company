@@ -153,7 +153,11 @@ jobs:
           docker exec amc-test-pg createdb -U postgres amc_test_studio_v2
           export AMC_MIGRATION_DSN="${AMC_MIGRATION_DSN%/*}/amc_test_studio_v2"
           export DATABASE_URL="${DATABASE_URL%/*}/amc_test_studio_v2"
-          python tests/check_studio_cutover.py --from-studio-v2
+          python tests/check_studio_cutover.py --from-version 2
+          docker exec amc-test-pg createdb -U postgres amc_test_studio_v3
+          export AMC_MIGRATION_DSN="${AMC_MIGRATION_DSN%/*}/amc_test_studio_v3"
+          export DATABASE_URL="${DATABASE_URL%/*}/amc_test_studio_v3"
+          python tests/check_studio_cutover.py --from-version 3
           docker exec amc-test-pg createdb -U postgres amc_test_populated_v22
           export AMC_MIGRATION_DSN="${AMC_MIGRATION_DSN%/*}/amc_test_populated_v22"
           export DATABASE_URL="${DATABASE_URL%/*}/amc_test_populated_v22"

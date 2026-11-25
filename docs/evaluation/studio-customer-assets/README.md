@@ -49,3 +49,9 @@ Mỗi hồ sơ ghi SHA nguồn, digest của manifest và release, ID quyết đ
 **Giới hạn bằng chứng.** Hai nhiệm vụ kỹ thuật tạo bốn loại tài sản, đều dùng tài khoản và quy trình phê duyệt tổng hợp. Không phát sinh lượt gọi model mới trong phép thử này. Lịch sử thành bại của hai workflow và kết quả pilot mù nằm trong [hồ sơ đối chứng](../c3-product-v2/RESULTS.md). Chưa có chuyên viên Marketing chấm lần đầu, thời gian sửa/QA, chi phí mỗi bản được chuyên viên chấp nhận hoặc mức sẵn sàng trả tiền. Commercial GA vẫn NO-GO.
 
 **Câu hỏi cho reviewer.** Hãy thử thêm câu hứa thương mại vào một trường chiến lược khách, thay lợi ích bằng một câu thiếu điều kiện hoặc mở bản giao bằng tài khoản khách thứ hai. Kiểm tra đúng điểm từ chối. Đối chiếu SHA-256 của snapshot gốc sau một lượt sửa và so từng trường với biên nhận của nhóm tương ứng.
+
+## Khả năng tương thích tại thời điểm kích hoạt
+
+Trên PostgreSQL 16.16, diễn tập đã khởi động binary #40 tại `159afde2` trên C3 v3 rồi giữ nguyên tiến trình khi publisher chuyển sang C3 v4. API cũ vẫn đọc được Studio cho tài khoản đủ quyền. Lệnh lưu Studio theo schema cũ, lệnh sửa draft chiến lược, quyết định QA và chia sẻ bản có buyer action RFQ qua API cũ đều gặp SQLSTATE `55000`. Thử chia sẻ bản thiếu customer edition qua API hiện hành nhận HTTP 409. Sau các lệnh bị từ chối, revision, digest từng nhóm, nội dung và phạm vi hiển thị của bản giao vẫn giữ nguyên. Đây là phép thử giao thức trên dữ liệu tổng hợp.
+
+Lỗi giả lập ngay trong giao dịch publisher đã rollback về C3 v3, cho phép writer cũ tiếp tục. Sau khi nâng thành công và chạy publisher lần hai, các hàng lịch sử đã đối chiếu trùng khớp, gồm hai bản làm việc, một snapshot khách, một quyết định, tám Workforce run, 16 revision tri thức, một knowledge snapshot, 12 dòng ledger và một dòng khóa phiên. [Lệnh và thứ tự rollback](../../../HANDOFF.md) · [Kịch bản đọc/ghi của hai binary](../../../tests/check_edition_actions.py)

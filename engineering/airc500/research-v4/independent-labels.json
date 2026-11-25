@@ -1,0 +1,84 @@
+{
+  "provenance": "Codex parent agent reviewed blind cases before inference and before seeing an answer key. Independent of evaluated Qwen and of case authorship; one AI assessor. No independent human reviewer.",
+  "references": [
+    "https://support.google.com/analytics/answer/12798876?hl=en",
+    "https://woocommerce.com/document/managing-products/add-product/",
+    "https://www.census.gov/retail/mrts/how_surveys_are_collected.html"
+  ],
+  "cases": {
+    "L1": {
+      "verdict": "flag",
+      "repair": "Count the second pageview even at four seconds.",
+      "sources": [
+        "G"
+      ]
+    },
+    "L2": {
+      "verdict": "keep",
+      "repair": "Retain the one-page, no-key-event, default-timer qualification.",
+      "sources": [
+        "G"
+      ]
+    },
+    "L3": {
+      "verdict": "flag",
+      "repair": "Remove mandatory purchase claim; distinguish individually purchasable grouped items from a separately configured bundle.",
+      "sources": [
+        "W"
+      ]
+    },
+    "L4": {
+      "verdict": "keep",
+      "repair": "Retain group-as-presentation; verify the minimum via merchant settings.",
+      "sources": [
+        "W"
+      ]
+    },
+    "L5": {
+      "verdict": "flag",
+      "repair": "Replace the store-growth inference with comparable store-level POS periods.",
+      "sources": [
+        "C",
+        "E",
+        "F"
+      ]
+    },
+    "L6": {
+      "verdict": "keep",
+      "repair": "Use the national benchmark as context; compare consistent local sales periods to calculate growth.",
+      "sources": [
+        "C",
+        "E",
+        "F"
+      ]
+    },
+    "L7": {
+      "verdict": "insufficient",
+      "repair": "Request this shop's terms, catalog or quantity configuration.",
+      "sources": [
+        "S"
+      ]
+    },
+    "L8": {
+      "verdict": "insufficient",
+      "repair": "Request comparable client control and treatment conversions or margins across a sufficiently long horizon.",
+      "sources": [
+        "H"
+      ]
+    },
+    "L9": {
+      "verdict": "keep",
+      "repair": "Preserve the conditional supplier/SKU pack-size check.",
+      "sources": [
+        "S"
+      ]
+    },
+    "L10": {
+      "verdict": "flag",
+      "repair": "Limit observation to the participant; verify actual incrementality and margin before recommending a budget.",
+      "sources": [
+        "H"
+      ]
+    }
+  }
+}

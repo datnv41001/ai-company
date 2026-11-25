@@ -195,6 +195,8 @@ def save_checkpoint(db, scope, run, stage, output, node):
         if binding and binding["workflow"] in c3_marketing.ROLES:
             draft = c3_marketing.render(binding["workflow"], run.knowledge["c3_projection"], {p["skill"]:p["output"] for p in run.checkpoints})
             title, preview = draft["title"], draft["body"]
+            if len(title) > 160:
+                title = run.knowledge["c3_projection"]["product"]
         doc = Deliverable(
             tenant_id=run.tenant_id,
             campaign_id=run.campaign_id,

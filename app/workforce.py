@@ -317,6 +317,9 @@ def report(tenant_id: str, rid: str, user: User = Depends(current_user), db: Ses
         "plan": display_plan(run, graph),
         "state": display_state(run, graph),
         "source_registry": run.knowledge["sources"],
+        **({"marketing_provenance": f"/api/tenants/{tenant_id}/clients/{run.client_id}/brands/{run.brand_id}"
+              f"/business-workspace/marketing/manifests/{run.knowledge['c3_manifest']['id']}/provenance"}
+           if m.role in ("owner", "admin") and run.knowledge.get("c3_manifest") else {}),
         "approved_assets": archived,
     }
 

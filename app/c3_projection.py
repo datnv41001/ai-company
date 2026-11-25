@@ -47,6 +47,18 @@ def corporate_profiles(workspace, pins):
     return company, brand
 
 
+def check_delivery_capacity(workflow, public):
+    # The existing delivery API accepts 30,000 characters. Reserve the validated
+    # maxima for both specialist checkpoints so a long source cannot strand a paid or leased job.
+    fixed = len(marketing.render(workflow, public, {})["body"])
+    checkpoint_max = sum(
+        sum(len(marketing.LABELS[k]) + 3 + 200 for k in marketing.FIELDS[role]) + 64
+        for role in marketing.ROLES[workflow]
+    )
+    if fixed + checkpoint_max > 30_000:
+        conflict("Select fewer approved claims so every qualifier fits in one deliverable")
+
+
 def materialize(s, workspace, pins, options, at):
     company, brand = corporate_profiles(workspace, pins)
     selections = pins.get("selections", {})
@@ -99,6 +111,7 @@ def materialize(s, workspace, pins, options, at):
     }
     private = {"company": [company.id, company.revision], "brand": [brand.id, brand.revision],
                "company_objective": [root.revision_id, root.digest], "dependencies": {id_:row.digest for id_,row in deps.items()}}
+    check_delivery_capacity(options["workflow"], public)
     return public, private, deps
 
 
@@ -203,6 +216,27 @@ def unpack(s, id_):
 def historical(manifest_id: str, workspace=Depends(ws.reader)):
     snap, data = unpack(store(workspace, False), manifest_id)
     return view(snap, data)
+
+
+@router.get("/manifests/{manifest_id}/provenance")
+def provenance(manifest_id: str, workspace=Depends(ws.reader)):
+    """An authorized reviewer may trace a public handle back to its pinned private locator."""
+    s = store(workspace, False)
+    if not s.approver:
+        missing()
+    snap, data = unpack(s, manifest_id)
+    pins = data["pins"]["dependencies"]
+    entries = []
+    for public, rid in zip(data["projection"]["facts"], sorted(data["options"]["claims"]), strict=True):
+        claim = s.get(m.KnowledgeRevision, rid)
+        bound = s.get(m.KnowledgeRevision, claim.data["binding"])
+        source = s.get(m.KnowledgeRevision, bound.data["source"])
+        if any(pins.get(row.id) != row.digest for row in (claim, bound, source)):
+            conflict("The historical evidence chain differs from the recorded manifest")
+        entries.append({"handle":public["id"], "claim_revision":claim.id, "binding_revision":bound.id,
+                        "source_revision":source.id, "source_digest":source.digest, "document":source.data["document"],
+                        "locator":bound.data["locator"]})
+    return {"manifest_digest":snap.digest, "entries":entries}
 
 
 def recheck(s, workspace, id_, expected, workflow, brief, stage):

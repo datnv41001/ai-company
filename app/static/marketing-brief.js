@@ -1,3 +1,30 @@
+/* Fetch the private locator only after an authorized reviewer opens it. */
+function attachMarketingProvenance(parent, path, read, active) {
+  const details=document.createElement('details'), label=document.createElement('summary'), rows=document.createElement('ul');
+  label.textContent='Đối chiếu mã nguồn với tài liệu gốc';
+  details.append(label,rows); parent.append(details);
+  let generation=0, openListener;
+  details.ontoggle=async()=>{
+    const token=++generation;
+    openListener?.abort();
+    rows.replaceChildren();
+    if(!details.open || !active())return;
+    openListener=new AbortController();
+    document.addEventListener('visibilitychange',()=>{
+      if(document.hidden){++generation;rows.replaceChildren();details.open=false;openListener.abort();}
+    },{signal:openListener.signal});
+    try{
+      const data=await read(path);
+      if(token!==generation || !details.open || !active() || !details.isConnected)return;
+      for(const entry of data.entries){
+        const item=document.createElement('li');
+        item.textContent=entry.handle+' · '+entry.document+' · '+entry.locator+' · SHA-256 '+entry.source_digest;
+        rows.append(item);
+      }
+    }catch{if(token===generation && active())rows.textContent='Không thể đọc nguồn trong phạm vi quyền hiện tại.';}
+  };
+}
+
 /* Attach Marketing readiness to an immutable internal brief. Only explicit clicks enqueue work. */
 function mountMarketingBrief(root, api, context) {
   const {tenant, client, brand, brief, role, signal} = context;
@@ -36,6 +63,7 @@ function mountMarketingBrief(root, api, context) {
       'Revision lacks current approved authority':'Đối chiếu lại trạng thái duyệt, hiệu lực và nguồn đã ghim trong danh mục.',
       'Claim differs from the exact product, variant, market, locale, region or channel':'Kiểm tra lại sản phẩm, SKU, thị trường, ngôn ngữ, khu vực và kênh của từng nhận định.',
       'Select the exact approved currency and quote quantity':'Nhập tiền tệ và số lượng khớp với điều kiện báo giá đã duyệt.',
+      'Select fewer approved claims so every qualifier fits in one deliverable':'Giảm số nhận định để bản giao chứa đủ mọi điều kiện đã duyệt.',
       'Locale and audience must match the selected market':'Kiểm tra thị trường của hồ sơ khách hàng và ngôn ngữ áp dụng.',
       'Brief recipient no longer has this scope':'Kiểm tra lại quyền của người nhận brief chiến dịch.'
     })[reason] || reason;
@@ -139,7 +167,10 @@ function mountMarketingBrief(root, api, context) {
         captured=snap;
         const run=await send(base+'/workforce/briefs/'+data.target.brief_id+'/run','POST',
           {workflow:'dynamic-v1',registry_workflow:data.workflow,budget_microusd:0,knowledge_manifest:{id:snap.id,digest:snap.digest}});
-        if(alive() && token===ticket)feedback('Đã xếp việc '+run.id+'. Theo dõi trong mục AI Workforce, sau đó mở bản giao để QA.');
+        if(alive() && token===ticket){
+          feedback('Đã xếp việc '+run.id+'. Theo dõi trong mục AI Workforce, sau đó mở bản giao để QA.');
+          if(['owner','admin'].includes(role))attachMarketingProvenance(details,path+'/manifests/'+snap.id+'/provenance',read,alive);
+        }
       } catch(e){if(alive() && token===ticket){feedback(e.message);queue.disabled=false;}}
     };
     try {

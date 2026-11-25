@@ -180,7 +180,8 @@ function createWorkforce(root, api, notify) {
             });
           }
           if(v.last_error)node(info,'p',v.last_error==='recipient_revoked'?'Đã hủy do thu hồi quyền của người giao brief.':'Lỗi: '+v.last_error);
-          v.checkpoints.forEach(p=>{node(info,'h4',labels[p.skill]);node(info,'p',p.output.text);
+            if(v.marketing_provenance)attachMarketingProvenance(info,v.marketing_provenance,api,()=>ticket===revision);
+            v.checkpoints.forEach(p=>{node(info,'h4',labels[p.skill]);node(info,'p',p.output.text);
             node(info,'p','Nguồn: '+p.output.source_ids.map(k=>v.source_registry?.[k]?.label||k).join(', '));
             const qa=p.quality?.role_qa;
             if(qa?.scope==='node_checkpoint'){

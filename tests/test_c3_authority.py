@@ -47,7 +47,7 @@ def test_scope_and_historical_manifests(api, workforce):
     from test_claim_desk import reader as create_member
     from agency_fixtures import account
 
-    for denied in (reader, create_member(api, owner, "editor"), account(api, "Other evidence agency")):
+    for denied in (reader, create_member(api, owner, "editor"), account(api, "OtherEvidenceAgency")):
         assert api.get(private_path, headers=denied["headers"]).status_code == 404
     assert api.get(api_path + "/manifests/" + frozen["id"], headers=reader["headers"]).status_code == 404
     for updates in ({"region": "VN-DN"}, {"locale": "fr-FR"}, {"channel": "store"}):

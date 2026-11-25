@@ -1,5 +1,9 @@
 # Bắt đầu ở đây khi tiếp quản AI Marketing Company
 
+## Nghiên cứu ứng dụng cho AMC và AIRC
+
+Bắt đầu từ [sổ nguồn](docs/research/SOURCE_REGISTRY.md), mở [thẻ kiến thức](docs/research/KNOWLEDGE_CARDS.md), [đối chiếu với mã hiện hành](docs/research/APPLICABILITY_MATRIX.md) rồi chọn [cải tiến có tiêu chí nghiệm thu](docs/research/PRODUCT_OPPORTUNITIES.md). Đọc [các giả thuyết đã hoãn hoặc bác bỏ](docs/research/REJECTED_HYPOTHESES.md) trước khi lặp lại nghiên cứu. Công cụ engineering chạy độc lập ở [runbook Research Broker](engineering/airc500/APPLIED-RESEARCH.md). Receipt lần đầu có hai nguồn quan sát được và một nguồn bị publisher hạn chế. Có thể replay ngoại tuyến bằng mã băm trong runbook. Rollback bằng dùng phiên bản catalog/adapter trước cho đợt đọc mới, giữ lại biên nhận cũ để đối soát. C2/C3 tiếp tục theo thứ tự sản phẩm.
+
 ## PR #34 · Màn hình điều hành Marketing
 
 Điều hướng workspace dùng URL của từng màn hình. Đường dẫn giữ workspace, thương hiệu theo dõi và chiến dịch. Khi mở liên kết, ứng dụng xác minh phiên và đối chiếu các ID với danh sách mà tài khoản được phép đọc. Khi lập kế hoạch, người dùng mở thẻ bộ phận để xem vai trò và nhiệm vụ được giao. Các lượt chạy Workforce, quyết định QA, tình trạng nguồn và số liệu kinh doanh được trình bày riêng.

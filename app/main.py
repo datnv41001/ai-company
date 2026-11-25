@@ -16,6 +16,7 @@ from sqlalchemy.inspection import inspect
 from sqlalchemy.orm import Session
 
 from .identity_quota import admit
+from .business_knowledge import router as knowledge_router
 from .identity import MailboxConfigurationError, issue, router as identity_router, verify_email
 from .revision_qa import content_digest, evaluate
 from .workforce_evidence import RULESET
@@ -51,6 +52,7 @@ app.include_router(recipients_router)
 app.include_router(workforce_router)
 app.include_router(registry_router)
 app.include_router(operations_router)
+app.include_router(knowledge_router)
 app.mount("/static", StaticFiles(directory=ROOT / "static"), name="static")
 
 

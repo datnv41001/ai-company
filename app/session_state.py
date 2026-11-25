@@ -57,7 +57,7 @@ def sha(value):
 
 
 def unauthorized():
-    return HTTPException(401, "Phiên đã hết hiệu lực. Vui lòng đăng nhập lại.", headers={"Cache-Control":"no-store"})
+    return HTTPException(401, "Phiên đã hết hiệu lực. Vui lòng đăng nhập lại.", headers={"Cache-Control": "no-store"})
 
 
 def now(db):
@@ -69,7 +69,7 @@ def user_lock(db, uid, *, shared=False):
     if db.get_bind().dialect.name == "postgresql":
         lock = "pg_advisory_xact_lock_shared" if shared else "pg_advisory_xact_lock"
         db.execute(text("SET LOCAL lock_timeout='5s'"))
-        db.execute(text(f"SELECT {lock}(hashtextextended(:uid,23001))"), {"uid":uid})
+        db.execute(text(f"SELECT {lock}(hashtextextended(:uid,23001))"), {"uid": uid})
     else:
         conn = db.connection()
         if not conn.connection.driver_connection.in_transaction:
@@ -78,18 +78,27 @@ def user_lock(db, uid, *, shared=False):
 
 def active(db, uid, sid, expected_epoch, credential_epoch):
     from .session_keys import generation, verify_config
+
     if db.get_bind().dialect.name == "postgresql":
         verify_config(db)
     current = now(db)
-    row = db.execute(select(DeviceSession, User.credential_epoch).join(User, User.id == DeviceSession.user_id)
-                     .where(DeviceSession.user_id == uid, DeviceSession.id == sid)
-                     .execution_options(populate_existing=True)).first()
+    row = db.execute(
+        select(DeviceSession, User.credential_epoch)
+        .join(User, User.id == DeviceSession.user_id)
+        .where(DeviceSession.user_id == uid, DeviceSession.id == sid)
+        .execution_options(populate_existing=True)
+    ).first()
     if not row:
         raise unauthorized()
     device, live_epoch = row
-    if (device.revoked or device.epoch != expected_epoch or credential_epoch != live_epoch
-            or device.credential_epoch != live_epoch or device.generation != generation()
-            or current >= min(device.created + MAX_SECONDS, device.seen + IDLE_SECONDS)):
+    if (
+        device.revoked
+        or device.epoch != expected_epoch
+        or credential_epoch != live_epoch
+        or device.credential_epoch != live_epoch
+        or device.generation != generation()
+        or current >= min(device.created + MAX_SECONDS, device.seen + IDLE_SECONDS)
+    ):
         raise unauthorized()
     return device
 
@@ -102,7 +111,7 @@ def verify_access(db, payload, *, commit=False):
             raise unauthorized()
         return active(db, payload["sub"], payload["sid"], payload["se"], payload["ce"])
     except SQLAlchemyError:
-        raise HTTPException(503, "Không đọc được trạng thái phiên.", headers={"Cache-Control":"no-store"}) from None
+        raise HTTPException(503, "Không đọc được trạng thái phiên.", headers={"Cache-Control": "no-store"}) from None
 
 
 @event.listens_for(Session, "before_commit")
@@ -112,6 +121,7 @@ def guard_commit(db):
     payload = db.info.get("amc_access_session")
     if payload:
         from .security import sign_actor
+
         sign_actor(db, payload["sub"])
         with db.no_autoflush:
             verify_access(db, payload, commit=True)
@@ -119,6 +129,7 @@ def guard_commit(db):
 
 def issue(db, user, password_hash, agent):
     from .session_keys import generation
+
     user_lock(db, user.id)
     db.refresh(user)
     if not hmac.compare_digest(user.password_hash, password_hash):
@@ -126,9 +137,20 @@ def issue(db, user, password_hash, agent):
     stamp = now(db)
     secret, csrf = secrets.token_urlsafe(32), secrets.token_urlsafe(32)
     label = "Firefox" if "Firefox/" in agent else "Edge" if "Edg/" in agent else "Chrome" if "Chrome/" in agent else "Safari" if "Safari/" in agent else "API"
-    device = DeviceSession(id=new_id(), user_id=user.id, epoch=1, credential_epoch=user.credential_epoch,
-                           generation=generation(), current_digest=sha(secret), csrf_digest=sha(csrf), device=label,
-                           created=stamp, seen=stamp, reauthed=stamp, revoked=False)
+    device = DeviceSession(
+        id=new_id(),
+        user_id=user.id,
+        epoch=1,
+        credential_epoch=user.credential_epoch,
+        generation=generation(),
+        current_digest=sha(secret),
+        csrf_digest=sha(csrf),
+        device=label,
+        created=stamp,
+        seen=stamp,
+        reauthed=stamp,
+        revoked=False,
+    )
     db.add(device)
     db.flush()
     return device, secret, csrf
@@ -136,6 +158,13 @@ def issue(db, user, password_hash, agent):
 
 def access_claims(device, issuer):
     issued = datetime.now(timezone.utc)
-    return {"sub":device.user_id, "sid":device.id, "se":device.epoch, "ce":device.credential_epoch,
-            "iss":issuer, "aud":"amc-api", "iat":issued,
-            "exp":min(issued + timedelta(seconds=ACCESS_SECONDS), datetime.fromtimestamp(device.created + MAX_SECONDS, timezone.utc))}
+    return {
+        "sub": device.user_id,
+        "sid": device.id,
+        "se": device.epoch,
+        "ce": device.credential_epoch,
+        "iss": issuer,
+        "aud": "amc-api",
+        "iat": issued,
+        "exp": min(issued + timedelta(seconds=ACCESS_SECONDS), datetime.fromtimestamp(device.created + MAX_SECONDS, timezone.utc)),
+    }

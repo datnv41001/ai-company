@@ -27,5 +27,5 @@ def generation():
 
 def verify_config(db):
     row = db.execute(text("SELECT * FROM amc_acl.session_config()")).one()
-    if tuple(row) != (hashlib.sha256(key("AMC_QUOTA_KEY")).hexdigest(),generation()):
-        raise HTTPException(503,"Session or quota configuration differs from the publisher")
+    if tuple(row) != (hashlib.sha256(key("AMC_QUOTA_KEY")).hexdigest(), generation()):
+        raise HTTPException(503, "Session or quota configuration differs from the publisher")

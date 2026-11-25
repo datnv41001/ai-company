@@ -176,6 +176,11 @@ def maintain_identity(conn, operation, material):
     fingerprint = hashlib.sha256(value).hexdigest()
     conn.execute("SET LOCAL row_security=off")
     conn.execute("SELECT pg_advisory_xact_lock(4197832741)")
+    quota, generation = conn.execute("SELECT quota_fingerprint,restore_generation FROM amc_acl.session_keys WHERE singleton FOR UPDATE").fetchone()
+    current_proof = conn.execute("SELECT secret FROM amc_acl.identity_key WHERE singleton").fetchone()[0]
+    domains = {"rotate-proof":hashlib.sha256(current_proof).hexdigest(),"rotate-quota":quota,"restore-fence":generation}
+    if any(fingerprint==pin for kind,pin in domains.items() if kind!=operation) or value.hex()==os.getenv("JWT_SECRET","").lower():
+        raise ValueError("Identity key material cannot be reused across purposes")
     if operation=="rotate-proof":
         conn.execute("UPDATE amc_acl.identity_key SET secret=%s WHERE singleton",(value,))
     elif operation=="rotate-quota":

@@ -4,6 +4,26 @@
 
 Bắt đầu từ [sổ nguồn](docs/research/SOURCE_REGISTRY.md), mở [thẻ kiến thức](docs/research/KNOWLEDGE_CARDS.md), [đối chiếu với mã hiện hành](docs/research/APPLICABILITY_MATRIX.md) rồi chọn [cải tiến có tiêu chí nghiệm thu](docs/research/PRODUCT_OPPORTUNITIES.md). Đọc [các giả thuyết đã hoãn hoặc bác bỏ](docs/research/REJECTED_HYPOTHESES.md) trước khi lặp lại nghiên cứu. Công cụ engineering chạy độc lập ở [runbook Research Broker](engineering/airc500/APPLIED-RESEARCH.md). Receipt lần đầu có hai nguồn quan sát được và một nguồn bị publisher hạn chế. Có thể replay ngoại tuyến bằng mã băm trong runbook. Rollback bằng dùng phiên bản catalog/adapter trước cho đợt đọc mới, giữ lại biên nhận cũ để đối soát. C2/C3 tiếp tục theo thứ tự sản phẩm.
 
+## C2.5 · Mục tiêu thật cấp công ty và liên kết thương hiệu, chiến dịch
+
+Chạy publisher module `amc_business` v3 trên core v22. Chọn **Mục tiêu chung doanh nghiệp** để lập cùng một mục tiêu cho nhiều thương hiệu của một khách hàng. API và giao diện dùng ID phiên bản, CAS và lịch sử quyết định khi cha được thay thế hoặc thu hồi. [Các bước dùng, nâng cấp và ca chạy lại](docs/business-profile/C2-OBJECTIVES-RUNBOOK.md)
+
+## Business Knowledge Center · review tích hợp
+
+[Mở bản bàn giao C2](docs/business-profile/C2-REVIEW-HANDOFF.md) để chạy trên máy mới, kiểm tra luồng từ hồ sơ đến brief, tải ảnh và đối chiếu commit, CI, giới hạn migration.
+
+## C2.4 · Nguồn và nhận định Marketing
+
+Trong hồ sơ thương hiệu, mở **Nguồn và nhận định** để ghi nguồn, chọn locator, so sánh câu và điều kiện, kiểm quyền chuyên môn, duyệt, xử lý tranh chấp và xem ảnh hưởng. Câu công khai dùng được qua nguồn hạn chế được tính trên server tại lúc đọc. Editor chỉ nhận phần được phép xem. Publisher cài predicate riêng trong `amc_business`, không tăng version core hoặc sidecar hồ sơ. Kiểm lại API, Chromium desktop/mobile và ranh giới kiểm chứng theo [runbook C2.4](docs/business-profile/C2-CLAIM-DESK.md).
+
+## C2 · Danh mục thương mại, audience và mục tiêu
+
+Nhánh `feature/business-knowledge-catalog` xuất phát từ PR #27. Mở Hồ sơ doanh nghiệp, chọn đúng client và brand, mở Danh mục, điều khoản và mục tiêu. Mã SKU/thị trường, giá theo tiền tệ quen dùng, giả thuyết audience và KPI có số liệu còn thiếu đi qua revision, CAS và quyền C1. Chạy publisher để cập nhật `amc_business` v2. Scope sản phẩm hiện tại, ca chạy lại, giới hạn dữ liệu và rollback được ghi trong [runbook danh mục](docs/business-profile/C2-CATALOG-RUNBOOK.md).
+
+## C2 · Hồ sơ chung và brief nội bộ
+
+Increment đầu tiên của C2.1/C2.5 trên C1 `c847f910` cho phép lưu một phần bốn field theo doanh nghiệp, kế thừa/ghi đè/để trống theo thương hiệu và tạo brief cá nhân khi chưa đủ thông tin. Publisher cài `amc_business` v1 bên cạnh core v22. Core 023 dành cho Identity A1. Chạy Compose rồi đối chiếu hai brand, thử lại lệnh sau mất phản hồi và đọc brief sau khi hồ sơ gốc đổi. PostgreSQL native 16.16 và SQLite đã qua năm ca API đầu tiên. Bộ điều phối Marketing và nghiệm thu thương mại giữ gate riêng. [Hợp đồng, quyền, chạy kiểm thử và rollback trên máy mới](docs/business-profile/C2-WORKSPACE-RUNBOOK.md)
+
 ## AIRC · Research Broker công khai và holdout năng lực v4
 
 Trên nền main sau PR #23 `5dc4ebc73c9423f360d63287d52350e2ef21a31a`, tooling engineering thu thập các trích đoạn Marketing công khai đã duyệt, ghi cả các nguồn bị chặn, và so sánh cùng holdout có/không có packet. Chạy `python engineering/airc500/research_release.py` trong venv engineering trên máy mới. [Runbook, phạm vi quyền và rollback](engineering/airc500/PUBLIC-RESEARCH.md) · [Phép đo đã ghim](engineering/airc500/research-v4/REPORT.md).

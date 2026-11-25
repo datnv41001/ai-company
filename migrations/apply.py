@@ -73,6 +73,7 @@ def migrate(dsn: str, runtime_password: str | None = None):
         if 22 in versions:
             if not conn.execute(RULE_IS_CURRENT).fetchone()[0]:
                 install_knowledge_commerce(conn)
+            install_business_workspace(conn)
             return
         if 2 not in versions:
             tables = {row[0] for row in conn.execute(
@@ -156,6 +157,23 @@ def migrate(dsn: str, runtime_password: str | None = None):
         conn.execute((HERE / "022_business_knowledge.sql").read_text(encoding="utf-8"))
         install_knowledge_commerce(conn)
         conn.execute("INSERT INTO amc_schema_versions VALUES (22)")
+        install_business_workspace(conn)
+
+
+def install_business_workspace(conn):
+    from migrations.claim_display import install as install_claim_display
+    from migrations.business_workspace.catalog import install_catalog
+    if not conn.execute("SELECT to_regclass('amc_business.versions')").fetchone()[0]:
+        conn.execute((HERE / "business_workspace" / "001_workspace.sql").read_text(encoding="utf-8"))
+    versions = conn.execute("SELECT version FROM amc_business.versions ORDER BY version").fetchall()
+    if versions == [(1,)]:
+        install_catalog(conn)
+        versions = [(1,), (2,)]
+    if versions == [(1,), (2,)]:
+        conn.execute((HERE / "business_workspace" / "003_objectives.sql").read_text(encoding="utf-8"))
+    elif versions != [(1,), (2,), (3,)]:
+        raise ValueError("Unsupported business workspace schema version")
+    install_claim_display(conn)
 
 
 

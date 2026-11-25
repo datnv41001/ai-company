@@ -41,6 +41,15 @@ def stamp(value):
     return aware(value).isoformat()
 
 
+def signed_document(db, actor, name, values):
+    """Bind a validated append to its table, actor and current PostgreSQL transaction."""
+    tx = db.scalar(text("SELECT txid_current()"))
+    doc = canonical({k: stamp(v) if isinstance(v, datetime) else v for k, v in values.items()})
+    key = hmac.digest(SECRET.encode(), b"amc-identity-v17", "sha256")
+    message = "\n".join(("knowledge-v22", actor, str(tx), name, doc))
+    return dict(doc=doc, proof=hmac.new(key, message.encode(), "sha256").hexdigest())
+
+
 def restrictive(*classes):
     return max(classes, key=VISIBILITY.index)
 
@@ -110,13 +119,8 @@ class Store:
 
     def _append(self, table, values):
         if self.postgres:
-            tx = self.db.scalar(text("SELECT txid_current()"))
-            doc = canonical({k: stamp(v) if isinstance(v, datetime) else v for k, v in values.items()})
-            key = hmac.digest(SECRET.encode(), b"amc-identity-v17", "sha256")
             name = table.__tablename__
-            message = "\n".join(("knowledge-v22", self.actor, str(tx), name, doc))
-            proof = hmac.new(key, message.encode(), "sha256").hexdigest()
-            self.db.execute(text("SELECT amc_acl.append_knowledge(:rel,:doc,:proof)"), dict(rel=name, doc=doc, proof=proof))
+            self.db.execute(text("SELECT amc_acl.append_knowledge(:rel,:doc,:proof)"), dict(rel=name, **signed_document(self.db, self.actor, name, values)))
         else:
             self.db.execute(table.__table__.insert().values(**values))
 

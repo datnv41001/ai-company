@@ -65,8 +65,16 @@ def rehearse_archive(dsn, container, version=16):
         assert source.info.host in ("localhost", "127.0.0.1", "::1") and source.info.dbname.startswith("amc_test")
         assert source.execute("SELECT max(version) FROM amc_schema_versions").fetchone() == (version,)
         db, owner = source.info.dbname, source.info.user
+        workspace_tables = ()
+        if version >= 22 and source.execute("SELECT to_regclass('amc_business.versions')").fetchone()[0]:
+            workspace_tables = ("amc_business.versions", "business_workspace_records")
+            if source.execute("SELECT to_regclass('public.business_company_objectives')").fetchone()[0]:
+                workspace_tables += ("business_company_objectives", "business_company_objective_edges")
+                assert {"draft","approved","withdrawn"} <= {r[0] for r in source.execute("SELECT DISTINCT state FROM business_company_objectives")}
+            tables += workspace_tables
+            assert {r[0] for r in source.execute("SELECT DISTINCT kind FROM business_workspace_records")} == {"company","brand","brief"}
         before = snapshot(source)
-    required = before[-(len(knowledge) + 1):] if version == 22 else before
+    required = before[-(len(knowledge) + 1 + len(workspace_tables)):] if version == 22 else before
     assert all(required), "Restore rehearsal requires populated fixture tables"
     # Both the archive and restore are inside this disposable CI container.
     target = "amc_test_restore_" + uuid4().hex
@@ -77,6 +85,37 @@ def rehearse_archive(dsn, container, version=16):
     subprocess.run([*command, "pg_restore", "-U", owner, "--single-transaction", "--exit-on-error", "-d", target, archive], check=True)
     with psycopg.connect(make_conninfo(dsn, dbname=target)) as restored:
         assert snapshot(restored) == before
+        if workspace_tables:
+            from migrations.claim_display import CURRENT, SIGNATURE
+            assert restored.execute(CURRENT).fetchone()==(True,)
+            assert restored.execute("""SELECT has_function_privilege('amc_runtime',%s,'EXECUTE'),EXISTS(
+                SELECT FROM pg_proc p, aclexplode(COALESCE(p.proacl,acldefault('f',p.proowner))) x
+                WHERE p.oid=to_regprocedure(%s) AND x.grantee=0 AND x.privilege_type='EXECUTE')""",(SIGNATURE,SIGNATURE)).fetchone()==(True,False)
+            from sqlalchemy.engine import make_url
+            from sqlalchemy.orm import Session
+            from app.access import set_context, set_worker_scope
+            from app.security import sign_actor
+            samples=restored.execute("""SELECT tenant_id,client_id,brand_id,id,author FROM knowledge_revisions
+                WHERE kind='claim' AND subject='surface' AND visibility='public' ORDER BY id LIMIT 40""").fetchall()
+            assert samples
+            def current_claims(database):
+                runtime=create_engine(make_url(os.environ["DATABASE_URL"]).set(database=database))
+                try:
+                    values=[]
+                    with Session(runtime) as session:
+                        predicate=text("SELECT amc_business.claim_display_current(:t,:c,:b,:i,NULL)")
+                        for tenant,client,brand,rid,actor in samples:
+                            set_context(session,actor=actor,tenant=tenant)
+                            sign_actor(session,actor)
+                            args=dict(t=tenant,c=client,b=brand,i=rid)
+                            values.append(session.scalar(predicate,args))
+                        set_worker_scope(session,client,brand,str(uuid4()))
+                        assert not session.scalar(predicate,args)
+                    return values
+                finally:
+                    runtime.dispose()
+            before_authority=current_claims(db)
+            assert any(before_authority) and current_claims(target)==before_authority
     print(f"PASS: pg_dump/pg_restore v{version} into a separate database; identical rows in {len(tables)} tables")
 
 

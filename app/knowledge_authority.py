@@ -9,7 +9,9 @@ from sqlalchemy import text
 from migrations.knowledge_commerce import conflict_query
 
 from . import knowledge_models as m
-from .commercial_scope import same_placement
+from .catalog_identity import check_master
+from .company_objectives import check_company_reference
+from .commercial_scope import same_placement, condition_keys, commercial_basis
 from .knowledge_contracts import TYPES, approval_category, price_wording
 from .knowledge_store import canonical, conflict, digest, in_window, parse_time, restrictive
 from .models import Campaign, Membership
@@ -65,6 +67,9 @@ def scoped_references(store, data):
 
 def check_business_data(store, kind, subject, data):
     refs = scoped_references(store, data)
+    shared = data.get("company_parent") or data.get("company_objective")
+    if shared:
+        check_company_reference(store, shared, require_approved=False)
     if kind == "objective":
         if data["campaign_id"]:
             campaign = store.db.get(Campaign, data["campaign_id"])
@@ -104,6 +109,9 @@ def new_revision(store, body, at):
         conflict("Revision changed or subject has another type")
     if prior and prior.visibility != body.visibility:
         conflict("Visibility is pinned to the subject")
+    if prior and body.kind == "objective" and any(prior.data.get(k) != data.get(k) for k in ("level", "campaign_id")):
+        conflict("Objective level and campaign are pinned. Create a separate objective for a different scope")
+    check_master(store, body.kind, body.subject, data, prior)
     refs = check_business_data(store, body.kind, body.subject, data)
     if body.kind == "qualification":
         if not store.approver or body.visibility != "restricted" or data["approver_id"] == store.actor:
@@ -144,6 +152,9 @@ def eligible(store, row, at, seen, *, include_root=True):
         conflict("Dependency budget exceeded")
     if include_root and store.summary(row, at)["state"] != "approved":
         conflict("Revision lacks current approved authority")
+    shared = row.data.get("company_parent") or row.data.get("company_objective")
+    if shared:
+        check_company_reference(store, shared, require_approved=True)
     if not in_window(row.data, at):
         conflict("Revision is outside its validity interval")
     if row.kind == "availability" and parse_time(row.data["observed_at"]) > at:
@@ -193,8 +204,8 @@ def check_assertion(store, assertion, at):
             terms = other.data["price"]
             if not same_placement(other.data["placement"], assertion["placement"]) or not terms or store.summary(other, at)["state"] != "approved":
                 continue
-            if any(terms[k] != requested[k] for k in ("currency", "unit", "basis_quantity", "tax")) or not set(terms["conditions"]).issubset(
-                assertion["qualifiers"]
+            if any(terms[k] != requested[k] for k in ("currency", "unit", "basis_quantity", "tax")) or not condition_keys(terms["conditions"]).issubset(
+                condition_keys(assertion["qualifiers"])
             ):
                 continue
             if qty < max(Decimal(terms["moq"]), Decimal(terms["tier_min"])) or terms["tier_max"] and qty > Decimal(terms["tier_max"]):
@@ -202,7 +213,7 @@ def check_assertion(store, assertion, at):
             matches.append(other.id)
         if matches != [chosen.id]:
             conflict("Marketing offer missing or ambiguous")
-        if not set(requested["conditions"]).issubset(assertion["qualifiers"]):
+        if not condition_keys(requested["conditions"]).issubset(condition_keys(assertion["qualifiers"])):
             conflict("Price qualifiers omit a commercial condition")
     elif field in ("availability", "payment", "warranty"):
         name = "availability" if field == "availability" else "policy"
@@ -212,7 +223,7 @@ def check_assertion(store, assertion, at):
             conflict("Unknown or mismatched availability or policy")
         if observed != assertion["wording"]:
             conflict("Copy does not match the approved policy or stock declaration")
-        if row.data.get("applicability") != assertion.get("applicability"):
+        if commercial_basis(row.data.get("applicability")) != commercial_basis(assertion.get("applicability")):
             conflict("Claim must preserve the exact commercial applicability")
         facet = "status" if field == "availability" else field
         params = dict(tenant=row.tenant_id, client=row.client_id, brand=row.brand_id, revision=row.id, facet=facet, at=at)
@@ -262,7 +273,7 @@ def change_state(store, row, command, at):
             preferred.id == row.id
             or preferred.kind != row.kind
             or not same_placement(preferred.data["placement"], row.data["placement"])
-            or preferred.data.get("applicability") != row.data.get("applicability")
+            or commercial_basis(preferred.data.get("applicability")) != commercial_basis(row.data.get("applicability"))
         ):
             conflict("Preferred authority must cover the same placement and order conditions")
         if row.kind == "policy" and any(row.data.get(term) and not preferred.data.get(term) for term in ("warranty", "payment", "shipping")):
@@ -289,6 +300,8 @@ def change_state(store, row, command, at):
             conflict("A different workspace owner must approve the reviewer's qualification")
         if row.kind == "source" and not row.data["entries"]:
             conflict("A legacy source needs reviewed, scoped assertions")
+        if row.kind == "kpi" and not row.data.get("source"):
+            conflict("A KPI needs an evidence source before approval")
         eligible(store, row, at, {}, include_root=False)
         if row.kind in ("claim", "binding"):
             check_assertion(store, row.data["assertion"], at)

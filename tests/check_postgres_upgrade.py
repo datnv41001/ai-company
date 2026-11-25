@@ -102,6 +102,10 @@ def rehearse_archive(dsn, container, version=16):
     subprocess.run([*command, "pg_restore", "-U", owner, "--single-transaction", "--exit-on-error", "-d", target, archive], check=True)
     with psycopg.connect(make_conninfo(dsn, dbname=target)) as restored:
         assert snapshot(restored) == before
+        if version == 25:
+            from migrations.c3_writer_contract import WRITER_FENCE
+            assert restored.execute("SELECT version FROM amc_c3.versions ORDER BY version").fetchall() == [(1,), (2,)]
+            assert restored.execute(WRITER_FENCE).fetchone() == (True,), "Restored Studio writer triggers must match the current publisher"
         if workspace_tables:
             from migrations.claim_display import CURRENT, SIGNATURE
             assert restored.execute(CURRENT).fetchone()==(True,)

@@ -221,7 +221,9 @@ function mountMarketingBrief(root, api, context) {
       active=release.manifest.required.every(s=>release.grants[s]==='activate');
       terms=data; queue.disabled=!active;
       activate.hidden=active || !['owner','admin'].includes(role);
-      feedback(active?'Đã đủ căn cứ để xếp việc. QA sẽ kiểm tra lại trước khi chia sẻ.':'Dữ liệu đã sẵn sàng. Quản trị viên cần bật quy trình cho chiến dịch.');
+      const internal=items.brief.find(row=>row.id===data.target.brief_id)?.origin==='internal';
+      const ready=internal?'Đã đủ căn cứ để tạo bản nháp nội bộ.':'Đã đủ căn cứ để xếp việc. QA sẽ kiểm tra lại trước khi chia sẻ.';
+      feedback(active?ready:'Dữ liệu đã sẵn sàng. Quản trị viên cần bật quy trình cho chiến dịch.');
     }
     check.onclick=()=>assess().catch(e=>feedback(e.message));
     activate.onclick=async()=>{
@@ -244,7 +246,8 @@ function mountMarketingBrief(root, api, context) {
         const run=await send(base+'/workforce/briefs/'+data.target.brief_id+'/run','POST',
           {workflow:'dynamic-v1',registry_workflow:data.workflow,budget_microusd:0,knowledge_manifest:{id:snap.id,digest:snap.digest}});
         if(alive() && token===ticket){
-          feedback('Đã xếp việc '+run.id+'. Theo dõi trong mục AI Workforce, sau đó mở bản giao để QA.');
+          const internal=items.brief.find(row=>row.id===data.target.brief_id)?.origin==='internal';
+          feedback('Đã xếp việc '+run.id+(internal?'. Theo dõi ở Đội ngũ AI, sau đó mở bản nháp nội bộ để đọc và biên tập.':'. Theo dõi ở Đội ngũ AI, sau đó mở bản giao để QA.'));
           if(['owner','admin'].includes(role))attachMarketingProvenance(details,path+'/manifests/'+snap.id+'/provenance',read,alive);
         }
       } catch(e){if(alive() && token===ticket){feedback(e.message);queue.disabled=false;}}

@@ -1,0 +1,64 @@
+{
+  "id": "market-research",
+  "version": 1,
+  "role": "research",
+  "task": "Design a short inquiry for a buyer decision.",
+  "inputs": [
+    "product",
+    "market",
+    "audience",
+    "facts",
+    "hypotheses",
+    "gaps"
+  ],
+  "method": "Start from one buying episode; separate what a source establishes from a falsifiable hypothesis and name evidence still needed.",
+  "applicability": "Local services and B2B purchasing teams",
+  "references": [
+    "K-01",
+    "K-05"
+  ],
+  "examples": {
+    "good": {
+      "research_question": "Ask which part of the most recent quote the buyer needed clarified.",
+      "evidence_needed": "Compare the questions on the last quote with the approved conditions."
+    },
+    "bad": "Claiming an observed market preference on the basis of a product spec."
+  },
+  "output_schema": {
+    "type": "object",
+    "properties": {
+      "research_question": {
+        "type": "string",
+        "minLength": 3,
+        "maxLength": 200
+      },
+      "evidence_needed": {
+        "type": "string",
+        "minLength": 3,
+        "maxLength": 200
+      }
+    },
+    "required": [
+      "research_question",
+      "evidence_needed"
+    ],
+    "additionalProperties": false
+  },
+  "rubric": [
+    "State a single answerable research question.",
+    "Distinguish the proposed observation from a completed interview."
+  ],
+  "prohibited": "Claims of conducted interviews, market shares or measured demand.",
+  "tests": [
+    {
+      "case": "example_positive",
+      "expected": "all structured output fields and applicable sources are present"
+    },
+    {
+      "case": "example_negative",
+      "expected": "State a single answerable research question."
+    }
+  ],
+  "release": "Publish the reviewed workflow manifest containing this exact skill version and digest; activate only on the selected campaign.",
+  "rollback": "Disable the candidate workflow for new runs and activate the previous compatible workflow. Retain pinned definitions and existing run receipts."
+}

@@ -10,7 +10,7 @@ from typing import Callable
 from migrations.registry_release import adapter_digest
 from migrations.runtime_bundle import approved_adapter_digests
 from . import dynamic_plan, landing_qa, research_strategy, registry_seo_v2, workforce_gateway as gateway
-from . import c3_marketing
+from . import c3_marketing, c3_skill_library
 
 V1_DIGEST = "c64cf3e0e691a1bad191b954b07d06a28c7cd8675bb5fe8328ee0ae0e620880a"
 ROLES = {
@@ -68,6 +68,8 @@ def runtimes():
         adapters[skill+"@2"] = Adapter(skill,2,research_digest(),research_strategy.request,research_strategy.validate)
     for skill, version in c3_marketing.VERSIONS.items():
         adapters[f"{skill}@{version}"] = Adapter(skill, version, c3_digest(), c3_marketing.request, c3_marketing.validate)
+    for skill, version in c3_skill_library.VERSIONS.items():
+        adapters[f"{skill}@{version}"] = Adapter(skill, version, c3_skill_library.adapter_digest(skill), c3_skill_library.request, c3_skill_library.validate)
     return {name: adapter for name, adapter in adapters.items() if adapter.digest in approved}
 
 

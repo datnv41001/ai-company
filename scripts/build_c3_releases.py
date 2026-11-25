@@ -7,15 +7,19 @@ import sys
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
 from app import c3_marketing as c3  # noqa: E402
+from app import c3_assets, c3_skill_library  # noqa: E402
 from app.registry_adapters import Adapter, ROLES, c3_digest, output_schema  # noqa: E402
 
 
 def manifest(workflow):
-    roles = c3.ROLES[workflow]
+    current = workflow in c3_assets.ROLES
+    roles = c3_assets.ROLES[workflow] if current else c3.ROLES[workflow]
     contracts = {}
     for skill in ("director", *roles):
-        version = c3.VERSIONS[skill]
-        adapter = Adapter(skill, version, c3_digest(), c3.request, c3.validate)
+        library = c3_skill_library if current else c3
+        version = library.VERSIONS[skill]
+        digest = c3_skill_library.adapter_digest(skill) if current else c3_digest()
+        adapter = Adapter(skill, version, digest, library.request, library.validate)
         schema = output_schema(adapter)
         contracts[skill] = {
             "skill_id": skill,
@@ -24,7 +28,7 @@ def manifest(workflow):
             "contract_version": version,
             "adapter": f"{skill}@{version}",
             "adapter_digest": adapter.digest,
-            "qa_policy": f"c3-{skill}@1",
+            "qa_policy": f"c3-{skill}@" + ("2" if current else "1"),
             "model": "local",
             "inputs": ["brief", "brand", "sources"],
             "outputs": schema["required"],
@@ -41,19 +45,26 @@ def manifest(workflow):
             "forbidden_actions": ["external_write", "publish", "spend"],
             "fallback": "agency editor",
         }
+        if current:
+            contracts[skill]["marketing_methods"] = c3_skill_library.skill_pins(skill)
     id_, version = workflow.rsplit("@", 1)
-    return {
+    research = workflow in (c3.RESEARCH, c3_assets.RESEARCH)
+    result = {
         "workflow_id": id_,
         "workflow_version": int(version),
         "mode": "dynamic-v1",
-        "profile": "research-strategy" if workflow == c3.RESEARCH else "landing-seo",
+        "profile": "research-strategy" if research else "landing-seo",
         "required": ["director", *roles],
-        "required_outputs": ["strategy"] if workflow == c3.RESEARCH else list(roles),
-        "knowledge_projection": "amc.marketing-manifest/1",
+        "required_outputs": ["strategy"] if research else list(roles),
+        "knowledge_projection": "amc.marketing-manifest/2" if current else "amc.marketing-manifest/1",
         "contracts": contracts,
     }
+    if current:
+        result["marketing_methods"] = {ref: c3_skill_library.method(ref) for role in roles for ref in c3_skill_library.PACKS[role]}
+    return result
 
 
 if __name__ == "__main__":
-    for name, workflow in (("research-strategy-v2", c3.RESEARCH), ("landing-seo-v5", c3.LANDING)):
+    for name, workflow in (("research-strategy-v2", c3.RESEARCH), ("landing-seo-v5", c3.LANDING),
+                           ("research-strategy-v3", c3_assets.RESEARCH), ("landing-seo-v6", c3_assets.LANDING)):
         (ROOT / "catalog" / (name + ".json")).write_text(json.dumps(manifest(workflow), indent=2, ensure_ascii=False) + "\n", encoding="utf-8", newline="\n")

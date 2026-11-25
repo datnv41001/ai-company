@@ -2,7 +2,7 @@ function createClaimDesk(root, api, notify) {
   const states = {draft:'Nháp', approved:'Đã duyệt', disputed:'Có tranh chấp', withdrawn:'Đã thu hồi', superseded:'Đã thay thế', expired:'Hết hạn', pending_effective:'Chưa có hiệu lực'};
   const kinds = {description:'Mô tả', price:'Giá', availability:'Tình trạng hàng', payment:'Thanh toán', warranty:'Bảo hành', performance:'Hiệu năng', regulated:'Nội dung có quy định chuyên ngành', comparison:'So sánh', unclassified:'Nội dung cần chuyên môn'};
   const options = {retail:'Bán lẻ', wholesale:'Bán sỉ', prepaid:'Trả trước', credit:'Trả sau', standard:'Tiêu chuẩn', extended:'Mở rộng'};
-  const units = {piece:'Cái',box:'Hộp','m²':'m²',tonne:'Tấn',kg:'kg',service:'Dịch vụ',subscription_month:'Tháng',subscription_year:'Năm'};
+  const units = {piece:'Cái',box:'Hộp','m²':'m²',tonne:'Tấn',kg:'kg',service:'Dịch vụ',machine:'Máy',participant:'Người',subscription_month:'Tháng',subscription_year:'Năm'};
   const axes={buyer:['Nhóm người mua',['retail','wholesale']],payment_type:['Cách thanh toán',['prepaid','credit']],service_level:['Mức dịch vụ',['standard','extended']]};
   let generation = 0, requestNo = 0, scope, ctl, board, data, src, entry, mandates, selectedMandate, pending, busy;
   let claimOffset = 0, sourceOffset = 0, captureChoices, qualificationOffset=0;

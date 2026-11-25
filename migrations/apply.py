@@ -30,6 +30,12 @@ def publish_registry(conn, manifest):
 
 def _publish_registry(conn, manifest):
     validate_manifest(manifest)
+    for definition in manifest.get("marketing_methods", {}).values():
+        identity = ("marketing_skill", definition["id"], definition["version"])
+        conn.execute("INSERT INTO amc_ops.registry_versions VALUES(%s,%s,%s,%s) ON CONFLICT DO NOTHING", (*identity, Jsonb(definition)))
+        existing = conn.execute("SELECT definition FROM amc_ops.registry_versions WHERE (kind,id,version)=(%s,%s,%s)", identity).fetchone()[0]
+        if existing != definition:
+            raise ValueError("Immutable Marketing skill version changed")
     for contract in manifest["contracts"].values():
         for kind, key, version in (("role", "role_id", "contract_version"), ("skill", "skill_id", "skill_version")):
             identity = (kind, contract[key], contract[version])

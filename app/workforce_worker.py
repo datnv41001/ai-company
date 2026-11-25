@@ -170,8 +170,8 @@ def save_checkpoint(db, scope, run, stage, output, node):
     if binding := run.knowledge.get("registry"):
         from .registry_qa import assess_role
         contract = binding["contracts"][stage]
-        from . import c3_marketing
-        if binding.get("workflow") in c3_marketing.ROLES:
+        from . import c3_releases
+        if binding.get("workflow") in c3_releases.WORKFLOWS:
             record["quality"]["role_qa"] = {"policy": contract["qa_policy"], "findings": record["quality"]["claims"],
                                           "manifest_digest":run.knowledge["c3_manifest"]["digest"], "source_ids":output["source_ids"]}
         elif stage in ("research","strategy") and contract["adapter"] == stage+"@2":
@@ -192,8 +192,10 @@ def save_checkpoint(db, scope, run, stage, output, node):
         if binding and binding["contracts"]["director"]["adapter"] == "director@2":
             preview = research_strategy.proposal(run.checkpoints)
         title = run.knowledge["title"]
-        if binding and binding.get("workflow") in c3_marketing.ROLES:
-            draft = c3_marketing.render(binding["workflow"], run.knowledge["c3_projection"], {p["skill"]:p["output"] for p in run.checkpoints})
+        if binding and binding.get("workflow") in c3_releases.WORKFLOWS:
+            from . import c3_assets, c3_marketing
+            renderer = c3_assets.render if c3_releases.is_current(binding["workflow"]) else c3_marketing.render
+            draft = renderer(binding["workflow"], run.knowledge["c3_projection"], {p["skill"]:p["output"] for p in run.checkpoints})
             title, preview = draft["title"], draft["body"]
             if len(title) > 160:
                 title = run.knowledge["c3_projection"]["product"]
@@ -237,8 +239,12 @@ def finish(db, scope, config, task, result, error, *, node=None, commit=True):
             if not error:
                 if node and node.template == "dynamic-v1" and stage == "director":
                     binding = run.knowledge.get("registry",{})
-                    from . import c3_marketing
-                    if binding.get("workflow") in c3_marketing.ROLES:
+                    from . import c3_marketing, c3_assets, c3_skill_library
+                    director_raw = None
+                    if binding.get("workflow") in c3_assets.ROLES:
+                        director_raw = raw
+                        raw = c3_skill_library.director_proposal(binding["workflow"], raw)
+                    elif binding.get("workflow") in c3_marketing.ROLES:
                         raw = c3_marketing.director_proposal(binding["workflow"], raw)
                     elif binding.get("contracts",{}).get("director",{}).get("adapter")=="director@2":
                         from .research_strategy import director_proposal
@@ -246,6 +252,8 @@ def finish(db, scope, config, task, result, error, *, node=None, commit=True):
                     contract, digest = dynamic_plan.compile_plan(raw, run.knowledge["required_outputs"], run.knowledge.get('registry'))
                     workflow_dag.freeze(db, token, contract, digest)
                     output = {"text": digest, "sections": {}, "source_ids": [], "plan_digest": digest}
+                    if director_raw is not None:
+                        output["raw_reply"] = director_raw
                 else:
                     output = validate_output(raw, stage, run.plan, run.knowledge["sources"], run.knowledge.get('registry'))
         except GatewayError as exc:

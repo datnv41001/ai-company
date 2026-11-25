@@ -87,7 +87,7 @@ function createCatalogPane(root, api) {
     region: ['VN-HN', 'VN-SG', 'VN-DN'],
     locale: ['vi-VN', 'en', 'en-US'],
     currency: ['VND', 'USD', 'EUR', 'JPY', 'GBP', 'AUD', 'CAD', 'SGD', 'THB'],
-    unit: ['piece', 'box', 'm²', 'tonne', 'kg', 'service', 'subscription_month', 'subscription_year'],
+    unit: ['piece', 'box', 'm²', 'tonne', 'kg', 'service', 'machine', 'participant', 'subscription_month', 'subscription_year'],
     tax: ['included', 'excluded', 'unknown'],
     status: ['available', 'unavailable', 'unknown'],
     buyer: ['retail', 'wholesale'],

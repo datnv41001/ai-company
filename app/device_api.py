@@ -51,6 +51,16 @@ def clear_cookies(response):
     response.headers["Cache-Control"] = "no-store"
 
 
+def clear_matching_device(request, response, sid):
+    # A second tab may now have a different device cookie. Revoking the bearer
+    # only authorizes retiring the device from which that bearer was issued.
+    parts = request.cookies.get(REFRESH, "").split(".")
+    if len(parts) == 3 and parts[1] == sid:
+        clear_cookies(response)
+    else:
+        response.headers["Cache-Control"] = "no-store"
+
+
 def cookie_proof(request):
     csrf = request.headers.get("x-amc-csrf", "")
     if (
@@ -141,9 +151,10 @@ def revoke(db, user, target):
 
 
 @router.post("/auth/logout", status_code=204)
-def logout(response: Response, user: User = Depends(current_user), db: Session = Depends(get_db)):
-    revoke(db, user, db.info["amc_access_session"]["sid"])
-    clear_cookies(response)
+def logout(request: Request, response: Response, user: User = Depends(current_user), db: Session = Depends(get_db)):
+    sid = db.info["amc_access_session"]["sid"]
+    revoke(db, user, sid)
+    clear_matching_device(request, response, sid)
 
 
 @router.post("/auth/logout-cookie", status_code=204)
@@ -165,11 +176,11 @@ def logout_cookie(request: Request, response: Response, db: Session = Depends(ge
 
 
 @router.delete("/me/sessions/{sid}", status_code=204)
-def revoke_device(sid: str, response: Response, user: User = Depends(current_user), db: Session = Depends(get_db)):
+def revoke_device(sid: str, request: Request, response: Response, user: User = Depends(current_user), db: Session = Depends(get_db)):
     current = db.info["amc_access_session"]["sid"]
     revoke(db, user, sid)
     if sid == current:
-        clear_cookies(response)
+        clear_matching_device(request, response, sid)
 
 
 @router.post("/auth/reauthenticate", status_code=204)

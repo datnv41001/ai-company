@@ -80,11 +80,23 @@ def test_refresh_response_loss_reuse_and_csrf(api):
 def test_logout_of_expired_browser_access_with_live_cookie(api):
     token, proof = login(api, signup(api))
     claims = jwt.decode(token, SECRET, algorithms=["HS256"], audience="amc-api", issuer=ISSUER)
+    expired = jwt.encode(dict(claims, iat=claims["iat"] - 600, exp=claims["iat"] - 300), SECRET, algorithm="HS256")
+    assert api.post("/api/auth/logout", headers=bearer(expired)).status_code == 401
     target = proof | {"X-AMC-Session": claims["sid"]}
     assert api.post("/api/auth/logout-cookie", headers=target | {"X-AMC-Session": str(uuid4())}).status_code == 409
     assert api.post("/api/auth/logout-cookie", headers=target).status_code == 204
     assert api.post("/api/auth/logout-cookie", headers=target).status_code == 204
     assert api.post("/api/auth/refresh", headers=proof).status_code == 401
+
+
+def test_old_tab_revokes_its_bearer_and_leaves_new_browser_cookie(api):
+    first, _ = login(api, signup(api))
+    second, other_cookie = login(api, signup(api))
+    response = api.post("/api/auth/logout", headers=bearer(first) | {"Cookie": other_cookie["Cookie"]})
+    assert response.status_code == 204 and "set-cookie" not in response.headers
+    assert api.get("/api/me", headers=bearer(first)).status_code == 401
+    assert api.get("/api/me", headers=bearer(second)).is_success
+    assert api.post("/api/auth/refresh", headers=other_cookie).is_success
 
 
 def test_storage_outage_denies_read(client, monkeypatch):
@@ -98,6 +110,29 @@ def test_storage_outage_denies_read(client, monkeypatch):
 
     monkeypatch.setattr(session_state, "active", unavailable)
     assert client.get("/api/me", headers=bearer(token)).status_code == 503
+
+
+@pytest.mark.skipif(os.getenv("AMC_TEST_PG") != "1", reason="requires disposable PostgreSQL")
+def test_worker_readiness_does_not_require_end_user_keys(tmp_path):
+    import subprocess
+    import sys
+    from pathlib import Path
+
+    repo = Path(__file__).resolve().parents[1]
+    env = dict(os.environ, PYTHONPATH=str(repo))
+    for name in ("JWT_SECRET", "AMC_DB_PROOF_KEY", "AMC_QUOTA_KEY", "AMC_SESSION_GENERATION"):
+        env.pop(name, None)
+    code = (
+        "from app.workforce_worker import engine,prepare_database; "
+        "from app import delivery_models,knowledge_models,session_state; "
+        "prepare_database(engine,verify_identity=False)"
+    )
+    result = subprocess.run([sys.executable, "-c", code], env=env, cwd=tmp_path, capture_output=True, timeout=20)
+    assert result.returncode == 0
+    blocked = subprocess.run(
+        [sys.executable, "-c", "from app.security import access_key; access_key()"], env=env, cwd=tmp_path, capture_output=True, timeout=20
+    )
+    assert blocked.returncode and b"unique strong JWT_SECRET" in blocked.stderr
 
 
 @pytest.mark.skipif(os.getenv("AMC_TEST_PG") != "1", reason="requires disposable PostgreSQL")

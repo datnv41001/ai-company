@@ -116,7 +116,8 @@ def prepare_database(bind, *, verify_identity=True):
         if not verify_identity:
             return
         from .access import set_context
-        from .security import sign_actor
+        from .security import access_key, sign_actor
+        access_key()
         from .session_keys import verify_config
         verify_config(conn)
         with Session(conn) as session:

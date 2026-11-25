@@ -64,7 +64,6 @@ services:
     environment:
       APP_ENV: development
       DATABASE_URL: postgresql+psycopg://amc_runtime:${AMC_RUNTIME_PASSWORD}@db:5432/amc
-      JWT_SECRET: ${JWT_SECRET}
       AMC_WORKER_TENANT: ${AMC_WORKER_TENANT:-}
       AMC_WORKER_CLIENT: ${AMC_WORKER_CLIENT:-}
       AMC_WORKER_BRAND: ${AMC_WORKER_BRAND:-}

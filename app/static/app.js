@@ -156,17 +156,23 @@
     try { await session({...await api('/api/me'), access_token:state.token},state.email); }
     catch (error) { msg(error.message, true); }
   };
+  function leaveTab() {
+    if (invitation !== null) history.replaceState(null, '', location.pathname + '#invite=' + encodeURIComponent(invitation));
+    location.reload();
+  }
+  $('leave-tab').onclick = leaveTab;
   $('switch-account').onclick = async () => {
     try {
       if (state.token) {
         const csrf = document.cookie.split('; ').find(v => v.startsWith('__Host-amc-csrf='))?.split('=')[1];
-        const response = csrf ? await fetch('/api/auth/logout-cookie',{method:'POST',headers:{'X-AMC-CSRF':csrf,'X-AMC-Session':claims(state.token).sid}})
-          : await fetch('/api/auth/logout',{method:'POST',headers:{Authorization:'Bearer '+state.token}});
-        if (!response.ok && response.status !== 409 && (csrf || response.status !== 401)) throw Error('Máy chủ chưa xác nhận đăng xuất. Vui lòng thử lại.');
+        let response = await fetch('/api/auth/logout',{method:'POST',headers:{Authorization:'Bearer '+state.token}});
+        if (response.status === 401 && csrf) {
+          response = await fetch('/api/auth/logout-cookie',{method:'POST',headers:{'X-AMC-CSRF':csrf,'X-AMC-Session':claims(state.token).sid}});
+        }
+        if (!response.ok) throw Error('Máy chủ chưa xác nhận thu hồi phiên này. Bạn có thể thử lại hoặc về đăng nhập trên tab này.');
       }
-      if (invitation !== null) history.replaceState(null, '', location.pathname + '#invite=' + encodeURIComponent(invitation));
-      location.reload();
-    } catch(error) { msg(error.message,true); }
+      leaveTab();
+    } catch(error) { $('leave-tab').classList.remove('hidden'); msg(error.message,true); }
   };
   async function deviceList() {
     const list = $('device-list');

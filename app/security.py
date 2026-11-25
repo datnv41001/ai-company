@@ -16,8 +16,15 @@ from sqlalchemy.exc import SQLAlchemyError
 
 SECRET = os.getenv("JWT_SECRET", "LOCAL_ONLY_INSECURE_DEVELOPMENT_SECRET")
 ISSUER = os.getenv("JWT_ISSUER", "amc-local")
-if (APP_ENV == "production" or DATABASE_URL.startswith("postgresql")) and (len(SECRET) < 32 or SECRET == "LOCAL_ONLY_INSECURE_DEVELOPMENT_SECRET" or SECRET.startswith("REPLACE-")):
-    raise RuntimeError("A unique strong JWT_SECRET is required with PostgreSQL or in production.")
+
+
+def access_key():
+    # Workers import domain helpers but never issue or accept end-user access.
+    if (APP_ENV == "production" or DATABASE_URL.startswith("postgresql")) and (
+        len(SECRET) < 32 or SECRET == "LOCAL_ONLY_INSECURE_DEVELOPMENT_SECRET" or SECRET.startswith("REPLACE-")
+    ):
+        raise RuntimeError("A unique strong JWT_SECRET is required with PostgreSQL or in production.")
+    return SECRET
 
 hasher = PasswordHasher()
 # A nonexistent account follows the same password verification work as a wrong password.
@@ -37,7 +44,7 @@ def check_password(password: str, encoded: str) -> bool:
 
 
 def make_token(device) -> str:
-    return jwt.encode(access_claims(device, ISSUER), SECRET, algorithm="HS256")
+    return jwt.encode(access_claims(device, ISSUER), access_key(), algorithm="HS256")
 
 
 def sign_actor(db, uid):
@@ -58,7 +65,7 @@ def current_user(credentials: HTTPAuthorizationCredentials | None = Depends(secu
     if not credentials or credentials.scheme.lower() != "bearer":
         raise HTTPException(status_code=401, detail="Bearer authentication required")
     try:
-        payload = jwt.decode(credentials.credentials, SECRET, algorithms=["HS256"], audience="amc-api", issuer=ISSUER,
+        payload = jwt.decode(credentials.credentials, access_key(), algorithms=["HS256"], audience="amc-api", issuer=ISSUER,
                              options={"require":["sub","sid","se","ce","iat","exp","aud","iss"]})
     except jwt.PyJWTError:
         raise HTTPException(status_code=401, detail="Invalid or expired token") from None

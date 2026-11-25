@@ -165,6 +165,7 @@ jobs:
               env=service.get('environment',{})
               assert 'OPENAI_API_KEY' not in env
               assert ('AMC_WORKER_KEY_FILE' in env)==(name=='worker')
+              if name=='worker': assert not {'JWT_SECRET','AMC_DB_PROOF_KEY','AMC_QUOTA_KEY','AMC_SESSION_GENERATION'} & set(env)
               assert any(v.get('target')=='/run/amc-worker-secrets' and v.get('read_only') for v in service.get('volumes',[]))==(name=='worker')"
           trap 'docker compose -p amc-acceptance down' EXIT
           docker compose -p amc-acceptance up -d --build

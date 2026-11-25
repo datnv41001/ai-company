@@ -11,6 +11,8 @@ Nhánh này xếp trên Business Profile C1 v22, xét duyệt riêng. Migration 
 
 ## Ranh giới quyết định
 
+Khi hai tab đăng nhập hai tài khoản khác nhau, thao tác đăng xuất ở tab cũ thu hồi đúng phiên bearer của tab đó, giữ cookie của tab mới. Nếu cả bearer và cookie của tab cũ đều mất hiệu lực, UI hiển thị kết quả chưa xác nhận và cho người dùng về màn hình đăng nhập ngay trên tab đó. Container workforce hiện chỉ có credential database theo cấu hình triển khai, không được cấp khóa ký JWT, khóa quota, khóa proof hoặc generation của phiên. Job Compose kiểm tra danh sách biến môi trường của worker.
+
 Read đã được kiểm tra trước logout có thể hoàn tất. Request tiếp theo phải kiểm tra lại. Với thay đổi qua SQLAlchemy Session của request, `before_commit` kiểm lại access và trạng thái phiên trong từng transaction, kể cả khi route đã commit quota rồi bắt đầu transaction mới. Tại ranh giới quyết định trên primary, mutation giữ shared advisory lock của user đến hết commit. Logout/refresh/thay credential dùng exclusive lock cùng định danh. Logout commit trước thì mutation rollback. Mutation vượt ranh giới trước thì logout đợi đến lúc mutation commit. Giới hạn chờ lock 5 giây. SQLite chỉ phục vụ pilot local, PostgreSQL là chuẩn nghiệm thu cạnh tranh. [Session guard](../app/session_state.py) · [Ca hai HTTP listener và hai thứ tự commit](../tests/test_device_sessions.py)
 
 ## Nâng cấp, xoay khóa và restore

@@ -51,9 +51,15 @@ def prepared(api, admin, base, client, brand, campaign, bid, workflow=c3_marketi
         if statement["category"] == "price":
             price = fact["price"]
             policy = make(f"terms-{i}","policy",{"placement":placement,"payment":"Payment on confirmation"})
-            offer = make(f"quote-{i}","offer",{"placement":placement,"price":price,"policy":policy["id"]})
+            offer_data = {"placement":placement,"price":price,"policy":policy["id"]}
+            if fact.get("offer_valid_until"):
+                offer_data["valid_until"] = fact["offer_valid_until"]
+            offer = make(f"quote-{i}","offer",offer_data)
             statement.update(offer=offer["id"],price=price,quantity=fact["quantity"],wording=price_wording(price))
             commercial = {"currency":price["currency"],"quantity":fact["quantity"]}
+        if statement["category"] == "availability":
+            observed = make(f"stock-{i}","availability",{"placement":placement,"status":statement["wording"],"observed_at":"2020-01-01T00:00:00Z","valid_until":"2099-01-01T00:00:00Z"})
+            statement["availability"] = observed["id"]
         source = make(f"source-{i}","source",{"publisher":"PRIVATE_SYNTHETIC_SUPPLIER","document":"PRIVATE_SYNTHETIC_DOCUMENT","valid_until":"2099-01-01T00:00:00Z",
                           "entries":[{"locator":"private locator", "excerpt":"PRIVATE_SYNTHETIC_EXCERPT","assertion":statement}]},visibility="restricted")
         binding = make(f"binding-{i}","binding",{"source":source["id"],"locator":"private locator","assertion":statement},visibility="restricted")
@@ -75,7 +81,7 @@ def prepared(api, admin, base, client, brand, campaign, bid, workflow=c3_marketi
     params = {"key":uuid4().hex, "workspace_brief_id":brief["id"],"target":{"campaign_id":campaign,"brief_id":bid}, "workflow":workflow,
               "market":market["id"],"kpi":kpi["id"],"claims":claims,**{k:info[k] for k in ("locale","channel","region")},**commercial}
     return {"marketing":marketing,"path":path,"ui":ui,"params":params,"root":shared,"company":company,
-            "sources":sources,"selections":selections,"placement":placement}
+            "sources":sources,"selections":selections,"placement":placement,"mandates":mandates}
 
 
 def capture(api, admin, prepared):

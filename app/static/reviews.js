@@ -163,7 +163,8 @@ function createReviewPanel(root, api, notify) {
         button(form,'Chia sẻ phiên bản đã duyệt',()=>{
           if(modified()) throw new Error('Hãy lưu và duyệt nội dung đã sửa trước khi chia sẻ.');
           if(!deadline.value) throw new Error('Chọn hạn phản hồi.');
-          return update(path+'/share','POST',{expires_at:new Date(deadline.value).toISOString()});
+          return update(path+'/share','POST',{expires_at:new Date(deadline.value).toISOString(),
+            expected_qa_revision:doc.qa_revision,expected_content_digest:doc.qa_approved_digest});
         });
       }
     }

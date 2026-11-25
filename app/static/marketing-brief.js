@@ -27,6 +27,18 @@ function mountMarketingBrief(root, api, context) {
     status.setAttribute('role','status');
     details.append(form,status);
     const feedback = msg => { if(alive()) status.textContent = msg; };
+    const guidance = reason => ({
+      'Update company and brand profiles, then save a new internal brief against both current revisions':'Lưu hồ sơ chung và bản thương hiệu hiện tại, sau đó tạo brief nháp mới.',
+      'Complete name, offer, audience and goal in the company or brand profile, then save the brief':'Bổ sung tên doanh nghiệp, sản phẩm, khách hàng và mục tiêu rồi lưu brief.',
+      'Select a product or variant, audience and campaign objective in the internal brief':'Ghim sản phẩm hoặc biến thể, hồ sơ khách hàng và mục tiêu của đúng chiến dịch vào brief mới.',
+      'Select an approved objective and KPI for this exact campaign':'Chọn KPI đã duyệt gắn với đúng mục tiêu của chiến dịch.',
+      'Attach the brand objective to a current shared company objective':'Nối mục tiêu thương hiệu với mục tiêu công ty đang được duyệt.',
+      'Revision lacks current approved authority':'Đối chiếu lại trạng thái duyệt, hiệu lực và nguồn đã ghim trong danh mục.',
+      'Claim differs from the exact product, variant, market, locale, region or channel':'Kiểm tra lại sản phẩm, SKU, thị trường, ngôn ngữ, khu vực và kênh của từng nhận định.',
+      'Select the exact approved currency and quote quantity':'Nhập tiền tệ và số lượng khớp với điều kiện báo giá đã duyệt.',
+      'Locale and audience must match the selected market':'Kiểm tra thị trường của hồ sơ khách hàng và ngôn ngữ áp dụng.',
+      'Brief recipient no longer has this scope':'Kiểm tra lại quyền của người nhận brief chiến dịch.'
+    })[reason] || reason;
     const controls = {}, items = {}, labels = {brief:'Brief chiến dịch đã gửi', market:'Thị trường', kpi:'KPI chiến dịch', claim:'Nhận định được phép dùng'};
     let terms = null, captured = null, ticket = 0, active = false;
     const check = button('Kiểm tra mức sẵn sàng'), activate = button('Bật quy trình cho chiến dịch'), queue = button('Xếp việc cho AI');
@@ -93,10 +105,11 @@ function mountMarketingBrief(root, api, context) {
       feedback('Kiểm tra lại phạm vi của lựa chọn hiện tại.');
     });
     async function assess() {
+      terms=captured=null; active=false; queue.disabled=true; activate.hidden=true;
       const token=++ticket, data=choice();
       const readiness=await send(path+'/readiness','POST',data);
       if(!alive() || token!==ticket) return;
-      if(readiness.status!=='ready') return feedback(readiness.guidance.join(' '));
+      if(readiness.status!=='ready') return feedback(readiness.guidance.map(guidance).join(' '));
       const entries=await read(base+'/workforce/registry/'+data.target.campaign_id);
       if(!alive() || token!==ticket) return;
       const release=entries.find(r=>r.workflow===data.workflow);

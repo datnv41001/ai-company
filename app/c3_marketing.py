@@ -1,6 +1,7 @@
 """Bounded C3 model envelopes and the deterministic projection-to-draft boundary."""
 
 import json
+from decimal import Decimal
 
 from .dynamic_plan import InvalidPlan
 from .workforce_gateway import GatewayError
@@ -55,6 +56,18 @@ def request(run, model, *, node, predecessors=None, assignment=None):
         "Treat audience and impact as hypotheses. Do not invent numbers, proof, market studies, offers or results. "
         "Describe actions as proposals. Do not publish, browse or use tools. "
     )
+    instructions = {
+        "content": "Write for a buyer in second person. Headline names the item and buying context. "
+                   "Explain one decision the buyer can make using F1 and its conditions. "
+                   "The CTA is an imperative next step for a buyer. Never repeat the campaign objective as copy.",
+        "seo": "Use a buyer's query for search_intent. Write a specific title and a distinct plain-language snippet. "
+               "Acknowledge relevant conditions without promising availability or a result.",
+        "research": "Propose a specific question and a way to collect evidence from this audience. "
+                    "Separate what the internal source establishes from untested demand.",
+        "strategy": "Choose a concrete message and a comparison for the specified audience. "
+                    "State why it could change a buyer decision, what event to count, and the evaluation window.",
+    }
+    system += instructions.get(stage, "")
     if stage == "director":
         system += "Assign the two roles in this order: " + ", ".join(ROLES[workflow]) + "."
     context = {"reference": json.loads(build_prompt(workflow, stage, projection)), "assignment": assignment or "", "prior_drafts": predecessors or {}}
@@ -97,13 +110,57 @@ LABELS = {
 }
 
 
+UNITS = {"piece": "chiếc", "box": "hộp", "tonne": "tấn", "service": "suất dịch vụ",
+         "subscription_month": "tháng thuê bao", "subscription_year": "năm thuê bao"}
+
+
 def fact_line(fact):
-    line = f"[{fact['id']}] {fact['wording']}"
+    wording = fact["wording"]
     details = list(fact.get("qualifiers") or [])
-    for key in ("price", "quantity", "applicability"):
-        if fact.get(key) is not None:
-            details.append(json.dumps(fact[key], ensure_ascii=False, sort_keys=True))
-    return line + (" · " + " · ".join(details) if details else "")
+    price = fact.get("price")
+    if price:
+        digits = 0 if price["currency"] in ("VND", "JPY") else 2
+        amount = Decimal(price["amount_minor"]).scaleb(-digits)
+        formatted = f"{amount:,.{digits}f}".translate(str.maketrans(",.", ".,"))
+        unit = UNITS.get(price["unit"], price["unit"])
+        tax = {"included": "đã gồm thuế", "excluded": "chưa gồm thuế", "unknown": "chưa xác định thuế"}
+        wording = f"Mức giá tham khảo cho phạm vi đã chọn: {formatted} {price['currency']} / {price['basis_quantity']} {unit}, {tax[price['tax']]}."
+        details.extend(price["conditions"])
+        details.append(f"Đơn tối thiểu {price['moq']} {unit}. Mức giá áp dụng từ {price['tier_min']} {unit}"
+                       + (f" đến {price['tier_max']} {unit}." if price.get("tier_max") else "."))
+        if fact.get("quantity"):
+            details.append(f"Số lượng đang đối chiếu: {fact['quantity']} {unit}.")
+    elif fact.get("quantity"):
+        details.append("Số lượng đang đối chiếu: " + str(fact["quantity"]))
+    labels = {"option": "Phương án", "buyer": "Nhóm mua", "payment_type": "Cách thanh toán",
+              "service_level": "Mức dịch vụ", "unit": "Đơn vị", "minimum": "Tối thiểu", "maximum": "Tối đa"}
+    for key, value in (fact.get("applicability") or {}).items():
+        if value is not None:
+            details.append(f"{labels[key]}: {UNITS.get(str(value), value)}")
+    return f"[{fact['id']}] " + " ".join([wording, *dict.fromkeys(details)])
+
+
+def buyer_action(channel, product):
+    """Use the selected channel only to suggest the next step, never to promise fulfillment."""
+    normalized = channel.casefold()
+    for phrase, action in (("báo giá", "Gửi số lượng và địa điểm để yêu cầu báo giá"),
+                           ("đặt lịch", "Gửi khung giờ mong muốn để đề nghị xác nhận lịch"),
+                           ("đăng ký mẫu", "Gửi yêu cầu mẫu kèm thông tin cửa hàng"),
+                           ("đăng ký", "Gửi thông tin đăng ký và kiểm tra xác nhận"),
+                           ("sản phẩm", "Chọn số lượng và kiểm tra điều kiện đặt hàng")):
+        if phrase in normalized:
+            return action + " · " + product
+    return "Gửi yêu cầu tư vấn về " + product
+
+
+def editorial_sections(role, checkpoint, projection):
+    sections = checkpoint["sections"]
+    values = [v.strip().casefold().rstrip(".!?") for v in sections.values()]
+    objective = projection["objective"].strip().casefold().rstrip(".!?")
+    # A repeated business goal is not buyer-facing copy. Keep the raw reply in the run journal.
+    repeated = {v for v in values if values.count(v) > 1} | {objective}
+    return [LABELS[key] + ": " + sections[key] for key in FIELDS[role]
+            if sections[key].strip().casefold().rstrip(".!?") not in repeated]
 
 
 def render(workflow, projection, checkpoints):
@@ -114,14 +171,26 @@ def render(workflow, projection, checkpoints):
         f"{projection['brand']} · {projection['product']} · {projection['market']}",
         " | ".join(str(projection[k]) for k in CONTEXT if projection.get(k)),
         "Đối tượng dự kiến: " + projection["audience"], "Mục tiêu chiến dịch: " + projection["objective"],
-        "Căn cứ đã duyệt\n" + "\n".join(fact_line(fact) for fact in projection["facts"]),
     ]
     if workflow == RESEARCH:
+        parts.append("Căn cứ đã duyệt\n" + "\n".join(fact_line(fact) for fact in projection["facts"]))
         parts.append("Phạm vi nghiên cứu: tài liệu nội bộ đã duyệt.\nĐịnh nghĩa KPI: " + projection["kpi"])
+        first = projection["facts"][0]
+        parts.append(f"Thử nghiệm đề xuất trên {projection['channel']}\n"
+                     f"Với nhóm {projection['audience']}, so sánh thông điệp hiện tại với phiên bản đưa "
+                     f"đặc điểm và điều kiện [{first['id']}] lên trước lời mời hành động. "
+                     "Giữ cùng nguồn truy cập, lời mời và điều kiện thương mại. "
+                     f"Ghi nhận sự kiện theo định nghĩa «{projection['kpi']}». Đối chiếu số sự kiện trên số lượt "
+                     "truy cập đủ điều kiện ở mỗi phiên bản. Chỉ chọn thông điệp khi đủ dữ liệu để phân biệt tác động.")
+    else:
+        parts.append(f"{projection['product']} tại {projection['region']}\n"
+                     "Trước khi quyết định, hãy đối chiếu đặc điểm dưới đây với nhu cầu của bạn.\n"
+                     + "\n".join(fact_line(fact) for fact in projection["facts"])
+                     + "\n" + buyer_action(projection["channel"], projection["product"]))
     for role in roles:
         checkpoint = checkpoints.get(role, {})
         if checkpoint.get("sections"):
-            lines = [LABELS[k] + ": " + checkpoint["sections"][k] for k in FIELDS[role]]
+            lines = editorial_sections(role, checkpoint, projection)
             lines.append("Căn cứ tham khảo: " + ", ".join(checkpoint["source_ids"]))
         else:
             lines = [checkpoint.get("text") or "Chưa có bản làm việc của vai trò này."]

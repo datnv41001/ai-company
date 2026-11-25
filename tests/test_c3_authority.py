@@ -47,7 +47,7 @@ def test_scope_and_historical_manifests(api, workforce):
     assert api.get(prep["path"]+"/snapshots/"+frozen["id"],headers=owner["headers"]).status_code == 404
 
 
-def setup_pool(lab, workflow=c3_marketing.LANDING):
+def setup_pool(lab, workflow=c3_marketing.LANDING, *, case=None):
     lab.owner.execute("update workforce_runs set ready_at=now()+interval '1 day' where id=any(%s)",(lab.runs,))
     name = "research-strategy-v2" if workflow == c3_marketing.RESEARCH else "landing-seo-v5"
     manifest = json.loads((ROOT/"catalog"/(name+".json")).read_text(encoding="utf-8"))
@@ -56,7 +56,7 @@ def setup_pool(lab, workflow=c3_marketing.LANDING):
     run_path,terms = registry_brief(lab)
     base,owner,reader,client,campaign=lab.cases[0]
     brand = lab.owner.execute("select brand_id from campaigns where id=%s",(campaign,)).fetchone()[0]
-    data = prepared(lab.api,owner,base,client,brand,campaign,run_path.split("/")[-2],workflow)
+    data = prepared(lab.api,owner,base,client,brand,campaign,run_path.split("/")[-2],workflow,case=case)
     snap = capture(lab.api,owner,data)
     terms.update(knowledge_manifest={"id":snap["id"],"digest":snap["digest"]},registry_workflow=workflow)
     return run_path,terms,data,snap
@@ -102,9 +102,18 @@ def test_real_boundaries(pool,workflow,withdraw_stage):
         return
     accepted(result)
     accepted(api.post(doc+"/review",headers=owner["headers"],json=qa))
+    if withdraw_stage is None:
+        # Rehearse a prior ruleset. Reassessment invalidates QA even if the text and save revision are unchanged.
+        lab.owner.execute("update deliverables set qa_evidence=(qa_evidence::jsonb || jsonb_build_object('ruleset_version','previous'))::json where id=%s",(doc.split("/")[-1],))
+        accepted(api.post(doc+"/assessment", headers=owner["headers"]))
+        accepted(api.post(doc+"/review", headers=owner["headers"],json=qa))
+        assert lab.owner.execute("select count(*) from knowledge_commands where snapshot_id=%s and operation='c3_qa'",(snap["id"],)).fetchone()==(2,)
     if withdraw_stage=="share":
         accepted(withdraw(api,owner,data))
     terms_share={"expires_at":(datetime.now(timezone.utc)+timedelta(days=1)).isoformat()}
+    assert api.post(doc+"/share",headers=owner["headers"],json=terms_share).status_code==422
+    terms_share.update(expected_qa_revision=qa["expected_qa_revision"], expected_content_digest=qa["expected_content_digest"])
+    assert api.post(doc+"/share",headers=owner["headers"],json=terms_share|{"expected_qa_revision":qa["expected_qa_revision"]+1}).status_code==412
     result=api.post(doc+"/share",headers=owner["headers"],json=terms_share)
     if withdraw_stage=="share":
         assert result.status_code==409

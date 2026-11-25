@@ -388,7 +388,7 @@ def review_deliverable(tenant_id: str, deliverable_id: str, body: DeliverableRev
         raise HTTPException(403, "Self-approval is forbidden")
     if body.decision == "approved" and (gate := c3_boundaries.boundary(db, user, item, digest, "qa")):
         store, snap, values = gate
-        c3_boundaries.record(store, snap, "qa", c3_boundaries.decision_key(values["run_id"], item.qa_revision, digest), values)
+        c3_boundaries.record_approval(store, snap, values)
     item.status, item.reviewed_by, item.review_note = body.decision, user.id, body.note
     item.qa_approved_revision = item.qa_revision if body.decision == "approved" else None
     item.qa_approved_digest = digest if body.decision == "approved" else None

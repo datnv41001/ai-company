@@ -20,7 +20,7 @@
       "role_id": "ai-managing-director",
       "contract_version": 3,
       "adapter": "director@3",
-      "adapter_digest": "2d6270f95aeddcac28ddf67590cab2ddf1b53c5352cc009ff2c3a5d8a041cd8e",
+      "adapter_digest": "ad8071a5187693d7ccf9cb47fc7c3cb1699845e2cfb1d2c27fce9bd21c7a10bc",
       "qa_policy": "c3-director@1",
       "model": "local",
       "inputs": [
@@ -73,7 +73,7 @@
       "role_id": "ai-copywriter-content-strategist",
       "contract_version": 3,
       "adapter": "content@3",
-      "adapter_digest": "2d6270f95aeddcac28ddf67590cab2ddf1b53c5352cc009ff2c3a5d8a041cd8e",
+      "adapter_digest": "ad8071a5187693d7ccf9cb47fc7c3cb1699845e2cfb1d2c27fce9bd21c7a10bc",
       "qa_policy": "c3-content@1",
       "model": "local",
       "inputs": [
@@ -147,7 +147,7 @@
       "role_id": "ai-seo-geo-specialist",
       "contract_version": 4,
       "adapter": "seo@4",
-      "adapter_digest": "2d6270f95aeddcac28ddf67590cab2ddf1b53c5352cc009ff2c3a5d8a041cd8e",
+      "adapter_digest": "ad8071a5187693d7ccf9cb47fc7c3cb1699845e2cfb1d2c27fce9bd21c7a10bc",
       "qa_policy": "c3-seo@1",
       "model": "local",
       "inputs": [

@@ -31,6 +31,8 @@ class Edit(Input):
 
 class Share(Input):
     expires_at: AwareDatetime
+    expected_qa_revision: int | None = Field(default=None, ge=1, strict=True)
+    expected_content_digest: str | None = Field(default=None, pattern=r"^[0-9a-f]{64}$")
 
 
 class Rights(Input):
@@ -226,8 +228,13 @@ def share(tenant_id: str, did: str, body: Share, user: User = Depends(current_us
     from . import c3_boundaries
     m = require_tenant(db, user, tenant_id, "admin")
     doc = working_copy(db, tenant_id, did)
-    if existing := c3_boundaries.existing_share(db, user, doc, body.expires_at):
-        return render(db, m, find_review(db, m, existing))
+    if run := c3_boundaries.run_for(db, doc):
+        if body.expected_qa_revision is None or body.expected_content_digest is None:
+            raise HTTPException(422, "The Marketing share request requires the reviewed revision and content digest")
+        if body.expected_qa_revision != doc.qa_revision or body.expected_content_digest != content_digest(doc.title, doc.content.get("client_preview", "")):
+            raise HTTPException(412, "The reviewed Marketing asset changed. Reload before sharing.")
+        if existing := c3_boundaries.existing_share(db, user, doc, body.expires_at, run):
+            return render(db, m, find_review(db, m, existing))
     if doc.status != "approved" or not doc.reviewed_by:
         raise HTTPException(409, "Independent QA approval is required")
     preview = doc.content.get("client_preview")

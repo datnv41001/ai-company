@@ -72,7 +72,8 @@ def receipts(lab, cases=None):
                 json={"decision": "approved", "expected_qa_revision": draft["qa_revision"], "expected_content_digest": evidence["content_digest"]},
             ).raise_for_status()
             shared = lab.api.post(
-                doc + "/share", headers=admin["headers"], json={"expires_at": (datetime.now(timezone.utc) + timedelta(days=1)).isoformat()}
+                doc + "/share", headers=admin["headers"], json={"expires_at": (datetime.now(timezone.utc) + timedelta(days=1)).isoformat(),
+                                                               "expected_qa_revision":draft["qa_revision"], "expected_content_digest":evidence["content_digest"]}
             ).json()
             assert shared["digest"] == evidence["content_digest"]
             lab.api.put(

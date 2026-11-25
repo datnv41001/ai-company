@@ -1,6 +1,7 @@
 """Current authority and immutable evidence at real queue, human QA and client delivery."""
 
 from types import SimpleNamespace
+from uuid import uuid4
 
 from sqlalchemy import select
 
@@ -53,9 +54,11 @@ def boundary(db, user, doc, content_digest, stage):
     values = {"run_id":run.id, "document_id":doc.id, "qa_revision":doc.qa_revision, "content_digest":content_digest,
               "manifest_digest":snap.digest, "release_digest":binding["manifest_digest"]}
     if stage == "share":
-        rows = db.scalars(store.query(KnowledgeCommand).filter_by(snapshot_id=snap.id, operation="c3_qa",
-                         actor=doc.reviewed_by, key=decision_key(run.id, doc.qa_revision, content_digest)))
-        if not any(row.result == values for row in rows):
+        key = decision_key(run.id, doc.qa_revision, content_digest)
+        query = store.query(KnowledgeCommand).filter_by(snapshot_id=snap.id, operation="c3_qa", actor=doc.reviewed_by)
+        row = db.scalar(query.where((KnowledgeCommand.key == key) | KnowledgeCommand.key.startswith(key + ":"))
+                        .order_by(KnowledgeCommand.effective_at.desc()).limit(1))
+        if row is None or row.result != values:
             conflict("A current approval for this manifest and deliverable revision is required")
     return store, snap, values
 
@@ -64,9 +67,15 @@ def decision_key(run_id, revision, content):
     return "qa:" + digest(canonical([run_id,revision,content]))
 
 
-def existing_share(db, user, doc, expires):
-    run = run_for(db, doc)
-    if not run or doc.status != "shared":
+def record_approval(store, snap, values):
+    # A changed assessment can require a second real decision on the same content revision.
+    # Lost acknowledgements are handled by the already-approved document branch under its lock.
+    key = decision_key(values["run_id"], values["qa_revision"], values["content_digest"])
+    record(store, snap, "qa", key + ":" + uuid4().hex[:24], values)
+
+
+def existing_share(db, user, doc, expires, run):
+    if doc.status != "shared":
         return None
     brief = db.get(WorkforceBrief, run.brief_id)
     _, store = context(db, user, brief)

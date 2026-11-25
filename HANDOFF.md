@@ -6,6 +6,10 @@ Draft A1 dành migration 023 sau C1 v22. Người dùng có thể xem thiết b�
 
 A1-P1-01 sửa luồng refresh của hai tab. Browser gửi SID đang hiển thị, PostgreSQL đối chiếu trước rotation. Cookie grant theo SID giữ response đến muộn của A tách khỏi phiên B. Khi nâng từ draft cũ hãy đăng nhập lại. Kiểm bằng `tests/test_device_sessions.py` và `tests/browser_device_context.py` trên dữ liệu tổng hợp. [Hợp đồng native, cách chạy và backlog Identity](docs/DEVICE-SESSIONS-A1.md)
 
+## AIRC · Research Broker công khai và holdout năng lực v4
+
+Trên nền main sau PR #23 `5dc4ebc73c9423f360d63287d52350e2ef21a31a`, tooling engineering thu thập các trích đoạn Marketing công khai đã duyệt, ghi cả các nguồn bị chặn, và so sánh cùng holdout có/không có packet. Chạy `python engineering/airc500/research_release.py` trong venv engineering trên máy mới. [Runbook, phạm vi quyền và rollback](engineering/airc500/PUBLIC-RESEARCH.md) · [Phép đo đã ghim](engineering/airc500/research-v4/REPORT.md).
+
 ## Business Profile C1 · backend v22 đang review nội bộ
 
 Sau phản biện trên `b9edc99`, C1 so khớp bí danh Hà Nội, TP.HCM và Đà Nẵng ở selector tồn kho, điều khoản và giá. Có thể có đơn vừa bán lẻ vừa trả trước. Hai chính sách áp dụng đồng thời cho đơn đó cần được đối chiếu. Hãy chạy lại publisher kể cả khi hàm SQL kiểm tồn kho đã tồn tại. API kiểm dấu SHA-256 của phiên bản quy tắc. [Danh mục và các ca hồi quy](tests/test_knowledge_scope_aliases.py)
@@ -516,5 +520,7 @@ Từ **Điều phối Marketing AI → Quyền workflow của chiến dịch**, 
 **Nâng cấp và rollback.** Tiếp tục dùng schema v14 và các trường JSON checkpoint hiện có. Nhập manifest là thao tác thêm định nghĩa. Khi cần rút `@4`, chọn **Ngừng cấp mới**, giao brief tiếp theo qua `@1`, giữ runtime tương thích cho run `@4` đến khi đã drain và đối soát hold/receipt. Kiểm tra snapshot và số dư theo mục kiểm kê v14 trước khi rút image cuối. Các đầu việc tiếp theo là Research → Strategy và chẩn đoán nguyên nhân chờ trước khi tăng quy mô pool.
 
 ## Business Profile & Brand Intelligence · increment Marketing đề xuất
+
+Để tiếp quản C2 sau vòng duyệt C1, bắt đầu từ [hồ sơ doanh nghiệp và năm luồng nghiệm thu](docs/business-profile/C2-WORKSPACE.md). Thiết kế dùng scope công ty theo client, giữ override của từng brand và cho Solo tạo brief nháp khi còn thiếu dữ kiện. [C3](docs/business-profile/C3-KNOWLEDGE-PROJECTION.md) mô tả projection và ba ranh giới kiểm tra trước khi kích hoạt adapter mới. Chỉ ghi nhận một luồng C2 đạt khi có lần chạy trình duyệt thật với API PostgreSQL ở đúng commit.
 
 Sau khi đồng bộ schema v20 từ `49cbc070`, C0 có [sáu quyết định, snapshot ví dụ và lệnh kiểm tra](docs/business-profile/README.md), [kế hoạch C1](docs/business-profile/C1-PLAN.md) và [năm tình huống C2/C4](docs/business-profile/C2-C4-ACCEPTANCE.md). Từ thư mục gốc chạy `python -m unittest discover -s docs/business-profile -p test_c0.py -v`. Chờ review độc lập C0 trước PR C1. Kiểm số migration còn trống trên main khi chuẩn bị tích hợp, kể cả nhánh Identity đang đề xuất. Commercial GA vẫn NO-GO.

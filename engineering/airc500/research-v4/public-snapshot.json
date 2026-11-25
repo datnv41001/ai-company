@@ -1,0 +1,94 @@
+{
+  "version": 1,
+  "policy_sha256": "920add65312efed98153507eefd355cfe9e0ad686810bb4cd39279d2246a9ea0",
+  "observations": [
+    {
+      "id": "G",
+      "topic": "analytics",
+      "kind": "platform_documentation",
+      "publisher": "Google Analytics Help",
+      "url": "https://support.google.com/analytics/answer/12195621?hl=en",
+      "locator": "About the metrics",
+      "excerpts": [
+        "Lasts longer than 10 seconds",
+        "Has a key event",
+        "Has 2 or more screen or page views"
+      ],
+      "limitations": "Platform definition for GA4 default engagement. Confirm the property configuration separately.",
+      "retrieved_utc": "2026-11-25T00:43:46.243184+00:00",
+      "bytes": 1686634,
+      "raw_sha256": "5c17a801c39522240daf29cf4edfbb76841d213e9726c15a0f5a021f62ff49b8",
+      "excerpt_sha256": "038d5e294b1f1dbb87dd58f22ae1a439977434d6b0477a553861040c85ed84d1",
+      "quality": "first-party platform rule",
+      "retention": "Short approved quotations only; transient full body discarded",
+      "untrusted": true
+    },
+    {
+      "id": "W",
+      "topic": "catalog",
+      "kind": "competitor_documentation",
+      "publisher": "WooCommerce",
+      "url": "https://woocommerce.com/document/managing-products/",
+      "locator": "Grouped Products",
+      "excerpts": [
+        "Each item within a grouped product can be added to the cart individually"
+      ],
+      "limitations": "First-party description of core grouped products. Extensions or shop-specific restrictions can differ.",
+      "retrieved_utc": "2026-11-25T00:43:46.623867+00:00",
+      "bytes": 227204,
+      "raw_sha256": "3261ed036e7eea9de1dfd81f7bb0d0e5caf69364cc51e76148484b13c1c88774",
+      "excerpt_sha256": "1683708c53ccc18bf9a7ceca28751d484abbef7a725bd93f7590868f524a0e97",
+      "quality": "first-party product description",
+      "retention": "Short approved quotations only; transient full body discarded",
+      "untrusted": true
+    },
+    {
+      "id": "S",
+      "topic": "community",
+      "kind": "community_feedback",
+      "publisher": "Shopify Community",
+      "url": "https://community.shopify.com/t/sell-products-with-minimum-quantity-and-increment-quantity-with-fixed-number-of-units/39933",
+      "locator": "Original merchant question on package sizes",
+      "excerpts": [
+        "add 6 bottles at a time, or 3 bottles at time depending on the product"
+      ],
+      "limitations": "A single self-selected merchant request. Use as a question to investigate, never as proof about another merchant.",
+      "retrieved_utc": "2026-11-25T00:43:48.821346+00:00",
+      "bytes": 49955,
+      "raw_sha256": "184b6c3d48981b55e795dbf70665ece4431ed6f81ac574ed48f635f6aed58b10",
+      "excerpt_sha256": "5137ac0b39df021c9cb138d6e968a14f2c611272c17a42eb1824c3361d420231",
+      "quality": "unverified anecdote",
+      "retention": "Short approved quotations only; transient full body discarded",
+      "untrusted": true
+    },
+    {
+      "id": "H",
+      "topic": "experiments",
+      "kind": "marketing_discussion",
+      "publisher": "Hacker News",
+      "url": "https://news.ycombinator.com/item?id=41679891",
+      "locator": "Participant discussing retargeting measurement",
+      "excerpts": [
+        "the cost of the ads netted it all to zero or less than zero"
+      ],
+      "limitations": "One participant's retrospective experience, without verified measurements. Cannot establish an effect for a client or a population.",
+      "retrieved_utc": "2026-11-25T00:43:50.398714+00:00",
+      "bytes": 46176,
+      "raw_sha256": "81c1282454e77d1670a6210d1c9b0ffa535eaa7f1fe0f23fd58ce3e02f14f83b",
+      "excerpt_sha256": "cac018712cdfe885f558f3f01a808dd7c1e04e93871a5c095f5f052d11b49f43",
+      "quality": "unverified anecdote",
+      "retention": "Short approved quotations only; transient full body discarded",
+      "untrusted": true
+    }
+  ],
+  "gaps": [
+    {
+      "source": "C",
+      "reason": "Unexpected response status, type or encoding (403)"
+    },
+    {
+      "source": "E",
+      "reason": "Unexpected response status, type or encoding (403)"
+    }
+  ]
+}

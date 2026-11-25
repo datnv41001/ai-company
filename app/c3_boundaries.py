@@ -5,7 +5,7 @@ from uuid import uuid4
 
 from sqlalchemy import select
 
-from . import c3_marketing, c3_projection as projection
+from . import c3_content_evidence, c3_projection as projection
 from .business_workspace import Workspace
 from .knowledge_models import KnowledgeCommand
 from .knowledge_store import canonical, conflict, digest
@@ -33,8 +33,14 @@ def record(store, snap, operation, key, result):
 
 def run_for(db, doc):
     run = db.scalar(select(WorkforceRun).filter_by(tenant_id=doc.tenant_id, deliverable_id=doc.id))
-    if run and run.knowledge.get("registry", {}).get("workflow") in c3_marketing.ROLES:
+    if c3_content_evidence.marketing_run(run):
         return run
+    return None
+
+
+def internal_author(brief):
+    if brief and (getattr(brief, "origin", None) == "internal" or (brief.payload or {}).get("internal_task") is True):
+        return brief.recipient_id
     return None
 
 
@@ -45,6 +51,9 @@ def boundary(db, user, doc, content_digest, stage):
     brief = db.get(WorkforceBrief, run.brief_id)
     if not brief or (brief.tenant_id, brief.client_id, brief.brand_id, brief.campaign_id) != (doc.tenant_id, run.client_id, run.brand_id, doc.campaign_id):
         conflict("Deliverable is outside the pinned campaign")
+    author = internal_author(brief)
+    if author and (stage == "share" or author == user.id):
+        conflict("Internal Marketing drafts require independent QA and cannot be shared through the client portal")
     binding = run.knowledge["registry"]
     ref = run.knowledge["c3_manifest"]
     store, snap, _ = checked(db, user, brief, ref, binding["workflow"], stage)
@@ -53,7 +62,9 @@ def boundary(db, user, doc, content_digest, stage):
         conflict("The approved campaign registry binding changed")
     values = {"run_id":run.id, "document_id":doc.id, "qa_revision":doc.qa_revision, "content_digest":content_digest,
               "manifest_digest":snap.digest, "release_digest":binding["manifest_digest"]}
-    if stage == "share":
+    from .c3_evidence_review import decision_evidence
+    values.update(decision_evidence(store, snap, doc, run, content_digest))
+    if stage in ("share", "replay_qa"):
         key = decision_key(run.id, doc.qa_revision, content_digest)
         query = store.query(KnowledgeCommand).filter_by(snapshot_id=snap.id, operation="c3_qa", actor=doc.reviewed_by)
         row = db.scalar(query.where((KnowledgeCommand.key == key) | KnowledgeCommand.key.startswith(key + ":"))

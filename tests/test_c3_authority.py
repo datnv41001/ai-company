@@ -176,7 +176,7 @@ def test_real_boundaries(pool, workflow, withdraw_stage):
 
     editor = new_member(api, owner, "editor")
     accepted(
-        api.patch(doc + "/draft", headers=editor["headers"], json={"title": "Another edition", "client_preview": "Revised approved matte surface reference."})
+        api.patch(doc + "/draft", headers=editor["headers"], json={"title": long_name, "client_preview": "[F1] Matte surface"})
     )
     accepted(api.post(doc + "/submit", headers=editor["headers"]))
     _, new_decision = doc_and_decision(lab, base, owner, rid)

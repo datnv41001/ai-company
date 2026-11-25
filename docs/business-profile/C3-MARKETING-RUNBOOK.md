@@ -35,6 +35,8 @@ Quyền và hiệu lực của nguồn áp dụng cho toàn bộ material đã g
 
 ## Kiểm tra, đánh giá, rollback
 
+Quy trình sửa và duyệt từng nhận định, đối chiếu nguồn và tra lịch sử được mô tả trong [hướng dẫn kiểm chứng nội dung](C3-CONTENT-EVIDENCE.md).
+
 ```bash
 python scripts/build_c3_releases.py
 python -m ruff check .

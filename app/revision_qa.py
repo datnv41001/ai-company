@@ -43,6 +43,9 @@ def evaluate(db, doc, actor):
     if run and any(step.get("quality", {}).get("role_qa", {}).get("scope") == "node_checkpoint" for step in run.checkpoints):
         # Free-form editor text has its own assessment. Original node findings stay on the run.
         report["scope"] = "delivery_revision"
+    from . import c3_content_evidence
+    if c3_content_evidence.marketing_run(run):
+        report["content_evidence"] = c3_content_evidence.assess_document(doc, run, report["content_digest"])
     doc.qa_evidence = report
     db.add(AuditEvent(tenant_id=doc.tenant_id, user_id=actor, subject_id=doc.id, event="deliverable.qa_evaluated", details=report))
     return report

@@ -228,6 +228,7 @@ jobs:
 
           AMC_STUDIO_EVIDENCE="$RUNNER_TEMP/knowledge-center-journeys/marketing-studio-replay" AMC_DEV_MAILBOX_DIR="$RUNNER_TEMP/c3-studio-mail" python -m pytest -q tests/browser_marketing_studio.py tests/browser_customer_assets.py --basetemp="$RUNNER_TEMP/c3-studio-db"
           AMC_LAB_EVIDENCE="$RUNNER_TEMP/knowledge-center-journeys/campaign-lab" AMC_DEV_MAILBOX_DIR="$RUNNER_TEMP/lab-mail" python -m pytest -q tests/browser_campaign_lab.py --basetemp="$RUNNER_TEMP/lab-db"
+          AMC_DEV_MAILBOX_DIR="$RUNNER_TEMP/engine-browser-mail" python -m pytest -q tests/browser_campaign_engine.py --basetemp="$RUNNER_TEMP/engine-browser-db"
           AMC_PREMIUM_EVIDENCE="$RUNNER_TEMP/premium-ui" AMC_BROWSER_MAILBOX_PROJECT=amc-acceptance AMC_BROWSER_TEST_URL=http://127.0.0.1:8000 python tests/browser_premium_ui.py
       - uses: actions/upload-artifact@v4
         if: always()
@@ -326,6 +327,13 @@ jobs:
             export AMC_LIVE_STUDIO_SCREENSHOTS=1
           fi
           python tests/evaluation/c3/internal_qualification.py c3-internal-receipts
+          if [[ "${{ matrix.revision }}" == integration ]]; then
+            export AMC_ENGINE_EVIDENCE=campaign-engine-receipts/screens
+          fi
+          python tests/campaign_planner_journey.py campaign-engine-receipts
+          verify=(python tests/check_engine_receipts.py campaign-engine-receipts --checkout "$(git rev-parse HEAD)")
+          if [[ -n "${AMC_ENGINE_EVIDENCE:-}" ]]; then verify+=(--screens "$AMC_ENGINE_EVIDENCE"); fi
+          "${verify[@]}"
           if [[ "${{ matrix.revision }}" == integration && "$GITHUB_HEAD_REF" == feature/marketing-product-qualification && ! -f docs/evaluation/c3-product-v2/RESULTS.md ]]; then
             python tests/evaluation/c3/internal_qualification.py c3-product-v2 --study
             python tests/evaluation/c3/internal_qualification.py c3-unit-recovery --recovery
@@ -349,6 +357,7 @@ jobs:
             research-strategy-measurements.json
             c3-model-receipts/
             c3-internal-receipts/
+            campaign-engine-receipts/
             c3-product-v2/
             c3-unit-recovery/
             c3-director-regression/

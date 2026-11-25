@@ -1,0 +1,176 @@
+[
+  {
+    "id": "49564b6f-043a-4163-b813-aeb8ba4efe42",
+    "digest": "c642c9eceaa88015381febfb1f809a022d9654d09a9d5e2ea3ff41d908db5b19",
+    "workflow": "WF-03/research-strategy-draft@3",
+    "version": "amc.marketing-manifest/2",
+    "snapshot_as_of": "2026-11-25T12:45:18.702080+00:00",
+    "expires_at": "2026-11-25T13:00:18.702080+00:00",
+    "projection": {
+      "company": "Vật liệu Hải Đăng",
+      "brand": "Gỗ tiêu âm Mộc",
+      "product": "Tấm gỗ tiêu âm Mộc",
+      "sku": "MOC-12",
+      "market": "Vietnam",
+      "audience": "Nhà thầu phòng thu",
+      "objective": "Tăng yêu cầu báo giá tấm gỗ cho dự án phòng thu",
+      "kpi": "Yêu cầu đủ số lượng và địa bàn để báo giá · requests · 30 days · Count completed request forms",
+      "locale": "vi-VN",
+      "region": "HN",
+      "channel": "web",
+      "facts": [
+        {
+          "id": "F1",
+          "wording": "Lớp mặt phủ veneer.",
+          "qualifiers": [
+            "Dùng trong nhà."
+          ],
+          "category": "description"
+        },
+        {
+          "id": "F2",
+          "wording": "VND 430000 / 1 box (tax included)",
+          "qualifiers": [
+            "Xác nhận số lượng trước khi đặt."
+          ],
+          "category": "price",
+          "price": {
+            "moq": "1",
+            "tax": "included",
+            "unit": "box",
+            "currency": "VND",
+            "tier_max": null,
+            "tier_min": "1",
+            "conditions": [
+              "Xác nhận số lượng trước khi đặt."
+            ],
+            "amount_minor": 430000,
+            "basis_quantity": "1"
+          },
+          "quantity": "1"
+        }
+      ],
+      "hypotheses": [
+        "Buyer needs require interviews"
+      ],
+      "gaps": [
+        "Kiểm chứng nhu cầu với khách hàng trong thị trường đã chọn.",
+        "Xác minh số liệu nền và kết quả bằng dữ liệu đo thực tế."
+      ],
+      "task_intent": {
+        "purpose": "Tăng yêu cầu báo giá tấm gỗ cho dự án phòng thu",
+        "deliverable_type": "marketing_strategy",
+        "audience": "Nhà thầu phòng thu",
+        "product": "Tấm gỗ tiêu âm Mộc",
+        "channel": "web",
+        "region": "HN",
+        "locale": "vi-VN",
+        "requirements": [
+          "Gửi yêu cầu báo giá theo hộp."
+        ],
+        "exclusions": [
+          "chắc chắn sinh lời"
+        ],
+        "acceptance_criteria": [
+          "Bàn giao thông tin đủ để người nhận thực hiện bước tiếp theo."
+        ],
+        "buyer_action": "rfq",
+        "editorial_style": "plain"
+      },
+      "brand_guidelines": {
+        "revision": 1,
+        "digest": "8667f503425c83801d0702e0a96932e171bcc578d401f55e68de2dc1d3e1e675",
+        "guidance": "Dùng câu ngắn và nêu rõ điều kiện áp dụng.",
+        "tone": "Cụ thể",
+        "prohibited_claims": []
+      }
+    }
+  },
+  {
+    "id": "7ca90231-1da3-4340-ad0e-8599d76e76b2",
+    "digest": "770c6e90656e32f88eff7dee2b5ae10a44221c453e55544b7a6e81edb26d0d6d",
+    "workflow": "WF-13/landing-seo-draft@6",
+    "version": "amc.marketing-manifest/2",
+    "snapshot_as_of": "2026-11-25T12:45:18.937045+00:00",
+    "expires_at": "2026-11-25T13:00:18.937045+00:00",
+    "projection": {
+      "company": "Vật liệu Hải Đăng",
+      "brand": "Gỗ tiêu âm Mộc",
+      "product": "Tấm gỗ tiêu âm Mộc",
+      "sku": "MOC-12",
+      "market": "Vietnam",
+      "audience": "Nhà thầu phòng thu",
+      "objective": "Tăng yêu cầu báo giá tấm gỗ cho dự án phòng thu",
+      "kpi": "Yêu cầu đủ số lượng và địa bàn để báo giá · requests · 30 days · Count completed request forms",
+      "locale": "vi-VN",
+      "region": "HN",
+      "channel": "web",
+      "facts": [
+        {
+          "id": "F1",
+          "wording": "Lớp mặt phủ veneer.",
+          "qualifiers": [
+            "Dùng trong nhà."
+          ],
+          "category": "description"
+        },
+        {
+          "id": "F2",
+          "wording": "VND 430000 / 1 box (tax included)",
+          "qualifiers": [
+            "Xác nhận số lượng trước khi đặt."
+          ],
+          "category": "price",
+          "price": {
+            "moq": "1",
+            "tax": "included",
+            "unit": "box",
+            "currency": "VND",
+            "tier_max": null,
+            "tier_min": "1",
+            "conditions": [
+              "Xác nhận số lượng trước khi đặt."
+            ],
+            "amount_minor": 430000,
+            "basis_quantity": "1"
+          },
+          "quantity": "1"
+        }
+      ],
+      "hypotheses": [
+        "Buyer needs require interviews"
+      ],
+      "gaps": [
+        "Kiểm chứng nhu cầu với khách hàng trong thị trường đã chọn.",
+        "Xác minh số liệu nền và kết quả bằng dữ liệu đo thực tế."
+      ],
+      "task_intent": {
+        "purpose": "Tăng yêu cầu báo giá tấm gỗ cho dự án phòng thu",
+        "deliverable_type": "landing_page",
+        "audience": "Nhà thầu phòng thu",
+        "product": "Tấm gỗ tiêu âm Mộc",
+        "channel": "web",
+        "region": "HN",
+        "locale": "vi-VN",
+        "requirements": [
+          "Gửi yêu cầu báo giá theo hộp."
+        ],
+        "exclusions": [
+          "chắc chắn sinh lời"
+        ],
+        "acceptance_criteria": [
+          "Bàn giao thông tin đủ để người nhận thực hiện bước tiếp theo."
+        ],
+        "buyer_action": "rfq",
+        "editorial_style": "plain"
+      },
+      "brand_guidelines": {
+        "revision": 1,
+        "digest": "8667f503425c83801d0702e0a96932e171bcc578d401f55e68de2dc1d3e1e675",
+        "guidance": "Dùng câu ngắn và nêu rõ điều kiện áp dụng.",
+        "tone": "Cụ thể",
+        "prohibited_claims": []
+      }
+    }
+  }
+]

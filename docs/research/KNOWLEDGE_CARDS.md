@@ -113,3 +113,5 @@ Linear giảm cạnh tranh thị giác giữa navigation và vùng nội dung. G
 **Giới hạn.** Các case thiết kế không chứng minh AMC dễ dùng. Phải thử dữ liệu thật qua API, cả workspace rỗng, trên desktop/tablet/mobile và đo riêng với người dùng. [Đối chiếu mã và yêu cầu](APPLICABILITY_MATRIX.md#k-11)
 
 Đợt áp dụng tiếp theo bổ sung transcript YC, ca SEO của Rakuten và phương pháp so sánh bản giao cho K-06 đến K-10. [Xem nguồn, quyết định, tiêu chí và phương án bác bỏ](C3-QUALITY-AND-REVIEWER-CAPACITY.md).
+
+Đợt Campaign Operating Engine áp dụng ghim nguồn theo chiến dịch, truy nguyên đầu ra, hợp đồng retry và đối soát Sales. Bảng quyết định ghi tác giả, mức bằng chứng, giới hạn và ca kiểm tương ứng. [Nguồn và nghiệm thu trong engine](CAMPAIGN-ENGINE.md)

@@ -1,0 +1,89 @@
+[
+  {
+    "id": "8219039f-1053-4d6b-ab72-bd9b048a7dac",
+    "digest": "cd301b2bfde11a0d70e34c48b4a63be1a65f011574e405e0ed5db63e184870af",
+    "workflow": "WF-13/landing-seo-draft@6",
+    "version": "amc.marketing-manifest/2",
+    "snapshot_as_of": "2026-11-25T12:46:38.732119+00:00",
+    "expires_at": "2026-11-25T13:01:38.732119+00:00",
+    "projection": {
+      "company": "Kỹ thuật Sông Lam",
+      "brand": "Xưởng bơm Lam",
+      "product": "Dịch vụ kiểm tra bơm Lam",
+      "sku": "BOM-KT",
+      "market": "Vietnam",
+      "audience": "Quản đốc nhà máy",
+      "objective": "Tăng lịch khảo sát bảo trì tại xưởng",
+      "kpi": "Lịch khảo sát được xác nhận · requests · 30 days · Count completed request forms",
+      "locale": "vi-VN",
+      "region": "HN",
+      "channel": "web",
+      "facts": [
+        {
+          "id": "F1",
+          "wording": "VND 270000 / 1 machine (tax included)",
+          "qualifiers": [
+            "Xác nhận số lượng trước khi đặt."
+          ],
+          "category": "price",
+          "price": {
+            "moq": "1",
+            "tax": "included",
+            "unit": "machine",
+            "currency": "VND",
+            "tier_max": null,
+            "tier_min": "1",
+            "conditions": [
+              "Xác nhận số lượng trước khi đặt."
+            ],
+            "amount_minor": 270000,
+            "basis_quantity": "1"
+          },
+          "quantity": "1"
+        },
+        {
+          "id": "F2",
+          "wording": "Phiếu kiểm tra ghi tình trạng máy.",
+          "qualifiers": [
+            "Áp dụng cho máy tại xưởng."
+          ],
+          "category": "description"
+        }
+      ],
+      "hypotheses": [
+        "Buyer needs require interviews"
+      ],
+      "gaps": [
+        "Kiểm chứng nhu cầu với khách hàng trong thị trường đã chọn.",
+        "Xác minh số liệu nền và kết quả bằng dữ liệu đo thực tế."
+      ],
+      "task_intent": {
+        "purpose": "Tăng lịch khảo sát bảo trì tại xưởng",
+        "deliverable_type": "landing_page",
+        "audience": "Quản đốc nhà máy",
+        "product": "Dịch vụ kiểm tra bơm Lam",
+        "channel": "web",
+        "region": "HN",
+        "locale": "vi-VN",
+        "requirements": [
+          "Đặt lịch khảo sát theo máy."
+        ],
+        "exclusions": [
+          "chắc chắn sinh lời"
+        ],
+        "acceptance_criteria": [
+          "Bàn giao thông tin đủ để người nhận thực hiện bước tiếp theo."
+        ],
+        "buyer_action": "appointment",
+        "editorial_style": "plain"
+      },
+      "brand_guidelines": {
+        "revision": 1,
+        "digest": "8667f503425c83801d0702e0a96932e171bcc578d401f55e68de2dc1d3e1e675",
+        "guidance": "Dùng câu ngắn và nêu rõ điều kiện áp dụng.",
+        "tone": "Cụ thể",
+        "prohibited_claims": []
+      }
+    }
+  }
+]

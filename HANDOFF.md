@@ -1,5 +1,9 @@
 # Bắt đầu ở đây khi tiếp quản AI Marketing Company
 
+## Điều hành chiến dịch từ mục tiêu đã duyệt
+
+Chọn **Chiến dịch → Điều hành chiến dịch** để chuyển dữ liệu đã duyệt của từng khách và brand thành kế hoạch có phiên bản, tài sản, lịch chạy sandbox và bàn giao Sales. Mọi phép đo có nguồn từ bản ghi campaign đang xem. Pilot người làm nghề còn thiếu người tham gia. [Quy trình, Docker, bằng chứng và rollback](docs/evaluation/campaign-engine/README.md) · [Giao thức chấm cố định](docs/evaluation/campaign-engine/PILOT.md). Commercial GA vẫn NO-GO.
+
 ## Mốc tích hợp nền của Studio và Campaign Lab
 
 | PR | Head đã duyệt → head đồng bộ | Bản tích hợp đã test → merge trên main | Bằng chứng |

@@ -1,0 +1,1295 @@
+{
+  "environment": "Windows local, restricted loopback PostgreSQL, pinned Qwen 0.5B in llama.cpp. Synthetic. Development timestamps and checkout IDs describe pre-commit runs. Runtime fingerprints include all application code.",
+  "series": [
+    {
+      "attempt_series": 1,
+      "outcome": "Blocked at registry publication after working source changed. No model call.",
+      "runs": [],
+      "input_tokens": 0,
+      "output_tokens": 0,
+      "worker_seconds": 0,
+      "provider_fee_usd": 0
+    },
+    {
+      "attempt_series": 2,
+      "outcome": "Original numeric product name. WF-03 draft produced; Studio refused to sign the edited revision because field evidence was insufficient. No customer acceptance.",
+      "runs": [
+        {
+          "run_id": "9b8404b2-5e75-43f9-b2e8-13120298a2b7",
+          "workflow": "WF-03/research-strategy-draft@3",
+          "state": "awaiting_qa",
+          "last_error": null,
+          "runtime_s": 22.172,
+          "provider_fee_usd": 0,
+          "input_tokens": 2186,
+          "output_tokens": 314,
+          "unmetered_attempts": 0,
+          "first_pass_runtime": true,
+          "journal": [
+            {
+              "skill": "director",
+              "attempt": 1,
+              "outcome": "ok",
+              "input_tokens": 501,
+              "output_tokens": 60
+            },
+            {
+              "skill": "research",
+              "attempt": 1,
+              "outcome": "ok",
+              "input_tokens": 774,
+              "output_tokens": 100
+            },
+            {
+              "skill": "strategy",
+              "attempt": 1,
+              "outcome": "ok",
+              "input_tokens": 911,
+              "output_tokens": 154
+            }
+          ],
+          "attempts": [
+            {
+              "attempt_id": "5b6f2023-42e4-40fb-871e-1ff8a3cfa2ec",
+              "schema": "c3_skills_director",
+              "request_sha256": "0733568c45094c260b0008fdf89c7a2c0891c6ceece621c62612b4bd664db145",
+              "input_tokens": 501,
+              "output_tokens": 60,
+              "raw_output": {
+                "primary_assignment": "Compare the approved facts with the buyer hypothesis.",
+                "secondary_assignment": "Design a bounded test of the positioning and define its metric."
+              }
+            },
+            {
+              "attempt_id": "68da7115-6265-4a46-9db7-ace567c45bbe",
+              "schema": "c3_skills_research",
+              "request_sha256": "a021e44e89ae4e43d3daf8aaf5c2b9d21cf99d58fb8bbb84c6269f8ac8981a68",
+              "input_tokens": 774,
+              "output_tokens": 100,
+              "raw_output": {
+                "segment": "Nhà thầu phòng thu",
+                "source_ids": [
+                  "F1",
+                  "F2"
+                ],
+                "buyer_problem": "Nhân viên cần phải thực hiện khảo sát.",
+                "evidence_needed": "Xác minh số liệu nền và kết quả bằng dữ liệu đo thực tế.",
+                "research_question": "Xem xét các thông tin cần thiết để xác định giá tấm gỗ tiêu âm Mộc 12 cho dự án phòng thu."
+              }
+            },
+            {
+              "attempt_id": "6ccd16ae-2d7f-4b03-ae7f-2bb8452349df",
+              "schema": "c3_skills_strategy",
+              "request_sha256": "6c1e98b6b64e9ec6af7b84e2fbf863640326834ad5723dc0546902a02ed10655",
+              "input_tokens": 911,
+              "output_tokens": 154,
+              "raw_output": {
+                "rationale": "Tạo một vòng lặp kiểm tra của vị trí và xác định metric của nó.",
+                "source_ids": [
+                  "F1",
+                  "F2"
+                ],
+                "positioning": "Tăng yêu cầu báo giá tấm gỗ cho dự án phòng thu",
+                "channel_choice": "web",
+                "test_hypothesis": "Nhà thầu phòng thu cần yêu cầu số lượng và địa bàn để báo giá",
+                "measurable_action": "tăng yêu cầu báo giá",
+                "measurement_method": "tăng yêu cầu số lượng và địa bàn để báo giá · requests · 30 days · Count completed request forms"
+              }
+            }
+          ],
+          "manifest": {
+            "id": "be2d17c4-5336-49a4-a045-4a86d0764441",
+            "digest": "08428b4c8235d318173c0f21524026d80bdf4a7382a9509ce0ab29f26987ecbe"
+          },
+          "runtime_fingerprint": "f5037847c132d0f98ad34e93cb1052b515791bdfeb99a329bf44f29a127f6d5d",
+          "case": "acoustic-panel",
+          "kind": "strategy",
+          "plan_id": "37e771f0-ed1b-41c5-81f9-25e6af43beaf",
+          "product": "Tấm gỗ tiêu âm Mộc 12",
+          "source_file_sha256": "258669212c8a69ffa984dd9d4883dff9d92a4ba44434ee1f33659af286954910",
+          "model_draft": {
+            "id": "fa3830b0-09e6-41ca-b34f-9ef1abcd3162",
+            "title": "Tấm gỗ tiêu âm Mộc 12",
+            "body": "Tấm gỗ tiêu âm Mộc 12\n\nPhạm vi: HN\n\nLớp mặt phủ veneer. Dùng trong nhà.\n\nGiá tham khảo: 430.000 VND / 1 hộp, đã gồm thuế. Đơn tối thiểu: 1 hộp. Áp dụng từ 1 hộp. Số lượng đối chiếu: 1 hộp. Xác nhận số lượng trước khi đặt.",
+            "qa_revision": 1,
+            "digest": "1dba9cfecfab04e9a954cfe1171a85568f92d8f6fc2f9484c382a0a22d71a9b2"
+          }
+        }
+      ],
+      "conditions": {
+        "checkout": "4a23c40a40ea0cfc6eb4f26c394619edf19f9235",
+        "provider": "llama.cpp loopback",
+        "model_sha256": "74a4da8c9fdbcd15bd1f6d01d621410d31c6fc00986f5eb687824e7b93d7a9db",
+        "build": "b12649-1f8baae28",
+        "cases_sha256": "3dfffb5ad22cd1d61d5ad4d24f4f2b02ffd4f3a0c9d44a505705a73782ff356b",
+        "worker_concurrency": 1
+      },
+      "input_tokens": 2186,
+      "output_tokens": 314,
+      "worker_seconds": 22.17,
+      "provider_fee_usd": 0
+    },
+    {
+      "attempt_series": 3,
+      "outcome": "Diagnostic harness requested the wrong evidence response property after model runs. Both model results retained. No customer acceptance.",
+      "runs": [
+        {
+          "run_id": "c25b6bca-0a74-408e-8590-9f4f69f5ec19",
+          "workflow": "WF-03/research-strategy-draft@3",
+          "state": "awaiting_qa",
+          "last_error": null,
+          "runtime_s": 18.89,
+          "provider_fee_usd": 0,
+          "input_tokens": 2154,
+          "output_tokens": 329,
+          "unmetered_attempts": 0,
+          "first_pass_runtime": true,
+          "journal": [
+            {
+              "skill": "director",
+              "attempt": 1,
+              "outcome": "ok",
+              "input_tokens": 495,
+              "output_tokens": 62
+            },
+            {
+              "skill": "research",
+              "attempt": 1,
+              "outcome": "ok",
+              "input_tokens": 768,
+              "output_tokens": 88
+            },
+            {
+              "skill": "strategy",
+              "attempt": 1,
+              "outcome": "ok",
+              "input_tokens": 891,
+              "output_tokens": 179
+            }
+          ],
+          "attempts": [
+            {
+              "attempt_id": "15cdbd07-acb6-43b6-8131-26785b58e9b9",
+              "schema": "c3_skills_director",
+              "request_sha256": "c98596d41b547f4bcbbb414e048d412c94595b1a753fb5159b5aa7dab7dd709c",
+              "input_tokens": 495,
+              "output_tokens": 62,
+              "raw_output": {
+                "primary_assignment": "Compare the approved facts with the buyer hypothesis.",
+                "secondary_assignment": "Design a bounded test of the positioning and define its metric."
+              }
+            },
+            {
+              "attempt_id": "b05765cd-b7f4-4743-8333-4424a3b8ffee",
+              "schema": "c3_skills_research",
+              "request_sha256": "962b9110d5989156813d19854affcef8fab354c84ec2a24ff6ca265802ecb1bf",
+              "input_tokens": 768,
+              "output_tokens": 88,
+              "raw_output": {
+                "segment": "Nhà thầu phòng thu",
+                "source_ids": [
+                  "F1",
+                  "F2"
+                ],
+                "buyer_problem": "Xác minh số liệu nền và kết quả bằng dữ liệu đo thực tế.",
+                "evidence_needed": "Kiểm chứng nhu cầu với khách hàng trong thị trường đã chọn.",
+                "research_question": "Compare the approved facts with the buyer hypothesis."
+              }
+            },
+            {
+              "attempt_id": "48922595-5572-4e28-8758-b88268bc29de",
+              "schema": "c3_skills_strategy",
+              "request_sha256": "be576423888baf3332e4c429e53605c065ecbb0b773cfb19f3d0bd062fd3a3e0",
+              "input_tokens": 891,
+              "output_tokens": 179,
+              "raw_output": {
+                "rationale": "Tạo một vòng lặp kiểm chứng vị trí và define metric.",
+                "source_ids": [
+                  "F1",
+                  "F2"
+                ],
+                "positioning": "Tăng yêu cầu báo giá tấm gỗ cho dự án phòng thu",
+                "channel_choice": "web",
+                "test_hypothesis": "Tăng yêu cầu đủ số lượng và địa bàn để báo giá · requests · 30 days · Count completed request forms",
+                "measurable_action": "rfq",
+                "measurement_method": "compare the approved facts with the buyer hypothesis.\nKiểm chứng nhu cầu với khách hàng trong thị trường đã chọn.\nNhà thầu phòng thu\nXác minh số liệu nền và kết quả bằng dữ liệu đo thực tế."
+              }
+            }
+          ],
+          "manifest": {
+            "id": "6b5848a3-4fca-43c8-b439-0d198a78c1cf",
+            "digest": "6adc23e273c39859e0a728329b59ea912f8827ca18e3efda55cb5421cb580917"
+          },
+          "runtime_fingerprint": "f5037847c132d0f98ad34e93cb1052b515791bdfeb99a329bf44f29a127f6d5d",
+          "case": "acoustic-panel",
+          "kind": "strategy",
+          "plan_id": "4a16688d-a104-44e2-b5bb-1960ee35c3f2",
+          "product": "Tấm gỗ tiêu âm Mộc",
+          "source_file_sha256": "6aa017de1002834f05f23e11952237a0be103d3fa1795e0a947008e8fee2cd6e",
+          "model_draft": {
+            "id": "9c3f7441-b438-49bd-9b84-b3ff243e1c52",
+            "title": "Tấm gỗ tiêu âm Mộc",
+            "body": "Tấm gỗ tiêu âm Mộc\n\nPhạm vi: HN\n\nGiá tham khảo: 430.000 VND / 1 hộp, đã gồm thuế. Đơn tối thiểu: 1 hộp. Áp dụng từ 1 hộp. Số lượng đối chiếu: 1 hộp. Xác nhận số lượng trước khi đặt.\n\nLớp mặt phủ veneer. Dùng trong nhà.",
+            "qa_revision": 1,
+            "digest": "4d80ed4c946c35acf4e79cbf7ee600bbf10a12f0aa896954f51812f4109709e4"
+          }
+        },
+        {
+          "run_id": "e100f535-de57-4458-bb06-a22b12baf0cf",
+          "workflow": "WF-13/landing-seo-draft@6",
+          "state": "awaiting_qa",
+          "last_error": null,
+          "runtime_s": 16.891,
+          "provider_fee_usd": 0,
+          "input_tokens": 1494,
+          "output_tokens": 267,
+          "unmetered_attempts": 0,
+          "first_pass_runtime": true,
+          "journal": [
+            {
+              "skill": "director",
+              "attempt": 1,
+              "outcome": "ok",
+              "input_tokens": 481,
+              "output_tokens": 55
+            },
+            {
+              "skill": "content",
+              "attempt": 1,
+              "outcome": "ok",
+              "input_tokens": 470,
+              "output_tokens": 114
+            },
+            {
+              "skill": "seo",
+              "attempt": 1,
+              "outcome": "ok",
+              "input_tokens": 543,
+              "output_tokens": 98
+            }
+          ],
+          "attempts": [
+            {
+              "attempt_id": "71c20076-13bd-4fbe-b0b3-4c06cd31911d",
+              "schema": "c3_skills_director",
+              "request_sha256": "c9937e7843807e26ab3245b3b19717159b40ac31d62437df7899c913f0e1f449",
+              "input_tokens": 481,
+              "output_tokens": 55,
+              "raw_output": {
+                "primary_assignment": "Write buyer copy with the approved terms and requested action.",
+                "secondary_assignment": "Describe search intent and draft a relevant title and snippet."
+              }
+            },
+            {
+              "attempt_id": "7b57c25b-f93f-47b2-86b1-6d879e6663f6",
+              "schema": "c3_skills_content",
+              "request_sha256": "59e22ddaf7549f493553b38ad66b81284a013afa95a71dad91345fc3baf7c821",
+              "input_tokens": 470,
+              "output_tokens": 114,
+              "raw_output": {
+                "benefit": "Đặt lịch hẹn với dịch vụ kiểm tra bơm Lam tại Xưởng bơm Lam",
+                "headline": "Đặt lịch hẹn với dịch vụ kiểm tra bơm Lam",
+                "source_ids": [
+                  "F1",
+                  "F2"
+                ],
+                "call_to_action": "đặt lịch hẹn",
+                "value_proposition": "Đặt lịch hẹn với dịch vụ kiểm tra bơm Lam tại Xưởng bơm Lam để kiểm tra bơm và đảm bảo chất lượng sản phẩm."
+              }
+            },
+            {
+              "attempt_id": "9e82d652-406f-4018-b126-b71256ee0ba6",
+              "schema": "c3_skills_seo",
+              "request_sha256": "0d37df635a0b22b3c8b651e3bb5d8abb092216d5e5fd69173991730c8aabcb76",
+              "input_tokens": 543,
+              "output_tokens": 98,
+              "raw_output": {
+                "page_title": "Dịch vụ kiểm tra bơm Lam tại Xưởng bơm Lam",
+                "source_ids": [
+                  "F1",
+                  "F2"
+                ],
+                "search_intent": "appointment",
+                "meta_description": "Đặt lịch hẹn với dịch vụ kiểm tra bơm Lam tại Xưởng bơm Lam để kiểm tra bơm và đảm bảo chất lượng sản phẩm."
+              }
+            }
+          ],
+          "manifest": {
+            "id": "da0c9156-928c-4b12-a4eb-79b525e2ed0b",
+            "digest": "8f713ca981f3fe2a557cedb6a3a5d1e736df6a9418e7f85c0c30a94530eaab2e"
+          },
+          "runtime_fingerprint": "f5037847c132d0f98ad34e93cb1052b515791bdfeb99a329bf44f29a127f6d5d",
+          "case": "pump-service",
+          "kind": "landing",
+          "plan_id": "9d4c13d8-3819-4891-8e40-c606185dc27c",
+          "product": "Dịch vụ kiểm tra bơm Lam",
+          "source_file_sha256": "1f5ea9e743e4f669594efe88a7fb7bcda13827f619538b30ff7d12ded57b82ea",
+          "model_draft": {
+            "id": "83590b8b-ffb1-44f1-be81-f1d8c9e0462e",
+            "title": "Đặt lịch hẹn với dịch vụ kiểm tra bơm Lam",
+            "body": "Đặt lịch hẹn với dịch vụ kiểm tra bơm Lam tại Xưởng bơm Lam để kiểm tra bơm và đảm bảo chất lượng sản phẩm.\n\nĐặt lịch hẹn với dịch vụ kiểm tra bơm Lam tại Xưởng bơm Lam\n\nGiá tham khảo: 270.000 VND / 1 máy, đã gồm thuế. Đơn tối thiểu: 1 máy. Áp dụng từ 1 máy. Số lượng đối chiếu: 1 máy. Xác nhận số lượng trước khi đặt.\nPhiếu kiểm tra ghi tình trạng máy. Áp dụng cho máy tại xưởng.\n\nĐặt lịch",
+            "qa_revision": 1,
+            "digest": "0ffadc2ef81bcd1d73fa35131fe944776163689c27af861abf6c3c54095bef8c"
+          }
+        }
+      ],
+      "conditions": {
+        "checkout": "4a23c40a40ea0cfc6eb4f26c394619edf19f9235",
+        "provider": "llama.cpp loopback",
+        "model_sha256": "74a4da8c9fdbcd15bd1f6d01d621410d31c6fc00986f5eb687824e7b93d7a9db",
+        "build": "b12649-1f8baae28",
+        "cases_sha256": "40291aa58da6abde852454e7cf7197f4e0dfd8011327c3998192526013ed2052",
+        "worker_concurrency": 1
+      },
+      "input_tokens": 3648,
+      "output_tokens": 596,
+      "worker_seconds": 35.78,
+      "provider_fee_usd": 0
+    },
+    {
+      "attempt_series": 4,
+      "outcome": "Completed three documents on the earlier commissioning implementation. Superseded by run 05.",
+      "runs": [
+        {
+          "run_id": "304f5fa0-19d7-4f8a-9735-e8f7e015ac9a",
+          "workflow": "WF-13/landing-seo-draft@6",
+          "state": "awaiting_qa",
+          "last_error": null,
+          "runtime_s": 14.187,
+          "provider_fee_usd": 0,
+          "input_tokens": 1491,
+          "output_tokens": 272,
+          "unmetered_attempts": 0,
+          "first_pass_runtime": true,
+          "journal": [
+            {
+              "skill": "director",
+              "attempt": 1,
+              "outcome": "ok",
+              "input_tokens": 495,
+              "output_tokens": 53
+            },
+            {
+              "skill": "content",
+              "attempt": 1,
+              "outcome": "ok",
+              "input_tokens": 464,
+              "output_tokens": 110
+            },
+            {
+              "skill": "seo",
+              "attempt": 1,
+              "outcome": "ok",
+              "input_tokens": 532,
+              "output_tokens": 109
+            }
+          ],
+          "attempts": [
+            {
+              "attempt_id": "65b95773-ba38-40be-b90e-095f7f2544e1",
+              "schema": "c3_skills_director",
+              "request_sha256": "aa4eefbde68c1d0631d22377295866f889a4b163cceb0b8063d497dddda7950a",
+              "input_tokens": 495,
+              "output_tokens": 53,
+              "raw_output": {
+                "primary_assignment": "Write buyer copy with the approved terms and requested action.",
+                "secondary_assignment": "Describe search intent and draft a relevant title and snippet."
+              }
+            },
+            {
+              "attempt_id": "3ce3363f-7b35-4787-b48e-38febafda60f",
+              "schema": "c3_skills_content",
+              "request_sha256": "4e37831d354df867b63eef917b58256d5423a6a0cd1fc14a8cf1a2059af44abe",
+              "input_tokens": 464,
+              "output_tokens": 110,
+              "raw_output": {
+                "benefit": "Để tiết kiệm chi phí, bạn có thể đặt hàng 1 tấm gỗ tiêu âm Mộc với giá VND 430,000 / 1 box (tax included).",
+                "headline": "Tấm gỗ tiêu âm Mộc",
+                "source_ids": [
+                  "F1",
+                  "F2"
+                ],
+                "call_to_action": "rfq",
+                "value_proposition": "Đặt hàng ngay để nhận ưu đãi từ Gỗ tiêu âm Mộc."
+              }
+            },
+            {
+              "attempt_id": "370d2beb-a916-48d7-b351-721cf2db7697",
+              "schema": "c3_skills_seo",
+              "request_sha256": "7ace537eaa1d9b3b4f87bbbe7e45c3068c44bee4e8c315139f7dcbdb138f9a4b",
+              "input_tokens": 532,
+              "output_tokens": 109,
+              "raw_output": {
+                "page_title": "Tấm gỗ tiêu âm Mộc",
+                "source_ids": [
+                  "F1",
+                  "F2"
+                ],
+                "search_intent": "RFQ",
+                "meta_description": "Tấm gỗ tiêu âm Mộc được bán tại Gỗ tiêu âm Mộc với giá VND 430,000 / 1 box (tax included). Đặt hàng ngay để nhận ưu đãi từ Gỗ tiêu âm Mộc."
+              }
+            }
+          ],
+          "manifest": {
+            "id": "77a0b460-5280-478a-9dcf-70a447d07fe0",
+            "digest": "bace4d1b1bea9698731cf22a775cb5f1a448d9f8f347e3def40620875fdb1b7d"
+          },
+          "runtime_fingerprint": "f5037847c132d0f98ad34e93cb1052b515791bdfeb99a329bf44f29a127f6d5d",
+          "case": "acoustic-panel",
+          "kind": "landing",
+          "plan_id": "4fbc2e77-526a-400a-8fd9-d8bc00caf9d2",
+          "product": "Tấm gỗ tiêu âm Mộc",
+          "source_file_sha256": "00b1c0dad0cfb19f0eed98adc9c55f3869527aa937a3079b00b689bd2900cead",
+          "model_draft": {
+            "id": "3a327276-e997-4b48-b6d9-d9738f247174",
+            "title": "Tấm gỗ tiêu âm Mộc",
+            "body": "Đặt hàng ngay để nhận ưu đãi từ Gỗ tiêu âm Mộc.\n\nĐể tiết kiệm chi phí, bạn có thể đặt hàng 1 tấm gỗ tiêu âm Mộc với giá VND 430,000 / 1 box (tax included).\n\nGiá tham khảo: 430.000 VND / 1 hộp, đã gồm thuế. Đơn tối thiểu: 1 hộp. Áp dụng từ 1 hộp. Số lượng đối chiếu: 1 hộp. Xác nhận số lượng trước khi đặt.\nLớp mặt phủ veneer. Dùng trong nhà.\n\nYêu cầu báo giá",
+            "qa_revision": 1,
+            "digest": "6e05c43d0fcf92036fc20e2ba0ffde13b8105af8e1833400359c3d43135442d1"
+          }
+        },
+        {
+          "run_id": "90bccfb5-bef3-4b4b-a12a-0c64738b881d",
+          "workflow": "WF-03/research-strategy-draft@3",
+          "state": "awaiting_qa",
+          "last_error": null,
+          "runtime_s": 14.469,
+          "provider_fee_usd": 0,
+          "input_tokens": 2154,
+          "output_tokens": 330,
+          "unmetered_attempts": 0,
+          "first_pass_runtime": true,
+          "journal": [
+            {
+              "skill": "director",
+              "attempt": 1,
+              "outcome": "ok",
+              "input_tokens": 495,
+              "output_tokens": 63
+            },
+            {
+              "skill": "research",
+              "attempt": 1,
+              "outcome": "ok",
+              "input_tokens": 768,
+              "output_tokens": 88
+            },
+            {
+              "skill": "strategy",
+              "attempt": 1,
+              "outcome": "ok",
+              "input_tokens": 891,
+              "output_tokens": 179
+            }
+          ],
+          "attempts": [
+            {
+              "attempt_id": "39db167f-cd0b-4343-923d-5166b3df3c72",
+              "schema": "c3_skills_director",
+              "request_sha256": "c98596d41b547f4bcbbb414e048d412c94595b1a753fb5159b5aa7dab7dd709c",
+              "input_tokens": 495,
+              "output_tokens": 63,
+              "raw_output": {
+                "primary_assignment": "Compare the approved facts with the buyer hypothesis.",
+                "secondary_assignment": "Design a bounded test of the positioning and define its metric."
+              }
+            },
+            {
+              "attempt_id": "a165e893-d3d7-49e6-8fe8-5c1e533f865c",
+              "schema": "c3_skills_research",
+              "request_sha256": "962b9110d5989156813d19854affcef8fab354c84ec2a24ff6ca265802ecb1bf",
+              "input_tokens": 768,
+              "output_tokens": 88,
+              "raw_output": {
+                "segment": "Nhà thầu phòng thu",
+                "source_ids": [
+                  "F1",
+                  "F2"
+                ],
+                "buyer_problem": "Xác minh số liệu nền và kết quả bằng dữ liệu đo thực tế.",
+                "evidence_needed": "Kiểm chứng nhu cầu với khách hàng trong thị trường đã chọn.",
+                "research_question": "Compare the approved facts with the buyer hypothesis."
+              }
+            },
+            {
+              "attempt_id": "a1c8032b-03e2-475e-adc7-03feb66d45da",
+              "schema": "c3_skills_strategy",
+              "request_sha256": "be576423888baf3332e4c429e53605c065ecbb0b773cfb19f3d0bd062fd3a3e0",
+              "input_tokens": 891,
+              "output_tokens": 179,
+              "raw_output": {
+                "rationale": "Tạo một vòng lặp kiểm chứng vị trí và define metric.",
+                "source_ids": [
+                  "F1",
+                  "F2"
+                ],
+                "positioning": "Tăng yêu cầu báo giá tấm gỗ cho dự án phòng thu",
+                "channel_choice": "web",
+                "test_hypothesis": "Tăng yêu cầu đủ số lượng và địa bàn để báo giá · requests · 30 days · Count completed request forms",
+                "measurable_action": "rfq",
+                "measurement_method": "compare the approved facts with the buyer hypothesis.\nKiểm chứng nhu cầu với khách hàng trong thị trường đã chọn.\nNhà thầu phòng thu\nXác minh số liệu nền và kết quả bằng dữ liệu đo thực tế."
+              }
+            }
+          ],
+          "manifest": {
+            "id": "f7af941b-6212-4f8d-9f14-fd0143e24617",
+            "digest": "4f7f9789094807fdb1638d62d6c7ddcb8581a742b7fb5cc7c06a3fe03f5e0662"
+          },
+          "runtime_fingerprint": "f5037847c132d0f98ad34e93cb1052b515791bdfeb99a329bf44f29a127f6d5d",
+          "case": "acoustic-panel",
+          "kind": "strategy",
+          "plan_id": "4fbc2e77-526a-400a-8fd9-d8bc00caf9d2",
+          "product": "Tấm gỗ tiêu âm Mộc",
+          "source_file_sha256": "d68bdab2db9a59c5eeb69f98a1b9b26a4c326986c8027bed2923c782bafd4594",
+          "model_draft": {
+            "id": "12b2e181-5677-4a86-b491-d6865d04d4e9",
+            "title": "Tấm gỗ tiêu âm Mộc",
+            "body": "Tấm gỗ tiêu âm Mộc\n\nPhạm vi: HN\n\nGiá tham khảo: 430.000 VND / 1 hộp, đã gồm thuế. Đơn tối thiểu: 1 hộp. Áp dụng từ 1 hộp. Số lượng đối chiếu: 1 hộp. Xác nhận số lượng trước khi đặt.\n\nLớp mặt phủ veneer. Dùng trong nhà.",
+            "qa_revision": 1,
+            "digest": "4d80ed4c946c35acf4e79cbf7ee600bbf10a12f0aa896954f51812f4109709e4"
+          }
+        },
+        {
+          "run_id": "64ddf144-525f-4f7c-b661-fd09f373c0de",
+          "workflow": "WF-13/landing-seo-draft@6",
+          "state": "awaiting_qa",
+          "last_error": null,
+          "runtime_s": 21.688,
+          "provider_fee_usd": 0,
+          "input_tokens": 1527,
+          "output_tokens": 299,
+          "unmetered_attempts": 0,
+          "first_pass_runtime": true,
+          "journal": [
+            {
+              "skill": "director",
+              "attempt": 1,
+              "outcome": "ok",
+              "input_tokens": 481,
+              "output_tokens": 55
+            },
+            {
+              "skill": "content",
+              "attempt": 1,
+              "outcome": "ok",
+              "input_tokens": 470,
+              "output_tokens": 147
+            },
+            {
+              "skill": "seo",
+              "attempt": 1,
+              "outcome": "ok",
+              "input_tokens": 576,
+              "output_tokens": 97
+            }
+          ],
+          "attempts": [
+            {
+              "attempt_id": "93f59160-af19-4ea2-a5da-368af56d2154",
+              "schema": "c3_skills_director",
+              "request_sha256": "c9937e7843807e26ab3245b3b19717159b40ac31d62437df7899c913f0e1f449",
+              "input_tokens": 481,
+              "output_tokens": 55,
+              "raw_output": {
+                "primary_assignment": "Write buyer copy with the approved terms and requested action.",
+                "secondary_assignment": "Describe search intent and draft a relevant title and snippet."
+              }
+            },
+            {
+              "attempt_id": "9e864143-ca9f-4d75-b97d-b16860ce9944",
+              "schema": "c3_skills_content",
+              "request_sha256": "32baa32a7f14c35d0fc6f5318244b6b8b279a2e6f5283bab3f7b2d7e0e70f926",
+              "input_tokens": 470,
+              "output_tokens": 147,
+              "raw_output": {
+                "benefit": "Quản đốc nhà máy có thể nhận được dịch vụ kiểm tra bơm Lam tại xưởng của Xưởng bơm Lam với giá VND 270,000 / 1 máy (tax included).",
+                "headline": "Dịch vụ kiểm tra bơm Lam",
+                "source_ids": [
+                  "F1",
+                  "F2"
+                ],
+                "call_to_action": "appointment",
+                "value_proposition": "Quản đốc nhà máy có thể nhận được dịch vụ kiểm tra bơm Lam tại xưởng của Xưởng bơm Lam với giá VND 270,000 / 1 máy (tax included)."
+              }
+            },
+            {
+              "attempt_id": "1d0db8eb-c636-474d-b682-ea563563ba2e",
+              "schema": "c3_skills_seo",
+              "request_sha256": "aafbca864f5fcde90783b69598cfc23f4ad4f3939d1bb0acd446ac9175c37a11",
+              "input_tokens": 576,
+              "output_tokens": 97,
+              "raw_output": {
+                "page_title": "Dịch vụ kiểm tra bơm Lam",
+                "source_ids": [
+                  "F1",
+                  "F2"
+                ],
+                "search_intent": "appointment",
+                "meta_description": "Dịch vụ kiểm tra bơm Lam tại xưởng của Xưởng bơm Lam với giá VND 270,000 / 1 máy (tax included)."
+              }
+            }
+          ],
+          "manifest": {
+            "id": "09f93ca0-7d07-44b1-800a-024be2a636fd",
+            "digest": "388d58aee0ac9a811b315db4a387c94b7950ec00505e1345f4899982b6ad50ef"
+          },
+          "runtime_fingerprint": "f5037847c132d0f98ad34e93cb1052b515791bdfeb99a329bf44f29a127f6d5d",
+          "case": "pump-service",
+          "kind": "landing",
+          "plan_id": "c13a6747-b306-45e3-9ac6-037a228e4835",
+          "product": "Dịch vụ kiểm tra bơm Lam",
+          "source_file_sha256": "20476b1cad2544d2e07fbdcaee2e8864cd8894b58d8ef99b46f905151525a0c8",
+          "model_draft": {
+            "id": "c4219bb6-425a-4666-80c9-443a5de705cf",
+            "title": "Dịch vụ kiểm tra bơm Lam",
+            "body": "Quản đốc nhà máy có thể nhận được dịch vụ kiểm tra bơm Lam tại xưởng của Xưởng bơm Lam với giá VND 270,000 / 1 máy (tax included).\n\nQuản đốc nhà máy có thể nhận được dịch vụ kiểm tra bơm Lam tại xưởng của Xưởng bơm Lam với giá VND 270,000 / 1 máy (tax included).\n\nPhiếu kiểm tra ghi tình trạng máy. Áp dụng cho máy tại xưởng.\nGiá tham khảo: 270.000 VND / 1 máy, đã gồm thuế. Đơn tối thiểu: 1 máy. Áp dụng từ 1 máy. Số lượng đối chiếu: 1 máy. Xác nhận số lượng trước khi đặt.\n\nĐặt lịch",
+            "qa_revision": 1,
+            "digest": "4bca99e2e831f31aa213f2b8b972f3c7d7c416ee2515eb3267bf401e1551badc"
+          }
+        }
+      ],
+      "conditions": {
+        "checkout": "4167ff73d75b52cb627ba240b524136ba1faf722",
+        "provider": "llama.cpp loopback",
+        "model_sha256": "74a4da8c9fdbcd15bd1f6d01d621410d31c6fc00986f5eb687824e7b93d7a9db",
+        "build": "b12649-1f8baae28",
+        "cases_sha256": "40291aa58da6abde852454e7cf7197f4e0dfd8011327c3998192526013ed2052",
+        "worker_concurrency": 1
+      },
+      "input_tokens": 5172,
+      "output_tokens": 901,
+      "worker_seconds": 50.34,
+      "provider_fee_usd": 0
+    },
+    {
+      "attempt_series": 5,
+      "outcome": "Completed three documents on the final commissioning implementation. UI and synthetic acceptance verified.",
+      "runs": [
+        {
+          "run_id": "f3b88aaa-cdd5-42ae-81ed-fe653a55a74f",
+          "workflow": "WF-13/landing-seo-draft@6",
+          "state": "awaiting_qa",
+          "last_error": null,
+          "runtime_s": 34.453,
+          "provider_fee_usd": 0,
+          "input_tokens": 1491,
+          "output_tokens": 268,
+          "unmetered_attempts": 0,
+          "first_pass_runtime": true,
+          "journal": [
+            {
+              "skill": "director",
+              "attempt": 1,
+              "outcome": "ok",
+              "input_tokens": 495,
+              "output_tokens": 53
+            },
+            {
+              "skill": "content",
+              "attempt": 1,
+              "outcome": "ok",
+              "input_tokens": 464,
+              "output_tokens": 109
+            },
+            {
+              "skill": "seo",
+              "attempt": 1,
+              "outcome": "ok",
+              "input_tokens": 532,
+              "output_tokens": 106
+            }
+          ],
+          "attempts": [
+            {
+              "attempt_id": "5601d914-3deb-49c1-8aa7-c9d795a06a79",
+              "schema": "c3_skills_director",
+              "request_sha256": "aa4eefbde68c1d0631d22377295866f889a4b163cceb0b8063d497dddda7950a",
+              "input_tokens": 495,
+              "output_tokens": 53,
+              "raw_output": {
+                "primary_assignment": "Write buyer copy with the approved terms and requested action.",
+                "secondary_assignment": "Describe search intent and draft a relevant title and snippet."
+              }
+            },
+            {
+              "attempt_id": "7f77c7bc-9749-416f-b6eb-24494519944b",
+              "schema": "c3_skills_content",
+              "request_sha256": "4fd8de8d1dc14af9b40a9995c52ace15abe6dec8a3f1556ff900c0bd6522292c",
+              "input_tokens": 464,
+              "output_tokens": 109,
+              "raw_output": {
+                "benefit": "Để tìm hiểu thông tin chi tiết về sản phẩm Tấm gỗ tiêu âm Mộc, hãy liên hệ với chúng tôi qua kênh web.",
+                "headline": "Tấm gỗ tiêu âm Mộc",
+                "source_ids": [
+                  "F1",
+                  "F2"
+                ],
+                "call_to_action": "rfq",
+                "value_proposition": "Để biết thêm thông tin chi tiết về sản phẩm Tấm gỗ tiêu âm Mộc, hãy liên hệ với chúng tôi qua kênh web."
+              }
+            },
+            {
+              "attempt_id": "63343e67-31c7-4699-a671-33f70c1be1cc",
+              "schema": "c3_skills_seo",
+              "request_sha256": "9253c2cf027e6925d07def79c4e8afcd9acd3cb39f339c7a30073abdc9d9abc0",
+              "input_tokens": 532,
+              "output_tokens": 106,
+              "raw_output": {
+                "page_title": "Tấm gỗ tiêu âm Mộc",
+                "source_ids": [
+                  "F1",
+                  "F2"
+                ],
+                "search_intent": "RFQ",
+                "meta_description": "Tấm gỗ tiêu âm Mộc được sản xuất bởi Gỗ tiêu âm Mộc và được bán tại nhà thầu phòng thu ở Hà Nội. Sản phẩm có giá bán 430.000 VND/box (tax included). Bạn có thể đặt hàng qua kênh web để nhận thông tin更"
+              }
+            }
+          ],
+          "manifest": {
+            "id": "6ed3e04e-7d80-4494-9f1e-d92c21e5e5ce",
+            "digest": "994da9ff190d963e8fa1e6405e946aa035e2894678c7354c13b805880960f34f"
+          },
+          "runtime_fingerprint": "4d75e415eb9263ca7950abe88821c8b15e2295198697967762fa67794d68a939",
+          "case": "acoustic-panel",
+          "kind": "landing",
+          "plan_id": "0f33382f-3ac3-4704-af8e-5b8470b044c4",
+          "product": "Tấm gỗ tiêu âm Mộc",
+          "source_file_sha256": "35017d2b6a4e9c5c505a9972e17b3e9737672a1a46393ce6c20ae57df955ec66",
+          "model_draft": {
+            "id": "695fd94e-eb6a-4398-8b33-3c5dab414442",
+            "title": "Tấm gỗ tiêu âm Mộc",
+            "body": "Để biết thêm thông tin chi tiết về sản phẩm Tấm gỗ tiêu âm Mộc, hãy liên hệ với chúng tôi qua kênh web.\n\nĐể tìm hiểu thông tin chi tiết về sản phẩm Tấm gỗ tiêu âm Mộc, hãy liên hệ với chúng tôi qua kênh web.\n\nLớp mặt phủ veneer. Dùng trong nhà.\nGiá tham khảo: 430.000 VND / 1 hộp, đã gồm thuế. Đơn tối thiểu: 1 hộp. Áp dụng từ 1 hộp. Số lượng đối chiếu: 1 hộp. Xác nhận số lượng trước khi đặt.\n\nYêu cầu báo giá",
+            "qa_revision": 1,
+            "digest": "6c1e75b1412b51b900b12fe6ef281203d6853c8727c3e5498da59f24f8766e58"
+          }
+        },
+        {
+          "run_id": "b1360d21-8bcc-4c24-a092-08dc8a314427",
+          "workflow": "WF-03/research-strategy-draft@3",
+          "state": "awaiting_qa",
+          "last_error": null,
+          "runtime_s": 39.313,
+          "provider_fee_usd": 0,
+          "input_tokens": 2154,
+          "output_tokens": 337,
+          "unmetered_attempts": 0,
+          "first_pass_runtime": true,
+          "journal": [
+            {
+              "skill": "director",
+              "attempt": 1,
+              "outcome": "ok",
+              "input_tokens": 495,
+              "output_tokens": 63
+            },
+            {
+              "skill": "research",
+              "attempt": 1,
+              "outcome": "ok",
+              "input_tokens": 768,
+              "output_tokens": 88
+            },
+            {
+              "skill": "strategy",
+              "attempt": 1,
+              "outcome": "ok",
+              "input_tokens": 891,
+              "output_tokens": 186
+            }
+          ],
+          "attempts": [
+            {
+              "attempt_id": "5ed002b8-50a7-495c-b150-96c416b8f96d",
+              "schema": "c3_skills_director",
+              "request_sha256": "c98596d41b547f4bcbbb414e048d412c94595b1a753fb5159b5aa7dab7dd709c",
+              "input_tokens": 495,
+              "output_tokens": 63,
+              "raw_output": {
+                "primary_assignment": "Compare the approved facts with the buyer hypothesis.",
+                "secondary_assignment": "Design a bounded test of the positioning and define its metric."
+              }
+            },
+            {
+              "attempt_id": "b3d654e9-6cf1-480a-8f5f-1f188c0654fb",
+              "schema": "c3_skills_research",
+              "request_sha256": "e272abedd5ea0545222e3b1f70146ffdb51ad48a17d4c7c797fe0fd0f7dbe7bc",
+              "input_tokens": 768,
+              "output_tokens": 88,
+              "raw_output": {
+                "segment": "Nhà thầu phòng thu",
+                "source_ids": [
+                  "F1",
+                  "F2"
+                ],
+                "buyer_problem": "Xác minh số liệu nền và kết quả bằng dữ liệu đo thực tế.",
+                "evidence_needed": "Kiểm chứng nhu cầu với khách hàng trong thị trường đã chọn.",
+                "research_question": "Compare the approved facts with the buyer hypothesis."
+              }
+            },
+            {
+              "attempt_id": "e1f1c94c-80cd-47fe-a252-4b73a5cba030",
+              "schema": "c3_skills_strategy",
+              "request_sha256": "825675f8d43270394e67b720c22cfcd2c39cbb1453c478be4da48601d1f56409",
+              "input_tokens": 891,
+              "output_tokens": 186,
+              "raw_output": {
+                "rationale": "Tấm gỗ tiêu âm Mộc là một sản phẩm tiêu âm chất lượng cao, phù hợp với các dự án phòng thu. Tuy nhiên, việc tăng yêu cầu báo giá có thể gây ra sự bất tiện cho nhà thầu. Để đảm bảo rằng yêu cầu báo giá",
+                "source_ids": [
+                  "F1",
+                  "F2"
+                ],
+                "positioning": "Tấm gỗ tiêu âm Mộc",
+                "channel_choice": "web",
+                "test_hypothesis": "Tấm gỗ tiêu âm Mộc",
+                "measurable_action": "tăng yêu cầu báo giá",
+                "measurement_method": "tính toán số lượng và giá trị thực tế của yêu cầu báo giá"
+              }
+            }
+          ],
+          "manifest": {
+            "id": "c5bcde7a-5583-40bf-a311-d3f12c656b98",
+            "digest": "1e8b18a45df1eb0f1a6950c1eac1e677472affc820b4bf8e0918b0fad27ddde9"
+          },
+          "runtime_fingerprint": "4d75e415eb9263ca7950abe88821c8b15e2295198697967762fa67794d68a939",
+          "case": "acoustic-panel",
+          "kind": "strategy",
+          "plan_id": "0f33382f-3ac3-4704-af8e-5b8470b044c4",
+          "product": "Tấm gỗ tiêu âm Mộc",
+          "source_file_sha256": "d1fb1bef5219007a8266b434a649986cf5d55c86089f1e5dcb151fa16ce9a049",
+          "model_draft": {
+            "id": "cc4fd319-d4a4-4f24-9668-adb495f6a2a4",
+            "title": "Tấm gỗ tiêu âm Mộc",
+            "body": "Tấm gỗ tiêu âm Mộc\n\nPhạm vi: HN\n\nLớp mặt phủ veneer. Dùng trong nhà.\n\nGiá tham khảo: 430.000 VND / 1 hộp, đã gồm thuế. Đơn tối thiểu: 1 hộp. Áp dụng từ 1 hộp. Số lượng đối chiếu: 1 hộp. Xác nhận số lượng trước khi đặt.",
+            "qa_revision": 1,
+            "digest": "c6a3c5500f429cb5177fca7232dd65e36338775df7f4ace77c9c65f9a68ca461"
+          }
+        },
+        {
+          "run_id": "0b1b971a-34de-47c7-bbbb-082aafa3a3ea",
+          "workflow": "WF-13/landing-seo-draft@6",
+          "state": "awaiting_qa",
+          "last_error": null,
+          "runtime_s": 21.5,
+          "provider_fee_usd": 0,
+          "input_tokens": 1529,
+          "output_tokens": 310,
+          "unmetered_attempts": 0,
+          "first_pass_runtime": true,
+          "journal": [
+            {
+              "skill": "director",
+              "attempt": 1,
+              "outcome": "ok",
+              "input_tokens": 481,
+              "output_tokens": 55
+            },
+            {
+              "skill": "content",
+              "attempt": 1,
+              "outcome": "ok",
+              "input_tokens": 470,
+              "output_tokens": 149
+            },
+            {
+              "skill": "seo",
+              "attempt": 1,
+              "outcome": "ok",
+              "input_tokens": 578,
+              "output_tokens": 106
+            }
+          ],
+          "attempts": [
+            {
+              "attempt_id": "ee1cf2cb-77ac-43fb-9940-d59ded980d3b",
+              "schema": "c3_skills_director",
+              "request_sha256": "c9937e7843807e26ab3245b3b19717159b40ac31d62437df7899c913f0e1f449",
+              "input_tokens": 481,
+              "output_tokens": 55,
+              "raw_output": {
+                "primary_assignment": "Write buyer copy with the approved terms and requested action.",
+                "secondary_assignment": "Describe search intent and draft a relevant title and snippet."
+              }
+            },
+            {
+              "attempt_id": "9576fa5d-7475-40dd-a120-300b4535619f",
+              "schema": "c3_skills_content",
+              "request_sha256": "32baa32a7f14c35d0fc6f5318244b6b8b279a2e6f5283bab3f7b2d7e0e70f926",
+              "input_tokens": 470,
+              "output_tokens": 149,
+              "raw_output": {
+                "benefit": "Quản đốc nhà máy có thể nhận được dịch vụ kiểm tra bơm Lam tại xưởng của Xưởng bơm Lam với mức giá VND 270,000 / 1 máy (tax included).",
+                "headline": "Dịch vụ kiểm tra bơm Lam",
+                "source_ids": [
+                  "F1",
+                  "F2"
+                ],
+                "call_to_action": "appointment",
+                "value_proposition": "Quản đốc nhà máy có thể nhận được dịch vụ kiểm tra bơm Lam tại xưởng của Xưởng bơm Lam với mức giá VND 270,000 / 1 máy (tax included)."
+              }
+            },
+            {
+              "attempt_id": "4d3d9db2-7fbd-4ee3-85c5-6057c7ae57b1",
+              "schema": "c3_skills_seo",
+              "request_sha256": "d5ebf9d80e2a700a7c473ad90725b71181dc776708bb312b380e9eca166dd73b",
+              "input_tokens": 578,
+              "output_tokens": 106,
+              "raw_output": {
+                "page_title": "Dịch vụ kiểm tra bơm Lam tại xưởng của Xưởng bơm Lam",
+                "source_ids": [
+                  "F1",
+                  "F2"
+                ],
+                "search_intent": "Quản đốc nhà máy",
+                "meta_description": "Dịch vụ kiểm tra bơm Lam tại xưởng của Xưởng bơm Lam với mức giá VND 270,000 / 1 máy (tax included)."
+              }
+            }
+          ],
+          "manifest": {
+            "id": "94f78821-0930-4f2b-bbe9-f590549477cf",
+            "digest": "1d905c772a484805f65ca1629ed6cae40a1ec2fa87594f39a01bc62c0092a9f1"
+          },
+          "runtime_fingerprint": "4d75e415eb9263ca7950abe88821c8b15e2295198697967762fa67794d68a939",
+          "case": "pump-service",
+          "kind": "landing",
+          "plan_id": "d33e2533-c70c-4f93-8424-d24e6e2dc1d8",
+          "product": "Dịch vụ kiểm tra bơm Lam",
+          "source_file_sha256": "2831ba1c980425111fb5899f3457ca0f8b88b80eb2abe11366e563dea97ee5bc",
+          "model_draft": {
+            "id": "e26add9a-cac6-41d4-bdcd-0a3105446c41",
+            "title": "Dịch vụ kiểm tra bơm Lam",
+            "body": "Quản đốc nhà máy có thể nhận được dịch vụ kiểm tra bơm Lam tại xưởng của Xưởng bơm Lam với mức giá VND 270,000 / 1 máy (tax included).\n\nQuản đốc nhà máy có thể nhận được dịch vụ kiểm tra bơm Lam tại xưởng của Xưởng bơm Lam với mức giá VND 270,000 / 1 máy (tax included).\n\nPhiếu kiểm tra ghi tình trạng máy. Áp dụng cho máy tại xưởng.\nGiá tham khảo: 270.000 VND / 1 máy, đã gồm thuế. Đơn tối thiểu: 1 máy. Áp dụng từ 1 máy. Số lượng đối chiếu: 1 máy. Xác nhận số lượng trước khi đặt.\n\nĐặt lịch",
+            "qa_revision": 1,
+            "digest": "af2450194f4b6bec1183a9779d4ddb07d18a398386f3dfe58847574b4f7767a8"
+          }
+        }
+      ],
+      "conditions": {
+        "checkout": "62d60932df32cd4357ced6d5d89deae2dba1183d",
+        "provider": "llama.cpp loopback",
+        "model_sha256": "74a4da8c9fdbcd15bd1f6d01d621410d31c6fc00986f5eb687824e7b93d7a9db",
+        "build": "b12649-1f8baae28",
+        "cases_sha256": "40291aa58da6abde852454e7cf7197f4e0dfd8011327c3998192526013ed2052",
+        "worker_concurrency": 1
+      },
+      "input_tokens": 5174,
+      "output_tokens": 915,
+      "worker_seconds": 95.27,
+      "provider_fee_usd": 0
+    },
+    {
+      "attempt_series": 6,
+      "outcome": "After binding commissions to their C3 queue receipt, tested actual raw model fields against unchanged Studio quality and evidence gates before signing. All three customer editions completed.",
+      "runs": [
+        {
+          "run_id": "9afc20ba-6e8c-473b-811b-614c2cbdece7",
+          "workflow": "WF-13/landing-seo-draft@6",
+          "state": "awaiting_qa",
+          "last_error": null,
+          "runtime_s": 21.25,
+          "provider_fee_usd": 0,
+          "input_tokens": 1491,
+          "output_tokens": 269,
+          "unmetered_attempts": 0,
+          "first_pass_runtime": true,
+          "journal": [
+            {
+              "skill": "director",
+              "attempt": 1,
+              "outcome": "ok",
+              "input_tokens": 495,
+              "output_tokens": 53
+            },
+            {
+              "skill": "content",
+              "attempt": 1,
+              "outcome": "ok",
+              "input_tokens": 464,
+              "output_tokens": 109
+            },
+            {
+              "skill": "seo",
+              "attempt": 1,
+              "outcome": "ok",
+              "input_tokens": 532,
+              "output_tokens": 107
+            }
+          ],
+          "attempts": [
+            {
+              "attempt_id": "23a5993d-0d34-4185-8cdc-36dbb430a3b4",
+              "schema": "c3_skills_director",
+              "request_sha256": "aa4eefbde68c1d0631d22377295866f889a4b163cceb0b8063d497dddda7950a",
+              "input_tokens": 495,
+              "output_tokens": 53,
+              "raw_output": {
+                "primary_assignment": "Write buyer copy with the approved terms and requested action.",
+                "secondary_assignment": "Describe search intent and draft a relevant title and snippet."
+              }
+            },
+            {
+              "attempt_id": "66c62081-41a7-4824-9b19-1cf432bfc6c3",
+              "schema": "c3_skills_content",
+              "request_sha256": "4fd8de8d1dc14af9b40a9995c52ace15abe6dec8a3f1556ff900c0bd6522292c",
+              "input_tokens": 464,
+              "output_tokens": 109,
+              "raw_output": {
+                "benefit": "Để tìm hiểu thông tin chi tiết về sản phẩm Tấm gỗ tiêu âm Mộc, hãy liên hệ với chúng tôi qua kênh web.",
+                "headline": "Tấm gỗ tiêu âm Mộc",
+                "source_ids": [
+                  "F1",
+                  "F2"
+                ],
+                "call_to_action": "rfq",
+                "value_proposition": "Để biết thêm thông tin chi tiết về sản phẩm Tấm gỗ tiêu âm Mộc, hãy liên hệ với chúng tôi qua kênh web."
+              }
+            },
+            {
+              "attempt_id": "bb310b91-c510-44e7-b030-af8fd7f62fbb",
+              "schema": "c3_skills_seo",
+              "request_sha256": "9253c2cf027e6925d07def79c4e8afcd9acd3cb39f339c7a30073abdc9d9abc0",
+              "input_tokens": 532,
+              "output_tokens": 107,
+              "raw_output": {
+                "page_title": "Tấm gỗ tiêu âm Mộc",
+                "source_ids": [
+                  "F1",
+                  "F2"
+                ],
+                "search_intent": "RFQ",
+                "meta_description": "Tấm gỗ tiêu âm Mộc được sản xuất bởi Gỗ tiêu âm Mộc và được bán tại nhà thầu phòng thu ở Hà Nội. Sản phẩm có giá bán 430.000 VND/box (tax included). Bạn có thể tìm hiểu thêm thông tin chi tiết về sản物"
+              }
+            }
+          ],
+          "manifest": {
+            "id": "7ca90231-1da3-4340-ad0e-8599d76e76b2",
+            "digest": "770c6e90656e32f88eff7dee2b5ae10a44221c453e55544b7a6e81edb26d0d6d"
+          },
+          "runtime_fingerprint": "4ff9399145c1236e7847e279bb6d63771ec4c5d42855f60df8676272185ec26a",
+          "case": "acoustic-panel",
+          "kind": "landing",
+          "plan_id": "ad47c0bb-262e-470a-b165-38f50ac4b030",
+          "product": "Tấm gỗ tiêu âm Mộc",
+          "source_file_sha256": "974f45337fe17e9f3825544f225a743d52c4546cc6c6a92a68dd4d28880da7a3",
+          "model_draft": {
+            "id": "699c0ba0-3ce4-4fae-ac12-a8382b759368",
+            "title": "Tấm gỗ tiêu âm Mộc",
+            "body": "Để biết thêm thông tin chi tiết về sản phẩm Tấm gỗ tiêu âm Mộc, hãy liên hệ với chúng tôi qua kênh web.\n\nĐể tìm hiểu thông tin chi tiết về sản phẩm Tấm gỗ tiêu âm Mộc, hãy liên hệ với chúng tôi qua kênh web.\n\nLớp mặt phủ veneer. Dùng trong nhà.\nGiá tham khảo: 430.000 VND / 1 hộp, đã gồm thuế. Đơn tối thiểu: 1 hộp. Áp dụng từ 1 hộp. Số lượng đối chiếu: 1 hộp. Xác nhận số lượng trước khi đặt.\n\nYêu cầu báo giá",
+            "qa_revision": 1,
+            "digest": "6c1e75b1412b51b900b12fe6ef281203d6853c8727c3e5498da59f24f8766e58"
+          }
+        },
+        {
+          "run_id": "708ddaa8-349a-49ab-a6c1-774cbe6c3f22",
+          "workflow": "WF-03/research-strategy-draft@3",
+          "state": "awaiting_qa",
+          "last_error": null,
+          "runtime_s": 28.687,
+          "provider_fee_usd": 0,
+          "input_tokens": 2154,
+          "output_tokens": 324,
+          "unmetered_attempts": 0,
+          "first_pass_runtime": true,
+          "journal": [
+            {
+              "skill": "director",
+              "attempt": 1,
+              "outcome": "ok",
+              "input_tokens": 495,
+              "output_tokens": 63
+            },
+            {
+              "skill": "research",
+              "attempt": 1,
+              "outcome": "ok",
+              "input_tokens": 768,
+              "output_tokens": 88
+            },
+            {
+              "skill": "strategy",
+              "attempt": 1,
+              "outcome": "ok",
+              "input_tokens": 891,
+              "output_tokens": 173
+            }
+          ],
+          "attempts": [
+            {
+              "attempt_id": "0a4c2f95-f226-473a-8d49-1a82fb1ceceb",
+              "schema": "c3_skills_director",
+              "request_sha256": "c98596d41b547f4bcbbb414e048d412c94595b1a753fb5159b5aa7dab7dd709c",
+              "input_tokens": 495,
+              "output_tokens": 63,
+              "raw_output": {
+                "primary_assignment": "Compare the approved facts with the buyer hypothesis.",
+                "secondary_assignment": "Design a bounded test of the positioning and define its metric."
+              }
+            },
+            {
+              "attempt_id": "c28d6118-d38a-40ea-b437-daca43693b9d",
+              "schema": "c3_skills_research",
+              "request_sha256": "e272abedd5ea0545222e3b1f70146ffdb51ad48a17d4c7c797fe0fd0f7dbe7bc",
+              "input_tokens": 768,
+              "output_tokens": 88,
+              "raw_output": {
+                "segment": "Nhà thầu phòng thu",
+                "source_ids": [
+                  "F1",
+                  "F2"
+                ],
+                "buyer_problem": "Xác minh số liệu nền và kết quả bằng dữ liệu đo thực tế.",
+                "evidence_needed": "Kiểm chứng nhu cầu với khách hàng trong thị trường đã chọn.",
+                "research_question": "Compare the approved facts with the buyer hypothesis."
+              }
+            },
+            {
+              "attempt_id": "7c805ae9-2b1d-410c-a324-d9d87f0dd183",
+              "schema": "c3_skills_strategy",
+              "request_sha256": "825675f8d43270394e67b720c22cfcd2c39cbb1453c478be4da48601d1f56409",
+              "input_tokens": 891,
+              "output_tokens": 173,
+              "raw_output": {
+                "rationale": "Tấm gỗ tiêu âm Mộc là một sản phẩm tiêu âm chất lượng cao, phù hợp với các dự án phòng thu. Tuy nhiên, việc tăng yêu cầu báo giá có thể gây ra sự bất tiện cho nhà thầu. Để đảm bảo rằng yêu cầu báo giá",
+                "source_ids": [
+                  "F1",
+                  "F2"
+                ],
+                "positioning": "Tấm gỗ tiêu âm Mộc",
+                "channel_choice": "web",
+                "test_hypothesis": "Nhà thầu phòng thu cần yêu cầu báo giá theo hộp.",
+                "measurable_action": "tăng yêu cầu báo giá",
+                "measurement_method": "tính toán số lượng và giá trị thực tế của yêu cầu báo giá."
+              }
+            }
+          ],
+          "manifest": {
+            "id": "49564b6f-043a-4163-b813-aeb8ba4efe42",
+            "digest": "c642c9eceaa88015381febfb1f809a022d9654d09a9d5e2ea3ff41d908db5b19"
+          },
+          "runtime_fingerprint": "4ff9399145c1236e7847e279bb6d63771ec4c5d42855f60df8676272185ec26a",
+          "case": "acoustic-panel",
+          "kind": "strategy",
+          "plan_id": "ad47c0bb-262e-470a-b165-38f50ac4b030",
+          "product": "Tấm gỗ tiêu âm Mộc",
+          "source_file_sha256": "afff81eda955bbcf24023959b7133105d241b4f5c9e3ec5af9b89c7240f22833",
+          "model_draft": {
+            "id": "9d4a6479-e714-431a-bfbb-06c14654c73f",
+            "title": "Tấm gỗ tiêu âm Mộc",
+            "body": "Tấm gỗ tiêu âm Mộc\n\nPhạm vi: HN\n\nLớp mặt phủ veneer. Dùng trong nhà.\n\nGiá tham khảo: 430.000 VND / 1 hộp, đã gồm thuế. Đơn tối thiểu: 1 hộp. Áp dụng từ 1 hộp. Số lượng đối chiếu: 1 hộp. Xác nhận số lượng trước khi đặt.",
+            "qa_revision": 1,
+            "digest": "c6a3c5500f429cb5177fca7232dd65e36338775df7f4ace77c9c65f9a68ca461"
+          }
+        },
+        {
+          "run_id": "e7aee923-2467-49ad-a64d-14f9ba283119",
+          "workflow": "WF-13/landing-seo-draft@6",
+          "state": "awaiting_qa",
+          "last_error": null,
+          "runtime_s": 15.844,
+          "provider_fee_usd": 0,
+          "input_tokens": 1494,
+          "output_tokens": 267,
+          "unmetered_attempts": 0,
+          "first_pass_runtime": true,
+          "journal": [
+            {
+              "skill": "director",
+              "attempt": 1,
+              "outcome": "ok",
+              "input_tokens": 481,
+              "output_tokens": 55
+            },
+            {
+              "skill": "content",
+              "attempt": 1,
+              "outcome": "ok",
+              "input_tokens": 470,
+              "output_tokens": 114
+            },
+            {
+              "skill": "seo",
+              "attempt": 1,
+              "outcome": "ok",
+              "input_tokens": 543,
+              "output_tokens": 98
+            }
+          ],
+          "attempts": [
+            {
+              "attempt_id": "f5f3236b-0df5-467f-a6fa-149d20fde83d",
+              "schema": "c3_skills_director",
+              "request_sha256": "c9937e7843807e26ab3245b3b19717159b40ac31d62437df7899c913f0e1f449",
+              "input_tokens": 481,
+              "output_tokens": 55,
+              "raw_output": {
+                "primary_assignment": "Write buyer copy with the approved terms and requested action.",
+                "secondary_assignment": "Describe search intent and draft a relevant title and snippet."
+              }
+            },
+            {
+              "attempt_id": "7e8866dc-359d-44aa-9ffe-df128a4b38e3",
+              "schema": "c3_skills_content",
+              "request_sha256": "59e22ddaf7549f493553b38ad66b81284a013afa95a71dad91345fc3baf7c821",
+              "input_tokens": 470,
+              "output_tokens": 114,
+              "raw_output": {
+                "benefit": "Đặt lịch hẹn với dịch vụ kiểm tra bơm Lam tại Xưởng bơm Lam",
+                "headline": "Đặt lịch hẹn với dịch vụ kiểm tra bơm Lam",
+                "source_ids": [
+                  "F1",
+                  "F2"
+                ],
+                "call_to_action": "đặt lịch hẹn",
+                "value_proposition": "Đặt lịch hẹn với dịch vụ kiểm tra bơm Lam tại Xưởng bơm Lam để kiểm tra bơm và đảm bảo chất lượng sản phẩm."
+              }
+            },
+            {
+              "attempt_id": "2961a6ef-c6ae-4d21-8c5f-0426f13243cf",
+              "schema": "c3_skills_seo",
+              "request_sha256": "0d37df635a0b22b3c8b651e3bb5d8abb092216d5e5fd69173991730c8aabcb76",
+              "input_tokens": 543,
+              "output_tokens": 98,
+              "raw_output": {
+                "page_title": "Dịch vụ kiểm tra bơm Lam tại Xưởng bơm Lam",
+                "source_ids": [
+                  "F1",
+                  "F2"
+                ],
+                "search_intent": "appointment",
+                "meta_description": "Đặt lịch hẹn với dịch vụ kiểm tra bơm Lam tại Xưởng bơm Lam để kiểm tra bơm và đảm bảo chất lượng sản phẩm."
+              }
+            }
+          ],
+          "manifest": {
+            "id": "8219039f-1053-4d6b-ab72-bd9b048a7dac",
+            "digest": "cd301b2bfde11a0d70e34c48b4a63be1a65f011574e405e0ed5db63e184870af"
+          },
+          "runtime_fingerprint": "4ff9399145c1236e7847e279bb6d63771ec4c5d42855f60df8676272185ec26a",
+          "case": "pump-service",
+          "kind": "landing",
+          "plan_id": "ea96447a-b370-461c-a8f1-c4abfb2c9f95",
+          "product": "Dịch vụ kiểm tra bơm Lam",
+          "source_file_sha256": "e34cfb7768f405b77262572cd4586e1493be79c67b5ee6b68b336dfa5633881c",
+          "model_draft": {
+            "id": "ef0e2413-dab3-4eb5-ae69-88c1b75bfd39",
+            "title": "Đặt lịch hẹn với dịch vụ kiểm tra bơm Lam",
+            "body": "Đặt lịch hẹn với dịch vụ kiểm tra bơm Lam tại Xưởng bơm Lam để kiểm tra bơm và đảm bảo chất lượng sản phẩm.\n\nĐặt lịch hẹn với dịch vụ kiểm tra bơm Lam tại Xưởng bơm Lam\n\nGiá tham khảo: 270.000 VND / 1 máy, đã gồm thuế. Đơn tối thiểu: 1 máy. Áp dụng từ 1 máy. Số lượng đối chiếu: 1 máy. Xác nhận số lượng trước khi đặt.\nPhiếu kiểm tra ghi tình trạng máy. Áp dụng cho máy tại xưởng.\n\nĐặt lịch",
+            "qa_revision": 1,
+            "digest": "0ffadc2ef81bcd1d73fa35131fe944776163689c27af861abf6c3c54095bef8c"
+          }
+        }
+      ],
+      "conditions": {
+        "checkout": "2a862d9e89ca4c6196858eab500a19ff8b5f7c5a",
+        "provider": "llama.cpp loopback",
+        "model_sha256": "74a4da8c9fdbcd15bd1f6d01d621410d31c6fc00986f5eb687824e7b93d7a9db",
+        "build": "b12649-1f8baae28",
+        "cases_sha256": "40291aa58da6abde852454e7cf7197f4e0dfd8011327c3998192526013ed2052",
+        "worker_concurrency": 1
+      },
+      "input_tokens": 5139,
+      "output_tokens": 860,
+      "provider_fee_usd": 0,
+      "worker_seconds": 65.78
+    }
+  ]
+}

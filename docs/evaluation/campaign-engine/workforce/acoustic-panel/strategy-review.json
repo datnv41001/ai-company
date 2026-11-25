@@ -1,0 +1,354 @@
+{
+  "groups": {
+    "research": {
+      "buyer_problem": "Cần tìm hiểu điều gì khiến Nhà thầu phòng thu còn do dự khi chọn Tấm gỗ tiêu âm Mộc?",
+      "research_question": "Trong lần mua gần nhất, Nhà thầu phòng thu đã so sánh Tấm gỗ tiêu âm Mộc với phương án nào?",
+      "evidence": "Lớp mặt phủ veneer. Dùng trong nhà.\nGiá tham khảo: 430.000 VND / 1 hộp, đã gồm thuế. Đơn tối thiểu: 1 hộp. Áp dụng từ 1 hộp. Số lượng đối chiếu: 1 hộp. Xác nhận số lượng trước khi đặt.",
+      "hypothesis": "Giả thuyết cần thử: làm rõ điều kiện của Tấm gỗ tiêu âm Mộc giúp Nhà thầu phòng thu chọn bước tiếp theo."
+    },
+    "strategy": {
+      "positioning": "Đề xuất định vị Tấm gỗ tiêu âm Mộc qua quy cách có thể đối chiếu.",
+      "channel_choice": "web",
+      "rationale": "Thử trên web vì đây là kênh nằm trong phạm vi được duyệt.",
+      "execution": "Soạn hai phiên bản giới thiệu Tấm gỗ tiêu âm Mộc trên web, giữ nguyên điều kiện và đo cùng một hành động."
+    },
+    "measurement": {
+      "test_hypothesis": "So sánh bản trình bày dữ kiện trước và sau lời mời hành động trên cùng nhóm khách.",
+      "measurable_action": "Yêu cầu báo giá",
+      "measurement_method": "Theo dõi số yêu cầu hoàn tất trên lượt vào trang. Đối chiếu mã yêu cầu khi bộ phận phụ trách tiếp nhận."
+    },
+    "client_strategy": {
+      "target": "Nhà thầu phòng thu",
+      "decision": "Đề xuất giúp Nhà thầu phòng thu đối chiếu quy cách của Tấm gỗ tiêu âm Mộc trước khi gửi yêu cầu báo giá.",
+      "activation": "Trên web, đặt điều kiện áp dụng cạnh lời mời báo giá. Chuyển yêu cầu đủ thông tin cho Sales.",
+      "next_decision": "Nếu nhiều người gửi nhưng Sales còn phải hỏi lại, ưu tiên sửa trường thông tin thiếu trước khi mở rộng kênh."
+    },
+    "client_measurement": {
+      "hypothesis": "Thử đặt quy cách trước biểu mẫu để người mua có thể gửi yêu cầu đủ thông tin hơn.",
+      "conversion": "Yêu cầu báo giá",
+      "method": "Đối soát mã yêu cầu duy nhất với yêu cầu Sales đủ thông tin để báo giá. So sánh trên lượt vào trang cùng nhóm khách."
+    }
+  },
+  "unresolved": [],
+  "terms": {
+    "expected_qa_revision": 12,
+    "expected_content_digest": "daf92d387ed10ea420ff5034a6f55b0a451c5b63fd44bd748cf032ea6afa53dc"
+  },
+  "field_history": {
+    "research.buyer_problem": {
+      "customer_visible": false,
+      "control": "Cần tìm hiểu điều gì khiến Nhà thầu phòng thu còn do dự khi chọn Tấm gỗ tiêu âm Mộc?",
+      "before": "Xác minh số liệu nền và kết quả bằng dữ liệu đo thực tế.",
+      "after": "Cần tìm hiểu điều gì khiến Nhà thầu phòng thu còn do dự khi chọn Tấm gỗ tiêu âm Mộc?",
+      "decision": "retained_control",
+      "model_candidate": "Xác minh số liệu nền và kết quả bằng dữ liệu đo thực tế.",
+      "worker_field": "buyer_problem",
+      "role": "research",
+      "attempt": "c28d6118-d38a-40ea-b437-daca43693b9d",
+      "request_sha256": "e272abedd5ea0545222e3b1f70146ffdb51ad48a17d4c7c797fe0fd0f7dbe7bc",
+      "tested_revision": 2,
+      "quality_issues": [],
+      "unresolved": [
+        {
+          "field": "studio.research.buyer_problem",
+          "text": "Xác minh số liệu nền và kết quả bằng dữ liệu đo thực tế.",
+          "outcome": "unresolved",
+          "reason": "unsupported"
+        }
+      ]
+    },
+    "research.research_question": {
+      "customer_visible": false,
+      "control": "Trong lần mua gần nhất, Nhà thầu phòng thu đã so sánh Tấm gỗ tiêu âm Mộc với phương án nào?",
+      "before": "Compare the approved facts with the buyer hypothesis.",
+      "after": "Trong lần mua gần nhất, Nhà thầu phòng thu đã so sánh Tấm gỗ tiêu âm Mộc với phương án nào?",
+      "decision": "retained_control",
+      "model_candidate": "Compare the approved facts with the buyer hypothesis.",
+      "worker_field": "research_question",
+      "role": "research",
+      "attempt": "c28d6118-d38a-40ea-b437-daca43693b9d",
+      "request_sha256": "e272abedd5ea0545222e3b1f70146ffdb51ad48a17d4c7c797fe0fd0f7dbe7bc",
+      "tested_revision": 3,
+      "quality_issues": [],
+      "unresolved": [
+        {
+          "field": "studio.research.research_question",
+          "text": "Compare the approved facts with the buyer hypothesis.",
+          "outcome": "unresolved",
+          "reason": "unsupported"
+        }
+      ]
+    },
+    "research.evidence": {
+      "customer_visible": false,
+      "control": "Lớp mặt phủ veneer. Dùng trong nhà.\nGiá tham khảo: 430.000 VND / 1 hộp, đã gồm thuế. Đơn tối thiểu: 1 hộp. Áp dụng từ 1 hộp. Số lượng đối chiếu: 1 hộp. Xác nhận số lượng trước khi đặt.",
+      "before": "Lớp mặt phủ veneer. Dùng trong nhà.\nGiá tham khảo: 430.000 VND / 1 hộp, đã gồm thuế. Đơn tối thiểu: 1 hộp. Áp dụng từ 1 hộp. Số lượng đối chiếu: 1 hộp. Xác nhận số lượng trước khi đặt.",
+      "after": "Lớp mặt phủ veneer. Dùng trong nhà.\nGiá tham khảo: 430.000 VND / 1 hộp, đã gồm thuế. Đơn tối thiểu: 1 hộp. Áp dụng từ 1 hộp. Số lượng đối chiếu: 1 hộp. Xác nhận số lượng trước khi đặt.",
+      "decision": "grounded_composer",
+      "model_candidate": null
+    },
+    "research.hypothesis": {
+      "customer_visible": false,
+      "control": "Giả thuyết cần thử: làm rõ điều kiện của Tấm gỗ tiêu âm Mộc giúp Nhà thầu phòng thu chọn bước tiếp theo.",
+      "before": "Giả thuyết cần thử: làm rõ điều kiện của Tấm gỗ tiêu âm Mộc giúp Nhà thầu phòng thu chọn bước tiếp theo.",
+      "after": "Giả thuyết cần thử: làm rõ điều kiện của Tấm gỗ tiêu âm Mộc giúp Nhà thầu phòng thu chọn bước tiếp theo.",
+      "decision": "grounded_composer",
+      "model_candidate": null
+    },
+    "strategy.positioning": {
+      "customer_visible": false,
+      "control": "Đề xuất định vị Tấm gỗ tiêu âm Mộc qua quy cách có thể đối chiếu.",
+      "before": "Tấm gỗ tiêu âm Mộc",
+      "after": "Đề xuất định vị Tấm gỗ tiêu âm Mộc qua quy cách có thể đối chiếu.",
+      "decision": "retained_control",
+      "model_candidate": "Tấm gỗ tiêu âm Mộc",
+      "worker_field": "positioning",
+      "role": "strategy",
+      "attempt": "7c805ae9-2b1d-410c-a324-d9d87f0dd183",
+      "request_sha256": "825675f8d43270394e67b720c22cfcd2c39cbb1453c478be4da48601d1f56409",
+      "tested_revision": 4,
+      "quality_issues": [
+        {
+          "group": "strategy",
+          "field": "positioning",
+          "reason": "entity_only"
+        }
+      ],
+      "unresolved": []
+    },
+    "strategy.channel_choice": {
+      "customer_visible": false,
+      "control": "web",
+      "before": "web",
+      "after": "web",
+      "decision": "coincides_with_control",
+      "model_candidate": "web",
+      "worker_field": "channel_choice",
+      "role": "strategy",
+      "attempt": "7c805ae9-2b1d-410c-a324-d9d87f0dd183",
+      "request_sha256": "825675f8d43270394e67b720c22cfcd2c39cbb1453c478be4da48601d1f56409"
+    },
+    "strategy.rationale": {
+      "customer_visible": false,
+      "control": "Thử trên web vì đây là kênh nằm trong phạm vi được duyệt.",
+      "before": "Tấm gỗ tiêu âm Mộc là một sản phẩm tiêu âm chất lượng cao, phù hợp với các dự án phòng thu. Tuy nhiên, việc tăng yêu cầu báo giá có thể gây ra sự bất tiện cho nhà thầu. Để đảm bảo rằng yêu cầu báo giá",
+      "after": "Thử trên web vì đây là kênh nằm trong phạm vi được duyệt.",
+      "decision": "retained_control",
+      "model_candidate": "Tấm gỗ tiêu âm Mộc là một sản phẩm tiêu âm chất lượng cao, phù hợp với các dự án phòng thu. Tuy nhiên, việc tăng yêu cầu báo giá có thể gây ra sự bất tiện cho nhà thầu. Để đảm bảo rằng yêu cầu báo giá",
+      "worker_field": "rationale",
+      "role": "strategy",
+      "attempt": "7c805ae9-2b1d-410c-a324-d9d87f0dd183",
+      "request_sha256": "825675f8d43270394e67b720c22cfcd2c39cbb1453c478be4da48601d1f56409",
+      "tested_revision": 5,
+      "quality_issues": [],
+      "unresolved": [
+        {
+          "field": "studio.strategy.rationale",
+          "text": "Tấm gỗ tiêu âm Mộc là một sản phẩm tiêu âm chất lượng cao, phù hợp với các dự án phòng thu.",
+          "outcome": "unresolved",
+          "reason": "unsupported"
+        },
+        {
+          "field": "studio.strategy.rationale",
+          "text": "Tuy nhiên, việc tăng yêu cầu báo giá có thể gây ra sự bất tiện cho nhà thầu.",
+          "outcome": "unresolved",
+          "reason": "unsupported"
+        },
+        {
+          "field": "studio.strategy.rationale",
+          "text": "Để đảm bảo rằng yêu cầu báo giá",
+          "outcome": "unresolved",
+          "reason": "unsupported"
+        }
+      ]
+    },
+    "strategy.execution": {
+      "customer_visible": false,
+      "control": "Soạn hai phiên bản giới thiệu Tấm gỗ tiêu âm Mộc trên web, giữ nguyên điều kiện và đo cùng một hành động.",
+      "before": "Soạn hai phiên bản giới thiệu Tấm gỗ tiêu âm Mộc trên web, giữ nguyên điều kiện và đo cùng một hành động.",
+      "after": "Soạn hai phiên bản giới thiệu Tấm gỗ tiêu âm Mộc trên web, giữ nguyên điều kiện và đo cùng một hành động.",
+      "decision": "grounded_composer",
+      "model_candidate": null
+    },
+    "measurement.test_hypothesis": {
+      "customer_visible": false,
+      "control": "So sánh bản trình bày dữ kiện trước và sau lời mời hành động trên cùng nhóm khách.",
+      "before": "Nhà thầu phòng thu cần yêu cầu báo giá theo hộp.",
+      "after": "So sánh bản trình bày dữ kiện trước và sau lời mời hành động trên cùng nhóm khách.",
+      "decision": "retained_control",
+      "model_candidate": "Nhà thầu phòng thu cần yêu cầu báo giá theo hộp.",
+      "worker_field": "test_hypothesis",
+      "role": "strategy",
+      "attempt": "7c805ae9-2b1d-410c-a324-d9d87f0dd183",
+      "request_sha256": "825675f8d43270394e67b720c22cfcd2c39cbb1453c478be4da48601d1f56409",
+      "tested_revision": 6,
+      "quality_issues": [],
+      "unresolved": [
+        {
+          "field": "studio.measurement.test_hypothesis",
+          "text": "Nhà thầu phòng thu cần yêu cầu báo giá theo hộp.",
+          "outcome": "unresolved",
+          "reason": "unsupported"
+        }
+      ]
+    },
+    "measurement.measurable_action": {
+      "customer_visible": false,
+      "control": "Yêu cầu báo giá",
+      "before": "Yêu cầu báo giá",
+      "after": "Yêu cầu báo giá",
+      "decision": "retained_control",
+      "model_candidate": "tăng yêu cầu báo giá",
+      "worker_field": "measurable_action",
+      "role": "strategy",
+      "attempt": "7c805ae9-2b1d-410c-a324-d9d87f0dd183",
+      "request_sha256": "825675f8d43270394e67b720c22cfcd2c39cbb1453c478be4da48601d1f56409",
+      "tested_revision": 7,
+      "quality_issues": [],
+      "unresolved": [
+        {
+          "field": "studio.measurement.measurable_action",
+          "text": "tăng yêu cầu báo giá",
+          "outcome": "unresolved",
+          "reason": "unsupported"
+        }
+      ]
+    },
+    "measurement.measurement_method": {
+      "customer_visible": false,
+      "control": "Theo dõi số yêu cầu hoàn tất trên lượt vào trang. Đối chiếu mã yêu cầu khi bộ phận phụ trách tiếp nhận.",
+      "before": "tính toán số lượng và giá trị thực tế của yêu cầu báo giá.",
+      "after": "Theo dõi số yêu cầu hoàn tất trên lượt vào trang. Đối chiếu mã yêu cầu khi bộ phận phụ trách tiếp nhận.",
+      "decision": "retained_control",
+      "model_candidate": "tính toán số lượng và giá trị thực tế của yêu cầu báo giá.",
+      "worker_field": "measurement_method",
+      "role": "strategy",
+      "attempt": "7c805ae9-2b1d-410c-a324-d9d87f0dd183",
+      "request_sha256": "825675f8d43270394e67b720c22cfcd2c39cbb1453c478be4da48601d1f56409",
+      "tested_revision": 8,
+      "quality_issues": [],
+      "unresolved": [
+        {
+          "field": "studio.measurement.measurement_method",
+          "text": "tính toán số lượng và giá trị thực tế của yêu cầu báo giá.",
+          "outcome": "unresolved",
+          "reason": "unsupported"
+        }
+      ]
+    },
+    "client_strategy.target": {
+      "customer_visible": true,
+      "control": "Nhà thầu phòng thu",
+      "before": null,
+      "after": "Nhà thầu phòng thu",
+      "decision": "coincides_with_control",
+      "model_candidate": "Nhà thầu phòng thu",
+      "worker_field": "segment",
+      "role": "research",
+      "attempt": "c28d6118-d38a-40ea-b437-daca43693b9d",
+      "request_sha256": "e272abedd5ea0545222e3b1f70146ffdb51ad48a17d4c7c797fe0fd0f7dbe7bc"
+    },
+    "client_strategy.decision": {
+      "customer_visible": true,
+      "control": "Đề xuất giúp Nhà thầu phòng thu đối chiếu quy cách của Tấm gỗ tiêu âm Mộc trước khi gửi yêu cầu báo giá.",
+      "before": null,
+      "after": "Đề xuất giúp Nhà thầu phòng thu đối chiếu quy cách của Tấm gỗ tiêu âm Mộc trước khi gửi yêu cầu báo giá.",
+      "decision": "retained_control",
+      "model_candidate": "Tấm gỗ tiêu âm Mộc",
+      "worker_field": "positioning",
+      "role": "strategy",
+      "attempt": "7c805ae9-2b1d-410c-a324-d9d87f0dd183",
+      "request_sha256": "825675f8d43270394e67b720c22cfcd2c39cbb1453c478be4da48601d1f56409",
+      "tested_revision": 9,
+      "quality_issues": [
+        {
+          "group": "client_strategy",
+          "field": "decision",
+          "reason": "entity_only"
+        }
+      ],
+      "unresolved": []
+    },
+    "client_strategy.activation": {
+      "customer_visible": true,
+      "control": "Trên web, đặt điều kiện áp dụng cạnh lời mời báo giá. Chuyển yêu cầu đủ thông tin cho Sales.",
+      "before": null,
+      "after": "Trên web, đặt điều kiện áp dụng cạnh lời mời báo giá. Chuyển yêu cầu đủ thông tin cho Sales.",
+      "decision": "grounded_composer",
+      "model_candidate": null
+    },
+    "client_strategy.next_decision": {
+      "customer_visible": true,
+      "control": "Nếu nhiều người gửi nhưng Sales còn phải hỏi lại, ưu tiên sửa trường thông tin thiếu trước khi mở rộng kênh.",
+      "before": null,
+      "after": "Nếu nhiều người gửi nhưng Sales còn phải hỏi lại, ưu tiên sửa trường thông tin thiếu trước khi mở rộng kênh.",
+      "decision": "grounded_composer",
+      "model_candidate": null
+    },
+    "client_measurement.hypothesis": {
+      "customer_visible": true,
+      "control": "Thử đặt quy cách trước biểu mẫu để người mua có thể gửi yêu cầu đủ thông tin hơn.",
+      "before": null,
+      "after": "Thử đặt quy cách trước biểu mẫu để người mua có thể gửi yêu cầu đủ thông tin hơn.",
+      "decision": "retained_control",
+      "model_candidate": "Nhà thầu phòng thu cần yêu cầu báo giá theo hộp.",
+      "worker_field": "test_hypothesis",
+      "role": "strategy",
+      "attempt": "7c805ae9-2b1d-410c-a324-d9d87f0dd183",
+      "request_sha256": "825675f8d43270394e67b720c22cfcd2c39cbb1453c478be4da48601d1f56409",
+      "tested_revision": 10,
+      "quality_issues": [],
+      "unresolved": [
+        {
+          "field": "client_preview",
+          "text": "Nhà thầu phòng thu cần yêu cầu báo giá theo hộp.",
+          "outcome": "unresolved",
+          "reason": "unsupported"
+        },
+        {
+          "field": "studio.client_measurement.hypothesis",
+          "text": "Nhà thầu phòng thu cần yêu cầu báo giá theo hộp.",
+          "outcome": "unresolved",
+          "reason": "unsupported"
+        }
+      ]
+    },
+    "client_measurement.conversion": {
+      "customer_visible": true,
+      "control": "Yêu cầu báo giá",
+      "before": null,
+      "after": "Yêu cầu báo giá",
+      "decision": "grounded_composer",
+      "model_candidate": null
+    },
+    "client_measurement.method": {
+      "customer_visible": true,
+      "control": "Đối soát mã yêu cầu duy nhất với yêu cầu Sales đủ thông tin để báo giá. So sánh trên lượt vào trang cùng nhóm khách.",
+      "before": null,
+      "after": "Đối soát mã yêu cầu duy nhất với yêu cầu Sales đủ thông tin để báo giá. So sánh trên lượt vào trang cùng nhóm khách.",
+      "decision": "retained_control",
+      "model_candidate": "tính toán số lượng và giá trị thực tế của yêu cầu báo giá.",
+      "worker_field": "measurement_method",
+      "role": "strategy",
+      "attempt": "7c805ae9-2b1d-410c-a324-d9d87f0dd183",
+      "request_sha256": "825675f8d43270394e67b720c22cfcd2c39cbb1453c478be4da48601d1f56409",
+      "tested_revision": 11,
+      "quality_issues": [],
+      "unresolved": [
+        {
+          "field": "client_preview",
+          "text": "tính toán số lượng và giá trị thực tế của yêu cầu báo giá.",
+          "outcome": "unresolved",
+          "reason": "unsupported"
+        },
+        {
+          "field": "studio.client_measurement.method",
+          "text": "tính toán số lượng và giá trị thực tế của yêu cầu báo giá.",
+          "outcome": "unresolved",
+          "reason": "unsupported"
+        }
+      ]
+    }
+  },
+  "retained_distinct_model_fields": 0
+}

@@ -1,0 +1,295 @@
+{
+  "id": "37e771f0-ed1b-41c5-81f9-25e6af43beaf",
+  "sku": "MOC-12",
+  "scope": {
+    "brand_id": "5efd9a5c-683c-4b19-b28a-3f66dcf4ff4d",
+    "client_id": "00530679-5b34-4f45-ba40-ca3ccbe4cdd1",
+    "tenant_id": "ed95c9f1-6b71-4337-b344-500629fdc899",
+    "campaign_id": "ac72974c-0323-4112-9b22-bbc34ccfec24"
+  },
+  "digest": "d2f78293fba9a757a36f3743ce77d533f30d33591bcc21c1c5e7967c12d71832",
+  "method": "deterministic-campaign-planner/1",
+  "status": "approved",
+  "product": "Tấm gỗ tiêu âm Mộc 12",
+  "audience": "Nhà thầu phòng thu",
+  "channels": [
+    "web"
+  ],
+  "revision": 1,
+  "manifests": {
+    "landing": {
+      "id": "f96da63f-5422-4720-be83-493de48c5f48",
+      "digest": "a6a28eee9cc45c47f8cd76195ca861b954a7b5eeff505aabbd6e18b1a1e59956",
+      "brief_id": "e1f33e78-c285-4bb4-bbe7-16c7eaa2f789",
+      "workflow": "WF-13/landing-seo-draft@6"
+    },
+    "strategy": {
+      "id": "be2d17c4-5336-49a4-a045-4a86d0764441",
+      "digest": "08428b4c8235d318173c0f21524026d80bdf4a7382a9509ce0ab29f26987ecbe",
+      "brief_id": "dba774ce-e9e1-4c52-9d34-d82f1a160e26",
+      "workflow": "WF-03/research-strategy-draft@3"
+    }
+  },
+  "objective": "Tăng yêu cầu báo giá tấm gỗ cho dự án phòng thu",
+  "budget_vnd": 3000000,
+  "product_id": "c3ce179c-84b9-4a7c-8b94-c57c1f72aa2d",
+  "campaign_id": "ac72974c-0323-4112-9b22-bbc34ccfec24",
+  "budget_scope": "simulated_media_only",
+  "buyer_action": "rfq",
+  "selling_unit": "box",
+  "duration_days": 21,
+  "research_gaps": [
+    "Kiểm chứng nhu cầu với khách hàng trong thị trường đã chọn.",
+    "Xác minh số liệu nền và kết quả bằng dữ liệu đo thực tế."
+  ],
+  "work_packages": [
+    {
+      "id": "strategy",
+      "kind": "strategy",
+      "role": "Strategy",
+      "due_day": 7,
+      "criteria": "Quyết định phân khúc, kênh và bước xử lý tiếp theo",
+      "complexity": "multi_section"
+    },
+    {
+      "id": "measurement",
+      "kind": "measurement",
+      "role": "Analytics",
+      "due_day": 7,
+      "criteria": "KPI, mẫu số và phương pháp đối soát Sales",
+      "complexity": "multi_section"
+    },
+    {
+      "id": "landing",
+      "kind": "landing",
+      "role": "Content",
+      "due_day": 14,
+      "criteria": "Nội dung trang có CTA và điều kiện theo manifest",
+      "complexity": "multi_section"
+    },
+    {
+      "id": "seo",
+      "kind": "seo",
+      "role": "SEO",
+      "due_day": 14,
+      "criteria": "Tiêu đề SEO và mô tả khớp trang",
+      "complexity": "single_asset"
+    },
+    {
+      "id": "social",
+      "kind": "social",
+      "role": "Social",
+      "due_day": 14,
+      "criteria": "Bài xã hội có hành động nhất quán với brief",
+      "complexity": "single_asset"
+    },
+    {
+      "id": "ad",
+      "kind": "ad",
+      "role": "Media",
+      "due_day": 14,
+      "criteria": "Mẫu quảng cáo nháp cho người mua đã chọn",
+      "complexity": "single_asset"
+    },
+    {
+      "id": "creative_brief",
+      "kind": "creative_brief",
+      "role": "Design",
+      "due_day": 14,
+      "criteria": "Brief nêu sản phẩm, người xem và tiêu chí hình ảnh",
+      "complexity": "single_asset"
+    },
+    {
+      "id": "calendar",
+      "kind": "calendar",
+      "role": "Campaign Manager",
+      "due_day": 21,
+      "criteria": "Lịch dự kiến có người nhận, mốc QA và kênh",
+      "complexity": "multi_channel"
+    }
+  ],
+  "target_outcome": "Tăng yêu cầu báo giá tấm gỗ cho dự án phòng thu",
+  "composed_assets": [
+    {
+      "id": "social",
+      "body": "Nhà thầu phòng thu đang cân nhắc Tấm gỗ tiêu âm Mộc 12? Yêu cầu báo giá để trao đổi nhu cầu về sản phẩm và điều kiện áp dụng.",
+      "kind": "social",
+      "title": "Nội dung mạng xã hội",
+      "digest": "a1c4bbf5513351ebbb59aa4ef46a3d72fff6f85b5382a0b55346283a30b9bb24",
+      "status": "draft",
+      "plan_id": "37e771f0-ed1b-41c5-81f9-25e6af43beaf",
+      "manifest": {
+        "id": "f96da63f-5422-4720-be83-493de48c5f48",
+        "digest": "a6a28eee9cc45c47f8cd76195ca861b954a7b5eeff505aabbd6e18b1a1e59956",
+        "brief_id": "e1f33e78-c285-4bb4-bbe7-16c7eaa2f789",
+        "workflow": "WF-13/landing-seo-draft@6"
+      },
+      "revision": 1,
+      "product_id": "c3ce179c-84b9-4a7c-8b94-c57c1f72aa2d",
+      "provenance": "deterministic-composition/1",
+      "buyer_action": "rfq",
+      "plan_revision": 1,
+      "guideline_digest": "8667f503425c83801d0702e0a96932e171bcc578d401f55e68de2dc1d3e1e675",
+      "requires_channel_evidence": true,
+      "referenced_workflow_skills": {
+        "seo": {
+          "search-intent-seo@1": "95015035ae8f0183d82fa88c9851879885736b82032ce11d9b8f12230dc0152d"
+        },
+        "content": {
+          "landing-conversion@1": "65fed41e31b470d9ac009c03a5ee376851fe86664f2c73f2c5e08af49385bcc6"
+        }
+      }
+    },
+    {
+      "id": "ad",
+      "body": "Tấm gỗ tiêu âm Mộc 12 dành cho Nhà thầu phòng thu. Yêu cầu báo giá.",
+      "kind": "ad",
+      "title": "Nội dung quảng cáo",
+      "digest": "8c7d0bffca8581d270fb7013b66c83e8b5e1cf28a1d3539c37e9bb98b08627a6",
+      "status": "draft",
+      "plan_id": "37e771f0-ed1b-41c5-81f9-25e6af43beaf",
+      "manifest": {
+        "id": "f96da63f-5422-4720-be83-493de48c5f48",
+        "digest": "a6a28eee9cc45c47f8cd76195ca861b954a7b5eeff505aabbd6e18b1a1e59956",
+        "brief_id": "e1f33e78-c285-4bb4-bbe7-16c7eaa2f789",
+        "workflow": "WF-13/landing-seo-draft@6"
+      },
+      "revision": 1,
+      "product_id": "c3ce179c-84b9-4a7c-8b94-c57c1f72aa2d",
+      "provenance": "deterministic-composition/1",
+      "buyer_action": "rfq",
+      "plan_revision": 1,
+      "guideline_digest": "8667f503425c83801d0702e0a96932e171bcc578d401f55e68de2dc1d3e1e675",
+      "requires_channel_evidence": true,
+      "referenced_workflow_skills": {
+        "seo": {
+          "search-intent-seo@1": "95015035ae8f0183d82fa88c9851879885736b82032ce11d9b8f12230dc0152d"
+        },
+        "content": {
+          "landing-conversion@1": "65fed41e31b470d9ac009c03a5ee376851fe86664f2c73f2c5e08af49385bcc6"
+        }
+      }
+    },
+    {
+      "id": "creative_brief",
+      "body": "Thiết kế cho Nhà thầu phòng thu trên web. Đặt Tấm gỗ tiêu âm Mộc 12 ở vị trí chính và dùng CTA “Yêu cầu báo giá”. Giọng điệu: Dùng câu ngắn và nêu rõ điều kiện áp dụng. Kiểm tra quyền sử dụng hình ảnh trước bàn giao.",
+      "kind": "creative_brief",
+      "title": "Brief sản xuất hình ảnh",
+      "digest": "9e8a3b170cb49547d9b0851a82441606e97d57e9a6842b29dbf5d0172339befd",
+      "status": "draft",
+      "plan_id": "37e771f0-ed1b-41c5-81f9-25e6af43beaf",
+      "manifest": {
+        "id": "f96da63f-5422-4720-be83-493de48c5f48",
+        "digest": "a6a28eee9cc45c47f8cd76195ca861b954a7b5eeff505aabbd6e18b1a1e59956",
+        "brief_id": "e1f33e78-c285-4bb4-bbe7-16c7eaa2f789",
+        "workflow": "WF-13/landing-seo-draft@6"
+      },
+      "revision": 1,
+      "product_id": "c3ce179c-84b9-4a7c-8b94-c57c1f72aa2d",
+      "provenance": "deterministic-composition/1",
+      "buyer_action": "rfq",
+      "plan_revision": 1,
+      "guideline_digest": "8667f503425c83801d0702e0a96932e171bcc578d401f55e68de2dc1d3e1e675",
+      "requires_channel_evidence": true,
+      "referenced_workflow_skills": {
+        "seo": {
+          "search-intent-seo@1": "95015035ae8f0183d82fa88c9851879885736b82032ce11d9b8f12230dc0152d"
+        },
+        "content": {
+          "landing-conversion@1": "65fed41e31b470d9ac009c03a5ee376851fe86664f2c73f2c5e08af49385bcc6"
+        }
+      }
+    },
+    {
+      "id": "calendar",
+      "body": "Ngày 7 · Strategy · Quyết định phân khúc, kênh và bước xử lý tiếp theo\nNgày 7 · Analytics · KPI, mẫu số và phương pháp đối soát Sales\nNgày 14 · Content · Nội dung trang có CTA và điều kiện theo manifest\nNgày 14 · SEO · Tiêu đề SEO và mô tả khớp trang\nNgày 14 · Social · Bài xã hội có hành động nhất quán với brief\nNgày 14 · Media · Mẫu quảng cáo nháp cho người mua đã chọn\nNgày 14 · Design · Brief nêu sản phẩm, người xem và tiêu chí hình ảnh\nNgày 21 · Campaign Manager · Lịch dự kiến có người nhận, mốc QA và kênh\nKênh đề xuất: web. Điểm duyệt: kiểm tra chứng cứ và phê duyệt từng tài sản trước thực thi.",
+      "kind": "calendar",
+      "title": "Lịch nội dung dự kiến",
+      "digest": "e35103aedc30278ec02731c92c3831db5db985e7712ada5885f05c34ee3027d9",
+      "status": "draft",
+      "plan_id": "37e771f0-ed1b-41c5-81f9-25e6af43beaf",
+      "manifest": {
+        "id": "f96da63f-5422-4720-be83-493de48c5f48",
+        "digest": "a6a28eee9cc45c47f8cd76195ca861b954a7b5eeff505aabbd6e18b1a1e59956",
+        "brief_id": "e1f33e78-c285-4bb4-bbe7-16c7eaa2f789",
+        "workflow": "WF-13/landing-seo-draft@6"
+      },
+      "revision": 1,
+      "product_id": "c3ce179c-84b9-4a7c-8b94-c57c1f72aa2d",
+      "provenance": "deterministic-composition/1",
+      "buyer_action": "rfq",
+      "plan_revision": 1,
+      "guideline_digest": "8667f503425c83801d0702e0a96932e171bcc578d401f55e68de2dc1d3e1e675",
+      "requires_channel_evidence": true,
+      "referenced_workflow_skills": {
+        "seo": {
+          "search-intent-seo@1": "95015035ae8f0183d82fa88c9851879885736b82032ce11d9b8f12230dc0152d"
+        },
+        "content": {
+          "landing-conversion@1": "65fed41e31b470d9ac009c03a5ee376851fe86664f2c73f2c5e08af49385bcc6"
+        }
+      }
+    }
+  ],
+  "brand_guidelines": {
+    "tone": "Cụ thể",
+    "digest": "8667f503425c83801d0702e0a96932e171bcc578d401f55e68de2dc1d3e1e675",
+    "guidance": "Dùng câu ngắn và nêu rõ điều kiện áp dụng.",
+    "revision": 1,
+    "prohibited_claims": []
+  },
+  "commercial_facts": [
+    {
+      "id": "F1",
+      "wording": "Lớp mặt phủ veneer.",
+      "category": "description",
+      "qualifiers": [
+        "Dùng trong nhà."
+      ]
+    },
+    {
+      "id": "F2",
+      "price": {
+        "moq": "1",
+        "tax": "included",
+        "unit": "box",
+        "currency": "VND",
+        "tier_max": null,
+        "tier_min": "1",
+        "conditions": [
+          "Xác nhận số lượng trước khi đặt."
+        ],
+        "amount_minor": 430000,
+        "basis_quantity": "1"
+      },
+      "wording": "VND 430000 / 1 box (tax included)",
+      "category": "price",
+      "quantity": "1",
+      "qualifiers": [
+        "Xác nhận số lượng trước khi đặt."
+      ]
+    }
+  ],
+  "measurement_plan": {
+    "kpi": "Yêu cầu đủ số lượng và địa bàn để báo giá · requests · 30 days · Count completed request forms",
+    "hypothesis": "Thử một CTA cho Nhà thầu phòng thu rồi đối soát với kết quả Sales.",
+    "attribution": "Theo mã yêu cầu và biên nhận, ghi riêng kết quả thiếu nguồn.",
+    "buyer_action": "rfq"
+  },
+  "audience_revision": {
+    "id": "203791ac-182d-4e12-a949-4d20a050be6b",
+    "digest": "1117904b57410595ec3abf0eb7e44e2d21f3cbe03aa90247bbc1e440fe3abd47",
+    "saved_state": "approved"
+  },
+  "objective_revision": {
+    "id": "42d2bdec-fdad-4239-86cf-5c615670944a",
+    "digest": "2d30096633c154f67a46384bae45355395b94bd4a01a5cb03ffcde45a0a24541",
+    "saved_state": "approved"
+  },
+  "optimization_basis": null,
+  "approval": {
+    "actor": "ab018fae-238d-40f4-98cc-89a6878a358c",
+    "receipt": "2f631e2e-9e55-49ad-b7fb-5bdd97b0bc49",
+    "at": "2026-11-25T19:32:49.183613+07:00"
+  }
+}

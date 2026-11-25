@@ -1,0 +1,235 @@
+{
+  "groups": {
+    "copy": {
+      "headline": "Tấm gỗ tiêu âm Mộc",
+      "value_proposition": "Đối chiếu quy cách và điều kiện áp dụng của Tấm gỗ tiêu âm Mộc trước khi lựa chọn.",
+      "benefit": "Lớp mặt phủ veneer. Dùng trong nhà.",
+      "commercial_terms": "Lớp mặt phủ veneer. Dùng trong nhà.\nGiá tham khảo: 430.000 VND / 1 hộp, đã gồm thuế. Đơn tối thiểu: 1 hộp. Áp dụng từ 1 hộp. Số lượng đối chiếu: 1 hộp. Xác nhận số lượng trước khi đặt.",
+      "call_to_action": "Yêu cầu báo giá"
+    },
+    "seo": {
+      "page_title": "Tấm gỗ tiêu âm Mộc",
+      "meta_description": "Xem thông tin về Tấm gỗ tiêu âm Mộc tại HN. Yêu cầu báo giá",
+      "search_intent": "Tìm hiểu điều kiện lựa chọn Tấm gỗ tiêu âm Mộc tại HN."
+    }
+  },
+  "unresolved": [],
+  "terms": {
+    "expected_qa_revision": 8,
+    "expected_content_digest": "bd6866a9c03db5b73d042abf640e47b936b62da8fed2310cc6c9589916354deb"
+  },
+  "field_history": {
+    "copy.headline": {
+      "customer_visible": true,
+      "control": "Tấm gỗ tiêu âm Mộc",
+      "before": "Tấm gỗ tiêu âm Mộc",
+      "after": "Tấm gỗ tiêu âm Mộc",
+      "decision": "coincides_with_control",
+      "model_candidate": "Tấm gỗ tiêu âm Mộc",
+      "worker_field": "headline",
+      "role": "content",
+      "attempt": "66c62081-41a7-4824-9b19-1cf432bfc6c3",
+      "request_sha256": "4fd8de8d1dc14af9b40a9995c52ace15abe6dec8a3f1556ff900c0bd6522292c"
+    },
+    "copy.value_proposition": {
+      "customer_visible": true,
+      "control": "Đối chiếu quy cách và điều kiện áp dụng của Tấm gỗ tiêu âm Mộc trước khi lựa chọn.",
+      "before": "Để biết thêm thông tin chi tiết về sản phẩm Tấm gỗ tiêu âm Mộc, hãy liên hệ với chúng tôi qua kênh web.",
+      "after": "Đối chiếu quy cách và điều kiện áp dụng của Tấm gỗ tiêu âm Mộc trước khi lựa chọn.",
+      "decision": "retained_control",
+      "model_candidate": "Để biết thêm thông tin chi tiết về sản phẩm Tấm gỗ tiêu âm Mộc, hãy liên hệ với chúng tôi qua kênh web.",
+      "worker_field": "value_proposition",
+      "role": "content",
+      "attempt": "66c62081-41a7-4824-9b19-1cf432bfc6c3",
+      "request_sha256": "4fd8de8d1dc14af9b40a9995c52ace15abe6dec8a3f1556ff900c0bd6522292c",
+      "tested_revision": 2,
+      "quality_issues": [],
+      "unresolved": [
+        {
+          "field": "client_preview",
+          "text": "Để biết thêm thông tin chi tiết về sản phẩm Tấm gỗ tiêu âm Mộc, hãy liên hệ với chúng tôi qua kênh web.",
+          "outcome": "unresolved",
+          "reason": "unsupported"
+        },
+        {
+          "field": "studio.copy.value_proposition",
+          "text": "Để biết thêm thông tin chi tiết về sản phẩm Tấm gỗ tiêu âm Mộc, hãy liên hệ với chúng tôi qua kênh web.",
+          "outcome": "unresolved",
+          "reason": "unsupported"
+        }
+      ]
+    },
+    "copy.benefit": {
+      "customer_visible": true,
+      "control": "Lớp mặt phủ veneer. Dùng trong nhà.",
+      "before": "Để tìm hiểu thông tin chi tiết về sản phẩm Tấm gỗ tiêu âm Mộc, hãy liên hệ với chúng tôi qua kênh web.",
+      "after": "Lớp mặt phủ veneer. Dùng trong nhà.",
+      "decision": "retained_control",
+      "model_candidate": "Để tìm hiểu thông tin chi tiết về sản phẩm Tấm gỗ tiêu âm Mộc, hãy liên hệ với chúng tôi qua kênh web.",
+      "worker_field": "benefit",
+      "role": "content",
+      "attempt": "66c62081-41a7-4824-9b19-1cf432bfc6c3",
+      "request_sha256": "4fd8de8d1dc14af9b40a9995c52ace15abe6dec8a3f1556ff900c0bd6522292c",
+      "tested_revision": 3,
+      "quality_issues": [],
+      "unresolved": [
+        {
+          "field": "client_preview",
+          "text": "Để tìm hiểu thông tin chi tiết về sản phẩm Tấm gỗ tiêu âm Mộc, hãy liên hệ với chúng tôi qua kênh web.",
+          "outcome": "unresolved",
+          "reason": "unsupported"
+        },
+        {
+          "field": "studio.copy.benefit",
+          "text": "Để tìm hiểu thông tin chi tiết về sản phẩm Tấm gỗ tiêu âm Mộc, hãy liên hệ với chúng tôi qua kênh web.",
+          "outcome": "unresolved",
+          "reason": "unsupported"
+        }
+      ]
+    },
+    "copy.commercial_terms": {
+      "customer_visible": true,
+      "control": "Lớp mặt phủ veneer. Dùng trong nhà.\nGiá tham khảo: 430.000 VND / 1 hộp, đã gồm thuế. Đơn tối thiểu: 1 hộp. Áp dụng từ 1 hộp. Số lượng đối chiếu: 1 hộp. Xác nhận số lượng trước khi đặt.",
+      "before": "Lớp mặt phủ veneer. Dùng trong nhà.\nGiá tham khảo: 430.000 VND / 1 hộp, đã gồm thuế. Đơn tối thiểu: 1 hộp. Áp dụng từ 1 hộp. Số lượng đối chiếu: 1 hộp. Xác nhận số lượng trước khi đặt.",
+      "after": "Lớp mặt phủ veneer. Dùng trong nhà.\nGiá tham khảo: 430.000 VND / 1 hộp, đã gồm thuế. Đơn tối thiểu: 1 hộp. Áp dụng từ 1 hộp. Số lượng đối chiếu: 1 hộp. Xác nhận số lượng trước khi đặt.",
+      "decision": "grounded_composer",
+      "model_candidate": null
+    },
+    "copy.call_to_action": {
+      "customer_visible": true,
+      "control": "Yêu cầu báo giá",
+      "before": "Yêu cầu báo giá",
+      "after": "Yêu cầu báo giá",
+      "decision": "retained_control",
+      "model_candidate": "rfq",
+      "worker_field": "call_to_action",
+      "role": "content",
+      "attempt": "66c62081-41a7-4824-9b19-1cf432bfc6c3",
+      "request_sha256": "4fd8de8d1dc14af9b40a9995c52ace15abe6dec8a3f1556ff900c0bd6522292c",
+      "tested_revision": 4,
+      "quality_issues": [
+        {
+          "group": "copy",
+          "field": "call_to_action",
+          "reason": "buyer_action"
+        }
+      ],
+      "unresolved": [
+        {
+          "field": "client_preview",
+          "text": "rfq",
+          "outcome": "unresolved",
+          "reason": "unsupported"
+        },
+        {
+          "field": "studio.copy.call_to_action",
+          "text": "rfq",
+          "outcome": "unresolved",
+          "reason": "unsupported"
+        }
+      ]
+    },
+    "seo.page_title": {
+      "customer_visible": true,
+      "control": "Tấm gỗ tiêu âm Mộc | HN",
+      "before": "Tấm gỗ tiêu âm Mộc",
+      "after": "Tấm gỗ tiêu âm Mộc",
+      "decision": "retained_model_verbatim",
+      "model_candidate": "Tấm gỗ tiêu âm Mộc",
+      "worker_field": "page_title",
+      "role": "seo",
+      "attempt": "bb310b91-c510-44e7-b030-af8fd7f62fbb",
+      "request_sha256": "9253c2cf027e6925d07def79c4e8afcd9acd3cb39f339c7a30073abdc9d9abc0",
+      "tested_revision": 5,
+      "quality_issues": [],
+      "unresolved": []
+    },
+    "seo.meta_description": {
+      "customer_visible": true,
+      "control": "Xem thông tin về Tấm gỗ tiêu âm Mộc tại HN. Yêu cầu báo giá",
+      "before": "Tấm gỗ tiêu âm Mộc được sản xuất bởi Gỗ tiêu âm Mộc và được bán tại nhà thầu phòng thu ở Hà Nội. Sản phẩm có giá bán 430.000 VND/box (tax included). Bạn có thể tìm hiểu thêm thông tin chi tiết về sản物",
+      "after": "Xem thông tin về Tấm gỗ tiêu âm Mộc tại HN. Yêu cầu báo giá",
+      "decision": "retained_control",
+      "model_candidate": "Tấm gỗ tiêu âm Mộc được sản xuất bởi Gỗ tiêu âm Mộc và được bán tại nhà thầu phòng thu ở Hà Nội. Sản phẩm có giá bán 430.000 VND/box (tax included). Bạn có thể tìm hiểu thêm thông tin chi tiết về sản物",
+      "worker_field": "meta_description",
+      "role": "seo",
+      "attempt": "bb310b91-c510-44e7-b030-af8fd7f62fbb",
+      "request_sha256": "9253c2cf027e6925d07def79c4e8afcd9acd3cb39f339c7a30073abdc9d9abc0",
+      "tested_revision": 6,
+      "quality_issues": [],
+      "unresolved": [
+        {
+          "field": "client_preview",
+          "text": "Tấm gỗ tiêu âm Mộc được sản xuất bởi Gỗ tiêu âm Mộc và được bán tại nhà thầu phòng thu ở Hà Nội.",
+          "outcome": "unresolved",
+          "reason": "unsupported"
+        },
+        {
+          "field": "client_preview",
+          "text": "Sản phẩm có giá bán 430.000 VND/box (tax included).",
+          "outcome": "needs_correction",
+          "reason": "unsupported_format"
+        },
+        {
+          "field": "client_preview",
+          "text": "Bạn có thể tìm hiểu thêm thông tin chi tiết về sản物",
+          "outcome": "unresolved",
+          "reason": "unsupported"
+        },
+        {
+          "field": "studio.seo.meta_description",
+          "text": "Tấm gỗ tiêu âm Mộc được sản xuất bởi Gỗ tiêu âm Mộc và được bán tại nhà thầu phòng thu ở Hà Nội.",
+          "outcome": "unresolved",
+          "reason": "unsupported"
+        },
+        {
+          "field": "studio.seo.meta_description",
+          "text": "Sản phẩm có giá bán 430.000 VND/box (tax included).",
+          "outcome": "needs_correction",
+          "reason": "unsupported_format"
+        },
+        {
+          "field": "studio.seo.meta_description",
+          "text": "Bạn có thể tìm hiểu thêm thông tin chi tiết về sản物",
+          "outcome": "unresolved",
+          "reason": "unsupported"
+        }
+      ]
+    },
+    "seo.search_intent": {
+      "customer_visible": true,
+      "control": "Tìm hiểu điều kiện lựa chọn Tấm gỗ tiêu âm Mộc tại HN.",
+      "before": "RFQ",
+      "after": "Tìm hiểu điều kiện lựa chọn Tấm gỗ tiêu âm Mộc tại HN.",
+      "decision": "retained_control",
+      "model_candidate": "RFQ",
+      "worker_field": "search_intent",
+      "role": "seo",
+      "attempt": "bb310b91-c510-44e7-b030-af8fd7f62fbb",
+      "request_sha256": "9253c2cf027e6925d07def79c4e8afcd9acd3cb39f339c7a30073abdc9d9abc0",
+      "tested_revision": 7,
+      "quality_issues": [
+        {
+          "group": "seo",
+          "field": "search_intent",
+          "reason": "relevance"
+        }
+      ],
+      "unresolved": [
+        {
+          "field": "client_preview",
+          "text": "RFQ",
+          "outcome": "unresolved",
+          "reason": "unsupported"
+        },
+        {
+          "field": "studio.seo.search_intent",
+          "text": "RFQ",
+          "outcome": "unresolved",
+          "reason": "unsupported"
+        }
+      ]
+    }
+  },
+  "retained_distinct_model_fields": 1
+}

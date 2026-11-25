@@ -1,0 +1,3317 @@
+{
+  "case": "acoustic-panel",
+  "conditions": {
+    "checkout": "2a862d9e89ca4c6196858eab500a19ff8b5f7c5a",
+    "provider": "llama.cpp loopback",
+    "model_sha256": "74a4da8c9fdbcd15bd1f6d01d621410d31c6fc00986f5eb687824e7b93d7a9db",
+    "build": "b12649-1f8baae28",
+    "cases_sha256": "40291aa58da6abde852454e7cf7197f4e0dfd8011327c3998192526013ed2052",
+    "worker_concurrency": 1
+  },
+  "plan": {
+    "id": "ad47c0bb-262e-470a-b165-38f50ac4b030",
+    "sku": "MOC-12",
+    "scope": {
+      "brand_id": "b120ed79-26ad-4a8b-b995-5c9d481fd2c9",
+      "client_id": "6d36b0d5-7289-477e-b598-9ef04002b8ce",
+      "tenant_id": "a554c5d3-a527-4a53-a006-ca09f19096b5",
+      "campaign_id": "c85eff13-3bd3-412a-a3dd-f0f4d2f989dd"
+    },
+    "digest": "4aa40ca0f37276cdf5980bb49f6fffe674cbac628ba893451bef8427c5498386",
+    "locale": "vi-VN",
+    "method": "deterministic-campaign-planner/1",
+    "status": "approved",
+    "product": "Tấm gỗ tiêu âm Mộc",
+    "audience": "Nhà thầu phòng thu",
+    "channels": [
+      "web"
+    ],
+    "revision": 1,
+    "manifests": {
+      "landing": {
+        "id": "7ca90231-1da3-4340-ad0e-8599d76e76b2",
+        "digest": "770c6e90656e32f88eff7dee2b5ae10a44221c453e55544b7a6e81edb26d0d6d",
+        "brief_id": "637b77e9-3112-4d30-8cec-50f92d927d2e",
+        "workflow": "WF-13/landing-seo-draft@6"
+      },
+      "strategy": {
+        "id": "49564b6f-043a-4163-b813-aeb8ba4efe42",
+        "digest": "c642c9eceaa88015381febfb1f809a022d9654d09a9d5e2ea3ff41d908db5b19",
+        "brief_id": "02159cca-e0e5-4214-9d87-eb102d462423",
+        "workflow": "WF-03/research-strategy-draft@3"
+      }
+    },
+    "objective": "Tăng yêu cầu báo giá tấm gỗ cho dự án phòng thu",
+    "budget_vnd": 3000000,
+    "product_id": "318d7373-91c2-4e1a-8be2-ea5f70efedb0",
+    "campaign_id": "c85eff13-3bd3-412a-a3dd-f0f4d2f989dd",
+    "budget_scope": "simulated_media_only",
+    "buyer_action": "rfq",
+    "selling_unit": "box",
+    "duration_days": 21,
+    "research_gaps": [
+      "Kiểm chứng nhu cầu với khách hàng trong thị trường đã chọn.",
+      "Xác minh số liệu nền và kết quả bằng dữ liệu đo thực tế."
+    ],
+    "work_packages": [
+      {
+        "id": "strategy",
+        "kind": "strategy",
+        "role": "Strategy",
+        "due_day": 7,
+        "criteria": "Quyết định phân khúc, kênh và bước xử lý tiếp theo",
+        "complexity": "multi_section"
+      },
+      {
+        "id": "measurement",
+        "kind": "measurement",
+        "role": "Analytics",
+        "due_day": 7,
+        "criteria": "KPI, mẫu số và phương pháp đối soát Sales",
+        "complexity": "multi_section"
+      },
+      {
+        "id": "landing",
+        "kind": "landing",
+        "role": "Content",
+        "due_day": 14,
+        "criteria": "Nội dung trang có CTA và điều kiện theo manifest",
+        "complexity": "multi_section"
+      },
+      {
+        "id": "seo",
+        "kind": "seo",
+        "role": "SEO",
+        "due_day": 14,
+        "criteria": "Tiêu đề SEO và mô tả khớp trang",
+        "complexity": "single_asset"
+      },
+      {
+        "id": "social",
+        "kind": "social",
+        "role": "Social",
+        "due_day": 14,
+        "criteria": "Bài xã hội có hành động nhất quán với brief",
+        "complexity": "single_asset"
+      },
+      {
+        "id": "ad",
+        "kind": "ad",
+        "role": "Media",
+        "due_day": 14,
+        "criteria": "Mẫu quảng cáo nháp cho người mua đã chọn",
+        "complexity": "single_asset"
+      },
+      {
+        "id": "creative_brief",
+        "kind": "creative_brief",
+        "role": "Design",
+        "due_day": 14,
+        "criteria": "Brief nêu sản phẩm, người xem và tiêu chí hình ảnh",
+        "complexity": "single_asset"
+      },
+      {
+        "id": "calendar",
+        "kind": "calendar",
+        "role": "Campaign Manager",
+        "due_day": 21,
+        "criteria": "Lịch dự kiến có người nhận, mốc QA và kênh",
+        "complexity": "multi_channel"
+      }
+    ],
+    "target_outcome": "Tăng yêu cầu báo giá tấm gỗ cho dự án phòng thu",
+    "brand_guidelines": {
+      "tone": "Cụ thể",
+      "digest": "8667f503425c83801d0702e0a96932e171bcc578d401f55e68de2dc1d3e1e675",
+      "guidance": "Dùng câu ngắn và nêu rõ điều kiện áp dụng.",
+      "revision": 1,
+      "prohibited_claims": []
+    },
+    "commercial_facts": [
+      {
+        "id": "F1",
+        "wording": "Lớp mặt phủ veneer.",
+        "category": "description",
+        "qualifiers": [
+          "Dùng trong nhà."
+        ]
+      },
+      {
+        "id": "F2",
+        "price": {
+          "moq": "1",
+          "tax": "included",
+          "unit": "box",
+          "currency": "VND",
+          "tier_max": null,
+          "tier_min": "1",
+          "conditions": [
+            "Xác nhận số lượng trước khi đặt."
+          ],
+          "amount_minor": 430000,
+          "basis_quantity": "1"
+        },
+        "wording": "VND 430000 / 1 box (tax included)",
+        "category": "price",
+        "quantity": "1",
+        "qualifiers": [
+          "Xác nhận số lượng trước khi đặt."
+        ]
+      }
+    ],
+    "measurement_plan": {
+      "kpi": "Yêu cầu đủ số lượng và địa bàn để báo giá · requests · 30 days · Count completed request forms",
+      "hypothesis": "Thử một CTA cho Nhà thầu phòng thu rồi đối soát với kết quả Sales.",
+      "attribution": "Theo mã yêu cầu và biên nhận, ghi riêng kết quả thiếu nguồn.",
+      "buyer_action": "rfq"
+    },
+    "audience_revision": {
+      "id": "c7b06a58-709b-44e1-93cb-5e21f7865ee4",
+      "digest": "17a76115f94687ecb93472d89d69db5dfd7d8d94a8c6860740a0b5bbd59f5ce1",
+      "saved_state": "approved"
+    },
+    "objective_revision": {
+      "id": "d2cde3fc-08e5-4270-8c6b-fbdf14500c55",
+      "digest": "bae2433d958dffc9be10bb7fa472746cf068eb8bd6d5b149bbcb9c4238240680",
+      "saved_state": "approved"
+    },
+    "optimization_basis": null,
+    "approval": {
+      "actor": "6cc5bd1b-8311-4536-a587-be647146ef2a",
+      "receipt": "27c28cea-7648-4d9d-b388-75833a20889e",
+      "at": "2026-11-25T19:45:19.407395+07:00"
+    },
+    "composed_assets": [
+      {
+        "id": "social",
+        "body": "Nhà thầu phòng thu đang cân nhắc Tấm gỗ tiêu âm Mộc? Yêu cầu báo giá để trao đổi nhu cầu về sản phẩm và điều kiện áp dụng.",
+        "kind": "social",
+        "title": "Nội dung mạng xã hội",
+        "digest": "8d7a9a474613639a4a194fa9d4c6e439d40374b8e3655e86dd8afdacf66f24ea",
+        "status": "draft",
+        "plan_id": "ad47c0bb-262e-470a-b165-38f50ac4b030",
+        "manifest": {
+          "id": "7ca90231-1da3-4340-ad0e-8599d76e76b2",
+          "digest": "770c6e90656e32f88eff7dee2b5ae10a44221c453e55544b7a6e81edb26d0d6d",
+          "brief_id": "637b77e9-3112-4d30-8cec-50f92d927d2e",
+          "workflow": "WF-13/landing-seo-draft@6"
+        },
+        "revision": 1,
+        "product_id": "318d7373-91c2-4e1a-8be2-ea5f70efedb0",
+        "provenance": "deterministic-composition/1",
+        "buyer_action": "rfq",
+        "plan_revision": 1,
+        "guideline_digest": "8667f503425c83801d0702e0a96932e171bcc578d401f55e68de2dc1d3e1e675",
+        "requires_channel_evidence": true,
+        "referenced_workflow_skills": {
+          "seo": {
+            "search-intent-seo@1": "95015035ae8f0183d82fa88c9851879885736b82032ce11d9b8f12230dc0152d"
+          },
+          "content": {
+            "landing-conversion@1": "65fed41e31b470d9ac009c03a5ee376851fe86664f2c73f2c5e08af49385bcc6"
+          }
+        }
+      },
+      {
+        "id": "ad",
+        "body": "Tấm gỗ tiêu âm Mộc dành cho Nhà thầu phòng thu. Yêu cầu báo giá.",
+        "kind": "ad",
+        "title": "Nội dung quảng cáo",
+        "digest": "85df72cdb2291be7d718e873e234a2c014c778370e25133c1a84a51f52f04281",
+        "status": "draft",
+        "plan_id": "ad47c0bb-262e-470a-b165-38f50ac4b030",
+        "manifest": {
+          "id": "7ca90231-1da3-4340-ad0e-8599d76e76b2",
+          "digest": "770c6e90656e32f88eff7dee2b5ae10a44221c453e55544b7a6e81edb26d0d6d",
+          "brief_id": "637b77e9-3112-4d30-8cec-50f92d927d2e",
+          "workflow": "WF-13/landing-seo-draft@6"
+        },
+        "revision": 1,
+        "product_id": "318d7373-91c2-4e1a-8be2-ea5f70efedb0",
+        "provenance": "deterministic-composition/1",
+        "buyer_action": "rfq",
+        "plan_revision": 1,
+        "guideline_digest": "8667f503425c83801d0702e0a96932e171bcc578d401f55e68de2dc1d3e1e675",
+        "requires_channel_evidence": true,
+        "referenced_workflow_skills": {
+          "seo": {
+            "search-intent-seo@1": "95015035ae8f0183d82fa88c9851879885736b82032ce11d9b8f12230dc0152d"
+          },
+          "content": {
+            "landing-conversion@1": "65fed41e31b470d9ac009c03a5ee376851fe86664f2c73f2c5e08af49385bcc6"
+          }
+        }
+      },
+      {
+        "id": "creative_brief",
+        "body": "Thiết kế cho Nhà thầu phòng thu trên web. Đặt Tấm gỗ tiêu âm Mộc ở vị trí chính và dùng CTA “Yêu cầu báo giá”. Giọng điệu: Dùng câu ngắn và nêu rõ điều kiện áp dụng. Kiểm tra quyền sử dụng hình ảnh trước bàn giao.",
+        "kind": "creative_brief",
+        "title": "Brief sản xuất hình ảnh",
+        "digest": "19e9358bde8b639f4e66bea4f8aea71ac8a6554734a47f7234b4f80cf02a7b17",
+        "status": "draft",
+        "plan_id": "ad47c0bb-262e-470a-b165-38f50ac4b030",
+        "manifest": {
+          "id": "7ca90231-1da3-4340-ad0e-8599d76e76b2",
+          "digest": "770c6e90656e32f88eff7dee2b5ae10a44221c453e55544b7a6e81edb26d0d6d",
+          "brief_id": "637b77e9-3112-4d30-8cec-50f92d927d2e",
+          "workflow": "WF-13/landing-seo-draft@6"
+        },
+        "revision": 1,
+        "product_id": "318d7373-91c2-4e1a-8be2-ea5f70efedb0",
+        "provenance": "deterministic-composition/1",
+        "buyer_action": "rfq",
+        "plan_revision": 1,
+        "guideline_digest": "8667f503425c83801d0702e0a96932e171bcc578d401f55e68de2dc1d3e1e675",
+        "requires_channel_evidence": true,
+        "referenced_workflow_skills": {
+          "seo": {
+            "search-intent-seo@1": "95015035ae8f0183d82fa88c9851879885736b82032ce11d9b8f12230dc0152d"
+          },
+          "content": {
+            "landing-conversion@1": "65fed41e31b470d9ac009c03a5ee376851fe86664f2c73f2c5e08af49385bcc6"
+          }
+        }
+      },
+      {
+        "id": "calendar",
+        "body": "Ngày 7 · Strategy · Quyết định phân khúc, kênh và bước xử lý tiếp theo\nNgày 7 · Analytics · KPI, mẫu số và phương pháp đối soát Sales\nNgày 14 · Content · Nội dung trang có CTA và điều kiện theo manifest\nNgày 14 · SEO · Tiêu đề SEO và mô tả khớp trang\nNgày 14 · Social · Bài xã hội có hành động nhất quán với brief\nNgày 14 · Media · Mẫu quảng cáo nháp cho người mua đã chọn\nNgày 14 · Design · Brief nêu sản phẩm, người xem và tiêu chí hình ảnh\nNgày 21 · Campaign Manager · Lịch dự kiến có người nhận, mốc QA và kênh\nKênh đề xuất: web. Điểm duyệt: kiểm tra chứng cứ và phê duyệt từng tài sản trước thực thi.",
+        "kind": "calendar",
+        "title": "Lịch nội dung dự kiến",
+        "digest": "e35103aedc30278ec02731c92c3831db5db985e7712ada5885f05c34ee3027d9",
+        "status": "draft",
+        "plan_id": "ad47c0bb-262e-470a-b165-38f50ac4b030",
+        "manifest": {
+          "id": "7ca90231-1da3-4340-ad0e-8599d76e76b2",
+          "digest": "770c6e90656e32f88eff7dee2b5ae10a44221c453e55544b7a6e81edb26d0d6d",
+          "brief_id": "637b77e9-3112-4d30-8cec-50f92d927d2e",
+          "workflow": "WF-13/landing-seo-draft@6"
+        },
+        "revision": 1,
+        "product_id": "318d7373-91c2-4e1a-8be2-ea5f70efedb0",
+        "provenance": "deterministic-composition/1",
+        "buyer_action": "rfq",
+        "plan_revision": 1,
+        "guideline_digest": "8667f503425c83801d0702e0a96932e171bcc578d401f55e68de2dc1d3e1e675",
+        "requires_channel_evidence": true,
+        "referenced_workflow_skills": {
+          "seo": {
+            "search-intent-seo@1": "95015035ae8f0183d82fa88c9851879885736b82032ce11d9b8f12230dc0152d"
+          },
+          "content": {
+            "landing-conversion@1": "65fed41e31b470d9ac009c03a5ee376851fe86664f2c73f2c5e08af49385bcc6"
+          }
+        }
+      }
+    ]
+  },
+  "runs": [
+    {
+      "run_id": "708ddaa8-349a-49ab-a6c1-774cbe6c3f22",
+      "state": "awaiting_qa",
+      "last_error": null,
+      "input_tokens": 2154,
+      "output_tokens": 324,
+      "runtime_s": 28.687,
+      "provider_fee_usd": 0,
+      "attempts": [
+        {
+          "attempt_id": "0a4c2f95-f226-473a-8d49-1a82fb1ceceb",
+          "schema": "c3_skills_director",
+          "request_sha256": "c98596d41b547f4bcbbb414e048d412c94595b1a753fb5159b5aa7dab7dd709c",
+          "input_tokens": 495,
+          "output_tokens": 63,
+          "raw_output": {
+            "primary_assignment": "Compare the approved facts with the buyer hypothesis.",
+            "secondary_assignment": "Design a bounded test of the positioning and define its metric."
+          }
+        },
+        {
+          "attempt_id": "c28d6118-d38a-40ea-b437-daca43693b9d",
+          "schema": "c3_skills_research",
+          "request_sha256": "e272abedd5ea0545222e3b1f70146ffdb51ad48a17d4c7c797fe0fd0f7dbe7bc",
+          "input_tokens": 768,
+          "output_tokens": 88,
+          "raw_output": {
+            "segment": "Nhà thầu phòng thu",
+            "source_ids": [
+              "F1",
+              "F2"
+            ],
+            "buyer_problem": "Xác minh số liệu nền và kết quả bằng dữ liệu đo thực tế.",
+            "evidence_needed": "Kiểm chứng nhu cầu với khách hàng trong thị trường đã chọn.",
+            "research_question": "Compare the approved facts with the buyer hypothesis."
+          }
+        },
+        {
+          "attempt_id": "7c805ae9-2b1d-410c-a324-d9d87f0dd183",
+          "schema": "c3_skills_strategy",
+          "request_sha256": "825675f8d43270394e67b720c22cfcd2c39cbb1453c478be4da48601d1f56409",
+          "input_tokens": 891,
+          "output_tokens": 173,
+          "raw_output": {
+            "rationale": "Tấm gỗ tiêu âm Mộc là một sản phẩm tiêu âm chất lượng cao, phù hợp với các dự án phòng thu. Tuy nhiên, việc tăng yêu cầu báo giá có thể gây ra sự bất tiện cho nhà thầu. Để đảm bảo rằng yêu cầu báo giá",
+            "source_ids": [
+              "F1",
+              "F2"
+            ],
+            "positioning": "Tấm gỗ tiêu âm Mộc",
+            "channel_choice": "web",
+            "test_hypothesis": "Nhà thầu phòng thu cần yêu cầu báo giá theo hộp.",
+            "measurable_action": "tăng yêu cầu báo giá",
+            "measurement_method": "tính toán số lượng và giá trị thực tế của yêu cầu báo giá."
+          }
+        }
+      ]
+    },
+    {
+      "run_id": "9afc20ba-6e8c-473b-811b-614c2cbdece7",
+      "state": "awaiting_qa",
+      "last_error": null,
+      "input_tokens": 1491,
+      "output_tokens": 269,
+      "runtime_s": 21.25,
+      "provider_fee_usd": 0,
+      "attempts": [
+        {
+          "attempt_id": "23a5993d-0d34-4185-8cdc-36dbb430a3b4",
+          "schema": "c3_skills_director",
+          "request_sha256": "aa4eefbde68c1d0631d22377295866f889a4b163cceb0b8063d497dddda7950a",
+          "input_tokens": 495,
+          "output_tokens": 53,
+          "raw_output": {
+            "primary_assignment": "Write buyer copy with the approved terms and requested action.",
+            "secondary_assignment": "Describe search intent and draft a relevant title and snippet."
+          }
+        },
+        {
+          "attempt_id": "66c62081-41a7-4824-9b19-1cf432bfc6c3",
+          "schema": "c3_skills_content",
+          "request_sha256": "4fd8de8d1dc14af9b40a9995c52ace15abe6dec8a3f1556ff900c0bd6522292c",
+          "input_tokens": 464,
+          "output_tokens": 109,
+          "raw_output": {
+            "benefit": "Để tìm hiểu thông tin chi tiết về sản phẩm Tấm gỗ tiêu âm Mộc, hãy liên hệ với chúng tôi qua kênh web.",
+            "headline": "Tấm gỗ tiêu âm Mộc",
+            "source_ids": [
+              "F1",
+              "F2"
+            ],
+            "call_to_action": "rfq",
+            "value_proposition": "Để biết thêm thông tin chi tiết về sản phẩm Tấm gỗ tiêu âm Mộc, hãy liên hệ với chúng tôi qua kênh web."
+          }
+        },
+        {
+          "attempt_id": "bb310b91-c510-44e7-b030-af8fd7f62fbb",
+          "schema": "c3_skills_seo",
+          "request_sha256": "9253c2cf027e6925d07def79c4e8afcd9acd3cb39f339c7a30073abdc9d9abc0",
+          "input_tokens": 532,
+          "output_tokens": 107,
+          "raw_output": {
+            "page_title": "Tấm gỗ tiêu âm Mộc",
+            "source_ids": [
+              "F1",
+              "F2"
+            ],
+            "search_intent": "RFQ",
+            "meta_description": "Tấm gỗ tiêu âm Mộc được sản xuất bởi Gỗ tiêu âm Mộc và được bán tại nhà thầu phòng thu ở Hà Nội. Sản phẩm có giá bán 430.000 VND/box (tax included). Bạn có thể tìm hiểu thêm thông tin chi tiết về sản物"
+          }
+        }
+      ]
+    }
+  ],
+  "accepted_editions": [
+    {
+      "source": "scripted editor and QA, synthetic customer",
+      "groups": {
+        "research": {
+          "buyer_problem": "Cần tìm hiểu điều gì khiến Nhà thầu phòng thu còn do dự khi chọn Tấm gỗ tiêu âm Mộc?",
+          "research_question": "Trong lần mua gần nhất, Nhà thầu phòng thu đã so sánh Tấm gỗ tiêu âm Mộc với phương án nào?",
+          "evidence": "Lớp mặt phủ veneer. Dùng trong nhà.\nGiá tham khảo: 430.000 VND / 1 hộp, đã gồm thuế. Đơn tối thiểu: 1 hộp. Áp dụng từ 1 hộp. Số lượng đối chiếu: 1 hộp. Xác nhận số lượng trước khi đặt.",
+          "hypothesis": "Giả thuyết cần thử: làm rõ điều kiện của Tấm gỗ tiêu âm Mộc giúp Nhà thầu phòng thu chọn bước tiếp theo."
+        },
+        "strategy": {
+          "positioning": "Đề xuất định vị Tấm gỗ tiêu âm Mộc qua quy cách có thể đối chiếu.",
+          "channel_choice": "web",
+          "rationale": "Thử trên web vì đây là kênh nằm trong phạm vi được duyệt.",
+          "execution": "Soạn hai phiên bản giới thiệu Tấm gỗ tiêu âm Mộc trên web, giữ nguyên điều kiện và đo cùng một hành động."
+        },
+        "measurement": {
+          "test_hypothesis": "So sánh bản trình bày dữ kiện trước và sau lời mời hành động trên cùng nhóm khách.",
+          "measurable_action": "Yêu cầu báo giá",
+          "measurement_method": "Theo dõi số yêu cầu hoàn tất trên lượt vào trang. Đối chiếu mã yêu cầu khi bộ phận phụ trách tiếp nhận."
+        },
+        "client_strategy": {
+          "target": "Nhà thầu phòng thu",
+          "decision": "Đề xuất giúp Nhà thầu phòng thu đối chiếu quy cách của Tấm gỗ tiêu âm Mộc trước khi gửi yêu cầu báo giá.",
+          "activation": "Trên web, đặt điều kiện áp dụng cạnh lời mời báo giá. Chuyển yêu cầu đủ thông tin cho Sales.",
+          "next_decision": "Nếu nhiều người gửi nhưng Sales còn phải hỏi lại, ưu tiên sửa trường thông tin thiếu trước khi mở rộng kênh."
+        },
+        "client_measurement": {
+          "hypothesis": "Thử đặt quy cách trước biểu mẫu để người mua có thể gửi yêu cầu đủ thông tin hơn.",
+          "conversion": "Yêu cầu báo giá",
+          "method": "Đối soát mã yêu cầu duy nhất với yêu cầu Sales đủ thông tin để báo giá. So sánh trên lượt vào trang cùng nhóm khách."
+        }
+      },
+      "approval_terms": {
+        "expected_qa_revision": 12,
+        "expected_content_digest": "daf92d387ed10ea420ff5034a6f55b0a451c5b63fd44bd748cf032ea6afa53dc"
+      },
+      "snapshot": {
+        "id": "74014250-4592-410f-8063-01124322294a",
+        "version": 1,
+        "digest": "daf92d387ed10ea420ff5034a6f55b0a451c5b63fd44bd748cf032ea6afa53dc",
+        "status": "approved",
+        "preview": "Chiến lược Marketing\n\nĐối tượng\nNhà thầu phòng thu\n\nLựa chọn chiến lược\nĐề xuất giúp Nhà thầu phòng thu đối chiếu quy cách của Tấm gỗ tiêu âm Mộc trước khi gửi yêu cầu báo giá.\n\nTriển khai trên kênh\nTrên web, đặt điều kiện áp dụng cạnh lời mời báo giá. Chuyển yêu cầu đủ thông tin cho Sales.\n\nQuyết định tiếp theo\nNếu nhiều người gửi nhưng Sales còn phải hỏi lại, ưu tiên sửa trường thông tin thiếu trước khi mở rộng kênh.\n\nKế hoạch đo lường\n\nGiả thuyết cần thử\nThử đặt quy cách trước biểu mẫu để người mua có thể gửi yêu cầu đủ thông tin hơn.\n\nHành động của người mua\nYêu cầu báo giá\n\nPhương pháp đo\nĐối soát mã yêu cầu duy nhất với yêu cầu Sales đủ thông tin để báo giá. So sánh trên lượt vào trang cùng nhóm khách."
+      }
+    },
+    {
+      "source": "scripted editor and QA, synthetic customer",
+      "groups": {
+        "copy": {
+          "headline": "Tấm gỗ tiêu âm Mộc",
+          "value_proposition": "Đối chiếu quy cách và điều kiện áp dụng của Tấm gỗ tiêu âm Mộc trước khi lựa chọn.",
+          "benefit": "Lớp mặt phủ veneer. Dùng trong nhà.",
+          "commercial_terms": "Lớp mặt phủ veneer. Dùng trong nhà.\nGiá tham khảo: 430.000 VND / 1 hộp, đã gồm thuế. Đơn tối thiểu: 1 hộp. Áp dụng từ 1 hộp. Số lượng đối chiếu: 1 hộp. Xác nhận số lượng trước khi đặt.",
+          "call_to_action": "Yêu cầu báo giá"
+        },
+        "seo": {
+          "page_title": "Tấm gỗ tiêu âm Mộc",
+          "meta_description": "Xem thông tin về Tấm gỗ tiêu âm Mộc tại HN. Yêu cầu báo giá",
+          "search_intent": "Tìm hiểu điều kiện lựa chọn Tấm gỗ tiêu âm Mộc tại HN."
+        }
+      },
+      "approval_terms": {
+        "expected_qa_revision": 8,
+        "expected_content_digest": "bd6866a9c03db5b73d042abf640e47b936b62da8fed2310cc6c9589916354deb"
+      },
+      "snapshot": {
+        "id": "9b07f9b5-2eb3-4e35-aba7-735cbc53f563",
+        "version": 1,
+        "digest": "bd6866a9c03db5b73d042abf640e47b936b62da8fed2310cc6c9589916354deb",
+        "status": "approved",
+        "preview": "Nội dung trang đích\n\nTiêu đề\nTấm gỗ tiêu âm Mộc\n\nGiá trị cho người mua\nĐối chiếu quy cách và điều kiện áp dụng của Tấm gỗ tiêu âm Mộc trước khi lựa chọn.\n\nLợi ích\nLớp mặt phủ veneer. Dùng trong nhà.\n\nĐiều kiện thương mại\nLớp mặt phủ veneer. Dùng trong nhà.\nGiá tham khảo: 430.000 VND / 1 hộp, đã gồm thuế. Đơn tối thiểu: 1 hộp. Áp dụng từ 1 hộp. Số lượng đối chiếu: 1 hộp. Xác nhận số lượng trước khi đặt.\n\nLời mời hành động\nYêu cầu báo giá\n\nThông tin SEO\n\nTiêu đề SEO\nTấm gỗ tiêu âm Mộc\n\nMô tả tìm kiếm\nXem thông tin về Tấm gỗ tiêu âm Mộc tại HN. Yêu cầu báo giá\n\nÝ định tìm kiếm\nTìm hiểu điều kiện lựa chọn Tấm gỗ tiêu âm Mộc tại HN."
+      }
+    }
+  ],
+  "participants": "Scripted synthetic operator, editor, reviewer and customer. Practitioner results unmeasured.",
+  "operating_result": {
+    "commands": [
+      {
+        "id": "e47e1edd-f086-4172-bfc7-41fbf6e91842",
+        "kind": "schedule",
+        "entity_id": "landing-5a406c161a",
+        "status": "scheduled"
+      },
+      {
+        "id": "d8fdd828-8736-4290-9b78-015aae427506",
+        "kind": "authorize",
+        "entity_id": "landing-5a406c161a",
+        "status": "authorized"
+      },
+      {
+        "id": "34a6f9f4-98f8-4d2e-828c-4252822ebb13",
+        "kind": "execute",
+        "entity_id": "landing-5a406c161a",
+        "status": "failed"
+      },
+      {
+        "id": "cf92744c-b4e7-4591-b24b-0999261906f7",
+        "kind": "execute",
+        "entity_id": "landing-5a406c161a",
+        "status": "executed"
+      },
+      {
+        "id": "cf92744c-b4e7-4591-b24b-0999261906f7",
+        "kind": "execute",
+        "entity_id": "landing-5a406c161a",
+        "status": "executed"
+      },
+      {
+        "id": "91d8140a-1442-4c89-8bca-2f04ee6ddb24",
+        "kind": "schedule",
+        "entity_id": "landing-5a406c161a-cancel",
+        "status": "scheduled"
+      },
+      {
+        "id": "e021c0c0-e040-4e2d-95d2-f0071add8900",
+        "kind": "cancel",
+        "entity_id": "landing-5a406c161a-cancel",
+        "status": "cancelled"
+      },
+      {
+        "id": "291d5f2b-4d72-4715-9630-d6117dc70436",
+        "kind": "rfq",
+        "entity_id": "rfq-93d9889f",
+        "status": "qualified"
+      },
+      {
+        "id": "291d5f2b-4d72-4715-9630-d6117dc70436",
+        "kind": "rfq",
+        "entity_id": "rfq-93d9889f",
+        "status": "qualified"
+      },
+      {
+        "id": "1281ec2e-826e-4b5d-a4da-43935ac21152",
+        "kind": "session",
+        "entity_id": "session-8fa2a721",
+        "status": null
+      },
+      {
+        "id": "cef945e5-8bba-4094-8428-13caa694c19a",
+        "kind": "sales",
+        "entity_id": "rfq-93d9889f",
+        "status": "assigned"
+      },
+      {
+        "id": "4be9ca6b-914d-49f5-ae55-64eb71b4fd78",
+        "kind": "sales",
+        "entity_id": "rfq-93d9889f",
+        "status": "accepted"
+      },
+      {
+        "id": "2b8814f8-b830-4a4c-8513-6382bb5a705b",
+        "kind": "sales",
+        "entity_id": "rfq-93d9889f",
+        "status": "quoted"
+      },
+      {
+        "id": "9284346c-32ad-49c0-bd22-ae1233271c6c",
+        "kind": "sales",
+        "entity_id": "rfq-93d9889f",
+        "status": "ordered"
+      },
+      {
+        "id": "7384c1a4-db87-4964-84a2-4b95e65cd56e",
+        "kind": "sales",
+        "entity_id": "rfq-93d9889f",
+        "status": "confirmed"
+      },
+      {
+        "id": "7fea4f21-9ab7-435c-bc87-38e790596d78",
+        "kind": "sales",
+        "entity_id": "rfq-93d9889f",
+        "status": "confirmed"
+      },
+      {
+        "id": "ca2c3b0b-96b0-4f0e-a70b-3958fec8d2de",
+        "kind": "sales",
+        "entity_id": "rfq-93d9889f",
+        "status": "confirmed"
+      },
+      {
+        "id": "b6b4666d-8423-4947-b23b-0b23a1be3fb0",
+        "kind": "rfq",
+        "entity_id": "rfq-93d9889f-gap",
+        "status": "received"
+      },
+      {
+        "id": "2150d7b7-f9b4-49cc-aa51-2b66c2ebd394",
+        "kind": "sales",
+        "entity_id": "rfq-93d9889f-gap",
+        "status": "rejected"
+      },
+      {
+        "id": "1a26a380-5d2a-470e-b5bd-af281f0a1d29",
+        "kind": "unit_receipt",
+        "entity_id": "dffa53d07587cdf4d83cb3d9dc5eee8be3edfe47b174f369fd4919e5f01e06a4",
+        "status": null
+      },
+      {
+        "id": "2217773e-57cd-490e-985f-31bdf9ccba33",
+        "kind": "propose_optimization",
+        "entity_id": "6b265ec2bb1f4becbd69c11ab369e131",
+        "status": null
+      },
+      {
+        "id": "4546f45f-c4cf-4dbe-8d04-8f783f8880cb",
+        "kind": "approve_optimization",
+        "entity_id": "6b265ec2bb1f4becbd69c11ab369e131",
+        "status": null
+      }
+    ],
+    "state": {
+      "synthetic": true,
+      "campaign_id": "c85eff13-3bd3-412a-a3dd-f0f4d2f989dd",
+      "actions": [
+        {
+          "id": "landing-5a406c161a",
+          "state": "executed",
+          "due_at": "2026-11-25T12:45:17.023562+00:00",
+          "plan_id": "ad47c0bb-262e-470a-b165-38f50ac4b030",
+          "attempts": 2,
+          "cost_vnd": 20000,
+          "executed_at": "2026-11-25T12:46:20.267272+00:00",
+          "plan_digest": "4aa40ca0f37276cdf5980bb49f6fffe674cbac628ba893451bef8427c5498386",
+          "asset_digest": "bd6866a9c03db5b73d042abf640e47b936b62da8fed2310cc6c9589916354deb",
+          "scheduled_by": "6cc5bd1b-8311-4536-a587-be647146ef2a",
+          "authorized_by": "ec44e94e-98cf-4ac1-bc87-8208af6767d0",
+          "asset_revision": 8,
+          "deliverable_id": "699c0ba0-3ce4-4fae-ac12-a8382b759368",
+          "execution_receipt": "cc40a47e-a06e-40da-89bd-b0047c98872a"
+        },
+        {
+          "id": "landing-5a406c161a-cancel",
+          "state": "cancelled",
+          "due_at": "2026-11-25T12:45:17.023562+00:00",
+          "plan_id": "ad47c0bb-262e-470a-b165-38f50ac4b030",
+          "attempts": 0,
+          "cost_vnd": 0,
+          "executed_at": null,
+          "plan_digest": "4aa40ca0f37276cdf5980bb49f6fffe674cbac628ba893451bef8427c5498386",
+          "asset_digest": "bd6866a9c03db5b73d042abf640e47b936b62da8fed2310cc6c9589916354deb",
+          "scheduled_by": "6cc5bd1b-8311-4536-a587-be647146ef2a",
+          "authorized_by": null,
+          "asset_revision": 8,
+          "deliverable_id": "699c0ba0-3ce4-4fae-ac12-a8382b759368",
+          "execution_receipt": null
+        }
+      ],
+      "leads": [
+        {
+          "id": "rfq-93d9889f",
+          "unit": "box",
+          "state": "confirmed",
+          "quoted": true,
+          "missing": [],
+          "ordered": true,
+          "plan_id": "ad47c0bb-262e-470a-b165-38f50ac4b030",
+          "feedback": [
+            {
+              "step": "accept",
+              "text": "Synthetic request contains the quantity and delivery window for quotation.",
+              "actor": "ec44e94e-98cf-4ac1-bc87-8208af6767d0"
+            },
+            {
+              "step": "refund",
+              "text": "Synthetic partial refund after order confirmation.",
+              "actor": "ec44e94e-98cf-4ac1-bc87-8208af6767d0"
+            },
+            {
+              "step": "correct",
+              "text": "Reconciled order amount from the synthetic Sales document.",
+              "actor": "ec44e94e-98cf-4ac1-bc87-8208af6767d0"
+            }
+          ],
+          "location": "Sandbox delivery zone",
+          "quantity": "4",
+          "revision": 8,
+          "confirmed": true,
+          "gross_vnd": 160000,
+          "product_id": "318d7373-91c2-4e1a-8be2-ea5f70efedb0",
+          "session_id": "session-8fa2a721",
+          "assignee_id": "ec44e94e-98cf-4ac1-bc87-8208af6767d0",
+          "occurred_at": "2026-11-25T12:46:21.215669+00:00",
+          "refunded_vnd": 30000,
+          "last_event_at": "2026-11-25T12:46:22.158622+00:00",
+          "required_date": "2026-12-09",
+          "sales_accepted": true,
+          "contact_purpose": "quote_request"
+        },
+        {
+          "id": "rfq-93d9889f-gap",
+          "unit": "box",
+          "state": "rejected",
+          "quoted": false,
+          "missing": [
+            "location"
+          ],
+          "ordered": false,
+          "plan_id": "ad47c0bb-262e-470a-b165-38f50ac4b030",
+          "feedback": [
+            {
+              "step": "reject",
+              "text": "Missing permitted delivery location.",
+              "actor": "ec44e94e-98cf-4ac1-bc87-8208af6767d0"
+            }
+          ],
+          "location": null,
+          "quantity": "4",
+          "revision": 2,
+          "confirmed": false,
+          "gross_vnd": 0,
+          "product_id": "318d7373-91c2-4e1a-8be2-ea5f70efedb0",
+          "session_id": null,
+          "assignee_id": null,
+          "occurred_at": "2026-11-25T12:46:22.282969+00:00",
+          "refunded_vnd": 0,
+          "last_event_at": "2026-11-25T12:46:22.587649+00:00",
+          "required_date": "2026-12-09",
+          "sales_accepted": false,
+          "contact_purpose": "quote_request"
+        }
+      ],
+      "sessions": [
+        {
+          "id": "session-8fa2a721",
+          "plan_id": "ad47c0bb-262e-470a-b165-38f50ac4b030",
+          "visitor": "buyer-test",
+          "action_id": "landing-5a406c161a",
+          "occurred_at": "2026-11-25T12:46:21.215669+00:00"
+        }
+      ],
+      "work_units": [
+        {
+          "id": "25b76a65aec73d1895e560b2d90636572615172a7fc05b9e5f668ea43f0fe96b",
+          "labor": [],
+          "scope": {
+            "brand_id": "b120ed79-26ad-4a8b-b995-5c9d481fd2c9",
+            "client_id": "6d36b0d5-7289-477e-b598-9ef04002b8ce",
+            "tenant_id": "a554c5d3-a527-4a53-a006-ca09f19096b5",
+            "campaign_id": "c85eff13-3bd3-412a-a3dd-f0f4d2f989dd"
+          },
+          "origin": "staff_saved_revision",
+          "status": "qa_passed",
+          "plan_id": "ad47c0bb-262e-470a-b165-38f50ac4b030",
+          "category": "strategy",
+          "criteria": "Quyết định phân khúc, kênh và bước xử lý tiếp theo",
+          "manifest": {
+            "id": "49564b6f-043a-4163-b813-aeb8ba4efe42",
+            "digest": "c642c9eceaa88015381febfb1f809a022d9654d09a9d5e2ea3ff41d908db5b19",
+            "brief_id": "02159cca-e0e5-4214-9d87-eb102d462423",
+            "workflow": "WF-03/research-strategy-draft@3"
+          },
+          "acceptance": null,
+          "complexity": "multi_section",
+          "package_id": "strategy",
+          "assigned_role": "Strategy",
+          "plan_revision": 1,
+          "cost_statement": null,
+          "artifact_digest": "daf92d387ed10ea420ff5034a6f55b0a451c5b63fd44bd748cf032ea6afa53dc",
+          "commissioned_at": "2026-11-25T12:45:19.677406+00:00",
+          "expected_output": "strategy",
+          "artifact_revision": 12,
+          "run_id": "708ddaa8-349a-49ab-a6c1-774cbe6c3f22",
+          "queue_receipt": "17014eb2-e80e-465c-aa7b-05991b826795",
+          "worker_attempts": 0,
+          "last_error": null,
+          "worker_journal": [
+            {
+              "node_id": "director",
+              "plan_revision": 1,
+              "skill": "director",
+              "attempt": 1,
+              "provider": "local",
+              "model": "amc-local",
+              "prompt": "marketing-workforce-2",
+              "started_at": "2026-11-25T12:45:21.766970+00:00",
+              "outcome": "ok",
+              "reserved_microusd": 0,
+              "input_tokens": 495,
+              "output_tokens": 63,
+              "estimated_microusd": 0,
+              "finished_at": "2026-11-25T12:45:27.513844+00:00"
+            },
+            {
+              "node_id": "n01",
+              "plan_revision": 1,
+              "skill": "research",
+              "attempt": 1,
+              "provider": "local",
+              "model": "amc-local",
+              "prompt": "marketing-workforce-2",
+              "started_at": "2026-11-25T12:45:27.545671+00:00",
+              "outcome": "ok",
+              "reserved_microusd": 0,
+              "input_tokens": 768,
+              "output_tokens": 88,
+              "estimated_microusd": 0,
+              "finished_at": "2026-11-25T12:45:33.402192+00:00"
+            },
+            {
+              "node_id": "n02",
+              "plan_revision": 1,
+              "skill": "strategy",
+              "attempt": 1,
+              "provider": "local",
+              "model": "amc-local",
+              "prompt": "marketing-workforce-2",
+              "started_at": "2026-11-25T12:45:33.435944+00:00",
+              "outcome": "ok",
+              "reserved_microusd": 0,
+              "input_tokens": 891,
+              "output_tokens": 173,
+              "estimated_microusd": 0,
+              "finished_at": "2026-11-25T12:45:50.057081+00:00"
+            }
+          ],
+          "reserved_microusd": 0
+        },
+        {
+          "id": "a0989cae960ac3be9b19ecab4bf49e116296c9d554cad0ca12cc95af9cd372d5",
+          "labor": [],
+          "scope": {
+            "brand_id": "b120ed79-26ad-4a8b-b995-5c9d481fd2c9",
+            "client_id": "6d36b0d5-7289-477e-b598-9ef04002b8ce",
+            "tenant_id": "a554c5d3-a527-4a53-a006-ca09f19096b5",
+            "campaign_id": "c85eff13-3bd3-412a-a3dd-f0f4d2f989dd"
+          },
+          "origin": "staff_saved_revision",
+          "status": "qa_passed",
+          "plan_id": "ad47c0bb-262e-470a-b165-38f50ac4b030",
+          "category": "measurement",
+          "criteria": "KPI, mẫu số và phương pháp đối soát Sales",
+          "manifest": {
+            "id": "49564b6f-043a-4163-b813-aeb8ba4efe42",
+            "digest": "c642c9eceaa88015381febfb1f809a022d9654d09a9d5e2ea3ff41d908db5b19",
+            "brief_id": "02159cca-e0e5-4214-9d87-eb102d462423",
+            "workflow": "WF-03/research-strategy-draft@3"
+          },
+          "acceptance": null,
+          "complexity": "multi_section",
+          "package_id": "measurement",
+          "assigned_role": "Analytics",
+          "plan_revision": 1,
+          "cost_statement": null,
+          "artifact_digest": "daf92d387ed10ea420ff5034a6f55b0a451c5b63fd44bd748cf032ea6afa53dc",
+          "commissioned_at": "2026-11-25T12:45:19.680778+00:00",
+          "expected_output": "measurement",
+          "artifact_revision": 12,
+          "run_id": "708ddaa8-349a-49ab-a6c1-774cbe6c3f22",
+          "queue_receipt": "17014eb2-e80e-465c-aa7b-05991b826795",
+          "worker_attempts": 0,
+          "last_error": null,
+          "worker_journal": [
+            {
+              "node_id": "director",
+              "plan_revision": 1,
+              "skill": "director",
+              "attempt": 1,
+              "provider": "local",
+              "model": "amc-local",
+              "prompt": "marketing-workforce-2",
+              "started_at": "2026-11-25T12:45:21.766970+00:00",
+              "outcome": "ok",
+              "reserved_microusd": 0,
+              "input_tokens": 495,
+              "output_tokens": 63,
+              "estimated_microusd": 0,
+              "finished_at": "2026-11-25T12:45:27.513844+00:00"
+            },
+            {
+              "node_id": "n01",
+              "plan_revision": 1,
+              "skill": "research",
+              "attempt": 1,
+              "provider": "local",
+              "model": "amc-local",
+              "prompt": "marketing-workforce-2",
+              "started_at": "2026-11-25T12:45:27.545671+00:00",
+              "outcome": "ok",
+              "reserved_microusd": 0,
+              "input_tokens": 768,
+              "output_tokens": 88,
+              "estimated_microusd": 0,
+              "finished_at": "2026-11-25T12:45:33.402192+00:00"
+            },
+            {
+              "node_id": "n02",
+              "plan_revision": 1,
+              "skill": "strategy",
+              "attempt": 1,
+              "provider": "local",
+              "model": "amc-local",
+              "prompt": "marketing-workforce-2",
+              "started_at": "2026-11-25T12:45:33.435944+00:00",
+              "outcome": "ok",
+              "reserved_microusd": 0,
+              "input_tokens": 891,
+              "output_tokens": 173,
+              "estimated_microusd": 0,
+              "finished_at": "2026-11-25T12:45:50.057081+00:00"
+            }
+          ],
+          "reserved_microusd": 0
+        },
+        {
+          "id": "dffa53d07587cdf4d83cb3d9dc5eee8be3edfe47b174f369fd4919e5f01e06a4",
+          "labor": [],
+          "scope": {
+            "brand_id": "b120ed79-26ad-4a8b-b995-5c9d481fd2c9",
+            "client_id": "6d36b0d5-7289-477e-b598-9ef04002b8ce",
+            "tenant_id": "a554c5d3-a527-4a53-a006-ca09f19096b5",
+            "campaign_id": "c85eff13-3bd3-412a-a3dd-f0f4d2f989dd"
+          },
+          "origin": null,
+          "status": "fixture_accepted",
+          "plan_id": "ad47c0bb-262e-470a-b165-38f50ac4b030",
+          "category": "landing",
+          "criteria": "Nội dung trang có CTA và điều kiện theo manifest",
+          "manifest": {
+            "id": "7ca90231-1da3-4340-ad0e-8599d76e76b2",
+            "digest": "770c6e90656e32f88eff7dee2b5ae10a44221c453e55544b7a6e81edb26d0d6d",
+            "brief_id": "637b77e9-3112-4d30-8cec-50f92d927d2e",
+            "workflow": "WF-13/landing-seo-draft@6"
+          },
+          "acceptance": {
+            "at": "2026-11-25T12:46:16.996324+00:00",
+            "actor": "81205dfd-5cc0-426b-a306-132a9ef88966",
+            "group": "copy",
+            "run_id": "9afc20ba-6e8c-473b-811b-614c2cbdece7",
+            "status": "fixture_accepted",
+            "plan_id": "ad47c0bb-262e-470a-b165-38f50ac4b030",
+            "entry_id": "237aef71-6720-4cce-96e9-e3baddf43455",
+            "revision": 8,
+            "review_id": "9b07f9b5-2eb3-4e35-aba7-735cbc53f563",
+            "queue_receipt": "d575d1b4-b3a7-4724-aeee-a1d713ae4fd4",
+            "share_receipt": "873e05ff-154a-4e0f-8099-c92fc16d1132",
+            "artifact_digest": "bde339232c63e7c26a6ed67e9f079b3346683746a423321e6b3a1d9a0098c370",
+            "elapsed_seconds": 57.312037,
+            "snapshot_digest": "bd6866a9c03db5b73d042abf640e47b936b62da8fed2310cc6c9589916354deb"
+          },
+          "complexity": "multi_section",
+          "package_id": "landing",
+          "assigned_role": "Content",
+          "plan_revision": 1,
+          "cost_statement": null,
+          "artifact_digest": null,
+          "commissioned_at": "2026-11-25T12:45:19.684287+00:00",
+          "expected_output": "landing",
+          "artifact_revision": null,
+          "run_id": "9afc20ba-6e8c-473b-811b-614c2cbdece7",
+          "queue_receipt": "d575d1b4-b3a7-4724-aeee-a1d713ae4fd4",
+          "worker_attempts": 0,
+          "last_error": null,
+          "worker_journal": [
+            {
+              "node_id": "director",
+              "plan_revision": 1,
+              "skill": "director",
+              "attempt": 1,
+              "provider": "local",
+              "model": "amc-local",
+              "prompt": "marketing-workforce-2",
+              "started_at": "2026-11-25T12:45:54.227340+00:00",
+              "outcome": "ok",
+              "reserved_microusd": 0,
+              "input_tokens": 495,
+              "output_tokens": 53,
+              "estimated_microusd": 0,
+              "finished_at": "2026-11-25T12:45:58.071753+00:00"
+            },
+            {
+              "node_id": "n01",
+              "plan_revision": 1,
+              "skill": "content",
+              "attempt": 1,
+              "provider": "local",
+              "model": "amc-local",
+              "prompt": "marketing-workforce-2",
+              "started_at": "2026-11-25T12:45:58.095517+00:00",
+              "outcome": "ok",
+              "reserved_microusd": 0,
+              "input_tokens": 464,
+              "output_tokens": 109,
+              "estimated_microusd": 0,
+              "finished_at": "2026-11-25T12:46:06.932450+00:00"
+            },
+            {
+              "node_id": "n02",
+              "plan_revision": 1,
+              "skill": "seo",
+              "attempt": 1,
+              "provider": "local",
+              "model": "amc-local",
+              "prompt": "marketing-workforce-2",
+              "started_at": "2026-11-25T12:46:06.967483+00:00",
+              "outcome": "ok",
+              "reserved_microusd": 0,
+              "input_tokens": 532,
+              "output_tokens": 107,
+              "estimated_microusd": 0,
+              "finished_at": "2026-11-25T12:46:15.245522+00:00"
+            }
+          ],
+          "reserved_microusd": 0
+        },
+        {
+          "id": "145f12b1c78deaec85d3d7a4cb74a2b7f8d055a4632de64d13ccedb4fb7dfa16",
+          "labor": [],
+          "scope": {
+            "brand_id": "b120ed79-26ad-4a8b-b995-5c9d481fd2c9",
+            "client_id": "6d36b0d5-7289-477e-b598-9ef04002b8ce",
+            "tenant_id": "a554c5d3-a527-4a53-a006-ca09f19096b5",
+            "campaign_id": "c85eff13-3bd3-412a-a3dd-f0f4d2f989dd"
+          },
+          "origin": "staff_saved_revision",
+          "status": "qa_passed",
+          "plan_id": "ad47c0bb-262e-470a-b165-38f50ac4b030",
+          "category": "seo",
+          "criteria": "Tiêu đề SEO và mô tả khớp trang",
+          "manifest": {
+            "id": "7ca90231-1da3-4340-ad0e-8599d76e76b2",
+            "digest": "770c6e90656e32f88eff7dee2b5ae10a44221c453e55544b7a6e81edb26d0d6d",
+            "brief_id": "637b77e9-3112-4d30-8cec-50f92d927d2e",
+            "workflow": "WF-13/landing-seo-draft@6"
+          },
+          "acceptance": null,
+          "complexity": "single_asset",
+          "package_id": "seo",
+          "assigned_role": "SEO",
+          "plan_revision": 1,
+          "cost_statement": null,
+          "artifact_digest": "bd6866a9c03db5b73d042abf640e47b936b62da8fed2310cc6c9589916354deb",
+          "commissioned_at": "2026-11-25T12:45:19.687184+00:00",
+          "expected_output": "seo",
+          "artifact_revision": 8,
+          "run_id": "9afc20ba-6e8c-473b-811b-614c2cbdece7",
+          "queue_receipt": "d575d1b4-b3a7-4724-aeee-a1d713ae4fd4",
+          "worker_attempts": 0,
+          "last_error": null,
+          "worker_journal": [
+            {
+              "node_id": "director",
+              "plan_revision": 1,
+              "skill": "director",
+              "attempt": 1,
+              "provider": "local",
+              "model": "amc-local",
+              "prompt": "marketing-workforce-2",
+              "started_at": "2026-11-25T12:45:54.227340+00:00",
+              "outcome": "ok",
+              "reserved_microusd": 0,
+              "input_tokens": 495,
+              "output_tokens": 53,
+              "estimated_microusd": 0,
+              "finished_at": "2026-11-25T12:45:58.071753+00:00"
+            },
+            {
+              "node_id": "n01",
+              "plan_revision": 1,
+              "skill": "content",
+              "attempt": 1,
+              "provider": "local",
+              "model": "amc-local",
+              "prompt": "marketing-workforce-2",
+              "started_at": "2026-11-25T12:45:58.095517+00:00",
+              "outcome": "ok",
+              "reserved_microusd": 0,
+              "input_tokens": 464,
+              "output_tokens": 109,
+              "estimated_microusd": 0,
+              "finished_at": "2026-11-25T12:46:06.932450+00:00"
+            },
+            {
+              "node_id": "n02",
+              "plan_revision": 1,
+              "skill": "seo",
+              "attempt": 1,
+              "provider": "local",
+              "model": "amc-local",
+              "prompt": "marketing-workforce-2",
+              "started_at": "2026-11-25T12:46:06.967483+00:00",
+              "outcome": "ok",
+              "reserved_microusd": 0,
+              "input_tokens": 532,
+              "output_tokens": 107,
+              "estimated_microusd": 0,
+              "finished_at": "2026-11-25T12:46:15.245522+00:00"
+            }
+          ],
+          "reserved_microusd": 0
+        },
+        {
+          "id": "c960256172d066e600eb04a4e799ad80f024eb498d0efac9583ecb11f1b0161e",
+          "labor": [],
+          "scope": {
+            "brand_id": "b120ed79-26ad-4a8b-b995-5c9d481fd2c9",
+            "client_id": "6d36b0d5-7289-477e-b598-9ef04002b8ce",
+            "tenant_id": "a554c5d3-a527-4a53-a006-ca09f19096b5",
+            "campaign_id": "c85eff13-3bd3-412a-a3dd-f0f4d2f989dd"
+          },
+          "origin": "deterministic-composition/1",
+          "status": "generated",
+          "plan_id": "ad47c0bb-262e-470a-b165-38f50ac4b030",
+          "category": "social",
+          "criteria": "Bài xã hội có hành động nhất quán với brief",
+          "manifest": {
+            "id": "7ca90231-1da3-4340-ad0e-8599d76e76b2",
+            "digest": "770c6e90656e32f88eff7dee2b5ae10a44221c453e55544b7a6e81edb26d0d6d",
+            "brief_id": "637b77e9-3112-4d30-8cec-50f92d927d2e",
+            "workflow": "WF-13/landing-seo-draft@6"
+          },
+          "acceptance": null,
+          "complexity": "single_asset",
+          "package_id": "social",
+          "assigned_role": "Social",
+          "plan_revision": 1,
+          "cost_statement": null,
+          "artifact_digest": "8d7a9a474613639a4a194fa9d4c6e439d40374b8e3655e86dd8afdacf66f24ea",
+          "commissioned_at": "2026-11-25T12:45:19.691131+00:00",
+          "expected_output": "social",
+          "artifact_revision": 1
+        },
+        {
+          "id": "99032257383978b4554e6f961c85ce920eb3733c30d28d56e4bd283b9a9212a0",
+          "labor": [],
+          "scope": {
+            "brand_id": "b120ed79-26ad-4a8b-b995-5c9d481fd2c9",
+            "client_id": "6d36b0d5-7289-477e-b598-9ef04002b8ce",
+            "tenant_id": "a554c5d3-a527-4a53-a006-ca09f19096b5",
+            "campaign_id": "c85eff13-3bd3-412a-a3dd-f0f4d2f989dd"
+          },
+          "origin": "deterministic-composition/1",
+          "status": "generated",
+          "plan_id": "ad47c0bb-262e-470a-b165-38f50ac4b030",
+          "category": "ad",
+          "criteria": "Mẫu quảng cáo nháp cho người mua đã chọn",
+          "manifest": {
+            "id": "7ca90231-1da3-4340-ad0e-8599d76e76b2",
+            "digest": "770c6e90656e32f88eff7dee2b5ae10a44221c453e55544b7a6e81edb26d0d6d",
+            "brief_id": "637b77e9-3112-4d30-8cec-50f92d927d2e",
+            "workflow": "WF-13/landing-seo-draft@6"
+          },
+          "acceptance": null,
+          "complexity": "single_asset",
+          "package_id": "ad",
+          "assigned_role": "Media",
+          "plan_revision": 1,
+          "cost_statement": null,
+          "artifact_digest": "85df72cdb2291be7d718e873e234a2c014c778370e25133c1a84a51f52f04281",
+          "commissioned_at": "2026-11-25T12:45:19.693985+00:00",
+          "expected_output": "ad",
+          "artifact_revision": 1
+        },
+        {
+          "id": "25fb00d71dbb5dc9fa943a073b07f2d56eae38d07e0414c75ae1bc593f98e278",
+          "labor": [],
+          "scope": {
+            "brand_id": "b120ed79-26ad-4a8b-b995-5c9d481fd2c9",
+            "client_id": "6d36b0d5-7289-477e-b598-9ef04002b8ce",
+            "tenant_id": "a554c5d3-a527-4a53-a006-ca09f19096b5",
+            "campaign_id": "c85eff13-3bd3-412a-a3dd-f0f4d2f989dd"
+          },
+          "origin": "deterministic-composition/1",
+          "status": "generated",
+          "plan_id": "ad47c0bb-262e-470a-b165-38f50ac4b030",
+          "category": "creative_brief",
+          "criteria": "Brief nêu sản phẩm, người xem và tiêu chí hình ảnh",
+          "manifest": {
+            "id": "7ca90231-1da3-4340-ad0e-8599d76e76b2",
+            "digest": "770c6e90656e32f88eff7dee2b5ae10a44221c453e55544b7a6e81edb26d0d6d",
+            "brief_id": "637b77e9-3112-4d30-8cec-50f92d927d2e",
+            "workflow": "WF-13/landing-seo-draft@6"
+          },
+          "acceptance": null,
+          "complexity": "single_asset",
+          "package_id": "creative_brief",
+          "assigned_role": "Design",
+          "plan_revision": 1,
+          "cost_statement": null,
+          "artifact_digest": "19e9358bde8b639f4e66bea4f8aea71ac8a6554734a47f7234b4f80cf02a7b17",
+          "commissioned_at": "2026-11-25T12:45:19.697300+00:00",
+          "expected_output": "creative_brief",
+          "artifact_revision": 1
+        },
+        {
+          "id": "4be90ce9dd99b7917cfeb3de7e27c486f6401027d6f47698223f0b9679a668af",
+          "labor": [],
+          "scope": {
+            "brand_id": "b120ed79-26ad-4a8b-b995-5c9d481fd2c9",
+            "client_id": "6d36b0d5-7289-477e-b598-9ef04002b8ce",
+            "tenant_id": "a554c5d3-a527-4a53-a006-ca09f19096b5",
+            "campaign_id": "c85eff13-3bd3-412a-a3dd-f0f4d2f989dd"
+          },
+          "origin": "deterministic-composition/1",
+          "status": "generated",
+          "plan_id": "ad47c0bb-262e-470a-b165-38f50ac4b030",
+          "category": "calendar",
+          "criteria": "Lịch dự kiến có người nhận, mốc QA và kênh",
+          "manifest": {
+            "id": "7ca90231-1da3-4340-ad0e-8599d76e76b2",
+            "digest": "770c6e90656e32f88eff7dee2b5ae10a44221c453e55544b7a6e81edb26d0d6d",
+            "brief_id": "637b77e9-3112-4d30-8cec-50f92d927d2e",
+            "workflow": "WF-13/landing-seo-draft@6"
+          },
+          "acceptance": null,
+          "complexity": "multi_channel",
+          "package_id": "calendar",
+          "assigned_role": "Campaign Manager",
+          "plan_revision": 1,
+          "cost_statement": null,
+          "artifact_digest": "e35103aedc30278ec02731c92c3831db5db985e7712ada5885f05c34ee3027d9",
+          "commissioned_at": "2026-11-25T12:45:19.700705+00:00",
+          "expected_output": "calendar",
+          "artifact_revision": 1
+        }
+      ],
+      "proposals": [
+        {
+          "id": "6b265ec2bb1f4becbd69c11ab369e131",
+          "basis": "missing_attribution",
+          "author": "6cc5bd1b-8311-4536-a587-be647146ef2a",
+          "status": "approved",
+          "plan_id": "ad47c0bb-262e-470a-b165-38f50ac4b030",
+          "evidence": {
+            "rfqs": 2,
+            "orders": 1,
+            "sessions": 1,
+            "visitors": 1,
+            "synthetic": true,
+            "quotations": 1,
+            "refunds_vnd": 30000,
+            "sales_accepted": 1,
+            "qualified_leads": 1,
+            "cancelled_orders": 0,
+            "confirmed_orders": 1,
+            "missing_attribution": 1,
+            "simulated_spend_vnd": 20000,
+            "confirmed_revenue_vnd": 130000,
+            "attributed_revenue_vnd": 130000,
+            "attributed_by_asset_vnd": {
+              "699c0ba0-3ce4-4fae-ac12-a8382b759368@8": 130000
+            },
+            "unattributed_revenue_vnd": 0
+          },
+          "approved_by": "ec44e94e-98cf-4ac1-bc87-8208af6767d0",
+          "work_package": {
+            "id": "6b265ec2bb1f4becbd69c11ab369e131",
+            "role": "marketing_analyst",
+            "outcome": "Đối soát mã phiên và biên nhận thực thi để xác định nguồn yêu cầu báo giá.",
+            "criteria": "Đối soát lại báo cáo và ghi nhận ngoại lệ còn mở.",
+            "budget_vnd": 0
+          },
+          "report_digest": "8f6ba1fe3fd7518d27daddf8a4e97663773a6ff851f150ea2b20b609398d5a85",
+          "recommendation": "Đối soát mã phiên và biên nhận thực thi để xác định nguồn yêu cầu báo giá."
+        }
+      ],
+      "report": {
+        "synthetic": true,
+        "visitors": 1,
+        "sessions": 1,
+        "rfqs": 2,
+        "qualified_leads": 1,
+        "sales_accepted": 1,
+        "quotations": 1,
+        "orders": 1,
+        "confirmed_orders": 1,
+        "cancelled_orders": 0,
+        "refunds_vnd": 30000,
+        "missing_attribution": 1,
+        "simulated_spend_vnd": 20000,
+        "confirmed_revenue_vnd": 130000,
+        "attributed_revenue_vnd": 130000,
+        "unattributed_revenue_vnd": 0,
+        "attributed_by_asset_vnd": {
+          "699c0ba0-3ce4-4fae-ac12-a8382b759368@8": 130000
+        }
+      },
+      "optimization": {
+        "basis": "missing_attribution",
+        "recommendation": "Đối soát mã phiên và biên nhận thực thi để xác định nguồn yêu cầu báo giá."
+      },
+      "requested_units": 8,
+      "business_accepted_units": 0,
+      "recorded_allocated_cost_vnd": null,
+      "cost_per_business_accepted_vnd": null,
+      "cost_status": "unmeasured_complete_production_cost",
+      "receipts": [
+        {
+          "id": "95342d39-e427-46d7-83e2-1cc6b9d3f76f",
+          "kind": "commission",
+          "actor": "6cc5bd1b-8311-4536-a587-be647146ef2a",
+          "at": "2026-11-25T12:45:19.677940+00:00",
+          "sequence": 1,
+          "entity_id": "25b76a65aec73d1895e560b2d90636572615172a7fc05b9e5f668ea43f0fe96b"
+        },
+        {
+          "id": "45458bdd-b3e0-4f9e-9a4c-5db166230827",
+          "kind": "commission",
+          "actor": "6cc5bd1b-8311-4536-a587-be647146ef2a",
+          "at": "2026-11-25T12:45:19.681544+00:00",
+          "sequence": 2,
+          "entity_id": "a0989cae960ac3be9b19ecab4bf49e116296c9d554cad0ca12cc95af9cd372d5"
+        },
+        {
+          "id": "287b703f-d082-4879-800f-c46ddd0d7f2a",
+          "kind": "commission",
+          "actor": "6cc5bd1b-8311-4536-a587-be647146ef2a",
+          "at": "2026-11-25T12:45:19.684688+00:00",
+          "sequence": 3,
+          "entity_id": "dffa53d07587cdf4d83cb3d9dc5eee8be3edfe47b174f369fd4919e5f01e06a4"
+        },
+        {
+          "id": "cc30b945-d4ee-4daf-9163-1a3e1f2cecf9",
+          "kind": "commission",
+          "actor": "6cc5bd1b-8311-4536-a587-be647146ef2a",
+          "at": "2026-11-25T12:45:19.687611+00:00",
+          "sequence": 4,
+          "entity_id": "145f12b1c78deaec85d3d7a4cb74a2b7f8d055a4632de64d13ccedb4fb7dfa16"
+        },
+        {
+          "id": "7d1f8bf0-794f-475a-993b-471f6cd91e65",
+          "kind": "commission",
+          "actor": "6cc5bd1b-8311-4536-a587-be647146ef2a",
+          "at": "2026-11-25T12:45:19.691564+00:00",
+          "sequence": 5,
+          "entity_id": "c960256172d066e600eb04a4e799ad80f024eb498d0efac9583ecb11f1b0161e"
+        },
+        {
+          "id": "b7c437ba-2e38-4d8e-bd7a-8cb0b6286449",
+          "kind": "commission",
+          "actor": "6cc5bd1b-8311-4536-a587-be647146ef2a",
+          "at": "2026-11-25T12:45:19.694361+00:00",
+          "sequence": 6,
+          "entity_id": "99032257383978b4554e6f961c85ce920eb3733c30d28d56e4bd283b9a9212a0"
+        },
+        {
+          "id": "8f34c5a9-1dad-4611-88ae-9b8834155cb0",
+          "kind": "commission",
+          "actor": "6cc5bd1b-8311-4536-a587-be647146ef2a",
+          "at": "2026-11-25T12:45:19.697813+00:00",
+          "sequence": 7,
+          "entity_id": "25fb00d71dbb5dc9fa943a073b07f2d56eae38d07e0414c75ae1bc593f98e278"
+        },
+        {
+          "id": "7437c7e0-2e47-4616-b71e-8e1496e22931",
+          "kind": "commission",
+          "actor": "6cc5bd1b-8311-4536-a587-be647146ef2a",
+          "at": "2026-11-25T12:45:19.701275+00:00",
+          "sequence": 8,
+          "entity_id": "4be90ce9dd99b7917cfeb3de7e27c486f6401027d6f47698223f0b9679a668af"
+        },
+        {
+          "id": "d71a6a07-b2fa-427e-8c29-a2cb03e3243e",
+          "kind": "generated",
+          "actor": "6cc5bd1b-8311-4536-a587-be647146ef2a",
+          "at": "2026-11-25T12:45:19.705590+00:00",
+          "sequence": 9,
+          "entity_id": "c960256172d066e600eb04a4e799ad80f024eb498d0efac9583ecb11f1b0161e"
+        },
+        {
+          "id": "c5c99b0e-0ef4-49f2-922d-6dbdf8e22032",
+          "kind": "generated",
+          "actor": "6cc5bd1b-8311-4536-a587-be647146ef2a",
+          "at": "2026-11-25T12:45:19.710628+00:00",
+          "sequence": 10,
+          "entity_id": "99032257383978b4554e6f961c85ce920eb3733c30d28d56e4bd283b9a9212a0"
+        },
+        {
+          "id": "352a5a0e-919e-4842-8c6f-7b9ca7497920",
+          "kind": "generated",
+          "actor": "6cc5bd1b-8311-4536-a587-be647146ef2a",
+          "at": "2026-11-25T12:45:19.714422+00:00",
+          "sequence": 11,
+          "entity_id": "25fb00d71dbb5dc9fa943a073b07f2d56eae38d07e0414c75ae1bc593f98e278"
+        },
+        {
+          "id": "cad4b4c9-1ef8-43e2-8566-5210b1184314",
+          "kind": "generated",
+          "actor": "6cc5bd1b-8311-4536-a587-be647146ef2a",
+          "at": "2026-11-25T12:45:19.718301+00:00",
+          "sequence": 12,
+          "entity_id": "4be90ce9dd99b7917cfeb3de7e27c486f6401027d6f47698223f0b9679a668af"
+        },
+        {
+          "id": "e47e1edd-f086-4172-bfc7-41fbf6e91842",
+          "kind": "schedule",
+          "actor": "6cc5bd1b-8311-4536-a587-be647146ef2a",
+          "at": "2026-11-25T12:46:17.957285+00:00",
+          "sequence": 13,
+          "entity_id": "landing-5a406c161a"
+        },
+        {
+          "id": "d8fdd828-8736-4290-9b78-015aae427506",
+          "kind": "authorize",
+          "actor": "ec44e94e-98cf-4ac1-bc87-8208af6767d0",
+          "at": "2026-11-25T12:46:19.090293+00:00",
+          "sequence": 14,
+          "entity_id": "landing-5a406c161a"
+        },
+        {
+          "id": "34a6f9f4-98f8-4d2e-828c-4252822ebb13",
+          "kind": "execute",
+          "actor": "ec44e94e-98cf-4ac1-bc87-8208af6767d0",
+          "at": "2026-11-25T12:46:19.405115+00:00",
+          "sequence": 15,
+          "entity_id": "landing-5a406c161a"
+        },
+        {
+          "id": "cf92744c-b4e7-4591-b24b-0999261906f7",
+          "kind": "execute",
+          "actor": "ec44e94e-98cf-4ac1-bc87-8208af6767d0",
+          "at": "2026-11-25T12:46:20.268497+00:00",
+          "sequence": 16,
+          "entity_id": "landing-5a406c161a"
+        },
+        {
+          "id": "91d8140a-1442-4c89-8bca-2f04ee6ddb24",
+          "kind": "schedule",
+          "actor": "6cc5bd1b-8311-4536-a587-be647146ef2a",
+          "at": "2026-11-25T12:46:20.895848+00:00",
+          "sequence": 17,
+          "entity_id": "landing-5a406c161a-cancel"
+        },
+        {
+          "id": "e021c0c0-e040-4e2d-95d2-f0071add8900",
+          "kind": "cancel",
+          "actor": "6cc5bd1b-8311-4536-a587-be647146ef2a",
+          "at": "2026-11-25T12:46:20.942087+00:00",
+          "sequence": 18,
+          "entity_id": "landing-5a406c161a-cancel"
+        },
+        {
+          "id": "291d5f2b-4d72-4715-9630-d6117dc70436",
+          "kind": "rfq",
+          "actor": "6cc5bd1b-8311-4536-a587-be647146ef2a",
+          "at": "2026-11-25T12:46:21.404329+00:00",
+          "sequence": 19,
+          "entity_id": "rfq-93d9889f"
+        },
+        {
+          "id": "1281ec2e-826e-4b5d-a4da-43935ac21152",
+          "kind": "session",
+          "actor": "6cc5bd1b-8311-4536-a587-be647146ef2a",
+          "at": "2026-11-25T12:46:21.577011+00:00",
+          "sequence": 20,
+          "entity_id": "session-8fa2a721"
+        },
+        {
+          "id": "cef945e5-8bba-4094-8428-13caa694c19a",
+          "kind": "sales",
+          "actor": "ec44e94e-98cf-4ac1-bc87-8208af6767d0",
+          "at": "2026-11-25T12:46:21.799814+00:00",
+          "sequence": 21,
+          "entity_id": "rfq-93d9889f"
+        },
+        {
+          "id": "4be9ca6b-914d-49f5-ae55-64eb71b4fd78",
+          "kind": "sales",
+          "actor": "ec44e94e-98cf-4ac1-bc87-8208af6767d0",
+          "at": "2026-11-25T12:46:21.871779+00:00",
+          "sequence": 22,
+          "entity_id": "rfq-93d9889f"
+        },
+        {
+          "id": "2b8814f8-b830-4a4c-8513-6382bb5a705b",
+          "kind": "sales",
+          "actor": "ec44e94e-98cf-4ac1-bc87-8208af6767d0",
+          "at": "2026-11-25T12:46:21.916750+00:00",
+          "sequence": 23,
+          "entity_id": "rfq-93d9889f"
+        },
+        {
+          "id": "9284346c-32ad-49c0-bd22-ae1233271c6c",
+          "kind": "sales",
+          "actor": "ec44e94e-98cf-4ac1-bc87-8208af6767d0",
+          "at": "2026-11-25T12:46:21.979417+00:00",
+          "sequence": 24,
+          "entity_id": "rfq-93d9889f"
+        },
+        {
+          "id": "7384c1a4-db87-4964-84a2-4b95e65cd56e",
+          "kind": "sales",
+          "actor": "ec44e94e-98cf-4ac1-bc87-8208af6767d0",
+          "at": "2026-11-25T12:46:22.059343+00:00",
+          "sequence": 25,
+          "entity_id": "rfq-93d9889f"
+        },
+        {
+          "id": "7fea4f21-9ab7-435c-bc87-38e790596d78",
+          "kind": "sales",
+          "actor": "ec44e94e-98cf-4ac1-bc87-8208af6767d0",
+          "at": "2026-11-25T12:46:22.145841+00:00",
+          "sequence": 26,
+          "entity_id": "rfq-93d9889f"
+        },
+        {
+          "id": "ca2c3b0b-96b0-4f0e-a70b-3958fec8d2de",
+          "kind": "sales",
+          "actor": "ec44e94e-98cf-4ac1-bc87-8208af6767d0",
+          "at": "2026-11-25T12:46:22.215604+00:00",
+          "sequence": 27,
+          "entity_id": "rfq-93d9889f"
+        },
+        {
+          "id": "b6b4666d-8423-4947-b23b-0b23a1be3fb0",
+          "kind": "rfq",
+          "actor": "6cc5bd1b-8311-4536-a587-be647146ef2a",
+          "at": "2026-11-25T12:46:22.572968+00:00",
+          "sequence": 28,
+          "entity_id": "rfq-93d9889f-gap"
+        },
+        {
+          "id": "2150d7b7-f9b4-49cc-aa51-2b66c2ebd394",
+          "kind": "sales",
+          "actor": "ec44e94e-98cf-4ac1-bc87-8208af6767d0",
+          "at": "2026-11-25T12:46:22.630356+00:00",
+          "sequence": 29,
+          "entity_id": "rfq-93d9889f-gap"
+        },
+        {
+          "id": "1a26a380-5d2a-470e-b5bd-af281f0a1d29",
+          "kind": "unit_receipt",
+          "actor": "6cc5bd1b-8311-4536-a587-be647146ef2a",
+          "at": "2026-11-25T12:46:22.713106+00:00",
+          "sequence": 30,
+          "entity_id": "dffa53d07587cdf4d83cb3d9dc5eee8be3edfe47b174f369fd4919e5f01e06a4"
+        },
+        {
+          "id": "2217773e-57cd-490e-985f-31bdf9ccba33",
+          "kind": "propose_optimization",
+          "actor": "6cc5bd1b-8311-4536-a587-be647146ef2a",
+          "at": "2026-11-25T12:46:22.914025+00:00",
+          "sequence": 31,
+          "entity_id": "6b265ec2bb1f4becbd69c11ab369e131"
+        },
+        {
+          "id": "4546f45f-c4cf-4dbe-8d04-8f783f8880cb",
+          "kind": "approve_optimization",
+          "actor": "ec44e94e-98cf-4ac1-bc87-8208af6767d0",
+          "at": "2026-11-25T12:46:23.080696+00:00",
+          "sequence": 32,
+          "entity_id": "6b265ec2bb1f4becbd69c11ab369e131"
+        }
+      ]
+    }
+  },
+  "production": {
+    "runs": [
+      {
+        "kind": "landing",
+        "queue_receipt": "d575d1b4-b3a7-4724-aeee-a1d713ae4fd4",
+        "manifest": {
+          "id": "7ca90231-1da3-4340-ad0e-8599d76e76b2",
+          "digest": "770c6e90656e32f88eff7dee2b5ae10a44221c453e55544b7a6e81edb26d0d6d",
+          "brief_id": "637b77e9-3112-4d30-8cec-50f92d927d2e",
+          "workflow": "WF-13/landing-seo-draft@6"
+        },
+        "id": "9afc20ba-6e8c-473b-811b-614c2cbdece7",
+        "state": "awaiting_qa",
+        "deliverable_id": "699c0ba0-3ce4-4fae-ac12-a8382b759368",
+        "last_error": null,
+        "budget_microusd": 10000,
+        "reserved_microusd": 0,
+        "journal": [
+          {
+            "node_id": "director",
+            "plan_revision": 1,
+            "skill": "director",
+            "attempt": 1,
+            "provider": "local",
+            "model": "amc-local",
+            "prompt": "marketing-workforce-2",
+            "started_at": "2026-11-25T12:45:54.227340+00:00",
+            "outcome": "ok",
+            "reserved_microusd": 0,
+            "input_tokens": 495,
+            "output_tokens": 53,
+            "estimated_microusd": 0,
+            "finished_at": "2026-11-25T12:45:58.071753+00:00"
+          },
+          {
+            "node_id": "n01",
+            "plan_revision": 1,
+            "skill": "content",
+            "attempt": 1,
+            "provider": "local",
+            "model": "amc-local",
+            "prompt": "marketing-workforce-2",
+            "started_at": "2026-11-25T12:45:58.095517+00:00",
+            "outcome": "ok",
+            "reserved_microusd": 0,
+            "input_tokens": 464,
+            "output_tokens": 109,
+            "estimated_microusd": 0,
+            "finished_at": "2026-11-25T12:46:06.932450+00:00"
+          },
+          {
+            "node_id": "n02",
+            "plan_revision": 1,
+            "skill": "seo",
+            "attempt": 1,
+            "provider": "local",
+            "model": "amc-local",
+            "prompt": "marketing-workforce-2",
+            "started_at": "2026-11-25T12:46:06.967483+00:00",
+            "outcome": "ok",
+            "reserved_microusd": 0,
+            "input_tokens": 532,
+            "output_tokens": 107,
+            "estimated_microusd": 0,
+            "finished_at": "2026-11-25T12:46:15.245522+00:00"
+          }
+        ],
+        "checkpoint_count": 3,
+        "registry": {
+          "skills": [
+            "content",
+            "director",
+            "seo"
+          ],
+          "workflow": "WF-13/landing-seo-draft@6",
+          "contracts": {
+            "seo": {
+              "model": "local",
+              "owner": "agency marketing lead",
+              "tools": [],
+              "inputs": [
+                "brief",
+                "brand",
+                "sources"
+              ],
+              "adapter": "seo@5",
+              "outputs": [
+                "meta_description",
+                "page_title",
+                "search_intent",
+                "source_ids"
+              ],
+              "role_id": "ai-seo-geo-specialist",
+              "approval": "revision_qa_and_client_snapshot",
+              "fallback": "agency editor",
+              "node_cap": 1000,
+              "skill_id": "seo",
+              "objective": "Use this role's approved knowledge projection to prepare internal Marketing work",
+              "qa_policy": "c3-seo@2",
+              "max_attempts": 3,
+              "predecessors": [
+                "content"
+              ],
+              "output_schema": {
+                "type": "object",
+                "required": [
+                  "meta_description",
+                  "page_title",
+                  "search_intent",
+                  "source_ids"
+                ],
+                "properties": {
+                  "page_title": {
+                    "type": "string"
+                  },
+                  "source_ids": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  },
+                  "search_intent": {
+                    "type": "string"
+                  },
+                  "meta_description": {
+                    "type": "string"
+                  }
+                },
+                "additionalProperties": false
+              },
+              "skill_version": 5,
+              "adapter_digest": "c8c7649ce2ef9d2d9e02e2a8ca83ba3cee22da2e9c90525248a26af693ff385f",
+              "timeout_seconds": 300,
+              "contract_version": 5,
+              "success_criteria": [
+                "meta_description",
+                "page_title",
+                "search_intent",
+                "source_ids"
+              ],
+              "forbidden_actions": [
+                "external_write",
+                "publish",
+                "spend"
+              ],
+              "marketing_methods": {
+                "search-intent-seo@1": "95015035ae8f0183d82fa88c9851879885736b82032ce11d9b8f12230dc0152d"
+              }
+            },
+            "content": {
+              "model": "local",
+              "owner": "agency marketing lead",
+              "tools": [],
+              "inputs": [
+                "brief",
+                "brand",
+                "sources"
+              ],
+              "adapter": "content@4",
+              "outputs": [
+                "benefit",
+                "call_to_action",
+                "headline",
+                "source_ids",
+                "value_proposition"
+              ],
+              "role_id": "ai-copywriter-content-strategist",
+              "approval": "revision_qa_and_client_snapshot",
+              "fallback": "agency editor",
+              "node_cap": 1000,
+              "skill_id": "content",
+              "objective": "Use this role's approved knowledge projection to prepare internal Marketing work",
+              "qa_policy": "c3-content@2",
+              "max_attempts": 3,
+              "predecessors": [],
+              "output_schema": {
+                "type": "object",
+                "required": [
+                  "benefit",
+                  "call_to_action",
+                  "headline",
+                  "source_ids",
+                  "value_proposition"
+                ],
+                "properties": {
+                  "benefit": {
+                    "type": "string"
+                  },
+                  "headline": {
+                    "type": "string"
+                  },
+                  "source_ids": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  },
+                  "call_to_action": {
+                    "type": "string"
+                  },
+                  "value_proposition": {
+                    "type": "string"
+                  }
+                },
+                "additionalProperties": false
+              },
+              "skill_version": 4,
+              "adapter_digest": "fcea91e89e8806897a72d314ca258a87c6e509f6ec34ee737edf9d8897d28aa8",
+              "timeout_seconds": 300,
+              "contract_version": 4,
+              "success_criteria": [
+                "benefit",
+                "call_to_action",
+                "headline",
+                "source_ids",
+                "value_proposition"
+              ],
+              "forbidden_actions": [
+                "external_write",
+                "publish",
+                "spend"
+              ],
+              "marketing_methods": {
+                "landing-conversion@1": "65fed41e31b470d9ac009c03a5ee376851fe86664f2c73f2c5e08af49385bcc6"
+              }
+            },
+            "director": {
+              "model": "local",
+              "owner": "agency marketing lead",
+              "tools": [],
+              "inputs": [
+                "brief",
+                "brand",
+                "sources"
+              ],
+              "adapter": "director@4",
+              "outputs": [
+                "primary_assignment",
+                "secondary_assignment"
+              ],
+              "role_id": "ai-managing-director",
+              "approval": "revision_qa_and_client_snapshot",
+              "fallback": "agency editor",
+              "node_cap": 1000,
+              "skill_id": "director",
+              "objective": "Use this role's approved knowledge projection to prepare internal Marketing work",
+              "qa_policy": "c3-director@2",
+              "max_attempts": 3,
+              "predecessors": [],
+              "output_schema": {
+                "type": "object",
+                "required": [
+                  "primary_assignment",
+                  "secondary_assignment"
+                ],
+                "properties": {
+                  "primary_assignment": {
+                    "type": "string"
+                  },
+                  "secondary_assignment": {
+                    "type": "string"
+                  }
+                },
+                "additionalProperties": false
+              },
+              "skill_version": 4,
+              "adapter_digest": "de8896dfee4aaf662dbf31bdda67606e3ae2376b8e4b4542acfeb3993646724d",
+              "timeout_seconds": 300,
+              "contract_version": 4,
+              "success_criteria": [
+                "primary_assignment",
+                "secondary_assignment"
+              ],
+              "forbidden_actions": [
+                "external_write",
+                "publish",
+                "spend"
+              ],
+              "marketing_methods": {}
+            }
+          },
+          "workflow_id": "WF-13/landing-seo-draft",
+          "manifest_digest": "0cfe96302a0d7698b09e379f38b98f1708311ce706d83694f595d11ddc56399f",
+          "workflow_version": 6
+        }
+      },
+      {
+        "kind": "strategy",
+        "queue_receipt": "17014eb2-e80e-465c-aa7b-05991b826795",
+        "manifest": {
+          "id": "49564b6f-043a-4163-b813-aeb8ba4efe42",
+          "digest": "c642c9eceaa88015381febfb1f809a022d9654d09a9d5e2ea3ff41d908db5b19",
+          "brief_id": "02159cca-e0e5-4214-9d87-eb102d462423",
+          "workflow": "WF-03/research-strategy-draft@3"
+        },
+        "id": "708ddaa8-349a-49ab-a6c1-774cbe6c3f22",
+        "state": "awaiting_qa",
+        "deliverable_id": "9d4a6479-e714-431a-bfbb-06c14654c73f",
+        "last_error": null,
+        "budget_microusd": 10000,
+        "reserved_microusd": 0,
+        "journal": [
+          {
+            "node_id": "director",
+            "plan_revision": 1,
+            "skill": "director",
+            "attempt": 1,
+            "provider": "local",
+            "model": "amc-local",
+            "prompt": "marketing-workforce-2",
+            "started_at": "2026-11-25T12:45:21.766970+00:00",
+            "outcome": "ok",
+            "reserved_microusd": 0,
+            "input_tokens": 495,
+            "output_tokens": 63,
+            "estimated_microusd": 0,
+            "finished_at": "2026-11-25T12:45:27.513844+00:00"
+          },
+          {
+            "node_id": "n01",
+            "plan_revision": 1,
+            "skill": "research",
+            "attempt": 1,
+            "provider": "local",
+            "model": "amc-local",
+            "prompt": "marketing-workforce-2",
+            "started_at": "2026-11-25T12:45:27.545671+00:00",
+            "outcome": "ok",
+            "reserved_microusd": 0,
+            "input_tokens": 768,
+            "output_tokens": 88,
+            "estimated_microusd": 0,
+            "finished_at": "2026-11-25T12:45:33.402192+00:00"
+          },
+          {
+            "node_id": "n02",
+            "plan_revision": 1,
+            "skill": "strategy",
+            "attempt": 1,
+            "provider": "local",
+            "model": "amc-local",
+            "prompt": "marketing-workforce-2",
+            "started_at": "2026-11-25T12:45:33.435944+00:00",
+            "outcome": "ok",
+            "reserved_microusd": 0,
+            "input_tokens": 891,
+            "output_tokens": 173,
+            "estimated_microusd": 0,
+            "finished_at": "2026-11-25T12:45:50.057081+00:00"
+          }
+        ],
+        "checkpoint_count": 3,
+        "registry": {
+          "skills": [
+            "director",
+            "research",
+            "strategy"
+          ],
+          "workflow": "WF-03/research-strategy-draft@3",
+          "contracts": {
+            "director": {
+              "model": "local",
+              "owner": "agency marketing lead",
+              "tools": [],
+              "inputs": [
+                "brief",
+                "brand",
+                "sources"
+              ],
+              "adapter": "director@4",
+              "outputs": [
+                "primary_assignment",
+                "secondary_assignment"
+              ],
+              "role_id": "ai-managing-director",
+              "approval": "revision_qa_and_client_snapshot",
+              "fallback": "agency editor",
+              "node_cap": 1000,
+              "skill_id": "director",
+              "objective": "Use this role's approved knowledge projection to prepare internal Marketing work",
+              "qa_policy": "c3-director@2",
+              "max_attempts": 3,
+              "predecessors": [],
+              "output_schema": {
+                "type": "object",
+                "required": [
+                  "primary_assignment",
+                  "secondary_assignment"
+                ],
+                "properties": {
+                  "primary_assignment": {
+                    "type": "string"
+                  },
+                  "secondary_assignment": {
+                    "type": "string"
+                  }
+                },
+                "additionalProperties": false
+              },
+              "skill_version": 4,
+              "adapter_digest": "de8896dfee4aaf662dbf31bdda67606e3ae2376b8e4b4542acfeb3993646724d",
+              "timeout_seconds": 300,
+              "contract_version": 4,
+              "success_criteria": [
+                "primary_assignment",
+                "secondary_assignment"
+              ],
+              "forbidden_actions": [
+                "external_write",
+                "publish",
+                "spend"
+              ],
+              "marketing_methods": {}
+            },
+            "research": {
+              "model": "local",
+              "owner": "agency marketing lead",
+              "tools": [],
+              "inputs": [
+                "brief",
+                "brand",
+                "sources"
+              ],
+              "adapter": "research@4",
+              "outputs": [
+                "buyer_problem",
+                "evidence_needed",
+                "research_question",
+                "segment",
+                "source_ids"
+              ],
+              "role_id": "ai-market-researcher",
+              "approval": "revision_qa_and_client_snapshot",
+              "fallback": "agency editor",
+              "node_cap": 1000,
+              "skill_id": "research",
+              "objective": "Use this role's approved knowledge projection to prepare internal Marketing work",
+              "qa_policy": "c3-research@2",
+              "max_attempts": 3,
+              "predecessors": [],
+              "output_schema": {
+                "type": "object",
+                "required": [
+                  "buyer_problem",
+                  "evidence_needed",
+                  "research_question",
+                  "segment",
+                  "source_ids"
+                ],
+                "properties": {
+                  "segment": {
+                    "type": "string"
+                  },
+                  "source_ids": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  },
+                  "buyer_problem": {
+                    "type": "string"
+                  },
+                  "evidence_needed": {
+                    "type": "string"
+                  },
+                  "research_question": {
+                    "type": "string"
+                  }
+                },
+                "additionalProperties": false
+              },
+              "skill_version": 4,
+              "adapter_digest": "cb32178ff6ab9076426ab22cbfb8624c282d76e47d6f08a12e4447f504391239",
+              "timeout_seconds": 300,
+              "contract_version": 4,
+              "success_criteria": [
+                "buyer_problem",
+                "evidence_needed",
+                "research_question",
+                "segment",
+                "source_ids"
+              ],
+              "forbidden_actions": [
+                "external_write",
+                "publish",
+                "spend"
+              ],
+              "marketing_methods": {
+                "market-research@1": "86eeef60340cfd5035e4ecbba3807b7afca9b4abd4356e047d8806b8c9f77621",
+                "icp-segmentation@1": "b69cd2acdf276b874a4cb956987cfd9ebf00efe4fd286e80d4b835ec6ab5102f"
+              }
+            },
+            "strategy": {
+              "model": "local",
+              "owner": "agency marketing lead",
+              "tools": [],
+              "inputs": [
+                "brief",
+                "brand",
+                "sources"
+              ],
+              "adapter": "strategy@4",
+              "outputs": [
+                "channel_choice",
+                "measurable_action",
+                "measurement_method",
+                "positioning",
+                "rationale",
+                "source_ids",
+                "test_hypothesis"
+              ],
+              "role_id": "ai-marketing-strategist",
+              "approval": "revision_qa_and_client_snapshot",
+              "fallback": "agency editor",
+              "node_cap": 1000,
+              "skill_id": "strategy",
+              "objective": "Use this role's approved knowledge projection to prepare internal Marketing work",
+              "qa_policy": "c3-strategy@2",
+              "max_attempts": 3,
+              "predecessors": [
+                "research"
+              ],
+              "output_schema": {
+                "type": "object",
+                "required": [
+                  "channel_choice",
+                  "measurable_action",
+                  "measurement_method",
+                  "positioning",
+                  "rationale",
+                  "source_ids",
+                  "test_hypothesis"
+                ],
+                "properties": {
+                  "rationale": {
+                    "type": "string"
+                  },
+                  "source_ids": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  },
+                  "positioning": {
+                    "type": "string"
+                  },
+                  "channel_choice": {
+                    "type": "string"
+                  },
+                  "test_hypothesis": {
+                    "type": "string"
+                  },
+                  "measurable_action": {
+                    "type": "string"
+                  },
+                  "measurement_method": {
+                    "type": "string"
+                  }
+                },
+                "additionalProperties": false
+              },
+              "skill_version": 4,
+              "adapter_digest": "225597105f7168efbf65e5e2e4e9cbb5fd725b2eca9b319fd352d5b39b10bf64",
+              "timeout_seconds": 300,
+              "contract_version": 4,
+              "success_criteria": [
+                "channel_choice",
+                "measurable_action",
+                "measurement_method",
+                "positioning",
+                "rationale",
+                "source_ids",
+                "test_hypothesis"
+              ],
+              "forbidden_actions": [
+                "external_write",
+                "publish",
+                "spend"
+              ],
+              "marketing_methods": {
+                "kpi-measurement@1": "b3f38b752f72b7a4bb76afc2783e08308f3d19a473b3a18eeed277d6552a13f9",
+                "campaign-channel@1": "e5f47b865cad8e80a7efab8d1ef1854cf9a4cf5b8185b80ecc263fea1dc631d0",
+                "positioning-value@1": "b83430d074a232e1b0e8a2485a935c20bdc2d72521ac25478ac34f99475af93c"
+              }
+            }
+          },
+          "workflow_id": "WF-03/research-strategy-draft",
+          "manifest_digest": "cf9078f2aa283cc7a9e9c273abd3077338c94ebe0f51a65e0a30c33254d94969",
+          "workflow_version": 3
+        }
+      }
+    ],
+    "assets": [
+      {
+        "id": "social",
+        "body": "Nhà thầu phòng thu đang cân nhắc Tấm gỗ tiêu âm Mộc? Yêu cầu báo giá để trao đổi nhu cầu về sản phẩm và điều kiện áp dụng.",
+        "kind": "social",
+        "title": "Nội dung mạng xã hội",
+        "digest": "8d7a9a474613639a4a194fa9d4c6e439d40374b8e3655e86dd8afdacf66f24ea",
+        "status": "draft",
+        "plan_id": "ad47c0bb-262e-470a-b165-38f50ac4b030",
+        "manifest": {
+          "id": "7ca90231-1da3-4340-ad0e-8599d76e76b2",
+          "digest": "770c6e90656e32f88eff7dee2b5ae10a44221c453e55544b7a6e81edb26d0d6d",
+          "brief_id": "637b77e9-3112-4d30-8cec-50f92d927d2e",
+          "workflow": "WF-13/landing-seo-draft@6"
+        },
+        "revision": 1,
+        "product_id": "318d7373-91c2-4e1a-8be2-ea5f70efedb0",
+        "provenance": "deterministic-composition/1",
+        "buyer_action": "rfq",
+        "plan_revision": 1,
+        "guideline_digest": "8667f503425c83801d0702e0a96932e171bcc578d401f55e68de2dc1d3e1e675",
+        "requires_channel_evidence": true,
+        "referenced_workflow_skills": {
+          "seo": {
+            "search-intent-seo@1": "95015035ae8f0183d82fa88c9851879885736b82032ce11d9b8f12230dc0152d"
+          },
+          "content": {
+            "landing-conversion@1": "65fed41e31b470d9ac009c03a5ee376851fe86664f2c73f2c5e08af49385bcc6"
+          }
+        }
+      },
+      {
+        "id": "ad",
+        "body": "Tấm gỗ tiêu âm Mộc dành cho Nhà thầu phòng thu. Yêu cầu báo giá.",
+        "kind": "ad",
+        "title": "Nội dung quảng cáo",
+        "digest": "85df72cdb2291be7d718e873e234a2c014c778370e25133c1a84a51f52f04281",
+        "status": "draft",
+        "plan_id": "ad47c0bb-262e-470a-b165-38f50ac4b030",
+        "manifest": {
+          "id": "7ca90231-1da3-4340-ad0e-8599d76e76b2",
+          "digest": "770c6e90656e32f88eff7dee2b5ae10a44221c453e55544b7a6e81edb26d0d6d",
+          "brief_id": "637b77e9-3112-4d30-8cec-50f92d927d2e",
+          "workflow": "WF-13/landing-seo-draft@6"
+        },
+        "revision": 1,
+        "product_id": "318d7373-91c2-4e1a-8be2-ea5f70efedb0",
+        "provenance": "deterministic-composition/1",
+        "buyer_action": "rfq",
+        "plan_revision": 1,
+        "guideline_digest": "8667f503425c83801d0702e0a96932e171bcc578d401f55e68de2dc1d3e1e675",
+        "requires_channel_evidence": true,
+        "referenced_workflow_skills": {
+          "seo": {
+            "search-intent-seo@1": "95015035ae8f0183d82fa88c9851879885736b82032ce11d9b8f12230dc0152d"
+          },
+          "content": {
+            "landing-conversion@1": "65fed41e31b470d9ac009c03a5ee376851fe86664f2c73f2c5e08af49385bcc6"
+          }
+        }
+      },
+      {
+        "id": "creative_brief",
+        "body": "Thiết kế cho Nhà thầu phòng thu trên web. Đặt Tấm gỗ tiêu âm Mộc ở vị trí chính và dùng CTA “Yêu cầu báo giá”. Giọng điệu: Dùng câu ngắn và nêu rõ điều kiện áp dụng. Kiểm tra quyền sử dụng hình ảnh trước bàn giao.",
+        "kind": "creative_brief",
+        "title": "Brief sản xuất hình ảnh",
+        "digest": "19e9358bde8b639f4e66bea4f8aea71ac8a6554734a47f7234b4f80cf02a7b17",
+        "status": "draft",
+        "plan_id": "ad47c0bb-262e-470a-b165-38f50ac4b030",
+        "manifest": {
+          "id": "7ca90231-1da3-4340-ad0e-8599d76e76b2",
+          "digest": "770c6e90656e32f88eff7dee2b5ae10a44221c453e55544b7a6e81edb26d0d6d",
+          "brief_id": "637b77e9-3112-4d30-8cec-50f92d927d2e",
+          "workflow": "WF-13/landing-seo-draft@6"
+        },
+        "revision": 1,
+        "product_id": "318d7373-91c2-4e1a-8be2-ea5f70efedb0",
+        "provenance": "deterministic-composition/1",
+        "buyer_action": "rfq",
+        "plan_revision": 1,
+        "guideline_digest": "8667f503425c83801d0702e0a96932e171bcc578d401f55e68de2dc1d3e1e675",
+        "requires_channel_evidence": true,
+        "referenced_workflow_skills": {
+          "seo": {
+            "search-intent-seo@1": "95015035ae8f0183d82fa88c9851879885736b82032ce11d9b8f12230dc0152d"
+          },
+          "content": {
+            "landing-conversion@1": "65fed41e31b470d9ac009c03a5ee376851fe86664f2c73f2c5e08af49385bcc6"
+          }
+        }
+      },
+      {
+        "id": "calendar",
+        "body": "Ngày 7 · Strategy · Quyết định phân khúc, kênh và bước xử lý tiếp theo\nNgày 7 · Analytics · KPI, mẫu số và phương pháp đối soát Sales\nNgày 14 · Content · Nội dung trang có CTA và điều kiện theo manifest\nNgày 14 · SEO · Tiêu đề SEO và mô tả khớp trang\nNgày 14 · Social · Bài xã hội có hành động nhất quán với brief\nNgày 14 · Media · Mẫu quảng cáo nháp cho người mua đã chọn\nNgày 14 · Design · Brief nêu sản phẩm, người xem và tiêu chí hình ảnh\nNgày 21 · Campaign Manager · Lịch dự kiến có người nhận, mốc QA và kênh\nKênh đề xuất: web. Điểm duyệt: kiểm tra chứng cứ và phê duyệt từng tài sản trước thực thi.",
+        "kind": "calendar",
+        "title": "Lịch nội dung dự kiến",
+        "digest": "e35103aedc30278ec02731c92c3831db5db985e7712ada5885f05c34ee3027d9",
+        "status": "draft",
+        "plan_id": "ad47c0bb-262e-470a-b165-38f50ac4b030",
+        "manifest": {
+          "id": "7ca90231-1da3-4340-ad0e-8599d76e76b2",
+          "digest": "770c6e90656e32f88eff7dee2b5ae10a44221c453e55544b7a6e81edb26d0d6d",
+          "brief_id": "637b77e9-3112-4d30-8cec-50f92d927d2e",
+          "workflow": "WF-13/landing-seo-draft@6"
+        },
+        "revision": 1,
+        "product_id": "318d7373-91c2-4e1a-8be2-ea5f70efedb0",
+        "provenance": "deterministic-composition/1",
+        "buyer_action": "rfq",
+        "plan_revision": 1,
+        "guideline_digest": "8667f503425c83801d0702e0a96932e171bcc578d401f55e68de2dc1d3e1e675",
+        "requires_channel_evidence": true,
+        "referenced_workflow_skills": {
+          "seo": {
+            "search-intent-seo@1": "95015035ae8f0183d82fa88c9851879885736b82032ce11d9b8f12230dc0152d"
+          },
+          "content": {
+            "landing-conversion@1": "65fed41e31b470d9ac009c03a5ee376851fe86664f2c73f2c5e08af49385bcc6"
+          }
+        }
+      },
+      {
+        "deliverable_id": "699c0ba0-3ce4-4fae-ac12-a8382b759368",
+        "revision": 8,
+        "document_digest": "bd6866a9c03db5b73d042abf640e47b936b62da8fed2310cc6c9589916354deb",
+        "status": "shared",
+        "plan_id": "ad47c0bb-262e-470a-b165-38f50ac4b030",
+        "plan_revision": 1,
+        "manifest": {
+          "id": "7ca90231-1da3-4340-ad0e-8599d76e76b2",
+          "digest": "770c6e90656e32f88eff7dee2b5ae10a44221c453e55544b7a6e81edb26d0d6d",
+          "brief_id": "637b77e9-3112-4d30-8cec-50f92d927d2e",
+          "workflow": "WF-13/landing-seo-draft@6"
+        },
+        "run_id": "9afc20ba-6e8c-473b-811b-614c2cbdece7",
+        "product_id": "318d7373-91c2-4e1a-8be2-ea5f70efedb0",
+        "buyer_action": "rfq",
+        "guideline_digest": "8667f503425c83801d0702e0a96932e171bcc578d401f55e68de2dc1d3e1e675",
+        "registry": {
+          "skills": [
+            "content",
+            "director",
+            "seo"
+          ],
+          "workflow": "WF-13/landing-seo-draft@6",
+          "contracts": {
+            "seo": {
+              "model": "local",
+              "owner": "agency marketing lead",
+              "tools": [],
+              "inputs": [
+                "brief",
+                "brand",
+                "sources"
+              ],
+              "adapter": "seo@5",
+              "outputs": [
+                "meta_description",
+                "page_title",
+                "search_intent",
+                "source_ids"
+              ],
+              "role_id": "ai-seo-geo-specialist",
+              "approval": "revision_qa_and_client_snapshot",
+              "fallback": "agency editor",
+              "node_cap": 1000,
+              "skill_id": "seo",
+              "objective": "Use this role's approved knowledge projection to prepare internal Marketing work",
+              "qa_policy": "c3-seo@2",
+              "max_attempts": 3,
+              "predecessors": [
+                "content"
+              ],
+              "output_schema": {
+                "type": "object",
+                "required": [
+                  "meta_description",
+                  "page_title",
+                  "search_intent",
+                  "source_ids"
+                ],
+                "properties": {
+                  "page_title": {
+                    "type": "string"
+                  },
+                  "source_ids": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  },
+                  "search_intent": {
+                    "type": "string"
+                  },
+                  "meta_description": {
+                    "type": "string"
+                  }
+                },
+                "additionalProperties": false
+              },
+              "skill_version": 5,
+              "adapter_digest": "c8c7649ce2ef9d2d9e02e2a8ca83ba3cee22da2e9c90525248a26af693ff385f",
+              "timeout_seconds": 300,
+              "contract_version": 5,
+              "success_criteria": [
+                "meta_description",
+                "page_title",
+                "search_intent",
+                "source_ids"
+              ],
+              "forbidden_actions": [
+                "external_write",
+                "publish",
+                "spend"
+              ],
+              "marketing_methods": {
+                "search-intent-seo@1": "95015035ae8f0183d82fa88c9851879885736b82032ce11d9b8f12230dc0152d"
+              }
+            },
+            "content": {
+              "model": "local",
+              "owner": "agency marketing lead",
+              "tools": [],
+              "inputs": [
+                "brief",
+                "brand",
+                "sources"
+              ],
+              "adapter": "content@4",
+              "outputs": [
+                "benefit",
+                "call_to_action",
+                "headline",
+                "source_ids",
+                "value_proposition"
+              ],
+              "role_id": "ai-copywriter-content-strategist",
+              "approval": "revision_qa_and_client_snapshot",
+              "fallback": "agency editor",
+              "node_cap": 1000,
+              "skill_id": "content",
+              "objective": "Use this role's approved knowledge projection to prepare internal Marketing work",
+              "qa_policy": "c3-content@2",
+              "max_attempts": 3,
+              "predecessors": [],
+              "output_schema": {
+                "type": "object",
+                "required": [
+                  "benefit",
+                  "call_to_action",
+                  "headline",
+                  "source_ids",
+                  "value_proposition"
+                ],
+                "properties": {
+                  "benefit": {
+                    "type": "string"
+                  },
+                  "headline": {
+                    "type": "string"
+                  },
+                  "source_ids": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  },
+                  "call_to_action": {
+                    "type": "string"
+                  },
+                  "value_proposition": {
+                    "type": "string"
+                  }
+                },
+                "additionalProperties": false
+              },
+              "skill_version": 4,
+              "adapter_digest": "fcea91e89e8806897a72d314ca258a87c6e509f6ec34ee737edf9d8897d28aa8",
+              "timeout_seconds": 300,
+              "contract_version": 4,
+              "success_criteria": [
+                "benefit",
+                "call_to_action",
+                "headline",
+                "source_ids",
+                "value_proposition"
+              ],
+              "forbidden_actions": [
+                "external_write",
+                "publish",
+                "spend"
+              ],
+              "marketing_methods": {
+                "landing-conversion@1": "65fed41e31b470d9ac009c03a5ee376851fe86664f2c73f2c5e08af49385bcc6"
+              }
+            },
+            "director": {
+              "model": "local",
+              "owner": "agency marketing lead",
+              "tools": [],
+              "inputs": [
+                "brief",
+                "brand",
+                "sources"
+              ],
+              "adapter": "director@4",
+              "outputs": [
+                "primary_assignment",
+                "secondary_assignment"
+              ],
+              "role_id": "ai-managing-director",
+              "approval": "revision_qa_and_client_snapshot",
+              "fallback": "agency editor",
+              "node_cap": 1000,
+              "skill_id": "director",
+              "objective": "Use this role's approved knowledge projection to prepare internal Marketing work",
+              "qa_policy": "c3-director@2",
+              "max_attempts": 3,
+              "predecessors": [],
+              "output_schema": {
+                "type": "object",
+                "required": [
+                  "primary_assignment",
+                  "secondary_assignment"
+                ],
+                "properties": {
+                  "primary_assignment": {
+                    "type": "string"
+                  },
+                  "secondary_assignment": {
+                    "type": "string"
+                  }
+                },
+                "additionalProperties": false
+              },
+              "skill_version": 4,
+              "adapter_digest": "de8896dfee4aaf662dbf31bdda67606e3ae2376b8e4b4542acfeb3993646724d",
+              "timeout_seconds": 300,
+              "contract_version": 4,
+              "success_criteria": [
+                "primary_assignment",
+                "secondary_assignment"
+              ],
+              "forbidden_actions": [
+                "external_write",
+                "publish",
+                "spend"
+              ],
+              "marketing_methods": {}
+            }
+          },
+          "workflow_id": "WF-13/landing-seo-draft",
+          "manifest_digest": "0cfe96302a0d7698b09e379f38b98f1708311ce706d83694f595d11ddc56399f",
+          "workflow_version": 6
+        },
+        "id": "landing",
+        "kind": "landing",
+        "title": "Nội dung trang đích",
+        "body": "Tấm gỗ tiêu âm Mộc\nĐối chiếu quy cách và điều kiện áp dụng của Tấm gỗ tiêu âm Mộc trước khi lựa chọn.\nLớp mặt phủ veneer. Dùng trong nhà.\nLớp mặt phủ veneer. Dùng trong nhà.\nGiá tham khảo: 430.000 VND / 1 hộp, đã gồm thuế. Đơn tối thiểu: 1 hộp. Áp dụng từ 1 hộp. Số lượng đối chiếu: 1 hộp. Xác nhận số lượng trước khi đặt.\nYêu cầu báo giá",
+        "fields": {
+          "headline": "Tấm gỗ tiêu âm Mộc",
+          "value_proposition": "Đối chiếu quy cách và điều kiện áp dụng của Tấm gỗ tiêu âm Mộc trước khi lựa chọn.",
+          "benefit": "Lớp mặt phủ veneer. Dùng trong nhà.",
+          "commercial_terms": "Lớp mặt phủ veneer. Dùng trong nhà.\nGiá tham khảo: 430.000 VND / 1 hộp, đã gồm thuế. Đơn tối thiểu: 1 hộp. Áp dụng từ 1 hộp. Số lượng đối chiếu: 1 hộp. Xác nhận số lượng trước khi đặt.",
+          "call_to_action": "Yêu cầu báo giá"
+        },
+        "digest": "b466d23837bea375a652b3b01c2893d20b04d62bf64b11f77bfaf6112fc03121",
+        "approval_receipt": "a890e7d3-39c8-4108-bf11-59584f52cdbe",
+        "provenance": "staff_saved_studio_revision"
+      },
+      {
+        "deliverable_id": "699c0ba0-3ce4-4fae-ac12-a8382b759368",
+        "revision": 8,
+        "document_digest": "bd6866a9c03db5b73d042abf640e47b936b62da8fed2310cc6c9589916354deb",
+        "status": "shared",
+        "plan_id": "ad47c0bb-262e-470a-b165-38f50ac4b030",
+        "plan_revision": 1,
+        "manifest": {
+          "id": "7ca90231-1da3-4340-ad0e-8599d76e76b2",
+          "digest": "770c6e90656e32f88eff7dee2b5ae10a44221c453e55544b7a6e81edb26d0d6d",
+          "brief_id": "637b77e9-3112-4d30-8cec-50f92d927d2e",
+          "workflow": "WF-13/landing-seo-draft@6"
+        },
+        "run_id": "9afc20ba-6e8c-473b-811b-614c2cbdece7",
+        "product_id": "318d7373-91c2-4e1a-8be2-ea5f70efedb0",
+        "buyer_action": "rfq",
+        "guideline_digest": "8667f503425c83801d0702e0a96932e171bcc578d401f55e68de2dc1d3e1e675",
+        "registry": {
+          "skills": [
+            "content",
+            "director",
+            "seo"
+          ],
+          "workflow": "WF-13/landing-seo-draft@6",
+          "contracts": {
+            "seo": {
+              "model": "local",
+              "owner": "agency marketing lead",
+              "tools": [],
+              "inputs": [
+                "brief",
+                "brand",
+                "sources"
+              ],
+              "adapter": "seo@5",
+              "outputs": [
+                "meta_description",
+                "page_title",
+                "search_intent",
+                "source_ids"
+              ],
+              "role_id": "ai-seo-geo-specialist",
+              "approval": "revision_qa_and_client_snapshot",
+              "fallback": "agency editor",
+              "node_cap": 1000,
+              "skill_id": "seo",
+              "objective": "Use this role's approved knowledge projection to prepare internal Marketing work",
+              "qa_policy": "c3-seo@2",
+              "max_attempts": 3,
+              "predecessors": [
+                "content"
+              ],
+              "output_schema": {
+                "type": "object",
+                "required": [
+                  "meta_description",
+                  "page_title",
+                  "search_intent",
+                  "source_ids"
+                ],
+                "properties": {
+                  "page_title": {
+                    "type": "string"
+                  },
+                  "source_ids": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  },
+                  "search_intent": {
+                    "type": "string"
+                  },
+                  "meta_description": {
+                    "type": "string"
+                  }
+                },
+                "additionalProperties": false
+              },
+              "skill_version": 5,
+              "adapter_digest": "c8c7649ce2ef9d2d9e02e2a8ca83ba3cee22da2e9c90525248a26af693ff385f",
+              "timeout_seconds": 300,
+              "contract_version": 5,
+              "success_criteria": [
+                "meta_description",
+                "page_title",
+                "search_intent",
+                "source_ids"
+              ],
+              "forbidden_actions": [
+                "external_write",
+                "publish",
+                "spend"
+              ],
+              "marketing_methods": {
+                "search-intent-seo@1": "95015035ae8f0183d82fa88c9851879885736b82032ce11d9b8f12230dc0152d"
+              }
+            },
+            "content": {
+              "model": "local",
+              "owner": "agency marketing lead",
+              "tools": [],
+              "inputs": [
+                "brief",
+                "brand",
+                "sources"
+              ],
+              "adapter": "content@4",
+              "outputs": [
+                "benefit",
+                "call_to_action",
+                "headline",
+                "source_ids",
+                "value_proposition"
+              ],
+              "role_id": "ai-copywriter-content-strategist",
+              "approval": "revision_qa_and_client_snapshot",
+              "fallback": "agency editor",
+              "node_cap": 1000,
+              "skill_id": "content",
+              "objective": "Use this role's approved knowledge projection to prepare internal Marketing work",
+              "qa_policy": "c3-content@2",
+              "max_attempts": 3,
+              "predecessors": [],
+              "output_schema": {
+                "type": "object",
+                "required": [
+                  "benefit",
+                  "call_to_action",
+                  "headline",
+                  "source_ids",
+                  "value_proposition"
+                ],
+                "properties": {
+                  "benefit": {
+                    "type": "string"
+                  },
+                  "headline": {
+                    "type": "string"
+                  },
+                  "source_ids": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  },
+                  "call_to_action": {
+                    "type": "string"
+                  },
+                  "value_proposition": {
+                    "type": "string"
+                  }
+                },
+                "additionalProperties": false
+              },
+              "skill_version": 4,
+              "adapter_digest": "fcea91e89e8806897a72d314ca258a87c6e509f6ec34ee737edf9d8897d28aa8",
+              "timeout_seconds": 300,
+              "contract_version": 4,
+              "success_criteria": [
+                "benefit",
+                "call_to_action",
+                "headline",
+                "source_ids",
+                "value_proposition"
+              ],
+              "forbidden_actions": [
+                "external_write",
+                "publish",
+                "spend"
+              ],
+              "marketing_methods": {
+                "landing-conversion@1": "65fed41e31b470d9ac009c03a5ee376851fe86664f2c73f2c5e08af49385bcc6"
+              }
+            },
+            "director": {
+              "model": "local",
+              "owner": "agency marketing lead",
+              "tools": [],
+              "inputs": [
+                "brief",
+                "brand",
+                "sources"
+              ],
+              "adapter": "director@4",
+              "outputs": [
+                "primary_assignment",
+                "secondary_assignment"
+              ],
+              "role_id": "ai-managing-director",
+              "approval": "revision_qa_and_client_snapshot",
+              "fallback": "agency editor",
+              "node_cap": 1000,
+              "skill_id": "director",
+              "objective": "Use this role's approved knowledge projection to prepare internal Marketing work",
+              "qa_policy": "c3-director@2",
+              "max_attempts": 3,
+              "predecessors": [],
+              "output_schema": {
+                "type": "object",
+                "required": [
+                  "primary_assignment",
+                  "secondary_assignment"
+                ],
+                "properties": {
+                  "primary_assignment": {
+                    "type": "string"
+                  },
+                  "secondary_assignment": {
+                    "type": "string"
+                  }
+                },
+                "additionalProperties": false
+              },
+              "skill_version": 4,
+              "adapter_digest": "de8896dfee4aaf662dbf31bdda67606e3ae2376b8e4b4542acfeb3993646724d",
+              "timeout_seconds": 300,
+              "contract_version": 4,
+              "success_criteria": [
+                "primary_assignment",
+                "secondary_assignment"
+              ],
+              "forbidden_actions": [
+                "external_write",
+                "publish",
+                "spend"
+              ],
+              "marketing_methods": {}
+            }
+          },
+          "workflow_id": "WF-13/landing-seo-draft",
+          "manifest_digest": "0cfe96302a0d7698b09e379f38b98f1708311ce706d83694f595d11ddc56399f",
+          "workflow_version": 6
+        },
+        "id": "seo",
+        "kind": "seo",
+        "title": "Thông tin SEO",
+        "body": "Tấm gỗ tiêu âm Mộc\nXem thông tin về Tấm gỗ tiêu âm Mộc tại HN. Yêu cầu báo giá\nTìm hiểu điều kiện lựa chọn Tấm gỗ tiêu âm Mộc tại HN.",
+        "fields": {
+          "page_title": "Tấm gỗ tiêu âm Mộc",
+          "meta_description": "Xem thông tin về Tấm gỗ tiêu âm Mộc tại HN. Yêu cầu báo giá",
+          "search_intent": "Tìm hiểu điều kiện lựa chọn Tấm gỗ tiêu âm Mộc tại HN."
+        },
+        "digest": "cf1c5e15eba298f6e9f7b30110cb916d880a6d51ffb67b36af6c4b2b94dffdd5",
+        "approval_receipt": "56fbcd99-1f74-4edb-bd1c-ef772a36450c",
+        "provenance": "staff_saved_studio_revision"
+      },
+      {
+        "deliverable_id": "9d4a6479-e714-431a-bfbb-06c14654c73f",
+        "revision": 12,
+        "document_digest": "daf92d387ed10ea420ff5034a6f55b0a451c5b63fd44bd748cf032ea6afa53dc",
+        "status": "shared",
+        "plan_id": "ad47c0bb-262e-470a-b165-38f50ac4b030",
+        "plan_revision": 1,
+        "manifest": {
+          "id": "49564b6f-043a-4163-b813-aeb8ba4efe42",
+          "digest": "c642c9eceaa88015381febfb1f809a022d9654d09a9d5e2ea3ff41d908db5b19",
+          "brief_id": "02159cca-e0e5-4214-9d87-eb102d462423",
+          "workflow": "WF-03/research-strategy-draft@3"
+        },
+        "run_id": "708ddaa8-349a-49ab-a6c1-774cbe6c3f22",
+        "product_id": "318d7373-91c2-4e1a-8be2-ea5f70efedb0",
+        "buyer_action": "rfq",
+        "guideline_digest": "8667f503425c83801d0702e0a96932e171bcc578d401f55e68de2dc1d3e1e675",
+        "registry": {
+          "skills": [
+            "director",
+            "research",
+            "strategy"
+          ],
+          "workflow": "WF-03/research-strategy-draft@3",
+          "contracts": {
+            "director": {
+              "model": "local",
+              "owner": "agency marketing lead",
+              "tools": [],
+              "inputs": [
+                "brief",
+                "brand",
+                "sources"
+              ],
+              "adapter": "director@4",
+              "outputs": [
+                "primary_assignment",
+                "secondary_assignment"
+              ],
+              "role_id": "ai-managing-director",
+              "approval": "revision_qa_and_client_snapshot",
+              "fallback": "agency editor",
+              "node_cap": 1000,
+              "skill_id": "director",
+              "objective": "Use this role's approved knowledge projection to prepare internal Marketing work",
+              "qa_policy": "c3-director@2",
+              "max_attempts": 3,
+              "predecessors": [],
+              "output_schema": {
+                "type": "object",
+                "required": [
+                  "primary_assignment",
+                  "secondary_assignment"
+                ],
+                "properties": {
+                  "primary_assignment": {
+                    "type": "string"
+                  },
+                  "secondary_assignment": {
+                    "type": "string"
+                  }
+                },
+                "additionalProperties": false
+              },
+              "skill_version": 4,
+              "adapter_digest": "de8896dfee4aaf662dbf31bdda67606e3ae2376b8e4b4542acfeb3993646724d",
+              "timeout_seconds": 300,
+              "contract_version": 4,
+              "success_criteria": [
+                "primary_assignment",
+                "secondary_assignment"
+              ],
+              "forbidden_actions": [
+                "external_write",
+                "publish",
+                "spend"
+              ],
+              "marketing_methods": {}
+            },
+            "research": {
+              "model": "local",
+              "owner": "agency marketing lead",
+              "tools": [],
+              "inputs": [
+                "brief",
+                "brand",
+                "sources"
+              ],
+              "adapter": "research@4",
+              "outputs": [
+                "buyer_problem",
+                "evidence_needed",
+                "research_question",
+                "segment",
+                "source_ids"
+              ],
+              "role_id": "ai-market-researcher",
+              "approval": "revision_qa_and_client_snapshot",
+              "fallback": "agency editor",
+              "node_cap": 1000,
+              "skill_id": "research",
+              "objective": "Use this role's approved knowledge projection to prepare internal Marketing work",
+              "qa_policy": "c3-research@2",
+              "max_attempts": 3,
+              "predecessors": [],
+              "output_schema": {
+                "type": "object",
+                "required": [
+                  "buyer_problem",
+                  "evidence_needed",
+                  "research_question",
+                  "segment",
+                  "source_ids"
+                ],
+                "properties": {
+                  "segment": {
+                    "type": "string"
+                  },
+                  "source_ids": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  },
+                  "buyer_problem": {
+                    "type": "string"
+                  },
+                  "evidence_needed": {
+                    "type": "string"
+                  },
+                  "research_question": {
+                    "type": "string"
+                  }
+                },
+                "additionalProperties": false
+              },
+              "skill_version": 4,
+              "adapter_digest": "cb32178ff6ab9076426ab22cbfb8624c282d76e47d6f08a12e4447f504391239",
+              "timeout_seconds": 300,
+              "contract_version": 4,
+              "success_criteria": [
+                "buyer_problem",
+                "evidence_needed",
+                "research_question",
+                "segment",
+                "source_ids"
+              ],
+              "forbidden_actions": [
+                "external_write",
+                "publish",
+                "spend"
+              ],
+              "marketing_methods": {
+                "market-research@1": "86eeef60340cfd5035e4ecbba3807b7afca9b4abd4356e047d8806b8c9f77621",
+                "icp-segmentation@1": "b69cd2acdf276b874a4cb956987cfd9ebf00efe4fd286e80d4b835ec6ab5102f"
+              }
+            },
+            "strategy": {
+              "model": "local",
+              "owner": "agency marketing lead",
+              "tools": [],
+              "inputs": [
+                "brief",
+                "brand",
+                "sources"
+              ],
+              "adapter": "strategy@4",
+              "outputs": [
+                "channel_choice",
+                "measurable_action",
+                "measurement_method",
+                "positioning",
+                "rationale",
+                "source_ids",
+                "test_hypothesis"
+              ],
+              "role_id": "ai-marketing-strategist",
+              "approval": "revision_qa_and_client_snapshot",
+              "fallback": "agency editor",
+              "node_cap": 1000,
+              "skill_id": "strategy",
+              "objective": "Use this role's approved knowledge projection to prepare internal Marketing work",
+              "qa_policy": "c3-strategy@2",
+              "max_attempts": 3,
+              "predecessors": [
+                "research"
+              ],
+              "output_schema": {
+                "type": "object",
+                "required": [
+                  "channel_choice",
+                  "measurable_action",
+                  "measurement_method",
+                  "positioning",
+                  "rationale",
+                  "source_ids",
+                  "test_hypothesis"
+                ],
+                "properties": {
+                  "rationale": {
+                    "type": "string"
+                  },
+                  "source_ids": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  },
+                  "positioning": {
+                    "type": "string"
+                  },
+                  "channel_choice": {
+                    "type": "string"
+                  },
+                  "test_hypothesis": {
+                    "type": "string"
+                  },
+                  "measurable_action": {
+                    "type": "string"
+                  },
+                  "measurement_method": {
+                    "type": "string"
+                  }
+                },
+                "additionalProperties": false
+              },
+              "skill_version": 4,
+              "adapter_digest": "225597105f7168efbf65e5e2e4e9cbb5fd725b2eca9b319fd352d5b39b10bf64",
+              "timeout_seconds": 300,
+              "contract_version": 4,
+              "success_criteria": [
+                "channel_choice",
+                "measurable_action",
+                "measurement_method",
+                "positioning",
+                "rationale",
+                "source_ids",
+                "test_hypothesis"
+              ],
+              "forbidden_actions": [
+                "external_write",
+                "publish",
+                "spend"
+              ],
+              "marketing_methods": {
+                "kpi-measurement@1": "b3f38b752f72b7a4bb76afc2783e08308f3d19a473b3a18eeed277d6552a13f9",
+                "campaign-channel@1": "e5f47b865cad8e80a7efab8d1ef1854cf9a4cf5b8185b80ecc263fea1dc631d0",
+                "positioning-value@1": "b83430d074a232e1b0e8a2485a935c20bdc2d72521ac25478ac34f99475af93c"
+              }
+            }
+          },
+          "workflow_id": "WF-03/research-strategy-draft",
+          "manifest_digest": "cf9078f2aa283cc7a9e9c273abd3077338c94ebe0f51a65e0a30c33254d94969",
+          "workflow_version": 3
+        },
+        "id": "strategy",
+        "kind": "strategy",
+        "title": "Chiến lược Marketing",
+        "body": "Nhà thầu phòng thu\nĐề xuất giúp Nhà thầu phòng thu đối chiếu quy cách của Tấm gỗ tiêu âm Mộc trước khi gửi yêu cầu báo giá.\nTrên web, đặt điều kiện áp dụng cạnh lời mời báo giá. Chuyển yêu cầu đủ thông tin cho Sales.\nNếu nhiều người gửi nhưng Sales còn phải hỏi lại, ưu tiên sửa trường thông tin thiếu trước khi mở rộng kênh.",
+        "fields": {
+          "target": "Nhà thầu phòng thu",
+          "decision": "Đề xuất giúp Nhà thầu phòng thu đối chiếu quy cách của Tấm gỗ tiêu âm Mộc trước khi gửi yêu cầu báo giá.",
+          "activation": "Trên web, đặt điều kiện áp dụng cạnh lời mời báo giá. Chuyển yêu cầu đủ thông tin cho Sales.",
+          "next_decision": "Nếu nhiều người gửi nhưng Sales còn phải hỏi lại, ưu tiên sửa trường thông tin thiếu trước khi mở rộng kênh."
+        },
+        "digest": "badea952e437d246eba535c5f4c5d692a27e3f73cad35e8ba020b0600ad464e4",
+        "approval_receipt": "0fcaab81-992d-4a8d-842b-85a38a288581",
+        "provenance": "staff_saved_studio_revision"
+      },
+      {
+        "deliverable_id": "9d4a6479-e714-431a-bfbb-06c14654c73f",
+        "revision": 12,
+        "document_digest": "daf92d387ed10ea420ff5034a6f55b0a451c5b63fd44bd748cf032ea6afa53dc",
+        "status": "shared",
+        "plan_id": "ad47c0bb-262e-470a-b165-38f50ac4b030",
+        "plan_revision": 1,
+        "manifest": {
+          "id": "49564b6f-043a-4163-b813-aeb8ba4efe42",
+          "digest": "c642c9eceaa88015381febfb1f809a022d9654d09a9d5e2ea3ff41d908db5b19",
+          "brief_id": "02159cca-e0e5-4214-9d87-eb102d462423",
+          "workflow": "WF-03/research-strategy-draft@3"
+        },
+        "run_id": "708ddaa8-349a-49ab-a6c1-774cbe6c3f22",
+        "product_id": "318d7373-91c2-4e1a-8be2-ea5f70efedb0",
+        "buyer_action": "rfq",
+        "guideline_digest": "8667f503425c83801d0702e0a96932e171bcc578d401f55e68de2dc1d3e1e675",
+        "registry": {
+          "skills": [
+            "director",
+            "research",
+            "strategy"
+          ],
+          "workflow": "WF-03/research-strategy-draft@3",
+          "contracts": {
+            "director": {
+              "model": "local",
+              "owner": "agency marketing lead",
+              "tools": [],
+              "inputs": [
+                "brief",
+                "brand",
+                "sources"
+              ],
+              "adapter": "director@4",
+              "outputs": [
+                "primary_assignment",
+                "secondary_assignment"
+              ],
+              "role_id": "ai-managing-director",
+              "approval": "revision_qa_and_client_snapshot",
+              "fallback": "agency editor",
+              "node_cap": 1000,
+              "skill_id": "director",
+              "objective": "Use this role's approved knowledge projection to prepare internal Marketing work",
+              "qa_policy": "c3-director@2",
+              "max_attempts": 3,
+              "predecessors": [],
+              "output_schema": {
+                "type": "object",
+                "required": [
+                  "primary_assignment",
+                  "secondary_assignment"
+                ],
+                "properties": {
+                  "primary_assignment": {
+                    "type": "string"
+                  },
+                  "secondary_assignment": {
+                    "type": "string"
+                  }
+                },
+                "additionalProperties": false
+              },
+              "skill_version": 4,
+              "adapter_digest": "de8896dfee4aaf662dbf31bdda67606e3ae2376b8e4b4542acfeb3993646724d",
+              "timeout_seconds": 300,
+              "contract_version": 4,
+              "success_criteria": [
+                "primary_assignment",
+                "secondary_assignment"
+              ],
+              "forbidden_actions": [
+                "external_write",
+                "publish",
+                "spend"
+              ],
+              "marketing_methods": {}
+            },
+            "research": {
+              "model": "local",
+              "owner": "agency marketing lead",
+              "tools": [],
+              "inputs": [
+                "brief",
+                "brand",
+                "sources"
+              ],
+              "adapter": "research@4",
+              "outputs": [
+                "buyer_problem",
+                "evidence_needed",
+                "research_question",
+                "segment",
+                "source_ids"
+              ],
+              "role_id": "ai-market-researcher",
+              "approval": "revision_qa_and_client_snapshot",
+              "fallback": "agency editor",
+              "node_cap": 1000,
+              "skill_id": "research",
+              "objective": "Use this role's approved knowledge projection to prepare internal Marketing work",
+              "qa_policy": "c3-research@2",
+              "max_attempts": 3,
+              "predecessors": [],
+              "output_schema": {
+                "type": "object",
+                "required": [
+                  "buyer_problem",
+                  "evidence_needed",
+                  "research_question",
+                  "segment",
+                  "source_ids"
+                ],
+                "properties": {
+                  "segment": {
+                    "type": "string"
+                  },
+                  "source_ids": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  },
+                  "buyer_problem": {
+                    "type": "string"
+                  },
+                  "evidence_needed": {
+                    "type": "string"
+                  },
+                  "research_question": {
+                    "type": "string"
+                  }
+                },
+                "additionalProperties": false
+              },
+              "skill_version": 4,
+              "adapter_digest": "cb32178ff6ab9076426ab22cbfb8624c282d76e47d6f08a12e4447f504391239",
+              "timeout_seconds": 300,
+              "contract_version": 4,
+              "success_criteria": [
+                "buyer_problem",
+                "evidence_needed",
+                "research_question",
+                "segment",
+                "source_ids"
+              ],
+              "forbidden_actions": [
+                "external_write",
+                "publish",
+                "spend"
+              ],
+              "marketing_methods": {
+                "market-research@1": "86eeef60340cfd5035e4ecbba3807b7afca9b4abd4356e047d8806b8c9f77621",
+                "icp-segmentation@1": "b69cd2acdf276b874a4cb956987cfd9ebf00efe4fd286e80d4b835ec6ab5102f"
+              }
+            },
+            "strategy": {
+              "model": "local",
+              "owner": "agency marketing lead",
+              "tools": [],
+              "inputs": [
+                "brief",
+                "brand",
+                "sources"
+              ],
+              "adapter": "strategy@4",
+              "outputs": [
+                "channel_choice",
+                "measurable_action",
+                "measurement_method",
+                "positioning",
+                "rationale",
+                "source_ids",
+                "test_hypothesis"
+              ],
+              "role_id": "ai-marketing-strategist",
+              "approval": "revision_qa_and_client_snapshot",
+              "fallback": "agency editor",
+              "node_cap": 1000,
+              "skill_id": "strategy",
+              "objective": "Use this role's approved knowledge projection to prepare internal Marketing work",
+              "qa_policy": "c3-strategy@2",
+              "max_attempts": 3,
+              "predecessors": [
+                "research"
+              ],
+              "output_schema": {
+                "type": "object",
+                "required": [
+                  "channel_choice",
+                  "measurable_action",
+                  "measurement_method",
+                  "positioning",
+                  "rationale",
+                  "source_ids",
+                  "test_hypothesis"
+                ],
+                "properties": {
+                  "rationale": {
+                    "type": "string"
+                  },
+                  "source_ids": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  },
+                  "positioning": {
+                    "type": "string"
+                  },
+                  "channel_choice": {
+                    "type": "string"
+                  },
+                  "test_hypothesis": {
+                    "type": "string"
+                  },
+                  "measurable_action": {
+                    "type": "string"
+                  },
+                  "measurement_method": {
+                    "type": "string"
+                  }
+                },
+                "additionalProperties": false
+              },
+              "skill_version": 4,
+              "adapter_digest": "225597105f7168efbf65e5e2e4e9cbb5fd725b2eca9b319fd352d5b39b10bf64",
+              "timeout_seconds": 300,
+              "contract_version": 4,
+              "success_criteria": [
+                "channel_choice",
+                "measurable_action",
+                "measurement_method",
+                "positioning",
+                "rationale",
+                "source_ids",
+                "test_hypothesis"
+              ],
+              "forbidden_actions": [
+                "external_write",
+                "publish",
+                "spend"
+              ],
+              "marketing_methods": {
+                "kpi-measurement@1": "b3f38b752f72b7a4bb76afc2783e08308f3d19a473b3a18eeed277d6552a13f9",
+                "campaign-channel@1": "e5f47b865cad8e80a7efab8d1ef1854cf9a4cf5b8185b80ecc263fea1dc631d0",
+                "positioning-value@1": "b83430d074a232e1b0e8a2485a935c20bdc2d72521ac25478ac34f99475af93c"
+              }
+            }
+          },
+          "workflow_id": "WF-03/research-strategy-draft",
+          "manifest_digest": "cf9078f2aa283cc7a9e9c273abd3077338c94ebe0f51a65e0a30c33254d94969",
+          "workflow_version": 3
+        },
+        "id": "measurement",
+        "kind": "measurement",
+        "title": "Kế hoạch đo lường",
+        "body": "Thử đặt quy cách trước biểu mẫu để người mua có thể gửi yêu cầu đủ thông tin hơn.\nYêu cầu báo giá\nĐối soát mã yêu cầu duy nhất với yêu cầu Sales đủ thông tin để báo giá. So sánh trên lượt vào trang cùng nhóm khách.",
+        "fields": {
+          "hypothesis": "Thử đặt quy cách trước biểu mẫu để người mua có thể gửi yêu cầu đủ thông tin hơn.",
+          "conversion": "Yêu cầu báo giá",
+          "method": "Đối soát mã yêu cầu duy nhất với yêu cầu Sales đủ thông tin để báo giá. So sánh trên lượt vào trang cùng nhóm khách."
+        },
+        "digest": "8008083fe51b67a99dca6b540b1a3d61a36f1fa09ed20814e9777943e60972b4",
+        "approval_receipt": "a557af2c-79bb-4d12-b6dc-dc9b4bd73e82",
+        "provenance": "staff_saved_studio_revision"
+      }
+    ],
+    "plan_id": "ad47c0bb-262e-470a-b165-38f50ac4b030",
+    "plan_digest": "4aa40ca0f37276cdf5980bb49f6fffe674cbac628ba893451bef8427c5498386"
+  }
+}

@@ -91,6 +91,8 @@ def require_all_approved(db, doc, run):
 
 
 def present(db, doc, run):
+    from .c3_journey import candidates
+
     workflow = run.knowledge["registry"]["workflow"]
     bundle = doc.content.get("studio")
     groups = bundle["groups"] if bundle else proposals(run)
@@ -122,6 +124,7 @@ def present(db, doc, run):
             "title": projection["product"],
         },
         "suggestions": {**controls, **customer},
+        "buyer_journeys": candidates(projection),
         "history": [dict(revision=row.details["revision"], at=row.occurred_at, groups=row.details["groups"]) for row in history],
         "asset_digests": {g: asset_digest(doc, run, g, v) for g, v in groups.items()},
         "approvals": signoffs(db, doc, run) if bundle else {},

@@ -4,6 +4,7 @@ import json
 import os
 import subprocess
 from datetime import datetime, timedelta, timezone
+from decimal import Decimal
 from pathlib import Path
 from time import perf_counter
 from urllib.parse import urlsplit
@@ -143,7 +144,36 @@ def create_brief(page, title, choices):
     expect(page.locator("#knowledge-open-title")).to_have_text(title)
 
 
-def offer_scenarios(api, owner, base, pane, prod, market, code):
+def commercial_dispute(api, owner, base, pane, scope, page, size):
+    now = datetime.now(timezone.utc)
+    window = {"observed_at": (now - timedelta(hours=1)).strftime("%Y-%m-%dT%H:%M"), "valid_until": (now + timedelta(days=4)).strftime("%Y-%m-%dT%H:%M")}
+    for status in ("available", "unavailable"):
+        enter_item(pane, "availability", {**scope, **window, "status": status})
+    entries = get(api, base + "/catalog/items", owner, kind="availability")["items"]
+    assert len(entries) == 2 and all(r["state"] == "approved" for r in entries)
+    by_status = {get(api, base + "/catalog/items/" + r["id"], owner)["data"]["status"]: r["id"] for r in entries}
+    assert set(by_status) == {"available", "unavailable"}
+    for name, reason in (
+        ("Ghi tranh chấp", "Hai quan sát cùng thị trường cung cấp trạng thái trái nhau."),
+        ("Thay thế", "Đối chiếu và chọn quan sát kho hiện hành."),
+        ("Thu hồi", "Lưu lại lịch sử của quan sát đã thay thế."),
+    ):
+        pane.get_by_label("Lý do quyết định").fill(reason)
+        if name == "Thay thế":
+            pane.get_by_label("Nguồn ưu tiên", exact=True).select_option(by_status["available"])
+        with page.expect_response(lambda r: r.request.method == "POST" and r.url.endswith("/events")) as saved:
+            pane.get_by_role("button", name=name, exact=True).click()
+        assert saved.value.status in (200, 201)
+        expect(pane.get_by_role("status")).to_have_text("Đã ghi quyết định vào lịch sử.")
+        if name == "Ghi tranh chấp":
+            capture(page, size, "materials", "stock-disputed", pane.locator(".catalog-detail"))
+    history = get(api, base + "/knowledge/revisions/" + by_status["unavailable"] + "/events", owner)
+    assert [entry["state"] for entry in history][-3:] == ["disputed", "superseded", "withdrawn"]
+    assert any(entry.get("preferred_revision") == by_status["available"] for entry in history)
+    return {"overlapping_observations": 2, "losing_state": "withdrawn", "preferred_reference_verified": True}
+
+
+def offer_scenarios(api, owner, base, pane, prod, market, code, page, size):
     scope = {"product": prod["id"], "market": market["id"], "region": "VN-DN" if code == "service" else "VN-HN", "channel": "web", "locale": "vi-VN"}
     enter_item(
         pane, "policy", {**scope, "buyer": "wholesale" if code == "materials" else "retail", "warranty": "12 months" if code == "materials" else "6 months"}
@@ -155,9 +185,10 @@ def offer_scenarios(api, owner, base, pane, prod, market, code):
             enter_item(pane, "offer", {**scope, **terms, "amount": amount, "moq": "200", "tier_min": minimum, "tier_max": maximum})
         offers = get(api, base + "/catalog/items", owner, kind="offer")["items"]
         prices = [get(api, base + "/knowledge/revisions/" + item["id"], owner)["data"]["price"] for item in offers]
-        assert sorted((p["amount_minor"], p["tier_min"], p["tier_max"]) for p in prices) == [(115000, 400, 799), (125000, 200, 399)]
-        assert all(p["moq"] == 200 and p["currency"] == "VND" and p["unit"] == "m²" for p in prices)
-        return {"tiers_checked": len(prices), "minimum_order": 200, "selling_unit": "m²"}
+        assert sorted((p["amount_minor"], Decimal(p["tier_min"]), Decimal(p["tier_max"])) for p in prices) == [(115000, 400, 799), (125000, 200, 399)]
+        assert all(Decimal(p["moq"]) == 200 and p["currency"] == "VND" and p["unit"] == "m²" for p in prices)
+        resolution = commercial_dispute(api, owner, base, pane, scope, page, size)
+        return {"tiers_checked": len(prices), "minimum_order": 200, "selling_unit": "m²", "stock_resolution": resolution}
     future = datetime.now(timezone.utc) + timedelta(days=5)
 
     def local_field(value):
@@ -178,7 +209,27 @@ def offer_scenarios(api, owner, base, pane, prod, market, code):
     )
     row = catalog_record(api, base, owner, "offer")
     assert row["state"] == "pending_effective", row["state"]
-    return {"future_offer_state": row["state"], "region": scope["region"]}
+    local_scope = {**scope, "region": "VN-SG"}
+    enter_item(pane, "policy", {**local_scope, "warranty": "3 months", "buyer": "retail"})
+    local_policy = catalog_record(api, base, owner, "policy", label="3 months")
+    enter_item(
+        pane,
+        "offer",
+        {
+            **local_scope,
+            **terms,
+            "policy": local_policy["id"],
+            "amount": "350000",
+            "moq": "1",
+            "tier_min": "1",
+            "valid_from": local_field(future - timedelta(days=6)),
+            "valid_until": local_field(future),
+        },
+    )
+    cards = get(api, base + "/catalog/items", owner, kind="offer")["items"]
+    offer_scopes = {get(api, base + "/catalog/items/" + card["id"], owner)["data"]["placement"]["region"]: card["state"] for card in cards}
+    assert offer_scopes == {"VN-DN": "pending_effective", "VN-SG": "approved"}
+    return {"offers_by_region": offer_scopes}
 
 
 def editor_projection(api, browser, size, owner, t, c, b, prefix, claim, source, markers, wording):
@@ -323,7 +374,7 @@ def exercise(api, browser, size, code):
             enter_item(pane, "variant", {"name": "Xanh cỡ L", "code": "RAIN-BLUE-L", "product": prod["id"]})
             variant = catalog_record(api, base, owner, "variant", code="RAIN-BLUE-L")
         if code in ("materials", "service"):
-            report["commerce"] = offer_scenarios(api, owner, base, pane, prod, market, code)
+            report["commerce"] = offer_scenarios(api, owner, base, pane, prod, market, code, page, size)
         if code == "agency":
             report["isolation"] = agency_switch(api, page, owner, t, c, b, base, sku)
             pane = open_catalog(page)

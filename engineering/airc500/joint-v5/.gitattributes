@@ -1,2 +1,4 @@
 *.json text eol=lf
 *.gz binary
+# The pre-enrolled oracle is hashed byte-for-byte on its original host.
+labels.json -text

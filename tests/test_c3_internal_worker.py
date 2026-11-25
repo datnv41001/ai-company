@@ -17,7 +17,8 @@ from app.pool_worker import report
 from app.security import check_password
 from c3_fixtures import capture
 from c3_task_fixtures import LANDING, fixture
-from knowledge_fixtures import accepted
+from knowledge_fixtures import accepted, revision
+from test_business_workspace import post
 from migrations.apply import publish_registry
 from pool_lab import Lab, Worker, lab_client
 from scripts.provision_pool import internal_route
@@ -32,6 +33,31 @@ class InternalPool(Lab):
         self.bind = create_engine("postgresql+psycopg://", creator=lambda: psycopg.connect(dispatch_dsn), poolclass=NullPool)
         self.worker_name, worker_dsn = self.login("amc_pool_worker")
         self.workers.append(Worker(psycopg.connect(worker_dsn, autocommit=True)))
+
+
+def public_employee_brief(api, owner, author, state):
+    # A staff author can prepare an entire brief against sources available to their role.
+    assertion = {"placement": state["placement"], "category": "description", "wording": "Bề mặt mờ", "qualifiers": []}
+    path = state["path"]
+    source = revision(
+        api,
+        owner,
+        path,
+        "public-spec",
+        "source",
+        {
+            "document": "Thẻ thông số công khai",
+            "publisher": "Xưởng mẫu An Nhiên",
+            "valid_until": "2099-01-01T00:00:00Z",
+            "entries": [{"locator": "Mục bề mặt", "excerpt": "Bề mặt mờ", "assertion": assertion}],
+        },
+    )
+    binding = revision(api, owner, path, "public-binding", "binding", {"source": source["id"], "locator": "Mục bề mặt", "assertion": assertion})
+    claim = revision(api, owner, path, "public-surface", "claim", {"binding": binding["id"], "assertion": assertion})
+    brief = post(
+        api, state["ui"] + "/briefs", author, title="Brief của nhân viên", expected_revision=1, expected_company_revision=1, selections=state["selections"]
+    )
+    state["params"].update(workspace_brief_id=brief["id"], claims=[claim["id"]])
 
 
 def complete(lab, rid):
@@ -63,6 +89,7 @@ def test_postgres_internal_task_to_editable_draft(persona):
                 author = reader(api, owner, "editor")
                 brief = accepted(api.post(base + "/workforce/internal-tasks", headers=author["headers"], json=task | {"key": str(uuid4())}))
                 state["params"]["target"]["brief_id"] = brief["id"]
+                public_employee_brief(api, owner, author, state)
             admin = owner["headers"]
             lab.configure(owner, 10000)
             with lab.owner.transaction():
@@ -78,7 +105,7 @@ def test_postgres_internal_task_to_editable_draft(persona):
             api.put(
                 base + "/workforce/registry/" + campaign, headers=admin, json={"workflow": LANDING, "action": "activate", "skills": manifest["required"]}
             ).raise_for_status()
-            snap = capture(api, owner, state)
+            snap = capture(api, author, state)
             uri = base + "/workforce/briefs/" + brief["id"] + "/run"
             terms = {
                 "registry_workflow": LANDING,
@@ -86,7 +113,7 @@ def test_postgres_internal_task_to_editable_draft(persona):
                 "budget_microusd": 10000,
                 "knowledge_manifest": {"id": snap["id"], "digest": snap["digest"]},
             }
-            run = accepted(api.post(uri, headers=admin, json=terms))
+            run = accepted(api.post(uri, headers=author["headers"], json=terms))
             complete(lab, run["id"])
             doc, qa = doc_and_decision(lab, base, owner, run["id"])
             assert accepted(api.get(base + "/workforce/runs/" + run["id"], headers=admin))["state"] == "awaiting_qa"
@@ -106,9 +133,9 @@ def test_postgres_internal_task_to_editable_draft(persona):
             if persona == "business":
                 pending = accepted(api.post(base + "/workforce/internal-tasks", headers=author["headers"], json=task | {"key": str(uuid4())}))
                 state["params"].update(key=str(uuid4()), target={"campaign_id": campaign, "brief_id": pending["id"]})
-                refreshed = capture(api, owner, state)
+                refreshed = capture(api, author, state)
                 terms["knowledge_manifest"] = {"id": refreshed["id"], "digest": refreshed["digest"]}
-                queued = accepted(api.post(base + "/workforce/briefs/" + pending["id"] + "/run", headers=admin, json=terms))
+                queued = accepted(api.post(base + "/workforce/briefs/" + pending["id"] + "/run", headers=author["headers"], json=terms))
                 lab.owner.execute("UPDATE memberships SET role='viewer' WHERE tenant_id=%s AND user_id=%s", (owner["tenant"], author["id"]))
                 assert lab.owner.execute("SELECT state,last_error FROM workforce_runs WHERE id=%s", (queued["id"],)).fetchone() == (
                     "failed",

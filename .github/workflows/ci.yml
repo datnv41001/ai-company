@@ -339,3 +339,13 @@ jobs:
             c3-product-v2/
             c3-unit-recovery/
           if-no-files-found: ignore
+
+  matched-model:
+    needs: workforce-model
+    if: github.event_name == 'pull_request' && github.event.repository.private == false && github.head_ref == 'feature/marketing-product-qualification'
+    permissions:
+      contents: read
+      actions: read
+    uses: ./.github/workflows/c3-stronger-role.yml
+    with:
+      source_sha: ${{ github.sha }}

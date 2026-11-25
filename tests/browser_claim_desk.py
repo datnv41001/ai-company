@@ -141,6 +141,7 @@ def exercise(browser, api, width, height):
                 expect(manager.locator("#knowledge-status")).to_contain_text("Đã lưu bản nháp")
             for heading in ("Xác nhận đối chiếu nguồn", "Duyệt nhận định"):
                 section = view.locator("section").filter(has=manager.get_by_role("heading", name=heading, exact=True))
+                expect(section).to_have_count(1)
                 section.get_by_label("Quyết định", exact=True).select_option("approved")
                 section.get_by_label("Lý do quyết định").fill("Đã đối chiếu với nguồn tổng hợp")
                 section.get_by_role("button", name="Ghi quyết định").click()

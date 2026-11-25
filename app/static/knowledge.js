@@ -4,6 +4,20 @@ function createKnowledgePanel(root, api) {
   const content = byId('knowledge-content');
   const status = byId('knowledge-status');
   const progress = byId('knowledge-progress');
+  const catalogDrawer = byId('catalog-drawer');
+  const catalog = createCatalogPane(byId('catalog-pane'),api);
+  let catalogContext = null;
+  function openCatalog() {
+    if (!data || !brand || !catalogDrawer.open) return;
+    const role = data.can_edit ? scope.role : 'viewer';
+    const key = [generation,scope.actor,scope.tenant,client,brand,role].join('/');
+    if (catalogContext === key) return;
+    catalogContext = key;
+    catalog.show({...scope,client,brand,role}).catch(() => {
+      if (catalogContext === key) {catalogContext=null;byId('catalog-pane').textContent='Chưa tải được danh mục. Đóng và mở lại để thử.';}
+    });
+  }
+  catalogDrawer.addEventListener('toggle',()=>{if(catalogDrawer.open)openCatalog();else{catalog.reset();catalogContext=null;}});
   const names = {name:'Tên doanh nghiệp', sells:'Sản phẩm hoặc dịch vụ', audience:'Khách hàng mục tiêu', goal:'Mục tiêu'};
   const hints = {name:'Tên dùng khi giới thiệu doanh nghiệp', sells:'Bạn cung cấp sản phẩm hoặc dịch vụ nào?', audience:'Ai thường mua hoặc sử dụng?', goal:'Bạn muốn Marketing giúp đạt điều gì?'};
   const modes = {inherit:'Từ hồ sơ doanh nghiệp', override:'Điều chỉnh cho thương hiệu', empty:'Chủ động để trống'};
@@ -43,6 +57,9 @@ function createKnowledgePanel(root, api) {
   function clearView() {
     claimDesk?.reset();
     claimDesk=null;
+    catalog.reset();
+    catalogContext=null;
+    catalogDrawer.hidden=true;
     generation++;
     reading?.abort();
     reading = new AbortController();
@@ -193,6 +210,8 @@ function createKnowledgePanel(root, api) {
     if (!data) return;
     claimDesk?.reset();
     claimDesk=null;
+    catalogDrawer.hidden=false;
+    openCatalog();
     progress.textContent = `${data.completion.filled}/${data.completion.total} trường đã lưu cho thương hiệu`;
     const tabs = {company:'Hồ sơ chung',brand:'Theo thương hiệu',briefs:'Brief nháp',claims:'Nguồn và nhận định'};
     if(view==='claims'){

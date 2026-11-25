@@ -25,7 +25,7 @@ function createClaimDesk(root, api, notify) {
     if(type!=='textarea') elem.type=type; elem.value=value ?? ''; l.append(elem);parent.append(l);return elem;
   }
   function select(parent, title, choices, current='') {
-    const label=field('label',title),node=field('select'); label.append(node); parent.append(label);
+    const label=field('label',title),node=field('select'); node.setAttribute('aria-label',title); label.append(node); parent.append(label);
     node.add(new Option('Chọn…','')); choices.forEach(c=>node.add(new Option(c.label,c.id)));
     node.value=current||''; return node;
   }

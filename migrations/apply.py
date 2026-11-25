@@ -162,9 +162,13 @@ def migrate(dsn: str, runtime_password: str | None = None):
 
 def install_business_workspace(conn):
     from migrations.claim_display import install as install_claim_display
+    from migrations.business_workspace.catalog import install_catalog
     if not conn.execute("SELECT to_regclass('amc_business.versions')").fetchone()[0]:
         conn.execute((HERE / "business_workspace" / "001_workspace.sql").read_text(encoding="utf-8"))
-    if conn.execute("SELECT version FROM amc_business.versions ORDER BY version").fetchall() != [(1,)]:
+    versions = conn.execute("SELECT version FROM amc_business.versions ORDER BY version").fetchall()
+    if versions == [(1,)]:
+        install_catalog(conn)
+    elif versions != [(1,), (2,)]:
         raise ValueError("Unsupported business workspace schema version")
     install_claim_display(conn)
 

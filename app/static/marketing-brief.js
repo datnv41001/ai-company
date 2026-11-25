@@ -249,6 +249,9 @@ function mountMarketingBrief(root, api, context) {
           const internal=items.brief.find(row=>row.id===data.target.brief_id)?.origin==='internal';
           feedback('Đã xếp việc '+run.id+(internal?'. Theo dõi ở Đội ngũ AI, sau đó mở bản nháp nội bộ để đọc và biên tập.':'. Theo dõi ở Đội ngũ AI, sau đó mở bản giao để QA.'));
           if(['owner','admin'].includes(role))attachMarketingProvenance(details,path+'/manifests/'+snap.id+'/provenance',read,alive);
+          // The worker panel may have loaded before the new run existed.
+          try { await context.refreshWorkforce?.(tenant); }
+          catch { if(alive() && token===ticket)feedback('Đã xếp việc '+run.id+'. Mở Đội ngũ AI và chọn Cập nhật tiến độ để tải lại.'); }
         }
       } catch(e){if(alive() && token===ticket){feedback(e.message);queue.disabled=false;}}
     };

@@ -1,4 +1,4 @@
-function createKnowledgePanel(root, api) {
+function createKnowledgePanel(root, api, refreshWorkforce) {
   const byId = id => document.getElementById(id);
   const context = byId('knowledge-context');
   const content = byId('knowledge-content');
@@ -281,7 +281,7 @@ function createKnowledgePanel(root, api) {
       mount.id='knowledge-marketing-workflow';
       content.querySelector('.knowledge-brief').append(mount);
       mountMarketingBrief(mount,api,{tenant:scope.tenant,client,brand,brief:brief.id,role:scope.role,signal:reading.signal,
-        mode:scope.mode,campaigns:(scope.campaigns||[]).filter(row=>row.brand_id===brand),selections:brief.selections||{}});
+        mode:scope.mode,campaigns:(scope.campaigns||[]).filter(row=>row.brand_id===brand),selections:brief.selections||{},refreshWorkforce});
     }
     if (view==='briefs' && Object.keys(edit?.picks || {}).length) chooseBriefData();
   }

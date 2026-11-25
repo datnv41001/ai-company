@@ -13,6 +13,8 @@
   <link rel="stylesheet" href="/static/design-system.css">
   <script src="/static/screens.js" defer></script>
   <script src="/static/command-center.js" defer></script>
+  <link rel="stylesheet" href="/static/campaign-lab.css">
+  <script src="/static/campaign-lab.js" defer></script>
   <script src="/static/catalog.js" defer></script>
   <script src="/static/marketing-brief.js" defer></script>
   <script src="/static/knowledge.js" defer></script>
@@ -140,6 +142,12 @@
         </div>
         <div data-screen="campaigns" class="section-head"><div><h2>Chiến dịch & nhiệm vụ</h2></div></div>
         <div data-screen="campaigns" class="panel"><div id="campaigns-list" class="empty">Chưa có chiến dịch. Hãy tạo khách hàng, thương hiệu và chiến dịch ở trên.</div></div>
+        <section id="campaign-lab" data-screen="campaigns" class="panel" aria-labelledby="lab-title" hidden>
+          <div class="section-head"><div><h3 id="lab-title">Mô phỏng chiến dịch RFQ</h3><p>Từ kế hoạch tiếp cận người mua đến yêu cầu báo giá và doanh thu đối soát. Kịch bản dùng dữ liệu tổng hợp, mọi tác vụ chạy trong mô phỏng.</p></div></div>
+          <form id="lab-form"><label>Chiến dịch làm việc<select id="lab-campaign" required></select></label><button type="submit">Chạy kịch bản B2B</button></form>
+          <p id="lab-status" role="status" aria-live="polite"></p>
+          <div id="lab-results"></div>
+        </section>
         <div data-screen="deliverables" class="section-head"><div><h2>Bản giao</h2></div></div>
         <div data-screen="deliverables" class="two-col"><div class="panel"><h4>Yêu cầu thực thi bên ngoài</h4><p>Thiết kế để yêu cầu duyệt trước khi đăng bài, gửi email, thay đổi ngân sách. Gọi API thực tế chưa được bật.</p><div id="actions-list" class="empty">Chưa có yêu cầu hành động.</div></div><div class="panel"><h4>Tài liệu bàn giao</h4><p>Các bản nháp và kết quả AI cần được kiểm duyệt trước khi sử dụng.</p><div id="deliverables-list" class="empty">Chưa có tài liệu.</div></div></div>
       </section>

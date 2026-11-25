@@ -1,0 +1,43 @@
+{
+  "version": 5,
+  "source": {
+    "base": "b267e1e99647f12f904604df867db59e91ddff9c",
+    "head": "19bf9c7a9b0a80c0320a22cf9dc1a92bbbf7c03c",
+    "blobs": {
+      "sources.jsonl": "c55a9024c53e12eeba43dbad257d08c74c87e999f885e42f90af5b0fd9754307",
+      "draft.jsonl": "e65427297a7e1fd3b9ac12fa4b1757d6759f1dd9a7212dc494c1b826b9f2affb"
+    },
+    "bundle": "5d6647ecfe9dad1e6fbd73c5d675838a87a0721edd672092f5a8aa19638828cf"
+  },
+  "oracle": "0da40ca3b602df610abde7a1babfbe1576b8df7b18a302ebedc949910e21be27",
+  "trust": {
+    "q15": {
+      "00781ef6c348f39358b4856ae1246a15f226b64b22d2ef804cce18b7cf75119e": {
+        "public_key": "JLs3H3g7fwM8pdzwWLZWAx0/h1k0CfAovjjJYZ0NUPU=",
+        "adapter_identity": "joint-v5-q15",
+        "model": "Qwen2.5-1.5B-Instruct-Q4_K_M",
+        "model_version": "91cad51170dc346986eccefdc2dd33a9da36ead9",
+        "model_digest": "6a1a2eb6d15622bf3c96857206351ba97e1af16c30d7a74ee38970e434e9407e",
+        "family": "Qwen2.5"
+      }
+    },
+    "smol": {
+      "a681e6e7122dceac5ddd240e3394d5176a8cb3ba302e9507e0077d178fcf7a96": {
+        "public_key": "ersb0gHhulHQ5yGDMZ2dwtzQVChw2Kp9NCZQcuLOkWY=",
+        "adapter_identity": "joint-v5-smol",
+        "model": "SmolLM2-1.7B-Instruct-Q4_K_M",
+        "model_version": "2d4a76a30b4af41ecd395c35725ac11688d4cfe4",
+        "model_digest": "decd2598bc2c8ed08c19adc3c8fdd461ee19ed5708679d1c54ef54a5a30d4f33",
+        "family": "SmolLM2"
+      }
+    }
+  },
+  "plans": {
+    "q15": "5a19b5d323396bce51c0d12ab94d11e55341735fafeed3c5a968e47339fde053",
+    "smol": "ada3243fca41a9b525fb691c0f671ebd0ab3ee45c407c9824b1b37a459086ec2"
+  },
+  "verifier_key": "lRP4wFsoRNTZmkgy74ao8wMU2U+s1uBBGmcxVMDOTHA=",
+  "token_cap": 20000,
+  "runtime": "34231eb5a24c45c5fa34ad5c2b3cb443073b94392d25800a24d982bea1dc2e19",
+  "catalog": "13682e00ca2a19d0ae36c7add059fe3aacb874cdabba54cc7c4bea58b8fc8a67"
+}

@@ -14,6 +14,10 @@ Người giao việc mở **Hồ sơ doanh nghiệp → Brief**, chọn mục ti
 
 CI chạy các release lịch sử @2/@5 qua Qwen thật trên đúng checkout. Trong artifact `pool-model-measurements-integration`, mở `c3-model-receipts` để đối chiếu SHA, weights, token, run, snapshot nguồn, draft và lần biên tập tổng hợp. Artifact `knowledge-center-journeys-integration` chứa hành trình giao việc và đối chiếu nguồn trên ba kích thước màn hình. Rà soát chuyên môn theo [protocol holdout và pilot](docs/evaluation/C3-HOLDOUT-AND-PILOT.md), [kết quả đã đo](docs/evaluation/C3-QUALITY-RESULTS.md) và [ngân sách kết nối local](docs/evaluation/C3-LOCAL-RESOURCES.md). PR #37 chờ phản biện. Commercial GA vẫn NO-GO.
 
+## AIRC · Kiểm định theo năng lực v5
+
+Tám ca mới so một reviewer với phản biện chéo cùng ngân sách. Có 20 invocation ký trên hai checkpoint local; kết quả chưa đủ để mở rộng. Chạy replay offline và xem các giới hạn trước khi tiếp quản. [Kết quả theo reviewer/model](engineering/airc500/joint-v5/REPORT.md) · [Lệnh kiểm và rollback](engineering/airc500/joint-v5/RUNBOOK.md).
+
 ## Nghiên cứu ứng dụng cho AMC và AIRC
 
 Bắt đầu từ [sổ nguồn](docs/research/SOURCE_REGISTRY.md), mở [thẻ kiến thức](docs/research/KNOWLEDGE_CARDS.md), [đối chiếu với mã hiện hành](docs/research/APPLICABILITY_MATRIX.md) rồi chọn [cải tiến có tiêu chí nghiệm thu](docs/research/PRODUCT_OPPORTUNITIES.md). Đọc [các giả thuyết đã hoãn hoặc bác bỏ](docs/research/REJECTED_HYPOTHESES.md) trước khi lặp lại nghiên cứu. Công cụ engineering chạy độc lập ở [runbook Research Broker](engineering/airc500/APPLIED-RESEARCH.md). Receipt lần đầu có hai nguồn quan sát được và một nguồn bị publisher hạn chế. Có thể replay ngoại tuyến bằng mã băm trong runbook. Rollback bằng dùng phiên bản catalog/adapter trước cho đợt đọc mới, giữ lại biên nhận cũ để đối soát. C2/C3 tiếp tục theo thứ tự sản phẩm.

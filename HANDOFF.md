@@ -1,5 +1,19 @@
 # Bắt đầu ở đây khi tiếp quản AI Marketing Company
 
+## PR #37 — nhiệm vụ Marketing, kiểm chứng nội dung và đánh giá chất lượng
+
+Bản phát triển kết hợp core v24, business v3 và module nhiệm vụ C3 v1. Khi chuyển máy, dùng PostgreSQL thử nghiệm và chạy publisher trong Compose trước khi mở ứng dụng. Trên máy đã có cấu hình, giữ lại secret và khóa nhận diện hiện tại. Publisher chạy lại được. Ghi nhận mọi thay đổi qua bản nâng cấp mới để giữ lịch sử quyết định và snapshot đã bàn giao.
+
+```bash
+docker compose up -d --build
+docker compose run --rm migrate python migrations/apply.py --publish-registry catalog/research-strategy-v3.json
+docker compose run --rm migrate python migrations/apply.py --publish-registry catalog/landing-seo-v6.json
+```
+
+Người giao việc mở **Hồ sơ doanh nghiệp → Brief**, chọn mục tiêu, sản phẩm, tập người mua, hướng dẫn thương hiệu và điều kiện áp dụng. Solo và Business dùng workspace nội bộ. Agency giữ brief do người nhận được cấp quyền gửi. Sau khi worker hoàn tất, mở bản giao để soạn nội dung, xem từng câu kèm nguồn và lịch sử lần lưu. Hướng dẫn dành cho người vận hành gồm [cấp route nội bộ và quyền duyệt](docs/ADR-C3-INTERNAL-TASKS.md), [7 skill và cách quay về phiên bản trước](docs/C3-MARKETING-SKILLS.md) và [quyết định QA theo câu](docs/business-profile/C3-CONTENT-EVIDENCE.md).
+
+CI chạy các release lịch sử @2/@5 qua Qwen thật trên đúng checkout. Trong artifact `pool-model-measurements-integration`, mở `c3-model-receipts` để đối chiếu SHA, weights, token, run, snapshot nguồn, draft và lần biên tập tổng hợp. Artifact `knowledge-center-journeys-integration` chứa hành trình giao việc và đối chiếu nguồn trên ba kích thước màn hình. Rà soát chuyên môn theo [protocol holdout và pilot](docs/evaluation/C3-HOLDOUT-AND-PILOT.md), [kết quả đã đo](docs/evaluation/C3-QUALITY-RESULTS.md) và [ngân sách kết nối local](docs/evaluation/C3-LOCAL-RESOURCES.md). PR #37 chờ phản biện. Commercial GA vẫn NO-GO.
+
 ## Nghiên cứu ứng dụng cho AMC và AIRC
 
 Bắt đầu từ [sổ nguồn](docs/research/SOURCE_REGISTRY.md), mở [thẻ kiến thức](docs/research/KNOWLEDGE_CARDS.md), [đối chiếu với mã hiện hành](docs/research/APPLICABILITY_MATRIX.md) rồi chọn [cải tiến có tiêu chí nghiệm thu](docs/research/PRODUCT_OPPORTUNITIES.md). Đọc [các giả thuyết đã hoãn hoặc bác bỏ](docs/research/REJECTED_HYPOTHESES.md) trước khi lặp lại nghiên cứu. Công cụ engineering chạy độc lập ở [runbook Research Broker](engineering/airc500/APPLIED-RESEARCH.md). Receipt lần đầu có hai nguồn quan sát được và một nguồn bị publisher hạn chế. Có thể replay ngoại tuyến bằng mã băm trong runbook. Rollback bằng dùng phiên bản catalog/adapter trước cho đợt đọc mới, giữ lại biên nhận cũ để đối soát. C2/C3 tiếp tục theo thứ tự sản phẩm.

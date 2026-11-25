@@ -101,7 +101,7 @@ function createWorkforce(root, api, notify, onActivity=()=>{}) {
         if(ticket===revision)await reload();
       },{campaigns});
       const guide=node(box,'p','Sau khi ghi nhận mục đích, mở brief đã ghim sản phẩm trong Hồ sơ doanh nghiệp để kiểm tra căn cứ và giao việc.');
-        const link=node(guide,'a','Mở hồ sơ doanh nghiệp');link.href='#knowledge-panel';
+      const link=node(guide,'a','Mở hồ sơ doanh nghiệp');link.href='#/knowledge';
     }
     if(admin && mode!=='inhouse') {
       const title=field(box,'Tên bộ tài sản','input');

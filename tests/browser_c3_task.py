@@ -6,6 +6,7 @@ from pathlib import Path
 import sys
 
 import httpx
+from c3_browser_themes import capture_themes
 from playwright.sync_api import expect, sync_playwright
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
@@ -33,7 +34,7 @@ def exercise(api, browser, width, height):
             entry.locator(f"[name={key}]").fill("\n".join(value) if isinstance(value, list) else value)
         entry.locator("summary").evaluate("el=>el.scrollIntoView({block:'start'})")
         expect(entry.locator("[name=product]")).to_have_value(INTENT["product"])
-        page.screenshot(path=OUT / f"c3-task-author-{width}.png", animations="disabled")
+        capture_themes(page, OUT / f"c3-task-author-{width}.png")
         with page.expect_response(lambda r: r.url.endswith("/workforce/internal-tasks")) as submission:
             entry.get_by_role("button", name="Xác nhận yêu cầu công việc").click()
         assert submission.value.status == 201, submission.value.text()
@@ -70,7 +71,7 @@ def exercise(api, browser, width, height):
         status.evaluate("el=>el.scrollIntoView({block:'center'})")
         assert page.evaluate("document.documentElement.scrollWidth<=innerWidth+1")
         assert "PRIVATE_SYNTHETIC" not in panel.inner_text()
-        page.screenshot(path=OUT / f"c3-task-queued-{width}.png", animations="disabled")
+        capture_themes(page, OUT / f"c3-task-queued-{width}.png")
         return {
             "viewport": [width, height],
             "mode": "inhouse",

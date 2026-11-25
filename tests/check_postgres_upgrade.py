@@ -75,6 +75,11 @@ def rehearse_archive(dsn, container, version=16):
                 assert {"draft","approved","withdrawn"} <= {r[0] for r in source.execute("SELECT DISTINCT state FROM business_company_objectives")}
             tables += workspace_tables
             assert {r[0] for r in source.execute("SELECT DISTINCT kind FROM business_workspace_records")} == {"company","brand","brief"}
+        if version >= 24 and source.execute("SELECT to_regclass('amc_c3.versions')").fetchone()[0]:
+            task_tables = ("amc_c3.versions", "workforce_briefs", "amc_c3.worker_operators")
+            assert source.execute("SELECT 1 FROM workforce_briefs WHERE origin='internal' LIMIT 1").fetchone()
+            tables += task_tables
+            workspace_tables += task_tables
         before = snapshot(source)
     if version >= 22:
         # Older fixtures need only the data introduced at their boundary.

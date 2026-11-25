@@ -13,6 +13,7 @@ import threading
 import time
 from uuid import uuid4
 
+from c3_browser_themes import capture_themes
 from playwright.sync_api import expect, sync_playwright
 import pytest
 from fastapi.testclient import TestClient
@@ -122,7 +123,7 @@ def test_content_gate_browser(api, content_lab):
                     expect(semantic.get_by_role("heading", name="Cần chuyên gia xác minh")).to_be_visible()
                     semantic.scroll_into_view_if_needed()
                     assert page.evaluate("document.documentElement.scrollWidth <= innerWidth")
-                    page.screenshot(path=out / f"claims-{width}.png", animations="disabled")
+                    capture_themes(page, out / f"claims-{width}.png")
                     semantic.get_by_label("Nguồn chứng minh nhận định").select_option(handle)
                     semantic.get_by_label("Giải thích nguồn hỗ trợ câu này như thế nào").fill(
                         "Compared finish and indoor use qualifier with the signed sample."

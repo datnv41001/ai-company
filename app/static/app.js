@@ -406,7 +406,7 @@
         requestedBrand: document.body.dataset.screen==='knowledge' ? screens.params().get('brand') : null,
         organization: state.memberships.find(m => m.tenant_id === tenantId)?.organization_name || '',
         clients, brands
-      }), operations(), workforce.show(tenantId,state.role,campaigns.map(c=>({...c,client_id:brands.find(b=>b.id===c.brand_id)?.client_id})),false,state.mode),portal.show(deliverables,campaigns,refresh),
+      }), operations(), workforce.show(tenantId,state.role,campaigns.map(c=>({...c,client_id:brands.find(b=>b.id===c.brand_id)?.client_id})),undefined,state.mode),portal.show(deliverables,campaigns,refresh),
         accessPanel.show(tenantId, state.role, clients, brands, campaigns)]);
     } catch (error) {
       if (generation !== workspaceGeneration || sequence !== refreshSequence) return;

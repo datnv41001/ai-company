@@ -57,6 +57,8 @@ def boundary(db, user, doc, content_digest, stage):
     binding = run.knowledge["registry"]
     ref = run.knowledge["c3_manifest"]
     store, snap, _ = checked(db, user, brief, ref, binding["workflow"], stage)
+    if doc.content.get("studio") and not store.approver:
+        conflict("Current approval authority is required for this Studio decision")
     from .registry import pin
     if pin(db, brief, binding["workflow"]) != binding:
         conflict("The approved campaign registry binding changed")
@@ -68,6 +70,9 @@ def boundary(db, user, doc, content_digest, stage):
         from .c3_studio_routes import require_all_approved
         values["studio_approvals"] = require_all_approved(db,doc,run)
     if stage in ("share", "replay_qa"):
+        from .c3_reviewer import active_approver
+        if doc.content.get("studio") and not active_approver(db, doc.tenant_id, doc.reviewed_by, lock=True):
+            conflict("The final Studio reviewer no longer has approval authority")
         key = decision_key(run.id, doc.qa_revision, content_digest)
         query = store.query(KnowledgeCommand).filter_by(snapshot_id=snap.id, operation="c3_qa", actor=doc.reviewed_by)
         row = db.scalar(query.where((KnowledgeCommand.key == key) | KnowledgeCommand.key.startswith(key + ":"))

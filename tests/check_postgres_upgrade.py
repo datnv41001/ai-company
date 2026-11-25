@@ -336,6 +336,16 @@ def verify():
         with psycopg.connect(dsn) as observer:
             assert tenant_state_before_c1(observer) == existing_v21
             print("GREEN v22: existing deliverables, reviews, runs, attempts, ledger, releases and quotas preserved")
+            # Early v22 installations have the same marker but lack the scoped decision.
+            observer.execute("DROP FUNCTION amc_acl.knowledge_commercial_conflict(text,text,text,text,text,timestamptz)")
+        with pytest.raises(RuntimeError, match="Rerun the v22 migration publisher"):
+            prepare_database(runtime)
+        migrate(dsn)
+        migrate(dsn)
+        prepare_database(runtime)
+        with psycopg.connect(dsn) as observer:
+            assert tenant_state_before_c1(observer) == existing_v21
+        print("GREEN v22 repair: startup requires the commercial rule; repeated publisher preserves populated tables")
     if from_v19:
         with runtime.connect() as observer:
             assert observer.scalar(text("select to_regprocedure('amc_acl.lock_recipient(text,text)') is not null"))

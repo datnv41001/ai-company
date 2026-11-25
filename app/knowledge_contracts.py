@@ -168,14 +168,38 @@ class Offer(Window):
     availability: Ref | None = None
 
 
-class Policy(Window):
+class CommercialApplicability(Input):
+    """A published promise covers every order inside its declared range."""
+
+    option: Literal["standard", "extended", "retail", "wholesale", "prepaid", "credit"] | None = None
+    unit: Unit | None = None
+    minimum: Amount | None = None
+    maximum: Amount | None = None
+
+    @model_validator(mode="after")
+    def defined(self):
+        if (self.minimum is not None or self.maximum is not None) and not self.unit:
+            raise ValueError("Quantity conditions require a unit")
+        if self.maximum is not None and self.minimum is not None and self.maximum < self.minimum:
+            raise ValueError("Empty commercial quantity range")
+        if not self.option and not self.unit:
+            raise ValueError("Declare an option or a selling unit")
+        return self
+
+
+class ScopedDeclaration(Window):
+    # Missing values retain the original v22 bytes and mean all order conditions.
+    applicability: CommercialApplicability | None = Field(default=None, exclude_if=lambda v: v is None)
+
+
+class Policy(ScopedDeclaration):
     placement: Placement
     warranty: Note | None = None
     payment: Note | None = None
     shipping: Note | None = None
 
 
-class Availability(Window):
+class Availability(ScopedDeclaration):
     placement: Placement
     status: Literal["available", "unavailable", "unknown"]
     observed_at: datetime
@@ -191,6 +215,7 @@ class Availability(Window):
 
 
 class Assertion(Input):
+    applicability: CommercialApplicability | None = Field(default=None, exclude_if=lambda v: v is None)
     placement: Placement
     category: Literal["description", "price", "availability", "warranty", "payment", "comparison", "regulated", "performance"]
     wording: Note
@@ -203,6 +228,8 @@ class Assertion(Input):
 
     @model_validator(mode="after")
     def basis(self):
+        if self.applicability and self.category not in ("availability", "warranty", "payment"):
+            raise ValueError("Commercial applicability belongs to stock and policy declarations")
         if self.category == "price":
             if not self.offer or not self.price or not self.quantity or self.price.tax == "unknown":
                 raise ValueError("Price claims require an offer, quantity and known tax basis")
@@ -338,6 +365,7 @@ class RevisionIn(Command):
 
 
 class EventIn(Command):
+    preferred_revision: Ref | None = Field(default=None, exclude_if=lambda v: v is None)
     expected_sequence: Annotated[int, Field(ge=0)]
     expected_digest: Annotated[str, Field(pattern=r"^[0-9a-f]{64}$")]
     state: Literal["approved", "withdrawn", "disputed", "superseded"]

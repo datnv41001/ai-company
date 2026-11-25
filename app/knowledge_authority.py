@@ -1,9 +1,12 @@
 """Resolve exact revision identity, commercial context and current authority under the brand guard."""
 
+from datetime import datetime, timezone
 from decimal import Decimal
 
 from fastapi import HTTPException
 from pydantic import ValidationError
+from sqlalchemy import text
+from migrations.knowledge_commerce import conflict_query
 
 from . import knowledge_models as m
 from .knowledge_contracts import TYPES, approval_category, price_wording
@@ -208,6 +211,27 @@ def check_assertion(store, assertion, at):
             conflict("Unknown or mismatched availability or policy")
         if observed != assertion["wording"]:
             conflict("Copy does not match the approved policy or stock declaration")
+        if row.data.get("applicability") != assertion.get("applicability"):
+            conflict("Claim must preserve the exact commercial applicability")
+        facet = "status" if field == "availability" else field
+        params = dict(tenant=row.tenant_id, client=row.client_id, brand=row.brand_id, revision=row.id, facet=facet, at=at)
+        if store.postgres:
+            query = "SELECT amc_acl.knowledge_commercial_conflict(:tenant,:client,:brand,:revision,:facet,:at)"
+        else:
+            # SQLite's built-in date functions round to milliseconds. Keep exact
+            # microsecond boundaries and compare equivalent offsets as in PG.
+            store.db.connection().connection.driver_connection.create_function("amc_commerce_instant", 1, sqlite_instant, deterministic=True)
+            query = conflict_query(False)
+            params["at"] = at.isoformat()
+        if store.db.scalar(text(query), params):
+            conflict("Commercial authority disputed")
+
+
+def sqlite_instant(value):
+    if value is None:
+        return None
+    delta = parse_time(value) - datetime(1970, 1, 1, tzinfo=timezone.utc)
+    return (delta.days * 86400 + delta.seconds) * 1_000_000 + delta.microseconds
 
 
 def change_state(store, row, command, at):
@@ -229,6 +253,23 @@ def change_state(store, row, command, at):
     }
     if command.state not in transitions[old]:
         conflict("Invalid authority transition; create a new revision for a replacement")
+    if command.preferred_revision:
+        if command.state != "superseded" or row.kind not in ("availability", "policy"):
+            invalid("A preference is recorded when retiring a stock or policy declaration")
+        preferred = store.get(m.KnowledgeRevision, command.preferred_revision)
+        if (
+            preferred.id == row.id
+            or preferred.kind != row.kind
+            or preferred.data["placement"] != row.data["placement"]
+            or preferred.data.get("applicability") != row.data.get("applicability")
+        ):
+            conflict("Preferred authority must cover the same placement and order conditions")
+        if row.kind == "policy" and any(row.data.get(term) and not preferred.data.get(term) for term in ("warranty", "payment", "shipping")):
+            conflict("Preferred policy must cover each term of the retired policy")
+        eligible(store, preferred, at, {})
+        store.insert(
+            m.KnowledgeLink, restrictive(row.visibility, preferred.visibility), revision_id=row.id, target_id=preferred.id, relation="preferred_authority"
+        )
     if command.state == "approved":
         head = store.db.scalar(store.query(m.KnowledgeRevision).filter_by(subject=row.subject).order_by(m.KnowledgeRevision.revision.desc()).limit(1))
         if head.id != row.id:

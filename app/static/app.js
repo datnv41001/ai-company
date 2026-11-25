@@ -11,6 +11,7 @@
   let workspaceGeneration = 0;
   let overviewRequest = 0;
   let refreshSequence = 0;
+  let profileRemoved = false;
   const esc = v => String(v ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
   const msg = (text, error=false) => { $('notice').textContent = text; $('notice').className = error ? 'error' : 'ok'; };
   function validationMessage(detail) {
@@ -81,9 +82,10 @@
   const tenantPath = name => `/api/tenants/${state.tenantId}/${name}`;
   const fromForm = form => Object.fromEntries(new FormData(form).entries());
   const process = (form, handler) => form.addEventListener('submit', async event => { event.preventDefault(); try { await handler(fromForm(form)); } catch (e) { msg(e.message, true); } });
-  const enter = async (token, membership, email='') => {
+  const enter = async (token, membership, email='', lostProfile=false) => {
     const tenantId = membership.tenant_id;
     const entry = ++workspaceGeneration;
+    profileRemoved = lostProfile;
     overviewRequest++;
     command.clear();
     $('workspace').dataset.loading='true';
@@ -238,6 +240,7 @@
     workspaceGeneration++;
     refreshSequence++;
     overviewRequest++;
+    profileRemoved=false;
     command.clear(); knowledge.reset(); workforce.reset(); accessPanel.reset(); portal.setContext(null);
     state.clients=[]; state.brands=[]; state.campaigns=[];
     render([],[]);
@@ -257,6 +260,19 @@
     $('auth').classList.remove('hidden');
     msg('Phiên hoặc quyền truy cập đã thay đổi. Hãy đăng nhập lại để tiếp tục.',true);
   }
+  async function changeMembership(me, membership) {
+    if (!membership) {
+      await session({...me,access_token:state.token},state.email);
+      msg('Quyền truy cập workspace đã thay đổi.',true);
+      return;
+    }
+    const lostProfile=document.body.dataset.access==='staff' && membership.role==='client_viewer';
+    state.memberships=me.tenants;
+    $('workspace-select').replaceChildren(...me.tenants.map(m=>new Option(m.organization_name,m.tenant_id)));
+    $('workspace-choice').classList.toggle('hidden',me.tenants.length<2);
+    // Keep the chosen tenant on a role change. A fresh login or explicit workspace switch resets this notice.
+    await enter(state.token,membership,state.email,lostProfile);
+  }
   const refresh = async (selected=null) => {
     workforce.pause();
     portal.select(selected);
@@ -269,7 +285,7 @@
       if (generation !== workspaceGeneration || sequence !== refreshSequence) return;
       const membership = me.tenants.find(m=>m.tenant_id===tenantId);
       if (!membership || membership.role!==state.role) {
-        await session({...me,access_token:state.token},state.email);
+        await changeMembership(me,membership);
         return;
       }
       const [clients,brands,campaigns,actions,deliverables] = await Promise.all(
@@ -277,7 +293,7 @@
       );
       if (generation !== workspaceGeneration || sequence !== refreshSequence) return;
       state.clients=clients;state.brands=brands;state.campaigns=campaigns;render(actions,deliverables);
-      await Promise.all([dashboardTicket===overviewRequest ? showCommand({clients,brands,campaigns,deliverables}) : null, knowledge.show({
+      await Promise.all([dashboardTicket===overviewRequest ? showCommand({clients,brands,campaigns,deliverables}) : null, profileRemoved ? knowledge.permissionChanged() : knowledge.show({
         tenant: tenantId, actor: state.userId, role: state.role,
         organization: state.memberships.find(m => m.tenant_id === tenantId)?.organization_name || '',
         clients, brands
@@ -312,7 +328,7 @@
       if (!current()) return;
       const membership = me.tenants.find(m=>m.tenant_id===state.tenantId);
       if (!membership || membership.role!==state.role) {
-        await session({...me,access_token:state.token},state.email);
+        await changeMembership(me,membership);
         return;
       }
       const result = await Promise.all(['clients','brands','campaigns','deliverables'].map(name=>api(tenantPath(name))));

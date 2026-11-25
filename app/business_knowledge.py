@@ -55,6 +55,7 @@ def transition(revision_id: str, body: EventIn, s=Depends(writer)):
 @router.get("/revisions/{revision_id}/events")
 def history(revision_id: str, s=Depends(reader)):
     s.get(m.KnowledgeRevision, revision_id)
+    preferred = s.db.scalar(s.query(m.KnowledgeLink).filter_by(revision_id=revision_id, relation="preferred_authority"))
     rows = s.db.scalars(s.query(m.KnowledgeEvent).filter_by(revision_id=revision_id).order_by(m.KnowledgeEvent.sequence))
     return [
         dict(
@@ -64,6 +65,7 @@ def history(revision_id: str, s=Depends(reader)):
             reason=r.reason,
             actor=r.actor,
             effective_at=stamp(r.effective_at),
+            **({"preferred_revision": preferred.target_id} if preferred and r.state == "superseded" else {}),
         )
         for r in rows
     ]
@@ -129,6 +131,8 @@ def resolved(s, claims, at):
         }
         if assertion["category"] == "price":
             item.update(price=assertion["price"], quantity=assertion["quantity"])
+        if assertion.get("applicability"):
+            item["applicability"] = assertion["applicability"]
         marketing.append(item)
     return deps, marketing
 

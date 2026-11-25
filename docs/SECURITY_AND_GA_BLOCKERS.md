@@ -1,5 +1,8 @@
 # Security, Reliability and General Availability (GA) Blockers
 
+AIRC v3 chỉ được sử dụng trên fixture tổng hợp. Kiểm định độc lập theo nghĩa vụ, custody giữa các OS principal, coverage ngữ nghĩa và mở rộng reviewer vẫn là cổng riêng. [Kết quả và các ngưỡng thử nghiệm](../engineering/airc500/UNION-STUDY.md).
+
+
 Engineering review tooling remains fixture-only. Production and autonomous real-repository review are still on hold pending independent host isolation, signing-key custody, and domain-quality gates. [Runtime boundary](../engineering/airc500/RUNTIME-HARDENING.md) · [Measured fixture evaluation](../engineering/airc500/QUALITY-EVALUATION.md).
 
 **Current status: NO-GO for production.** The bootstrap is intentionally safe for local development and demonstrates scoped API behavior; it is not a commercial service.
@@ -58,3 +61,7 @@ Schema đề xuất v21 cho đăng ký, đăng nhập, xác minh và cấp/gửi
 C1 v22 đã có kiểm thử PostgreSQL native 16.16 cho signed LOGIN, giao dịch thu hồi trước/sau QA/share và giới hạn dữ liệu được đưa vào snapshot. Gate thương mại còn chờ review ứng dụng, phân quyền worker và portal khi kích hoạt C3, qualification thực của người duyệt và kiểm thử các tuyên bố Marketing ngoài fixture. [Bằng chứng và phạm vi còn mở](business-profile/C1-RUNBOOK.md)
 
 C0 có fixture tổng hợp cho dữ kiện thương mại và tính hợp lệ của nguồn. Để đóng gate sử dụng dữ liệu Marketing, C1 phải chứng minh cô lập tenant/client/brand, đúng SKU/variant/offer, quyền sử dụng nguồn và hai thứ tự transaction thu hồi/share. C2–C4 cần bằng chứng desktop/mobile, WF-03/WF-13 trên đúng snapshot và thẩm định nghiệp vụ độc lập. Commercial GA giữ NO-GO. [Kế hoạch và phép đo](business-profile/README.md)
+
+## SAA-02 · session và recovery
+
+[Thiết kế và tiêu chí nghiệm thu](IDENTITY-SESSION-RECOVERY.md) bao gồm thu hồi giữa hai worker, recovery khi cooldown, xoay khóa và so sánh OIDC. Những gate này chờ triển khai và kiểm thử độc lập.

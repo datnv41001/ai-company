@@ -6,7 +6,17 @@ Draft A1 dành migration 023 sau C1 v22. Người dùng có thể xem thiết b�
 
 ## Business Profile C1 · backend v22 đang review nội bộ
 
+Bản sửa sau phản biện PR #22 đã đồng bộ với `main@5dc4ebc73c9423f360d63287d52350e2ef21a31a`. Trên database v22 hiện hữu, chạy lại publisher trước khi khởi động API. Người tiếp quản có thể dùng cùng fixture để kiểm tra câu công khai cần người duyệt đủ chuyên môn và trường hợp hai nguồn tồn kho, bảo hành hoặc thanh toán mâu thuẫn. Hai ca này là điều kiện review lại C1. C2/C3 và Commercial GA tiếp tục theo gate riêng. [Cách chạy và đối chiếu kết quả](docs/business-profile/C1-RUNBOOK.md#kiểm-tra-lại-hai-phản-biện-của-pr-22)
+
 Nhánh `feature/business-profile-knowledge-v22` tích hợp main `16fea3d45`. Staff có thể ghi hồ sơ, SKU, offer và chứng cứ, tự duyệt dữ kiện thông thường hoặc yêu cầu người thứ hai đủ quyền. API tạo snapshot và cấp receipt nội bộ cho queue/QA/share. Local PostgreSQL 16.16 và SQLite đã đạt 29 ca C1, gồm tranh chấp thật, hết hạn, idempotency và quyền đọc nguồn. Mốc tiếp là giao diện C2, adapter WF-03/WF-13 C3 và nghiệm thu nghiệp vụ. Commercial GA giữ NO-GO. [Lệnh Docker, API, ma trận nghiệm thu và rollback](docs/business-profile/C1-RUNBOOK.md) · [SHA và CI của các mốc đã hợp nhất](docs/business-profile/INTEGRATION-BASE.md)
+
+## Thiết kế phiên đăng nhập và khôi phục sau PR #19
+
+Đề xuất SAA-02 mô tả thu hồi phiên trên nhiều worker, đổi refresh grant, recovery trong cooldown, chuyển khóa duy trì quota, so sánh Keycloak/Auth0 với credential local và ca nghiệm thu cho sáu rủi ro. Tài liệu giữ hợp đồng đăng ký HTTP 202 của v21. Hạng mục triển khai đầu tiên là xem và thu hồi phiên trên hai thiết bị với PostgreSQL runtime bị giới hạn. [Quyết định, quy trình kiểm thử và rollback](docs/IDENTITY-SESSION-RECOVERY.md)
+
+## AIRC · Hợp nhất verifier và nghiên cứu ngữ nghĩa v3
+
+Trên main sau PR #20 `16fea3d45aff62dc4ba80243fcf0791627ffb90f`, schema sản phẩm v21. Chạy `python engineering/airc500/union_release.py` để tái dựng toàn bộ phép đo từ archive đã ghim. [Phương pháp, rollback và hướng dẫn máy mới](engineering/airc500/UNION-STUDY.md) · [Kết quả và giới hạn](engineering/airc500/evidence/union-v3/REPORT.md).
 
 ## AIRC · Kiểm định chất lượng v2 và runtime
 

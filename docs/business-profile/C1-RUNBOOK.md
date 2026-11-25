@@ -17,6 +17,18 @@ Mặc định pytest kiểm SQLite và skip ca cần PostgreSQL. Để chạy c�
 
 ## Hợp đồng lệnh
 
+### Kiểm tra lại hai phản biện của PR 22
+
+Tại base tích hợp `5dc4ebc73c9423f360d63287d52350e2ef21a31a`, database vẫn dùng schema v22. Trên DB từng chạy bản PR cũ, dừng API, chạy lại `python migrations/apply.py` bằng publisher rồi khởi động bản mới. Publisher bổ sung hàm quyết định và index, giữ bytes của snapshot, event và receipt cũ. API kiểm tra hàm này khi khởi động. Tình trạng có hiệu lực được tính lại khi lập preview hoặc xin receipt mới.
+
+- **C1-P1-01.** Khi duyệt claim, đọc cả wording, qualifier, điều kiện giá, locale, vùng và kênh hiển thị. Điều khoản thương mại thông thường được nhận diện bằng danh mục cố định. Nội dung ngoài danh mục cần người thứ hai với qualification còn hiệu lực cho phạm vi tương ứng. Khi kiểm lại phê duyệt cũ, hệ thống đối chiếu mandate, người duyệt và revision của claim. [Kiểm thử các trường đưa ra công chúng](../../tests/test_projection_approval.py)
+- **C1-P1-02.** Mỗi yêu cầu mới so sánh các khai báo tồn kho, bảo hành hoặc thanh toán đã duyệt, theo đúng product revision, variant, market, locale, channel và region. `applicability` có thể ghi `{"option":"retail","unit":"box","minimum":"2","maximum":"10"}`. Nguồn, binding, claim và bản công khai phải giữ cùng điều kiện. Bỏ trống điều kiện nghĩa là áp dụng cho mọi đơn trong placement. Hai khoảng số lượng có chung một đầu mút cũng chồng lấn. Khoảng hiệu lực gồm thời điểm bắt đầu và kết thúc ngay trước `valid_until`. Kho cần observation đã xảy ra. [Kiểm thử phạm vi, thời hạn và lựa chọn nguồn](../../tests/test_knowledge_commerce_conditions.py)
+- Hai giá trị trái nhau trong phạm vi trùng lặp chặn preview/queue/QA/share mới bằng HTTP 409. Editor chỉ nhận `Commercial authority disputed` nếu nguồn cạnh tranh là restricted. Thời điểm quan sát mới hơn tự nó chưa đủ để chọn bên thắng. Người có quyền có thể thu hồi hoặc đánh dấu nguồn cũ `superseded`, ghi lý do và `preferred_revision` của nguồn đang được duyệt cho cùng placement, điều kiện và các loại điều khoản. Trạng thái `disputed` của nguồn từng được duyệt tiếp tục chặn sử dụng cho tới khi xử lý. Hai cách diễn đạt chưa được khai báo tương đương cần một quyết định nghiệp vụ. [Fixture tồn kho, bảo hành và thanh toán trên hai engine](../../tests/test_knowledge_conflicting_authority.py)
+
+Chạy `python -m pytest -q tests/test_projection_approval.py tests/test_knowledge_conflicting_authority.py tests/test_knowledge_commerce_conditions.py` với cấu hình SQLite hoặc PostgreSQL mô tả phía trên. Trước khi sửa, ba fixture xung đột vẫn tạo preview 201 và claim có qualifier tự do vẫn tự duyệt thành công. Sau khi sửa, kiểm tra 409, bytes/digest của lịch sử, và 201 khi đã giải quyết xung đột. Ca `--from-v21` kiểm thêm tình trạng database v22 thiếu hàm, khởi động lại và migration lặp. Dữ liệu thử đều là dữ liệu tổng hợp. C1 đang chờ phản biện độc lập lần tới, Commercial GA **NO-GO**.
+
+### Endpoint
+
 Tiền tố là `/api/tenants/{tenant}/clients/{client}/brands/{brand}/knowledge`. Mỗi POST cần `key` tối đa 96 ký tự. Server xác định actor từ bearer. Cùng scope, actor, key và payload trả kết quả đã lưu; tái sử dụng key với payload hoặc đối tượng khác trả 409. Client giữ key khi thử lại sau mất kết nối. Database serialize theo brand rồi khóa membership, kiểm lại role và lấy giờ server trong giao dịch. SQLite dùng single-writer, PostgreSQL dùng READ COMMITTED và khóa giao dịch. [Mẫu gọi API chạy được bằng dữ liệu tổng hợp](../../tests/knowledge_fixtures.py)
 
 | Lệnh | Dữ liệu và kết quả |

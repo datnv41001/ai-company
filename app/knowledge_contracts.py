@@ -2,6 +2,7 @@
 
 from datetime import datetime, timezone
 from decimal import Decimal
+import re
 from typing import Annotated, Literal
 
 from pydantic import BaseModel, ConfigDict, Field, PlainSerializer, StrictInt, field_validator, model_validator
@@ -167,14 +168,38 @@ class Offer(Window):
     availability: Ref | None = None
 
 
-class Policy(Window):
+class CommercialApplicability(Input):
+    """A published promise covers every order inside its declared range."""
+
+    option: Literal["standard", "extended", "retail", "wholesale", "prepaid", "credit"] | None = None
+    unit: Unit | None = None
+    minimum: Amount | None = None
+    maximum: Amount | None = None
+
+    @model_validator(mode="after")
+    def defined(self):
+        if (self.minimum is not None or self.maximum is not None) and not self.unit:
+            raise ValueError("Quantity conditions require a unit")
+        if self.maximum is not None and self.minimum is not None and self.maximum < self.minimum:
+            raise ValueError("Empty commercial quantity range")
+        if not self.option and not self.unit:
+            raise ValueError("Declare an option or a selling unit")
+        return self
+
+
+class ScopedDeclaration(Window):
+    # Missing values retain the original v22 bytes and mean all order conditions.
+    applicability: CommercialApplicability | None = Field(default=None, exclude_if=lambda v: v is None)
+
+
+class Policy(ScopedDeclaration):
     placement: Placement
     warranty: Note | None = None
     payment: Note | None = None
     shipping: Note | None = None
 
 
-class Availability(Window):
+class Availability(ScopedDeclaration):
     placement: Placement
     status: Literal["available", "unavailable", "unknown"]
     observed_at: datetime
@@ -190,6 +215,7 @@ class Availability(Window):
 
 
 class Assertion(Input):
+    applicability: CommercialApplicability | None = Field(default=None, exclude_if=lambda v: v is None)
     placement: Placement
     category: Literal["description", "price", "availability", "warranty", "payment", "comparison", "regulated", "performance"]
     wording: Note
@@ -202,6 +228,8 @@ class Assertion(Input):
 
     @model_validator(mode="after")
     def basis(self):
+        if self.applicability and self.category not in ("availability", "warranty", "payment"):
+            raise ValueError("Commercial applicability belongs to stock and policy declarations")
         if self.category == "price":
             if not self.offer or not self.price or not self.quantity or self.price.tax == "unknown":
                 raise ValueError("Price claims require an offer, quantity and known tax basis")
@@ -274,11 +302,29 @@ TYPES = {
 }
 SENSITIVE = {"comparison", "regulated", "performance"}
 
+# The Solo path covers exact structured values and legacy spellings of those
+# values. Other markets and prose remain usable after independent review.
+COMMERCIAL_CONDITIONS = {"Prepaid", "Cash on delivery", "Pickup", "Delivery", "Trả trước", "Thanh toán khi nhận hàng", "Nhận tại cửa hàng"}
+PLACEMENT_CHANNELS = {"web", "store", "email", "retail", "wholesale", "search", "social", "marketplace"}
+REGIONAL_LABELS = {"HCM", "Hà Nội", "TP.HCM", "Đà Nẵng"}
+
 
 def approval_category(assertion):
     category = assertion["category"]
     if category in SENSITIVE:
+        # The grant and approval bind the complete immutable assertion, including
+        # qualifiers. A domain reviewer must assess all accompanying language.
         return category
+    place = assertion["placement"]
+    terms = (assertion.get("price") or {}).get("conditions", [])
+    free_context = (
+        place["channel"] not in PLACEMENT_CHANNELS
+        or (place["region"] not in REGIONAL_LABELS and not re.fullmatch(r"[A-Z]{2}(?:-[A-Z0-9]{1,3})?", place["region"]))
+        or not re.fullmatch(r"[a-z]{2}(?:-[A-Z]{2})?", place["locale"])
+        or any(value not in COMMERCIAL_CONDITIONS for value in [*assertion["qualifiers"], *terms])
+    )
+    if free_context:
+        return "unclassified"
     # Solo may declare a finite set of neutral attributes. Open prose goes to a
     # second reviewer even when its author labels it an ordinary description.
     neutral = {
@@ -294,6 +340,14 @@ def approval_category(assertion):
         "Dịch vụ trực tuyến",
     }
     if category == "description" and (assertion["wording"] not in neutral or assertion["qualifiers"]):
+        return "unclassified"
+    if category == "warranty" and not re.fullmatch(r"[1-9][0-9]? (?:months|tháng)", assertion["wording"]):
+        return "unclassified"
+    if category == "payment" and assertion["wording"] not in {"Prepaid", "Cash on delivery", "Trả trước", "Thanh toán khi nhận hàng"}:
+        return "unclassified"
+    if category == "availability" and assertion["wording"] not in {"available", "unavailable"}:
+        return "unclassified"
+    if category == "price" and assertion["wording"] != price_wording(assertion["price"]):
         return "unclassified"
     return None
 
@@ -311,6 +365,7 @@ class RevisionIn(Command):
 
 
 class EventIn(Command):
+    preferred_revision: Ref | None = Field(default=None, exclude_if=lambda v: v is None)
     expected_sequence: Annotated[int, Field(ge=0)]
     expected_digest: Annotated[str, Field(pattern=r"^[0-9a-f]{64}$")]
     state: Literal["approved", "withdrawn", "disputed", "superseded"]

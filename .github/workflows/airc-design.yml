@@ -8,12 +8,16 @@ permissions:
   contents: read
 jobs:
   validate:
+    strategy:
+      matrix:
+        revision: [head, integration]
     runs-on: ubuntu-latest
     timeout-minutes: 5
     steps:
       - uses: actions/checkout@v4
         with:
           persist-credentials: false
+          ref: ${{ matrix.revision == 'head' && github.event.pull_request.head.sha || github.sha }}
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"

@@ -27,6 +27,12 @@ def verify(folder, checkout):
         assert doc["status"] in {"draft", "submitted"}
         assessment = doc["assessment"]["content_evidence"]
         assert assessment["qa_revision"] == doc["qa_revision"] and assessment["content_digest"] == doc["digest"] and assessment["statements"]
+        edit = obj["edited_example"]
+        assert edit["id"] == doc["id"] and edit["status"] == "draft"
+        assert edit["qa_revision"] == doc["qa_revision"] + 1
+        evidence = edit["qa_evidence"]["content_evidence"]
+        assert evidence["qa_revision"] == edit["qa_revision"] and evidence["content_digest"] != doc["digest"]
+        assert evidence["content_digest"] == edit["qa_evidence"]["content_digest"]
         assert release not in matched
         matched[release] = doc["id"]
     if matched.keys() != REQUIRED:

@@ -6,6 +6,8 @@
   <meta name="color-scheme" content="dark">
   <title>AMC | AI Marketing Company</title>
   <link rel="stylesheet" href="/static/style.css">
+  <link rel="stylesheet" href="/static/knowledge.css">
+  <script src="/static/knowledge.js" defer></script>
   <script src="/static/workforce.js" defer></script>
   <script src="/static/recipients.js" defer></script>
   <script src="/static/reviews.js" defer></script>
@@ -17,6 +19,7 @@
       <div class="logo"><div class="logo-mark">A</div><div><strong>AI Marketing</strong><small>COMPANY WORKSPACE</small></div></div>
       <div class="nav-title">OPERATING SYSTEM</div>
       <div class="nav active">▦ &nbsp; Tổng quan</div>
+      <a id="knowledge-nav" class="nav hidden" href="#knowledge-title">Hồ sơ doanh nghiệp</a>
       <div class="nav">◎ &nbsp; Khách hàng & Thương hiệu</div>
       <div class="nav">◈ &nbsp; Chiến dịch</div>
       <div class="nav">☷ &nbsp; Nhân viên AI</div>
@@ -53,6 +56,12 @@
       <section id="workspace" class="hidden">
         <label id="workspace-choice" class="hidden">Không gian làm việc<select id="workspace-select"></select></label>
         <p id="client-scope" class="hidden"></p>
+        <section id="knowledge-panel" class="knowledge hidden" aria-labelledby="knowledge-title">
+          <header class="knowledge-heading"><div><p id="knowledge-org"></p><h2 id="knowledge-title" tabindex="-1">Hồ sơ doanh nghiệp</h2></div><span id="knowledge-progress"></span></header>
+          <div id="knowledge-context" class="knowledge-grid"></div>
+          <div id="knowledge-status" role="status" aria-live="polite"></div>
+          <div id="knowledge-content"></div>
+        </section>
         <section id="operations-panel" class="panel hidden" aria-labelledby="operations-title">
           <h3 id="operations-title">Điều hành agency</h3><p id="operations-month"></p><dl id="operations-values"></dl>
           <button type="button" id="operations-refresh">Cập nhật số liệu</button>

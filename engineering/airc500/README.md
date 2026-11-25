@@ -1,5 +1,8 @@
 # AIRC-500 · Đề xuất hội đồng kiểm định độc lập của AMC
 
+[Public Marketing research broker and capability study v4](PUBLIC-RESEARCH.md) · [Frozen matched results](research-v4/REPORT.md). Run `python engineering/airc500/research_release.py` from the repository root to verify signed outputs offline.
+
+
 [Hợp nhất deterministic-first, nguồn công khai và ba trạng thái · nghiên cứu v3](UNION-STUDY.md) · [Kết quả đo trên ba checkpoint](evidence/union-v3/REPORT.md).
 
 

@@ -1,0 +1,15 @@
+[
+  {
+    "id": "F",
+    "topic": "market",
+    "kind": "market_study",
+    "publisher": "Federal Reserve Bank of St. Louis (FRED), series by U.S. Census Bureau",
+    "url": "https://fred.stlouisfed.org/series/ECOMSA",
+    "locator": "ECOMSA, Notes and series scope",
+    "excerpts": [
+      "Quarterly Retail E-Commerce Sales",
+      "United States of America"
+    ],
+    "limitations": "National quarterly Census series. No evidence of this shop's performance. Original Census site retrieval was unavailable."
+  }
+]

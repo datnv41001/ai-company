@@ -90,8 +90,10 @@ def queue_legacy(lab, kind):
     return queued.json()["id"], workflow
 
 
-def run_one(lab, kind, arm, folder):
-    if arm == "legacy":
+def run_one(lab, kind, arm, folder, *, queued=None, request_log=None):
+    if queued is not None:
+        rid, release = queued
+    elif arm == "legacy":
         rid, release = queue_legacy(lab, kind)
     else:
         from candidate_fixture import queue_projected
@@ -103,17 +105,17 @@ def run_one(lab, kind, arm, folder):
     while lab.states()[0] in ("queued", "running") and monotonic() - started < 540:
         if lab.consume() or lab.dispatch():
             continue
-        job = lab.workers[0].take()
-        if not job:
-            job = lab.workers[1].take()
-            worker = lab.workers[1]
-        else:
-            worker = lab.workers[0]
+        for worker in lab.workers:
+            job = worker.take()
+            if job:
+                break
         if not job:
             sleep(0.1)
             continue
         assert job["run"] == rid
         body = job["body"]
+        if request_log is not None:
+            request_log[job["id"]] = body
         entry = {"attempt_id": job["id"], "schema": body["response_format"]["json_schema"]["name"],
                  "request_sha256": hashlib.sha256(json.dumps(body, sort_keys=True, ensure_ascii=False).encode()).hexdigest()}
         try:
@@ -155,8 +157,9 @@ def run_one(lab, kind, arm, folder):
                 assert set(sections) == {"research_notes","strategy_decisions","buyer_copy","seo_fields","evidence_report","measurement_plan","customer_preview"}
                 preview = sections["customer_preview"]
                 assert preview["current"]["digest"] == record["deliverable"]["digest"]
-                assert preview["generated"] == {"title":draft["title"], "body":draft["content"]["client_preview"]}
-                assert staff["evidence_coverage"]["fields"] == ["title","client_preview"]
+                if queued is None:
+                    assert preview["generated"] == {"title":draft["title"], "body":draft["content"]["client_preview"]}
+                    assert staff["evidence_coverage"]["fields"] == ["title","client_preview"]
                 # Retain the frozen evaluation artifact format while exercising the actual staff API.
                 record["assets"] = sections | {"customer_preview":preview["generated"]}
         (folder / "deliverable.md").write_text("# " + draft["title"] + "\n\n" + draft["content"]["client_preview"] + "\n", encoding="utf8")

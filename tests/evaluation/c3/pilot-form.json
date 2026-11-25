@@ -26,6 +26,8 @@
   ],
   "task_minutes": {
     "planning": null,
+    "clarification": null,
+    "commercial_correction": null,
     "drafting": null,
     "source_check": null,
     "editing": null,

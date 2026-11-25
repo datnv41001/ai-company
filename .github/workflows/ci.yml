@@ -292,6 +292,20 @@ jobs:
           AMC_V1_SOURCE="$PWD/.ci/adapter-v1" AMC_SOURCE_SHA="$(git rev-parse HEAD)" \
             AMC_LOCAL_MODEL_URL="http://127.0.0.1:$model_port/v1" python tests/registry_model_smoke.py
           AMC_LOCAL_MODEL_URL="http://127.0.0.1:$model_port/v1" AMC_EVAL_MODEL_FILE="$PWD/models/workforce.gguf" python tests/evaluation/c3/qualification.py c3-model-receipts
+          export AMC_LOCAL_MODEL_URL="http://127.0.0.1:$model_port/v1" AMC_EVAL_MODEL_FILE="$PWD/models/workforce.gguf"
+          if [[ "${{ matrix.revision }}" == integration ]]; then
+            if command -v google-chrome >/dev/null; then
+              export AMC_BROWSER_EXECUTABLE="$(command -v google-chrome)"
+            else
+              python -m playwright install chromium
+            fi
+            export AMC_LIVE_STUDIO_SCREENSHOTS=1
+          fi
+          python tests/evaluation/c3/internal_qualification.py c3-internal-receipts
+          if [[ "${{ matrix.revision }}" == integration && "$GITHUB_HEAD_REF" == feature/marketing-product-qualification && ! -f docs/evaluation/c3-product-v2/RESULTS.md ]]; then
+            python tests/evaluation/c3/internal_qualification.py c3-product-v2 --study
+            python tests/evaluation/c3/internal_qualification.py c3-unit-recovery --recovery
+          fi
           test "$single_result" -eq 0 && test "$pool_result" -eq 0
       - uses: actions/upload-artifact@v4
         if: always()
@@ -308,4 +322,7 @@ jobs:
             wait-diagnostics-measurements.json
             research-strategy-measurements.json
             c3-model-receipts/
+            c3-internal-receipts/
+            c3-product-v2/
+            c3-unit-recovery/
           if-no-files-found: ignore

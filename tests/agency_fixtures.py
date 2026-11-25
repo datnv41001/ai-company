@@ -3,6 +3,7 @@ import os
 import socket
 import threading
 import time
+from contextlib import contextmanager
 from uuid import uuid4
 
 import pytest
@@ -20,6 +21,12 @@ def api(request):
         return
     if os.environ.get("AMC_TEST_PG") != "1":
         pytest.skip("Set AMC_TEST_PG=1 to run PostgreSQL acceptance tests")
+    with postgres_api() as api:
+        yield api
+
+
+@contextmanager
+def postgres_api():
     # Browser clients reuse the HTTP fixture helpers without importing a local API.
     from app.database import engine
     from app.main import app

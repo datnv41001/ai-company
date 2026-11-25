@@ -22,7 +22,11 @@ def duration(form):
 
 def labor_cost(form):
     rate = form.get("hourly_rate_and_currency") or {}
-    times = [form.get("task_minutes", {}).get(k) for k in ("planning","drafting","source_check","editing","qa")]
+    minutes = form.get("task_minutes", {})
+    phases = ["planning","drafting","source_check","editing","qa"]
+    # Preserve older returned forms. New forms must explicitly record zero or measured time.
+    phases.extend(k for k in ("clarification","commercial_correction") if k in minutes)
+    times = [minutes.get(k) for k in phases]
     amounts = [rate.get("amount"),form.get("compute_cost"),form.get("provider_cost"),*times]
     if not all(nonnegative(v) for v in amounts) or not rate.get("currency"):
         return None
@@ -85,6 +89,7 @@ def compare(key, returned):
         left,right = (duration(data.get(s["code"],{})) for s in (manual,assisted))
         pairs.append({"brief":manual["task"],"assisted_arm":assisted["arm"],
                       "manual_minutes":left,"assisted_minutes":right,
+                      "phase_minutes":{s["arm"]:data.get(s["code"],{}).get("task_minutes") for s in (manual,assisted)},
                       "time_saving_fraction":1-right/left if left and right is not None else None})
     complete = all(p["manual_minutes"] is not None and p["assisted_minutes"] is not None for p in pairs)
     denominator = sum(p["manual_minutes"] for p in pairs) if complete else 0

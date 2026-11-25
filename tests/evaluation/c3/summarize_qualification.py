@@ -54,7 +54,7 @@ def examine(case, row):
     unit = price_fact["wording"].rsplit("/", 1)[1].strip(". ")
     tax = {"included":"đã gồm thuế","excluded":"chưa gồm thuế"}[price["tax"]]
     term = rf"\b{re.escape(str(price['basis_quantity']))}\s+{re.escape(unit)}\b"
-    minimum = rf"đơn tối thiểu\s+{re.escape(str(price['moq']))}\s+{re.escape(unit)}\b"
+    minimum = rf"đơn tối thiểu\s*:?\s+{re.escape(str(price['moq']))}\s+{re.escape(unit)}\b"
     tier = rf"(?:áp dụng từ|mức giá áp dụng từ)\s+{re.escape(str(price['tier_min']))}\s+{re.escape(unit)}\b"
     amounts = []
     for match in PRICE.finditer(audience):

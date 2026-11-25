@@ -193,6 +193,47 @@ def test_new_assertions_are_not_layout_or_editorial_advice():
         assert classify(text, [], [], set(), projection)[1:3] == ("contradiction", reason)
 
 
+def test_only_the_supported_span_can_inherit_a_fact_or_editorial_label():
+    from types import SimpleNamespace
+    from app.c3_content_evidence import assess_document
+    from app import c3_assets
+
+    projection = dict(
+        company="Example",
+        brand="Workshop",
+        product="Tile",
+        sku="TILE-2",
+        region="HN",
+        channel="web",
+        locale="vi-VN",
+        audience="Builders",
+        objective="Collect quote requests",
+        market="Vietnam",
+        kpi="Request forms",
+        hypotheses=["Giảm giá 25%"],
+        gaps=[],
+        task_intent={"exclusions": ["bao gồm lắp đặt"]},
+        facts=[{"id": "F1", "category": "description", "wording": "Matte surface", "qualifiers": ["Indoor use only"]}],
+    )
+    for workflow in (c3_marketing.LANDING, c3_assets.LANDING):
+        run = SimpleNamespace(knowledge={"registry": {"workflow": workflow}, "c3_projection": projection, "c3_manifest": {"digest": "d" * 64}})
+
+        def inspect(body):
+            doc = SimpleNamespace(id="sample", qa_revision=2, title="Tile", content={"client_preview": body})
+            result = assess_document(doc, run, "a" * 64)["statements"]
+            rows = [row for row in result if row["field"] == "client_preview"]
+            assert all(body[r["start"] : r["end"]] == r["text"] for r in rows)
+            return rows
+
+        rows = inspect("[F1] Matte surface Indoor use only. Lasts longer than competitors.")
+        assert [r["outcome"] for r in rows] == ["verified", "unresolved"]
+        assert inspect("Matte surface Indoor use only and lasts longer than competitors.")[0]["outcome"] == "unresolved"
+        assert inspect("[F0]")[0]["reason"] == "unknown_handle"
+        assert inspect("Giả thuyết cần kiểm chứng\nGiảm giá 25%")[1]["outcome"] == "contradiction"
+        assert all(r["reason"] == "prohibited" for r in inspect("Giá bao gồm\nlắp đặt"))
+        assert inspect("Not matte surface — Indoor use only.")[0]["reason"] == "negated_fact"
+
+
 @PG
 def test_published_content_gate(pool):
     lab = pool

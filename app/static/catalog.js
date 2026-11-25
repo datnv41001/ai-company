@@ -216,7 +216,9 @@ function createCatalogPane(root, api) {
           root.textContent = 'Quyền truy cập hoặc phạm vi đã thay đổi. Mở lại hồ sơ để xem dữ liệu hiện tại.';
           return;
         }
-        message.textContent = err.message || 'Chưa tải được dữ liệu. Thử lại.';
+        message.textContent = err.message === 'Revision is outside its validity interval'
+          ? 'Chỉ có thể duyệt trong khoảng hiệu lực đã lưu. Hãy kiểm tra ngày bắt đầu và ngày kết thúc.'
+          : err.message || 'Chưa tải được dữ liệu. Thử lại.';
       });
   }
   function reset() {
@@ -244,6 +246,9 @@ function createCatalogPane(root, api) {
   }
   function collection(itemKind) {
     return itemKind === 'company_objective' ? companyPath : path + '/items';
+  }
+  function labelOf(row) {
+    return row.kind === 'availability' ? friendly[row.label] || row.label : row.label;
   }
   function selected(ctx) {
     return ctx === epoch && scope;
@@ -327,7 +332,7 @@ function createCatalogPane(root, api) {
     for (const row of result.items) {
       const li = el('li');
       li.append(
-        button(row.label, () => inspect(row.id)),
+        button(labelOf(row), () => inspect(row.id)),
         el('span', [row.code, row.scope_label, states[row.state] || row.state].filter(Boolean).join(' · ')),
       );
       list.append(li);
@@ -364,7 +369,7 @@ function createCatalogPane(root, api) {
       record = await get(collection(kind) + '/' + encodeURIComponent(id));
     if (!selected(life)) return;
     record.references ??= {};
-    details.replaceChildren(el('h4', record.label));
+    details.replaceChildren(el('h4', labelOf(record)));
     const lines = el('dl'),
       flat = values(record.data);
     for (const raw of forms[record.kind] || []) {
@@ -483,7 +488,7 @@ function createCatalogPane(root, api) {
       const prior = input.value || existing?.id;
       input.replaceChildren(new Option('Chọn theo tên', ''));
       for (const row of rows)
-        input.add(new Option([row.label, row.code, row.scope_label].filter(Boolean).join(' · '), row.id));
+        input.add(new Option([labelOf(row), row.code, row.scope_label].filter(Boolean).join(' · '), row.id));
       if (prior && !rows.some((r) => r.id === prior) && existing?.id === prior)
         input.add(new Option(existing.label, prior));
       input.value = prior || '';
@@ -604,6 +609,8 @@ function createCatalogPane(root, api) {
     }
     if (kind === 'objective') {
       const scopeHint = el('p');
+      scopeHint.id = 'catalog-objective-guidance';
+      controls.level.setAttribute('aria-describedby', scopeHint.id);
       form.prepend(scopeHint);
       const adjust = () => {
         const level = controls.level.value;

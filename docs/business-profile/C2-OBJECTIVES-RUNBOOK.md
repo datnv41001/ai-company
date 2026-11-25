@@ -14,7 +14,9 @@ Nhân sự agency chọn khách hàng cùng một thương hiệu tại Hồ sơ
 
 Dùng cùng checkout cho API và publisher. Sao lưu database bằng công cụ PostgreSQL đang vận hành, chạy `docker compose run --rm migrate` theo cấu hình repository và khởi động API sau khi publisher thành công. Kiểm tra `SELECT version FROM amc_business.versions ORDER BY version` cho kết quả 1, 2, 3. Cặp bảng `business_company_objectives` và `business_company_objective_edges` nằm trong backup. App dùng role `amc_runtime`; publisher dùng owner riêng. Gặp phiên bản module lạ, dừng và kiểm tra các commit publisher trước khi khởi động. Để rollback có dữ liệu, khôi phục bản sao trước nâng cấp vào database mới và khởi động checkout cũ với database đó.
 
-Module v3 độc lập với core v22. Nhánh A1 giữ số migration core 023. Khi tích hợp A1 hoặc Claim Desk, giữ kiểm tra module [1,2,3], publisher idempotent của từng module và kiểm tra digest helper Claim Desk nếu đã cài. Những mục tiêu ghi tại C1 với level=company thuộc một thương hiệu cụ thể. Chuyển sang chia sẻ bằng cách tạo và duyệt phiên bản công ty riêng, rồi lập revision mới của mục tiêu con; giữ ID và snapshot cũ để tra cứu.
+Module v3 độc lập với core v22. Nhánh A1 giữ số migration core 023. Bản tích hợp dựa trên #31 ở `0ef8719` và giữ kiểm tra digest riêng của Claim Desk. Khi tích hợp A1, giữ kiểm tra module [1,2,3], publisher idempotent của từng module và kiểm tra digest helper Claim Desk. Những mục tiêu ghi tại C1 với level=company thuộc một thương hiệu cụ thể. Chuyển sang chia sẻ bằng cách tạo và duyệt phiên bản công ty riêng, rồi lập revision mới của mục tiêu con để giữ ID và snapshot cũ cho lần tra cứu tiếp theo.
+
+Trong brief làm việc, chọn mục tiêu cấp thương hiệu hoặc chiến dịch. Brief ghim ID, digest và trạng thái lúc lưu của đúng mục tiêu đã chọn. Mục tiêu cha chung truy được từ revision thương hiệu. Hai lần chọn nhãn trùng tên ở hai khách hàng vẫn đi qua phạm vi client/brand cụ thể.
 
 ## Kiểm thử
 

@@ -3,13 +3,14 @@
 from datetime import datetime, timezone
 from typing import Annotated, Literal
 
-from fastapi import APIRouter, Depends, HTTPException, Request
+from fastapi import APIRouter, Depends, HTTPException, Query, Request
 from pydantic import Field, model_validator
 from sqlalchemy import or_, select, text
 from sqlalchemy.exc import DBAPIError
 
+from . import brief_knowledge
 from .database import get_db
-from .knowledge_contracts import Input, Key, Name
+from .knowledge_contracts import Input, Key, Name, Ref
 from .knowledge_store import canonical, conflict, digest, missing, signed_document, stamp
 from .models import Brand, Client, new_id
 from .security import current_user, require_tenant
@@ -55,6 +56,7 @@ class BrandPatch(BrandCommand):
 
 class DraftBrief(BrandCommand):
     title: Name
+    selections: dict[brief_knowledge.Slot, Ref] = Field(default_factory=dict, max_length=3, exclude_if=lambda value: not value)
 
 
 class Workspace:
@@ -63,6 +65,7 @@ class Workspace:
         client = request.path_params["client_id"]
         brand = request.path_params.get("brand_id")
         self.db, self.actor, self.client, self.tenant, self.brand = db, user.id, client, tenant, brand
+        self.user = user
         self.postgres = db.get_bind().dialect.name == "postgresql"
         if write and not self.postgres and not db.connection().connection.driver_connection.in_transaction:
             db.execute(text("BEGIN IMMEDIATE"))
@@ -109,7 +112,7 @@ class Workspace:
         if old:
             if old.request_digest != signature:
                 conflict("This command key was already used for different inputs")
-            return result(old)
+            return result(old, self)
         company, brand = self.profiles()
         cn, bn = sequence(company), sequence(brand)
         if body.expected_revision != (cn if kind == "company" else bn) or kind != "company" and body.expected_company_revision != cn:
@@ -125,6 +128,8 @@ class Workspace:
                 missing=completion(fields)["missing"],
                 pending_checks=["source_validation", "kpi_baseline", "kpi_target", "kpi_actual"],
             )
+            if body.selections:
+                payload["selections"] = brief_knowledge.pin(self, body.selections)
             revision = 1
         else:
             previous = company if kind == "company" else brand
@@ -152,8 +157,10 @@ class Workspace:
             self.db.execute(text("SELECT amc_business.append_record(:doc,:proof)"), signed_document(self.db, self.actor, Record.__tablename__, values))
         else:
             self.db.execute(Record.__table__.insert().values(**values))
+        # The signed reader context and C1 lock are transaction-local on PostgreSQL.
+        response = result(Record(**values), self)
         self.db.commit()
-        return result(Record(**values))
+        return response
 
 
 def sequence(row):
@@ -183,9 +190,14 @@ def completion(fields):
     return dict(filled=len(FIELDS) - len(missing_keys), total=len(FIELDS), missing=missing_keys)
 
 
-def result(row):
+def result(row, workspace):
     metadata = dict(id=row.id, revision=row.revision, created_at=stamp(row.created_at))
-    return {**metadata, **row.payload} if row.kind == "brief" else metadata
+    if row.kind != "brief":
+        return metadata
+    payload = dict(row.payload)
+    if "selections" in payload:
+        payload["selections"] = brief_knowledge.render(workspace, payload["selections"])
+    return {**metadata, **payload}
 
 
 def reader(request: Request, user=Depends(current_user), db=Depends(get_db)):
@@ -224,12 +236,17 @@ def profile_revision(revision: int, s=Depends(reader)):
     row = s.db.scalar(s.rows.filter_by(scope=s.brand or "company", kind=kind, revision=revision))
     if not row:
         missing()
-    return {**result(row), "kind": kind, "fields": row.payload}
+    return {**result(row, s), "kind": kind, "fields": row.payload}
 
 
 @router.post(BRAND + "/overrides", status_code=201)
 def update_brand(body: BrandPatch, s=Depends(writer)):
     return s.save(body, "brand")
+
+
+@router.get(BRAND + "/brief-options")
+def brief_options(slot: brief_knowledge.Slot, q: str = Query("", max_length=100), s=Depends(reader)):
+    return brief_knowledge.options(s, slot, q.strip())
 
 
 @router.post(BRAND + "/briefs", status_code=201)
@@ -242,7 +259,7 @@ def get_brief(brief_id: str, s=Depends(reader)):
     row = s.db.scalar(s.owned_briefs().filter_by(id=brief_id))
     if not row:
         missing()
-    return result(row)
+    return result(row, s)
 
 
 @router.get(BRAND + "/commands/{key}")
@@ -251,4 +268,4 @@ def get_command(key: str, s=Depends(reader)):
     row = s.command_record(key)
     if not row:
         raise HTTPException(404, "Command not found")
-    return result(row)
+    return result(row, s)

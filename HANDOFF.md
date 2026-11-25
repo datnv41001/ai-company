@@ -1,5 +1,14 @@
 # Bắt đầu ở đây khi tiếp quản AI Marketing Company
 
+## Mốc tích hợp nền của Studio và Campaign Lab
+
+| PR | Head đã duyệt → head đồng bộ | Bản tích hợp đã test → merge trên main | Bằng chứng |
+| --- | --- | --- | --- |
+| #39 · Product Mission | `73721efa` | `9e8ad14f` → `428b5ed95ce284b5818e3e1512910ab95ae991b2` | Cùng tree `75b38ab8` và parent `b23497dc`, `73721efa`. [CI trên main](https://github.com/datnv41001/ai-company/actions/runs/45603608382) |
+| #38 · Qualification nội bộ | `eb64af43` → `49cdd0cf` | `37c88280` → `220d7aa11914d1f732415478b00a230c37d6f36f` | Cùng tree `2fd9d442` và parent `428b5ed9`, `49cdd0cf`. Bản tích hợp đạt 484 test, bỏ qua 2, restore 34 bảng. [CI tích hợp](https://github.com/datnv41001/ai-company/actions/runs/45603772718) · [CI sau merge](https://github.com/datnv41001/ai-company/actions/runs/45606255271) |
+
+Nhánh tài sản giao khách kế thừa cơ chế khóa quyền của [STUDIO-G02](https://github.com/datnv41001/ai-company/pull/40). [Campaign Lab](https://github.com/datnv41001/ai-company/pull/41) và [composer theo hành trình mua](https://github.com/datnv41001/ai-company/pull/42) có phạm vi và bằng chứng độc lập. Khi kết hợp nhiều thay đổi runtime, cần đối chiếu lại fingerprint của đúng cây tích hợp và chạy lại bộ hồi quy trước khi nghiệm thu.
+
 ## Nghiệm thu bản nháp Marketing trên máy khác
 
 Xem [hồ sơ 10 brief mới, 20 brief khôi phục và hai smoke nội bộ](docs/evaluation/c3-product-v2/RESULTS.md) để đọc số liệu, bản Marketing hoàn chỉnh, nhận xét mù của AI và các phép đo còn thiếu.

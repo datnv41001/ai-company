@@ -1,0 +1,130 @@
+{
+  "provenance": "Synthetic Agency, restricted PostgreSQL runtime and distinct dispatcher and worker logins. Deterministic role replies and scripted QA.",
+  "source_sha": "14e162faa3cb3de54ff39e6e6f71c7db8109444a",
+  "postgres": "16.16",
+  "workflow": "WF-13/landing-seo-draft@6",
+  "snapshot": {
+    "id": "a4d055e7-cfcc-4708-87aa-c512c378930d",
+    "version": 1,
+    "title": "Bộ mẫu vải",
+    "preview": "Nội dung trang đích\n\nTiêu đề\nBộ mẫu vải\n\nGiá trị cho người mua\nĐối chiếu quy cách và điều kiện áp dụng của Bộ mẫu vải trước khi lựa chọn.\n\nLợi ích\nBề mặt mờ Dùng trong nhà\n\nĐiều kiện thương mại\nBề mặt mờ Dùng trong nhà\n\nLời mời hành động\nYêu cầu báo giá\n\nThông tin SEO\n\nTiêu đề SEO\nBộ mẫu vải | HN\n\nMô tả tìm kiếm\nXem thông tin về Bộ mẫu vải tại HN. Yêu cầu báo giá\n\nÝ định tìm kiếm\nTìm hiểu điều kiện lựa chọn Bộ mẫu vải tại HN.",
+    "digest": "98c76127b9fa12f854d13986871c525ae247325f136c5ca5c7f336913e0c23d2"
+  },
+  "decisions": {
+    "c3_qa": "22445ec9-d3ec-4c14-a2df-6561f335f528",
+    "c3_share": "54fb0e69-b213-4dcf-85e2-afc3a4e8955e"
+  },
+  "staff_evidence": {
+    "customer_delivery": {
+      "scope": {
+        "brand_id": "30f387a7-ce33-4545-8f40-70b0746c7ff1",
+        "client_id": "c31be385-0353-4979-8e30-a7f3b2c5a5b7",
+        "tenant_id": "dca50795-fac3-4113-b06a-c62ea5ae9227",
+        "campaign_id": "6de06fed-decf-4056-bf8b-c043518ea748"
+      },
+      "assets": {
+        "seo": {
+          "digest": "041dd6641d4fc07f47efd0507b05e4ae8c832b2941660cdce1d69d858c2b681b",
+          "fields": {
+            "page_title": "Bộ mẫu vải | HN",
+            "search_intent": "Tìm hiểu điều kiện lựa chọn Bộ mẫu vải tại HN.",
+            "meta_description": "Xem thông tin về Bộ mẫu vải tại HN. Yêu cầu báo giá"
+          },
+          "approval_receipt": "bd7e2624-afba-4f13-995c-b4e12a9c9180"
+        },
+        "copy": {
+          "digest": "1877c0e5c71a7a1f6b2795bc3d89b5799640b560c66262d3aeb1b84b6bdb64d6",
+          "fields": {
+            "benefit": "Bề mặt mờ Dùng trong nhà",
+            "headline": "Bộ mẫu vải",
+            "call_to_action": "Yêu cầu báo giá",
+            "commercial_terms": "Bề mặt mờ Dùng trong nhà",
+            "value_proposition": "Đối chiếu quy cách và điều kiện áp dụng của Bộ mẫu vải trước khi lựa chọn."
+          },
+          "approval_receipt": "1b927e2f-13df-4aaf-84d7-d32ebfbe0d5e"
+        }
+      },
+      "contract": "amc.customer-marketing-assets/1",
+      "revision": 2
+    },
+    "customer_field_evidence": {
+      "seo": {
+        "page_title": [
+          {
+            "id": "d3032b079eb1493aed12093ea9f06f171b7b0013edff6b980ccb1e0ef14ff8c2",
+            "handles": [],
+            "outcome": "editorial",
+            "claim_type": "editorial"
+          }
+        ],
+        "search_intent": [
+          {
+            "id": "a33353b1554525f90cecf1a7e269992fd79a22046ee347bd05ef18f5765a3e22",
+            "handles": [],
+            "outcome": "editorial",
+            "claim_type": "editorial"
+          }
+        ],
+        "meta_description": [
+          {
+            "id": "d931e758071758ee81cae282cdcf4872c4cf80488ec715dbbc5f0d6f2278dd83",
+            "handles": [],
+            "outcome": "editorial",
+            "claim_type": "editorial"
+          }
+        ]
+      },
+      "copy": {
+        "benefit": [
+          {
+            "id": "a5416d18baa8a4502dd861587ede8e638fb5d5e2f803405d65a4f50243b767f0",
+            "handles": [
+              "F1"
+            ],
+            "outcome": "verified",
+            "claim_type": "description"
+          }
+        ],
+        "headline": [
+          {
+            "id": "8109fe91fdc910ff0e6b3ee393708542e66dbc8de96a050da2f34c483b5ed9cc",
+            "handles": [
+              "PRODUCT"
+            ],
+            "outcome": "verified",
+            "claim_type": "product"
+          }
+        ],
+        "call_to_action": [
+          {
+            "id": "0502780b304967f486a8e6299f7f9fd4e50fd36c73c0bdf279f232aaabd30ec5",
+            "handles": [],
+            "outcome": "editorial",
+            "claim_type": "editorial"
+          }
+        ],
+        "commercial_terms": [
+          {
+            "id": "5b5ca0e2134bb095b48b566185f43b743dcd036c89bd8d0a9c556486609126a2",
+            "handles": [
+              "F1"
+            ],
+            "outcome": "verified",
+            "claim_type": "description"
+          }
+        ],
+        "value_proposition": [
+          {
+            "id": "689a0d84729a4166663c34e0b76ce602d6303491f25abd1bc676983d86dcdcbc",
+            "handles": [],
+            "outcome": "editorial",
+            "claim_type": "editorial"
+          }
+        ]
+      }
+    },
+    "content_gate_digest": "ef1d26940356ac34f052dbe8ca7899e5edae18b50b1d5319f329331dd30d549a",
+    "manifest_digest": "6b7711180d3c0ccd905d8b81b0b89186d88aee109e95a4e933f05bfee261eeae",
+    "release_digest": "0cfe96302a0d7698b09e379f38b98f1708311ce706d83694f595d11ddc56399f"
+  }
+}

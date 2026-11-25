@@ -30,6 +30,17 @@ Trên PowerShell, đặt biến trước lệnh, ví dụ `$env:AMC_STUDIO_EVIDE
 
 [Studio desktop](screens/studio-1280.png) · [Studio tablet tối](screens/studio-820-dark.png) · [Studio mobile](screens/studio-390.png) · [Portal desktop tối](screens/portal-1280-dark.png) · [Portal tablet](screens/portal-820.png) · [Portal mobile tối](screens/portal-390-dark.png)
 
+## Biên nhận qua PostgreSQL
+
+Hai ca dưới đây sử dụng API với login `amc_runtime`, registry đã publish, dispatcher và worker riêng trên PostgreSQL 16.16. Brief RFQ của Agency tạo ba nhiệm vụ theo workflow. Worker trả dữ liệu tất định, editor chọn bản soạn có căn cứ, reviewer độc lập ký từng nhóm và người có quyền QA chia sẻ vào portal. Kiểm thử đọc lại snapshot bằng tài khoản khách đúng phạm vi và kiểm tra khách thứ hai trong cùng agency nhận HTTP 404.
+
+| Workflow | Hồ sơ bàn giao | Đối chiếu trong database |
+| --- | --- | --- |
+| WF-03@3 | [Chiến lược và kế hoạch đo](postgres-strategy.json) | Các trường chiến lược, đo lường, digest, scope và ID ký duyệt |
+| WF-13@6 | [Nội dung trang và metadata SEO](postgres-landing.json) | Các trường copy, SEO, digest, scope và ID ký duyệt |
+
+Mỗi hồ sơ ghi SHA nguồn, digest của manifest và release, ID quyết định QA/chia sẻ và bản khách đã đọc. Phần `staff_evidence` dùng riêng để kiểm toán dữ liệu tổng hợp. Để chạy lại trên DB kiểm thử đã migrate theo job `api-tests`, đặt `AMC_TEST_PG=1`, `AMC_CUSTOMER_EDITION_EVIDENCE` trỏ đến thư mục xuất rồi chạy `python -m pytest -q tests/test_customer_assets_postgres.py tests/test_studio_postgres.py`. Ba ca kiểm tra cả phiên bản hợp đồng mới lẫn đường bàn giao cũ. Thời gian CI hoặc thời gian chạy pytest chỉ đo quá trình kiểm thử.
+
 ## Phương pháp Marketing đã áp dụng
 
 - Google Analytics mô tả riêng sự kiện gửi thông tin và bước một lead đạt tiêu chí. Trong playbook báo giá, hệ thống đề xuất so yêu cầu với bước Sales có đủ thông tin để báo giá, dùng cùng nhóm lượt truy cập. Đây là yêu cầu đo nội bộ. Phải lắp nguồn và đối soát trước khi báo số chuyển đổi hoặc doanh thu. Đã đọc mục *For lead generation* ngày 25/11/2026. [Tài liệu chính thức của Google Analytics](https://support.google.com/analytics/answer/9267735?hl=en)

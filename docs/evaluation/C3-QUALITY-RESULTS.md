@@ -55,6 +55,46 @@ Ba bản chiến lược mới hoàn thành có tổng cộng 15 đoạn tiêu �
 
 Trên bộ đủ 50 brief, nhánh lịch sử tại `6a2d65f3` đã có 50 receipt, 150 lời gọi, 75.451 token vào, 16.251 token ra và thời gian sinh trung vị 17,63 giây. Cả 50 preview có giá trị tiền tệ khớp giá nguồn; chỉ 30/50 khớp đơn vị bán cụ thể và MOQ theo brief. Một preview có số điện thoại ngoài nguồn. Ba preview khớp từ khóa cam kết hoặc khuyến mãi cần đọc lại. Phí nhà cung cấp bằng 0.
 
+## Kết quả đủ 50 cặp trên cùng commit
+
+Mỗi cấu hình đã tiếp nhận đủ 50 brief. Cả 100 kết quả có receipt, gồm 80 bản nháp và 20 yêu cầu làm rõ. Chỉ mười brief đã chọn trước ở mỗi cấu hình có thêm nhận xét nghiệp vụ của AI.
+
+| Thước đo | @2 / @5 | @3 / @6 |
+| --- | ---: | ---: |
+| Sinh được bản nháp | 50/50 (100%) | 30/50 (60%) |
+| Sinh nháp ngay lần thử kỹ thuật đầu tiên | 50/50 (100%) | 29/50 (58%) |
+| Cần làm rõ trước suy luận | 0/50 | 20/50 (40%) |
+| Lượt gọi model có số token | 150/150 | 91/91 |
+| Token đầu vào / đầu ra | 75.478 / 16.419 | 58.354 / 8.573 |
+| Độ trễ sinh nháp, trung vị [min–max] | 17,76 s [12,41–60,83] | 17,03 s [12,55–100,49] |
+| Trên 30 brief cả hai đều ra nháp, trung vị | 16,30 s | 17,03 s |
+| Khớp các giá tiền đọc được, tiền tệ và tên sản phẩm | 50/50 nháp | 30/30 nháp |
+| Có đúng đơn vị bán, MOQ và bậc giá ghi trong brief | 30/50 nháp | 30/30 nháp |
+| Xuất hiện nhãn nội bộ trong preview | 50/50 nháp | 0/30 nháp |
+| Có mẫu số điện thoại ngoài nguồn | 1/50 nháp | 0/30 nháp |
+
+Các brief yêu cầu làm rõ gồm đủ mười trường hợp dịch vụ và mười trường hợp lớp học. Trong 30 trường hợp mới có nháp, 29/30 hoàn tất kỹ thuật ngay lần đầu và một trường hợp dùng thêm một lượt gọi. Tổng phí nhà cung cấp bằng 0 USD ở cả hai cấu hình.
+
+Cổng ứng dụng ghi cho phiên bản mới 137 đoạn verified, 22 unresolved và 30 contradiction trên các tiêu đề và preview. Cả 15 preview chiến lược mới chỉ có đoạn verified; cả 15 trang đích mới còn đoạn mâu thuẫn hoặc chưa giải quyết. Ở phiên bản cũ, cả 50 nháp có ít nhất một đoạn cần xử lý. Tỷ lệ đoạn verified của gate không đo độ đúng của mọi câu trong tài liệu nội bộ hoặc các trường SEO và không phải số đo độc lập về ngưỡng 95% nguồn hỗ trợ. Trên cả hai cấu hình, kiểm tra mẫu SKU chưa bắt gặp mã SKU khác trong văn bản. SKU có thể trùng giữa hồ sơ; bằng chứng cách ly khách hàng phải đến từ suite phân quyền trên PostgreSQL.
+
+## Lặp lại 10 brief và đo bộ nhớ
+
+Lần chạy thứ hai dùng cùng SHA, weights, seed, release và danh sách brief. Cả 20 cặp kết quả theo từng cấu hình giữ nguyên trạng thái. Cấu hình cũ tạo nháp cả hai lần trên 10 ca; cấu hình mới tạo nháp cả hai lần trên 6 ca, còn 4 ca đều yêu cầu làm rõ.
+
+| Chỉ số ghép theo cùng brief có nháp cả hai lần | @2 / @5 | @3 / @6 |
+| --- | ---: | ---: |
+| Tiêu đề cùng nội dung preview trùng hoàn toàn | 4/10 | 2/6 |
+| Toàn bộ trường chữ model sinh giống hệt, bỏ qua handle nguồn | 4/10 | 1/6 |
+| Số trường chữ thay đổi / tổng trường đối chiếu | 22/90 | 25/63 |
+| Các request thành công của mọi vai trò có cùng hash | 5/10 | 1/6 |
+| Chênh lệch tuyệt đối độ trễ sinh theo brief, trung vị / lớn nhất | 4,61 s / 38,78 s | 6,94 s / 13,86 s |
+| Chênh lệch tuyệt đối token đầu vào, trung vị / lớn nhất | 0 / 64 | 2 / 32 |
+| Chênh lệch tuyệt đối token đầu ra, trung vị / lớn nhất | 16 / 50 | 12,5 / 32 |
+
+Kết quả cho thấy hai lần cùng brief có thể cho câu chữ khác nhau. Quá trình dựng lại dữ liệu và đầu ra của các bước trước có thể làm thay đổi request ở các bước sau, nên chưa thể quy tất cả biến thiên cho phép lấy mẫu của model. Hai lần chạy cho mỗi ca cũng chưa cho phép ước lượng độ tin cậy của chất lượng ở quần thể khách hàng.
+
+Sampler Windows theo dõi một tiến trình `llama-server` (PID 28116) từ 13:45:54 đến 14:36:49 ngày 25/11/2026, giờ Việt Nam. Trong 2.895 quan sát, khoảng cách lấy mẫu trung vị là 1,038 s, lớn nhất 2,186 s. Working set cao nhất quan sát được là 924.962.816 byte (882,113 MiB). Đỉnh working set theo vòng đời tiến trình do Windows báo là 924.966.912 byte (882,117 MiB). Hai số này áp dụng cho tiến trình phục vụ nhiều ca; phép đo không phân bổ RAM hoặc chi phí máy cho từng bản giao.
+
 ## Cách kiểm tra bằng máy
 
 ```bash

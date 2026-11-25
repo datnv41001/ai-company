@@ -65,6 +65,14 @@ Công cụ đối chiếu SHA-256 của brief và nội dung, SKU đi cùng tên
 
 Tệp JSON đếm các lần gọi model có receipt, bản nháp thật, bản cần làm rõ, ca thiếu receipt, token và thời gian sinh bản. Mọi ca được giao đều thuộc mẫu số 50. Chỉ tính độ trễ sinh nội dung khi có lời gọi model. Khoảng biến thiên giữa các brief khác nhau không phải phép đo độ ổn định trên cùng một brief. Phí nhà cung cấp bằng 0 với inference local. Chi phí máy và nhân công cho mỗi bản được chuyên viên chấp nhận chưa xác định.
 
+Khi đủ hai lần chạy trên mười brief đại diện, so sánh từng cặp như sau.
+
+```bash
+python tests/evaluation/c3/compare_repeats.py /path/holdout-paired /path/holdout-repeat --memory /path/model-memory.ndjson --process /path/model-process.json --out c3-repeat-summary.json
+```
+
+Với mỗi brief và cấu hình, công cụ xác minh cùng SHA, weights, dữ liệu, ID lần gọi khác nhau, rồi so độ trễ, token, câu chữ ở lần gọi thành công cuối cùng của mỗi vai trò và digest của tiêu đề cùng preview. Nó cũng ghi hash của request có lặp lại hay không. Việc dựng lại hồ sơ có thể đổi thứ tự các handle nguồn và làm thay đổi prompt. Hai lần chạy chỉ cho phép mô tả sai khác quan sát được. Bộ nhớ resident lớn nhất trong chuỗi lấy mẫu và đỉnh do Windows lưu suốt vòng đời của tiến trình model được báo riêng.
+
 ## Giới hạn
 
 Không có phiếu của chuyên viên Marketing độc lập, bản chấm thời gian thủ công hoặc chi phí lao động đối chứng. SLA nghiệp vụ, mức giảm 30% tổng thời gian và ngưỡng ≥80% được chấp nhận lần đầu vẫn cần pilot. Kết quả ở môi trường nội bộ giữ trạng thái Commercial GA NO-GO.

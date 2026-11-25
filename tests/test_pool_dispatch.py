@@ -156,10 +156,10 @@ def test_teardown_retires_only_its_workers_attempts(pool_lab):
     with lab_client(app) as client:
         closing = Lab(client, foreign.dsn)
         try:
+            assert all(worker.take() is None for worker in closing.workers)
             assert closing.dispatch(reserve=700)
             job = next(j for w in closing.workers if (j := w.take()))
             names = [name for name, _ in closing.logins]
-            tenant = closing.x["tenant"]
             assert job["run"] in closing.runs
         finally:
             closing.close()
@@ -171,7 +171,7 @@ def test_teardown_retires_only_its_workers_attempts(pool_lab):
     assert db.execute("select count(*) from pg_roles where rolname=any(%s)", (names,)).fetchone() == (0,)
     # The sent reservation remains held for a legitimate late usage receipt.
     assert db.execute("select sum(held),sum(spent) from amc_ops.ledger where id=%s", (job["id"],)).fetchone() == (700, 0)
-    assert db.execute("select count(*) from amc_ops.attempts where tenant=%s and status<>'closed'", (tenant,)).fetchone() == (0,)
+    assert db.execute("select count(*) from amc_ops.attempts where worker=any(%s) and status<>'closed'", (names,)).fetchone() == (0,)
     assert foreign.consume()
 
 

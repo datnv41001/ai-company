@@ -1,0 +1,1346 @@
+{
+  "contract": "buyer-journey-composer/1",
+  "source_checkout": "a2dbe4566415fe28226b014ffb8785a1cc2cd9d6",
+  "synthetic_fixture_digest": "993f93551657734fbea73f6c8898633a18df9dd573fcd0ff78b5e01653bc3346",
+  "assigned": 10,
+  "offline_candidates": 10,
+  "historical_states": {
+    "awaiting_qa": 8,
+    "failed": 2
+  },
+  "rows": [
+    {
+      "case": "v2-01",
+      "workflow": "WF-03/research-strategy-draft@3",
+      "source_sha256": "8c36ed8cb55571a14775e9d44f697e5d952b35f7202b052eb01ab99e9b331c83",
+      "run": "19c66f4d-6616-4a8d-8481-cbe6d7ac970f",
+      "projection_digest": "8810fa2adcaa48363d0f1c8f553eba88943e4b0bb46015ada3ca5ff2d38539f6",
+      "historical_state": "awaiting_qa",
+      "historical_model_attempt_count": 3,
+      "historical_model_failure": null,
+      "original_groups": {
+        "deterministic": {
+          "research": {
+            "buyer_problem": "Cần tìm hiểu điều gì khiến người thuê căn hộ còn do dự khi chọn Đệm tựa ghế TUA-412?",
+            "research_question": "Trong lần mua gần nhất, người thuê căn hộ đã so sánh Đệm tựa ghế TUA-412 với phương án nào?",
+            "evidence": "Đệm tựa ghế TUA-412 vỏ tháo rời. Áp dụng tại Hạ Long.\nGiá tham khảo: 165.000 VND / 1 chiếc, đã gồm thuế. Đơn tối thiểu: 1 chiếc. Áp dụng từ 1 chiếc. Số lượng đối chiếu: 1 chiếc. Áp dụng tại Hạ Long. Chưa gồm gói quà.",
+            "hypothesis": "Giả thuyết cần thử: làm rõ điều kiện của Đệm tựa ghế TUA-412 giúp người thuê căn hộ chọn bước tiếp theo."
+          },
+          "strategy": {
+            "positioning": "Đề xuất định vị Đệm tựa ghế TUA-412 qua quy cách có thể đối chiếu.",
+            "channel_choice": "web",
+            "rationale": "Thử trên web vì đây là kênh nằm trong phạm vi được duyệt.",
+            "execution": "Soạn hai phiên bản giới thiệu Đệm tựa ghế TUA-412 trên web, giữ nguyên điều kiện và đo cùng một hành động."
+          },
+          "measurement": {
+            "test_hypothesis": "So sánh bản trình bày dữ kiện trước và sau lời mời hành động trên cùng nhóm khách.",
+            "measurable_action": "Mua hàng",
+            "measurement_method": "Đối chiếu đơn đã xác nhận theo mã đơn và phiên đủ điều kiện. Ghi nhận riêng đơn bị hủy."
+          }
+        },
+        "model_assisted": {
+          "research": {
+            "buyer_problem": "Người thuê căn hộ cần kiểm chứng điều kiện trước khi chọn đệm theo kích thước ghế.",
+            "research_question": "Người thuê căn hộ cần kiểm chứng điều kiện trước khi chọn đệm theo kích thước ghế?",
+            "evidence": "Đệm tựa ghế TUA-412 vỏ tháo rời. Áp dụng tại Hạ Long.\nGiá tham khảo: 165.000 VND / 1 chiếc, đã gồm thuế. Đơn tối thiểu: 1 chiếc. Áp dụng từ 1 chiếc. Số lượng đối chiếu: 1 chiếc. Áp dụng tại Hạ Long. Chưa gồm gói quà.",
+            "hypothesis": "Giả thuyết cần thử: làm rõ điều kiện của Đệm tựa ghế TUA-412 giúp người thuê căn hộ chọn bước tiếp theo."
+          },
+          "strategy": {
+            "positioning": "Hướng dẫn người thuê căn hộ chọn đệm theo kích thước ghế",
+            "channel_choice": "web",
+            "rationale": "Người thuê căn hộ cần kiểm chứng điều kiện trước khi chọn đệm theo kích thước ghế.",
+            "execution": "Soạn hai phiên bản giới thiệu Đệm tựa ghế TUA-412 trên web, giữ nguyên điều kiện và đo cùng một hành động."
+          },
+          "measurement": {
+            "test_hypothesis": "Người mua có thể cần đối chiếu điều kiện trước khi chọn đệm theo kích thước ghế.",
+            "measurable_action": "Mua hàng",
+            "measurement_method": "Đếm một lần mỗi yêu cầu được xác nhận cho TUA-412 trong 14 ngày."
+          }
+        }
+      },
+      "baseline_digest": "3f221d4ebe981d2f5848305558360aeabbc8602c80569be255f08edc12ba91bd",
+      "model_assisted_digest": "a61fe9c3bf597a2e77114449d113f4e27822685e34e45569dde9840572e9c931",
+      "baseline_comparison": {
+        "before_fields": 11,
+        "after_fields": 11,
+        "changed": [
+          "measurement.measurement_method",
+          "measurement.test_hypothesis",
+          "research.buyer_problem",
+          "research.hypothesis",
+          "research.research_question",
+          "strategy.execution",
+          "strategy.positioning",
+          "strategy.rationale"
+        ],
+        "removed": [],
+        "empty": []
+      },
+      "model_assisted_comparison": {
+        "before_fields": 11,
+        "after_fields": 11,
+        "changed": [
+          "measurement.measurement_method",
+          "measurement.test_hypothesis",
+          "research.buyer_problem",
+          "research.hypothesis",
+          "research.research_question",
+          "strategy.execution",
+          "strategy.positioning",
+          "strategy.rationale"
+        ],
+        "removed": [],
+        "empty": []
+      },
+      "candidate": {
+        "groups": {
+          "research": {
+            "buyer_problem": "Khi cân nhắc Đệm tựa ghế TUA-412, người thuê căn hộ gặp vướng mắc nào khi cần kiểm tra món hàng có vừa vị trí sử dụng?",
+            "research_question": "Hỏi về lần chọn mua gần nhất: khi nào anh/chị cần kiểm tra món hàng có vừa vị trí sử dụng, đã dựa vào tài liệu nào và còn phải hỏi lại ai?",
+            "evidence": "Đệm tựa ghế TUA-412 vỏ tháo rời. Áp dụng tại Hạ Long.\nGiá tham khảo: 165.000 VND / 1 chiếc, đã gồm thuế. Đơn tối thiểu: 1 chiếc. Áp dụng từ 1 chiếc. Số lượng đối chiếu: 1 chiếc. Áp dụng tại Hạ Long. Chưa gồm gói quà.",
+            "hypothesis": "Giả thuyết cần thử: hướng dẫn đo ngay đầu trang giúp người đọc chọn bước tiếp theo."
+          },
+          "strategy": {
+            "positioning": "Đề xuất giới thiệu Đệm tựa ghế TUA-412 cho người thuê căn hộ theo nhu cầu kiểm tra món hàng có vừa vị trí sử dụng. Đặt điều kiện áp dụng cạnh thông tin sản phẩm.",
+            "channel_choice": "web",
+            "rationale": "Trên web, thử hướng dẫn đo ngay đầu trang trước khi dẫn tới hành động. Chuyển kết quả cho bộ phận bán hàng đối soát.",
+            "execution": "Giữ nguyên sản phẩm và điều kiện cho hai nhóm. Bản A trình bày thông tin như hiện tại. Bản B thêm hướng dẫn đo ngay đầu trang. Gắn mã biến thể vào sự kiện rồi kiểm tra khả năng truy về phiên."
+          },
+          "measurement": {
+            "test_hypothesis": "Kiểm tra xem bản B có nhiều đơn mua đã xác nhận hơn trên mỗi phiên đủ điều kiện so với A hay không.",
+            "measurable_action": "Mua hàng",
+            "measurement_method": "Trong 14 ngày, chia số đơn mua đã xác nhận duy nhất cho số phiên đủ điều kiện của từng biến thể. Nhờ bộ phận bán hàng đối chiếu mã đơn, tách đơn hủy và khoản hoàn. Ghi riêng sự kiện thiếu nguồn trước khi diễn giải kết quả."
+          }
+        },
+        "field_types": {
+          "research": {
+            "buyer_problem": "research_question",
+            "research_question": "research_question",
+            "evidence": "source_declarations",
+            "hypothesis": "hypothesis"
+          },
+          "strategy": {
+            "positioning": "recommendation",
+            "channel_choice": "recommendation",
+            "rationale": "recommendation",
+            "execution": "experiment_design"
+          },
+          "measurement": {
+            "test_hypothesis": "hypothesis",
+            "measurable_action": "approved_action",
+            "measurement_method": "measurement_proposal"
+          }
+        },
+        "correction": null,
+        "protected_field": "research.evidence",
+        "protected_sha256": "75d594da88f96aefb28ba7a802c83d0c740af1908163d462407fcff2078ae943",
+        "source_bindings": {
+          "material-scope": {
+            "wording": "Đệm tựa ghế TUA-412 vỏ tháo rời.",
+            "qualifiers": "Áp dụng tại Hạ Long."
+          },
+          "approved-terms": {
+            "wording": "Giá 165.000 VND/chiếc.",
+            "qualifiers": "Áp dụng tại Hạ Long. Chưa gồm gói quà."
+          }
+        },
+        "action": {
+          "code": "purchase",
+          "buyer_step": "Hãy đo vị trí đặt sản phẩm rồi đối chiếu với quy cách.",
+          "event": "đơn mua đã xác nhận",
+          "receiving_team": "bộ phận bán hàng",
+          "reconciliation": "đối chiếu mã đơn, tách đơn hủy và khoản hoàn"
+        },
+        "scope": "staff-only synthetic candidate; all user-facing uses require current source authorization and QA",
+        "protected_term_checks": {
+          "matched": 12
+        },
+        "needs_commercial_reconciliation": false
+      }
+    },
+    {
+      "case": "v2-02",
+      "workflow": "WF-13/landing-seo-draft@6",
+      "source_sha256": "99df698678e9bcbc92ffdc2b5faa1ddab107cab8ac8d1f1783c62f85463d1c5b",
+      "run": "1cdcc608-61a1-4a0c-8f63-fabea9a9cc83",
+      "projection_digest": "e1f2a61829978f03d0b143f24bc4ad30be4eb4bf6334fd3162f0728a743e7381",
+      "historical_state": "awaiting_qa",
+      "historical_model_attempt_count": 3,
+      "historical_model_failure": null,
+      "original_groups": {
+        "deterministic": {
+          "copy": {
+            "headline": "Khay trà tròn KTR-75",
+            "value_proposition": "Đối chiếu quy cách và điều kiện áp dụng của Khay trà tròn KTR-75 trước khi lựa chọn.",
+            "benefit": "Khay trà tròn KTR-75 mặt gỗ dầu. Áp dụng tại Vinh.",
+            "commercial_terms": "Khay trà tròn KTR-75 mặt gỗ dầu. Áp dụng tại Vinh.\nGiá tham khảo: 285.000 VND / 1 chiếc, đã gồm thuế. Đơn tối thiểu: 1 chiếc. Áp dụng từ 1 chiếc. Số lượng đối chiếu: 1 chiếc. Áp dụng tại Vinh. Chưa gồm khắc tên.",
+            "call_to_action": "Yêu cầu bảng màu"
+          },
+          "seo": {
+            "page_title": "Khay trà tròn KTR-75 | Vinh",
+            "meta_description": "Xem thông tin về Khay trà tròn KTR-75 tại Vinh. Yêu cầu bảng màu",
+            "search_intent": "Tìm hiểu điều kiện lựa chọn Khay trà tròn KTR-75 tại Vinh."
+          }
+        },
+        "model_assisted": {
+          "copy": {
+            "headline": "Khay trà tròn KTR-75 mặt gỗ dầu giá VND 285000 đồng",
+            "value_proposition": "Khay trà tròn KTR-75 mặt gỗ dầu giá VND 285000 đồng, không cần khắc tên.",
+            "benefit": "Khay trà tròn KTR-75 mặt gỗ dầu có giá VND 285000 đồng, không cần khắc tên.",
+            "commercial_terms": "Khay trà tròn KTR-75 mặt gỗ dầu. Áp dụng tại Vinh.\nGiá tham khảo: 285.000 VND / 1 chiếc, đã gồm thuế. Đơn tối thiểu: 1 chiếc. Áp dụng từ 1 chiếc. Số lượng đối chiếu: 1 chiếc. Áp dụng tại Vinh. Chưa gồm khắc tên.",
+            "call_to_action": "Yêu cầu bảng màu"
+          },
+          "seo": {
+            "page_title": "Khay trà tròn KTR-75 mặt gỗ dầu giá VND 285000 đồng",
+            "meta_description": "Khay trà tròn KTR-75 mặt gỗ dầu giá VND 285000 đồng, không cần khắc tên. Đặt hàng qua colour_card_request.",
+            "search_intent": "khách mua quà"
+          }
+        }
+      },
+      "baseline_digest": "564fa1df4f3834fb97de78341a04af5934e87cfb15a2f58d1d681c5d2c4a0924",
+      "model_assisted_digest": "5fb66cc87d287b9b29e25b3820e7fb2b4879d0031ba5c369fc3dae12d518ecb1",
+      "baseline_comparison": {
+        "before_fields": 8,
+        "after_fields": 8,
+        "changed": [
+          "copy.value_proposition",
+          "seo.meta_description",
+          "seo.page_title",
+          "seo.search_intent"
+        ],
+        "removed": [],
+        "empty": []
+      },
+      "model_assisted_comparison": {
+        "before_fields": 8,
+        "after_fields": 8,
+        "changed": [
+          "copy.benefit",
+          "copy.headline",
+          "copy.value_proposition",
+          "seo.meta_description",
+          "seo.page_title",
+          "seo.search_intent"
+        ],
+        "removed": [],
+        "empty": []
+      },
+      "candidate": {
+        "groups": {
+          "copy": {
+            "headline": "Khay trà tròn KTR-75",
+            "value_proposition": "Bạn cần đối chiếu màu trước khi chọn quà cho Khay trà tròn KTR-75? Hãy ghi màu cần so và yêu cầu bảng màu trước khi chọn.",
+            "benefit": "Khay trà tròn KTR-75 mặt gỗ dầu. Áp dụng tại Vinh.",
+            "commercial_terms": "Khay trà tròn KTR-75 mặt gỗ dầu. Áp dụng tại Vinh.\nGiá tham khảo: 285.000 VND / 1 chiếc, đã gồm thuế. Đơn tối thiểu: 1 chiếc. Áp dụng từ 1 chiếc. Số lượng đối chiếu: 1 chiếc. Áp dụng tại Vinh. Chưa gồm khắc tên.",
+            "call_to_action": "Yêu cầu bảng màu"
+          },
+          "seo": {
+            "page_title": "Khay trà tròn KTR-75 tại Vinh | Yêu cầu bảng màu",
+            "meta_description": "Khay trà tròn KTR-75 mặt gỗ dầu. Áp dụng tại Vinh. Hãy ghi màu cần so và yêu cầu bảng màu trước khi chọn.",
+            "search_intent": "Giả thuyết: người tìm Khay trà tròn KTR-75 tại Vinh muốn đối chiếu màu trước khi chọn quà."
+          }
+        },
+        "field_types": {
+          "copy": {
+            "headline": "brief_identity",
+            "value_proposition": "buyer_guidance",
+            "benefit": "source_declaration",
+            "commercial_terms": "source_declarations",
+            "call_to_action": "approved_action"
+          },
+          "seo": {
+            "page_title": "brief_identity",
+            "meta_description": "source_and_buyer_guidance",
+            "search_intent": "hypothesis"
+          }
+        },
+        "correction": {
+          "field": "copy.benefit",
+          "attempts": 1,
+          "reason": "scoped_declaration_required",
+          "original": "Khay trà tròn KTR-75 mặt gỗ dầu có giá VND 285000 đồng, không cần khắc tên.",
+          "replacement_source": "material-scope"
+        },
+        "protected_field": "copy.commercial_terms",
+        "protected_sha256": "3cce070bdd35107f0ad3ba05cf8c071cfdb71db8f290681f318079883993d67e",
+        "source_bindings": {
+          "material-scope": {
+            "wording": "Khay trà tròn KTR-75 mặt gỗ dầu.",
+            "qualifiers": "Áp dụng tại Vinh."
+          },
+          "approved-terms": {
+            "wording": "Giá 285.000 VND/chiếc.",
+            "qualifiers": "Áp dụng tại Vinh. Chưa gồm khắc tên."
+          }
+        },
+        "action": {
+          "code": "colour_card_request",
+          "buyer_step": "Hãy ghi màu cần so và yêu cầu bảng màu trước khi chọn.",
+          "event": "yêu cầu bảng màu hợp lệ",
+          "receiving_team": "nhân viên tư vấn",
+          "reconciliation": "khớp mã yêu cầu với bảng màu được gửi, ghi riêng bước đặt hàng"
+        },
+        "scope": "staff-only synthetic candidate; all user-facing uses require current source authorization and QA",
+        "protected_term_checks": {
+          "matched": 12
+        },
+        "needs_commercial_reconciliation": false
+      }
+    },
+    {
+      "case": "v2-03",
+      "workflow": "WF-03/research-strategy-draft@3",
+      "source_sha256": "8ff9fa6fce4ccf3e58c7ef29bda99521c633fac5d7ed8f7f4b8cc6b0fb6c66f3",
+      "run": "83772dbd-f8e0-4f9a-a442-c495f63ffed9",
+      "projection_digest": "952cd8e58feddb0c742c0edc996eea85205b71b0a60c946ffbd3321f27ee8626",
+      "historical_state": "awaiting_qa",
+      "historical_model_attempt_count": 3,
+      "historical_model_failure": null,
+      "original_groups": {
+        "deterministic": {
+          "research": {
+            "buyer_problem": "Cần tìm hiểu điều gì khiến đội thi công phòng đọc còn do dự khi chọn Tấm sàn màu tro SL-817?",
+            "research_question": "Trong lần mua gần nhất, đội thi công phòng đọc đã so sánh Tấm sàn màu tro SL-817 với phương án nào?",
+            "evidence": "Giá tham khảo: 290.000 VND / 1 m², đã gồm thuế. Đơn tối thiểu: 12 m². Áp dụng từ 12 m². Số lượng đối chiếu: 12 m². Áp dụng tại Pleiku. Chưa gồm vận chuyển và lắp đặt.\nTấm sàn màu tro SL-817 bề mặt sọc mảnh. Áp dụng tại Pleiku.",
+            "hypothesis": "Giả thuyết cần thử: làm rõ điều kiện của Tấm sàn màu tro SL-817 giúp đội thi công phòng đọc chọn bước tiếp theo."
+          },
+          "strategy": {
+            "positioning": "Đề xuất định vị Tấm sàn màu tro SL-817 qua quy cách có thể đối chiếu.",
+            "channel_choice": "web",
+            "rationale": "Thử trên web vì đây là kênh nằm trong phạm vi được duyệt.",
+            "execution": "Soạn hai phiên bản giới thiệu Tấm sàn màu tro SL-817 trên web, giữ nguyên điều kiện và đo cùng một hành động."
+          },
+          "measurement": {
+            "test_hypothesis": "So sánh bản trình bày dữ kiện trước và sau lời mời hành động trên cùng nhóm khách.",
+            "measurable_action": "Yêu cầu mẫu thử",
+            "measurement_method": "So sánh tỷ lệ gửi lựa chọn mẫu. Đối chiếu từng lựa chọn với yêu cầu gốc trước khi tổng hợp."
+          }
+        },
+        "model_assisted": {
+          "research": {
+            "buyer_problem": "Người mua có thể cần đối chiếu điều kiện trước khi chọn mẫu trước khi đặt vật liệu.",
+            "research_question": "Người mua có thể cần đối chiếu điều kiện trước khi chọn mẫu trước khi đặt vật liệu?",
+            "evidence": "Giá tham khảo: 290.000 VND / 1 m², đã gồm thuế. Đơn tối thiểu: 12 m². Áp dụng từ 12 m². Số lượng đối chiếu: 12 m². Áp dụng tại Pleiku. Chưa gồm vận chuyển và lắp đặt.\nTấm sàn màu tro SL-817 bề mặt sọc mảnh. Áp dụng tại Pleiku.",
+            "hypothesis": "Giả thuyết cần thử: làm rõ điều kiện của Tấm sàn màu tro SL-817 giúp đội thi công phòng đọc chọn bước tiếp theo."
+          },
+          "strategy": {
+            "positioning": "Giúp đội thi công phòng đọc chọn mẫu trước khi đặt vật liệu",
+            "channel_choice": "web",
+            "rationale": "Người mua có thể cần đối chiếu điều kiện trước khi chọn mẫu trước khi đặt vật liệu.",
+            "execution": "Soạn hai phiên bản giới thiệu Tấm sàn màu tro SL-817 trên web, giữ nguyên điều kiện và đo cùng một hành động."
+          },
+          "measurement": {
+            "test_hypothesis": "Người mua có thể cần đối chiếu điều kiện trước khi chọn mẫu trước khi đặt vật liệu.",
+            "measurable_action": "Yêu cầu mẫu thử",
+            "measurement_method": "web_search"
+          }
+        }
+      },
+      "baseline_digest": "1ce0808f9454aaf0fd08e931226e8ca89bda3fc398b32a1f40e349601b226284",
+      "model_assisted_digest": "93d9b63c7a41cf275f4d5e6b3c4f005483a88051244ab664f98bf0cdc228bdf0",
+      "baseline_comparison": {
+        "before_fields": 11,
+        "after_fields": 11,
+        "changed": [
+          "measurement.measurement_method",
+          "measurement.test_hypothesis",
+          "research.buyer_problem",
+          "research.hypothesis",
+          "research.research_question",
+          "strategy.execution",
+          "strategy.positioning",
+          "strategy.rationale"
+        ],
+        "removed": [],
+        "empty": []
+      },
+      "model_assisted_comparison": {
+        "before_fields": 11,
+        "after_fields": 11,
+        "changed": [
+          "measurement.measurement_method",
+          "measurement.test_hypothesis",
+          "research.buyer_problem",
+          "research.hypothesis",
+          "research.research_question",
+          "strategy.execution",
+          "strategy.positioning",
+          "strategy.rationale"
+        ],
+        "removed": [],
+        "empty": []
+      },
+      "candidate": {
+        "groups": {
+          "research": {
+            "buyer_problem": "Khi cân nhắc Tấm sàn màu tro SL-817, đội thi công phòng đọc gặp vướng mắc nào khi cần chọn mẫu vật liệu trước khi đưa vào bảng dự toán?",
+            "research_question": "Hỏi về lần chọn mua gần nhất: khi nào anh/chị cần chọn mẫu vật liệu trước khi đưa vào bảng dự toán, đã dựa vào tài liệu nào và còn phải hỏi lại ai?",
+            "evidence": "Giá tham khảo: 290.000 VND / 1 m², đã gồm thuế. Đơn tối thiểu: 12 m². Áp dụng từ 12 m². Số lượng đối chiếu: 12 m². Áp dụng tại Pleiku. Chưa gồm vận chuyển và lắp đặt.\nTấm sàn màu tro SL-817 bề mặt sọc mảnh. Áp dụng tại Pleiku.",
+            "hypothesis": "Giả thuyết cần thử: bảng so mẫu theo vị trí lắp đặt giúp người đọc chọn bước tiếp theo."
+          },
+          "strategy": {
+            "positioning": "Đề xuất giới thiệu Tấm sàn màu tro SL-817 cho đội thi công phòng đọc theo nhu cầu chọn mẫu vật liệu trước khi đưa vào bảng dự toán. Đặt điều kiện áp dụng cạnh thông tin sản phẩm.",
+            "channel_choice": "web",
+            "rationale": "Trên web, thử bảng so mẫu theo vị trí lắp đặt trước khi dẫn tới hành động. Chuyển kết quả cho phụ trách vật liệu đối soát.",
+            "execution": "Giữ nguyên sản phẩm và điều kiện cho hai nhóm. Bản A trình bày thông tin như hiện tại. Bản B thêm bảng so mẫu theo vị trí lắp đặt. Gắn mã biến thể vào sự kiện rồi kiểm tra khả năng truy về phiên."
+          },
+          "measurement": {
+            "test_hypothesis": "Kiểm tra xem bản B có nhiều yêu cầu mẫu có vị trí sử dụng hơn trên mỗi phiên đủ điều kiện so với A hay không.",
+            "measurable_action": "Yêu cầu mẫu thử",
+            "measurement_method": "Trong 14 ngày, chia số yêu cầu mẫu có vị trí sử dụng duy nhất cho số phiên đủ điều kiện của từng biến thể. Nhờ phụ trách vật liệu khớp mã yêu cầu với mẫu được chọn, ghi tách yêu cầu báo giá sau đó. Ghi riêng sự kiện thiếu nguồn trước khi diễn giải kết quả."
+          }
+        },
+        "field_types": {
+          "research": {
+            "buyer_problem": "research_question",
+            "research_question": "research_question",
+            "evidence": "source_declarations",
+            "hypothesis": "hypothesis"
+          },
+          "strategy": {
+            "positioning": "recommendation",
+            "channel_choice": "recommendation",
+            "rationale": "recommendation",
+            "execution": "experiment_design"
+          },
+          "measurement": {
+            "test_hypothesis": "hypothesis",
+            "measurable_action": "approved_action",
+            "measurement_method": "measurement_proposal"
+          }
+        },
+        "correction": null,
+        "protected_field": "research.evidence",
+        "protected_sha256": "dbfaf628fdefa5b477151732b03e89d4d0589cd8eaa1ebce276710b00d768c51",
+        "source_bindings": {
+          "material-scope": {
+            "wording": "Tấm sàn màu tro SL-817 bề mặt sọc mảnh.",
+            "qualifiers": "Áp dụng tại Pleiku."
+          },
+          "approved-terms": {
+            "wording": "Giá 290.000 VND/m².",
+            "qualifiers": "Áp dụng tại Pleiku. Chưa gồm vận chuyển và lắp đặt."
+          }
+        },
+        "action": {
+          "code": "sample_request",
+          "buyer_step": "Hãy nêu vị trí sử dụng và đặc điểm bề mặt cần đối chiếu.",
+          "event": "yêu cầu mẫu có vị trí sử dụng",
+          "receiving_team": "phụ trách vật liệu",
+          "reconciliation": "khớp mã yêu cầu với mẫu được chọn, ghi tách yêu cầu báo giá sau đó"
+        },
+        "scope": "staff-only synthetic candidate; all user-facing uses require current source authorization and QA",
+        "protected_term_checks": {
+          "matched": 12
+        },
+        "needs_commercial_reconciliation": false
+      }
+    },
+    {
+      "case": "v2-04",
+      "workflow": "WF-13/landing-seo-draft@6",
+      "source_sha256": "ed78b2a91bf5c6ffcbd364d676d36eaa215b74f977a09739d5e0cba36527e679",
+      "run": "a6136db1-0150-4add-8575-4bb15dc06916",
+      "projection_digest": "ea4b13457fa30c12cb6c4f0e178860ec56743d17841b49e34f47a50a873be141",
+      "historical_state": "awaiting_qa",
+      "historical_model_attempt_count": 3,
+      "historical_model_failure": null,
+      "original_groups": {
+        "deterministic": {
+          "copy": {
+            "headline": "Thanh nẹp góc NK-73",
+            "value_proposition": "Đối chiếu quy cách và điều kiện áp dụng của Thanh nẹp góc NK-73 trước khi lựa chọn.",
+            "benefit": "Thanh nẹp góc NK-73 lớp phủ mờ. Áp dụng tại Biên Hòa.",
+            "commercial_terms": "Thanh nẹp góc NK-73 lớp phủ mờ. Áp dụng tại Biên Hòa.\nGiá tham khảo: 92.000 VND / 1 chiếc, đã gồm thuế. Đơn tối thiểu: 15 chiếc. Áp dụng từ 15 chiếc. Số lượng đối chiếu: 15 chiếc. Áp dụng tại Biên Hòa. Báo giá chưa gồm cắt theo kích thước.",
+            "call_to_action": "Yêu cầu báo giá"
+          },
+          "seo": {
+            "page_title": "Thanh nẹp góc NK-73 | Biên Hòa",
+            "meta_description": "Xem thông tin về Thanh nẹp góc NK-73 tại Biên Hòa. Yêu cầu báo giá",
+            "search_intent": "Tìm hiểu điều kiện lựa chọn Thanh nẹp góc NK-73 tại Biên Hòa."
+          }
+        },
+        "model_assisted": {
+          "copy": {
+            "headline": "Thanh nẹp góc NK-73 lớp phủ mờ",
+            "value_proposition": "Với giá VND 92000 / 1 piece (tax included), thanh nẹp góc NK-73 lớp phủ mờ được ứng dụng tại Biên Hòa, đảm bảo bạn hoàn thiện sản phẩm đúng thời hạn.",
+            "benefit": "Thanh nẹp góc NK-73 lớp phủ mờ được ứng dụng tại Biên Hòa, với giá VND 92000 / 1 piece (tax included).",
+            "commercial_terms": "Thanh nẹp góc NK-73 lớp phủ mờ. Áp dụng tại Biên Hòa.\nGiá tham khảo: 92.000 VND / 1 chiếc, đã gồm thuế. Đơn tối thiểu: 15 chiếc. Áp dụng từ 15 chiếc. Số lượng đối chiếu: 15 chiếc. Áp dụng tại Biên Hòa. Báo giá chưa gồm cắt theo kích thước.",
+            "call_to_action": "Yêu cầu báo giá"
+          },
+          "seo": {
+            "page_title": "Thanh nẹp góc NK-73 lớp phủ mờ tại Biên Hòa",
+            "meta_description": "Thanh nẹp góc NK-73 lớp phủ mờ được ứng dụng tại Biên Hòa, với giá VND 92000 / 1 piece (tax included). Vị trí: Biên Hòa, Việt Nam. Thông tin chi tiết: VND 92000 / 1 piece (tax included). Giá chưa bao込",
+            "search_intent": "RFQ"
+          }
+        }
+      },
+      "baseline_digest": "acbbef9868228adff0a420bd404bff9bfe161c62e986c31aeff9a7e288cd2c97",
+      "model_assisted_digest": "27461778c9dd5d0199610bf2f76d39be066ed2a65eee84a46ebbab85414af4d1",
+      "baseline_comparison": {
+        "before_fields": 8,
+        "after_fields": 8,
+        "changed": [
+          "copy.value_proposition",
+          "seo.meta_description",
+          "seo.page_title",
+          "seo.search_intent"
+        ],
+        "removed": [],
+        "empty": []
+      },
+      "model_assisted_comparison": {
+        "before_fields": 8,
+        "after_fields": 8,
+        "changed": [
+          "copy.benefit",
+          "copy.headline",
+          "copy.value_proposition",
+          "seo.meta_description",
+          "seo.page_title",
+          "seo.search_intent"
+        ],
+        "removed": [],
+        "empty": []
+      },
+      "candidate": {
+        "groups": {
+          "copy": {
+            "headline": "Thanh nẹp góc NK-73",
+            "value_proposition": "Bạn cần so báo giá trên cùng số lượng và điều kiện cho Thanh nẹp góc NK-73? Hãy gửi số lượng dự kiến cùng địa bàn cần báo giá.",
+            "benefit": "Thanh nẹp góc NK-73 lớp phủ mờ. Áp dụng tại Biên Hòa.",
+            "commercial_terms": "Thanh nẹp góc NK-73 lớp phủ mờ. Áp dụng tại Biên Hòa.\nGiá tham khảo: 92.000 VND / 1 chiếc, đã gồm thuế. Đơn tối thiểu: 15 chiếc. Áp dụng từ 15 chiếc. Số lượng đối chiếu: 15 chiếc. Áp dụng tại Biên Hòa. Báo giá chưa gồm cắt theo kích thước.",
+            "call_to_action": "Yêu cầu báo giá"
+          },
+          "seo": {
+            "page_title": "Thanh nẹp góc NK-73 tại Biên Hòa | Yêu cầu báo giá",
+            "meta_description": "Thanh nẹp góc NK-73 lớp phủ mờ. Áp dụng tại Biên Hòa. Hãy gửi số lượng dự kiến cùng địa bàn cần báo giá.",
+            "search_intent": "Giả thuyết: người tìm Thanh nẹp góc NK-73 tại Biên Hòa muốn so báo giá trên cùng số lượng và điều kiện."
+          }
+        },
+        "field_types": {
+          "copy": {
+            "headline": "brief_identity",
+            "value_proposition": "buyer_guidance",
+            "benefit": "source_declaration",
+            "commercial_terms": "source_declarations",
+            "call_to_action": "approved_action"
+          },
+          "seo": {
+            "page_title": "brief_identity",
+            "meta_description": "source_and_buyer_guidance",
+            "search_intent": "hypothesis"
+          }
+        },
+        "correction": {
+          "field": "copy.benefit",
+          "attempts": 1,
+          "reason": "scoped_declaration_required",
+          "original": "Thanh nẹp góc NK-73 lớp phủ mờ được ứng dụng tại Biên Hòa, với giá VND 92000 / 1 piece (tax included).",
+          "replacement_source": "material-scope"
+        },
+        "protected_field": "copy.commercial_terms",
+        "protected_sha256": "0d7484ab86d93e06ddc9ae2df0453193bf427e7073f76f50a9b9f6bc47197518",
+        "source_bindings": {
+          "material-scope": {
+            "wording": "Thanh nẹp góc NK-73 lớp phủ mờ.",
+            "qualifiers": "Áp dụng tại Biên Hòa."
+          },
+          "approved-terms": {
+            "wording": "Giá 92.000 VND/chiếc.",
+            "qualifiers": "Áp dụng tại Biên Hòa. Báo giá chưa gồm cắt theo kích thước."
+          }
+        },
+        "action": {
+          "code": "rfq",
+          "buyer_step": "Hãy gửi số lượng dự kiến cùng địa bàn cần báo giá.",
+          "event": "yêu cầu báo giá đủ số lượng và địa bàn",
+          "receiving_team": "Sales",
+          "reconciliation": "đối chiếu mã RFQ với báo giá đã lập, ghi riêng đơn xác nhận sau báo giá"
+        },
+        "scope": "staff-only synthetic candidate; all user-facing uses require current source authorization and QA",
+        "protected_term_checks": {
+          "matched": 12
+        },
+        "needs_commercial_reconciliation": false
+      }
+    },
+    {
+      "case": "v2-05",
+      "workflow": "WF-03/research-strategy-draft@3",
+      "source_sha256": "5307a87992cdc0afb2b97f75c33c82de1f9e816bb85c04b02c864984c140a809",
+      "run": "8d82e86c-e265-4e48-9cce-5479bcc0fb43",
+      "projection_digest": "ab5fe7bfc331f1dd86fdd95d4c5c0d89ec83528dd90af811dcc11e60c73b9fc2",
+      "historical_state": "failed",
+      "historical_model_attempt_count": 3,
+      "historical_model_failure": "invalid_plan",
+      "original_groups": {
+        "deterministic": {
+          "research": {
+            "buyer_problem": "Cần tìm hiểu điều gì khiến chủ bếp ăn nhỏ còn do dự khi chọn Kiểm tra quạt hút KQ-64?",
+            "research_question": "Trong lần mua gần nhất, chủ bếp ăn nhỏ đã so sánh Kiểm tra quạt hút KQ-64 với phương án nào?",
+            "evidence": "Giá tham khảo: 240.000 VND / 1 máy, đã gồm thuế. Đơn tối thiểu: 1 máy. Áp dụng từ 1 máy. Số lượng đối chiếu: 1 máy. Áp dụng tại Cần Thơ. Không bao gồm thay linh kiện.\nKiểm tra quạt hút KQ-64 có phiếu ghi hiện trạng. Áp dụng tại Cần Thơ.",
+            "hypothesis": "Giả thuyết cần thử: làm rõ điều kiện của Kiểm tra quạt hút KQ-64 giúp chủ bếp ăn nhỏ chọn bước tiếp theo."
+          },
+          "strategy": {
+            "positioning": "Đề xuất định vị Kiểm tra quạt hút KQ-64 qua quy cách có thể đối chiếu.",
+            "channel_choice": "web",
+            "rationale": "Thử trên web vì đây là kênh nằm trong phạm vi được duyệt.",
+            "execution": "Soạn hai phiên bản giới thiệu Kiểm tra quạt hút KQ-64 trên web, giữ nguyên điều kiện và đo cùng một hành động."
+          },
+          "measurement": {
+            "test_hypothesis": "So sánh bản trình bày dữ kiện trước và sau lời mời hành động trên cùng nhóm khách.",
+            "measurable_action": "Đặt lịch",
+            "measurement_method": "Theo dõi số yêu cầu hoàn tất trên lượt vào trang. Đối chiếu mã yêu cầu khi bộ phận phụ trách tiếp nhận."
+          }
+        },
+        "model_assisted": null
+      },
+      "baseline_digest": "c411e5d80f7f8b4c00623562b574c08dcdee6d0f920debf8f610cd1d22187892",
+      "model_assisted_digest": null,
+      "baseline_comparison": {
+        "before_fields": 11,
+        "after_fields": 11,
+        "changed": [
+          "measurement.measurement_method",
+          "measurement.test_hypothesis",
+          "research.buyer_problem",
+          "research.hypothesis",
+          "research.research_question",
+          "strategy.execution",
+          "strategy.positioning",
+          "strategy.rationale"
+        ],
+        "removed": [],
+        "empty": []
+      },
+      "model_assisted_comparison": null,
+      "candidate": {
+        "groups": {
+          "research": {
+            "buyer_problem": "Khi cân nhắc Kiểm tra quạt hút KQ-64, chủ bếp ăn nhỏ gặp vướng mắc nào khi cần chọn lịch phù hợp với thời gian dừng thiết bị?",
+            "research_question": "Hỏi về lần chọn mua gần nhất: khi nào anh/chị cần chọn lịch phù hợp với thời gian dừng thiết bị, đã dựa vào tài liệu nào và còn phải hỏi lại ai?",
+            "evidence": "Giá tham khảo: 240.000 VND / 1 máy, đã gồm thuế. Đơn tối thiểu: 1 máy. Áp dụng từ 1 máy. Số lượng đối chiếu: 1 máy. Áp dụng tại Cần Thơ. Không bao gồm thay linh kiện.\nKiểm tra quạt hút KQ-64 có phiếu ghi hiện trạng. Áp dụng tại Cần Thơ.",
+            "hypothesis": "Giả thuyết cần thử: mẫu yêu cầu khung giờ kèm số thiết bị giúp người đọc chọn bước tiếp theo."
+          },
+          "strategy": {
+            "positioning": "Đề xuất giới thiệu Kiểm tra quạt hút KQ-64 cho chủ bếp ăn nhỏ theo nhu cầu chọn lịch phù hợp với thời gian dừng thiết bị. Đặt điều kiện áp dụng cạnh thông tin sản phẩm.",
+            "channel_choice": "web",
+            "rationale": "Trên web, thử mẫu yêu cầu khung giờ kèm số thiết bị trước khi dẫn tới hành động. Chuyển kết quả cho điều phối kỹ thuật đối soát.",
+            "execution": "Giữ nguyên sản phẩm và điều kiện cho hai nhóm. Bản A trình bày thông tin như hiện tại. Bản B thêm mẫu yêu cầu khung giờ kèm số thiết bị. Gắn mã biến thể vào sự kiện rồi kiểm tra khả năng truy về phiên."
+          },
+          "measurement": {
+            "test_hypothesis": "Kiểm tra xem bản B có nhiều lịch hẹn đã được hai bên xác nhận hơn trên mỗi phiên đủ điều kiện so với A hay không.",
+            "measurable_action": "Đặt lịch",
+            "measurement_method": "Trong 14 ngày, chia số lịch hẹn đã được hai bên xác nhận duy nhất cho số phiên đủ điều kiện của từng biến thể. Nhờ điều phối kỹ thuật đối chiếu mã lịch, loại lịch trùng và ghi riêng lịch hủy hoặc chưa xác nhận. Ghi riêng sự kiện thiếu nguồn trước khi diễn giải kết quả."
+          }
+        },
+        "field_types": {
+          "research": {
+            "buyer_problem": "research_question",
+            "research_question": "research_question",
+            "evidence": "source_declarations",
+            "hypothesis": "hypothesis"
+          },
+          "strategy": {
+            "positioning": "recommendation",
+            "channel_choice": "recommendation",
+            "rationale": "recommendation",
+            "execution": "experiment_design"
+          },
+          "measurement": {
+            "test_hypothesis": "hypothesis",
+            "measurable_action": "approved_action",
+            "measurement_method": "measurement_proposal"
+          }
+        },
+        "correction": null,
+        "protected_field": "research.evidence",
+        "protected_sha256": "07e21a1a4dbeac4bbcda08905bfb70a1a057313a714702aa8f0650f92ab154ec",
+        "source_bindings": {
+          "material-scope": {
+            "wording": "Kiểm tra quạt hút KQ-64 có phiếu ghi hiện trạng.",
+            "qualifiers": "Áp dụng tại Cần Thơ."
+          },
+          "approved-terms": {
+            "wording": "Giá 240.000 VND/máy.",
+            "qualifiers": "Áp dụng tại Cần Thơ. Không bao gồm thay linh kiện."
+          }
+        },
+        "action": {
+          "code": "appointment",
+          "buyer_step": "Hãy ghi số thiết bị và khung giờ có thể bàn giao.",
+          "event": "lịch hẹn đã được hai bên xác nhận",
+          "receiving_team": "điều phối kỹ thuật",
+          "reconciliation": "đối chiếu mã lịch, loại lịch trùng và ghi riêng lịch hủy hoặc chưa xác nhận"
+        },
+        "scope": "staff-only synthetic candidate; all user-facing uses require current source authorization and QA",
+        "protected_term_checks": {
+          "matched": 12
+        },
+        "needs_commercial_reconciliation": false
+      }
+    },
+    {
+      "case": "v2-06",
+      "workflow": "WF-13/landing-seo-draft@6",
+      "source_sha256": "33641f998463e411fc80928a1516502a927f50feb59695b9c759d5efa2b9253f",
+      "run": "2157bdfe-7431-4a03-96c0-b7b411515179",
+      "projection_digest": "a7a2faf4c4991bf559209217bea6534cf081f27be7ef64ff24fd9cfd14fa2f7f",
+      "historical_state": "awaiting_qa",
+      "historical_model_attempt_count": 3,
+      "historical_model_failure": null,
+      "original_groups": {
+        "deterministic": {
+          "copy": {
+            "headline": "Vệ sinh bộ lọc LO-914",
+            "value_proposition": "Đối chiếu quy cách và điều kiện áp dụng của Vệ sinh bộ lọc LO-914 trước khi lựa chọn.",
+            "benefit": "Vệ sinh bộ lọc LO-914 có phiếu ghi ngày bảo trì. Áp dụng tại Long Xuyên.",
+            "commercial_terms": "Giá tham khảo: 310.000 VND / 1 máy, đã gồm thuế. Đơn tối thiểu: 1 máy. Áp dụng từ 1 máy. Số lượng đối chiếu: 1 máy. Áp dụng tại Long Xuyên. Chưa gồm lõi lọc mới.\nVệ sinh bộ lọc LO-914 có phiếu ghi ngày bảo trì. Áp dụng tại Long Xuyên.",
+            "call_to_action": "Đặt lịch"
+          },
+          "seo": {
+            "page_title": "Vệ sinh bộ lọc LO-914 | Long Xuyên",
+            "meta_description": "Xem thông tin về Vệ sinh bộ lọc LO-914 tại Long Xuyên. Đặt lịch",
+            "search_intent": "Tìm hiểu điều kiện lựa chọn Vệ sinh bộ lọc LO-914 tại Long Xuyên."
+          }
+        },
+        "model_assisted": {
+          "copy": {
+            "headline": "Vệ sinh bộ lọc LO-914",
+            "value_proposition": "Vệ sinh bộ lọc LO-914 có giá bán chỉ bằng 310000 VND cho 1 máy, không bao gồm lõi lọc mới.",
+            "benefit": "Vệ sinh bộ lọc LO-914 có giá bán chỉ bằng 310000 VND cho 1 máy, không bao gồm lõi lọc mới.",
+            "commercial_terms": "Giá tham khảo: 310.000 VND / 1 máy, đã gồm thuế. Đơn tối thiểu: 1 máy. Áp dụng từ 1 máy. Số lượng đối chiếu: 1 máy. Áp dụng tại Long Xuyên. Chưa gồm lõi lọc mới.\nVệ sinh bộ lọc LO-914 có phiếu ghi ngày bảo trì. Áp dụng tại Long Xuyên.",
+            "call_to_action": "Đặt lịch"
+          },
+          "seo": {
+            "page_title": "Vệ sinh bộ lọc LO-914",
+            "meta_description": "Vệ sinh bộ lọc LO-914 có giá bán chỉ bằng 310000 VND cho 1 máy, không bao gồm lõi lọc mới. Vệ sinh bộ lọc LO-914 có giá bán chỉ bằng 310000 VND cho 1 máy, không bao gồm lõi lọc mới. Vệ sinh bộ lọc LO-",
+            "search_intent": "Vệ sinh bộ lọc LO-914"
+          }
+        }
+      },
+      "baseline_digest": "43805fe729c9ec185b9b439b9cb0aac4804e57f2b3a5c875520517c10132b711",
+      "model_assisted_digest": "a7a2738f137de92ed732baeab6df76eaf1cf60a8e10ca3e966c65cc7e9ef0672",
+      "baseline_comparison": {
+        "before_fields": 8,
+        "after_fields": 8,
+        "changed": [
+          "copy.value_proposition",
+          "seo.meta_description",
+          "seo.page_title",
+          "seo.search_intent"
+        ],
+        "removed": [],
+        "empty": []
+      },
+      "model_assisted_comparison": {
+        "before_fields": 8,
+        "after_fields": 8,
+        "changed": [
+          "copy.benefit",
+          "copy.value_proposition",
+          "seo.meta_description",
+          "seo.page_title",
+          "seo.search_intent"
+        ],
+        "removed": [],
+        "empty": []
+      },
+      "candidate": {
+        "groups": {
+          "copy": {
+            "headline": "Vệ sinh bộ lọc LO-914",
+            "value_proposition": "Bạn cần chọn lịch phù hợp với thời gian dừng thiết bị cho Vệ sinh bộ lọc LO-914? Hãy ghi số thiết bị và khung giờ có thể bàn giao.",
+            "benefit": "Vệ sinh bộ lọc LO-914 có phiếu ghi ngày bảo trì. Áp dụng tại Long Xuyên.",
+            "commercial_terms": "Giá tham khảo: 310.000 VND / 1 máy, đã gồm thuế. Đơn tối thiểu: 1 máy. Áp dụng từ 1 máy. Số lượng đối chiếu: 1 máy. Áp dụng tại Long Xuyên. Chưa gồm lõi lọc mới.\nVệ sinh bộ lọc LO-914 có phiếu ghi ngày bảo trì. Áp dụng tại Long Xuyên.",
+            "call_to_action": "Đặt lịch"
+          },
+          "seo": {
+            "page_title": "Vệ sinh bộ lọc LO-914 tại Long Xuyên | Đặt lịch",
+            "meta_description": "Vệ sinh bộ lọc LO-914 có phiếu ghi ngày bảo trì. Áp dụng tại Long Xuyên. Hãy ghi số thiết bị và khung giờ có thể bàn giao.",
+            "search_intent": "Giả thuyết: người tìm Vệ sinh bộ lọc LO-914 tại Long Xuyên muốn chọn lịch phù hợp với thời gian dừng thiết bị."
+          }
+        },
+        "field_types": {
+          "copy": {
+            "headline": "brief_identity",
+            "value_proposition": "buyer_guidance",
+            "benefit": "source_declaration",
+            "commercial_terms": "source_declarations",
+            "call_to_action": "approved_action"
+          },
+          "seo": {
+            "page_title": "brief_identity",
+            "meta_description": "source_and_buyer_guidance",
+            "search_intent": "hypothesis"
+          }
+        },
+        "correction": {
+          "field": "copy.benefit",
+          "attempts": 1,
+          "reason": "scoped_declaration_required",
+          "original": "Vệ sinh bộ lọc LO-914 có giá bán chỉ bằng 310000 VND cho 1 máy, không bao gồm lõi lọc mới.",
+          "replacement_source": "material-scope"
+        },
+        "protected_field": "copy.commercial_terms",
+        "protected_sha256": "6dcac4617930ccccf4fd83586b4e8360d9eafbe957c968143373b2e49e247441",
+        "source_bindings": {
+          "material-scope": {
+            "wording": "Vệ sinh bộ lọc LO-914 có phiếu ghi ngày bảo trì.",
+            "qualifiers": "Áp dụng tại Long Xuyên."
+          },
+          "approved-terms": {
+            "wording": "Giá 310.000 VND/máy.",
+            "qualifiers": "Áp dụng tại Long Xuyên. Chưa gồm lõi lọc mới."
+          }
+        },
+        "action": {
+          "code": "appointment",
+          "buyer_step": "Hãy ghi số thiết bị và khung giờ có thể bàn giao.",
+          "event": "lịch hẹn đã được hai bên xác nhận",
+          "receiving_team": "điều phối kỹ thuật",
+          "reconciliation": "đối chiếu mã lịch, loại lịch trùng và ghi riêng lịch hủy hoặc chưa xác nhận"
+        },
+        "scope": "staff-only synthetic candidate; all user-facing uses require current source authorization and QA",
+        "protected_term_checks": {
+          "matched": 12
+        },
+        "needs_commercial_reconciliation": false
+      }
+    },
+    {
+      "case": "v2-07",
+      "workflow": "WF-03/research-strategy-draft@3",
+      "source_sha256": "b437ec16d9a87d439e607c4d18dd59cb2088ab72714634a5ab5466088e93ae13",
+      "run": "541244fd-0bdf-4af7-b386-092bb5429a4f",
+      "projection_digest": "e0a617b1daad7ec85c3997838296c6c07585feb506eae6299955dd83e95c3c3c",
+      "historical_state": "failed",
+      "historical_model_attempt_count": 3,
+      "historical_model_failure": "invalid_plan",
+      "original_groups": {
+        "deterministic": {
+          "research": {
+            "buyer_problem": "Cần tìm hiểu điều gì khiến người mới làm đồ gỗ còn do dự khi chọn Lớp đóng khung ảnh KA-82?",
+            "research_question": "Trong lần mua gần nhất, người mới làm đồ gỗ đã so sánh Lớp đóng khung ảnh KA-82 với phương án nào?",
+            "evidence": "Lớp đóng khung ảnh KA-82 có bàn thao tác riêng. Áp dụng tại Quy Nhơn.\nGiá tham khảo: 340.000 VND / 1 người, đã gồm thuế. Đơn tối thiểu: 1 người. Áp dụng từ 1 người. Số lượng đối chiếu: 1 người. Áp dụng tại Quy Nhơn. Học phí chưa gồm kính khung.",
+            "hypothesis": "Giả thuyết cần thử: làm rõ điều kiện của Lớp đóng khung ảnh KA-82 giúp người mới làm đồ gỗ chọn bước tiếp theo."
+          },
+          "strategy": {
+            "positioning": "Đề xuất định vị Lớp đóng khung ảnh KA-82 qua quy cách có thể đối chiếu.",
+            "channel_choice": "web",
+            "rationale": "Thử trên web vì đây là kênh nằm trong phạm vi được duyệt.",
+            "execution": "Soạn hai phiên bản giới thiệu Lớp đóng khung ảnh KA-82 trên web, giữ nguyên điều kiện và đo cùng một hành động."
+          },
+          "measurement": {
+            "test_hypothesis": "So sánh bản trình bày dữ kiện trước và sau lời mời hành động trên cùng nhóm khách.",
+            "measurable_action": "Đăng ký",
+            "measurement_method": "Đo lượt hoàn tất sau khi gửi biểu mẫu hoặc tải tài liệu, loại sự kiện trùng theo mã."
+          }
+        },
+        "model_assisted": null
+      },
+      "baseline_digest": "e3617108745de38813fcced1154059eac33a924a35d192de597424fb409db098",
+      "model_assisted_digest": null,
+      "baseline_comparison": {
+        "before_fields": 11,
+        "after_fields": 11,
+        "changed": [
+          "measurement.measurement_method",
+          "measurement.test_hypothesis",
+          "research.buyer_problem",
+          "research.hypothesis",
+          "research.research_question",
+          "strategy.execution",
+          "strategy.positioning",
+          "strategy.rationale"
+        ],
+        "removed": [],
+        "empty": []
+      },
+      "model_assisted_comparison": null,
+      "candidate": {
+        "groups": {
+          "research": {
+            "buyer_problem": "Khi cân nhắc Lớp đóng khung ảnh KA-82, người mới làm đồ gỗ gặp vướng mắc nào khi cần chọn buổi thực hành và chuẩn bị phần học phí chưa bao gồm?",
+            "research_question": "Hỏi về lần chọn mua gần nhất: khi nào anh/chị cần chọn buổi thực hành và chuẩn bị phần học phí chưa bao gồm, đã dựa vào tài liệu nào và còn phải hỏi lại ai?",
+            "evidence": "Lớp đóng khung ảnh KA-82 có bàn thao tác riêng. Áp dụng tại Quy Nhơn.\nGiá tham khảo: 340.000 VND / 1 người, đã gồm thuế. Đơn tối thiểu: 1 người. Áp dụng từ 1 người. Số lượng đối chiếu: 1 người. Áp dụng tại Quy Nhơn. Học phí chưa gồm kính khung.",
+            "hypothesis": "Giả thuyết cần thử: hướng dẫn chọn buổi và kiểm tra phần cần chuẩn bị giúp người đọc chọn bước tiếp theo."
+          },
+          "strategy": {
+            "positioning": "Đề xuất giới thiệu Lớp đóng khung ảnh KA-82 cho người mới làm đồ gỗ theo nhu cầu chọn buổi thực hành và chuẩn bị phần học phí chưa bao gồm. Đặt điều kiện áp dụng cạnh thông tin sản phẩm.",
+            "channel_choice": "web",
+            "rationale": "Trên web, thử hướng dẫn chọn buổi và kiểm tra phần cần chuẩn bị trước khi dẫn tới hành động. Chuyển kết quả cho điều phối lớp đối soát.",
+            "execution": "Giữ nguyên sản phẩm và điều kiện cho hai nhóm. Bản A trình bày thông tin như hiện tại. Bản B thêm hướng dẫn chọn buổi và kiểm tra phần cần chuẩn bị. Gắn mã biến thể vào sự kiện rồi kiểm tra khả năng truy về phiên."
+          },
+          "measurement": {
+            "test_hypothesis": "Kiểm tra xem bản B có nhiều đăng ký có buổi và số người xác nhận hơn trên mỗi phiên đủ điều kiện so với A hay không.",
+            "measurable_action": "Đăng ký",
+            "measurement_method": "Trong 14 ngày, chia số đăng ký có buổi và số người xác nhận duy nhất cho số phiên đủ điều kiện của từng biến thể. Nhờ điều phối lớp khớp mã đăng ký với danh sách đã xác nhận, tách người tham dự thực tế. Ghi riêng sự kiện thiếu nguồn trước khi diễn giải kết quả."
+          }
+        },
+        "field_types": {
+          "research": {
+            "buyer_problem": "research_question",
+            "research_question": "research_question",
+            "evidence": "source_declarations",
+            "hypothesis": "hypothesis"
+          },
+          "strategy": {
+            "positioning": "recommendation",
+            "channel_choice": "recommendation",
+            "rationale": "recommendation",
+            "execution": "experiment_design"
+          },
+          "measurement": {
+            "test_hypothesis": "hypothesis",
+            "measurable_action": "approved_action",
+            "measurement_method": "measurement_proposal"
+          }
+        },
+        "correction": null,
+        "protected_field": "research.evidence",
+        "protected_sha256": "7905eeeba9120d5696d13fcfdce0f9f8075228d7b3349c27213222b1b427c6a8",
+        "source_bindings": {
+          "material-scope": {
+            "wording": "Lớp đóng khung ảnh KA-82 có bàn thao tác riêng.",
+            "qualifiers": "Áp dụng tại Quy Nhơn."
+          },
+          "approved-terms": {
+            "wording": "Giá 340.000 VND/người.",
+            "qualifiers": "Áp dụng tại Quy Nhơn. Học phí chưa gồm kính khung."
+          }
+        },
+        "action": {
+          "code": "registration",
+          "buyer_step": "Hãy ghi buổi muốn học và số người tham gia.",
+          "event": "đăng ký có buổi và số người xác nhận",
+          "receiving_team": "điều phối lớp",
+          "reconciliation": "khớp mã đăng ký với danh sách đã xác nhận, tách người tham dự thực tế"
+        },
+        "scope": "staff-only synthetic candidate; all user-facing uses require current source authorization and QA",
+        "protected_term_checks": {
+          "matched": 12
+        },
+        "needs_commercial_reconciliation": false
+      }
+    },
+    {
+      "case": "v2-08",
+      "workflow": "WF-13/landing-seo-draft@6",
+      "source_sha256": "08af034892be4949d61626a5b675bb2c1b6bbcfdcccc3821ed850b7b58fc1c25",
+      "run": "2513b36c-ae60-48df-bc06-25e2babfbd36",
+      "projection_digest": "8bb0842622c9183f449245790e983fa6b46ff3ac89e0ee98e753e98bfae0f9ff",
+      "historical_state": "awaiting_qa",
+      "historical_model_attempt_count": 3,
+      "historical_model_failure": null,
+      "original_groups": {
+        "deterministic": {
+          "copy": {
+            "headline": "Buổi in mộc bản MB-706",
+            "value_proposition": "Đối chiếu quy cách và điều kiện áp dụng của Buổi in mộc bản MB-706 trước khi lựa chọn.",
+            "benefit": "Buổi in mộc bản MB-706 có giấy thử tại lớp. Áp dụng tại Vĩnh Long.",
+            "commercial_terms": "Buổi in mộc bản MB-706 có giấy thử tại lớp. Áp dụng tại Vĩnh Long.\nGiá tham khảo: 390.000 VND / 1 người, đã gồm thuế. Đơn tối thiểu: 1 người. Áp dụng từ 1 người. Số lượng đối chiếu: 1 người. Áp dụng tại Vĩnh Long. Phí chưa gồm bộ dụng cụ mang về.",
+            "call_to_action": "Đăng ký"
+          },
+          "seo": {
+            "page_title": "Buổi in mộc bản MB-706 | Vĩnh Long",
+            "meta_description": "Xem thông tin về Buổi in mộc bản MB-706 tại Vĩnh Long. Đăng ký",
+            "search_intent": "Tìm hiểu điều kiện lựa chọn Buổi in mộc bản MB-706 tại Vĩnh Long."
+          }
+        },
+        "model_assisted": {
+          "copy": {
+            "headline": "Buổi in mộc bản MB-706",
+            "value_proposition": "Đoạn học in thủ công có thể tham gia ngay!",
+            "benefit": "Buổi in mộc bản MB-706 có giấy thử tại lớp, giá VND 390000 / 1 participant (tax included).",
+            "commercial_terms": "Buổi in mộc bản MB-706 có giấy thử tại lớp. Áp dụng tại Vĩnh Long.\nGiá tham khảo: 390.000 VND / 1 người, đã gồm thuế. Đơn tối thiểu: 1 người. Áp dụng từ 1 người. Số lượng đối chiếu: 1 người. Áp dụng tại Vĩnh Long. Phí chưa gồm bộ dụng cụ mang về.",
+            "call_to_action": "Đăng ký"
+          },
+          "seo": {
+            "page_title": "Buổi in mộc bản MB-706",
+            "meta_description": "Buổi in mộc bản MB-706 có giấy thử tại lớp, giá VND 390000 / 1 participant (tax included). Registration available for this event in Vĩnh Long, Vietnam.",
+            "search_intent": "registration"
+          }
+        }
+      },
+      "baseline_digest": "48bd08728d230a3d281f9b3e22a0642bc07e9243c42b94693bb86f858a3ca07f",
+      "model_assisted_digest": "9350e05ff40759ecd0d92d8b74c1e50aaaca1b8d71a32f278658a1f063f1c76d",
+      "baseline_comparison": {
+        "before_fields": 8,
+        "after_fields": 8,
+        "changed": [
+          "copy.value_proposition",
+          "seo.meta_description",
+          "seo.page_title",
+          "seo.search_intent"
+        ],
+        "removed": [],
+        "empty": []
+      },
+      "model_assisted_comparison": {
+        "before_fields": 8,
+        "after_fields": 8,
+        "changed": [
+          "copy.benefit",
+          "copy.value_proposition",
+          "seo.meta_description",
+          "seo.page_title",
+          "seo.search_intent"
+        ],
+        "removed": [],
+        "empty": []
+      },
+      "candidate": {
+        "groups": {
+          "copy": {
+            "headline": "Buổi in mộc bản MB-706",
+            "value_proposition": "Bạn cần chọn buổi thực hành và chuẩn bị phần học phí chưa bao gồm cho Buổi in mộc bản MB-706? Hãy ghi buổi muốn học và số người tham gia.",
+            "benefit": "Buổi in mộc bản MB-706 có giấy thử tại lớp. Áp dụng tại Vĩnh Long.",
+            "commercial_terms": "Buổi in mộc bản MB-706 có giấy thử tại lớp. Áp dụng tại Vĩnh Long.\nGiá tham khảo: 390.000 VND / 1 người, đã gồm thuế. Đơn tối thiểu: 1 người. Áp dụng từ 1 người. Số lượng đối chiếu: 1 người. Áp dụng tại Vĩnh Long. Phí chưa gồm bộ dụng cụ mang về.",
+            "call_to_action": "Đăng ký"
+          },
+          "seo": {
+            "page_title": "Buổi in mộc bản MB-706 tại Vĩnh Long | Đăng ký",
+            "meta_description": "Buổi in mộc bản MB-706 có giấy thử tại lớp. Áp dụng tại Vĩnh Long. Hãy ghi buổi muốn học và số người tham gia.",
+            "search_intent": "Giả thuyết: người tìm Buổi in mộc bản MB-706 tại Vĩnh Long muốn chọn buổi thực hành và chuẩn bị phần học phí chưa bao gồm."
+          }
+        },
+        "field_types": {
+          "copy": {
+            "headline": "brief_identity",
+            "value_proposition": "buyer_guidance",
+            "benefit": "source_declaration",
+            "commercial_terms": "source_declarations",
+            "call_to_action": "approved_action"
+          },
+          "seo": {
+            "page_title": "brief_identity",
+            "meta_description": "source_and_buyer_guidance",
+            "search_intent": "hypothesis"
+          }
+        },
+        "correction": {
+          "field": "copy.benefit",
+          "attempts": 1,
+          "reason": "scoped_declaration_required",
+          "original": "Buổi in mộc bản MB-706 có giấy thử tại lớp, giá VND 390000 / 1 participant (tax included).",
+          "replacement_source": "material-scope"
+        },
+        "protected_field": "copy.commercial_terms",
+        "protected_sha256": "ec7eb89b27eb5415b6d33cddd768f303230c1ed246301ee8ff40962e76a5199d",
+        "source_bindings": {
+          "material-scope": {
+            "wording": "Buổi in mộc bản MB-706 có giấy thử tại lớp.",
+            "qualifiers": "Áp dụng tại Vĩnh Long."
+          },
+          "approved-terms": {
+            "wording": "Giá 390.000 VND/người.",
+            "qualifiers": "Áp dụng tại Vĩnh Long. Phí chưa gồm bộ dụng cụ mang về."
+          }
+        },
+        "action": {
+          "code": "registration",
+          "buyer_step": "Hãy ghi buổi muốn học và số người tham gia.",
+          "event": "đăng ký có buổi và số người xác nhận",
+          "receiving_team": "điều phối lớp",
+          "reconciliation": "khớp mã đăng ký với danh sách đã xác nhận, tách người tham dự thực tế"
+        },
+        "scope": "staff-only synthetic candidate; all user-facing uses require current source authorization and QA",
+        "protected_term_checks": {
+          "matched": 12
+        },
+        "needs_commercial_reconciliation": false
+      }
+    },
+    {
+      "case": "v2-09",
+      "workflow": "WF-03/research-strategy-draft@3",
+      "source_sha256": "8d28900f943f85b2b30b4a3f618cd2af7b4f46baff2db25b4e034c33a261407a",
+      "run": "ec36034e-adde-45a7-a78e-a1f6eca71a76",
+      "projection_digest": "03c1b823a416b99bd9b0fa40c3864f44e05b60bc9498183b41a0a7050c6d58b1",
+      "historical_state": "awaiting_qa",
+      "historical_model_attempt_count": 3,
+      "historical_model_failure": null,
+      "original_groups": {
+        "deterministic": {
+          "research": {
+            "buyer_problem": "Cần tìm hiểu điều gì khiến quản lý cửa hàng trà còn do dự khi chọn Bộ bao bì trà HG-54?",
+            "research_question": "Trong lần mua gần nhất, quản lý cửa hàng trà đã so sánh Bộ bao bì trà HG-54 với phương án nào?",
+            "evidence": "Giá tham khảo: 95.000 VND / 1 hộp, đã gồm thuế. Đơn tối thiểu: 8 hộp. Áp dụng từ 8 hộp. Số lượng đối chiếu: 8 hộp. Áp dụng tại Phan Thiết. Chưa gồm thiết kế nhãn riêng.\nBộ bao bì trà HG-54 giấy màu ngà. Áp dụng tại Phan Thiết.",
+            "hypothesis": "Giả thuyết cần thử: làm rõ điều kiện của Bộ bao bì trà HG-54 giúp quản lý cửa hàng trà chọn bước tiếp theo."
+          },
+          "strategy": {
+            "positioning": "Đề xuất định vị Bộ bao bì trà HG-54 qua quy cách có thể đối chiếu.",
+            "channel_choice": "web",
+            "rationale": "Thử trên web vì đây là kênh nằm trong phạm vi được duyệt.",
+            "execution": "Soạn hai phiên bản giới thiệu Bộ bao bì trà HG-54 trên web, giữ nguyên điều kiện và đo cùng một hành động."
+          },
+          "measurement": {
+            "test_hypothesis": "So sánh bản trình bày dữ kiện trước và sau lời mời hành động trên cùng nhóm khách.",
+            "measurable_action": "Tải danh mục",
+            "measurement_method": "Đo lượt hoàn tất sau khi gửi biểu mẫu hoặc tải tài liệu, loại sự kiện trùng theo mã."
+          }
+        },
+        "model_assisted": {
+          "research": {
+            "buyer_problem": "Quản lý cửa hàng trà cần so các quy cách bao bì",
+            "research_question": "Người mua có thể cần đối chiếu điều kiện trước khi so các quy cách bao bì?",
+            "evidence": "Giá tham khảo: 95.000 VND / 1 hộp, đã gồm thuế. Đơn tối thiểu: 8 hộp. Áp dụng từ 8 hộp. Số lượng đối chiếu: 8 hộp. Áp dụng tại Phan Thiết. Chưa gồm thiết kế nhãn riêng.\nBộ bao bì trà HG-54 giấy màu ngà. Áp dụng tại Phan Thiết.",
+            "hypothesis": "Giả thuyết cần thử: làm rõ điều kiện của Bộ bao bì trà HG-54 giúp quản lý cửa hàng trà chọn bước tiếp theo."
+          },
+          "strategy": {
+            "positioning": "Giúp quản lý cửa hàng trà so các quy cách bao bì",
+            "channel_choice": "web",
+            "rationale": "Người mua cần so các quy cách bao bì để thực hiện đúng bước tiếp theo trong phạm vi đã duyệt.",
+            "execution": "Soạn hai phiên bản giới thiệu Bộ bao bì trà HG-54 trên web, giữ nguyên điều kiện và đo cùng một hành động."
+          },
+          "measurement": {
+            "test_hypothesis": "Người mua có thể cần đối chiếu điều kiện trước khi so các quy cách bao bì.",
+            "measurable_action": "Tải danh mục",
+            "measurement_method": "tải catalogue quy cách bao bì từ web, so các quy cách bao bì từ catalogue, so các quy cách bao bì từ catalogue với yêu cầu từ web, so các quy cách bao bì từ catalogue với yêu cầu từ web, so các quy mã"
+          }
+        }
+      },
+      "baseline_digest": "7a7103fefcb5dc9a5ceedcce8fdfe0c74582849d421ba7dbdbdd668c0df50784",
+      "model_assisted_digest": "025fd503bcd917813af78b3c220d10adf1c46fb426c80fa97daa680755f05900",
+      "baseline_comparison": {
+        "before_fields": 11,
+        "after_fields": 11,
+        "changed": [
+          "measurement.measurement_method",
+          "measurement.test_hypothesis",
+          "research.buyer_problem",
+          "research.hypothesis",
+          "research.research_question",
+          "strategy.execution",
+          "strategy.positioning",
+          "strategy.rationale"
+        ],
+        "removed": [],
+        "empty": []
+      },
+      "model_assisted_comparison": {
+        "before_fields": 11,
+        "after_fields": 11,
+        "changed": [
+          "measurement.measurement_method",
+          "measurement.test_hypothesis",
+          "research.buyer_problem",
+          "research.hypothesis",
+          "research.research_question",
+          "strategy.execution",
+          "strategy.positioning",
+          "strategy.rationale"
+        ],
+        "removed": [],
+        "empty": []
+      },
+      "candidate": {
+        "groups": {
+          "research": {
+            "buyer_problem": "Khi cân nhắc Bộ bao bì trà HG-54, quản lý cửa hàng trà gặp vướng mắc nào khi cần lập danh sách quy cách trước khi hỏi giá nhà cung cấp?",
+            "research_question": "Hỏi về lần chọn mua gần nhất: khi nào anh/chị cần lập danh sách quy cách trước khi hỏi giá nhà cung cấp, đã dựa vào tài liệu nào và còn phải hỏi lại ai?",
+            "evidence": "Giá tham khảo: 95.000 VND / 1 hộp, đã gồm thuế. Đơn tối thiểu: 8 hộp. Áp dụng từ 8 hộp. Số lượng đối chiếu: 8 hộp. Áp dụng tại Phan Thiết. Chưa gồm thiết kế nhãn riêng.\nBộ bao bì trà HG-54 giấy màu ngà. Áp dụng tại Phan Thiết.",
+            "hypothesis": "Giả thuyết cần thử: mẫu ghi quy cách ngay cạnh liên kết danh mục giúp người đọc chọn bước tiếp theo."
+          },
+          "strategy": {
+            "positioning": "Đề xuất giới thiệu Bộ bao bì trà HG-54 cho quản lý cửa hàng trà theo nhu cầu lập danh sách quy cách trước khi hỏi giá nhà cung cấp. Đặt điều kiện áp dụng cạnh thông tin sản phẩm.",
+            "channel_choice": "web",
+            "rationale": "Trên web, thử mẫu ghi quy cách ngay cạnh liên kết danh mục trước khi dẫn tới hành động. Chuyển kết quả cho phụ trách danh mục đối soát.",
+            "execution": "Giữ nguyên sản phẩm và điều kiện cho hai nhóm. Bản A trình bày thông tin như hiện tại. Bản B thêm mẫu ghi quy cách ngay cạnh liên kết danh mục. Gắn mã biến thể vào sự kiện rồi kiểm tra khả năng truy về phiên."
+          },
+          "measurement": {
+            "test_hypothesis": "Kiểm tra xem bản B có nhiều lượt tải danh mục hoàn tất hơn trên mỗi phiên đủ điều kiện so với A hay không.",
+            "measurable_action": "Tải danh mục",
+            "measurement_method": "Trong 14 ngày, chia số lượt tải danh mục hoàn tất duy nhất cho số phiên đủ điều kiện của từng biến thể. Nhờ phụ trách danh mục khớp mã tải với phiên, tách yêu cầu báo giá và đơn mua về sau. Ghi riêng sự kiện thiếu nguồn trước khi diễn giải kết quả."
+          }
+        },
+        "field_types": {
+          "research": {
+            "buyer_problem": "research_question",
+            "research_question": "research_question",
+            "evidence": "source_declarations",
+            "hypothesis": "hypothesis"
+          },
+          "strategy": {
+            "positioning": "recommendation",
+            "channel_choice": "recommendation",
+            "rationale": "recommendation",
+            "execution": "experiment_design"
+          },
+          "measurement": {
+            "test_hypothesis": "hypothesis",
+            "measurable_action": "approved_action",
+            "measurement_method": "measurement_proposal"
+          }
+        },
+        "correction": null,
+        "protected_field": "research.evidence",
+        "protected_sha256": "b8a1b20b6d57abe0a1e1d086f91a0974b2450f85ea53567e62a54c6e1d0f07de",
+        "source_bindings": {
+          "material-scope": {
+            "wording": "Bộ bao bì trà HG-54 giấy màu ngà.",
+            "qualifiers": "Áp dụng tại Phan Thiết."
+          },
+          "approved-terms": {
+            "wording": "Giá 95.000 VND/hộp.",
+            "qualifiers": "Áp dụng tại Phan Thiết. Chưa gồm thiết kế nhãn riêng."
+          }
+        },
+        "action": {
+          "code": "catalogue_download",
+          "buyer_step": "Hãy dùng danh mục để ghi lại quy cách cần so sánh.",
+          "event": "lượt tải danh mục hoàn tất",
+          "receiving_team": "phụ trách danh mục",
+          "reconciliation": "khớp mã tải với phiên, tách yêu cầu báo giá và đơn mua về sau"
+        },
+        "scope": "staff-only synthetic candidate; all user-facing uses require current source authorization and QA",
+        "protected_term_checks": {
+          "matched": 12
+        },
+        "needs_commercial_reconciliation": false
+      }
+    },
+    {
+      "case": "v2-10",
+      "workflow": "WF-13/landing-seo-draft@6",
+      "source_sha256": "ca2614ff1ccce49e9f4f3a3d68b3005e864a3d7ce6db046eb9c12402654b8d5a",
+      "run": "16b35051-4a8f-46e5-9457-0a71c65581d6",
+      "projection_digest": "67cff6f7affbd9d60e339e692a3806e83f82963febccf1041ee14d05eae67428",
+      "historical_state": "awaiting_qa",
+      "historical_model_attempt_count": 3,
+      "historical_model_failure": null,
+      "original_groups": {
+        "deterministic": {
+          "copy": {
+            "headline": "Hộp thiệp nổi TN-304",
+            "value_proposition": "Đối chiếu quy cách và điều kiện áp dụng của Hộp thiệp nổi TN-304 trước khi lựa chọn.",
+            "benefit": "Hộp thiệp nổi TN-304 mặt thiệp dập nổi. Áp dụng tại Tuy Hòa.",
+            "commercial_terms": "Hộp thiệp nổi TN-304 mặt thiệp dập nổi. Áp dụng tại Tuy Hòa.\nGiá tham khảo: 128.000 VND / 1 hộp, đã gồm thuế. Đơn tối thiểu: 4 hộp. Áp dụng từ 4 hộp. Số lượng đối chiếu: 4 hộp. Áp dụng tại Tuy Hòa. Chưa gồm giao tới từng cửa hàng.",
+            "call_to_action": "Yêu cầu báo giá"
+          },
+          "seo": {
+            "page_title": "Hộp thiệp nổi TN-304 | Tuy Hòa",
+            "meta_description": "Xem thông tin về Hộp thiệp nổi TN-304 tại Tuy Hòa. Yêu cầu báo giá",
+            "search_intent": "Tìm hiểu điều kiện lựa chọn Hộp thiệp nổi TN-304 tại Tuy Hòa."
+          }
+        },
+        "model_assisted": {
+          "copy": {
+            "headline": "Hộp thiệp nổi TN-304 mặt thiệp dập nổi",
+            "value_proposition": "Hộp thiệp nổi TN-304 mặt thiệp dập nổi có giá VND 128000 / 1 box (tax included). Đa lý văn phòng phẩm tại Tuy Hòa.",
+            "benefit": "Hộp thiệp nổi TN-304 mặt thiệp dập nổi có giá VND 128000 / 1 box (tax included).",
+            "commercial_terms": "Hộp thiệp nổi TN-304 mặt thiệp dập nổi. Áp dụng tại Tuy Hòa.\nGiá tham khảo: 128.000 VND / 1 hộp, đã gồm thuế. Đơn tối thiểu: 4 hộp. Áp dụng từ 4 hộp. Số lượng đối chiếu: 4 hộp. Áp dụng tại Tuy Hòa. Chưa gồm giao tới từng cửa hàng.",
+            "call_to_action": "Yêu cầu báo giá"
+          },
+          "seo": {
+            "page_title": "Hộp thiệp nổi TN-304 mặt thiệp dập nổi",
+            "meta_description": "Hộp thiệp nổi TN-304 mặt thiệp dập nổi có giá VND 128000 / 1 box (tax included). Đa lý văn phòng phẩm tại Tuy Hòa.",
+            "search_intent": "RFQ"
+          }
+        }
+      },
+      "baseline_digest": "3fcc5c8d9b2f534244b83b7e0d6b5dd81a4ef6356f19d984dd1453e751ee0522",
+      "model_assisted_digest": "0393f0e24646fc5abe958c9a927b50b9f319ead164893af99812fb7496c53548",
+      "baseline_comparison": {
+        "before_fields": 8,
+        "after_fields": 8,
+        "changed": [
+          "copy.value_proposition",
+          "seo.meta_description",
+          "seo.page_title",
+          "seo.search_intent"
+        ],
+        "removed": [],
+        "empty": []
+      },
+      "model_assisted_comparison": {
+        "before_fields": 8,
+        "after_fields": 8,
+        "changed": [
+          "copy.benefit",
+          "copy.headline",
+          "copy.value_proposition",
+          "seo.meta_description",
+          "seo.page_title",
+          "seo.search_intent"
+        ],
+        "removed": [],
+        "empty": []
+      },
+      "candidate": {
+        "groups": {
+          "copy": {
+            "headline": "Hộp thiệp nổi TN-304",
+            "value_proposition": "Bạn cần so báo giá trên cùng số lượng và điều kiện cho Hộp thiệp nổi TN-304? Hãy gửi số hộp cần báo giá và địa bàn nhận hàng.",
+            "benefit": "Hộp thiệp nổi TN-304 mặt thiệp dập nổi. Áp dụng tại Tuy Hòa.",
+            "commercial_terms": "Hộp thiệp nổi TN-304 mặt thiệp dập nổi. Áp dụng tại Tuy Hòa.\nGiá tham khảo: 128.000 VND / 1 hộp, đã gồm thuế. Đơn tối thiểu: 4 hộp. Áp dụng từ 4 hộp. Số lượng đối chiếu: 4 hộp. Áp dụng tại Tuy Hòa. Chưa gồm giao tới từng cửa hàng.",
+            "call_to_action": "Yêu cầu báo giá"
+          },
+          "seo": {
+            "page_title": "Hộp thiệp nổi TN-304 tại Tuy Hòa | Yêu cầu báo giá",
+            "meta_description": "Hộp thiệp nổi TN-304 mặt thiệp dập nổi. Áp dụng tại Tuy Hòa. Hãy gửi số hộp cần báo giá và địa bàn nhận hàng.",
+            "search_intent": "Giả thuyết: người tìm Hộp thiệp nổi TN-304 tại Tuy Hòa muốn so báo giá trên cùng số lượng và điều kiện."
+          }
+        },
+        "field_types": {
+          "copy": {
+            "headline": "brief_identity",
+            "value_proposition": "buyer_guidance",
+            "benefit": "source_declaration",
+            "commercial_terms": "source_declarations",
+            "call_to_action": "approved_action"
+          },
+          "seo": {
+            "page_title": "brief_identity",
+            "meta_description": "source_and_buyer_guidance",
+            "search_intent": "hypothesis"
+          }
+        },
+        "correction": {
+          "field": "copy.benefit",
+          "attempts": 1,
+          "reason": "scoped_declaration_required",
+          "original": "Hộp thiệp nổi TN-304 mặt thiệp dập nổi có giá VND 128000 / 1 box (tax included).",
+          "replacement_source": "material-scope"
+        },
+        "protected_field": "copy.commercial_terms",
+        "protected_sha256": "296ecdfbf0286b0b54882c0710800fa448b3022dca89a71efdd01fa68e93f1a8",
+        "source_bindings": {
+          "material-scope": {
+            "wording": "Hộp thiệp nổi TN-304 mặt thiệp dập nổi.",
+            "qualifiers": "Áp dụng tại Tuy Hòa."
+          },
+          "approved-terms": {
+            "wording": "Giá 128.000 VND/hộp.",
+            "qualifiers": "Áp dụng tại Tuy Hòa. Chưa gồm giao tới từng cửa hàng."
+          }
+        },
+        "action": {
+          "code": "rfq",
+          "buyer_step": "Hãy gửi số hộp cần báo giá và địa bàn nhận hàng.",
+          "event": "yêu cầu báo giá đủ số lượng và địa bàn",
+          "receiving_team": "Sales",
+          "reconciliation": "đối chiếu mã RFQ với báo giá đã lập, ghi riêng đơn xác nhận sau báo giá"
+        },
+        "scope": "staff-only synthetic candidate; all user-facing uses require current source authorization and QA",
+        "protected_term_checks": {
+          "matched": 12
+        },
+        "needs_commercial_reconciliation": false
+      }
+    }
+  ],
+  "historical_model_pairs": 8,
+  "bounded_field_corrections": 5,
+  "new_model_invocations": 0,
+  "new_provider_fees": 0,
+  "human_acceptance": null,
+  "commercial_qa": "not_run",
+  "manual_baseline_minutes": null,
+  "clarification_minutes": null,
+  "editing_minutes": null,
+  "qa_minutes": null,
+  "cost_per_accepted_unit": null
+}

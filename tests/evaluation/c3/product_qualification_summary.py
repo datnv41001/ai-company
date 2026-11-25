@@ -375,7 +375,11 @@ def main():
     cli.add_argument("--source-root", type=Path, default=ROOT, help="Matching source checkout with the frozen case manifest and catalog")
     cli.add_argument("--out", type=Path, required=True)
     cli.add_argument("--require-complete", action="store_true")
+    cli.add_argument("--buyer-journey-out", type=Path,
+                     help="Also replay the pinned 45582688602 study as a separate staff-only composer regression")
     args = cli.parse_args()
+    if args.buyer_journey_out:
+        require(args.buyer_journey_out.resolve() != args.out.resolve(), "Keep candidate and original results separate")
     require(re.fullmatch(r"[0-9a-f]{40}", args.checkout), "Expected exact checkout SHA")
     catalog = pins(args.source_root)
     results = {mode: series(args.artifact / name, mode, args.checkout, *plan(args.source_root, mode), catalog) for mode, name in MODES.items()}
@@ -395,6 +399,9 @@ def main():
     }
     args.out.parent.mkdir(parents=True, exist_ok=True)
     args.out.write_text(json.dumps(report, ensure_ascii=False, indent=2) + "\n", encoding="utf8")
+    if args.buyer_journey_out:
+        from grounded_composer_study import save_study
+        save_study(args.artifact / MODES["study"], args.buyer_journey_out, args.source_root)
     if args.require_complete and not complete:
         raise SystemExit("Incomplete evidence; see report for missing cases and files")
 

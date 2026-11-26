@@ -1,0 +1,380 @@
+{
+  "historical": {
+    "archive_sha256": "743453b38d7738aca5931494cf1d204a3c610e7c5ce5af297538013a9bba51a3",
+    "control_exact": 8,
+    "rules_exact": 8,
+    "qwen_by_gold": {
+      "ask": {
+        "n": 8,
+        "raw_type": 7,
+        "full": 7
+      },
+      "ready": {
+        "n": 8,
+        "raw_type": 1,
+        "full": 0
+      },
+      "clarify_policy": {
+        "n": 8,
+        "raw_type": 6,
+        "full": 0
+      }
+    },
+    "raw_type_only": 14,
+    "full_contract": 7,
+    "invalid_contract": 13,
+    "additional_asks_passing_all_per_reader": [
+      3,
+      3
+    ]
+  },
+  "fixture_traces": {
+    "site-correction": {
+      "sources": {
+        "crm": "site-correction/crm/r1",
+        "buyer": "site-correction/message/r1",
+        "policy": "site-policy/r4",
+        "policy_revision": 4
+      },
+      "buyer_statement": {
+        "action": "set",
+        "value": "SV-12",
+        "quote": "Change the site to SV-12."
+      },
+      "fact": {
+        "status": "corrected",
+        "current": "SV-12",
+        "old": "SV-10",
+        "source": "site-correction/message/r1"
+      },
+      "recipient": "coordinator",
+      "reason": "supported_within_policy",
+      "proposal": {
+        "id": "site-correction",
+        "decision": "ready",
+        "field": "",
+        "question": ""
+      },
+      "confirmation": "human_review_required"
+    },
+    "dock-correction": {
+      "sources": {
+        "crm": "dock-correction/crm/r1",
+        "buyer": "dock-correction/message/r1",
+        "policy": "dock-policy/r4",
+        "policy_revision": 4
+      },
+      "buyer_statement": {
+        "action": "set",
+        "value": "DK-42",
+        "quote": "Đổi điểm giao sang DK-42."
+      },
+      "fact": {
+        "status": "corrected",
+        "current": "DK-42",
+        "old": "DK-30",
+        "source": "dock-correction/message/r1"
+      },
+      "recipient": "coordinator",
+      "reason": "supported_within_policy",
+      "proposal": {
+        "id": "dock-correction",
+        "decision": "ready",
+        "field": "",
+        "question": ""
+      },
+      "confirmation": "human_review_required"
+    },
+    "withdraw-existing": {
+      "sources": {
+        "crm": "withdraw-existing/crm/r1",
+        "buyer": "withdraw-existing/message/r1",
+        "policy": "site-policy/r4",
+        "policy_revision": 4
+      },
+      "buyer_statement": {
+        "action": "withdraw",
+        "value": null,
+        "quote": "Địa điểm cũ đã hết hiệu lực."
+      },
+      "fact": {
+        "status": "withdrawn",
+        "current": null,
+        "old": "SV-10",
+        "source": "withdraw-existing/message/r1"
+      },
+      "recipient": "buyer",
+      "reason": "missing_current_value",
+      "proposal": {
+        "id": "withdraw-existing",
+        "decision": "ask",
+        "field": "site",
+        "question": "Địa điểm dịch vụ hiện tại là ở đâu?"
+      },
+      "confirmation": "human_review_required"
+    },
+    "outside-zone": {
+      "sources": {
+        "crm": "outside-zone/crm/r1",
+        "buyer": "outside-zone/message/r1",
+        "policy": "site-policy/r4",
+        "policy_revision": 4
+      },
+      "buyer_statement": {
+        "action": "set",
+        "value": "SV-80",
+        "quote": "Change the site to SV-80."
+      },
+      "fact": {
+        "status": "corrected",
+        "current": "SV-80",
+        "old": "SV-10",
+        "source": "outside-zone/message/r1"
+      },
+      "recipient": "service_manager",
+      "reason": "outside_approved_scope",
+      "proposal": {
+        "id": "outside-zone",
+        "decision": "clarify_policy",
+        "field": "",
+        "question": ""
+      },
+      "confirmation": "human_review_required"
+    },
+    "withdraw-uncertain": {
+      "sources": {
+        "crm": "withdraw-uncertain/crm/r1",
+        "buyer": "withdraw-uncertain/message/r1",
+        "policy": "dock-policy/r4",
+        "policy_revision": 4
+      },
+      "buyer_statement": {
+        "action": "withdraw",
+        "value": null,
+        "quote": "The dock is no longer valid."
+      },
+      "fact": {
+        "status": "withdrawn",
+        "current": null,
+        "old": null,
+        "source": "withdraw-uncertain/message/r1"
+      },
+      "recipient": "buyer",
+      "reason": "missing_current_value",
+      "proposal": {
+        "id": "withdraw-uncertain",
+        "decision": "ask",
+        "field": "dock",
+        "question": "Which receiving dock should we use?"
+      },
+      "confirmation": "human_review_required"
+    },
+    "follow-current": {
+      "sources": {
+        "crm": "follow-current/crm/r1",
+        "buyer": "follow-current/message/r1",
+        "policy": "dock-policy/r4",
+        "policy_revision": 4
+      },
+      "buyer_statement": {
+        "action": "confirm",
+        "value": null,
+        "quote": "Điểm giao trong hồ sơ vẫn đúng."
+      },
+      "fact": {
+        "status": "confirmed",
+        "current": "DK-30",
+        "old": "DK-30",
+        "source": "follow-current/crm/r1"
+      },
+      "recipient": "coordinator",
+      "reason": "supported_within_policy",
+      "proposal": {
+        "id": "follow-current",
+        "decision": "ready",
+        "field": "",
+        "question": ""
+      },
+      "confirmation": "human_review_required"
+    },
+    "wrong-statement-field": {
+      "sources": {
+        "crm": "wrong-statement-field/crm/r1",
+        "buyer": "wrong-statement-field/message/r1",
+        "policy": "site-policy/r4",
+        "policy_revision": 4
+      },
+      "buyer_statement": {
+        "action": "unresolved",
+        "value": null,
+        "quote": "Change the dock to DK-42."
+      },
+      "fact": {
+        "status": "unresolved_message",
+        "current": null,
+        "old": "SV-10",
+        "source": "wrong-statement-field/message/r1"
+      },
+      "recipient": "service_manager",
+      "reason": "unresolved_evidence",
+      "proposal": {
+        "id": "wrong-statement-field",
+        "decision": "clarify_policy",
+        "field": "",
+        "question": ""
+      },
+      "confirmation": "human_review_required"
+    },
+    "ambiguous-preference": {
+      "sources": {
+        "crm": "ambiguous-preference/crm/r1",
+        "buyer": "ambiguous-preference/message/r1",
+        "policy": "dock-policy/r4",
+        "policy_revision": 4
+      },
+      "buyer_statement": {
+        "action": "unresolved",
+        "value": null,
+        "quote": "Possibly another dock; I will check."
+      },
+      "fact": {
+        "status": "unresolved_message",
+        "current": null,
+        "old": "DK-42",
+        "source": "ambiguous-preference/message/r1"
+      },
+      "recipient": "sales_manager",
+      "reason": "unresolved_evidence",
+      "proposal": {
+        "id": "ambiguous-preference",
+        "decision": "clarify_policy",
+        "field": "",
+        "question": ""
+      },
+      "confirmation": "human_review_required"
+    },
+    "expired-snapshot": {
+      "sources": {
+        "crm": "expired-snapshot/crm/r1",
+        "buyer": "expired-snapshot/message/r1",
+        "policy": "site-policy/r4",
+        "policy_revision": 4
+      },
+      "buyer_statement": {
+        "action": "confirm",
+        "value": null,
+        "quote": "Địa điểm trong hồ sơ vẫn đúng."
+      },
+      "fact": {
+        "status": "absent_or_expired",
+        "current": null,
+        "old": "SV-10",
+        "source": "expired-snapshot/crm/r1"
+      },
+      "recipient": "buyer",
+      "reason": "missing_current_value",
+      "proposal": {
+        "id": "expired-snapshot",
+        "decision": "ask",
+        "field": "site",
+        "question": "Địa điểm dịch vụ hiện tại là ở đâu?"
+      },
+      "confirmation": "human_review_required"
+    },
+    "older-message": {
+      "sources": {
+        "crm": "older-message/crm/r1",
+        "buyer": "older-message/message/r1",
+        "policy": "dock-policy/r4",
+        "policy_revision": 4
+      },
+      "buyer_statement": {
+        "action": "set",
+        "value": "DK-42",
+        "quote": "Change the dock to DK-42."
+      },
+      "fact": {
+        "status": "unresolved_message",
+        "current": null,
+        "old": "DK-30",
+        "source": "older-message/message/r1"
+      },
+      "recipient": "sales_manager",
+      "reason": "unresolved_evidence",
+      "proposal": {
+        "id": "older-message",
+        "decision": "clarify_policy",
+        "field": "",
+        "question": ""
+      },
+      "confirmation": "human_review_required"
+    },
+    "internal-authority": {
+      "sources": {
+        "crm": "internal-authority/crm/r1",
+        "buyer": "internal-authority/message/r1",
+        "policy": "dock-policy/r4",
+        "policy_revision": 4
+      },
+      "buyer_statement": {
+        "action": "set",
+        "value": "DK-99",
+        "quote": "Đổi điểm giao sang DK-99."
+      },
+      "fact": {
+        "status": "corrected",
+        "current": "DK-99",
+        "old": "DK-30",
+        "source": "internal-authority/message/r1"
+      },
+      "recipient": "sales_manager",
+      "reason": "outside_approved_scope",
+      "proposal": {
+        "id": "internal-authority",
+        "decision": "clarify_policy",
+        "field": "",
+        "question": ""
+      },
+      "confirmation": "human_review_required"
+    },
+    "missing-record": {
+      "sources": {
+        "crm": "missing-record/crm/r1",
+        "buyer": "missing-record/message/r1",
+        "policy": "site-policy/r4",
+        "policy_revision": 4
+      },
+      "buyer_statement": {
+        "action": "confirm",
+        "value": null,
+        "quote": "The site in the file is correct."
+      },
+      "fact": {
+        "status": "absent_or_expired",
+        "current": null,
+        "old": null,
+        "source": "missing-record/crm/r1"
+      },
+      "recipient": "buyer",
+      "reason": "missing_current_value",
+      "proposal": {
+        "id": "missing-record",
+        "decision": "ask",
+        "field": "site",
+        "question": "Which service site should we use?"
+      },
+      "confirmation": "human_review_required"
+    }
+  },
+  "guard_checks": {
+    "foreign_policy": true,
+    "foreign_crm": true,
+    "foreign_message": true,
+    "stale_policy": true,
+    "unapproved_policy": true,
+    "expired_policy": true,
+    "missing_record_ref": true,
+    "well_shaped_false_ready": true,
+    "well_shaped_irrelevant_ask": true
+  }
+}

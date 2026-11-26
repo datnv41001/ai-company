@@ -1,0 +1,24 @@
+{
+  "llama_commit": "1f8baae28d096624bd47d33d2d179ec479d47720",
+  "library_sha256": "965a15d74cdbb1a38cda5b717a6eca9015527c21af7a141d4e32624820f49a21",
+  "vocabulary_file_sha256": "6a1a2eb6d15622bf3c96857206351ba97e1af16c30d7a74ee38970e434e9407e",
+  "grammar_sha256_lf": "c33e2b2a47ab3bb5911eb2474867737da24b7ab8d478c4440388523ee5c75f6e",
+  "fixture_sha256_lf": "ef2469baeea8d7ca78c9a755347d21708475691bc3f9c7ff1522ad66ff968a8d",
+  "model_inference_calls": 0,
+  "result": {
+    "one-grounded-ask": true,
+    "vietnamese-ask": true,
+    "ready": true,
+    "internal-policy": true,
+    "irrelevant-but-well-formed": true,
+    "unsupported-ready": true,
+    "ready-with-field": false,
+    "policy-with-buyer-question": false,
+    "missing-ask-field": false,
+    "blank-ask": false,
+    "unknown-action": false,
+    "unexpected-authority": false,
+    "missing-end": false,
+    "duplicate-key": false
+  }
+}

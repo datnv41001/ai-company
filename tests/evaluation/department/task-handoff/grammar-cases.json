@@ -1,0 +1,72 @@
+[
+  {
+    "name": "one-grounded-ask",
+    "text": "{\"id\":\"demo\",\"decision\":\"ask\",\"field\":\"site\",\"question\":\"Which service site did you mean?\"}",
+    "accepted": true
+  },
+  {
+    "name": "vietnamese-ask",
+    "text": "{\"id\":\"demo\",\"decision\":\"ask\",\"field\":\"site\",\"question\":\"Địa điểm mới là ở đâu?\"}",
+    "accepted": true
+  },
+  {
+    "name": "ready",
+    "text": "{\"id\":\"demo\",\"decision\":\"ready\",\"field\":\"\",\"question\":\"\"}",
+    "accepted": true
+  },
+  {
+    "name": "internal-policy",
+    "text": "{\"id\":\"demo\",\"decision\":\"clarify_policy\",\"field\":\"\",\"question\":\"\"}",
+    "accepted": true
+  },
+  {
+    "name": "irrelevant-but-well-formed",
+    "text": "{\"id\":\"demo\",\"decision\":\"ask\",\"field\":\"shoe\",\"question\":\"What is your shoe size?\"}",
+    "accepted": true
+  },
+  {
+    "name": "unsupported-ready",
+    "text": "{\"id\":\"demo\",\"decision\":\"ready\",\"field\":\"\",\"question\":\"\"}",
+    "accepted": true
+  },
+  {
+    "name": "ready-with-field",
+    "text": "{\"id\":\"demo\",\"decision\":\"ready\",\"field\":\"site\",\"question\":\"\"}",
+    "accepted": false
+  },
+  {
+    "name": "policy-with-buyer-question",
+    "text": "{\"id\":\"demo\",\"decision\":\"clarify_policy\",\"field\":\"site\",\"question\":\"Which site?\"}",
+    "accepted": false
+  },
+  {
+    "name": "missing-ask-field",
+    "text": "{\"id\":\"demo\",\"decision\":\"ask\",\"field\":\"\",\"question\":\"Which site?\"}",
+    "accepted": false
+  },
+  {
+    "name": "blank-ask",
+    "text": "{\"id\":\"demo\",\"decision\":\"ask\",\"field\":\"site\",\"question\":\" \"}",
+    "accepted": false
+  },
+  {
+    "name": "unknown-action",
+    "text": "{\"id\":\"demo\",\"decision\":\"quote\",\"field\":\"\",\"question\":\"\"}",
+    "accepted": false
+  },
+  {
+    "name": "unexpected-authority",
+    "text": "{\"id\":\"demo\",\"decision\":\"ready\",\"field\":\"\",\"question\":\"\",\"approve\":true}",
+    "accepted": false
+  },
+  {
+    "name": "missing-end",
+    "text": "{\"id\":\"demo\",\"decision\":\"ready\",\"field\":\"\",\"question\":\"\"",
+    "accepted": false
+  },
+  {
+    "name": "duplicate-key",
+    "text": "{\"id\":\"demo\",\"decision\":\"ready\",\"field\":\"\",\"question\":\"\",\"question\":\"\"}",
+    "accepted": false
+  }
+]

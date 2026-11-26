@@ -1,0 +1,198 @@
+{
+  "synthetic": true,
+  "case": "index-tray",
+  "plan_id": "010c3117-fbaf-4c69-a961-126c9eb42ef7",
+  "plan_digest": "1f5d9831da4c5475703e66eec0472639124d51327b2993734d24615434005836",
+  "contract": {
+    "version": "business-intake/1",
+    "revision": 1,
+    "action": "rfq",
+    "locale": "vi-VN",
+    "plan_id": "010c3117-fbaf-4c69-a961-126c9eb42ef7",
+    "subject": "1d6b71bb-50fa-4554-b713-1002510f4a43",
+    "unit": "box",
+    "fields": [
+      {
+        "id": "box_count",
+        "required": true,
+        "label": "số hộp",
+        "maps_to": "quantity",
+        "type": "integer",
+        "unit": "box",
+        "unit_label": "hộp",
+        "minimum": 1,
+        "maximum": 100
+      },
+      {
+        "id": "destination",
+        "required": true,
+        "label": "địa bàn",
+        "maps_to": "location",
+        "type": "enum",
+        "options": [
+          {
+            "value": "north",
+            "label": "Cơ sở thử A"
+          },
+          {
+            "value": "south",
+            "label": "Cơ sở thử B"
+          }
+        ]
+      },
+      {
+        "id": "need_date",
+        "required": true,
+        "label": "thời điểm cần hàng",
+        "maps_to": "required_date",
+        "type": "enum",
+        "options": [
+          {
+            "value": "2",
+            "label": "Sau hai ngày"
+          },
+          {
+            "value": "7",
+            "label": "Sau một tuần"
+          }
+        ]
+      }
+    ],
+    "source": {
+      "id": "166c16d9-b059-4125-ba5e-335286e87ced",
+      "digest": "07bcfe6209392d08660fcf78197001077376d55173555166ff43d8137252466f",
+      "brief_id": "783cfaf8-78ec-49c7-a872-0878e6f47e25",
+      "workflow": "WF-13/landing-seo-draft@6"
+    },
+    "selection": "brief",
+    "measurement_digest": null,
+    "consent": {
+      "purpose": "quote_request",
+      "required": true,
+      "label": "Tôi đồng ý gửi yêu cầu thử cho bộ phận phụ trách."
+    },
+    "qualification": {
+      "accept_inquiries": true,
+      "minimum_order_quantities": [
+        "5"
+      ]
+    },
+    "digest": "c156cadaab41d490a758a99ae390c7bdc1afe21a6265b392ee63a189bb2c7a8c"
+  },
+  "copy": {
+    "digest": "c156cadaab41d490a758a99ae390c7bdc1afe21a6265b392ee63a189bb2c7a8c",
+    "fields": [
+      "box_count",
+      "destination",
+      "need_date"
+    ]
+  },
+  "package_id": "10e626bf-5ad5-4ad9-bd4d-885dcb59dc26",
+  "package_digest": "c48895a7f7791af23378d7aef59b7edacd68b05691d0d1428670a8b68913541d",
+  "file": {
+    "mime": "text/html",
+    "bytes": 4693,
+    "sha256": "7f97268d9745daf658d0d8d0d80537ab429e11e3b1dcb258e7d93c03ebb4465b"
+  },
+  "group_receipts": {
+    "copy": "23506290-43b2-4582-b0fe-69c9aa3c8ab4",
+    "seo": "0ae16695-3aa1-4c32-b56d-da6c3209b1fc"
+  },
+  "file_approval": {
+    "receipt": "5cd0f43b-d188-41f3-9868-cc1f031c0b66",
+    "digest": "c48895a7f7791af23378d7aef59b7edacd68b05691d0d1428670a8b68913541d"
+  },
+  "commercial_terms": "Vách ngăn có thể tháo rời Áp dụng cho mẫu tiêu chuẩn.\nGiá tham khảo: 380.000 VND / 1 hộp, đã gồm thuế. Đơn tối thiểu: 5 hộp. Áp dụng từ 5 hộp. Số lượng đối chiếu: 5 hộp. Xác nhận số lượng trước khi đặt.",
+  "visit_id": "eb9454a3-2226-4d6c-ba58-dbf0e449a4a7",
+  "submitted_id": "147f8490-5385-4722-800e-9e776a364adc",
+  "submit_kind": "rfq",
+  "crm_entity": "leads",
+  "state": "received",
+  "crm_fields": {
+    "contract_digest": "c156cadaab41d490a758a99ae390c7bdc1afe21a6265b392ee63a189bb2c7a8c",
+    "revision": 1,
+    "answers": {
+      "box_count": 3,
+      "destination": "north",
+      "need_date": "7"
+    },
+    "fields": [
+      {
+        "id": "box_count",
+        "required": true,
+        "label": "số hộp",
+        "maps_to": "quantity",
+        "type": "integer",
+        "unit": "box",
+        "unit_label": "hộp",
+        "minimum": 1,
+        "maximum": 100
+      },
+      {
+        "id": "destination",
+        "required": true,
+        "label": "địa bàn",
+        "maps_to": "location",
+        "type": "enum",
+        "options": [
+          {
+            "value": "north",
+            "label": "Cơ sở thử A"
+          },
+          {
+            "value": "south",
+            "label": "Cơ sở thử B"
+          }
+        ]
+      },
+      {
+        "id": "need_date",
+        "required": true,
+        "label": "thời điểm cần hàng",
+        "maps_to": "required_date",
+        "type": "enum",
+        "options": [
+          {
+            "value": "2",
+            "label": "Sau hai ngày"
+          },
+          {
+            "value": "7",
+            "label": "Sau một tuần"
+          }
+        ]
+      }
+    ],
+    "mapped": {
+      "quantity": 3,
+      "location": "north",
+      "required_date": "7"
+    },
+    "consent": {
+      "purpose": "quote_request",
+      "granted": true
+    }
+  },
+  "desk_readback_digest": "c156cadaab41d490a758a99ae390c7bdc1afe21a6265b392ee63a189bb2c7a8c",
+  "landing_funnel": {
+    "contract_digest": "c156cadaab41d490a758a99ae390c7bdc1afe21a6265b392ee63a189bb2c7a8c",
+    "window": "approved_plan_lifetime",
+    "action": "rfq",
+    "landing_visits": 1,
+    "valid_submissions": 1,
+    "manual_requests": 0,
+    "qualified_quotes": 0,
+    "orders": 0
+  },
+  "manual_funnel": {
+    "contract_digest": "c156cadaab41d490a758a99ae390c7bdc1afe21a6265b392ee63a189bb2c7a8c",
+    "window": "approved_plan_lifetime",
+    "action": "rfq",
+    "landing_visits": 1,
+    "valid_submissions": 1,
+    "manual_requests": 1,
+    "qualified_quotes": 0,
+    "orders": 0
+  },
+  "primary_measurement": null
+}

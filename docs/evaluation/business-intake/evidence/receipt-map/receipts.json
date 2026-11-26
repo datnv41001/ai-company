@@ -1,0 +1,221 @@
+{
+  "synthetic": true,
+  "case": "receipt-map",
+  "plan_id": "78620401-ba04-435b-9555-443908b52f09",
+  "plan_digest": "83e4c1ae778b72c002068dd726c6cffd331ec5146ed43a3301751f6956d93823",
+  "contract": {
+    "version": "business-intake/1",
+    "revision": 1,
+    "action": "appointment",
+    "locale": "vi-VN",
+    "plan_id": "78620401-ba04-435b-9555-443908b52f09",
+    "subject": "334ffe9c-07b4-4628-84d1-3ecd7f91b1dd",
+    "unit": "visit",
+    "fields": [
+      {
+        "id": "site",
+        "required": true,
+        "label": "địa điểm",
+        "maps_to": "location",
+        "type": "enum",
+        "options": [
+          {
+            "value": "north",
+            "label": "Cơ sở thử A"
+          },
+          {
+            "value": "south",
+            "label": "Cơ sở thử B"
+          }
+        ]
+      },
+      {
+        "id": "receiving_shift",
+        "required": true,
+        "label": "ca nhận hàng cần quan sát",
+        "maps_to": "receiving_shift",
+        "type": "enum",
+        "options": [
+          {
+            "value": "morning",
+            "label": "Ca sáng"
+          },
+          {
+            "value": "evening",
+            "label": "Ca chiều"
+          },
+          {
+            "value": "night",
+            "label": "Ca đêm"
+          }
+        ]
+      }
+    ],
+    "source": {
+      "id": "24a29b97-c045-4f57-b490-0f5a3af076a8",
+      "digest": "e627b07ebf2ce7a35e87865c20f2f4802c7414cd37259a5adebc604ba6468c3a",
+      "brief_id": "92a48e56-9d01-406a-ac2c-b11c3b8404a7",
+      "workflow": "WF-13/landing-seo-draft@6"
+    },
+    "selection": "brief",
+    "measurement_digest": "660b38ac47f5eea4fb6d58b019901b02bd49a57b8de4ca841101937339ce4f66",
+    "consent": {
+      "purpose": "appointment_request",
+      "required": true,
+      "label": "Tôi đồng ý gửi yêu cầu thử cho bộ phận phụ trách."
+    },
+    "qualification": {
+      "accept_inquiries": true,
+      "minimum_order_quantities": [
+        "1"
+      ]
+    },
+    "digest": "e5a0f18c3ff14fbaa0fde4a2e5d30464b70cf5d823dd2417d5ff9204835fb8ed"
+  },
+  "copy": {
+    "digest": "e5a0f18c3ff14fbaa0fde4a2e5d30464b70cf5d823dd2417d5ff9204835fb8ed",
+    "fields": [
+      "site",
+      "receiving_shift"
+    ]
+  },
+  "package_id": "c9e964b0-54fd-4d55-85e7-9110650c263d",
+  "package_digest": "10f3ab91375299ef57034c5b165504a4a77e3a0b547eaada3bd084016aace59d",
+  "file": {
+    "mime": "text/html",
+    "bytes": 4702,
+    "sha256": "16b7f263b4a1aaf66eb93da41c6a58c524014071760f278fc3f8cd6eb8a1126c"
+  },
+  "group_receipts": {
+    "copy": "22a2bd1d-cb00-461f-9618-caa55b053e2c",
+    "seo": "0badbe00-3401-4465-9d98-803b64d06e2d"
+  },
+  "file_approval": {
+    "receipt": "8cdfb00d-af10-482d-81bd-810936c44faf",
+    "digest": "10f3ab91375299ef57034c5b165504a4a77e3a0b547eaada3bd084016aace59d"
+  },
+  "commercial_terms": "Giá tham khảo: 760.000 VND / 1 lượt, đã gồm thuế. Đơn tối thiểu: 1 lượt. Áp dụng từ 1 lượt. Số lượng đối chiếu: 1 lượt. Xác nhận số lượng trước khi đặt.\nBàn giao sơ đồ luồng nhận hàng Trong phạm vi buổi khảo sát.",
+  "visit_id": "8a00a78b-fef4-4b41-884e-a479fcc9c7ef",
+  "submitted_id": "f4a8754d-c9a1-46ca-83dd-ae3fee448abb",
+  "submit_kind": "appointment",
+  "crm_entity": "appointments",
+  "state": "requested",
+  "crm_fields": {
+    "contract_digest": "e5a0f18c3ff14fbaa0fde4a2e5d30464b70cf5d823dd2417d5ff9204835fb8ed",
+    "revision": 1,
+    "answers": {
+      "site": "north",
+      "receiving_shift": "evening"
+    },
+    "fields": [
+      {
+        "id": "site",
+        "required": true,
+        "label": "địa điểm",
+        "maps_to": "location",
+        "type": "enum",
+        "options": [
+          {
+            "value": "north",
+            "label": "Cơ sở thử A"
+          },
+          {
+            "value": "south",
+            "label": "Cơ sở thử B"
+          }
+        ]
+      },
+      {
+        "id": "receiving_shift",
+        "required": true,
+        "label": "ca nhận hàng cần quan sát",
+        "maps_to": "receiving_shift",
+        "type": "enum",
+        "options": [
+          {
+            "value": "morning",
+            "label": "Ca sáng"
+          },
+          {
+            "value": "evening",
+            "label": "Ca chiều"
+          },
+          {
+            "value": "night",
+            "label": "Ca đêm"
+          }
+        ]
+      }
+    ],
+    "mapped": {
+      "location": "north",
+      "receiving_shift": "evening"
+    },
+    "consent": {
+      "purpose": "appointment_request",
+      "granted": true
+    }
+  },
+  "desk_readback_digest": "e5a0f18c3ff14fbaa0fde4a2e5d30464b70cf5d823dd2417d5ff9204835fb8ed",
+  "landing_funnel": {
+    "contract_digest": "e5a0f18c3ff14fbaa0fde4a2e5d30464b70cf5d823dd2417d5ff9204835fb8ed",
+    "window": "approved_plan_lifetime",
+    "action": "appointment",
+    "landing_visits": 1,
+    "valid_submissions": 1,
+    "manual_requests": 0,
+    "confirmed": 0
+  },
+  "manual_funnel": null,
+  "primary_measurement": {
+    "contract": {
+      "version": "appointment-measurement/1",
+      "business_outcome": "appointment.confirmed_per_requested",
+      "window_days": 21,
+      "owner_role": "service_operations",
+      "numerator": {
+        "event": "confirmed",
+        "eligibility": "staff_confirmation_with_scheduled_time"
+      },
+      "denominator": {
+        "event": "requested",
+        "eligibility": "valid_service_request_with_consent"
+      },
+      "window": "rolling_utc_(start,end]_denominator_cohort",
+      "unit": "ratio",
+      "aggregation": "distinct_appointment_id",
+      "cancellations": "retain_prior_eligible_events_report_separately",
+      "refunds": "not_a_monetary_outcome",
+      "missing_attribution": "include_and_report_separately",
+      "reconciliation": "join_authorized_lifecycle_receipts_by_plan_and_appointment_id",
+      "id": "721a38ba-58eb-4815-9920-1845454806ff",
+      "revision": 1,
+      "digest": "660b38ac47f5eea4fb6d58b019901b02bd49a57b8de4ca841101937339ce4f66"
+    },
+    "definition": "KPI chính trong 21 ngày: số lịch do nhân sự xác nhận trên số yêu cầu đặt lịch hợp lệ. Vận hành dịch vụ đối soát mỗi mã hẹn một lần. Giữ các sự kiện đủ điều kiện trước khi hủy. Tách hủy, vắng mặt và thiếu nguồn; hoàn tiền không đổi tỷ lệ.",
+    "plan_id": "78620401-ba04-435b-9555-443908b52f09",
+    "window_start_exclusive": "2026-11-05T05:12:26.549286+00:00",
+    "as_of_inclusive": "2026-11-26T05:12:26.549286+00:00",
+    "numerator": 0,
+    "denominator": 1,
+    "ratio": 0.0,
+    "cancelled": 0,
+    "no_show": 0,
+    "unattributed": 0,
+    "attributed": 1,
+    "attribution": {
+      "landing_asset": 1,
+      "media_action": 0,
+      "unknown_media_action": 1,
+      "neither": 0
+    },
+    "source": "sandbox_appointment_receipts",
+    "secondary_metrics": [
+      {
+        "metric_id": "web.sessions",
+        "unit": "session_count",
+        "value": 1
+      }
+    ]
+  }
+}

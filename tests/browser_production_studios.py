@@ -2,7 +2,10 @@
 
 import json
 import os
+from base64 import b64decode
+from hashlib import sha256
 from pathlib import Path
+import subprocess
 
 from playwright.sync_api import expect, sync_playwright
 import pytest
@@ -14,12 +17,77 @@ from test_channel_editions import workforce  # noqa: F401
 from test_production_studios import rehearsal
 
 
+def approved_ad_preview(page, plan, landing, out, width):
+    page.evaluate("location.hash='/campaigns'")
+    engine = page.locator("#campaign-engine")
+    engine.locator("#engine-select").select_option(plan["campaign_id"])
+    pack_path = "/engine/plans/" + plan["id"] + "/content-pack"
+    pack_button = engine.get_by_text("Bộ nội dung và kế hoạch quảng cáo", exact=True)
+    with page.expect_response(lambda response: response.url.endswith(pack_path) and response.status == 200) as initial:
+        pack_button.press("Enter")
+    pack = initial.value.json()
+    destination = pack["advertising"]["destination"]
+    meta = landing["files"]["landing.html"]
+    assert destination["status"] == "approved" and destination["package_id"] == landing["id"]
+    assert destination["package_digest"] == landing["digest"] and destination["file_digest"] == meta["sha256"]
+    assert destination["studio_revision"] == landing["studio_revision"] and destination["deliverable_id"] == landing["did"]
+    engine.get_by_text("Advertising Studio · Mẫu quảng cáo tìm kiếm", exact=True).press("Enter")
+    preview = engine.get_by_role("button", name="Xem trang đích đã duyệt", exact=True)
+    expect(preview).to_be_visible()
+    expect(engine.get_by_text("Trang đích sandbox đã duyệt", exact=True)).to_be_visible()
+    preview.evaluate("e=>e.scrollIntoView({block:'center'})")
+    capture_themes(page, out / f"ads-ready-{width}.png")
+    writes = []
+
+    def watch(request):
+        if request.method not in ("GET", "HEAD", "OPTIONS") and any(part in request.url for part in ("/sandbox/commands", "/submissions", "/visits")):
+            writes.append(request.url)
+
+    page.on("request", watch)
+    try:
+        with (
+            page.expect_response(lambda response: response.url.endswith(pack_path)) as live,
+            page.expect_response(lambda response: response.url.endswith(destination["download_url"])) as file,
+        ):
+            preview.press("Enter")
+        assert live.value.json()["advertising"]["destination"] == destination
+        assert file.value.status == 200
+        envelope = file.value.json()
+        raw = b64decode(envelope["base64"], validate=True)
+        assert sha256(raw).hexdigest() == envelope["sha256"] == meta["sha256"]
+        assert len(raw) == envelope["bytes"] == meta["bytes"]
+        host = engine.locator('iframe[title="Bản xem trang đích sandbox"]')
+        frame = host.content_frame
+        headline = landing["master"]["sections"]["headline"]
+        expect(frame.locator("h1")).to_have_text(headline)
+        assert host.get_attribute("srcdoc").encode("utf-8") == raw
+        assert host.get_attribute("sandbox") == "" and host.get_attribute("referrerpolicy") == "no-referrer"
+        assert frame.locator("title").text_content() == landing["master"]["seo"]["page_title"]
+        assert frame.locator('meta[name="description"]').get_attribute("content") == landing["master"]["seo"]["meta_description"]
+        expect(frame.get_by_role("link", name=landing["master"]["sections"]["call_to_action"])).to_have_attribute("href", "#request")
+        host.evaluate("e=>e.scrollIntoView({block:'center'})")
+        capture_themes(page, out / f"ads-landing-{width}.png")
+        assert not writes
+    finally:
+        page.remove_listener("request", watch)
+    return {
+        "width": width,
+        "plan_digest": pack["plan_digest"],
+        "destination": destination,
+        "file_bytes": len(raw),
+        "iframe_html_sha256": sha256(raw).hexdigest(),
+        "headline": headline,
+        "sandbox_event_writes": len(writes),
+    }
+
+
 @pytest.mark.parametrize("api", ["sqlite"], indirect=True)
 @pytest.mark.parametrize("case", CASES, ids=lambda c: c["id"])
 def test_production_browser(api, workforce, monkeypatch, case):  # noqa: F811
     out = Path(os.getenv("AMC_PRODUCTION_SCREENS", "knowledge-browser-evidence/marketing-studio/production")) / case["buyer_action"]
     out.mkdir(parents=True, exist_ok=True)
     observations = []
+    advertising = []
 
     def capture(owner, doc, plan, exports):
         with local_api() as origin, sync_playwright() as pw:
@@ -99,6 +167,7 @@ def test_production_browser(api, workforce, monkeypatch, case):  # noqa: F811
                                 "landing_viewport": page_width,
                             }
                         )
+                        advertising.append(approved_ad_preview(page, plan, exports["landing"], out, width))
                     finally:
                         page.close()
             finally:
@@ -107,6 +176,21 @@ def test_production_browser(api, workforce, monkeypatch, case):  # noqa: F811
             json.dumps(
                 {"synthetic": True, "plan_digest": plan["digest"], "package_digests": {k: i["digest"] for k, i in exports.items()}, "sessions": observations},
                 indent=2,
+            )
+            + "\n",
+            encoding="utf8",
+        )
+        (out / "advertising.json").write_text(
+            json.dumps(
+                {
+                    "source_sha": subprocess.check_output(["git", "rev-parse", "HEAD"], text=True).strip(),
+                    "test_sha256": sha256(Path(__file__).read_bytes()).hexdigest(),
+                    "synthetic": True,
+                    "browser": observations[0]["browser"],
+                    "sessions": advertising,
+                },
+                indent=2,
+                ensure_ascii=False,
             )
             + "\n",
             encoding="utf8",

@@ -11,11 +11,11 @@ DETAIL_UNITS = {
     "seats_v1": {"participant", "subscription_month", "subscription_year"},
 }
 FROM = {
-    "assign": {"qualified"}, "accept": {"assigned"}, "reject": {"received", "qualified", "assigned", "accepted", "quoted"},
+    "assign": {"qualified"}, "reassign": {"assigned"}, "accept": {"assigned"}, "reject": {"received", "qualified", "assigned", "accepted", "quoted"},
     "quote": {"accepted"}, "order": {"quoted"}, "confirm": {"ordered"}, "refund": {"confirmed"},
     "cancel": {"assigned", "accepted", "quoted", "ordered", "confirmed"}, "correct": {"confirmed"},
 }
-STATES = {"assign": "assigned", "accept": "accepted", "reject": "rejected", "quote": "quoted",
+STATES = {"assign": "assigned", "reassign":"assigned", "accept": "accepted", "reject": "rejected", "quote": "quoted",
           "order": "ordered", "confirm": "confirmed", "refund": "confirmed", "cancel": "cancelled", "correct": "confirmed"}
 
 
@@ -37,7 +37,7 @@ def missing_fields(row):
     return fields
 
 
-def observation(cmd, state, plan, store):
+def observation(cmd, state, plan, store, *, recipient=None, coordinator=None):
     if isinstance(cmd, (RFQ, Sales, SessionEvent)) and cmd.occurred_at > aware(store.now()):
         conflict("A received event cannot occur in the future")
     if isinstance(cmd, SessionEvent):
@@ -52,6 +52,8 @@ def observation(cmd, state, plan, store):
         return "sessions", cmd.session_id, {"id": cmd.session_id, "visitor": cmd.actor_key, "action_id": cmd.action_id,
                                            "occurred_at": stamp(cmd.occurred_at), "plan_id": plan["id"]}
     if isinstance(cmd, RFQ):
+        if plan["buyer_action"]!="rfq" and "rfq" not in plan.get("secondary_conversions",[]):
+            conflict("Quote intake requires a primary or explicitly approved secondary RFQ conversion")
         if cmd.product_id != plan["product_id"] or cmd.unit != plan["selling_unit"]:
             conflict("Product and selling unit must match the approved plan")
         if cmd.rfq_id in state["leads"]:
@@ -76,16 +78,21 @@ def observation(cmd, state, plan, store):
         return "leads", cmd.rfq_id, row
     if row["state"] not in FROM[cmd.step] or cmd.occurred_at < parse_time(row["last_event_at"]):
         conflict("Invalid or out-of-order Sales transition")
-    if not store.approver and row["assignee_id"] != store.actor:
+    can_route=store.approver if coordinator is None else coordinator
+    if not can_route and row["assignee_id"] != store.actor:
         conflict("Sales decisions require the assigned staff member or a campaign approver")
-    if cmd.step == "assign":
-        assigned = store.db.get(Membership, {"tenant_id": store.scope["tenant_id"], "user_id": cmd.assignee_id}) if cmd.assignee_id else None
-        if not store.approver or not assigned or assigned.role not in ("admin", "owner"):
+    if cmd.step in ("assign","reassign"):
+        if recipient:
+            eligible=cmd.assignee_id and recipient(cmd.assignee_id,"sales_recipient")
+        else:
+            assigned = store.db.get(Membership, {"tenant_id": store.scope["tenant_id"], "user_id": cmd.assignee_id}) if cmd.assignee_id else None
+            eligible=assigned and assigned.role in ("admin","owner")
+        if not can_route or not eligible or cmd.step=="reassign" and row["assignee_id"]==cmd.assignee_id:
             conflict("Assign a current staff member of this organization")
-        row["assignee_id"] = assigned.user_id
+        row["assignee_id"] = cmd.assignee_id
     elif cmd.assignee_id is not None:
         conflict("Assignee is only set by the assignment command")
-    if cmd.step in {"reject", "cancel", "correct", "refund", "accept"} and not cmd.reason:
+    if cmd.step in {"reject", "cancel", "correct", "refund", "accept","reassign"} and not cmd.reason:
         conflict("Record the Sales feedback or correction reason")
     if cmd.reason:
         row["feedback"] = [*row["feedback"], {"step": cmd.step, "text": cmd.reason, "actor": store.actor}]
@@ -134,3 +141,14 @@ def reconcile(state):
             "simulated_spend_vnd": sum(a["cost_vnd"] for a in actions.values() if a["state"] == "executed"),
             "confirmed_revenue_vnd": revenue, "attributed_revenue_vnd": attributed,
             "unattributed_revenue_vnd": revenue - attributed, "attributed_by_asset_vnd": breakdown}
+
+
+def secondary_rfq_funnel(plan,state):
+    if not plan or plan["buyer_action"]!="appointment" or "rfq" not in plan.get("secondary_conversions",[]):
+        return None
+    scoped={bucket:{key:row for key,row in state[bucket].items() if row["plan_id"]==plan["id"]}
+            for bucket in ("leads","sessions","actions")}
+    report=reconcile(scoped)
+    fields=("rfqs","qualified_leads","sales_accepted","quotations","confirmed_orders","cancelled_orders",
+            "confirmed_revenue_vnd","attributed_revenue_vnd","unattributed_revenue_vnd","refunds_vnd")
+    return {"plan_id":plan["id"],"window":"plan_lifetime",**{field:report[field] for field in fields}}

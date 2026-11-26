@@ -1,0 +1,12 @@
+{
+  "synthetic": true,
+  "plan": "0aa87cdbc43e733d1b3944630469259aa2cbc78dd1e6de01e70825489ce3da47",
+  "service_receipt": "e63bea64-f009-46c7-950d-c8073f647558",
+  "service_revision": 6,
+  "service_role": "service_assignee",
+  "review_receipt": "e256adec-2fb8-4628-852d-5ea6f93ed4ea",
+  "reviewed_lead_revision": 3,
+  "distinct_assignee": true,
+  "confirmed_revenue_vnd": 0,
+  "business_acceptance": "unmeasured"
+}

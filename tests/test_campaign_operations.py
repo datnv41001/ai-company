@@ -62,7 +62,7 @@ def test_scoped_rfq_pipeline_idempotency_and_commission_identity(api, agency):
     def plan(rev, outcome):
         draft = accepted(api.post(planner, headers=owner["headers"], json={
             "key": uuid4().hex, "expected_revision": rev, "target_outcome": outcome, "budget_vnd": 30000,
-            "duration_days": 30, "manifest_ids": [s["id"] for s in snaps]}))
+            "duration_days": 30, "secondary_rfq":True, "manifest_ids": [s["id"] for s in snaps]}))
         accepted(api.post(planner + "/" + draft["id"] + "/approve", headers=owner["headers"],
                           json={"key": uuid4().hex, "expected_digest": draft["digest"]}))
         return draft

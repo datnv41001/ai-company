@@ -1,6 +1,13 @@
 # Bắt đầu ở đây khi tiếp quản AI Marketing Company
 
 
+## Bàn giao theo vai trò Sales, dịch vụ và Marketing
+
+Khi đổi giờ hẹn, KPI theo nhóm lịch xác nhận giữ ngày xác nhận đầu tiên. Một kế hoạch dịch vụ có thể tiếp nhận RFQ sau khi người phụ trách bật tùy chọn và duyệt phiên bản. Bảng **Báo giá phụ của kế hoạch** tính số hồ sơ và doanh thu sandbox trên đúng phiên bản đó. [Ca hồi quy và ảnh giao diện](docs/evaluation/campaign-role-desk/README.md)
+
+Tiếp quản từ bản journal core v26 tại `3dc7e4e`. Chạy lại publisher để có quyền truy cập theo campaign và kiểm tra RFQ ở tầng database. Trong **Chiến dịch → Bàn giao nghiệp vụ**, trao vai trò cho thành viên rồi kiểm tra bằng tài khoản viewer của người nhận. Giao diện theo dõi revision, phản hồi, thay đổi người phụ trách và kết quả thực hiện. [Hợp đồng, kiểm thử, ảnh thật và rollback](docs/evaluation/campaign-role-desk/README.md)
+
+
 ## Đối soát KPI lịch hẹn từ brief đến CRM
 
 KPI lịch hẹn có hai cách đo theo nghiệp vụ. Luồng Rõ ghi nhận 2 lịch được nhân sự xác nhận trên 3 yêu cầu trong 21 ngày. Mực Chuẩn ghi nhận 1 buổi hoàn tất trên 3 lịch được xác nhận trong 14 ngày. Các lần lưu và duyệt giữ định nghĩa từ bản tri thức đã phê duyệt đến tài liệu gửi khách. Số phiên web được ghi riêng. Khi chưa có mẫu số, tỷ lệ chưa xác định. Chưa đo hiệu quả với người thực hành Marketing hoặc Sales thật. Commercial GA vẫn NO-GO. [Quy trình tiếp quản và rollback](docs/evaluation/kpi-integrity/HANDOFF.md) · [Bằng chứng API, bản giao và Chromium](docs/evaluation/kpi-integrity/RESULTS.md) · [Gói nghiệm thu nghề nghiệp](docs/evaluation/kpi-integrity/PILOT.md)

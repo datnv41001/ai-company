@@ -44,6 +44,8 @@ def test_campaign_commands_and_scope_switch(api, agency):  # noqa: F811
                 expect(checks).to_have_count(2)
                 for check in checks.all():
                     check.check()
+                if case["buyer_action"]=="appointment":
+                    form.get_by_label("Tiếp nhận báo giá trong chiến dịch lịch hẹn").select_option("yes")
                 form.get_by_label("Kết quả mong muốn").fill(case["kpi"])
                 form.get_by_role("button").click()
                 panel.get_by_text("Xem bản chờ duyệt v1", exact=True).click()
@@ -57,7 +59,21 @@ def test_campaign_commands_and_scope_switch(api, agency):  # noqa: F811
                 intake.get_by_label("Mục đích liên hệ do khách chọn").select_option("quote_request")
                 intake.get_by_role("button").click()
                 expect(panel.locator("summary").filter(has_text="rfq-" + case["id"])).to_contain_text("Đủ điều kiện")
-                expect(panel.locator(".metric").filter(has_text="Yêu cầu báo giá sandbox").locator("strong")).to_have_text("1")
+                if case["buyer_action"]=="appointment":
+                    expect(panel.locator(".metric").filter(has_text="Yêu cầu đặt lịch của kế hoạch").locator("strong")).to_have_text("0")
+                    secondary=panel.locator("[data-secondary-rfq]")
+                    expect(secondary.get_by_role("heading",name="Báo giá phụ của kế hoạch")).to_be_visible()
+                    expect(secondary.locator(".engine-row").filter(has_text="Yêu cầu báo giá")).to_contain_text("1")
+                    if directory:=os.getenv("AMC_SECONDARY_RFQ_SCREENSHOTS"):
+                        folder=Path(directory)
+                        folder.mkdir(parents=True,exist_ok=True)
+                        for label,width,height in (("desktop",1280,850),("tablet",820,1000),("mobile",390,844)):
+                            page.set_viewport_size({"width":width,"height":height})
+                            secondary.evaluate("el => el.scrollIntoView({block:'start'})")
+                            capture_themes(page,folder/("secondary-rfq-"+label+".png"))
+                else:
+                    expect(panel.locator("[data-secondary-rfq]")).to_have_count(0)
+                    expect(panel.locator(".metric").filter(has_text="Yêu cầu báo giá sandbox").locator("strong")).to_have_text("1")
             expect(panel).not_to_contain_text("rfq-" + CASES[0]["id"])
             campaign.select_option(ids[0])
             expect(panel.locator("summary").filter(has_text="rfq-" + CASES[0]["id"])).to_be_attached()

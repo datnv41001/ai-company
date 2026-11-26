@@ -143,7 +143,13 @@ def evaluate(contract, plan_id, state, as_of, locale="vi-VN"):
         if row["plan_id"] != plan_id:
             continue
         # The journal already verified staff authority, assignment and consent at write time.
-        events = {h["event"]: parse_time(h["at"]) for h in row["history"] if parse_time(h["at"]) <= end}
+        events = {}
+        for history in row["history"]:
+            occurred = parse_time(history["at"])
+            # Rescheduling retains the case's confirmed state. It does not establish
+            # a second confirmation, even when the new slot falls inside the window.
+            if occurred <= end and history.get("step") not in {"reschedule","reassign"}:
+                events.setdefault(history["event"], occurred)
         anchor = events.get(contract["denominator"]["event"])
         if anchor is None or not start < anchor <= end:
             continue

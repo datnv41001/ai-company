@@ -1,0 +1,239 @@
+{
+  "source": "synthetic Studio API rehearsal",
+  "historical_snapshot_digest": "5d4f193fd0e93db6fb254352ef46a62634af10e6f947e9201c672de82dcdd6db",
+  "before": {
+    "document_qa": {
+      "expected_qa_revision": 2,
+      "expected_content_digest": "5d4f193fd0e93db6fb254352ef46a62634af10e6f947e9201c672de82dcdd6db"
+    },
+    "package": {
+      "id": "cb5f038b-3943-49d3-b731-d83dd5d52414",
+      "created_by": "f4e6372c-eab3-4064-87f6-478e1199b675",
+      "did": "f9864411-1897-4c60-8bcb-9fed01e7b89a",
+      "version": 1,
+      "kind": "landing",
+      "studio_revision": 2,
+      "manifest": {
+        "id": "ec1a7841-b46a-4a18-ae35-6497e6231ffe",
+        "digest": "a4371dc04b6ff27317021195d310a28b219faab1665da91922af421e3ff89a1c"
+      },
+      "plan_id": "71dc8c9d-5772-43e7-9778-279da4ec9e17",
+      "plan_digest": "da1e65ce77545e7c27434ce69fc8a5c37831759e6fa02992fbc2a8d325cb1ae2",
+      "groups": {
+        "copy": "e4631fef9c915ee2b24f6b963a271637fdc2557fbe9aaeda30b9030515a3b342",
+        "seo": "80fd10be75c94e05536d036d87155b8aec220918bd385d0a243ce39747e11c9e"
+      },
+      "group_receipts": {
+        "copy": "984a0a3e-4841-4a8f-af9a-303cc16f2961",
+        "seo": "ea59a25c-bf25-447b-a766-8820385966f9"
+      },
+      "inputs": "d5ba13f0c34c2f158deddea660f5888bfb101d87791f84d77bd0d55ee4d045f6",
+      "master": {
+        "contract": "amc.sandbox-landing/1",
+        "kind": "appointment",
+        "seo": {
+          "page_title": "Dịch vụ kiểm tra bơm Lam | HN",
+          "meta_description": "Xem thông tin về Dịch vụ kiểm tra bơm Lam tại HN. Đặt lịch",
+          "search_intent": "Tìm hiểu điều kiện lựa chọn Dịch vụ kiểm tra bơm Lam tại HN."
+        },
+        "sections": {
+          "headline": "Dịch vụ kiểm tra bơm Lam",
+          "value_proposition": "Đối chiếu quy cách và điều kiện áp dụng của Dịch vụ kiểm tra bơm Lam trước khi lựa chọn.",
+          "benefit": "Phiếu kiểm tra ghi tình trạng máy. Áp dụng cho máy tại xưởng.",
+          "commercial_terms": "Phiếu kiểm tra ghi tình trạng máy. Áp dụng cho máy tại xưởng.\nGiá tham khảo: 270.000 VND / 1 máy, đã gồm thuế. Đơn tối thiểu: 1 máy. Áp dụng từ 1 máy. Số lượng đối chiếu: 1 máy. Xác nhận số lượng trước khi đặt.",
+          "call_to_action": "Đặt lịch"
+        },
+        "product_id": "ac219496-0c0a-49ae-8e58-f41b636f8f3e",
+        "unit": "machine",
+        "scope": "synthetic_local",
+        "public_tracking": false
+      },
+      "files": {
+        "landing.html": {
+          "mime": "text/html",
+          "bytes": 4237,
+          "sha256": "597652d1737db9515d14fd7e6a365ea84ddfeb32df7ff4cc4f15d65288b9038a"
+        }
+      },
+      "digest": "f5153bdb5e728baadb902b56353e030df296468390b8ec0fb5826ee04c92446f",
+      "measurement": {
+        "render_ms": 0.13,
+        "bytes": 4237,
+        "external_calls": 0,
+        "full_cost_vnd": null
+      }
+    },
+    "file_qa": {
+      "receipt": "3e87d773-c8bb-49e8-b4da-91906c6e9878",
+      "digest": "f5153bdb5e728baadb902b56353e030df296468390b8ec0fb5826ee04c92446f"
+    },
+    "reviewer": "78669ed2-f4b4-49e6-aaaa-cb5900c82add",
+    "resolved": [],
+    "form": {
+      "quantity": 1,
+      "place": "north",
+      "days": 7
+    },
+    "visit_receipt": "ad2f7fda-cc2a-4edf-930a-bd1afbfbdf8a",
+    "appointment_receipt": "9226a82a-c54f-424b-87ac-91b0905ed303"
+  },
+  "after": {
+    "document_qa": {
+      "expected_qa_revision": 3,
+      "expected_content_digest": "1d00665923825f2fb1bba087ab73b8b2e9a89f676288361283fd5451aa6c0b97"
+    },
+    "package": {
+      "id": "0da6cf03-e71b-4f85-b39b-9151c634e9cc",
+      "created_by": "f4e6372c-eab3-4064-87f6-478e1199b675",
+      "did": "f9864411-1897-4c60-8bcb-9fed01e7b89a",
+      "version": 2,
+      "kind": "landing",
+      "studio_revision": 3,
+      "manifest": {
+        "id": "ec1a7841-b46a-4a18-ae35-6497e6231ffe",
+        "digest": "a4371dc04b6ff27317021195d310a28b219faab1665da91922af421e3ff89a1c"
+      },
+      "plan_id": "71dc8c9d-5772-43e7-9778-279da4ec9e17",
+      "plan_digest": "da1e65ce77545e7c27434ce69fc8a5c37831759e6fa02992fbc2a8d325cb1ae2",
+      "groups": {
+        "copy": "d4075f0e636b8c317bd36ccca4b0788e4cdd000341b5d774d446991f6318b85e",
+        "seo": "95637e1b3ff40a43a84d1edb252cf018aacbc0b1e6ca840b13fc85ca4bc7c1e4"
+      },
+      "group_receipts": {
+        "copy": "ae083c98-4736-4a1b-b4d9-dfaa641de323",
+        "seo": "83952eb4-1779-44b8-8220-331fbbd1aab8"
+      },
+      "inputs": "36fbe600dbf3c32f73ff19f9e16d86dc2afa7f93287775ccd91efe11e01545a5",
+      "master": {
+        "contract": "amc.sandbox-landing/1",
+        "kind": "appointment",
+        "seo": {
+          "page_title": "Dịch vụ kiểm tra bơm Lam | HN",
+          "meta_description": "Xem thông tin về Dịch vụ kiểm tra bơm Lam tại HN. Đặt lịch",
+          "search_intent": "Tìm hiểu điều kiện lựa chọn Dịch vụ kiểm tra bơm Lam tại HN."
+        },
+        "sections": {
+          "headline": "Dịch vụ kiểm tra bơm Lam",
+          "value_proposition": "Đối chiếu quy cách và điều kiện áp dụng của Dịch vụ kiểm tra bơm Lam trước khi lựa chọn.",
+          "benefit": "Phiếu kiểm tra ghi tình trạng máy. Áp dụng cho máy tại xưởng.",
+          "commercial_terms": "Áp dụng cho máy tại xưởng.\nGiá tham khảo: 270.000 VND / 1 máy, đã gồm thuế. Đơn tối thiểu: 1 máy. Áp dụng từ 1 máy. Số lượng đối chiếu: 1 máy. Xác nhận số lượng trước khi đặt.",
+          "call_to_action": "Đặt lịch"
+        },
+        "product_id": "ac219496-0c0a-49ae-8e58-f41b636f8f3e",
+        "unit": "machine",
+        "scope": "synthetic_local",
+        "public_tracking": false
+      },
+      "files": {
+        "landing.html": {
+          "mime": "text/html",
+          "bytes": 4194,
+          "sha256": "119efffe705609ca582e4e85a1ef6d3baf051d593f892a953f7e57a5e14ecadf"
+        }
+      },
+      "digest": "ffeec5e9b5f49472afaf0f5849ae8e1b38ea2f83d05953b1db64203c41142513",
+      "measurement": {
+        "render_ms": 0.1,
+        "bytes": 4194,
+        "external_calls": 0,
+        "full_cost_vnd": null
+      }
+    },
+    "file_qa": {
+      "receipt": "1323a3b9-f45b-40f4-ba84-80f094ac610b",
+      "digest": "ffeec5e9b5f49472afaf0f5849ae8e1b38ea2f83d05953b1db64203c41142513"
+    },
+    "reviewer": "78669ed2-f4b4-49e6-aaaa-cb5900c82add",
+    "resolved": [
+      {
+        "id": "3e2ab6ec8a3f23d39605004b8f3f6d0ae26170a73445a528dc005ba683310d62",
+        "field": "client_preview",
+        "start": 259,
+        "end": 285,
+        "text": "Áp dụng cho máy tại xưởng.",
+        "claim_type": "unclassified",
+        "outcome": "reviewed",
+        "reason": "qualified_review",
+        "handles": [
+          "F1"
+        ],
+        "diagnostic": "unsupported_assertion",
+        "resolution_id": "a3f83b92-9d94-43b6-b1ab-6c2d83159a3c",
+        "sources": [
+          {
+            "handle": "F1",
+            "claim_revision": "4d53e6f6-c6cd-4718-baa7-628c70e961ef",
+            "source_revision": "8377f52b-5b45-44c5-9f27-35cdb1235351",
+            "source_digest": "f701b99d9b508be47fa55d33e5327986e906aaa16f45e658f6b91fe8d1db64d4",
+            "document": "PRIVATE_SYNTHETIC_DOCUMENT",
+            "locator": "private locator",
+            "statement": "Phiếu kiểm tra ghi tình trạng máy.",
+            "qualifiers": [
+              "Áp dụng cho máy tại xưởng."
+            ],
+            "category": "description",
+            "price": null,
+            "applicability": null,
+            "quantity": null,
+            "placement": {
+              "product": "ac219496-0c0a-49ae-8e58-f41b636f8f3e",
+              "variant": null,
+              "market": "388d4137-66d0-4de5-8475-551e736d2e5a",
+              "locale": "vi-VN",
+              "channel": "web",
+              "region": "HN"
+            }
+          }
+        ]
+      },
+      {
+        "id": "ef1b49fa7d8bfaa1477363cc7ae2a9a126adffc3485c136689c21f08f9779845",
+        "field": "studio.copy.commercial_terms",
+        "start": 0,
+        "end": 26,
+        "text": "Áp dụng cho máy tại xưởng.",
+        "claim_type": "unclassified",
+        "outcome": "reviewed",
+        "reason": "qualified_review",
+        "handles": [
+          "F1"
+        ],
+        "diagnostic": "unsupported_assertion",
+        "resolution_id": "e5cc9824-6e82-47fa-b1a8-890a99859b8d",
+        "sources": [
+          {
+            "handle": "F1",
+            "claim_revision": "4d53e6f6-c6cd-4718-baa7-628c70e961ef",
+            "source_revision": "8377f52b-5b45-44c5-9f27-35cdb1235351",
+            "source_digest": "f701b99d9b508be47fa55d33e5327986e906aaa16f45e658f6b91fe8d1db64d4",
+            "document": "PRIVATE_SYNTHETIC_DOCUMENT",
+            "locator": "private locator",
+            "statement": "Phiếu kiểm tra ghi tình trạng máy.",
+            "qualifiers": [
+              "Áp dụng cho máy tại xưởng."
+            ],
+            "category": "description",
+            "price": null,
+            "applicability": null,
+            "quantity": null,
+            "placement": {
+              "product": "ac219496-0c0a-49ae-8e58-f41b636f8f3e",
+              "variant": null,
+              "market": "388d4137-66d0-4de5-8475-551e736d2e5a",
+              "locale": "vi-VN",
+              "channel": "web",
+              "region": "HN"
+            }
+          }
+        ]
+      }
+    ],
+    "form": {
+      "quantity": 1,
+      "place": "north",
+      "days": 7
+    },
+    "visit_receipt": "6d64e5e1-cf27-4586-8e59-4ba7f688c100",
+    "appointment_receipt": "25dd5ab4-b7e0-456a-bad8-74cf0bf1a99e"
+  }
+}

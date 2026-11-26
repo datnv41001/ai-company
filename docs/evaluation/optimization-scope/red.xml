@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites name="pytest tests"><testsuite name="pytest" errors="0" failures="3" skipped="1" tests="4" time="23.206" timestamp="2026-11-26T11:55:18.888799+07:00" hostname="local-synthetic"><testcase classname="tests.test_optimization_scope" name="test_previous_plan_exception_cannot_steer_new_rfq_plan_or_invalidate_its_proposal" time="0.016"><failure message="AssertionError: assert 'appointment_exceptions' == 'no_rfqs'&#10;  &#10;  - no_rfqs&#10;  + appointment_exceptions">def test_previous_plan_exception_cannot_steer_new_rfq_plan_or_invalidate_its_proposal():
+        state = {k: {} for k in ops.BUCKETS}
+        state["appointments"]["old"] = appointment("visits", [("requested", "request", -2), ("cancelled", "cancel", -1)])
+        rfq = plan("quotes", "rfq")
+        assert ops.reconcile(state)["appointments"]["cancelled"] == 1
+        proposed = decide(state, rfq)
+&gt;       assert proposed["basis"] == "no_rfqs"
+E       AssertionError: assert 'appointment_exceptions' == 'no_rfqs'
+E
+E         - no_rfqs
+E         + appointment_exceptions
+
+tests\test_optimization_scope.py:44: AssertionError</failure></testcase><testcase classname="tests.test_optimization_scope" name="test_new_service_plan_uses_signed_denominator_cohort_even_with_secondary_rfq_or_old_no_show" time="0.002"><failure message="AssertionError: assert 'appointment_exceptions' == 'no_eligible_appointments'&#10;  &#10;  - no_eligible_appointments&#10;  + appointment_exceptions">def test_new_service_plan_uses_signed_denominator_cohort_even_with_secondary_rfq_or_old_no_show():
+        service = plan("service", "appointment", measured=True)
+        state = {k: {} for k in ops.BUCKETS}
+        # First confirmation is outside the 14-day window. Rescheduling inside does not enter the cohort.
+        state["appointments"]["expired"] = appointment("service", [("requested","request",-20),("confirmed","confirm",-16),
+            ("confirmed","reschedule",-3),("no_show","no_show",-2)])
+        state["leads"]["secondary"] = {"plan_id":"service","confirmed":False,"ordered":False,"quoted":False,
+            "sales_accepted":False,"missing":[],"session_id":None,"occurred_at":stamp(CUTOFF),"refunded_vnd":0,"state":"qualified"}
+        assert ops.reconcile(state)["rfqs"] == 1
+        empty = decide(state, service)
+&gt;       assert empty["basis"] == "no_eligible_appointments"
+E       AssertionError: assert 'appointment_exceptions' == 'no_eligible_appointments'
+E
+E         - no_eligible_appointments
+E         + appointment_exceptions
+
+tests\test_optimization_scope.py:63: AssertionError</failure></testcase><testcase classname="tests.test_optimization_scope" name="test_replan_from_service_to_rfq_keeps_distinct_kpis_and_historical_reports[sqlite]" time="19.900"><failure message="AssertionError: assert 'appointment_exceptions' == 'no_rfqs'&#10;  &#10;  - no_rfqs&#10;  + appointment_exceptions">api = &lt;starlette.testclient.TestClient object at 0x000001F6BA7FC620&gt;
+agency = ({'id': '8622f115-91dc-40df-9d71-7516e7b64f82', 'tenant': '089af42c-ac41-4965-8caa-d89b4a22b6a0', 'email': 'Agency-fc4...-442d-b84f-fb5d3509b255', '6852932d-2386-4002-a940-16e1082f89da', '7badd9f3-03f2-4ef6-bbf8-0f625e59e5b8', ...}, ...})))
+
+    def test_replan_from_service_to_rfq_keeps_distinct_kpis_and_historical_reports(api, agency):
+        from uuid import uuid4
+        from app import c3_assets
+        from agency_fixtures import create
+        from c3_fixtures import capture
+        from c3_task_fixtures import INTENT
+        from campaign_planner_fixtures import CASES, prepare_inputs
+        from knowledge_fixtures import accepted, revision
+        from test_workforce import DATA
+
+        owner, base, ((customer, scope), _) = agency
+        cid = next(iter(scope["campaigns"]))
+        brand = next(row["brand_id"] for row in accepted(api.get(base+"/campaigns",headers=owner["headers"])) if row["id"] == cid)
+        root = base+"/campaigns/"+cid
+        case = CASES[1]
+        [first], setup = prepare_inputs(api, owner, customer, next(iter(scope["clients"])), brand, cid, case, workflows=(c3_assets.LANDING,))
+
+        def post(path, **data):
+            return accepted(api.post(root+path,headers=owner["headers"],json=data))
+
+        def approve(manifest, previous):
+            draft = post("/engine/plans",key=uuid4().hex,expected_revision=previous,manifest_ids=[manifest["id"]],duration_days=14,budget_vnd=50000)
+            post("/engine/plans/"+draft["id"]+"/approve",key=uuid4().hex,expected_digest=draft["digest"])
+            return draft
+
+        old = approve(first, 0)
+        post("/sandbox/commands",request_id=uuid4().hex,plan_id=old["id"],kind="appointment",contract="service-appointment/1",
+             appointment_id="old-visit", product_id=old["product_id"], unit="machine", quantity="1",
+             location="Synthetic site",service_scope="Kiểm tra bơm",requested_for=stamp(CUTOFF),
+             contact_purpose="appointment_request",occurred_at=stamp(CUTOFF-timedelta(days=2)))
+        post("/sandbox/commands",request_id=uuid4().hex,plan_id=old["id"],kind="appointment_decision",
+             appointment_id="old-visit",step="cancel",expected_revision=1,occurred_at=stamp(CUTOFF-timedelta(days=1)),
+             feedback="Nhà xưởng đổi kế hoạch.")
+        # The new brief and measurement selection change while the approved product/brand stay the same.
+        title="Yêu cầu báo giá bảo trì máy"
+        bid=create(api,base+"/workforce/briefs",owner,{"campaign_id":cid,"recipient_id":customer["id"],"title":title})["id"]
+        intent=INTENT | {"product":case["product"],"audience":case["audience"],"buyer_action":"rfq","purpose":title,
+                        "deliverable_type":"landing_page","editorial_style":"plain","requirements":["Gửi yêu cầu báo giá."],
+                        "acceptance_criteria":["Chuyển yêu cầu hợp lệ tới Sales."]}
+        accepted(api.put(base+"/workforce/briefs/"+bid+"/submission",headers=customer["headers"],json=DATA | {"task_intent":intent}))
+        path=setup["ui"].rsplit("/business-workspace",1)[0]+"/catalog/items/"+setup["params"]["kpi"]
+        prior=accepted(api.get(path,headers=owner["headers"]))["data"]
+        new_kpi=revision(api,owner,setup["path"],"rfq-followup","kpi",prior | {"name":"Yêu cầu báo giá hợp lệ"})
+        snap=capture(api,owner,setup | {"params":setup["params"] | {"key":uuid4().hex, "kpi":new_kpi["id"],
+                     "target":{"campaign_id":cid,"brief_id":bid}}})
+        current=approve(snap,1)
+        assert old["buyer_action"]=="appointment" and current["buyer_action"]=="rfq"
+        assert old["measurement_plan"]["kpi"] != current["measurement_plan"]["kpi"]
+        result=post("/sandbox/commands",request_id=uuid4().hex,plan_id=current["id"],kind="propose_optimization",proposal_id="new-rfq")
+&gt;       assert result["value"]["basis"] == "no_rfqs"
+E       AssertionError: assert 'appointment_exceptions' == 'no_rfqs'
+E
+E         - no_rfqs
+E         + appointment_exceptions
+
+tests\test_optimization_scope.py:131: AssertionError</failure></testcase><testcase classname="tests.test_optimization_scope" name="test_replan_from_service_to_rfq_keeps_distinct_kpis_and_historical_reports[postgres]" time="0.002"><skipped type="pytest.skip" message="Set AMC_TEST_PG=1 to run PostgreSQL acceptance tests">tests\test_optimization_scope.py:82: Set AMC_TEST_PG=1 to run PostgreSQL acceptance tests</skipped></testcase></testsuite></testsuites>

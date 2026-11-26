@@ -1,0 +1,1 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites name="pytest tests"><testsuite name="pytest" errors="0" failures="0" skipped="0" tests="1" time="37.702" timestamp="2026-11-26T12:01:25.562421+07:00" hostname="local-synthetic"><testcase classname="tests.browser_campaign_engine" name="test_campaign_commands_and_scope_switch[sqlite]" time="36.158" /></testsuite></testsuites>

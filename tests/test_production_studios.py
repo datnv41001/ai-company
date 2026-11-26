@@ -97,6 +97,10 @@ def qualify(api, base, doc, owner, buyer, other, plan, action, observe=None):
                 "download_url": result + "/files/landing.html",
             }
             assert destination(owner, plan["campaign_id"], plan | {"digest": "f" * 64}) is None
+            pack_url = doc.split("/deliverables/")[0] + "/campaigns/" + plan["campaign_id"] + "/engine/plans/" + plan["id"] + "/content-pack"
+            advertised = accepted(api.get(pack_url, headers=owner["headers"]))["advertising"]["destination"]
+            assert advertised == {"kind":"sandbox_landing","status":"approved", **target}
+            assert api.get(pack_url, headers=other["headers"]).status_code in (403,404)
         files = {}
         for name, meta in item["files"].items():
             path = result + "/files/" + name

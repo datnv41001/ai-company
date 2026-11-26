@@ -184,6 +184,7 @@ def planner(tenant_id: str, campaign_id: str, user: User = Depends(current_user)
 @router.get("/plans/{plan_id}/content-pack")
 def content_pack(tenant_id: str, campaign_id: str, plan_id: str, user: User = Depends(current_user), db: Session = Depends(get_db)):
     from .campaign_content_pack import compose
+    from .production_studios import approved_landing_destination
 
     store = campaign_store(db, user, tenant_id, campaign_id, write=False)
     if not store.approver:
@@ -193,7 +194,11 @@ def content_pack(tenant_id: str, campaign_id: str, plan_id: str, user: User = De
         conflict("Refresh the approved campaign revision")
     ref = plan["manifests"].get("landing") or plan["manifests"]["strategy"]
     _, _, projection = selection(store, campaign_id, ref["id"], stage="operate")
-    return compose(plan, projection)
+    pack = compose(plan, projection)
+    destination = approved_landing_destination(store, user, plan)
+    if destination:
+        pack["advertising"]["destination"] = {"kind": "sandbox_landing", "status": "approved", **destination}
+    return pack
 
 
 @router.post("/plans", status_code=201)

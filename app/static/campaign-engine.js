@@ -304,7 +304,30 @@ function createCampaignEngine(api) {
           line(ad,'Kỳ đối soát',measure.window_days+' ngày · UTC');
         }
         for(const issue of pack.advertising.format_issues)add(ad,'p','Cần biên tập '+issue.field+' '+(issue.variant||'')+(issue.limit?' · '+issue.length+'/'+issue.limit+' ký tự':' · kiểm số biến thể'));
-        add(ad,'p','Đích đến cần chọn trong Landing Studio · số tiền bản nháp đã chi '+money(pack.advertising.external_spend_vnd));
+        const destination=pack.advertising.destination;
+        if(destination.status==='approved'){
+          line(ad,'Trang đích sandbox đã duyệt','Bản Studio '+destination.studio_revision+' · '+destination.file_digest.slice(0,12));
+          const preview=add(ad,'button','Xem trang đích đã duyệt');preview.type='button';
+          preview.onclick=async()=>{
+            preview.disabled=true;
+            try{
+              const live=(await api(target)).advertising.destination;
+              if(live.status!=='approved'||live.package_digest!==destination.package_digest)throw new Error('Trang đích đã đổi. Mở lại kế hoạch để đối chiếu.');
+              const artifact=await api(live.download_url);
+              if(artifact.sha256!==live.file_digest)throw new Error('Dấu vân tay của tệp đã đổi.');
+              const bytes=Uint8Array.from(atob(artifact.base64),c=>c.charCodeAt(0));
+              const digest=Array.from(new Uint8Array(await crypto.subtle.digest('SHA-256',bytes)),b=>b.toString(16).padStart(2,'0')).join('');
+              if(digest!==live.file_digest)throw new Error('Nội dung tải về không khớp biên nhận.');
+              if(epoch!==generation||!panel.isConnected)return;
+              const frame=add(ad,'iframe');
+              frame.title='Bản xem trang đích sandbox';frame.setAttribute('sandbox','');frame.referrerPolicy='no-referrer';
+              frame.style.cssText='display:block;width:100%;height:26rem;border:0';
+              frame.srcdoc=new TextDecoder().decode(bytes);
+              preview.remove();
+            }catch(error){if(epoch===generation)status.textContent=error.message;preview.disabled=false;}
+          };
+        }else add(ad,'p','Đích đến cần chọn trong Landing Studio.');
+        add(ad,'small','Số tiền bản nháp đã chi '+money(pack.advertising.external_spend_vnd));
         const cal=details(child,'Lịch biên tập · '+pack.calendar_timezone);
         for(const item of pack.calendar)line(cal,item.date+' · '+department(item.owner),item.acceptance,kinds[item.kind]||item.kind);
         add(child,'small','Giả thuyết thị trường cần đối chiếu với bằng chứng theo phạm vi chiến dịch.');

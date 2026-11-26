@@ -1,0 +1,66 @@
+name: Matched department comparison
+on:
+  pull_request:
+    branches: [main]
+permissions:
+  contents: read
+concurrency:
+  group: department-study-${{ github.event.pull_request.number }}
+  cancel-in-progress: false
+jobs:
+  full-workflow:
+    if: >-
+      github.repository == 'datnv41001/ai-company' &&
+      github.event.repository.private == false &&
+      github.event.pull_request.head.repo.full_name == github.repository &&
+      github.head_ref == 'research/full-workflow-qualification'
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.sha }}
+          fetch-depth: 0
+          persist-credentials: false
+      - name: Check for the completed study
+        id: pending
+        run: |
+          if test -f docs/evaluation/department-study/RECEIPTS.json; then
+            echo 'run=false' >> "$GITHUB_OUTPUT"
+          else
+            echo 'run=true' >> "$GITHUB_OUTPUT"
+          fi
+      - uses: actions/setup-python@v5
+        if: steps.pending.outputs.run == 'true'
+        with:
+          python-version: '3.12.16'
+      - name: Run all matched arms on the same synthetic PostgreSQL corpus
+        if: steps.pending.outputs.run == 'true'
+        shell: bash
+        run: |
+          set -euo pipefail
+          python -m pip install -r requirements-dev.txt
+          python scripts/init_env.py
+          compose=(docker compose -p department-study -f compose.yaml -f tests/compose_pool_database.yaml)
+          trap '"${compose[@]}" down -v; docker rm -f amc-department-study 2>/dev/null || true' EXIT
+          "${compose[@]}" up -d --wait db
+          "${compose[@]}" exec -T db createdb -U amc amc_test_department
+          port=$("${compose[@]}" port db 5432 | cut -d: -f2)
+          set -a
+          source .env
+          set +a
+          export AMC_MIGRATION_DSN="postgresql://amc:$POSTGRES_PASSWORD@127.0.0.1:$port/amc_test_department"
+          export DATABASE_URL="postgresql+psycopg://amc_runtime:$AMC_RUNTIME_PASSWORD@127.0.0.1:$port/amc_test_department"
+          export AMC_TEST_PG=1 PYTHONPATH=. OPENAI_API_KEY=''
+          python migrations/apply.py
+          python -u tests/evaluation/department/run.py department-measurements
+          python tests/evaluation/department/score.py department-measurements
+      - name: Preserve submissions, partial results and resources
+        if: always() && steps.pending.outputs.run == 'true'
+        uses: actions/upload-artifact@v4
+        with:
+          name: department-measurements-${{ github.sha }}
+          path: department-measurements
+          if-no-files-found: error
+          retention-days: 30
+

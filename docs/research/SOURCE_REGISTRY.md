@@ -1,5 +1,12 @@
 # Sổ nguồn nghiên cứu AMC
 
+Mỗi nguồn mới cần URL, tác giả hoặc đơn vị phát hành, ngày khảo sát, phiên bản/commit nếu có, phần thực sự đọc, loại bằng chứng và giới hạn tin cậy. Ghi quyền truy cập, quyền tái sử dụng và nghĩa vụ attribution theo hành động dự kiến. Theo kiến thức qua thẻ và ma trận tới module/workflow, thử nghiệm, kết quả hoặc lý do chưa áp dụng. Với dữ liệu huấn luyện, phải xác minh quyền cho mục đích đó trước khi nhập.
+
+| Nguồn khảo sát ngày 26/11/2026 | Bài học, độ tin cậy và giới hạn sử dụng | Áp dụng, bằng chứng |
+|---|---|---|
+| [GitHub Docs · PR template](https://docs.github.com/en/communities/using-templates-to-encourage-useful-issues-and-pull-requests/creating-a-pull-request-template-for-your-repository), trang công khai không ghim release | Hướng dẫn chính thức về vị trí mẫu và thời điểm mẫu có hiệu lực trên nhánh mặc định. AMC dẫn nguồn và tự viết câu hỏi theo nghiệp vụ. | Dùng lại [mẫu hiện hữu](../../.github/pull_request_template.md) cho 15 mục bàn giao. Hiệu lực mặc định của bản cập nhật phụ thuộc việc merge. |
+| [AWS Prescriptive Guidance · ADR process](https://docs.aws.amazon.com/prescriptive-guidance/latest/architectural-decision-records/adr-process.html), trang công khai không ghim release | Hướng dẫn của nhà xuất bản về bối cảnh, lý do, hậu quả và quyết định bị thay thế. Hiệu quả với AMC cần kiểm qua lần tiếp quản. Chỉ dẫn nguồn, không nhập ví dụ hoặc tài liệu huấn luyện. | Quy tắc phản biện trong [AGENTS](../../AGENTS.md) nối quyết định với ADR hoặc đánh giá hiện có. [Bài kiểm tiếp quản](../KNOWLEDGE_MAP.md#cold-start) yêu cầu reviewer giải thích lại một quyết định từ repo. |
+
 Đợt đọc ngày **25/11/2026** (giờ Việt Nam). Mỗi dòng ghi phần thực sự truy xuất qua trang công khai của nhà xuất bản và giới hạn được phép suy ra. Ngày cạnh tác giả là ngày xuất bản hoặc cập nhật khi trang ghi rõ. Với mục chỉ ghi năm hoặc không ghi ngày, dùng ngày truy xuất để lập lịch kiểm lại. Các đoạn dưới là tóm tắt của AMC.
 
 | Nguồn và người chịu trách nhiệm nội dung | Chủ đề | Bằng chứng đã đọc | Loại và mức tin cậy | Thẻ |

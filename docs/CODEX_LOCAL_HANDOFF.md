@@ -1,5 +1,7 @@
 # Codex Local Handoff and Two-Way Engineering Review
 
+Historical commissioning brief for the starter. For the current checkout use the [knowledge map](KNOWLEDGE_MAP.md), [operating handoff](../HANDOFF.md) and [implementation register](IMPLEMENTATION_STATUS.md).
+
 ## 1) Immediate mission
 
 Read the product spec and ADR. Run the starter **as-is** locally and tests. Report actual functionality, security defects, licensing contradictions and architecture challenges. **Do not assume the existing recommendation is correct.** You are an independent challenger, not a rubber stamp.

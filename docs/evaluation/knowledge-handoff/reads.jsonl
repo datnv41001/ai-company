@@ -1,0 +1,35 @@
+{"timestamp": "2026-11-26T03:48:28.682160+00:00", "sha": "82d5b246143e893f49467e1ca319dfb9d1551229", "op": "list", "path": "docs", "args": [], "size": 920}
+{"timestamp": "2026-11-26T03:48:28.736015+00:00", "sha": "82d5b246143e893f49467e1ca319dfb9d1551229", "op": "list", "path": "", "args": [], "size": 301}
+{"timestamp": "2026-11-26T03:48:29.563615+00:00", "sha": "82d5b246143e893f49467e1ca319dfb9d1551229", "op": "read", "path": "README.md", "args": ["1", "240"], "size": 7466}
+{"timestamp": "2026-11-26T03:48:32.752053+00:00", "sha": "82d5b246143e893f49467e1ca319dfb9d1551229", "op": "list", "path": "scripts", "args": [], "size": 158}
+{"timestamp": "2026-11-26T03:48:36.265279+00:00", "sha": "82d5b246143e893f49467e1ca319dfb9d1551229", "op": "list", "path": "apps", "args": [], "size": 0}
+{"timestamp": "2026-11-26T03:48:37.554954+00:00", "sha": "82d5b246143e893f49467e1ca319dfb9d1551229", "op": "list", "path": "tests", "args": [], "size": 3098}
+{"timestamp": "2026-11-26T03:48:38.087542+00:00", "sha": "82d5b246143e893f49467e1ca319dfb9d1551229", "op": "list", "path": ".github", "args": [], "size": 34}
+{"timestamp": "2026-11-26T03:48:46.252967+00:00", "sha": "82d5b246143e893f49467e1ca319dfb9d1551229", "op": "read", "path": "tests/test_api.py", "args": ["1", "100"], "size": 5858}
+{"timestamp": "2026-11-26T03:48:46.727222+00:00", "sha": "82d5b246143e893f49467e1ca319dfb9d1551229", "op": "read", "path": "app/main.py", "args": ["1", "75"], "size": 3891}
+{"timestamp": "2026-11-26T03:48:47.125355+00:00", "sha": "82d5b246143e893f49467e1ca319dfb9d1551229", "op": "read", "path": "docs/IMPLEMENTATION_STATUS.md", "args": ["1", "130"], "size": 18572}
+{"timestamp": "2026-11-26T03:48:48.293330+00:00", "sha": "82d5b246143e893f49467e1ca319dfb9d1551229", "op": "read", "path": "docs/PRODUCT_MISSION.md", "args": ["1", "160"], "size": 12503}
+{"timestamp": "2026-11-26T03:48:49.496273+00:00", "sha": "82d5b246143e893f49467e1ca319dfb9d1551229", "op": "read", "path": "docs/ADR-001-OWN-SaaS-CORE.md", "args": ["1", "110"], "size": 4841}
+{"timestamp": "2026-11-26T03:48:50.825808+00:00", "sha": "82d5b246143e893f49467e1ca319dfb9d1551229", "op": "read", "path": "docs/SECURITY_AND_GA_BLOCKERS.md", "args": ["1", "105"], "size": 8116}
+{"timestamp": "2026-11-26T03:48:52.167487+00:00", "sha": "82d5b246143e893f49467e1ca319dfb9d1551229", "op": "read", "path": "docs/KNOWLEDGE_MAP.md", "args": ["1", "155"], "size": 6903}
+{"timestamp": "2026-11-26T03:49:16.619177+00:00", "sha": "82d5b246143e893f49467e1ca319dfb9d1551229", "op": "read", "path": "docs/PRODUCT_MISSION.md", "args": ["1", "30"], "size": 4309}
+{"timestamp": "2026-11-26T03:49:18.192145+00:00", "sha": "82d5b246143e893f49467e1ca319dfb9d1551229", "op": "read", "path": "HANDOFF.md", "args": ["1", "50"], "size": 8129}
+{"timestamp": "2026-11-26T03:49:28.642438+00:00", "sha": "82d5b246143e893f49467e1ca319dfb9d1551229", "op": "read", "path": "docs/ADR-001-OWN-SaaS-CORE.md", "args": ["1", "52"], "size": 4841}
+{"timestamp": "2026-11-26T03:49:30.721959+00:00", "sha": "82d5b246143e893f49467e1ca319dfb9d1551229", "op": "read", "path": "docs/IMPLEMENTATION_STATUS.md", "args": ["97", "133"], "size": 3622}
+{"timestamp": "2026-11-26T03:49:32.593172+00:00", "sha": "82d5b246143e893f49467e1ca319dfb9d1551229", "op": "read", "path": "AGENTS.md", "args": ["1", "45"], "size": 5748}
+{"timestamp": "2026-11-26T03:49:45.653822+00:00", "sha": "82d5b246143e893f49467e1ca319dfb9d1551229", "op": "read", "path": "docs/evaluation/department-study/PILOT.md", "args": ["1", "40"], "size": 2760}
+{"timestamp": "2026-11-26T03:49:45.869487+00:00", "sha": "82d5b246143e893f49467e1ca319dfb9d1551229", "op": "read", "path": "docs/GITHUB_RESEARCH_AND_REUSE.md", "args": ["1", "10"], "size": 585}
+{"timestamp": "2026-11-26T03:49:47.606473+00:00", "sha": "82d5b246143e893f49467e1ca319dfb9d1551229", "op": "read", "path": "docs/evaluation/sandbox-operations/README.md", "args": ["1", "24"], "size": 3162}
+{"timestamp": "2026-11-26T03:49:48.746679+00:00", "sha": "82d5b246143e893f49467e1ca319dfb9d1551229", "op": "read", "path": "docs/ADR-007-QA-EVIDENCE-REVISION.md", "args": ["1", "40"], "size": 5927}
+{"timestamp": "2026-11-26T03:49:50.268845+00:00", "sha": "82d5b246143e893f49467e1ca319dfb9d1551229", "op": "read", "path": "docs/evaluation/campaign-engine/commission/README.md", "args": ["1", "24"], "size": 2116}
+{"timestamp": "2026-11-26T03:49:51.738069+00:00", "sha": "82d5b246143e893f49467e1ca319dfb9d1551229", "op": "read", "path": "docs/PRODUCT_SPEC_V1.md", "args": ["1", "17"], "size": 1877}
+{"timestamp": "2026-11-26T03:49:52.757995+00:00", "sha": "82d5b246143e893f49467e1ca319dfb9d1551229", "op": "read", "path": "docs/CODEX_LOCAL_HANDOFF.md", "args": ["1", "10"], "size": 640}
+{"timestamp": "2026-11-26T03:50:03.733654+00:00", "sha": "82d5b246143e893f49467e1ca319dfb9d1551229", "op": "read", "path": "tests/test_revision_evidence.py", "args": ["1", "65"], "size": 3131}
+{"timestamp": "2026-11-26T03:50:03.910914+00:00", "sha": "82d5b246143e893f49467e1ca319dfb9d1551229", "op": "read", "path": "app/database.py", "args": ["1", "44"], "size": 1953}
+{"timestamp": "2026-11-26T03:50:04.319128+00:00", "sha": "82d5b246143e893f49467e1ca319dfb9d1551229", "op": "read", "path": "docs/evaluation/content-factory/README.md", "args": ["1", "18"], "size": 2414}
+{"timestamp": "2026-11-26T03:50:04.901598+00:00", "sha": "82d5b246143e893f49467e1ca319dfb9d1551229", "op": "read", "path": "docs/IMPLEMENTATION_STATUS.md", "args": ["62", "98"], "size": 5177}
+{"timestamp": "2026-11-26T03:50:19.700597+00:00", "sha": "82d5b246143e893f49467e1ca319dfb9d1551229", "op": "read", "path": "docs/evaluation/sandbox-operations/CUTOVER.md", "args": ["1", "14"], "size": 2098}
+{"timestamp": "2026-11-26T03:50:19.971660+00:00", "sha": "82d5b246143e893f49467e1ca319dfb9d1551229", "op": "read", "path": "docs/PR16-ONBOARDING.md", "args": ["1", "21"], "size": 2404}
+{"timestamp": "2026-11-26T03:50:20.382543+00:00", "sha": "82d5b246143e893f49467e1ca319dfb9d1551229", "op": "read", "path": "scripts/init_env.py", "args": ["1", "75"], "size": 2399}
+{"timestamp": "2026-11-26T03:50:21.143637+00:00", "sha": "82d5b246143e893f49467e1ca319dfb9d1551229", "op": "read", "path": "tests/conftest.py", "args": ["1", "65"], "size": 948}
+{"timestamp": "2026-11-26T03:50:37.111441+00:00", "sha": "82d5b246143e893f49467e1ca319dfb9d1551229", "op": "read", "path": "tests/test_revision_evidence.py", "args": ["60", "88"], "size": 1941}

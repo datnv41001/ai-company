@@ -189,11 +189,11 @@ def content_pack(tenant_id: str, campaign_id: str, plan_id: str, user: User = De
     store = campaign_store(db, user, tenant_id, campaign_id, write=False)
     if not store.approver:
         missing()
-    plan = active_plan(store, campaign_id)
+    plan = active_plan(store, campaign_id, lock_targets=False)
     if plan["id"] != plan_id:
         conflict("Refresh the approved campaign revision")
     ref = plan["manifests"].get("landing") or plan["manifests"]["strategy"]
-    _, _, projection = selection(store, campaign_id, ref["id"], stage="operate")
+    _, _, projection = selection(store, campaign_id, ref["id"], stage="operate", lock_target=False)
     pack = compose(plan, projection)
     destination = approved_landing_destination(store, user, plan)
     if destination:

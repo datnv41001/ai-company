@@ -79,6 +79,7 @@
   const knowledge = createKnowledgePanel($('knowledge-panel'), api, refreshWorkforce);
   const campaignLab = createCampaignLab(api);
   const campaignEngine = createCampaignEngine(api);
+  const campaignDesk = createCampaignRoleDesk(api);
   const screens = createWorkspaceScreens(id => {
     const membership=state.memberships.find(m=>m.tenant_id===id);
     if(!membership) return false;
@@ -343,6 +344,7 @@
     option(state.clients, 'brand-client', 'Chọn khách hàng'); option(state.brands, 'campaign-brand', 'Chọn thương hiệu');
     campaignLab.scope(state.tenantId, state.readOnly ? [] : state.campaigns);
     campaignEngine.scope(state.tenantId, state.role, state.readOnly ? [] : state.campaigns, state.userId);
+    campaignDesk.scope(state.tenantId,state.role,state.campaigns,state.userId);
     $('campaigns-list').innerHTML = state.campaigns.length ? state.campaigns.map(c=>`<div class="item"><div><strong>${esc(c.name)}</strong><small>${esc(c.objective)} · ${esc(c.status)}</small></div><div class="item-actions ${state.readOnly ? 'hidden' : ''}"><button class="small secondary" data-action="plan" data-id="${esc(c.id)}">Phân rã việc</button></div></div>`).join('') : '<div class="empty">Chưa có chiến dịch.</div>';
     $('actions-list').innerHTML = actions.length ? actions.map(a=>`<div class="item"><div><strong>${esc(a.action_kind)}</strong><small>${esc(a.state)} · ${esc(a.id.slice(0,8))}</small></div><span class="tag">${esc(a.state)}</span></div>`).join('') : '<div class="empty">Chưa có yêu cầu hành động.</div>';
     $('deliverables-list').innerHTML = deliverables.length ? deliverables.map(a=>`<div class="item"><div><strong>${esc(a.title)}</strong><small>${esc(a.id.slice(0,8))}</small></div><span class="tag">${esc(deliverableStage(a))}</span></div>`).join('') : '<div class="empty">Chưa có tài liệu.</div>';

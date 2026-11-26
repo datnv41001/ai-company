@@ -86,7 +86,7 @@ class AppointmentDecision(Observation):
     kind: Literal["appointment_decision"]
     appointment_id: Id
     expected_revision: Positive
-    step: Literal["confirm","assign","complete","cancel","no_show"]
+    step: Literal["confirm","assign","reassign","reschedule","complete","cancel","no_show"]
     assignee_id: Id | None = None
     confirmed_for: AwareDatetime | None = None
     feedback: Note | None = None
@@ -141,7 +141,7 @@ class Sales(Observation):
     kind: Literal["sales"]
     rfq_id: Id
     expected_revision: Positive
-    step: Literal["assign", "accept", "reject", "quote", "order", "confirm", "refund", "cancel", "correct"]
+    step: Literal["assign", "reassign", "accept", "reject", "quote", "order", "confirm", "refund", "cancel", "correct"]
     assignee_id: Id | None = None
     amount_vnd: Money | None = None
     reason: Note | None = None

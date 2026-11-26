@@ -94,6 +94,10 @@ def compose_plan(store, campaign_id, selections, body, plan_id):
         "method": "deterministic-campaign-planner/1",
         "optimization_basis": body.optimization_basis,
     }
+    if body.secondary_rfq:
+        if action != "appointment":
+            conflict("Optional quote intake is available only alongside a service appointment")
+        plan["secondary_conversions"] = ["rfq"]
     plan["digest"] = digest(canonical(plan))
     return plan
 

@@ -44,6 +44,8 @@ def test_campaign_commands_and_scope_switch(api, agency):  # noqa: F811
                 expect(checks).to_have_count(2)
                 for check in checks.all():
                     check.check()
+                if case["buyer_action"]=="appointment":
+                    form.get_by_label("Tiếp nhận báo giá trong chiến dịch lịch hẹn").select_option("yes")
                 form.get_by_label("Kết quả mong muốn").fill(case["kpi"])
                 form.get_by_role("button").click()
                 panel.get_by_text("Xem bản chờ duyệt v1", exact=True).click()

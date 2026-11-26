@@ -34,6 +34,7 @@ class Proposal(Input):
     duration_days: Annotated[int, Field(strict=True, ge=1, le=180)]
     channels: Annotated[list[Name], Field(min_length=1, max_length=4)] | None = None
     target_outcome: Name | None = None
+    secondary_rfq: bool = False
     optimization_basis: Annotated[str, Field(min_length=1, max_length=600)] | None = None
 
 
@@ -198,6 +199,8 @@ def propose(tenant_id: str, campaign_id: str, body: Proposal, user: User = Depen
         return compose_plan(s, campaign_id, selected, body, new_id()), "restricted", None
 
     inputs = body.model_dump(mode="json")
+    if not inputs["secondary_rfq"]:
+        inputs.pop("secondary_rfq")
     # Existing retries used the implicit 10,000 µUSD ceiling before it was configurable.
     if inputs["ai_budget_microusd_per_run"] == 10000:
         del inputs["ai_budget_microusd_per_run"]

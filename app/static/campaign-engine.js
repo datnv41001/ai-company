@@ -96,11 +96,21 @@ function createCampaignEngine(api) {
     const ai=field(form,'Hạn mức sản xuất AI mỗi lượt (µUSD)','number',old?.ai_budget_microusd_per_run??10000);
     ai.min=0;ai.max=1000000;
     const channels=field(form,'Kênh đề xuất (cách nhau bằng dấu phẩy)','text',(old?.channels||[]).join(', '),false);
+    const secondary=pick(form,'Tiếp nhận báo giá trong chiến dịch lịch hẹn',[['no','Chỉ nhận lịch hẹn'],['yes','Nhận thêm yêu cầu báo giá']]);
+    secondary.value=old?.secondary_conversions?.includes('rfq')?'yes':'no';
+    function syncIntake(){
+      const choices=planner.choices.filter((_,i)=>selections[i].checked);
+      secondary.disabled=!choices.length || !choices.every(c=>c.buyer_action==='appointment');
+      secondary.closest('label').hidden=secondary.disabled;
+    }
+    for(const check of selections)check.addEventListener('change',syncIntake);
+    syncIntake();
     command(form,'Lưu đề xuất',()=>{
       const ids=selections.filter(input=>input.checked).map(input=>input.value);
       if(!ids.length || ids.length>2)throw Error('Chọn một hoặc hai hồ sơ, mỗi workflow một hồ sơ.');
       return {path:'/engine/plans',idField:'key',payload:{manifest_ids:ids,expected_revision:planner.revisions[0]?.revision||0,
         duration_days:days.valueAsNumber,ai_budget_microusd_per_run:ai.valueAsNumber,budget_vnd:budget.valueAsNumber,...(target.value?{target_outcome:target.value}:{}),
+        ...(!secondary.disabled && secondary.value==='yes'?{secondary_rfq:true}:{}),
         ...(channels.value?{channels:channels.value.split(',').map(x=>x.trim()).filter(Boolean)}:{})}};
     },{form:true});
   }
@@ -137,6 +147,8 @@ function createCampaignEngine(api) {
       if(proposal.target_outcome!==proposal.objective)add(proposed,'p',proposal.target_outcome);
       add(proposed,'p',proposal.measurement_plan.kpi);
       add(proposed,'p',proposal.duration_days+' ngày · '+money(proposal.budget_vnd)+' · '+proposal.channels.join(', '));
+      if(proposal.buyer_action==='appointment')add(proposed,'p',proposal.secondary_conversions?.includes('rfq')?
+        'Tiếp nhận lịch hẹn và yêu cầu báo giá riêng biệt.':'Chỉ tiếp nhận lịch hẹn.');
       for(const [kind,ref] of Object.entries(proposal.manifests))
         line(proposed,kinds[kind],ref.workflow+' · Brief '+ref.brief_id+' · Manifest '+ref.id+' · SHA-256 '+ref.digest);
       for(const item of proposal.work_packages)
@@ -281,7 +293,7 @@ function createCampaignEngine(api) {
     let visited;
     command(visit,'Lưu phiên',()=>sandbox(plan,{kind:'session',session_id:visitId.value,actor_key:visitor.value,
       action_id:origin.value||null,occurred_at:visited??=new Date().toISOString()}),{form:true});
-    if(plan.selling_unit) {
+    if(plan.selling_unit && (plan.buyer_action==='rfq' || plan.secondary_conversions?.includes('rfq'))) {
       const form=add(details(sales,'Ghi nhận yêu cầu báo giá'),'form');
       const id=field(form,'Mã yêu cầu','text'),qty=field(form,'Số lượng ('+plan.selling_unit+')','number','',false);
       qty.min='0.001';qty.step='any';

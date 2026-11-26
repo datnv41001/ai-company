@@ -184,9 +184,13 @@ def migrate(dsn: str, runtime_password: str | None = None):
             raise ValueError("Incomplete C3 delivery writer fence")
         if 26 not in versions:
             conn.execute((HERE / "026_campaign_sandbox_writer.sql").read_text(encoding="utf-8"))
-        from migrations.sandbox_contract import SANDBOX_FENCE
+        from migrations.sandbox_contract import ROLE_DESK, SANDBOX_FENCE
         if not conn.execute(SANDBOX_FENCE).fetchone()[0]:
             raise ValueError("Incomplete campaign sandbox writer fence")
+        if not conn.execute("SELECT to_regprocedure('amc_acl.campaign_desk(text,text)')").fetchone()[0]:
+            conn.execute((HERE / "campaign_desk.sql").read_text(encoding="utf-8"))
+        if not conn.execute(ROLE_DESK).fetchone()[0]:
+            raise ValueError("Incomplete scoped campaign handoff capability")
 
 
 def install_device_sessions(conn, material):

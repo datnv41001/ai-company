@@ -1,0 +1,203 @@
+{
+  "version": "department-content-pack/1",
+  "status": "internal_draft",
+  "plan_digest": "1d57d3f1eefc2a2cffe55b6e027a151fbec9b69849511cb207c8dc58887641f8",
+  "plan_id": "81f47043-1fae-40f5-8de5-70073fd7d577",
+  "plan_revision": 1,
+  "manifests": {
+    "landing": {
+      "id": "4b856166-6d4a-4e71-a653-0b8175365cc0",
+      "digest": "c0f0c07f63e2d2da468c325612289b01a289318d26aec961ab086002b5ecaae8",
+      "brief_id": "a8d613b5-d512-464c-b70c-2f56ea6d3b6f",
+      "workflow": "WF-13/landing-seo-draft@6"
+    },
+    "strategy": {
+      "id": "86f89c18-0b65-49e9-b9e9-b9a8e7368887",
+      "digest": "7c082fbece1f753aa084a4df6b11aa4046eaad98b9fb10e6a265f2db447271cf",
+      "brief_id": "4672daa1-4dd3-4d92-9c01-f98aff60a6da",
+      "workflow": "WF-03/research-strategy-draft@3"
+    }
+  },
+  "objective": "Đặt lịch khảo sát luồng nhận hàng tại kho",
+  "audience": "Trưởng vận hành kho phân phối",
+  "pillars": [
+    "Chuẩn bị nhu cầu",
+    "Điều kiện áp dụng"
+  ],
+  "buyer_fields": [
+    "site",
+    "receiving_shift"
+  ],
+  "social": [
+    {
+      "platform": "LinkedIn",
+      "stage": "consideration",
+      "pillar": "Chuẩn bị nhu cầu",
+      "copy": "Buổi khảo sát luồng nhận hàng Luồng Rõ dành cho Trưởng vận hành kho phân phối\n\nCần chuẩn bị gì trước khi hẹn? Gửi kèm địa điểm và ca nhận hàng cần quan sát.\n\nBàn giao sơ đồ luồng nhận hàng Trong phạm vi buổi khảo sát.\nGiá tham khảo: 760.000 VND / 1 lượt, đã gồm thuế. Đơn tối thiểu: 1 lượt. Áp dụng từ 1 lượt. Số lượng đối chiếu: 1 lượt. Xác nhận số lượng trước khi đặt.\n\nĐặt lịch"
+    },
+    {
+      "platform": "Facebook",
+      "stage": "decision",
+      "pillar": "Điều kiện áp dụng",
+      "copy": "Cần chuẩn bị gì trước khi hẹn?\n\nBuổi khảo sát luồng nhận hàng Luồng Rõ\nBàn giao sơ đồ luồng nhận hàng Trong phạm vi buổi khảo sát.\nGiá tham khảo: 760.000 VND / 1 lượt, đã gồm thuế. Đơn tối thiểu: 1 lượt. Áp dụng từ 1 lượt. Số lượng đối chiếu: 1 lượt. Xác nhận số lượng trước khi đặt.\n\nGửi kèm địa điểm và ca nhận hàng cần quan sát. Đặt lịch"
+    }
+  ],
+  "website": {
+    "headline": "Buổi khảo sát luồng nhận hàng Luồng Rõ dành cho Trưởng vận hành kho phân phối",
+    "body": "Gửi kèm địa điểm và ca nhận hàng cần quan sát.",
+    "commercial_terms": "Bàn giao sơ đồ luồng nhận hàng Trong phạm vi buổi khảo sát.\nGiá tham khảo: 760.000 VND / 1 lượt, đã gồm thuế. Đơn tối thiểu: 1 lượt. Áp dụng từ 1 lượt. Số lượng đối chiếu: 1 lượt. Xác nhận số lượng trước khi đặt.",
+    "cta": "Đặt lịch"
+  },
+  "organic_search": {
+    "title": "Buổi khảo sát luồng nhận hàng Luồng Rõ · Gửi yêu cầu hẹn",
+    "question": "Cần chuẩn bị gì trước khi hẹn?",
+    "answer": "Gửi kèm địa điểm và ca nhận hàng cần quan sát.\nBàn giao sơ đồ luồng nhận hàng Trong phạm vi buổi khảo sát.\nGiá tham khảo: 760.000 VND / 1 lượt, đã gồm thuế. Đơn tối thiểu: 1 lượt. Áp dụng từ 1 lượt. Số lượng đối chiếu: 1 lượt. Xác nhận số lượng trước khi đặt.",
+    "next_step": "Đặt lịch",
+    "rubric": "https://developers.google.com/search/docs/fundamentals/creating-helpful-content"
+  },
+  "calendar_timezone": "UTC",
+  "calendar": [
+    {
+      "date": "2026-11-30",
+      "owner": "Strategy",
+      "kind": "strategy",
+      "acceptance": "Quyết định phân khúc, kênh và bước xử lý tiếp theo"
+    },
+    {
+      "date": "2026-11-30",
+      "owner": "Analytics",
+      "kind": "measurement",
+      "acceptance": "KPI, mẫu số và phương pháp đối soát Sales"
+    },
+    {
+      "date": "2026-12-05",
+      "owner": "Content",
+      "kind": "landing",
+      "acceptance": "Nội dung trang có CTA và điều kiện theo manifest"
+    },
+    {
+      "date": "2026-12-05",
+      "owner": "SEO",
+      "kind": "seo",
+      "acceptance": "Tiêu đề SEO và mô tả khớp trang"
+    },
+    {
+      "date": "2026-12-05",
+      "owner": "Social",
+      "kind": "social",
+      "acceptance": "Bài xã hội có hành động nhất quán với brief"
+    },
+    {
+      "date": "2026-12-05",
+      "owner": "Media",
+      "kind": "ad",
+      "acceptance": "Mẫu quảng cáo nháp cho người mua đã chọn"
+    },
+    {
+      "date": "2026-12-05",
+      "owner": "Design",
+      "kind": "creative_brief",
+      "acceptance": "Brief nêu sản phẩm, người xem và tiêu chí hình ảnh"
+    },
+    {
+      "date": "2026-12-09",
+      "owner": "Campaign Manager",
+      "kind": "calendar",
+      "acceptance": "Lịch dự kiến có người nhận, mốc QA và kênh"
+    }
+  ],
+  "creative": {
+    "subject": "Buổi khảo sát luồng nhận hàng Luồng Rõ",
+    "audience": "Trưởng vận hành kho phân phối",
+    "caption": "Gửi yêu cầu hẹn",
+    "terms": "Bàn giao sơ đồ luồng nhận hàng Trong phạm vi buổi khảo sát.\nGiá tham khảo: 760.000 VND / 1 lượt, đã gồm thuế. Đơn tối thiểu: 1 lượt. Áp dụng từ 1 lượt. Số lượng đối chiếu: 1 lượt. Xác nhận số lượng trước khi đặt.",
+    "cta": "Đặt lịch",
+    "rights_gate": "licensed_source_and_independent_revision_approval"
+  },
+  "advertising": {
+    "format": "google_responsive_search_ad_draft",
+    "source": "https://support.google.com/google-ads/answer/7684791",
+    "headlines": [
+      "Buổi khảo sát luồng nhận hàng Luồng Rõ",
+      "Gửi yêu cầu hẹn",
+      "Xem phạm vi áp dụng"
+    ],
+    "descriptions": [
+      "Gửi kèm địa điểm và ca nhận hàng cần quan sát.",
+      "Đặt lịch"
+    ],
+    "format_issues": [
+      {
+        "field": "headline",
+        "variant": 1,
+        "reason": "length",
+        "length": 38,
+        "limit": 30
+      }
+    ],
+    "ad_groups": [
+      {
+        "hypothesis": "Buổi khảo sát luồng nhận hàng Luồng Rõ",
+        "intent": "product",
+        "budget_vnd": 150000
+      },
+      {
+        "hypothesis": "Gửi yêu cầu hẹn",
+        "intent": "appointment",
+        "budget_vnd": 150001
+      }
+    ],
+    "experiment": "So sánh lời nhấn vào nhu cầu với lời nhấn vào điều kiện. Giữ nguyên CTA, trang đích và nhóm người mua.",
+    "measurement": {
+      "status": "requires_measurement_contract",
+      "approved_label": "Lịch hẹn được người phụ trách kho xác nhận · appointments · 21 ngày · Đếm lịch được xác nhận trên số đề nghị khảo sát; tách hủy lịch, ghi người đối soát theo mã hẹn."
+    },
+    "destination": {
+      "kind": "sandbox_landing",
+      "manifest": {
+        "id": "4b856166-6d4a-4e71-a653-0b8175365cc0",
+        "digest": "c0f0c07f63e2d2da468c325612289b01a289318d26aec961ab086002b5ecaae8",
+        "brief_id": "a8d613b5-d512-464c-b70c-2f56ea6d3b6f",
+        "workflow": "WF-13/landing-seo-draft@6"
+      },
+      "requirement": "select_approved_package_for_current_revision"
+    },
+    "external_spend_vnd": 0,
+    "external_spend_scope": "this_offline_draft_only",
+    "publication_receipt": null
+  },
+  "research": {
+    "sources": [
+      "https://support.google.com/google-ads/answer/7684791",
+      "https://developers.google.com/search/docs/fundamentals/creating-helpful-content",
+      "https://www.wecommit.com.vn/bai-viet/tam-ban-do-tong-the-cho-doi-ai-agent"
+    ],
+    "approved_facts": [
+      "F1",
+      "F2"
+    ],
+    "hypotheses": [
+      "Ca giao nhận có thể tạo điểm chờ; cần quan sát trước khi kết luận."
+    ],
+    "open_questions": [
+      "Kiểm chứng nhu cầu với khách hàng trong thị trường đã chọn.",
+      "Xác minh số liệu nền và kết quả bằng dữ liệu đo thực tế."
+    ],
+    "workflow_references": [
+      {
+        "source": "https://calendly.com/scheduling/routing",
+        "scope": "public_vendor_description",
+        "observation": "Form answers can guide appointment routing.",
+        "question": "Who receives this request and what evidence confirms the appointment?"
+      },
+      {
+        "source": "https://www.hubspot.com/products/sales/schedule-meeting",
+        "scope": "public_vendor_description",
+        "observation": "A buyer can use a scheduling page to book a meeting.",
+        "question": "Does this service support self-booking or does staff need to confirm?"
+      }
+    ],
+    "competitor_observations": [],
+    "competitor_status": "awaiting_scoped_public_evidence"
+  }
+}

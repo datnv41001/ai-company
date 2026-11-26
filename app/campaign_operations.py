@@ -7,7 +7,7 @@ from fastapi import APIRouter, Depends, Query, Request
 from sqlalchemy import select
 from sqlalchemy.orm import Session
 
-from . import c3_boundaries
+from . import c3_boundaries, campaign_channels
 from .c3_reviewer import active_approver
 from .campaign_operations_contracts import Appointment, AppointmentDecision, ActionTarget, CompleteRFQ, CostClose, DecideAction, Execute, Labor, Optimization, ReconcileCost, RFQ, Sales, SandboxCommand, Schedule, SessionEvent
 from . import campaign_operations_appointments as appointments, campaign_operations_capabilities as capabilities, campaign_operations_cost as costs
@@ -28,7 +28,8 @@ from .workforce_models import WorkforceRun
 router = APIRouter(prefix="/api/tenants/{tenant_id}/campaigns/{campaign_id}/sandbox", tags=["Campaign sandbox"])
 OP = "campaign_sandbox_v1"
 BUCKETS = ("actions", "leads", "sessions", "work_units", "proposals", "appointments")
-GROUP = {"strategy": "client_strategy", "measurement": "client_measurement", "landing": "copy", "seo": "seo"}
+GROUP = {"strategy": "client_strategy", "measurement": "client_measurement", "landing": "copy", "seo": "seo",
+         **{group: group for group in campaign_channels.FIELDS}}
 
 
 def entries(store, cid):
@@ -69,6 +70,10 @@ def production_bindings(store, cid):
         at = aware(receipt.queued_at)
         owner = next((p for start, p in approved if start <= at), None)
         if not owner:
+            continue
+        # Pre-commission receipts retain their historical attribution. New receipts must
+        # prove the plan reached this run even when an editor independently queues a brief.
+        if "campaign_plan_digest" in receipt.result and receipt.result["campaign_plan_digest"] != owner["digest"]:
             continue
         manifest = {"id": receipt.snapshot_id, "digest": receipt.result["manifest_digest"]}
         if manifest != run.knowledge.get("c3_manifest"):
@@ -233,6 +238,10 @@ def work_receipt(cmd, state, plan, store, cid, rows):
             or share.result.get("run_id") != binding[0].id or share.result.get("document_id") != rev.deliverable_id):
         conflict("Need the scoped client decision on a shared, evidence-bound revision")
     edition = share.result.get("customer_delivery", {})
+    if unit["package_id"] in campaign_channels.FIELDS:
+        ctx = edition.get("channel_context", {})
+        if ctx.get("plan_digest") != plan["digest"] or ctx.get("queue_receipt") != binding[1]:
+            conflict("The channel asset was not delivered for this plan and queue receipt")
     asset = edition.get("assets", {}).get(GROUP[unit["package_id"]])
     if not asset or edition.get("scope") != {**store.scope, "campaign_id": cid}:
         conflict("Delivery decision does not include this commissioned asset")
@@ -266,15 +275,26 @@ def enrich_units(store, cid, units):
         if not binding:
             continue
         run, receipt_id = binding
-        unit.update(run_id=run.id, run_state=run.state, queue_receipt=receipt_id, worker_attempts=run.attempts, last_error=run.last_error,
-                    worker_journal=run.journal, reserved_microusd=run.reserved_microusd)
+        channel = unit["package_id"] in campaign_channels.FIELDS
         doc = store.db.get(Deliverable, run.deliverable_id) if run.deliverable_id else None
+        if channel:
+            studio = doc.content.get("studio", {}) if doc else {}
+            if studio.get("channel_context", {}).get("plan_id") != unit["plan_id"] or unit["package_id"] not in studio.get("groups", {}):
+                continue
+        unit.update(run_id=run.id, run_state=run.state, queue_receipt=receipt_id)
+        if not channel:
+            unit.update(worker_attempts=run.attempts, last_error=run.last_error,
+                        worker_journal=run.journal, reserved_microusd=run.reserved_microusd)
         if unit["acceptance"] and unit["acceptance"]["plan_id"] == unit["plan_id"]:
             unit["status"] = unit["acceptance"]["status"]
         elif doc and doc.campaign_id == cid:
             unit.update(status="qa_passed" if doc.status in ("approved", "shared") and doc.qa_approved_revision == doc.qa_revision else "generated",
                         artifact_revision=doc.qa_revision, artifact_digest=content_digest(doc.title, doc.content.get("client_preview", "")),
                         origin="workforce_draft" if doc.qa_revision == 1 else "staff_saved_revision")
+            if channel:
+                from .c3_studio_routes import asset_digest
+                group = unit["package_id"]
+                unit.update(artifact_digest=asset_digest(doc, run, group, studio["groups"][group]), origin="staff_saved_channel_edition")
         elif run.state == "failed":
             unit["status"] = "incomplete"
 

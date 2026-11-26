@@ -156,8 +156,9 @@ class Store:
             qualification_id=qualification,
         )
 
-    def command(self, operation, payload, action, target=None, prepare=None):
-        fingerprint = digest(canonical([operation, target, payload.model_dump(mode="json")]))
+    def command(self, operation, payload, action, target=None, prepare=None, fingerprint_input=None):
+        inputs = payload.model_dump(mode="json") if fingerprint_input is None else fingerprint_input
+        fingerprint = digest(canonical([operation, target, inputs]))
         old = self.db.scalar(self.query(m.KnowledgeCommand).filter_by(actor=self.actor, key=payload.key))
         if old:
             if old.request_digest != fingerprint:

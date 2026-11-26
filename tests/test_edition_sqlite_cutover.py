@@ -22,7 +22,8 @@ def test_file_backed_edition_cutover_keeps_reader_and_requires_current_writer(tm
         for connection in (old, sqlite3.connect(db)):
             try:
                 assert connection.execute("SELECT qa_revision FROM deliverables WHERE id='draft'").fetchone() == (2,)
-                with pytest.raises(sqlite3.OperationalError, match="amc_edition_writer_v4"):
+                connection.create_function("amc_edition_writer_v4", 0, lambda: 4)
+                with pytest.raises(sqlite3.OperationalError, match="amc_channel_writer_v5"):
                     connection.execute("UPDATE deliverables SET qa_revision=3 WHERE id='draft'")
                 connection.rollback()
                 assert connection.execute("SELECT qa_revision FROM deliverables WHERE id='draft'").fetchone() == (2,)

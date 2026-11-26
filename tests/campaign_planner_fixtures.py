@@ -82,6 +82,8 @@ def prepare_inputs(api, owner, customer, client, brand, campaign, case, workflow
             requirements=[case["cta"]],
             acceptance_criteria=["Bàn giao thông tin đủ để người nhận thực hiện bước tiếp theo."],
         )
+        if "campaign_limits" in case:
+            intent["campaign_limits"] = case["campaign_limits"]
         accepted(api.put(base + "/workforce/briefs/" + bid + "/submission", headers=customer["headers"], json=DATA | {"task_intent": intent}))
         if prep is None:
             prep = prepared(api, owner, base, client, brand, campaign, bid, workflow, case=case | {"facts": facts(case)})

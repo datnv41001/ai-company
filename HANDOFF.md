@@ -4,6 +4,20 @@
 
 Trên nền merge #44 `837ec9fc`, nhân viên có thể tiếp nhận và đối soát lịch dịch vụ riêng, duyệt tác vụ cho đúng nhóm tài sản, chạy bộ điều phối loopback và kiểm tra chứng từ theo từng đầu việc. Mẫu số nghiệm thu thật hiện bằng 0. Hợp đồng tài sản C3 /1 dùng cho bản này; khi nối nhánh Studio /2 cần kiểm tra lại quyền từng nhóm mới. [Cấu hình, kiểm thử, biên nhận, ảnh sáu cấu hình và rollback](docs/evaluation/sandbox-operations/README.md)
 
+## Bàn giao sản xuất nội dung theo kênh (ENG-G02)
+
+Trong **Chiến dịch → Điều hành chiến dịch**, duyệt kế hoạch và chạy brief chính. Từ bản làm việc của chiến dịch, mở **Biên tập tài liệu Marketing → Soạn bộ nội dung theo kế hoạch** để biên tập bài Social, lời quảng cáo, brief thiết kế và lịch nội dung. Mỗi nhóm có bằng chứng trường, người duyệt độc lập, phiên bản và biên nhận. Xem cách chạy lại, nâng cấp writer C3 v5, ảnh giao diện và hai ví dụ bàn giao ở [hồ sơ Content Factory](docs/evaluation/content-factory/README.md).
+
+## Từ bản merge #44 đến kế hoạch giao việc
+
+Bản phát triển nội bộ của #44 là `837ec9fc6c67868f5a88e263f06febc7d0ddf6bc`. Core v25, Business v3, C3 v4. Parent main `1b9e3a9643014122d4c6e510efffc3d02b9843cf`, parent PR `c2a409367fecc3d62537ab582ee126107b6ef2b5`. Tree `c9e171dd82bd70c5eebb996ccf047628845b0c84` khớp bản tích hợp `95254dd2cb0d7b61a398bef34bcfd7157cbcdc5d`. Phát hiện tương thích #40/#43 đã đóng trong phạm vi writer và cutover đã thử trên SQLite/PostgreSQL. CI trên đúng SHA merge đạt 3 job bắt buộc, 524 test đạt và 2 bỏ qua, 22 đường nâng có dữ liệu, restore 34 bảng, C3 v1/v2/v3 lên v4. [Biên bản SHA, job và kiểm thử](docs/evaluation/campaign-engine/merge-44.json) · [CI của main](https://github.com/datnv41001/ai-company/actions/runs/45725774714) · [Bốn lần hợp nhất trước](docs/evaluation/campaign-engine/INTEGRATIONS.md)
+
+Trong nhánh G01, điều phối viên có thể lưu đề xuất khác brief. Để duyệt, chọn mục tiêu, KPI, mục đích hoặc tiêu chí đã ghim và kênh tương thích với từng manifest. Nếu cần đổi, duyệt brief mới và ghi phiên bản đề xuất tiếp theo. Trần sản xuất AI cho từng lượt dùng đơn vị µUSD, mặc định 10.000. Ngân sách truyền thông mô phỏng dùng VND. Khi giao brief bằng API, gửi thêm `campaign_limits` với `max_duration_days` và `max_media_budget_vnd` để ghim hai trần trong task intent v3. Bản kế hoạch vượt một trong hai trần cần brief và manifest mới. Brief v1/v2 giữ nguyên lịch sử và format cũ; điều phối viên vẫn cần đối chiếu các ràng buộc viết tự do khi duyệt. Khi xếp việc, Workforce lưu digest của kế hoạch cùng phiên bản manifest. Trong màn hình chiến dịch, chọn một trong sáu khu vực để chuyển đến việc cần xử lý. Tiến độ bộ phận lấy từ đơn vị công việc trong kế hoạch đang duyệt.
+
+Chạy `python -m pytest -q tests/test_campaign_commission.py tests/test_campaign_operations.py tests/test_campaign_unit_ownership.py` trong môi trường test của repo. Dùng hướng dẫn Campaign Engine bên dưới để chạy worker thật; mỗi lượt ghi thêm `commission-receipts.json` với attempt ID và hash request theo vai trò. Kiểm các bản giao tổng hợp và trạng thái từng năng lực trước khi lập pilot. [Sổ năng lực](docs/evaluation/campaign-engine/CAPABILITIES.md) · [Nghiên cứu đã áp dụng](docs/research/CAMPAIGN-ENGINE.md)
+
+Không có DDL trong G01. Khi thử bản mới, tách DB phát triển, sao lưu và dùng API, static và worker cùng build, drain hàng đợi trước khi chuyển. Khi rollback, dừng giao việc, giữ bản sao DB và evidence sau thử nghiệm, rồi phục hồi bản sao trước thay đổi cùng image #44 tương ứng. API cũ chưa hiểu ràng buộc giao việc mới. Pool tiền nhiệm và production ngoài phạm vi.
+
 ## Điều hành chiến dịch từ mục tiêu đã duyệt
 
 Bản nền trên main sau bốn lần merge là `1b9e3a9643014122d4c6e510efffc3d02b9843cf`. Bảng đối chiếu ghi cả hai parent, tree, bản tích hợp và CI của từng PR, cùng đường dẫn để kiểm tra trên GitHub. [Bằng chứng hợp nhất #40, #43, #41 và #42](docs/evaluation/campaign-engine/INTEGRATIONS.md)
@@ -670,3 +684,7 @@ Từ **Điều phối Marketing AI → Quyền workflow của chiến dịch**, 
 Để tiếp quản C2 sau vòng duyệt C1, bắt đầu từ [hồ sơ doanh nghiệp và năm luồng nghiệm thu](docs/business-profile/C2-WORKSPACE.md). Thiết kế dùng scope công ty theo client, giữ override của từng brand và cho Solo tạo brief nháp khi còn thiếu dữ kiện. [C3](docs/business-profile/C3-KNOWLEDGE-PROJECTION.md) mô tả projection và ba ranh giới kiểm tra trước khi kích hoạt adapter mới. Chỉ ghi nhận một luồng C2 đạt khi có lần chạy trình duyệt thật với API PostgreSQL ở đúng commit.
 
 Sau khi đồng bộ schema v20 từ `49cbc070`, C0 có [sáu quyết định, snapshot ví dụ và lệnh kiểm tra](docs/business-profile/README.md), [kế hoạch C1](docs/business-profile/C1-PLAN.md) và [năm tình huống C2/C4](docs/business-profile/C2-C4-ACCEPTANCE.md). Từ thư mục gốc chạy `python -m unittest discover -s docs/business-profile -p test_c0.py -v`. Chờ review độc lập C0 trước PR C1. Kiểm số migration còn trống trên main khi chuẩn bị tích hợp, kể cả nhánh Identity đang đề xuất. Commercial GA vẫn NO-GO.
+
+## Nghiệm thu nghiệp vụ trên bộ công việc Marketing
+
+Hai brief B2B đã được chạy cùng đối chứng, Qwen 0.5B, 1.5B và 7B. [Kết quả và trách nhiệm bàn giao](docs/evaluation/department-study/RESULTS.md) dẫn tới bản đầu, bản sau QA, 42 lần gọi có biên nhận, phần tài nguyên bị gián đoạn, hai gói pilot và công cụ kiểm tra ngoại tuyến. Chưa có quyết định của người làm Marketing, reviewer nghiệp vụ hoặc Sales. Commercial GA vẫn NO-GO.

@@ -41,11 +41,23 @@ class ActionIntent(TaskIntent):
     editorial_style: Literal["plain", "concise", "formal", "friendly"]
 
 
-SubmittedIntent = ActionIntent | TaskIntent
+class CampaignLimits(BaseModel):
+    model_config = ConfigDict(extra="forbid")
+    max_duration_days: Annotated[int, Field(strict=True, ge=1, le=180)]
+    max_media_budget_vnd: Annotated[int, Field(strict=True, ge=0, le=1_000_000_000)]
+
+
+class CommissionIntent(ActionIntent):
+    campaign_limits: CampaignLimits
+
+
+COMMISSION_VERSION = "amc.task-intent/3"
+INTENT_TYPES = {TASK_VERSION: TaskIntent, ACTION_VERSION: ActionIntent, COMMISSION_VERSION: CommissionIntent}
+SubmittedIntent = CommissionIntent | ActionIntent | TaskIntent
 
 
 def task_payload(intent):
-    version = ACTION_VERSION if isinstance(intent, ActionIntent) else TASK_VERSION
+    version = next(v for v, kind in INTENT_TYPES.items() if type(intent) is kind)
     return {"task_intent": intent.model_dump(exclude_none=True), "task_version": version}
 
 

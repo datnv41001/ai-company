@@ -20,6 +20,7 @@ PREDECESSOR = "64964aab4f954e3a25bb7b7849fe77a11bfdf5c5"
 
 PREDECESSORS = {
     1: PREDECESSOR,
+    4: "c2a409367fecc3d62537ab582ee126107b6ef2b5",
     2: "eb64af438f0a418ed5c951b20387e1d5bf7d982f",
     3: "159afde2a56e61722db49a08b14724af63d74ec8",
 }
@@ -66,7 +67,7 @@ def run(old_version):
             db.execute(f"ALTER TABLE amc_c3.versions ADD CONSTRAINT studio_rollback_test CHECK(version<>{next_version})")
             with pytest.raises(psycopg.errors.CheckViolation):
                 migrate(dsn)
-            assert db.execute("SELECT to_regprocedure('amc_acl.require_edition_writer()')").fetchone() == (None,)
+            assert db.execute("SELECT to_regprocedure('amc_acl.require_channel_writer()')").fetchone() == (None,)
             assert db.execute("SELECT max(version) FROM amc_c3.versions").fetchone() == (old_version,)
             assert snapshot(db) == before
             assert probe() == "allowed-zero,allowed-zero,allowed-zero"
@@ -74,7 +75,7 @@ def run(old_version):
             migrate(dsn)
             prepare_database(runtime)
             assert probe() == "55000,55000,55000"
-            assert db.execute("SELECT version FROM amc_c3.versions ORDER BY version").fetchall() == [(1,), (2,), (3,), (4,)]
+            assert db.execute("SELECT version FROM amc_c3.versions ORDER BY version").fetchall() == [(1,), (2,), (3,), (4,), (5,)]
             refuse(STARTUP, old, env, b"delivery writer fence")
             refuse(PUBLISH, old, env, b"Unsupported C3 task schema version")
             witness = fingerprint(db)
@@ -89,10 +90,10 @@ def run(old_version):
                 for table, historical in before.items():
                     assert all(row in after[table] for row in historical), table
             with running_api(ROOT, env) as current:
-                assert current("protocol") == "c3/4"
+                assert current("protocol") == "c3/5"
                 assert current() == "allowed-zero,allowed-zero,allowed-zero"
     runtime.dispose()
-    print(f"PASS Studio core v25 C3 v{old_version} to v4: three c3/{old_version} writer denials, c3/4 accepted,"
+    print(f"PASS Studio core v25 C3 v{old_version} to v5: three c3/{old_version} writer denials, c3/5 accepted,"
           " startup and publisher refused, atomic rollback and replay, rows preserved",
           {t:len(v) for t,v in before.items()})
 

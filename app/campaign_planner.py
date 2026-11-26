@@ -9,7 +9,7 @@ from pydantic import Field
 from sqlalchemy import select
 from sqlalchemy.orm import Session
 
-from . import c3_customer_assets, c3_projection, workforce
+from . import c3_customer_assets, c3_projection, campaign_channels, workforce
 from .c3_studio_routes import asset_digest, signoffs
 from .business_workspace import Workspace
 from .database import get_db
@@ -30,6 +30,7 @@ class Proposal(Input):
     expected_revision: Annotated[int, Field(ge=0)]
     manifest_ids: Annotated[list[Ref], Field(min_length=1, max_length=2)]
     budget_vnd: Annotated[int, Field(strict=True, ge=0, le=1_000_000_000)]
+    ai_budget_microusd_per_run: Annotated[int, Field(strict=True, ge=0, le=1_000_000)] = 10000
     duration_days: Annotated[int, Field(strict=True, ge=1, le=180)]
     channels: Annotated[list[Name], Field(min_length=1, max_length=4)] | None = None
     target_outcome: Name | None = None
@@ -95,6 +96,48 @@ def selection(store, cid, mid, *, stage):
     return snap, body, public
 
 
+def check_requirements(plan, projection):
+    intent = projection["task_intent"]
+    limits = intent.get("campaign_limits")
+    if limits and (plan["duration_days"] > limits["max_duration_days"] or plan["budget_vnd"] > limits["max_media_budget_vnd"]):
+        conflict("Thời hạn hoặc trần truyền thông vượt phạm vi đã ghim. Hãy duyệt brief và manifest mới.")
+    outcomes = {projection["objective"], projection["kpi"], projection["kpi"].split(" · ")[0],
+                intent["purpose"], *intent["acceptance_criteria"]}
+    if plan["target_outcome"] not in outcomes:
+        conflict("Kết quả đề xuất khác mục tiêu, KPI hoặc tiêu chí đã duyệt. Hãy duyệt brief và manifest mới.")
+    if {c.casefold() for c in plan["channels"]} != {projection["channel"].casefold()}:
+        conflict("Kênh sản xuất khác kênh đã duyệt. Hãy duyệt brief và manifest mới.")
+
+
+def commissioned_brief(store, brief_id):
+    records = store.query(KnowledgeCommand).filter_by(operation="c3_commission").where(
+        KnowledgeCommand.result["brief_id"].as_string() == brief_id)
+    return store.db.scalar(records.limit(1)) is not None
+
+
+def execution_terms(store, snap, projection, budget):
+    marker = commissioned_brief(store, snap.brief_id)
+    if not marker and not store.approver:
+        return None
+    if marker and not store.approver:
+        conflict("Quản trị viên cần xếp việc từ kế hoạch chiến dịch đã duyệt.")
+    plans = history(store, snap.campaign_id)
+    active = next((p for p in plans if p["status"] == "approved"), None)
+    refs = active["manifests"].values() if active else []
+    if not any(r["id"] == snap.id and r["digest"] == snap.digest for r in refs):
+        if marker or any(p["approval"] and any(r["brief_id"] == snap.brief_id for r in p["manifests"].values()) for p in plans):
+            conflict("Brief đã được giao theo kế hoạch khác. Chọn đúng manifest hoặc duyệt brief mới.")
+        return None
+    check_requirements(active, projection)
+    cap = active.get("ai_budget_microusd_per_run", 10000)
+    if budget != cap:
+        conflict("Hạn mức sản xuất AI phải khớp với kế hoạch đã duyệt.")
+    return {"plan_id": active["id"], "revision": active["revision"], "plan_digest": active["digest"],
+            "manifest_id": snap.id, "manifest_digest": snap.digest, "target_outcome": active["target_outcome"],
+            "channel": projection["channel"], "duration_days": active["duration_days"],
+            "simulated_media_budget_vnd": active["budget_vnd"], "ai_budget_microusd_per_run": cap}
+
+
 def active_plan(store, campaign_id, *, revalidate=True):
     current = next((row for row in history(store, campaign_id) if row["status"] == "approved"), None)
     if not current:
@@ -124,6 +167,8 @@ def planner(tenant_id: str, campaign_id: str, user: User = Depends(current_user)
                     "workflow": body["options"]["workflow"],
                     **{k: public[k] for k in ("audience", "product", "objective")},
                     "buyer_action": public["task_intent"]["buyer_action"],
+                    **({"channel": public["channel"], "kpi": public["kpi"].split(" · ")[0],
+                        "limits": public["task_intent"].get("campaign_limits")} if s.approver else {}),
                 }
             )
     rows = history(s, campaign_id)
@@ -152,7 +197,11 @@ def propose(tenant_id: str, campaign_id: str, body: Proposal, user: User = Depen
             conflict("Choose at most one manifest per production workflow")
         return compose_plan(s, campaign_id, selected, body, new_id()), "restricted", None
 
-    return s.command("campaign_plan", body, make, target=campaign_id)
+    inputs = body.model_dump(mode="json")
+    # Existing retries used the implicit 10,000 µUSD ceiling before it was configurable.
+    if inputs["ai_budget_microusd_per_run"] == 10000:
+        del inputs["ai_budget_microusd_per_run"]
+    return s.command("campaign_plan", body, make, target=campaign_id, fingerprint_input=inputs)
 
 
 @router.post("/plans/{plan_id}/approve")
@@ -172,9 +221,14 @@ def approve(tenant_id: str, campaign_id: str, plan_id: str, body: Approval, user
         for ref in plan["manifests"].values():
             if ref["brief_id"] in commissioned and ref not in carried:
                 conflict("This brief already belongs to a commissioned plan. Prepare a new brief for the next revision")
-            selection(s, campaign_id, ref["id"], stage="queue")
+            snap, _, projection = selection(s, campaign_id, ref["id"], stage="queue")
+            check_requirements(plan, projection)
             if db.scalar(select(WorkforceRun.id).filter_by(tenant_id=tenant_id, campaign_id=campaign_id, brief_id=ref["brief_id"])):
                 conflict("A commissioned workflow requires a fresh brief before production")
+            # Publish only an opaque reservation under the brief's scope. Plan details stay restricted.
+            s.insert(KnowledgeCommand, "internal", key="commission:" + plan_id + ":" + snap.id,
+                     operation="c3_commission", actor=s.actor, request_digest=plan["digest"],
+                     result={"brief_id": ref["brief_id"]}, snapshot_id=None, effective_at=s.now(), queued_at=None)
         from .campaign_operations import commission_plan_units
 
         assets = commission_plan_units(s, campaign_id, plan)
@@ -214,10 +268,17 @@ def queue(
     args = workforce.Start(
         workflow="dynamic-v1",
         max_parallel_nodes=1,
-        budget_microusd=10000,
+        budget_microusd=row.get("ai_budget_microusd_per_run", 10000),
         registry_workflow=ref["workflow"],
         knowledge_manifest={"id": ref["id"], "digest": ref["digest"]},
     )
+    # Check an idempotent retry while the scoped transaction and locks are still active.
+    # Workforce.start commits a new run and its receipt atomically.
+    existing = db.scalar(select(WorkforceRun.id).filter_by(**s.scope, campaign_id=campaign_id, brief_id=ref["brief_id"]))
+    if existing:
+        from .campaign_operations import production_bindings
+        if (plan_id, ref["id"]) not in production_bindings(s, campaign_id):
+            conflict("Lượt chạy hiện hữu không thuộc kế hoạch. Hãy tạo brief và manifest mới.")
     return workforce.start(tenant_id, ref["brief_id"], args, user, db)
 
 
@@ -243,6 +304,7 @@ def production(tenant_id: str, campaign_id: str, plan_id: str, user: User = Depe
                 {
                     "kind": kind,
                     "queue_receipt": queue_receipt,
+                    "commission": run.knowledge.get("campaign_commission"),
                     "manifest": ref,
                     **{k: getattr(run, k) for k in ("id", "state", "deliverable_id", "last_error", "budget_microusd", "reserved_microusd", "journal")},
                     "checkpoint_count": len(run.checkpoints),
@@ -267,10 +329,16 @@ def production(tenant_id: str, campaign_id: str, plan_id: str, user: User = Depe
                     "guideline_digest": plan["brand_guidelines"]["digest"],
                     "registry": run.knowledge["registry"],
                 }
-                if bundle.get("delivery_version") == c3_customer_assets.VERSION:
-                    grouped = c3_customer_assets.project(ref["workflow"], bundle["groups"])
+                if bundle.get("delivery_version") in (c3_customer_assets.VERSION, campaign_channels.VERSION):
+                    ctx = bundle.get("channel_context")
+                    grouped = c3_customer_assets.project(ref["workflow"], bundle["groups"], ctx)
                     receipts = signoffs(db, doc, run)
-                    slots = {"client_strategy": "strategy", "client_measurement": "measurement", "copy": "landing", "seo": "seo"}
+                    slots = {"client_strategy": "strategy", "client_measurement": "measurement", "copy": "landing", "seo": "seo",
+                             **{group: group for group in campaign_channels.FIELDS}}
+                    if ctx:
+                        # The immutable planner proposals remain in plan history. Show
+                        # each commissioned package once in the current production list.
+                        assets[:] = [a for a in assets if a["kind"] not in campaign_channels.FIELDS]
                     for group, fields in grouped.items():
                         slot = slots[group]
                         assets.append(
@@ -283,6 +351,7 @@ def production(tenant_id: str, campaign_id: str, plan_id: str, user: User = Depe
                                 "fields": fields,
                                 "digest": asset_digest(doc, run, group, fields),
                                 "approval_receipt": receipts.get(group, {}).get("receipt"),
+                                **({"plan_digest": ctx["plan_digest"], "queue_receipt": ctx["queue_receipt"]} if ctx else {}),
                                 "provenance": "staff_saved_studio_revision",
                             }
                         )

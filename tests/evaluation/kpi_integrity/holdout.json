@@ -1,0 +1,26 @@
+{
+  "fixture": "kpi-integrity-holdout/1",
+  "case": "Nghiệm thu nội bộ bộ bảo trì cân điện tử Mực Chuẩn",
+  "product": "Buổi kiểm tra điểm cân Mực Chuẩn",
+  "buyer": "Trưởng vận hành trạm cân",
+  "purpose": "Đối chiếu buổi kiểm tra đã hoàn tất với lịch đã xác nhận",
+  "primary": "appointment.completed_per_confirmed",
+  "days": 14,
+  "observed_at": "2026-11-26T00:00:00Z",
+  "cohort": "Lịch đã được xác nhận trong 14 ngày; mỗi mã hẹn một lần; hoàn tất có người thực hiện trong kỳ; giữ ca đã hủy ở mẫu số, tách ca thiếu nguồn.",
+  "expected": {
+    "numerator": 1,
+    "denominator": 3,
+    "unattributed": 2,
+    "cancelled": 1,
+    "rate": 0.3333333333333333
+  },
+  "mutations": [
+    "Substitute page visits",
+    "Count a prior-window confirmation",
+    "Present incomplete work as delivered",
+    "Drop an unattributed appointment",
+    "Double-count a corrected confirmation"
+  ],
+  "pass": "All fields bound to approved version, identical approved equation in signed measurement fields. All seeded numerator, denominator, period, attribution and cancellation counts match. No model inference and zero external writes."
+}

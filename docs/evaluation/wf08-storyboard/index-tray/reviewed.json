@@ -1,0 +1,90 @@
+{
+  "version": "amc.storyboard/1",
+  "brand": "Khe Gọn",
+  "product": "Khay chia linh kiện Khe Gọn",
+  "audience": "Tổ trưởng lắp ráp điện tử",
+  "channel": "vertical-social",
+  "format": "9:16",
+  "duration_seconds": 32,
+  "concept": "product_demonstration",
+  "hook": "Tổ trưởng lắp ráp điện tử cần biết gì?",
+  "hook_variant": "audience",
+  "cta": "Yêu cầu báo giá",
+  "rights": "synthetic_illustration_only",
+  "source_refs": {
+    "manifest": {
+      "id": "d0589b67-0314-427a-9e0e-1fbda5b51915",
+      "digest": "f33e6777ee3a68efcd2fdefcc278c799de099eba775dca7bea53b23cb52f722a"
+    },
+    "guidelines": "b44545db196285fb8c3b7ed25b603c0e333e8d9374725e561a5c3375be4bcf26",
+    "facts": [
+      "F1",
+      "F2"
+    ]
+  },
+  "brand_direction": "Liên kết mỗi cảnh với dữ kiện đã duyệt; dùng câu ngắn.",
+  "method_ref": {
+    "path": "catalog/video-storyboard-sop-v1.json",
+    "revision": "wf08-production-sop/1",
+    "digest": "db4558733a1d4924ee5e5aa2b61f82f918973bc4551514637054645af1118819"
+  },
+  "shots": [
+    {
+      "purpose": "hook",
+      "visual_mode": "mechanism",
+      "visual": "Tách thao tác thành hai trạng thái để người xem đối chiếu.",
+      "voice": "Tổ trưởng lắp ráp điện tử cần biết gì?",
+      "caption": "Tổ trưởng lắp ráp điện tử cần biết gì?",
+      "source_ids": [],
+      "start_s": 0,
+      "end_s": 6
+    },
+    {
+      "purpose": "proof",
+      "visual_mode": "mechanism",
+      "visual": "Tách thao tác thành hai trạng thái để người xem đối chiếu. Ghi đúng phạm vi của F2.",
+      "voice": "Vách ngăn có thể tháo rời. Áp dụng cho mẫu tiêu chuẩn.",
+      "caption": "Vách ngăn có thể tháo rời. Áp dụng cho\nmẫu tiêu chuẩn.",
+      "source_ids": [
+        "F2"
+      ],
+      "start_s": 6,
+      "end_s": 13
+    },
+    {
+      "purpose": "terms",
+      "visual_mode": "offer",
+      "visual": "Tách số tiền, đơn vị tính thuế và mức đặt tối thiểu.",
+      "voice": "Giá tham khảo: 380.000 VND / 1 hộp, đã gồm thuế. Đơn tối thiểu: 5 hộp.",
+      "caption": "Giá tham khảo: 380.000 VND / 1 hộp, đã\ngồm thuế. Đơn tối thiểu: 5 hộp.",
+      "source_ids": [
+        "F1"
+      ],
+      "start_s": 13,
+      "end_s": 21
+    },
+    {
+      "purpose": "conditions",
+      "visual_mode": "document",
+      "visual": "Giữ nguyên điều kiện trên thẻ chữ.",
+      "voice": "Xác nhận số lượng trước khi đặt.",
+      "caption": "Xác nhận số lượng trước khi đặt.",
+      "source_ids": [
+        "F1"
+      ],
+      "start_s": 21,
+      "end_s": 27
+    },
+    {
+      "purpose": "action",
+      "visual_mode": "request",
+      "visual": "Hiện nút gửi yêu cầu; không vẽ dấu đã xác nhận.",
+      "voice": "Yêu cầu báo giá",
+      "caption": "Yêu cầu báo giá",
+      "source_ids": [],
+      "start_s": 27,
+      "end_s": 32
+    }
+  ],
+  "vtt": "WEBVTT\n\n1\n00:00:00.000 --> 00:00:06.000\nTổ trưởng lắp ráp điện tử cần biết gì?\n\n2\n00:00:06.000 --> 00:00:13.000\nVách ngăn có thể tháo rời. Áp dụng cho\nmẫu tiêu chuẩn.\n\n3\n00:00:13.000 --> 00:00:21.000\nGiá tham khảo: 380.000 VND / 1 hộp, đã\ngồm thuế. Đơn tối thiểu: 5 hộp.\n\n4\n00:00:21.000 --> 00:00:27.000\nXác nhận số lượng trước khi đặt.\n\n5\n00:00:27.000 --> 00:00:32.000\nYêu cầu báo giá\n"
+}

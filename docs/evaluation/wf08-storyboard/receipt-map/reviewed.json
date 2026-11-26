@@ -1,0 +1,90 @@
+{
+  "version": "amc.storyboard/1",
+  "brand": "Luồng Rõ",
+  "product": "Buổi khảo sát luồng nhận hàng Luồng Rõ",
+  "audience": "Trưởng vận hành kho phân phối",
+  "channel": "vertical-social",
+  "format": "9:16",
+  "duration_seconds": 32,
+  "concept": "service_deliverable",
+  "hook": "Trưởng vận hành kho phân phối cần biết gì?",
+  "hook_variant": "audience",
+  "cta": "Gửi đề nghị khảo sát",
+  "rights": "synthetic_illustration_only",
+  "source_refs": {
+    "manifest": {
+      "id": "57a71cd2-2a27-41d2-ab7c-1b2149b1a8d3",
+      "digest": "8f001034616dbc9c4a3d79df0a209c079893286801123b50700ee2d960fb6b88"
+    },
+    "guidelines": "b44545db196285fb8c3b7ed25b603c0e333e8d9374725e561a5c3375be4bcf26",
+    "facts": [
+      "F1",
+      "F2"
+    ]
+  },
+  "brand_direction": "Liên kết mỗi cảnh với dữ kiện đã duyệt; dùng câu ngắn.",
+  "method_ref": {
+    "path": "catalog/video-storyboard-sop-v1.json",
+    "revision": "wf08-production-sop/1",
+    "digest": "db4558733a1d4924ee5e5aa2b61f82f918973bc4551514637054645af1118819"
+  },
+  "shots": [
+    {
+      "purpose": "hook",
+      "visual_mode": "process",
+      "visual": "Vẽ luồng bàn giao rồi phóng vào kết quả được duyệt.",
+      "voice": "Trưởng vận hành kho phân phối cần biết gì?",
+      "caption": "Trưởng vận hành kho phân phối cần biết\ngì?",
+      "source_ids": [],
+      "start_s": 0,
+      "end_s": 6
+    },
+    {
+      "purpose": "proof",
+      "visual_mode": "document",
+      "visual": "Vẽ luồng bàn giao rồi phóng vào kết quả được duyệt. Ghi đúng phạm vi của F1.",
+      "voice": "Bàn giao sơ đồ luồng nhận hàng. Trong phạm vi buổi khảo sát.",
+      "caption": "Bàn giao sơ đồ luồng nhận hàng. Trong\nphạm vi buổi khảo sát.",
+      "source_ids": [
+        "F1"
+      ],
+      "start_s": 6,
+      "end_s": 13
+    },
+    {
+      "purpose": "terms",
+      "visual_mode": "offer",
+      "visual": "Tách số tiền, đơn vị tính thuế và mức đặt tối thiểu.",
+      "voice": "Giá tham khảo: 760.000 VND / 1 lượt, đã gồm thuế. Đơn tối thiểu: 1 lượt.",
+      "caption": "Giá tham khảo: 760.000 VND / 1 lượt, đã\ngồm thuế. Đơn tối thiểu: 1 lượt.",
+      "source_ids": [
+        "F2"
+      ],
+      "start_s": 13,
+      "end_s": 21
+    },
+    {
+      "purpose": "conditions",
+      "visual_mode": "document",
+      "visual": "Giữ nguyên điều kiện trên thẻ chữ.",
+      "voice": "Người phụ trách xác nhận lịch sau khi nhận đề nghị.",
+      "caption": "Người phụ trách xác nhận lịch sau khi\nnhận đề nghị.",
+      "source_ids": [
+        "F2"
+      ],
+      "start_s": 21,
+      "end_s": 28
+    },
+    {
+      "purpose": "action",
+      "visual_mode": "request",
+      "visual": "Hiện nút gửi yêu cầu; không vẽ dấu đã xác nhận.",
+      "voice": "Gửi đề nghị khảo sát",
+      "caption": "Gửi đề nghị khảo sát",
+      "source_ids": [],
+      "start_s": 28,
+      "end_s": 32
+    }
+  ],
+  "vtt": "WEBVTT\n\n1\n00:00:00.000 --> 00:00:06.000\nTrưởng vận hành kho phân phối cần biết\ngì?\n\n2\n00:00:06.000 --> 00:00:13.000\nBàn giao sơ đồ luồng nhận hàng. Trong\nphạm vi buổi khảo sát.\n\n3\n00:00:13.000 --> 00:00:21.000\nGiá tham khảo: 760.000 VND / 1 lượt, đã\ngồm thuế. Đơn tối thiểu: 1 lượt.\n\n4\n00:00:21.000 --> 00:00:28.000\nNgười phụ trách xác nhận lịch sau khi\nnhận đề nghị.\n\n5\n00:00:28.000 --> 00:00:32.000\nGửi đề nghị khảo sát\n"
+}

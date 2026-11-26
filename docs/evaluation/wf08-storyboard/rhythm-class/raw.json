@@ -1,0 +1,75 @@
+{
+  "audience": "Người lớn quay lại học nhạc",
+  "brand": "Phách Mở",
+  "brand_direction": "Liên kết mỗi cảnh với dữ kiện đã duyệt; dùng câu ngắn.",
+  "channel": "vertical-social",
+  "concept": "educational",
+  "cta": "Chọn buổi",
+  "duration_seconds": 32,
+  "format": "9:16",
+  "hook": "Bạn muốn chọn buổi nào?",
+  "hook_variant": "direct",
+  "method_ref": {
+    "digest": "db4558733a1d4924ee5e5aa2b61f82f918973bc4551514637054645af1118819",
+    "path": "catalog/video-storyboard-sop-v1.json",
+    "revision": "wf08-production-sop/1"
+  },
+  "product": "Buổi đọc nhịp Phách Mở",
+  "rights": "synthetic_illustration_only",
+  "shots": [
+    {
+      "caption": "Bạn muốn chọn buổi nào?",
+      "end_s": 8,
+      "purpose": "hook",
+      "source_ids": [],
+      "start_s": 0,
+      "visual": "Đặt hai thẻ lựa chọn cạnh nhau rồi đánh dấu bước người xem cần thực hiện.",
+      "visual_mode": "comparison",
+      "voice": "Bạn muốn chọn buổi nào?"
+    },
+    {
+      "caption": "Bảng nhịp có ký hiệu phách mạnh và\nphách nhẹ. Áp dụng cho phần luyện đọc.",
+      "end_s": 18,
+      "purpose": "proof",
+      "source_ids": [
+        "F1"
+      ],
+      "start_s": 8,
+      "visual": "Đặt hai thẻ lựa chọn cạnh nhau rồi đánh dấu bước người xem cần thực hiện. Ghi đúng phạm vi của F1.",
+      "visual_mode": "comparison",
+      "voice": "Bảng nhịp có ký hiệu phách mạnh và phách nhẹ. Áp dụng cho phần luyện đọc."
+    },
+    {
+      "caption": "Chưa có giá được duyệt.",
+      "end_s": 25,
+      "purpose": "scope",
+      "source_ids": [],
+      "start_s": 18,
+      "visual": "Để trống ô giá và chỉ dẫn nơi hỏi thêm.",
+      "visual_mode": "document",
+      "voice": "Chưa có giá được duyệt."
+    },
+    {
+      "caption": "Chọn buổi",
+      "end_s": 32,
+      "purpose": "action",
+      "source_ids": [],
+      "start_s": 25,
+      "visual": "Hiện nút gửi yêu cầu; không vẽ dấu đã xác nhận.",
+      "visual_mode": "request",
+      "voice": "Chọn buổi"
+    }
+  ],
+  "source_refs": {
+    "facts": [
+      "F1"
+    ],
+    "guidelines": "b44545db196285fb8c3b7ed25b603c0e333e8d9374725e561a5c3375be4bcf26",
+    "manifest": {
+      "digest": "17ec6c25eb1dbae0f0684e5e98a4a062206ecce88ec141456c49ee35ed3a577f",
+      "id": "8819749e-158b-4113-b69c-3be0fceeeefa"
+    }
+  },
+  "version": "amc.storyboard/1",
+  "vtt": "WEBVTT\n\n1\n00:00:00.000 --> 00:00:08.000\nBạn muốn chọn buổi nào?\n\n2\n00:00:08.000 --> 00:00:18.000\nBảng nhịp có ký hiệu phách mạnh và\nphách nhẹ. Áp dụng cho phần luyện đọc.\n\n3\n00:00:18.000 --> 00:00:25.000\nChưa có giá được duyệt.\n\n4\n00:00:25.000 --> 00:00:32.000\nChọn buổi\n"
+}

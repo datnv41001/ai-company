@@ -1,0 +1,75 @@
+{
+  "version": "amc.storyboard/1",
+  "brand": "Phách Mở",
+  "product": "Buổi đọc nhịp Phách Mở",
+  "audience": "Người lớn quay lại học nhạc",
+  "channel": "vertical-social",
+  "format": "9:16",
+  "duration_seconds": 32,
+  "concept": "educational",
+  "hook": "Người lớn quay lại học nhạc cần biết gì?",
+  "hook_variant": "audience",
+  "cta": "Chọn buổi",
+  "rights": "synthetic_illustration_only",
+  "source_refs": {
+    "manifest": {
+      "id": "8819749e-158b-4113-b69c-3be0fceeeefa",
+      "digest": "17ec6c25eb1dbae0f0684e5e98a4a062206ecce88ec141456c49ee35ed3a577f"
+    },
+    "guidelines": "b44545db196285fb8c3b7ed25b603c0e333e8d9374725e561a5c3375be4bcf26",
+    "facts": [
+      "F1"
+    ]
+  },
+  "brand_direction": "Liên kết mỗi cảnh với dữ kiện đã duyệt; dùng câu ngắn.",
+  "method_ref": {
+    "path": "catalog/video-storyboard-sop-v1.json",
+    "revision": "wf08-production-sop/1",
+    "digest": "db4558733a1d4924ee5e5aa2b61f82f918973bc4551514637054645af1118819"
+  },
+  "shots": [
+    {
+      "purpose": "hook",
+      "visual_mode": "comparison",
+      "visual": "Đặt hai thẻ lựa chọn cạnh nhau rồi đánh dấu bước người xem cần thực hiện.",
+      "voice": "Người lớn quay lại học nhạc cần biết gì?",
+      "caption": "Người lớn quay lại học nhạc cần biết\ngì?",
+      "source_ids": [],
+      "start_s": 0,
+      "end_s": 8
+    },
+    {
+      "purpose": "proof",
+      "visual_mode": "comparison",
+      "visual": "Đặt hai thẻ lựa chọn cạnh nhau rồi đánh dấu bước người xem cần thực hiện. Ghi đúng phạm vi của F1.",
+      "voice": "Bảng nhịp có ký hiệu phách mạnh và phách nhẹ. Áp dụng cho phần luyện đọc.",
+      "caption": "Bảng nhịp có ký hiệu phách mạnh và\nphách nhẹ. Áp dụng cho phần luyện đọc.",
+      "source_ids": [
+        "F1"
+      ],
+      "start_s": 8,
+      "end_s": 18
+    },
+    {
+      "purpose": "scope",
+      "visual_mode": "document",
+      "visual": "Để trống ô giá và chỉ dẫn nơi hỏi thêm.",
+      "voice": "Chưa có giá được duyệt.",
+      "caption": "Chưa có giá được duyệt.",
+      "source_ids": [],
+      "start_s": 18,
+      "end_s": 25
+    },
+    {
+      "purpose": "action",
+      "visual_mode": "request",
+      "visual": "Hiện nút gửi yêu cầu; không vẽ dấu đã xác nhận.",
+      "voice": "Chọn buổi",
+      "caption": "Chọn buổi",
+      "source_ids": [],
+      "start_s": 25,
+      "end_s": 32
+    }
+  ],
+  "vtt": "WEBVTT\n\n1\n00:00:00.000 --> 00:00:08.000\nNgười lớn quay lại học nhạc cần biết\ngì?\n\n2\n00:00:08.000 --> 00:00:18.000\nBảng nhịp có ký hiệu phách mạnh và\nphách nhẹ. Áp dụng cho phần luyện đọc.\n\n3\n00:00:18.000 --> 00:00:25.000\nChưa có giá được duyệt.\n\n4\n00:00:25.000 --> 00:00:32.000\nChọn buổi\n"
+}

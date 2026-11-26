@@ -1,0 +1,2 @@
+# Render receipts hash the exact UTF-8 worker export, including its LF newlines.
+*.json text eol=lf

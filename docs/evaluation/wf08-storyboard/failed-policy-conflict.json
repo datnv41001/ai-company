@@ -1,0 +1,72 @@
+{
+  "run_id": "75a8a2ee-3270-4613-bf8f-81c75b749b5b",
+  "state": "failed",
+  "last_error": "storyboard_needs_revision",
+  "deliverable_id": null,
+  "journal": [
+    {
+      "node_id": "director",
+      "plan_revision": 1,
+      "skill": "director",
+      "attempt": 1,
+      "provider": "deterministic",
+      "model": "local-storyboard/1",
+      "prompt": "marketing-workforce-2",
+      "started_at": "2026-11-26T08:52:35.729146+00:00",
+      "outcome": "ok",
+      "reserved_microusd": 0,
+      "input_tokens": 0,
+      "output_tokens": 0,
+      "estimated_microusd": 0,
+      "finished_at": "2026-11-26T08:52:35.811541+00:00"
+    },
+    {
+      "node_id": "n01",
+      "plan_revision": 1,
+      "skill": "storyboard",
+      "attempt": 1,
+      "provider": "deterministic",
+      "model": "local-storyboard/1",
+      "prompt": "marketing-workforce-2",
+      "started_at": "2026-11-26T08:52:35.837075+00:00",
+      "outcome": "storyboard_needs_revision",
+      "reserved_microusd": 0,
+      "input_tokens": 0,
+      "output_tokens": 0,
+      "estimated_microusd": 0,
+      "finished_at": "2026-11-26T08:52:35.877174+00:00"
+    },
+    {
+      "node_id": "n01",
+      "plan_revision": 1,
+      "skill": "storyboard",
+      "attempt": 2,
+      "provider": "deterministic",
+      "model": "local-storyboard/1",
+      "prompt": "marketing-workforce-2",
+      "started_at": "2026-11-26T08:52:35.894656+00:00",
+      "outcome": "storyboard_needs_revision",
+      "reserved_microusd": 0,
+      "input_tokens": 0,
+      "output_tokens": 0,
+      "estimated_microusd": 0,
+      "finished_at": "2026-11-26T08:52:35.922666+00:00"
+    },
+    {
+      "node_id": "n01",
+      "plan_revision": 1,
+      "skill": "storyboard",
+      "attempt": 3,
+      "provider": "deterministic",
+      "model": "local-storyboard/1",
+      "prompt": "marketing-workforce-2",
+      "started_at": "2026-11-26T08:52:35.933656+00:00",
+      "outcome": "storyboard_needs_revision",
+      "reserved_microusd": 0,
+      "input_tokens": 0,
+      "output_tokens": 0,
+      "estimated_microusd": 0,
+      "finished_at": "2026-11-26T08:52:35.963840+00:00"
+    }
+  ]
+}

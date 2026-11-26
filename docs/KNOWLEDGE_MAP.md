@@ -17,20 +17,9 @@
 | Phản biện và chất lượng | [Các đánh giá](evaluation/), [thiết kế pilot nghiệp vụ](evaluation/department-study/PILOT.md), [AIRC-500](../engineering/airc500/README.md) và [giao thức kiểm định](../engineering/airc500/CONTRACTS.md). Phân biệt người triển khai, reviewer độc lập, model có receipt và người hành nghề thực sự. Lưu bất đồng còn mở tại báo cáo có liên quan. |
 | Vận hành và giới hạn triển khai | [Chạy trên máy mới](../HANDOFF.md#2-chạy-bằng-docker-từ-một-checkout-sạch), [worker pool](POOL-RUNBOOK.md), [khôi phục phiên](IDENTITY-SESSION-RECOVERY.md) và [workflow CI](../.github/workflows/ci.yml). Thiết lập dev dùng loopback và fixture. Cần quyết định theo từng gate trước khi triển khai production hoặc bật adapter ghi ra ngoài. |
 
-## Dùng bằng chứng để đặt trạng thái
+## Đọc mức nghiệm thu
 
-| Mức | Bằng chứng tối thiểu |
-|---|---|
-| Ý tưởng | Nhu cầu, giả thuyết giá trị, đối tượng và phép thử dự kiến. |
-| Đặc tả | Yêu cầu có ID, phạm vi, đầu vào, đầu ra và điều kiện nghiệm thu. |
-| Đã hiện thực | Commit và đường chạy thực tế từ API, UI hoặc worker. |
-| Đã kiểm thử kỹ thuật | Lệnh, fixture, phiên bản, kết quả đạt/trượt/bỏ qua và artifact tái kiểm được. |
-| Đã kiểm chứng tích hợp | Base/head hoặc merge SHA, tree và bằng chứng các thành phần dùng cùng hợp đồng trong một hành trình. Ghi riêng bản ghép thử và bản có trên main. |
-| Đã nghiệm thu nghiệp vụ | Người có thẩm quyền đã dùng hoặc xem đúng đầu ra, ghi quyết định, công sửa và revision chấp nhận. |
-| Đủ điều kiện production | Owner chịu trách nhiệm ký các gate vận hành, bảo mật, pháp lý và phục hồi trong đặc tả. |
-| Đã chứng minh giá trị thương mại | Số liệu trên công việc được chấp nhận, có mẫu số, baseline, kỳ đo, chi phí toàn hành trình và giới hạn suy luận. |
-
-Áp dụng mức cho **từng năng lực trong phạm vi đã đo**. Một case tích hợp có thể đạt trong sandbox trong khi cả module còn thiếu nhiều hành trình. Giữ giá trị chưa đo là chưa đo. Khi hai nguồn mâu thuẫn, nêu rõ mốc của từng nguồn, tái hiện bằng checkout được chỉ định, sau đó cập nhật nguồn đang có trách nhiệm mô tả hành vi.
+Tra tám mức từ ý tưởng tới giá trị thương mại trong [từ điển trạng thái V1](IMPLEMENTATION_STATUS.md#cách-đọc-trạng-thái). Áp dụng mức cho từng năng lực trong phạm vi đã đo. Khi hai nguồn mâu thuẫn, ghim checkout, tái hiện hành vi, ghi cách phân xử và cập nhật đúng tài liệu chịu trách nhiệm.
 
 <a id="cold-start"></a>
 ## Bài tiếp quản bằng một AI mới

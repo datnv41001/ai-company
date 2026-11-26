@@ -1,0 +1,28 @@
+{
+  "snapshot": "82d5b246143e893f49467e1ca319dfb9d1551229",
+  "executor": "operator-run disposable source archive",
+  "db": "SQLite",
+  "python": "3.12.14",
+  "init_exit": 0,
+  "health": {
+    "http": 200,
+    "json": {
+      "status": "ok",
+      "stage": "engineering_bootstrap",
+      "environment": "local",
+      "production_ready": false
+    }
+  },
+  "pages": {
+    "/": 200,
+    "/docs": 200
+  },
+  "stopped": true,
+  "test_exit": 0,
+  "test_summary": "12 passed in 6.58s",
+  "pytest_command": "python -m pytest -q tests/test_api.py",
+  "archive_sha256": "1f9f499b898a5010eec34335c2e1eb486b7a644db7c2249acd667acee4ec57d5",
+  "initial_error": "WinError 10106: SYSTEMROOT was absent from the disposable harness",
+  "additional_test": "tests/test_revision_evidence.py::test_title_only_revision_rejects_old_approval_and_rejection",
+  "additional_result": "1 passed, 1 skipped in 10.99s"
+}

@@ -29,7 +29,7 @@ The completed product must support Agency Mode + In-house Mode, 49 product modul
 
 ## What already works in this starter
 
-- Register an organization as Agency or In-house; login with bearer JWT and Argon2 password hashing.
+- Register an account, verify its email in the development mailbox and choose or create a workspace. The workspace supports Agency and In-house modes.
 - Persist clients, brands, campaigns, workflow skeleton tasks, deliverables, action approvals and audit events.
 - Scope API resources by tenant and client. Each external membership belongs to one client per agency. It can read that client profile and explicitly shared snapshots. Commenting and deciding require separate grants. PostgreSQL enforces row policies in addition to the API checks. Internal `viewer` members retain agency-wide read access.
 - Create an idempotent **deterministic** 7-task marketing campaign plan (NOT an LLM-generated plan).
@@ -83,7 +83,7 @@ Open http://127.0.0.1:8000 for development. Local email verification uses a synt
 
 ## First interactive workflow
 
-1. Register a tenant; choose `agency` or `inhouse`.
+1. Register an account, verify its address using the private development mailbox, then sign in. Create an Agency or In-house workspace, or accept an invitation to an existing workspace. [Onboarding walkthrough](docs/PR16-ONBOARDING.md)
 2. Agency: add a Client. In-house: the initial `Internal Marketing` client exists.
 3. Create a Brand; record brand rules and verified product facts.
 4. Create a Campaign with objective and a meaningful brief.

@@ -57,6 +57,8 @@ The two new briefs cover an RFQ for 24-piece boxes sold excluding VAT and a staf
 
 ## Independent read of Marketing deliverables
 
+The [obligation-level analysis](OBLIGATIONS.md) separates the Vietnamese RFQ from the English appointment, traces all 18 role objectives to candidate IDs, and links a matched-language handoff task with frozen evaluation criteria.
+
 A separate AI reader received the shuffled 24 texts, the two briefs and the rubric. It had no source mapping or prior run history. Formatting can still hint at authorship. After the reader submitted all 24 decisions, the custodian checked every card against its exact sealed draft and then joined arm labels. Each arm has six binary obligations per job (three per brief). The engineering reading is a small diagnostic, not a survey of Marketing experts.
 
 | Role | Deterministic obligations met / 6 | AI revision obligations met / 6 | AI prompt / output tokens | Request seconds |

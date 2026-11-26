@@ -1,5 +1,7 @@
 # Security, Reliability and General Availability (GA) Blockers
 
+The internal merge of #57 at `26578088519d99f4aed5be9c516ac247f3d4735e` includes the corrected commercial unit, scoped pre-assignment withdrawal and role-specific treatment disclosure. Production and Commercial GA are **NO-GO**. Sandbox campaign receipts, local grammar validation and technical editorial scores do not establish practitioner acceptance, provider permissions or actual unit economics. [Internal merge CI](https://github.com/datnv41001/ai-company/actions/runs/45780019694) · [Current handoff](../HANDOFF.md)
+
 Main after #56 includes synthetic Sales permissions, intake metrics and the private practitioner-pilot procedure. Producer disclosure and customer withdrawal are under follow-up review. Practitioner acceptance, full costs per accepted job and authorization for external platform writes remain outstanding. Production and Commercial GA are **NO-GO**. [Main receipt](evaluation/department-review/MAIN-56.json) · [Review scope](evaluation/department-review/MARKET-HANDOFF.md)
 
 AIRC v3 chỉ được sử dụng trên fixture tổng hợp. Kiểm định độc lập theo nghĩa vụ, custody giữa các OS principal, coverage ngữ nghĩa và mở rộng reviewer vẫn là cổng riêng. [Kết quả và các ngưỡng thử nghiệm](../engineering/airc500/UNION-STUDY.md).

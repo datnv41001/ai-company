@@ -1,0 +1,176 @@
+{
+  "as_of": "2026-11-26",
+  "scope": "synthetic-agency/client-a/brand-sky/campaign-demo",
+  "policies": {
+    "site": {
+      "authority": "service_manager",
+      "allowed": [
+        "SV-10",
+        "SV-12"
+      ],
+      "questions": {
+        "en": "Which service site should we use?",
+        "vi": "Địa điểm dịch vụ hiện tại là ở đâu?"
+      }
+    },
+    "dock": {
+      "authority": "sales_manager",
+      "allowed": [
+        "DK-30",
+        "DK-42"
+      ],
+      "questions": {
+        "en": "Which receiving dock should we use?",
+        "vi": "Điểm giao hiện tại là ở đâu?"
+      }
+    }
+  },
+  "scenarios": [
+    {
+      "id": "site-correction",
+      "field": "site",
+      "locale": "en",
+      "old": "SV-10",
+      "message": "Change the site to SV-12.",
+      "expected": {
+        "decision": "ready",
+        "current": "SV-12",
+        "status": "corrected"
+      }
+    },
+    {
+      "id": "dock-correction",
+      "field": "dock",
+      "locale": "vi",
+      "old": "DK-30",
+      "message": "Đổi điểm giao sang DK-42.",
+      "expected": {
+        "decision": "ready",
+        "current": "DK-42",
+        "status": "corrected"
+      }
+    },
+    {
+      "id": "withdraw-existing",
+      "field": "site",
+      "locale": "vi",
+      "old": "SV-10",
+      "message": "Địa điểm cũ đã hết hiệu lực.",
+      "expected": {
+        "decision": "ask",
+        "current": null,
+        "status": "withdrawn"
+      }
+    },
+    {
+      "id": "outside-zone",
+      "field": "site",
+      "locale": "en",
+      "old": "SV-10",
+      "message": "Change the site to SV-80.",
+      "expected": {
+        "decision": "clarify_policy",
+        "current": "SV-80",
+        "status": "corrected"
+      }
+    },
+    {
+      "id": "withdraw-uncertain",
+      "field": "dock",
+      "locale": "en",
+      "old": null,
+      "message": "The dock is no longer valid.",
+      "expected": {
+        "decision": "ask",
+        "current": null,
+        "status": "withdrawn"
+      }
+    },
+    {
+      "id": "follow-current",
+      "field": "dock",
+      "locale": "vi",
+      "old": "DK-30",
+      "message": "Điểm giao trong hồ sơ vẫn đúng.",
+      "expected": {
+        "decision": "ready",
+        "current": "DK-30",
+        "status": "confirmed"
+      }
+    },
+    {
+      "id": "wrong-statement-field",
+      "field": "site",
+      "locale": "en",
+      "old": "SV-10",
+      "message": "Change the dock to DK-42.",
+      "expected": {
+        "decision": "clarify_policy",
+        "current": null,
+        "status": "unresolved_message"
+      }
+    },
+    {
+      "id": "ambiguous-preference",
+      "field": "dock",
+      "locale": "en",
+      "old": "DK-42",
+      "message": "Possibly another dock; I will check.",
+      "expected": {
+        "decision": "clarify_policy",
+        "current": null,
+        "status": "unresolved_message"
+      }
+    },
+    {
+      "id": "expired-snapshot",
+      "field": "site",
+      "locale": "vi",
+      "old": "SV-10",
+      "message": "Địa điểm trong hồ sơ vẫn đúng.",
+      "expiry": "2026-11-25",
+      "expected": {
+        "decision": "ask",
+        "current": null,
+        "status": "absent_or_expired"
+      }
+    },
+    {
+      "id": "older-message",
+      "field": "dock",
+      "locale": "en",
+      "old": "DK-30",
+      "message": "Change the dock to DK-42.",
+      "when": "2026-11-23",
+      "expected": {
+        "decision": "clarify_policy",
+        "current": null,
+        "status": "unresolved_message"
+      }
+    },
+    {
+      "id": "internal-authority",
+      "field": "dock",
+      "locale": "vi",
+      "old": "DK-30",
+      "message": "Đổi điểm giao sang DK-99.",
+      "expected": {
+        "decision": "clarify_policy",
+        "current": "DK-99",
+        "status": "corrected"
+      }
+    },
+    {
+      "id": "missing-record",
+      "field": "site",
+      "locale": "en",
+      "old": null,
+      "message": "The site in the file is correct.",
+      "expected": {
+        "decision": "ask",
+        "current": null,
+        "status": "absent_or_expired"
+      }
+    }
+  ]
+}

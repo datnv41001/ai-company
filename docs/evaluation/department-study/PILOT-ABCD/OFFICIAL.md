@@ -79,3 +79,14 @@ python -m pytest -q tests/test_department_official_pilot.py tests/test_departmen
 ```
 
 Người review có thể thay byte bản đầu sau khi giữ lại receipt, đổi revision trên phiếu đầu sang revision bản giao, xóa một work order ở design lẫn ở bảng kết quả, gỡ phiếu QA của D, hoặc bỏ trống chi phí của lần thất bại. Các regression kiểm từng trường hợp ở đúng khâu nhận, chấm hoặc đối soát. Đây là kiểm định công cụ, chưa đo giá trị Marketing từ người sử dụng.
+
+## Mời người hành nghề
+
+Dùng [thư mời riêng và hướng dẫn consent](INVITATION.md). Người điều phối điền thời gian, thù lao, nơi lưu, hạn xóa và đầu mối rút quyền trước khi mời. Tách thư mời khỏi khóa phân bổ và tài liệu chấm mù. Trạng thái vòng chuẩn bị là chưa gửi thư, chưa tuyển và chưa cấp một quyết định nghiệm thu thật.
+
+## Điều phối và quyết định sau lời mời
+
+1. Xác nhận người tham gia có kinh nghiệm phù hợp, đủ consent, điều kiện thù lao đã duyệt và khả năng giữ riêng tài liệu. Tạo một alias riêng tư, gán một loại vai trò xuyên suốt. Người đánh giá độc lập và người nhận cuối nhận gói ẩn treatment. Nếu một người đã biết brief phải ghi nhận và xử lý thứ tự hoặc phân công theo runbook. Tuyển theo số vai trò có thật. Khi thiếu người, giữ việc ở trạng thái chờ.
+2. Giữ bản đồng ý, điều kiện sử dụng, chi phí và liên hệ trong kho riêng. Không đưa thư đã điền vào Git. Tạo brief và ứng viên mới được phép dùng, khóa tám work order, giữ digest ở người thứ hai. Chỉ gửi gói riêng theo vai trò. [Quy trình issue/capture/grade/report v2](OFFICIAL.md)
+3. Chấm bản đầu trước biên tập. Ghi đúng revision, căn cứ claim, người nhận, độ rõ của hành động và lý do trả lại. Ghi từng lần sửa, lỗi nghiêm trọng, giờ thực làm, thời gian chờ, phí dịch vụ, công QA. Sales/Service quyết định có sử dụng bản cuối ở revision nào. Từ chối, hết hạn, lộ nhãn và việc dang dở vẫn vào báo cáo.
+4. Báo cáo từng nhánh A/B/C/D, tách RFQ và lịch hẹn. Đếm việc được ủy quyền chấp nhận, tỷ lệ bản đầu đạt, chất lượng theo rubric và chi phí đầy đủ trên việc được dùng. Mẫu số bằng 0 hoặc thiếu chi phí thì ghi **chưa xác định**. Một phiếu của AI chỉ là bằng chứng kỹ thuật. [Định nghĩa đơn vị giá trị](../../../PRODUCT_MISSION.md)

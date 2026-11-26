@@ -38,3 +38,14 @@ Mốc đối chiếu là cây PR #56 tại `5b5e3ae625dddecf98fddfd063b0cb3855eb
 | Reporting & Optimization. Trưởng Marketing/Finance → analyst → người chịu ngân sách và bên tiếp nhận | Receipt, chi phí, chiết khấu/hoàn tiền nếu có, kỳ và mẫu số. Đối soát theo giai đoạn, tách quan sát khỏi quy kết → báo cáo kèm khoảng trống và quyết định thử tiếp. | Gộp receipt, canonical event và tiền đã thu. Tự động flag mẫu số/nguồn thiếu. Người duyệt truy lại chứng từ, ghi độ bất định và quyết định. [K-08](KNOWLEDGE_CARDS.md#k-08) · [K-16](KNOWLEDGE_CARDS.md#k-16) | **Có một phần**. Đã có sandbox đối soát. Chưa có outcome và cost/accepted job từ doanh nghiệp. MKT-16, MKT-17, MKT-18, `ai-marketing-data-analyst`, `ai-attribution-experiment-analyst`, WF-17, WF-18, WF-19. |
 
 Phân loại theo phạm vi. **Đã có** hợp đồng nhập dữ liệu và kiểm câu trả lời ở intake. **Chưa có** phép đo lợi ích từ practitioner trong các nhóm trên. **Không phù hợp** là cấp quyền tự động gửi email, chốt lịch, sửa CRM hoặc chi ngân sách theo tín hiệu từ nguồn công khai. [Mã intake](../../app/business_intake.py) · [Quy tắc tư vấn](../evaluation/business-intake/CONSULTATION.md) · [ADR về ranh giới tích hợp](../ADR-001-OWN-SaaS-CORE.md) · [Bàn giao repo](../../HANDOFF.md) · [Bước kiểm định ưu tiên](PRODUCT_OPPORTUNITIES.md#o-09)
+
+## Ai cần kết quả nào trong vòng sản xuất này
+
+| Bối cảnh | Việc tốn công hoặc dễ sai | Phần tái sử dụng và phép kiểm |
+| --- | --- | --- |
+| Solo và SME dịch vụ | Chủ vừa nhận khách vừa duyệt bài. CTA vô tình biến yêu cầu tư vấn thành xác nhận đã đặt lịch. | WF-14/WF-20, landing và Service Desk. Chủ đọc bằng ngôn ngữ nghiệp vụ và chỉ ra bước xác nhận cuối. |
+| SME B2B | SKU, đơn vị, MOQ và revision phân tán giữa brief, artwork và RFQ. Một vật tư tính theo diện tích có số lượng thập phân. | Phạm vi Sales/Service đã có. Đối chiếu SKU/đơn vị qua API và tài sản đúng brief. Bàn giao ảnh có thể xem, chữ có thể sửa, người duyệt có nguồn. |
+| E-commerce và bán lẻ | Dễ lấy lượt xem creative làm đơn mua, hoặc đưa biến thể, tồn kho và phí giao của SKU khác vào CTA. | Creative/landing và đối soát giai đoạn có một phần. Chưa mượn số đơn từ B2B để suy ra doanh thu bán lẻ. Pilot bán lẻ cần brief được phép, người xác nhận SKU/offer và đơn đối soát. |
+| Agency nhiều nhãn hàng và Enterprise | Nhiều người góp ý làm lẫn hai revision hoặc hai thương hiệu. Mục đích measurement khác quyền xem hồ sơ. | Snapshot, QA, phân quyền và report sandbox. Đại diện có thẩm quyền chốt revision; nhóm measurement kiểm receipt, consent và destination. Thiếu quyết định thật của doanh nghiệp. |
+
+Bằng chứng nền gồm hướng dẫn nhà cung cấp, khảo sát và lời kể có giới hạn. Các ứng dụng trên là giả thuyết theo từng phân khúc. [K-17 và K-18](KNOWLEDGE_CARDS.md) · [Sổ năng lực](../evaluation/DEPARTMENT-CAPABILITY-REGISTER.md)

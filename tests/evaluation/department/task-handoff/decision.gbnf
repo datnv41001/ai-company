@@ -1,0 +1,9 @@
+root ::= "{" ws "\"id\"" ws ":" ws identifier "," ws "\"decision\"" ws ":" ws (ask | ready | escalation) ws "}"
+ask ::= "\"ask\"" "," ws "\"field\"" ws ":" ws identifier "," ws "\"question\"" ws ":" ws "\"" initial char* "\""
+ready ::= "\"ready\"" "," ws empty-fields
+escalation ::= "\"clarify_policy\"" "," ws empty-fields
+empty-fields ::= "\"field\"" ws ":" ws "\"\"" "," ws "\"question\"" ws ":" ws "\"\""
+identifier ::= "\"" [a-zA-Z0-9_-]+ "\""
+initial ::= [^"\\\x00-\x20\x7f] | "\\" ["\\/]
+char ::= [^"\\\x00-\x1f\x7f] | "\\" (["\\/bfnrt] | "u" [0-9a-fA-F]{4})
+ws ::= [ \t\r\n]{0,8}

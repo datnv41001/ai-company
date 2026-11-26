@@ -1,0 +1,46 @@
+{
+  "case": "index-tray",
+  "product": "Khay chia linh kiện Khe Gọn",
+  "audience": "Tổ trưởng lắp ráp điện tử ở Hà Nội",
+  "format": "Dọc 9:16, thoại tiếng Việt, chữ đọc được khi tắt âm; giữ chữ và vách ngăn trong vùng an toàn.",
+  "objective": "Yêu cầu đủ điều kiện được Sales nhận đúng phạm vi",
+  "approval": "editorial_candidate",
+  "rights": "Chỉ quay mẫu tiêu chuẩn đã được chủ sản phẩm xác nhận và cho phép. Dùng nhãn công đoạn giả lập, tránh logo bên thứ ba và con người thật.",
+  "hooks": {
+    "A": "Cần tách vít theo công đoạn?",
+    "B": "Khay này có tháo được vách?"
+  },
+  "shots": [
+    {
+      "start": 0,
+      "end": 3,
+      "picture": "Máy cố định từ trên xuống. Hai nhóm chi tiết giả trên bàn, một khay trống ở giữa. Cùng một hình và chuyển động cho cả hai hook.",
+      "caption": "{hook}"
+    },
+    {
+      "start": 3,
+      "end": 8,
+      "picture": "Cận tay người dựng nhấc một vách ra khỏi khay mẫu rồi đặt lại. Cho thấy một thao tác liên tục, không ghép biến thể.",
+      "caption": "Mẫu Khe Gọn tiêu chuẩn\ncó vách ngăn tháo rời."
+    },
+    {
+      "start": 8,
+      "end": 14,
+      "picture": "Giữ khay trong hình. Đặt thẻ giá bên cạnh khay, tách đơn vị bán khỏi cỡ khay để tránh hiểu giá theo chiếc.",
+      "caption": "Giá tham khảo 380.000 đồng/hộp.\nĐã gồm thuế. Đơn từ 5 hộp."
+    },
+    {
+      "start": 14,
+      "end": 21,
+      "picture": "Cuộn tới ba nhãn trên form thử. Gõ dữ liệu tổng hợp đúng phạm vi, không hiển thị thông tin liên hệ.",
+      "caption": "Ghi số hộp, địa bàn\nvà thời điểm cần hàng."
+    },
+    {
+      "start": 21,
+      "end": 25,
+      "picture": "Dừng trên nút yêu cầu báo giá. Giữ CTA 4 giây, không thể hiện đơn đã được duyệt.",
+      "caption": "Gửi yêu cầu báo giá theo hộp."
+    }
+  ],
+  "revision": 2
+}

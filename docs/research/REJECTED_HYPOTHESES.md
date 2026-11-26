@@ -20,3 +20,10 @@
 | R-11 | Mẫu quảng cáo được chọn, số view, retention, điều kiện index hoặc số lần hiển thị chứng minh hiệu quả doanh thu. **Bác bỏ** suy luận. | Dùng chúng để phát sinh câu hỏi, đối soát kết quả kinh doanh theo cohort và nguồn riêng. Cần mô hình nhận dạng nhân quả phù hợp trước khi tuyên bố hiệu quả tăng thêm. [K-15](KNOWLEDGE_CARDS.md#k-15) · [K-16](KNOWLEDGE_CARDS.md#k-16) |
 | R-12 | Cần thay framework hiện hành để có đối chứng, hoặc có thể dùng lại nhãn công khai cũ làm holdout. **Bác bỏ** cho vòng này. | Repo đã có harness và rubric. Khóa cohort mới và giữ riêng receipt thật, mức đối chứng, công việc không chạy và giới hạn. [K-14](KNOWLEDGE_CARDS.md#k-14) |
 | R-13 | Điểm khác nhau giữa hai brief chuyên môn chứng minh một ngôn ngữ tốt hơn hoặc xác lập mức tiết kiệm lao động. **Bác bỏ** diễn giải. | Dùng cặp cùng nghĩa vụ/ngữ cảnh để kiểm ngôn ngữ và đo giờ thật của practitioner cho suy luận kinh tế. [K-14](KNOWLEDGE_CARDS.md#k-14) · [O-09](PRODUCT_OPPORTUNITIES.md#o-09) |
+
+## Quyết định vòng review #57
+
+- Loại phương án lấy video cũ của một sản phẩm khác hoặc giữ MOQ của brief lịch sử để minh họa một offer mới. Phải đối chiếu bản gốc, SKU/dịch vụ, điều kiện, revision và đường nhận yêu cầu.
+- Loại phương án dùng tỷ lệ tăng trưởng trong case study TikTok để dự báo kết quả AMC. Chỉ tái sử dụng cách lập giả thuyết, chọn một biến, người nghiệm thu và mẫu số.
+- Loại phương án coi consent xử lý RFQ là quyền gửi sự kiện cho Google hoặc gọi validateOnly lên tài khoản thật. Quyền dữ liệu, adapter, destination, đối soát và thẩm quyền phát hành là các dependency riêng.
+- Loại việc diễn giải 14/24 nhãn thô của Qwen thành 14 bản bàn giao dùng được. Lịch sử chấm đủ hợp đồng là 7/24. Khả năng grammar loại lỗi định dạng và khả năng hiểu nghiệp vụ cần hai phép thử riêng. [Kết quả đã khóa](../evaluation/department-study/advisory/PROSPECTIVE-HANDOFF.md)

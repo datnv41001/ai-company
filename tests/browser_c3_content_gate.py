@@ -61,7 +61,11 @@ def client(tmp_path):
 def local_api():
     with socket.socket() as sock:
         sock.bind(("127.0.0.1", 0))
-        service = uvicorn.Server(uvicorn.Config(app, log_level="error", access_log=False, proxy_headers=False))
+        # Chromium can close a media connection while the Windows event loop
+        # still has its transport queued. Bound the disposable server's drain.
+        service = uvicorn.Server(
+            uvicorn.Config(app, log_level="error", access_log=False, proxy_headers=False, timeout_graceful_shutdown=4)
+        )
         thread = threading.Thread(target=service.run, kwargs={"sockets": [sock]}, daemon=True)
         thread.start()
         try:

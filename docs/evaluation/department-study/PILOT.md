@@ -18,3 +18,7 @@ Người điều phối lưu đúng tệp của bản cuối đã chuyển cho c
 Mỗi người tự lấy SHA-256 từ bản mình nhận bằng `Get-FileHash -Algorithm SHA256 -LiteralPath tên-tệp` hoặc `sha256sum tên-tệp`. Ghi mã vào `delivered_artifact_sha256`, ghi cùng tham chiếu bản giao vào `reference_to_delivered_revision` và nộp phiếu trước khi trao đổi. Reviewer vẫn chấm mức đạt lần đầu ở trường riêng với bản đầu. Mã băm chỉ nhận diện tệp, người điều phối xác nhận danh tính, vai trò và sự đồng ý của người tham gia.
 
 Kết quả chỉ tính quyết định Sales vào số bản nghiệm thu khi ba vai độc lập khai cùng tham chiếu và SHA-256, và tệp được lưu đúng gói có cùng SHA-256. Phiếu cũ vẫn giữ ý kiến gốc với trạng thái thiếu mã băm. Tệp thiếu, thay đổi, phiếu thiếu và bất đồng về phiên bản được ghi riêng. Chi phí trên bản được chấp thuận ở cấp nhánh chỉ tính khi có chi phí và quyết định đã đối chiếu cho toàn bộ gói được giao. Chưa có phiếu thực hành thực tế.
+
+## So sánh A/B/C/D
+
+[Gói bốn nhánh đã chuẩn bị](PILOT-ABCD/README.md) dùng lại hai brief, rubric và ba vai trò nhận xét của pilot này. Bản C và D có cùng điểm xuất phát. Nhánh D bổ sung người QA độc lập trước khi giao. Bộ thu kết quả giữ riêng thời gian, chi phí của lượt QA đó và xác minh hai phiên bản thực tế. Số người làm nghề tham gia tại thời điểm chuẩn bị là 0.

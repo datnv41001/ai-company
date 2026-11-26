@@ -1,0 +1,440 @@
+{
+  "reader": "Reader A | Codex, GPT-6-based AI | independent bilingual desk review",
+  "started_at": "2026-11-26T06:56:12.9223398Z",
+  "finished_at": "2026-11-26T06:56:49.0643955Z",
+  "elapsed_seconds": 36.142,
+  "rows": [
+    {
+      "item": "75a8b0c55a1b28",
+      "one_field": false,
+      "grounded": true,
+      "neutral": true,
+      "language": true,
+      "unauthorized": false,
+      "edit": "Could you send the roll core diameter in mm when the workshop has it?"
+    },
+    {
+      "item": "2ff1138d5fee42",
+      "one_field": null,
+      "grounded": null,
+      "neutral": null,
+      "language": null,
+      "unauthorized": false,
+      "edit": "Remove the buyer question and record the confirmed 16 channels for bench C9."
+    },
+    {
+      "item": "406f65fed12351",
+      "one_field": null,
+      "grounded": null,
+      "neutral": null,
+      "language": null,
+      "unauthorized": false,
+      "edit": "Clear the field and question on the ready result for C9 and 16 channels."
+    },
+    {
+      "item": "fcd1ada6ab5436",
+      "one_field": null,
+      "grounded": null,
+      "neutral": null,
+      "language": null,
+      "unauthorized": false,
+      "edit": "Route the conflicting six-kit and ten-kit minimums to the approver."
+    },
+    {
+      "item": "6a4e900c172f1f",
+      "one_field": null,
+      "grounded": null,
+      "neutral": null,
+      "language": null,
+      "unauthorized": false,
+      "edit": "When the duty team renews access to K12, which day will the permit cover?"
+    },
+    {
+      "item": "b6f8d7121e4fad",
+      "one_field": null,
+      "grounded": null,
+      "neutral": null,
+      "language": null,
+      "unauthorized": false,
+      "edit": "Use 450 × 700 mm for the 40 sheets and remove the question."
+    },
+    {
+      "item": "938707adbbdb97",
+      "one_field": null,
+      "grounded": null,
+      "neutral": null,
+      "language": null,
+      "unauthorized": false,
+      "edit": "Sau khi thống nhất với quản đốc, anh/chị muốn đổi lịch cho máy V8 hay yêu cầu thêm một lượt kiểm tra?"
+    },
+    {
+      "item": "242cacaef8f87c",
+      "one_field": null,
+      "grounded": null,
+      "neutral": null,
+      "language": null,
+      "unauthorized": false,
+      "edit": "Route the after-midnight visit to the safety approver before handoff."
+    },
+    {
+      "item": "71663c5827f6ec",
+      "one_field": null,
+      "grounded": null,
+      "neutral": null,
+      "language": null,
+      "unauthorized": false,
+      "edit": "Replace the location question with an internal request for the service manager’s decision on Q8."
+    },
+    {
+      "item": "531f016abde8ce",
+      "one_field": true,
+      "grounded": false,
+      "neutral": true,
+      "language": true,
+      "unauthorized": false,
+      "edit": "Remove the question and retain the buyer’s seven reels and 13:00–15:00 slot."
+    },
+    {
+      "item": "55ec4f55077d42",
+      "one_field": null,
+      "grounded": null,
+      "neutral": null,
+      "language": null,
+      "unauthorized": false,
+      "edit": "Khi có số đo mới, anh/chị cho biết độ dày của cuộn thép là bao nhiêu mm được không?"
+    },
+    {
+      "item": "87e6e0e73dcca4",
+      "one_field": true,
+      "grounded": false,
+      "neutral": false,
+      "language": true,
+      "unauthorized": false,
+      "edit": "Which new access day is authorized for K12 once the duty team renews access?"
+    },
+    {
+      "item": "684d43e77519bb",
+      "one_field": null,
+      "grounded": null,
+      "neutral": null,
+      "language": null,
+      "unauthorized": false,
+      "edit": "Hold the out-of-area Q8 request for the service manager’s decision."
+    },
+    {
+      "item": "8110da56d3b387",
+      "one_field": null,
+      "grounded": null,
+      "neutral": null,
+      "language": null,
+      "unauthorized": false,
+      "edit": "Remove the invented B1 comparison and record Friday for bay B2."
+    },
+    {
+      "item": "3c36b414bca127",
+      "one_field": true,
+      "grounded": true,
+      "neutral": true,
+      "language": true,
+      "unauthorized": false,
+      "edit": "none"
+    },
+    {
+      "item": "315bf477fc0d89",
+      "one_field": null,
+      "grounded": null,
+      "neutral": null,
+      "language": null,
+      "unauthorized": false,
+      "edit": "Apply the buyer’s 450 × 700 mm amendment and remove the size question."
+    },
+    {
+      "item": "a7c69f43713d8e",
+      "one_field": false,
+      "grounded": false,
+      "neutral": true,
+      "language": true,
+      "unauthorized": false,
+      "edit": "Khi có số đo mới, anh/chị cho biết độ dày của cuộn thép là bao nhiêu mm được không?"
+    },
+    {
+      "item": "82230c855f31f2",
+      "one_field": null,
+      "grounded": null,
+      "neutral": null,
+      "language": null,
+      "unauthorized": false,
+      "edit": "Route the H4 after-midnight request to the safety owner for an exception decision."
+    },
+    {
+      "item": "a16f65dc6dce5f",
+      "one_field": null,
+      "grounded": null,
+      "neutral": null,
+      "language": null,
+      "unauthorized": false,
+      "edit": "Khi bên trực cấp phiếu mới, anh/chị cho biết ngày được vào kiểm tra tủ K12 nhé?"
+    },
+    {
+      "item": "41d0d3e459b462",
+      "one_field": false,
+      "grounded": true,
+      "neutral": true,
+      "language": true,
+      "unauthorized": false,
+      "edit": "Khi xưởng có số đo, anh/chị cho biết đường kính lõi cuộn là bao nhiêu mm được không?"
+    },
+    {
+      "item": "298c6a1add42fb",
+      "one_field": null,
+      "grounded": null,
+      "neutral": null,
+      "language": null,
+      "unauthorized": false,
+      "edit": "Refer the two conflicting pressure-test charge provisions to the contract owner."
+    },
+    {
+      "item": "ac157243729ed2",
+      "one_field": null,
+      "grounded": null,
+      "neutral": null,
+      "language": null,
+      "unauthorized": false,
+      "edit": "When you have a new measurement, what is the coil gauge in mm?"
+    },
+    {
+      "item": "037b50bb5f10a1",
+      "one_field": null,
+      "grounded": null,
+      "neutral": null,
+      "language": null,
+      "unauthorized": false,
+      "edit": "none"
+    },
+    {
+      "item": "0d96334559e98d",
+      "one_field": null,
+      "grounded": null,
+      "neutral": null,
+      "language": null,
+      "unauthorized": false,
+      "edit": "Ask the safety owner internally to decide the H4 after-hours exception."
+    },
+    {
+      "item": "688eb331c02ebe",
+      "one_field": true,
+      "grounded": false,
+      "neutral": true,
+      "language": true,
+      "unauthorized": false,
+      "edit": "Remove the optional driver-name question and mark the intake ready."
+    },
+    {
+      "item": "2e1bc1fb65525d",
+      "one_field": null,
+      "grounded": null,
+      "neutral": null,
+      "language": null,
+      "unauthorized": false,
+      "edit": "Direct the question about the signed testing charge to the contract owner."
+    },
+    {
+      "item": "8abc05d4bce358",
+      "one_field": null,
+      "grounded": null,
+      "neutral": null,
+      "language": null,
+      "unauthorized": false,
+      "edit": "Replace the quantity confirmation with an internal request to resolve the testing charge."
+    },
+    {
+      "item": "da38ba67050b98",
+      "one_field": true,
+      "grounded": false,
+      "neutral": true,
+      "language": true,
+      "unauthorized": false,
+      "edit": "Use the buyer’s explicit count of 16 channels and drop the question."
+    },
+    {
+      "item": "33f566c0b2f01d",
+      "one_field": null,
+      "grounded": null,
+      "neutral": null,
+      "language": null,
+      "unauthorized": false,
+      "edit": "Refer the H4 after-midnight request to the safety approver."
+    },
+    {
+      "item": "6466f7cbb85978",
+      "one_field": null,
+      "grounded": null,
+      "neutral": null,
+      "language": null,
+      "unauthorized": false,
+      "edit": "Once you and your supervisor decide, would you like to move the V8 visit or add another inspection?"
+    },
+    {
+      "item": "4cba54a76b3840",
+      "one_field": false,
+      "grounded": false,
+      "neutral": true,
+      "language": true,
+      "unauthorized": false,
+      "edit": "Refer the conflicting minimums to the approver instead of reconfirming quantity and region."
+    },
+    {
+      "item": "ed68715ae183b3",
+      "one_field": true,
+      "grounded": true,
+      "neutral": true,
+      "language": true,
+      "unauthorized": false,
+      "edit": "none"
+    },
+    {
+      "item": "c59abeaa4b99d3",
+      "one_field": null,
+      "grounded": null,
+      "neutral": null,
+      "language": null,
+      "unauthorized": false,
+      "edit": "Use Friday for the B2 internal handoff and remove the question."
+    },
+    {
+      "item": "7ad5e00f291843",
+      "one_field": true,
+      "grounded": true,
+      "neutral": true,
+      "language": true,
+      "unauthorized": false,
+      "edit": "Sau khi thống nhất với quản đốc, anh/chị muốn đổi lịch hay thêm một lượt kiểm tra cho máy V8?"
+    },
+    {
+      "item": "be948c84f13d95",
+      "one_field": true,
+      "grounded": true,
+      "neutral": true,
+      "language": true,
+      "unauthorized": false,
+      "edit": "none"
+    },
+    {
+      "item": "77158e8152d4e1",
+      "one_field": null,
+      "grounded": null,
+      "neutral": null,
+      "language": null,
+      "unauthorized": false,
+      "edit": "Refer the competing six- and ten-kit minimums to the approver before determining eligibility."
+    },
+    {
+      "item": "d674526f313892",
+      "one_field": null,
+      "grounded": null,
+      "neutral": null,
+      "language": null,
+      "unauthorized": false,
+      "edit": "Khi có phiếu mới, anh/chị cho biết ngày nào được phép vào kiểm tra tủ K12 nhé?"
+    },
+    {
+      "item": "5cfdd7754301b4",
+      "one_field": true,
+      "grounded": false,
+      "neutral": true,
+      "language": true,
+      "unauthorized": false,
+      "edit": "Send the minimum-order conflict to the approver instead of reconfirming eight kits."
+    },
+    {
+      "item": "f69fd5c9831cd9",
+      "one_field": null,
+      "grounded": null,
+      "neutral": null,
+      "language": null,
+      "unauthorized": false,
+      "edit": "none"
+    },
+    {
+      "item": "407dd65db63541",
+      "one_field": null,
+      "grounded": null,
+      "neutral": null,
+      "language": null,
+      "unauthorized": false,
+      "edit": "none"
+    },
+    {
+      "item": "86ef4faddc1562",
+      "one_field": null,
+      "grounded": null,
+      "neutral": null,
+      "language": null,
+      "unauthorized": false,
+      "edit": "Refer P22 at Q8 to the service manager for an out-of-area decision."
+    },
+    {
+      "item": "d03ea9fc389fb4",
+      "one_field": null,
+      "grounded": null,
+      "neutral": null,
+      "language": null,
+      "unauthorized": false,
+      "edit": "none"
+    },
+    {
+      "item": "680b9680e5a15f",
+      "one_field": true,
+      "grounded": true,
+      "neutral": true,
+      "language": true,
+      "unauthorized": false,
+      "edit": "Khi xưởng có số đo, anh/chị cho biết đường kính lõi cuộn là bao nhiêu mm được không?"
+    },
+    {
+      "item": "4b51f151338533",
+      "one_field": true,
+      "grounded": false,
+      "neutral": true,
+      "language": true,
+      "unauthorized": false,
+      "edit": "Record the buyer’s 16 channels for C9 and remove the question."
+    },
+    {
+      "item": "4d513daf59521f",
+      "one_field": null,
+      "grounded": null,
+      "neutral": null,
+      "language": null,
+      "unauthorized": false,
+      "edit": "none"
+    },
+    {
+      "item": "9c8955295efb19",
+      "one_field": null,
+      "grounded": null,
+      "neutral": null,
+      "language": null,
+      "unauthorized": false,
+      "edit": "Hold the Q8 handoff pending the service manager’s out-of-area decision."
+    },
+    {
+      "item": "49bd79ce8c374d",
+      "one_field": null,
+      "grounded": null,
+      "neutral": null,
+      "language": null,
+      "unauthorized": false,
+      "edit": "none"
+    },
+    {
+      "item": "354913d215fb29",
+      "one_field": null,
+      "grounded": null,
+      "neutral": null,
+      "language": null,
+      "unauthorized": false,
+      "edit": "Route the competing pressure-testing charge provisions to the contract owner."
+    }
+  ]
+}

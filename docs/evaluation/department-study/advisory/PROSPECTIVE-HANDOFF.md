@@ -33,6 +33,14 @@ The [first-pass archive](../../../../tests/evaluation/department/handoff-v2/FIRS
 
 For the next separately proposed design, let a coordinator inspect the previous value, the latest buyer statement, the extracted replacement (if present), and the owner responsible for any policy exception. Test separate customer-question and internal-escalation outputs, including explicit rejection of unexpected buyer text on internal actions. A design trial needs fresh holdouts, field-level source attribution, practitioner-adjudicated labels and measured edits/time before considering product integration. Commercial GA remains NO-GO.
 
+## Blind wording and correction review
+
+Two independently assigned Codex AI readers assessed 48 shuffled, anonymous card–answer combinations spanning all 72 arm outputs. Identical answers from the two rule arms shared a card. Each reader had the source card and the candidate, without the reference labels, arm key, other reader's response or measured outcomes. Formulaic output can still suggest a method. Both readers belong to the same model family. There were zero Sales or Service practitioners. Their elapsed desk reads took 36.142 s and 54.978 s. These measurements cannot estimate employee editing time. [Anonymous packet, arm map and both returned sheets](../../../../tests/evaluation/department/handoff-v2/blind-read/)
+
+Each reader proposed edits for 18/24 rule outputs and 21/24 local Qwen outputs. On the eleven Qwen asks, five satisfied every wording obligation. Only three of its five newly correct asks passed all four checks. One English question suggested an expired date as a current option. A Vietnamese answer requested the coil count alongside the outstanding thickness and phrased the instruction for an operator. The four rule asks per arm all needed changes under this stricter editorial rubric. No reader found an issued quote, approval, booking or other unauthorized promise in any of the 48 candidates. This judgment inspects actual wording; false-ready is a separate decision error measured against the synthetic reference. The readers agreed on every binary flag and whether an edit was needed. Their suggested text differed on all 39 edited anonymous items. Both wordings remain available for inspection. [Reconciled counts and dissent](../../../../tests/evaluation/department/handoff-v2/blind-read/summary.json)
+
+The complete gate therefore fails on net exact decisions, VI performance and wording of newly recovered asks. Selecting the favorable false-ready or promise metric alone would hide the contract failures and extra work. The [frozen scorer](../../../../tests/evaluation/department/handoff_score.py) checks decision, field, question and case identity. The [raw archive](../../../../tests/evaluation/department/handoff-v2/FIRST-RUN.zip) preserves the thirteen contradictory responses without editing them into valid answers.
+
 ## Offline replay
 
 Install the development requirements with Python 3.12. From repository root, replay the whole receipt and score check with:
@@ -46,6 +54,7 @@ To inspect the per-case comparison and regenerate the report into a fresh direct
 ```sh
 python -m zipfile -e tests/evaluation/department/handoff-v2/FIRST-RUN.zip handoff-replay
 python tests/evaluation/department/handoff_comparison.py score tests/evaluation/department/handoff-v2/inputs.json handoff-replay tests/evaluation/department/handoff-v2/gold.json
+python tests/evaluation/department/handoff_blind_read.py tests/evaluation/department/handoff-v2/blind-read handoff-replay/reader-summary.json
 ```
 
 The [frozen local runner](../../../../tests/evaluation/department/handoff_infer.py) counts explicit ChatML tokens before requesting a completion and archives every attempt. The recorded Windows CPU run uses two threads, one worker, temperature zero, seed 42 and llama.cpp build 12649 (`1f8baae28`). The [pinned model file](https://huggingface.co/Qwen/Qwen2.5-1.5B-Instruct-GGUF/tree/91cad51170dc346986eccefdc2dd33a9da36ead9) and executable digests are recorded in the archive. Native kernels and compiler differences can affect a new inference pass. The first pass consumed the single-run authorization. Independent prospective replication needs a fresh sealed cohort and separate budget approval. The replay commands above run entirely offline without loading model weights.

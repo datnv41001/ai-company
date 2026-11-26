@@ -314,21 +314,36 @@ def optimization(report):
     return {"basis": "sales_followup", "recommendation": "Đối chiếu phản hồi Sales với đơn xác nhận trước khi đề xuất thay đổi kênh."}
 
 
+def measurement_report(state, plan, cutoff):
+    report = reconcile(state)
+    if plan and (contract := plan.get("measurement_contract")):
+        report["primary_measurement"] = measurement_integrity.evaluate(contract, plan["id"], state, cutoff, plan["locale"])
+    return report
+
+
+def measurement_inputs_digest(state, plan):
+    # Event revisions matter even when two changes cancel out in the headline totals.
+    inputs = {key: state[key] for key in ("appointments", "leads", "sessions", "actions")}
+    return digest(canonical({"plan_digest": plan["digest"], "inputs": inputs}))
+
+
 def optimize_command(cmd, state, store, plan):
     proposals = state["proposals"]
     if cmd.kind == "propose_optimization":
         if cmd.proposal_id in proposals:
             conflict("Proposal ID already exists")
-        report = reconcile(state)
-        if contract := plan.get("measurement_contract"):
-            report["primary_measurement"] = measurement_integrity.evaluate(contract, plan["id"], state, store.now(), plan["locale"])
+        report = measurement_report(state, plan, store.now())
         value = {"id": cmd.proposal_id, "plan_id": plan["id"], "status": "proposed", "author": store.actor,
-                 **optimization(report), "evidence": report, "report_digest": digest(canonical(report))}
+                 **optimization(report), "evidence": report, "report_digest": digest(canonical(report)),
+                 "measurement_inputs_digest": measurement_inputs_digest(state, plan)}
     else:
         value = proposals.get(cmd.proposal_id)
         if not value or value["plan_id"] != plan["id"] or value["status"] != "proposed" or value["author"] == store.actor:
             conflict("A different approver must review the proposed optimization package")
-        if value["report_digest"] != digest(canonical(reconcile(state))):
+        frozen = value["evidence"].get("primary_measurement", {}).get("as_of_inclusive")
+        report = measurement_report(state, plan, parse_time(frozen) if frozen else store.now())
+        inputs = value.get("measurement_inputs_digest")
+        if value["report_digest"] != digest(canonical(report)) or (inputs and inputs != measurement_inputs_digest(state, plan)):
             conflict("Measurement changed. Create and review a fresh proposal")
         value = {**value, "status": "approved", "approved_by": store.actor,
                  "work_package": {"id": cmd.proposal_id, "role": "marketing_analyst", "outcome": value["recommendation"],
@@ -344,7 +359,6 @@ def view(tenant_id: str, campaign_id: str, user: User = Depends(current_user), d
         missing()
     rows = entries(store, campaign_id)
     state = state_of(rows)
-    report = reconcile(state)
     plans = history(store, campaign_id)
     if measurement_plan_id:
         selected = next((p for p in plans if p["id"] == measurement_plan_id and p["approval"]), None)
@@ -352,8 +366,7 @@ def view(tenant_id: str, campaign_id: str, user: User = Depends(current_user), d
             missing()
     else:
         selected = next((p for p in plans if p["status"] == "approved"), None)
-    if selected and (contract := selected.get("measurement_contract")):
-        report["primary_measurement"] = measurement_integrity.evaluate(contract, selected["id"], state, store.now(), selected["locale"])
+    report = measurement_report(state, selected, store.now())
     units = list(state["work_units"].values())
     enrich_units(store, campaign_id, units)
     accepted = sum((u["acceptance"] or {}).get("status") == "business_accepted" for u in units)

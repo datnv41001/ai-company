@@ -27,6 +27,17 @@ def definition(outcome, days):
     return {"version": "appointment-measurement/1", "business_outcome": outcome, "window_days": days, "owner_role": "service_operations"}
 
 
+def test_optimization_source_revisions_matter_even_with_identical_totals():
+    from app.campaign_operations import measurement_inputs_digest
+    from app.campaign_operations_crm import reconcile
+
+    state = {"appointments": {}, "actions": {}, "leads": {}, "sessions": {"s": {"visitor": "visitor-a"}}}
+    corrected = {**state, "sessions": {"s": {"visitor": "visitor-b"}}}
+    assert reconcile(state) == reconcile(corrected)
+    assert measurement_inputs_digest(state, {"digest": "plan-1"}) != measurement_inputs_digest(corrected, {"digest": "plan-1"})
+    assert measurement_inputs_digest(state, {"digest": "plan-1"}) != measurement_inputs_digest(state, {"digest": "plan-2"})
+
+
 def test_approved_definition_cannot_disagree_with_free_text():
     payload = {"measurement": definition("appointment.confirmed_per_requested", 21), "name": "Confirmation rate", "objective": "a" * 36}
     model = KPI.model_validate(payload)
@@ -206,6 +217,8 @@ def test_scoped_campaign_through_final_edition_and_crm(api, agency, case_name):
             api.post(root + "/sandbox/commands", headers=actor["headers"], json={"request_id": uuid4().hex, "plan_id": plan["id"], "kind": kind, **fields})
         )
 
+    waiting_id = uuid4().hex
+    send("propose_optimization", proposal_id=waiting_id)
     receipt_ids = []
     for ident in ("first", "second", "third"):
         req = send(
@@ -250,6 +263,17 @@ def test_scoped_campaign_through_final_edition_and_crm(api, agency, case_name):
     assert report["numerator"] == (2 if case_name == "luong-ro" else 1) and report["denominator"] == report["unattributed"] == 3
     assert report["secondary_metrics"] == [{"metric_id": "web.sessions", "unit": "session_count", "value": 0}]
     assert report["cancelled"] == 1 and report["ratio"] == report["numerator"] / 3 and report["contract"] == contract
+    # The other approver sees the original measurement cutoff. An intervening CRM
+    # change invalidates a proposal; an unchanged source still approves after time advances.
+    stale = api.post(root + "/sandbox/commands", headers=staff["headers"],
+                     json={"request_id": uuid4().hex, "plan_id": plan["id"], "kind": "approve_optimization", "proposal_id": waiting_id})
+    assert stale.status_code == 409
+    fresh_id = uuid4().hex
+    send("propose_optimization", proposal_id=fresh_id)
+    send("approve_optimization", staff, proposal_id=fresh_id)
+    resolved = accepted(api.get(root + "/sandbox", headers=owner["headers"]))
+    decision = next(p for p in resolved["proposals"] if p["id"] == fresh_id)
+    assert decision["status"] == "approved" and decision["evidence"]["primary_measurement"]["contract"] == contract
     if output := os.getenv("AMC_KPI_EVIDENCE"):
         destination = Path(output)
         destination.mkdir(parents=True, exist_ok=True)

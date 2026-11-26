@@ -437,14 +437,16 @@ function createCampaignEngine(api) {
   }
   function drawOptimization(parent,active,ops){
     parent.dataset.optimization='true';
+    const utc=new Intl.DateTimeFormat('vi-VN',{dateStyle:'short',timeStyle:'medium',timeZone:'UTC'});
     const proposal=ops.optimization;
     if(proposal?.recommendation)add(parent,'p',proposal.recommendation);
     else add(parent,'p','Đối soát kết quả Sales và nguồn doanh thu trước khi giao việc tối ưu.');
     function showEvidence(target,evidence){
       if(!evidence)return;
       const metric=evidence.primary_measurement;
-      const period=metric ? 'Sau '+metric.window_start_exclusive+' đến '+evidence.as_of_inclusive
-        : 'Trọn vòng đời kế hoạch, chốt lúc '+evidence.as_of_inclusive;
+      const cutoff=utc.format(new Date(evidence.as_of_inclusive))+' UTC';
+      const period=metric ? 'Sau '+utc.format(new Date(metric.window_start_exclusive))+' UTC đến '+cutoff
+        : 'Trọn vòng đời kế hoạch, chốt lúc '+cutoff;
       const source={sandbox_appointment_receipts:'Biên nhận lịch dịch vụ',sandbox_rfq_receipts:'Biên nhận RFQ'}[evidence.source]||'Chưa có nguồn đo';
       line(target,source+' · '+period,'KPI: '+evidence.kpi);
       if(metric)line(target,metric.definition,'Số đạt / số đủ điều kiện: '+metric.numerator+' / '+metric.denominator);

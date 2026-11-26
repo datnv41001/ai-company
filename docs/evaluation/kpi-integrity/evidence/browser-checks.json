@@ -1,0 +1,19 @@
+{
+  "sizes": [
+    1280,
+    820,
+    390
+  ],
+  "themes": [
+    "light",
+    "dark"
+  ],
+  "mode": "authenticated Chromium / synthetic workspace",
+  "saved_typed_draft_id": "d6357619-d34c-4c88-a086-114ece835b7b",
+  "brief_kpi_revision_id": "523b374c-8774-4b86-8751-4a2121c76f94",
+  "keyboard": "Focused the labeled outcome control and selected completed/confirmed with End",
+  "timings": {
+    "edit_automated_seconds": 0.24
+  },
+  "horizontal_overflow": false
+}

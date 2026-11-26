@@ -30,7 +30,7 @@ pytestmark = PG
 WORKFLOW = c3_assets.RESEARCH
 
 
-def agency_draft(lab, workflow, *, rfq=False, before_queue=None):
+def agency_draft(lab, workflow, *, rfq=False, before_queue=None, approved_facts=None):
     api = lab.api
     base, owner, recipient, client, campaign = lab.cases[0]
     lab.owner.execute("update workforce_runs set ready_at=now()+interval '1 day' where id=any(%s)", (lab.runs,))
@@ -60,6 +60,8 @@ def agency_draft(lab, workflow, *, rfq=False, before_queue=None):
             product="Bộ mẫu vải", audience="Xưởng nội thất", purpose="Thông tin nghiệp vụ riêng của đội dự án", buyer_action="rfq", editorial_style="plain"
         )
         case = {"product": intent["product"], "audience": intent["audience"], "facts": [{"wording": "Bề mặt mờ", "qualifiers": ["Dùng trong nhà"]}]}
+        if approved_facts is not None:
+            case["facts"] = approved_facts
     accepted(api.put(brief + "/submission", headers=recipient["headers"], json=DATA | {"task_intent": intent}))
     brand = lab.owner.execute("select brand_id from campaigns where id=%s", (campaign,)).fetchone()[0]
     prep = prepared(api, owner, base, client, brand, campaign, bid, workflow, case=case)

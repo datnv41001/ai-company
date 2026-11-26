@@ -1,0 +1,40 @@
+{
+  "source": "Signed synthetic HTTP/SQLite edition. No new inference.",
+  "plan_digest": "38dd7c3048a72bc3ef1e493d7ed0c398c54660e2561118aa4b7cd9b8f025bb20",
+  "snapshot_digest": "3fa513d605a547a460cf380ae67cb62be13a0b97875deeade6dc6fa8acadf4ee",
+  "sessions": [
+    {
+      "width": 1280,
+      "height": 850,
+      "themes": [
+        "light",
+        "dark"
+      ],
+      "browser": "157.0.8103.52",
+      "four_group_keyboard_ms": 188,
+      "scroll_width": 1280
+    },
+    {
+      "width": 820,
+      "height": 1180,
+      "themes": [
+        "light",
+        "dark"
+      ],
+      "browser": "157.0.8103.52",
+      "four_group_keyboard_ms": 188,
+      "scroll_width": 820
+    },
+    {
+      "width": 390,
+      "height": 844,
+      "themes": [
+        "light",
+        "dark"
+      ],
+      "browser": "157.0.8103.52",
+      "four_group_keyboard_ms": 140,
+      "scroll_width": 390
+    }
+  ]
+}

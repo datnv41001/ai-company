@@ -1,0 +1,139 @@
+{
+  "id": "8eed155f-2e4b-4646-bf7a-7e1a259f7650",
+  "created_by": "cb3b9927-0b77-4972-8f0c-0641e8728644",
+  "did": "f5e715cf-8fca-4de2-956a-028dc5780d59",
+  "version": 2,
+  "kind": "creative",
+  "studio_revision": 4,
+  "manifest": {
+    "id": "03f8bee9-1de7-4b2f-8b67-ca47b6795718",
+    "digest": "16a8247bff139e3cde80991d4d2399967a8330d58187772d67bd4cc19fad5401"
+  },
+  "plan_id": "a42ea052-d18c-458f-a2c5-b85dc1824ab0",
+  "plan_digest": "ec429bc88771e2bf310bf006be311c1c09d333ca3546e73ef440ef684fb3deee",
+  "groups": {
+    "copy": "a9b5ca7f5d41287a12c0e10eb6b613e68d662635af01cc2da4c14e74a93f92a5",
+    "creative_brief": "b8c459f11e691d13728da1a90b178fc3bd88ce6a525eb9f114b9bfa15eec9292"
+  },
+  "group_receipts": {
+    "copy": "56a470b5-670d-480b-855e-88e20f664f67",
+    "creative_brief": "fd2fff04-c74b-46e6-9dea-c5905d865b20"
+  },
+  "inputs": "2ce69d26ea153216bba646d4efd468461a203c2139b7ce4388886e600f7aa3a7",
+  "master": {
+    "contract": "amc.creative-master/1",
+    "palette": "forest",
+    "motif": "planes",
+    "layout": "art_first",
+    "colors": [
+      "#123D31",
+      "#E5F39A",
+      "#FCF9ED"
+    ],
+    "headline": "Dịch vụ kiểm tra bơm Lam",
+    "cta": "Đặt lịch",
+    "brief": {
+      "concept": "Phác thảo khung hình cho Dịch vụ kiểm tra bơm Lam có chỗ đặt điều kiện và lời mời hành động.",
+      "brand_direction": "Áp dụng hướng dẫn thương hiệu bản 1. Tách phần chuẩn bị của người mua khỏi bước xác nhận lịch của nhân sự.",
+      "image_spec": "Giao mẫu dọc và ngang, bản nguồn chỉnh sửa được và ảnh xem trước. Giữ chủ thể, điều kiện và lời mời hành động trong vùng an toàn khi cắt. Duyệt độ đọc ở kích thước điện thoại.",
+      "video_spec": "Giao storyboard có cảnh nhu cầu, cảnh đối chiếu dữ kiện và cảnh chọn bước tiếp theo. Kèm chỉ dẫn cảnh quay, phụ đề, bản chép lời và danh mục nguồn. Duyệt khi tắt âm thanh trước khi xuất bản dựng.",
+      "rights": "Chờ kiểm tra chủ sở hữu, giấy phép, phạm vi và thời hạn trước khi dùng tư liệu.",
+      "provenance": "Bản giao chỉ gồm chỉ dẫn sản xuất. Chưa có tệp hình ảnh hoặc video được cấp phép."
+    },
+    "brand_guideline_digest": "8667f503425c83801d0702e0a96932e171bcc578d401f55e68de2dc1d3e1e675",
+    "variations": {
+      "portrait": [
+        720,
+        900
+      ],
+      "landscape": [
+        960,
+        540
+      ],
+      "square": [
+        720,
+        720
+      ]
+    },
+    "safe_inset_percent": 6.5,
+    "typeface": "Be Vietnam Pro SemiBold",
+    "scenes": [
+      {
+        "from": 0,
+        "to": 2,
+        "caption": "Dịch vụ kiểm tra bơm Lam"
+      },
+      {
+        "from": 2,
+        "to": 4,
+        "caption": "Đối chiếu quy cách và điều kiện áp dụng của Dịch vụ kiểm tra bơm Lam trước khi lựa chọn."
+      },
+      {
+        "from": 4,
+        "to": 6,
+        "caption": "Đặt lịch"
+      }
+    ],
+    "source": {
+      "file": "source.png",
+      "sha256": "b8c0a8704829c527c4ac7d61659413dec61366e4aafdffdb2f989f7fe5a1651e",
+      "type": "AMC original synthetic geometry",
+      "rights": "AMC synthetic source for internal sandbox use. No external media or photography."
+    },
+    "renderer": {
+      "engine": "Pillow",
+      "version": "13.0.0",
+      "freetype": "2.14.3",
+      "webp": "1.6.0"
+    }
+  },
+  "files": {
+    "source.png": {
+      "mime": "image/png",
+      "bytes": 8031,
+      "sha256": "b8c0a8704829c527c4ac7d61659413dec61366e4aafdffdb2f989f7fe5a1651e"
+    },
+    "portrait.png": {
+      "mime": "image/png",
+      "bytes": 116339,
+      "sha256": "8fcd00f21b626bc4543b5d12399a9345ee80242ef3c2a2936b336e351e565b1a"
+    },
+    "landscape.png": {
+      "mime": "image/png",
+      "bytes": 89515,
+      "sha256": "b68f7c803724dd0973547fce7c25c1c987e420d57df1aed2165882dcb27188f6"
+    },
+    "square.png": {
+      "mime": "image/png",
+      "bytes": 100946,
+      "sha256": "9645a01597d512e91d4042344cba3037ded9d53ca0e293c3504df1b1305b2955"
+    },
+    "preview.webm": {
+      "mime": "video/webm",
+      "bytes": 45804,
+      "sha256": "cffbfe26d54c84840673c40ea7beb2beb9e8f7c67da548299e0012738dbd5814"
+    },
+    "captions.vtt": {
+      "mime": "text/vtt",
+      "bytes": 266,
+      "sha256": "cbfb9eaa6804af28408e3c5a2c28caa3e8c5a621f221d8f8332e520c0074cc2f"
+    },
+    "master.json": {
+      "mime": "application/json",
+      "bytes": 2469,
+      "sha256": "8fdcdd6dede9863743a78aa507922377898c48e793b9276f4e2126cf60db15be"
+    }
+  },
+  "digest": "53e60ee5f2a872cc05cb6d3283123bd3c7f35053ded0acaa141c76d7af248633",
+  "measurement": {
+    "render_ms": 255.96,
+    "bytes": 363370,
+    "external_calls": 0,
+    "full_cost_vnd": null
+  },
+  "production_qa": {
+    "reviewer": "17efa09c-2ef6-4c33-899d-96f792ac7ee2",
+    "receipt": "0755f555-770a-4983-87b2-6a79f27db609",
+    "digest": "53e60ee5f2a872cc05cb6d3283123bd3c7f35053ded0acaa141c76d7af248633"
+  }
+}

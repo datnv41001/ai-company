@@ -1,0 +1,129 @@
+{
+  "archive_sha256": "d7b96f93ef7529eddc9fb3feb84a7aa23e9e0626f1bb1b7c67d64cff5e26f39e",
+  "files": {
+    "receipt-map/control/approved-inputs.json": "7f36cf3aa9a6b3c55d3a0512fee3cc0449b029c4b0991b453cbbc9257cb9bbd6",
+    "receipt-map/qwen7/reviewed-package.json": "e873cad4c2880bb17f186ee0568f9123a076c8e4d0a6e2e6889042ba58fdd41e",
+    "receipt-map/qwen7/strategy/editor-review.json": "842c2c918e231c2b1732f70643b0f6b0198eefb5c8d4a43f687203f87d02e949"
+  },
+  "projection": {
+    "company": "Tư vấn Mạch Kho",
+    "brand": "Luồng Rõ",
+    "product": "Buổi khảo sát luồng nhận hàng Luồng Rõ",
+    "sku": "LR-KS",
+    "market": "Vietnam",
+    "audience": "Trưởng vận hành kho phân phối",
+    "objective": "Đặt lịch khảo sát luồng nhận hàng tại kho",
+    "kpi": "Lịch hẹn được người phụ trách kho xác nhận · appointments · 21 ngày · Đếm lịch được xác nhận trên số đề nghị khảo sát; tách hủy lịch, ghi người đối soát theo mã hẹn.",
+    "locale": "vi-VN",
+    "region": "HN",
+    "channel": "web",
+    "facts": [
+      {
+        "id": "F1",
+        "wording": "Bàn giao sơ đồ luồng nhận hàng",
+        "qualifiers": [
+          "Trong phạm vi buổi khảo sát."
+        ],
+        "category": "description"
+      },
+      {
+        "id": "F2",
+        "wording": "VND 760000 / 1 visit (tax included)",
+        "qualifiers": [
+          "Xác nhận số lượng trước khi đặt."
+        ],
+        "category": "price",
+        "price": {
+          "moq": "1",
+          "tax": "included",
+          "unit": "visit",
+          "currency": "VND",
+          "tier_max": null,
+          "tier_min": "1",
+          "conditions": [
+            "Xác nhận số lượng trước khi đặt."
+          ],
+          "amount_minor": 760000,
+          "basis_quantity": "1"
+        },
+        "quantity": "1"
+      }
+    ],
+    "hypotheses": [
+      "Ca giao nhận có thể tạo điểm chờ; cần quan sát trước khi kết luận."
+    ],
+    "gaps": [
+      "Kiểm chứng nhu cầu với khách hàng trong thị trường đã chọn.",
+      "Xác minh số liệu nền và kết quả bằng dữ liệu đo thực tế."
+    ],
+    "task_intent": {
+      "purpose": "Đặt lịch khảo sát luồng nhận hàng tại kho",
+      "deliverable_type": "marketing_strategy",
+      "audience": "Trưởng vận hành kho phân phối",
+      "product": "Buổi khảo sát luồng nhận hàng Luồng Rõ",
+      "channel": "web",
+      "region": "HN",
+      "locale": "vi-VN",
+      "requirements": [
+        "Đặt lịch khảo sát, ghi địa điểm và ca nhận hàng cần quan sát."
+      ],
+      "exclusions": [
+        "Không cam kết tiết kiệm chi phí, chứng nhận tuân thủ hay thời gian bàn giao."
+      ],
+      "acceptance_criteria": [
+        "Lịch hẹn được người phụ trách kho xác nhận"
+      ],
+      "buyer_action": "appointment",
+      "editorial_style": "plain"
+    },
+    "brand_guidelines": {
+      "revision": 1,
+      "digest": "277267798d6a0da60f910d5c8f21793ce840a8ed55b7719da9ef45ae52ca85c9",
+      "guidance": "Nêu đúng điều kiện, không suy diễn chứng nhận hoặc mức tiết kiệm.",
+      "tone": "Cụ thể",
+      "prohibited_claims": []
+    }
+  },
+  "published_groups": {
+    "measurement": {
+      "test_hypothesis": "So sánh bản trình bày dữ kiện trước và sau lời mời hành động trên cùng nhóm khách.",
+      "measurable_action": "Đặt lịch",
+      "measurement_method": "Theo dõi số yêu cầu hoàn tất trên lượt vào trang. Đối chiếu mã yêu cầu khi bộ phận phụ trách tiếp nhận."
+    },
+    "client_measurement": {
+      "hypothesis": "Thử xem thứ tự trình bày có giúp người mua hoàn tất bước đã chọn.",
+      "conversion": "Đặt lịch",
+      "method": "Đối soát mỗi sự kiện hoàn tất theo mã duy nhất. So tỷ lệ hoàn tất trên lượt vào cùng nhóm khách."
+    }
+  },
+  "case": {
+    "id": "receipt-map",
+    "company": "Tư vấn Mạch Kho",
+    "brand": "Luồng Rõ",
+    "product": "Buổi khảo sát luồng nhận hàng Luồng Rõ",
+    "sku": "LR-KS",
+    "audience": "Trưởng vận hành kho phân phối",
+    "objective": "Đặt lịch khảo sát luồng nhận hàng tại kho",
+    "kpi": "Lịch hẹn được người phụ trách kho xác nhận",
+    "buyer_action": "appointment",
+    "unit": "visit",
+    "amount": 760000,
+    "wording": "Bàn giao sơ đồ luồng nhận hàng",
+    "qualifier": "Trong phạm vi buổi khảo sát.",
+    "cta": "Đặt lịch khảo sát, ghi địa điểm và ca nhận hàng cần quan sát.",
+    "hypotheses": [
+      "Ca giao nhận có thể tạo điểm chờ; cần quan sát trước khi kết luận."
+    ],
+    "exclusions": [
+      "Không cam kết tiết kiệm chi phí, chứng nhận tuân thủ hay thời gian bàn giao."
+    ],
+    "kpi_method": "Đếm lịch được xác nhận trên số đề nghị khảo sát; tách hủy lịch, ghi người đối soát theo mã hẹn.",
+    "kpi_unit": "appointments",
+    "kpi_window": "21 ngày",
+    "must_ask": [
+      "địa điểm",
+      "ca nhận"
+    ],
+    "unit_word": "buổi"
+  }
+}

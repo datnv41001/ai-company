@@ -1,0 +1,87 @@
+{
+  "runtime_base": "eff86cda2f99dd10244dc8127451e941bb546a3c",
+  "pre_desk": "0498949e64f4d030cc9ba2f0f961ab4dfc2e2ab0",
+  "test_source_sha256": "d12a8386c5d8e5d1bb302f956cfd25db3f010b35b7aea41c6c4e487a756c6fb8",
+  "synthetic": true,
+  "database_user": "amc_runtime",
+  "journal_row_security": true,
+  "superuser": false,
+  "bypassrls": false,
+  "first_fixture_attempt": "The additional independent-tenant fixture used a space in its synthetic email, causing registration HTTP 422 before authorization was exercised. Fixed the synthetic account label.",
+  "provider_calls": 0,
+  "business_acceptance": "unmeasured",
+  "runs": [
+    {
+      "source_junit_sha256": "abd8168d11d20f4e64566e005e4c2c73506e4e852d78e33c8a7afc1f40add32e",
+      "cases": [
+        {
+          "name": "test_scoped_role_cannot_read_another_customers_business_case[sqlite]",
+          "seconds": 15.396
+        },
+        {
+          "name": "test_scoped_role_cannot_read_another_customers_business_case[postgres]",
+          "seconds": 15.82
+        },
+        {
+          "name": "test_service_results_do_not_count_as_quotes_or_revenue[sqlite]",
+          "seconds": 8.028
+        },
+        {
+          "name": "test_service_results_do_not_count_as_quotes_or_revenue[postgres]",
+          "seconds": 11.768
+        },
+        {
+          "name": "test_attempt_coverage_is_unknown_without_readings_and_deduplicates_shared_runs",
+          "seconds": 0.001
+        },
+        {
+          "name": "test_scoped_rfq_pipeline_idempotency_and_commission_identity[sqlite]",
+          "seconds": 13.929
+        },
+        {
+          "name": "test_scoped_rfq_pipeline_idempotency_and_commission_identity[postgres]",
+          "seconds": 26.306
+        },
+        {
+          "name": "test_paid_reservation_stale_approval_and_retry_limits",
+          "seconds": 0.004
+        },
+        {
+          "name": "test_all_strategy_only_commissions_precede_generation_and_rollback_on_failure[sqlite]",
+          "seconds": 11.889
+        },
+        {
+          "name": "test_all_strategy_only_commissions_precede_generation_and_rollback_on_failure[postgres]",
+          "seconds": 13.112
+        },
+        {
+          "name": "test_scoped_production[acoustic-panel-sqlite]",
+          "seconds": 28.489
+        },
+        {
+          "name": "test_scoped_production[pump-service-sqlite]",
+          "seconds": 16.233
+        },
+        {
+          "name": "test_restricted_production[False]",
+          "seconds": 59.496
+        },
+        {
+          "name": "test_restricted_production[True]",
+          "seconds": 39.409
+        }
+      ],
+      "passed": 14
+    },
+    {
+      "source_junit_sha256": "c1e876172b484576cca53fbd57cbc07bd5a6fd7abe99f0502dbcbce3870c43aa",
+      "cases": [
+        {
+          "name": "test_compatible_business_writers_share_authority_and_revision[postgres]",
+          "seconds": 95.03
+        }
+      ],
+      "passed": 1
+    }
+  ]
+}

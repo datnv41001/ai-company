@@ -1,0 +1,21 @@
+{
+  "local_inbox_ms": 1594,
+  "viewports": [
+    {
+      "width": 1280,
+      "height": 850,
+      "content_width": 1280
+    },
+    {
+      "width": 820,
+      "height": 1000,
+      "content_width": 820
+    },
+    {
+      "width": 390,
+      "height": 844,
+      "content_width": 390
+    }
+  ],
+  "local_decision_visible_ms": 359
+}

@@ -1,6 +1,7 @@
 """Compose bounded, internal campaign materials from the same verified C3 task and evidence."""
 
 from . import c3_assets, c3_skill_library
+from . import business_intake
 from .c3_actions import ACTIONS
 from .knowledge_store import canonical, conflict, digest
 from .revision_qa import content_digest
@@ -82,8 +83,10 @@ def compose_plan(store, campaign_id, selections, body, plan_id):
         "brand_guidelines": source["brand_guidelines"],
         "commercial_facts": source["facts"],
         "sku": source.get("sku"),
+        **({"measurement_contract": source["measurement_contract"]} if source.get("measurement_contract") else {}),
         "measurement_plan": {
             "kpi": source["kpi"],
+            **({"primary": source["measurement_contract"]} if source.get("measurement_contract") else {}),
             "buyer_action": action,
             "hypothesis": f"Thử một CTA cho {source['audience']} rồi đối soát với kết quả Sales.",
             "attribution": "Theo mã yêu cầu và biên nhận, ghi riêng kết quả thiếu nguồn.",
@@ -92,6 +95,22 @@ def compose_plan(store, campaign_id, selections, body, plan_id):
         "method": "deterministic-campaign-planner/1",
         "optimization_basis": body.optimization_basis,
     }
+    if body.secondary_rfq:
+        if action != "appointment":
+            conflict("Optional quote intake is available only alongside a service appointment")
+        plan["secondary_conversions"] = ["rfq"]
+    if action in {"appointment", "rfq"} and plan["selling_unit"]:
+        landing = next((p for _, b, p in selections if KINDS[b["options"]["workflow"]] == "landing"), source)
+        lists = {tuple(business_intake.submitted_fields(p["task_intent"], strict=True)) for _, _, p in selections}
+        lists.discard(())
+        if len(lists) > 1:
+            conflict("Reconcile the required buyer fields across the approved briefs")
+        intake_source = landing if business_intake.submitted_fields(landing["task_intent"]) else next(
+            (p for _, _, p in selections if business_intake.submitted_fields(p["task_intent"])), landing)
+        source_kind = next(KINDS[b["options"]["workflow"]] for _, b, p in selections if p is intake_source)
+        plan["intake_contract"] = business_intake.issue(plan, intake_source, body.intake_fields, plan["manifests"][source_kind])
+    elif body.intake_fields:
+        conflict("Select a transactional journey with an approved selling unit")
     plan["digest"] = digest(canonical(plan))
     return plan
 
@@ -152,6 +171,7 @@ def compose_assets(plan):
             "product_id": plan["product_id"],
             "guideline_digest": plan["brand_guidelines"]["digest"],
             "referenced_workflow_skills": method_versions,
+            **({"measurement_contract": plan["measurement_contract"]} if plan.get("measurement_contract") else {}),
             "requires_channel_evidence": True,
         }
         for kind, (title, text) in copy.items()

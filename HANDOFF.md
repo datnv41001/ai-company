@@ -1,5 +1,51 @@
 # Bắt đầu ở đây khi tiếp quản AI Marketing Company
 
+## Công việc hiện hành trên cây tích hợp nội bộ
+
+Hai nhóm tiếp quản dùng cùng một mốc: reviewer kiểm luồng tư vấn trước MOQ và cách đếm RFQ, người giữ bộ pilot kiểm chuỗi phiên bản và phân công chấm mù. Đối chiếu head đã checkout với biên nhận CI cuối. [Báo cáo review](docs/evaluation/department-review/ROUND-53-55.md) · [Bản đồ tiếp quản](docs/KNOWLEDGE_MAP.md) · [Quy trình rollback](docs/evaluation/sandbox-operations/CUTOVER.md)
+
+Các mục từ đây trở xuống ghi lại hành vi và ưu tiên ở từng mốc lịch sử.
+## Kiểm tra kế hoạch, biểu mẫu và bàn giao Sales/Service
+
+Ở nhánh tích hợp sau PR #54, mở [bảng năm finding và bằng chứng](docs/evaluation/department-review/README.md). Bảng có đường dẫn kiểm thử hai phiên bản API, hợp đồng intake, khuyến nghị tối ưu, nghiên cứu Qwen, pilot nghiệp vụ và hai ZIP có thể tải từ máy khác. Khi review, đối chiếu head SHA với CI và biên nhận cold handoff tại cùng trang. PR #53 quản trị tri thức đang chờ người có thẩm quyền review. Commercial GA vẫn **NO-GO**.
+
+Ở vòng phản biện tiếp theo, dùng [biên bản sửa PR #55](docs/evaluation/department-review/REVIEW-55-FOLLOWUP.md) để kiểm tra phân công tư vấn, chỉ số, thủ tục phát pilot riêng và việc gắn quyết định với từng bản.
+
+## Sửa điều kiện trên landing đặt lịch dịch vụ
+
+Trong Marketing Studio, giữ nguyên quyền lợi đã ghim và mọi giới hạn của quyền lợi, rồi bỏ câu mô tả bị chép lặp ở **Nội dung trang → Điều kiện thương mại**. Gửi revision mới, mở **Đối chiếu bằng chứng** và xử lý các câu chờ chuyên môn bằng nguồn của đúng dịch vụ. QA ký lại từng nhóm và toàn bản trước khi dựng HTML phiên bản kế tiếp. Ca bơm Lam có hai file, hai lần thử đặt lịch và biên nhận tải lại snapshot cũ. [Bàn giao 15 mục và lệnh tái chạy](docs/evaluation/service-landing-edit/README.md)
+
+
+## Biên tập từng câu và bộ nội dung theo kế hoạch
+
+Với kế hoạch nội bộ đã duyệt, mở Campaign Command Center → Bộ nội dung và kế hoạch quảng cáo. Hai bài theo nền tảng, nội dung web/search, lịch, brief thiết kế và đề xuất Media đều mang digest kế hoạch. Trong Marketing Studio, mở cảnh báo có nguồn để xem nguyên câu và căn cứ, sửa đề xuất hoặc bỏ qua. Khi lưu, digest và revision mới đi qua QA hiện có. Bản khách đã nhận giữ snapshot riêng. [Cách chạy, bằng chứng và giới hạn](docs/evaluation/commercial-meaning/README.md) · [Sổ 19 năng lực và 24 workflow](docs/evaluation/DEPARTMENT-CAPABILITY-REGISTER.md)
+
+
+## Bàn giao Creative và Landing Production nội bộ
+
+Từ **Biên tập tài liệu Marketing**, mở **Brief thiết kế → Creative Studio** để dựng master, ảnh theo ba tỉ lệ, WebM và VTT. Mở **Nội dung trang → Landing Studio** để dựng HTML, kiểm tra trên mobile và chạy phiên thử RFQ/appointment sau khi reviewer thứ hai duyệt file. [Quy trình Docker, file thực tế, ảnh giao diện và phép đo](docs/evaluation/real-production/README.md).
+
+
+## Bàn giao theo vai trò Sales, dịch vụ và Marketing
+
+Khi đổi giờ hẹn, KPI theo nhóm lịch xác nhận giữ ngày xác nhận đầu tiên. Một kế hoạch dịch vụ có thể tiếp nhận RFQ sau khi người phụ trách bật tùy chọn và duyệt phiên bản. Bảng **Báo giá phụ của kế hoạch** tính số hồ sơ và doanh thu sandbox trên đúng phiên bản đó. [Ca hồi quy và ảnh giao diện](docs/evaluation/campaign-role-desk/README.md)
+
+Tiếp quản từ bản journal core v26 tại `3dc7e4e`. Chạy lại publisher để có quyền truy cập theo campaign và kiểm tra RFQ ở tầng database. Trong **Chiến dịch → Bàn giao nghiệp vụ**, trao vai trò cho thành viên rồi kiểm tra bằng tài khoản viewer của người nhận. Giao diện theo dõi revision, phản hồi, thay đổi người phụ trách và kết quả thực hiện. [Hợp đồng, kiểm thử, ảnh thật và rollback](docs/evaluation/campaign-role-desk/README.md)
+
+
+## Đối soát KPI lịch hẹn từ brief đến CRM
+
+KPI lịch hẹn có hai cách đo theo nghiệp vụ. Luồng Rõ ghi nhận 2 lịch được nhân sự xác nhận trên 3 yêu cầu trong 21 ngày. Mực Chuẩn ghi nhận 1 buổi hoàn tất trên 3 lịch được xác nhận trong 14 ngày. Các lần lưu và duyệt giữ định nghĩa từ bản tri thức đã phê duyệt đến tài liệu gửi khách. Số phiên web được ghi riêng. Khi chưa có mẫu số, tỷ lệ chưa xác định. Chưa đo hiệu quả với người thực hành Marketing hoặc Sales thật. Commercial GA vẫn NO-GO. [Quy trình tiếp quản và rollback](docs/evaluation/kpi-integrity/HANDOFF.md) · [Bằng chứng API, bản giao và Chromium](docs/evaluation/kpi-integrity/RESULTS.md) · [Gói nghiệm thu nghề nghiệp](docs/evaluation/kpi-integrity/PILOT.md)
+
+## Mốc bàn giao sau PR #48 · 26/11/2026
+
+[Biên bản một phiên AI tiếp quản từ checkout](docs/evaluation/knowledge-handoff/RESULTS.md) có SHA đã đọc, bằng chứng truy xuất, lệnh người vận hành chạy theo yêu cầu của AI, lỗi lần đầu và sửa đổi sau phản biện.
+
+Trên main `380be3eb70a41424c6d45318b0b1890fa950970a`, core v26, Business v3, C3 v5 và sandbox ops/2. CI sau merge ghi 537 test đạt, 2 bỏ qua. Đọc [bản đồ tiếp quản](docs/KNOWLEDGE_MAP.md), [trạng thái V1](docs/IMPLEMENTATION_STATUS.md), [CI của mốc này](https://github.com/datnv41001/ai-company/actions/runs/45744737771) và [hồ sơ chuyển journal](docs/evaluation/sandbox-operations/CUTOVER.md).
+
+**Ưu tiên sản phẩm tại mốc này.** Reviewer đối chiếu lần lượt [#49 KPI](https://github.com/datnv41001/ai-company/pull/49), [#50 bàn giao theo vai trò](https://github.com/datnv41001/ai-company/pull/50), [#51 Creative/Landing](https://github.com/datnv41001/ai-company/pull/51) và [#52 nội dung/Ads](https://github.com/datnv41001/ai-company/pull/52). Đây là chuỗi PR mở khi lập hồ sơ. [Bản chụp register trên head #52](https://github.com/datnv41001/ai-company/blob/95aed621381c782114b18521d2b2d58eb17a7828/docs/evaluation/DEPARTMENT-CAPABILITY-REGISTER.md) có 19 năng lực và 24 workflow. Kiểm lại base/head hiện thời trước khi tích hợp. Marketing tiếp tục biên tập câu lặp ở trang dịch vụ theo từng revision, giữ bản đã duyệt. Khi có người hành nghề, thực hiện [pilot RFQ và dịch vụ](docs/evaluation/department-study/PILOT.md) để đo công sửa, tính hữu ích cho Sales và chi phí. Commercial GA vẫn NO-GO.
+
+
 
 ## Chuyển journal chiến dịch sang ops/2
 

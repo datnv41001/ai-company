@@ -1,0 +1,56 @@
+{
+  "base": "c5c6329599a66fd2dc6011428e7ab8eed9208df4",
+  "runtime": "d95c5cd3f0e73c357c870d86774c40e31a4ac05d",
+  "synthetic": true,
+  "runs": {
+    "native": {
+      "passed": 15,
+      "seconds": 281.724,
+      "raw_junit_sha256": "c8ce01d158d42e78d462de0435aea0ddceb1476882563bf73e118a3348c158e6",
+      "cases": [
+        "tests.test_campaign_role_desk.test_scoped_role_cannot_read_another_customers_business_case[sqlite]",
+        "tests.test_campaign_role_desk.test_scoped_role_cannot_read_another_customers_business_case[postgres]",
+        "tests.test_business_authority_paths.test_compatible_business_writers_share_authority_and_revision[postgres]",
+        "tests.test_production_studios.test_scoped_production[acoustic-panel-sqlite]",
+        "tests.test_production_studios.test_scoped_production[pump-service-sqlite]",
+        "tests.test_production_studios.test_scoped_production[index-tray-sqlite]",
+        "tests.test_production_studios.test_scoped_production[receipt-map-sqlite]",
+        "tests.test_production_studios.test_restricted_production[False]",
+        "tests.test_production_studios.test_restricted_production[True]",
+        "tests.test_production_studios.test_predecessor_can_still_serve_approved_v1",
+        "tests.test_business_intake.test_optional_fields_change_the_plan_contract_without_weakening_the_approved_brief",
+        "tests.test_business_intake.test_explicit_buyer_list_requires_supported_fields[\\u0110\\u1eb7t l\\u1ecbch kh\\u1ea3o s\\xe1t, ghi \\u0111\\u1ecba \\u0111i\\u1ec3m v\\xe0 m\\xe3 d\\xe2y chuy\\u1ec1n.]",
+        "tests.test_business_intake.test_explicit_buyer_list_requires_supported_fields[Request a quote and provide number of boxes and cable ID.]",
+        "tests.test_business_intake.test_explicit_buyer_list_requires_supported_fields[\\u0110\\u1eb7t l\\u1ecbch kh\\u1ea3o s\\xe1t, ghi m\\xe3 d\\xe2y chuy\\u1ec1n.]",
+        "tests.test_business_intake.test_sales_followup_rechecks_moq_before_transition"
+      ]
+    },
+    "chromium": {
+      "passed": 1,
+      "seconds": 91.774,
+      "raw_junit_sha256": "2e128501e857fcd42908f617bd1a7eeeb7804000446b459d1813966caf43fdba",
+      "cases": [
+        "tests.browser_role_desk.test_assigned_sales_consultation[sqlite]"
+      ]
+    },
+    "missing_consent_or_grant": {
+      "passed": 1,
+      "seconds": 0.319,
+      "raw_junit_sha256": "37571e93a322aa0bdb077b03de81259360c2c1aeeec7b26a88c37e6ba96d8465",
+      "cases": [
+        "tests.test_business_intake.test_consultation_referral_requires_buyer_permission_and_campaign_grant"
+      ]
+    }
+  },
+  "sha256": {
+    "observations.json": "412cd1b816f7a16e2dc9e3c29632de0682ee271369732c72313372767d3692d4",
+    "postgres.json": "e314b7c7b55d6abbf6161a7e7e650866280d643230e1afae8166ed3434c98253",
+    "sales-1280-dark.png": "d8f9c9e20ea926c1453cebef13b8ef2a5a29c76a063c532c9c72cb013c4d0def",
+    "sales-1280-light.png": "04837e3c8f7d158ef8d79d0885858a37dfa9e41b448dd14517a45a9efde92ead",
+    "sales-390-dark.png": "87e632f36b07d5c78e9c54b3e70e41e14565b962c75fd9a1db3c9e5d3690e1dd",
+    "sales-390-light.png": "7c12a6f77e24c6fe9f7147113868fc811b787b1b2cfc611d4915f6610a6710f2",
+    "sales-820-dark.png": "4f7f23d6061d87ed7ff538058ba6164524c596e932de82bbc69622b24ef8cd48",
+    "sales-820-light.png": "acfd4499d093da8da99a935044b66999056d062fd9dfcf3d73223de2fb5c51fb",
+    "sqlite.json": "116891a97b3ad266ba5b82f4bf2b56ed8be84185d986be15764f925dfe4418cc"
+  }
+}

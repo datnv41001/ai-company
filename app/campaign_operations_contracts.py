@@ -82,11 +82,20 @@ class Appointment(Observation):
     session_id: Id | None = None
 
 
+class IntakeAppointment(Appointment):
+    """Internal request whose approved brief can ask for a shift before booking a time."""
+
+    contract: Literal["service-intake/2"]
+    quantity: Amount | None
+    requested_for: AwareDatetime | None
+    location: Note | None
+
+
 class AppointmentDecision(Observation):
     kind: Literal["appointment_decision"]
     appointment_id: Id
     expected_revision: Positive
-    step: Literal["confirm","assign","complete","cancel","no_show"]
+    step: Literal["confirm","assign","reassign","reschedule","complete","cancel","no_show"]
     assignee_id: Id | None = None
     confirmed_for: AwareDatetime | None = None
     feedback: Note | None = None
@@ -141,10 +150,22 @@ class Sales(Observation):
     kind: Literal["sales"]
     rfq_id: Id
     expected_revision: Positive
-    step: Literal["assign", "accept", "reject", "quote", "order", "confirm", "refund", "cancel", "correct"]
+    step: Literal["refer", "assign", "reassign", "accept", "reject", "quote", "order", "confirm", "refund", "cancel", "correct"]
     assignee_id: Id | None = None
     amount_vnd: Money | None = None
     reason: Note | None = None
+
+
+class Consultation(Observation):
+    """Only the named, currently granted Sales recipient can record this follow-up."""
+
+    kind: Literal["consultation"]
+    rfq_id: Id
+    expected_revision: Positive
+    note: Note
+    quantity: Amount | None = None
+    location: Note | None = None
+    required_date: date | None = None
 
 
 class Labor(Command):

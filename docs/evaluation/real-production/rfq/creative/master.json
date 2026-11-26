@@ -1,0 +1,67 @@
+{
+  "contract": "amc.creative-master/1",
+  "palette": "forest",
+  "motif": "planes",
+  "layout": "art_first",
+  "colors": [
+    "#123D31",
+    "#E5F39A",
+    "#FCF9ED"
+  ],
+  "headline": "Tấm gỗ tiêu âm Mộc",
+  "cta": "Yêu cầu báo giá",
+  "brief": {
+    "concept": "Phác thảo khung hình cho Tấm gỗ tiêu âm Mộc có chỗ đặt điều kiện và lời mời hành động.",
+    "brand_direction": "Áp dụng hướng dẫn thương hiệu bản 1. Dành một vùng cho đơn vị báo giá và điều kiện chọn số lượng.",
+    "image_spec": "Giao mẫu dọc và ngang, bản nguồn chỉnh sửa được và ảnh xem trước. Giữ chủ thể, điều kiện và lời mời hành động trong vùng an toàn khi cắt. Duyệt độ đọc ở kích thước điện thoại.",
+    "video_spec": "Giao storyboard có cảnh nhu cầu, cảnh đối chiếu dữ kiện và cảnh chọn bước tiếp theo. Kèm chỉ dẫn cảnh quay, phụ đề, bản chép lời và danh mục nguồn. Duyệt khi tắt âm thanh trước khi xuất bản dựng.",
+    "rights": "Chờ kiểm tra chủ sở hữu, giấy phép, phạm vi và thời hạn trước khi dùng tư liệu.",
+    "provenance": "Bản giao chỉ gồm chỉ dẫn sản xuất. Chưa có tệp hình ảnh hoặc video được cấp phép."
+  },
+  "brand_guideline_digest": "8667f503425c83801d0702e0a96932e171bcc578d401f55e68de2dc1d3e1e675",
+  "variations": {
+    "portrait": [
+      720,
+      900
+    ],
+    "landscape": [
+      960,
+      540
+    ],
+    "square": [
+      720,
+      720
+    ]
+  },
+  "safe_inset_percent": 6.5,
+  "typeface": "Be Vietnam Pro SemiBold",
+  "scenes": [
+    {
+      "from": 0,
+      "to": 2,
+      "caption": "Tấm gỗ tiêu âm Mộc"
+    },
+    {
+      "from": 2,
+      "to": 4,
+      "caption": "Đối chiếu quy cách và điều kiện áp dụng của Tấm gỗ tiêu âm Mộc trước khi lựa chọn."
+    },
+    {
+      "from": 4,
+      "to": 6,
+      "caption": "Yêu cầu báo giá"
+    }
+  ],
+  "source": {
+    "file": "source.png",
+    "sha256": "b8c0a8704829c527c4ac7d61659413dec61366e4aafdffdb2f989f7fe5a1651e",
+    "type": "AMC original synthetic geometry",
+    "rights": "AMC synthetic source for internal sandbox use. No external media or photography."
+  },
+  "renderer": {
+    "engine": "Pillow",
+    "version": "13.0.0",
+    "freetype": "2.14.3",
+    "webp": "1.6.0"
+  }
+}

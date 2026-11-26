@@ -1,0 +1,9 @@
+{
+  "checkout": "f1064d29c8cc59e517d85612e91a675d915ba8d0",
+  "archive_sha256": "d7b96f93ef7529eddc9fb3feb84a7aa23e9e0626f1bb1b7c67d64cff5e26f39e",
+  "approved_kpi": "Lịch hẹn được người phụ trách kho xác nhận · appointments · 21 ngày · Đếm lịch được xác nhận trên số đề nghị khảo sát; tách hủy lịch, ghi người đối soát theo mã hẹn.",
+  "staff_method": "Theo dõi số yêu cầu hoàn tất trên lượt vào trang. Đối chiếu mã yêu cầu khi bộ phận phụ trách tiếp nhận.",
+  "customer_method": "Đối soát mỗi sự kiện hoàn tất theo mã duy nhất. So tỷ lệ hoàn tất trên lượt vào cùng nhóm khách.",
+  "matches_archived_fields": true,
+  "observed": "Both generated methods substitute page visits for booking requests."
+}

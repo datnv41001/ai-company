@@ -79,11 +79,13 @@ def prepared(api, admin, base, client, brand, campaign, bid, workflow=c3_marketi
         {
             "name": info["kpi"],
             "objective": goal["id"],
-            "owner": "Analyst",
             "source": kpi_source["id"],
-            "unit": info.get("kpi_unit", "requests"),
-            "method": method,
-            "window": info.get("kpi_window", "30 days"),
+            **({"measurement": info["measurement"]} if "measurement" in info else {
+                "owner": "Analyst",
+                "unit": info.get("kpi_unit", "requests"),
+                "method": method,
+                "window": info.get("kpi_window", "30 days"),
+            }),
         },
     )
     claims, sources = [], []
@@ -149,6 +151,8 @@ def prepared(api, admin, base, client, brand, campaign, bid, workflow=c3_marketi
         claims.append(claim["id"])
         sources.append(source)
     selections = {"product": product["id"], "audience": audience["id"], "objective": goal["id"]}
+    if info.get("measurement"):
+        selections["kpi"] = kpi["id"]
     brief = post(api, ui + "/briefs", admin, title="Internal scoped Marketing brief", expected_revision=1, expected_company_revision=1, selections=selections)
     params = {
         "key": uuid4().hex,

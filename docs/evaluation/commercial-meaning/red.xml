@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites name="pytest tests"><testsuite name="pytest" errors="0" failures="6" skipped="0" tests="8" time="0.810" timestamp="2026-11-26T08:41:42.304094+07:00" hostname="CNTT-Dat"><testcase classname="tests.test_semantic_commercial" name="test_edited_asset_meaning[Nh\u1eadn 760.000 VND khi \u0111\u1eb7t l\u1ecbch.-payment_direction-handles0]" time="0.009"><failure message="AssertionError: assert ('needs_corre...d_format', []) == ('contradicti...tion', ['F2'])&#10;  &#10;  At index 0 diff: 'needs_correction' != 'contradiction'&#10;  Use -v to get more diff">copy = 'Nhận 760.000 VND khi đặt lịch.', reason = 'payment_direction'
+handles = ['F2']
+
+    @pytest.mark.parametrize(("copy", "reason", "handles"), [
+        ("Nhận 760.000 VND khi đặt lịch.", "payment_direction", ["F2"]),
+        ("Receive 760,000 VND when you book.", "payment_direction", ["F2"]),
+        ("Phí khảo sát chuyển thành khoản hoàn tiền 760.000 VND.", "payment_kind", ["F2"]),
+        ("Vách ngăn có thể tháo rời, và cả khay cũng có thể tháo rời.", "component_scope", ["F1"]),
+        ("Có thể tháo rời toàn bộ khay.", "component_scope", ["F1"]),
+        ("Chúng tôi đã khảo sát khách hàng và xác nhận nhu cầu.", "observation_status", []),
+        ("Vách ngăn có thể tháo rời.", "missing_qualifier", ["F1"]),
+    ])
+    def test_edited_asset_meaning(copy, reason, handles):
+        result = classify(copy, [FEATURE, FEE], [], set(), SCOPE, precise=True)
+&gt;       assert result[1:] == ("contradiction", reason, handles)
+E       AssertionError: assert ('needs_corre...d_format', []) == ('contradicti...tion', ['F2'])
+E         
+E         At index 0 diff: 'needs_correction' != 'contradiction'
+E         Use -v to get more diff
+
+tests\test_semantic_commercial.py:27: AssertionError</failure></testcase><testcase classname="tests.test_semantic_commercial" name="test_edited_asset_meaning[Receive 760,000 VND when you book.-payment_direction-handles1]" time="0.002"><failure message="AssertionError: assert ('needs_corre...d_format', []) == ('contradicti...tion', ['F2'])&#10;  &#10;  At index 0 diff: 'needs_correction' != 'contradiction'&#10;  Use -v to get more diff">copy = 'Receive 760,000 VND when you book.', reason = 'payment_direction'
+handles = ['F2']
+
+    @pytest.mark.parametrize(("copy", "reason", "handles"), [
+        ("Nhận 760.000 VND khi đặt lịch.", "payment_direction", ["F2"]),
+        ("Receive 760,000 VND when you book.", "payment_direction", ["F2"]),
+        ("Phí khảo sát chuyển thành khoản hoàn tiền 760.000 VND.", "payment_kind", ["F2"]),
+        ("Vách ngăn có thể tháo rời, và cả khay cũng có thể tháo rời.", "component_scope", ["F1"]),
+        ("Có thể tháo rời toàn bộ khay.", "component_scope", ["F1"]),
+        ("Chúng tôi đã khảo sát khách hàng và xác nhận nhu cầu.", "observation_status", []),
+        ("Vách ngăn có thể tháo rời.", "missing_qualifier", ["F1"]),
+    ])
+    def test_edited_asset_meaning(copy, reason, handles):
+        result = classify(copy, [FEATURE, FEE], [], set(), SCOPE, precise=True)
+&gt;       assert result[1:] == ("contradiction", reason, handles)
+E       AssertionError: assert ('needs_corre...d_format', []) == ('contradicti...tion', ['F2'])
+E         
+E         At index 0 diff: 'needs_correction' != 'contradiction'
+E         Use -v to get more diff
+
+tests\test_semantic_commercial.py:27: AssertionError</failure></testcase><testcase classname="tests.test_semantic_commercial" name="test_edited_asset_meaning[Ph\xed kh\u1ea3o s\xe1t chuy\u1ec3n th\xe0nh kho\u1ea3n ho\xe0n ti\u1ec1n 760.000 VND.-payment_kind-handles2]" time="0.005"><failure message="AssertionError: assert ('needs_corre...d_format', []) == ('contradicti...kind', ['F2'])&#10;  &#10;  At index 0 diff: 'needs_correction' != 'contradiction'&#10;  Use -v to get more diff">copy = 'Phí khảo sát chuyển thành khoản hoàn tiền 760.000 VND.'
+reason = 'payment_kind', handles = ['F2']
+
+    @pytest.mark.parametrize(("copy", "reason", "handles"), [
+        ("Nhận 760.000 VND khi đặt lịch.", "payment_direction", ["F2"]),
+        ("Receive 760,000 VND when you book.", "payment_direction", ["F2"]),
+        ("Phí khảo sát chuyển thành khoản hoàn tiền 760.000 VND.", "payment_kind", ["F2"]),
+        ("Vách ngăn có thể tháo rời, và cả khay cũng có thể tháo rời.", "component_scope", ["F1"]),
+        ("Có thể tháo rời toàn bộ khay.", "component_scope", ["F1"]),
+        ("Chúng tôi đã khảo sát khách hàng và xác nhận nhu cầu.", "observation_status", []),
+        ("Vách ngăn có thể tháo rời.", "missing_qualifier", ["F1"]),
+    ])
+    def test_edited_asset_meaning(copy, reason, handles):
+        result = classify(copy, [FEATURE, FEE], [], set(), SCOPE, precise=True)
+&gt;       assert result[1:] == ("contradiction", reason, handles)
+E       AssertionError: assert ('needs_corre...d_format', []) == ('contradicti...kind', ['F2'])
+E         
+E         At index 0 diff: 'needs_correction' != 'contradiction'
+E         Use -v to get more diff
+
+tests\test_semantic_commercial.py:27: AssertionError</failure></testcase><testcase classname="tests.test_semantic_commercial" name="test_edited_asset_meaning[V\xe1ch ng\u0103n c\xf3 th\u1ec3 th\xe1o r\u1eddi, v\xe0 c\u1ea3 khay c\u0169ng c\xf3 th\u1ec3 th\xe1o r\u1eddi.-component_scope-handles3]" time="0.002"><failure message="AssertionError: assert ('contradicti...fier', ['F1']) == ('contradicti...cope', ['F1'])&#10;  &#10;  At index 1 diff: 'missing_qualifier' != 'component_scope'&#10;  Use -v to get more diff">copy = 'Vách ngăn có thể tháo rời, và cả khay cũng có thể tháo rời.'
+reason = 'component_scope', handles = ['F1']
+
+    @pytest.mark.parametrize(("copy", "reason", "handles"), [
+        ("Nhận 760.000 VND khi đặt lịch.", "payment_direction", ["F2"]),
+        ("Receive 760,000 VND when you book.", "payment_direction", ["F2"]),
+        ("Phí khảo sát chuyển thành khoản hoàn tiền 760.000 VND.", "payment_kind", ["F2"]),
+        ("Vách ngăn có thể tháo rời, và cả khay cũng có thể tháo rời.", "component_scope", ["F1"]),
+        ("Có thể tháo rời toàn bộ khay.", "component_scope", ["F1"]),
+        ("Chúng tôi đã khảo sát khách hàng và xác nhận nhu cầu.", "observation_status", []),
+        ("Vách ngăn có thể tháo rời.", "missing_qualifier", ["F1"]),
+    ])
+    def test_edited_asset_meaning(copy, reason, handles):
+        result = classify(copy, [FEATURE, FEE], [], set(), SCOPE, precise=True)
+&gt;       assert result[1:] == ("contradiction", reason, handles)
+E       AssertionError: assert ('contradicti...fier', ['F1']) == ('contradicti...cope', ['F1'])
+E         
+E         At index 1 diff: 'missing_qualifier' != 'component_scope'
+E         Use -v to get more diff
+
+tests\test_semantic_commercial.py:27: AssertionError</failure></testcase><testcase classname="tests.test_semantic_commercial" name="test_edited_asset_meaning[C\xf3 th\u1ec3 th\xe1o r\u1eddi to\xe0n b\u1ed9 khay.-component_scope-handles4]" time="0.005"><failure message="AssertionError: assert ('unresolved'...upported', []) == ('contradicti...cope', ['F1'])&#10;  &#10;  At index 0 diff: 'unresolved' != 'contradiction'&#10;  Use -v to get more diff">copy = 'Có thể tháo rời toàn bộ khay.', reason = 'component_scope'
+handles = ['F1']
+
+    @pytest.mark.parametrize(("copy", "reason", "handles"), [
+        ("Nhận 760.000 VND khi đặt lịch.", "payment_direction", ["F2"]),
+        ("Receive 760,000 VND when you book.", "payment_direction", ["F2"]),
+        ("Phí khảo sát chuyển thành khoản hoàn tiền 760.000 VND.", "payment_kind", ["F2"]),
+        ("Vách ngăn có thể tháo rời, và cả khay cũng có thể tháo rời.", "component_scope", ["F1"]),
+        ("Có thể tháo rời toàn bộ khay.", "component_scope", ["F1"]),
+        ("Chúng tôi đã khảo sát khách hàng và xác nhận nhu cầu.", "observation_status", []),
+        ("Vách ngăn có thể tháo rời.", "missing_qualifier", ["F1"]),
+    ])
+    def test_edited_asset_meaning(copy, reason, handles):
+        result = classify(copy, [FEATURE, FEE], [], set(), SCOPE, precise=True)
+&gt;       assert result[1:] == ("contradiction", reason, handles)
+E       AssertionError: assert ('unresolved'...upported', []) == ('contradicti...cope', ['F1'])
+E         
+E         At index 0 diff: 'unresolved' != 'contradiction'
+E         Use -v to get more diff
+
+tests\test_semantic_commercial.py:27: AssertionError</failure></testcase><testcase classname="tests.test_semantic_commercial" name="test_edited_asset_meaning[Ch\xfang t\xf4i \u0111\xe3 kh\u1ea3o s\xe1t kh\xe1ch h\xe0ng v\xe0 x\xe1c nh\u1eadn nhu c\u1ea7u.-observation_status-handles5]" time="0.002"><failure message="AssertionError: assert ('unresolved'...upported', []) == ('contradicti...n_status', [])&#10;  &#10;  At index 0 diff: 'unresolved' != 'contradiction'&#10;  Use -v to get more diff">copy = 'Chúng tôi đã khảo sát khách hàng và xác nhận nhu cầu.'
+reason = 'observation_status', handles = []
+
+    @pytest.mark.parametrize(("copy", "reason", "handles"), [
+        ("Nhận 760.000 VND khi đặt lịch.", "payment_direction", ["F2"]),
+        ("Receive 760,000 VND when you book.", "payment_direction", ["F2"]),
+        ("Phí khảo sát chuyển thành khoản hoàn tiền 760.000 VND.", "payment_kind", ["F2"]),
+        ("Vách ngăn có thể tháo rời, và cả khay cũng có thể tháo rời.", "component_scope", ["F1"]),
+        ("Có thể tháo rời toàn bộ khay.", "component_scope", ["F1"]),
+        ("Chúng tôi đã khảo sát khách hàng và xác nhận nhu cầu.", "observation_status", []),
+        ("Vách ngăn có thể tháo rời.", "missing_qualifier", ["F1"]),
+    ])
+    def test_edited_asset_meaning(copy, reason, handles):
+        result = classify(copy, [FEATURE, FEE], [], set(), SCOPE, precise=True)
+&gt;       assert result[1:] == ("contradiction", reason, handles)
+E       AssertionError: assert ('unresolved'...upported', []) == ('contradicti...n_status', [])
+E         
+E         At index 0 diff: 'unresolved' != 'contradiction'
+E         Use -v to get more diff
+
+tests\test_semantic_commercial.py:27: AssertionError</failure></testcase><testcase classname="tests.test_semantic_commercial" name="test_edited_asset_meaning[V\xe1ch ng\u0103n c\xf3 th\u1ec3 th\xe1o r\u1eddi.-missing_qualifier-handles6]" time="0.003" /><testcase classname="tests.test_semantic_commercial" name="test_questions_and_ambiguity_require_review" time="0.001" /></testsuite></testsuites>

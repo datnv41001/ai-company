@@ -1,0 +1,242 @@
+[
+  {
+    "id": "case-980001",
+    "label": "supported"
+  },
+  {
+    "id": "case-85260e",
+    "label": "supported"
+  },
+  {
+    "id": "case-369c57",
+    "label": "unknown"
+  },
+  {
+    "id": "case-594cbd",
+    "label": "supported"
+  },
+  {
+    "id": "case-85fed5",
+    "label": "supported"
+  },
+  {
+    "id": "case-21fcf7",
+    "label": "supported"
+  },
+  {
+    "id": "case-72a085",
+    "label": "supported"
+  },
+  {
+    "id": "case-a6fd6b",
+    "label": "contradicted"
+  },
+  {
+    "id": "case-45d4f0",
+    "label": "contradicted"
+  },
+  {
+    "id": "case-14573b",
+    "label": "contradicted"
+  },
+  {
+    "id": "case-d35907",
+    "label": "supported"
+  },
+  {
+    "id": "case-2e7785",
+    "label": "supported"
+  },
+  {
+    "id": "case-3a0d06",
+    "label": "supported"
+  },
+  {
+    "id": "case-f4a775",
+    "label": "unknown"
+  },
+  {
+    "id": "case-0724a8",
+    "label": "contradicted"
+  },
+  {
+    "id": "case-f3239f",
+    "label": "contradicted"
+  },
+  {
+    "id": "case-a5dc09",
+    "label": "supported"
+  },
+  {
+    "id": "case-df97b2",
+    "label": "contradicted"
+  },
+  {
+    "id": "case-d2c5c8",
+    "label": "supported"
+  },
+  {
+    "id": "case-a53948",
+    "label": "unknown"
+  },
+  {
+    "id": "case-44e06b",
+    "label": "supported"
+  },
+  {
+    "id": "case-616cd9",
+    "label": "contradicted"
+  },
+  {
+    "id": "case-b5c703",
+    "label": "contradicted"
+  },
+  {
+    "id": "case-d37a43",
+    "label": "supported"
+  },
+  {
+    "id": "case-41f64d",
+    "label": "unknown"
+  },
+  {
+    "id": "case-c5594f",
+    "label": "unknown"
+  },
+  {
+    "id": "case-b6882e",
+    "label": "supported"
+  },
+  {
+    "id": "case-0ec3b5",
+    "label": "contradicted"
+  },
+  {
+    "id": "case-9a28f6",
+    "label": "unknown"
+  },
+  {
+    "id": "case-2b507e",
+    "label": "unknown"
+  },
+  {
+    "id": "case-b38fb7",
+    "label": "contradicted"
+  },
+  {
+    "id": "case-1c398b",
+    "label": "contradicted"
+  },
+  {
+    "id": "case-6d412a",
+    "label": "supported"
+  },
+  {
+    "id": "case-75a3fc",
+    "label": "contradicted"
+  },
+  {
+    "id": "case-e22d7d",
+    "label": "supported"
+  },
+  {
+    "id": "case-1df5be",
+    "label": "unknown"
+  },
+  {
+    "id": "case-fef86c",
+    "label": "supported"
+  },
+  {
+    "id": "case-91be71",
+    "label": "contradicted"
+  },
+  {
+    "id": "case-6f3a29",
+    "label": "contradicted"
+  },
+  {
+    "id": "case-42123b",
+    "label": "contradicted"
+  },
+  {
+    "id": "case-369450",
+    "label": "contradicted"
+  },
+  {
+    "id": "case-c76f3b",
+    "label": "contradicted"
+  },
+  {
+    "id": "case-862c19",
+    "label": "supported"
+  },
+  {
+    "id": "case-a215ff",
+    "label": "unknown"
+  },
+  {
+    "id": "case-fc7fcc",
+    "label": "contradicted"
+  },
+  {
+    "id": "case-b043f0",
+    "label": "contradicted"
+  },
+  {
+    "id": "case-579ebb",
+    "label": "supported"
+  },
+  {
+    "id": "case-3baea9",
+    "label": "supported"
+  },
+  {
+    "id": "case-1e9ad3",
+    "label": "unknown"
+  },
+  {
+    "id": "case-cd89af",
+    "label": "contradicted"
+  },
+  {
+    "id": "case-9e7d72",
+    "label": "unknown"
+  },
+  {
+    "id": "case-2c4a61",
+    "label": "supported"
+  },
+  {
+    "id": "case-4ec9d5",
+    "label": "contradicted"
+  },
+  {
+    "id": "case-4a33b2",
+    "label": "contradicted"
+  },
+  {
+    "id": "case-41240b",
+    "label": "supported"
+  },
+  {
+    "id": "case-951784",
+    "label": "contradicted"
+  },
+  {
+    "id": "case-4865fe",
+    "label": "supported"
+  },
+  {
+    "id": "case-9a1196",
+    "label": "unknown"
+  },
+  {
+    "id": "case-ce3259",
+    "label": "contradicted"
+  },
+  {
+    "id": "case-17d0b5",
+    "label": "supported"
+  }
+]

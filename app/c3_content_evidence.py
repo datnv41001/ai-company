@@ -7,7 +7,7 @@ to independent domain review; a role-level list of citations is never sentence e
 import re
 import unicodedata
 
-from . import c3_marketing
+from . import c3_marketing, commercial_meaning
 from .commercial_scope import TERRITORIES, TERRITORY_BY_LABEL
 from .knowledge_store import canonical, digest
 
@@ -150,6 +150,10 @@ def classify(line, facts, complete, fixed, projection, *, precise=False):
             if fact.get("qualifiers"):
                 return fact["category"], "contradiction", "missing_qualifier", [fact["id"]]
             return fact["category"], "verified", "exact_declaration", [fact["id"]]
+    if precise:
+        conflict = commercial_meaning.contradiction(bare, facts, projection)
+        if conflict:
+            return conflict
     if bare == normalized(projection.get("product", "")) and bare:
         return "product", "verified", "exact_scope", ["PRODUCT"]
     label, sep, value = bare.partition(":")
@@ -274,6 +278,14 @@ def assess_document(doc, run, signature):
                         procedural = all(normalized(ch) in ("web","website","email","search","social","linkedin","facebook","youtube","organic","paid search")
                                          for ch in ctx["channel_plan"])
                 fixed[field] = {normalized(proposed)} if proposed and procedural else set()
+                if projection.get("measurement_contract") and (group, key) in {
+                    ("measurement", "measurement_method"), ("client_measurement", "method"), ("ad", "measurement")
+                }:
+                    from .measurement_integrity import secondary_statement
+                    secondary = normalized(secondary_statement(projection["locale"]))
+                    fixed[field].add(secondary)
+                    if customer and group in public_fields:
+                        fixed["client_preview"].add(secondary)
                 if group == "copy" and key == "value_proposition" and procedural:
                     fixed["client_preview"].add(normalized(proposed))
                 if customer and group in public_fields and procedural and proposed:

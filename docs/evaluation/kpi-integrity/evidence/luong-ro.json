@@ -1,0 +1,110 @@
+{
+  "fixture": "luong-ro",
+  "source": "synthetic authenticated campaign API; deterministic editions, no model inference",
+  "knowledge_revision": {
+    "version": "appointment-measurement/1",
+    "owner_role": "service_operations",
+    "window_days": 21,
+    "business_outcome": "appointment.confirmed_per_requested",
+    "numerator": {
+      "event": "confirmed",
+      "eligibility": "staff_confirmation_with_scheduled_time"
+    },
+    "denominator": {
+      "event": "requested",
+      "eligibility": "valid_service_request_with_consent"
+    },
+    "window": "rolling_utc_(start,end]_denominator_cohort",
+    "unit": "ratio",
+    "aggregation": "distinct_appointment_id",
+    "cancellations": "retain_prior_eligible_events_report_separately",
+    "refunds": "not_a_monetary_outcome",
+    "missing_attribution": "include_and_report_separately",
+    "reconciliation": "join_authorized_lifecycle_receipts_by_plan_and_appointment_id",
+    "id": "523b374c-8774-4b86-8751-4a2121c76f94",
+    "revision": 1,
+    "digest": "06e7abe7e9a807f84a28596fe483d1b846d2ba6324d5e9dd1db883ab681fda9f"
+  },
+  "brief_pins": {
+    "product": "21c3aef5-e818-4826-b4a4-bb483b6ae9af",
+    "audience": "de4c7f2e-7adf-499c-a6d5-4894d6695ca4",
+    "objective": "9854969f-14aa-4581-aecd-b42102f5f8ea",
+    "kpi": "523b374c-8774-4b86-8751-4a2121c76f94"
+  },
+  "manifests": [
+    {
+      "id": "d5e55631-abe4-4422-875c-445150b17417",
+      "digest": "63045d85b9c326e81a15c4c0b127d8dffab5c33a4f10bd6e6c96495779d4f223",
+      "workflow": "WF-03/research-strategy-draft@3"
+    },
+    {
+      "id": "3abbfa61-6f3f-455b-964c-eeccb776e50a",
+      "digest": "488af70451ae9d66606b3fe280123fe0672bc125a6ea8cd1dfee34b2c9257524",
+      "workflow": "WF-13/landing-seo-draft@6"
+    }
+  ],
+  "plan": {
+    "id": "fe64c991-e3da-42d9-b62b-722718008079",
+    "digest": "a0f74606a16beef6f02e00631e10d103fdba207044d5f166787f74e7a06b1d2a",
+    "revision": 1
+  },
+  "approval": "approved",
+  "strategy_method": "KPI chính trong 21 ngày: số lịch do nhân sự xác nhận trên số yêu cầu đặt lịch hợp lệ. Vận hành dịch vụ đối soát mỗi mã hẹn một lần. Giữ các sự kiện đủ điều kiện trước khi hủy. Tách hủy, vắng mặt và thiếu nguồn; hoàn tiền không đổi tỷ lệ.",
+  "customer_method": "KPI chính trong 21 ngày: số lịch do nhân sự xác nhận trên số yêu cầu đặt lịch hợp lệ. Vận hành dịch vụ đối soát mỗi mã hẹn một lần. Giữ các sự kiện đủ điều kiện trước khi hủy. Tách hủy, vắng mặt và thiếu nguồn; hoàn tiền không đổi tỷ lệ.",
+  "ad_method": "KPI chính trong 21 ngày: số lịch do nhân sự xác nhận trên số yêu cầu đặt lịch hợp lệ. Vận hành dịch vụ đối soát mỗi mã hẹn một lần. Giữ các sự kiện đủ điều kiện trước khi hủy. Tách hủy, vắng mặt và thiếu nguồn; hoàn tiền không đổi tỷ lệ.",
+  "crm_receipts": [
+    "74dbbef6-100c-4016-a569-1e958821e59e",
+    "6ac206be-57d8-43a4-85ef-53a3d6914afc",
+    "05d6edf8-1b7a-4f8e-b1d9-9df3f490b8f5",
+    "b4a4f9fc-57ed-4e9c-bbcb-57eb459522eb",
+    "98736603-1a24-41d3-b573-514f29b5a05f",
+    "567fdc53-c6c5-4163-bf0d-9ebd4c7b9d98",
+    "2dad0e01-5fca-4939-9a62-83b52fe4d299",
+    "57f9ad91-5c8a-40f7-a76a-fe9d4d7ef51d"
+  ],
+  "actual_analytics": {
+    "contract": {
+      "id": "523b374c-8774-4b86-8751-4a2121c76f94",
+      "unit": "ratio",
+      "digest": "06e7abe7e9a807f84a28596fe483d1b846d2ba6324d5e9dd1db883ab681fda9f",
+      "window": "rolling_utc_(start,end]_denominator_cohort",
+      "refunds": "not_a_monetary_outcome",
+      "version": "appointment-measurement/1",
+      "revision": 1,
+      "numerator": {
+        "event": "confirmed",
+        "eligibility": "staff_confirmation_with_scheduled_time"
+      },
+      "owner_role": "service_operations",
+      "aggregation": "distinct_appointment_id",
+      "denominator": {
+        "event": "requested",
+        "eligibility": "valid_service_request_with_consent"
+      },
+      "window_days": 21,
+      "cancellations": "retain_prior_eligible_events_report_separately",
+      "reconciliation": "join_authorized_lifecycle_receipts_by_plan_and_appointment_id",
+      "business_outcome": "appointment.confirmed_per_requested",
+      "missing_attribution": "include_and_report_separately"
+    },
+    "definition": "KPI chính trong 21 ngày: số lịch do nhân sự xác nhận trên số yêu cầu đặt lịch hợp lệ. Vận hành dịch vụ đối soát mỗi mã hẹn một lần. Giữ các sự kiện đủ điều kiện trước khi hủy. Tách hủy, vắng mặt và thiếu nguồn; hoàn tiền không đổi tỷ lệ.",
+    "plan_id": "fe64c991-e3da-42d9-b62b-722718008079",
+    "window_start_exclusive": "2026-11-05T02:09:34.168915+00:00",
+    "as_of_inclusive": "2026-11-26T02:09:34.168915+00:00",
+    "numerator": 2,
+    "denominator": 3,
+    "ratio": 0.6666666666666666,
+    "cancelled": 1,
+    "no_show": 0,
+    "unattributed": 3,
+    "attributed": 0,
+    "source": "sandbox_appointment_receipts",
+    "secondary_metrics": [
+      {
+        "metric_id": "web.sessions",
+        "unit": "session_count",
+        "value": 0
+      }
+    ]
+  }
+}

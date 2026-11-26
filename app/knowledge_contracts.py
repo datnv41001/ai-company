@@ -7,6 +7,7 @@ from typing import Annotated, Literal
 
 from pydantic import BaseModel, ConfigDict, Field, PlainSerializer, StrictInt, field_validator, model_validator
 
+from .measurement_integrity import MeasurementDefinition, statement as measurement_statement, terms as measurement_terms
 from .commercial_scope import CommercialOption, TERRITORY_BY_LABEL, OrderChannel, PaymentOption, ServiceLevel, ORDER_AXES, CONDITION_BY_LABEL
 
 Key = Annotated[str, Field(min_length=1, max_length=96)]
@@ -125,6 +126,7 @@ class Objective(Input):
 
 
 class KPI(Input):
+    measurement: MeasurementDefinition | None = Field(default=None, exclude_if=lambda v: v is None)
     objective: Ref | None = Field(default=None, exclude_if=lambda v: v is None)
     company_objective: Ref | None = Field(default=None, exclude_if=lambda v: v is None)
     name: Name
@@ -136,6 +138,22 @@ class KPI(Input):
     baseline: Measure | None = Field(default=None, exclude_if=lambda v: v is None)
     target: Measure | None = Field(default=None, exclude_if=lambda v: v is None)
     actual: Measure | None = Field(default=None, exclude_if=lambda v: v is None)
+
+    @model_validator(mode="before")
+    @classmethod
+    def structured_definition(cls, value):
+        if not isinstance(value, dict) or not value.get("measurement"):
+            return value
+        definition = MeasurementDefinition.model_validate(value["measurement"]).model_dump()
+        contract = measurement_terms(definition)
+        derived = {"unit": "ratio", "window": f"{contract['window_days']} days", "owner": contract["owner_role"]}
+        for field, expected in derived.items():
+            if field in value and value[field] != expected:
+                raise ValueError(f"{field} conflicts with the structured KPI definition")
+        approved_methods = {measurement_statement(contract, locale) for locale in ("vi", "en")}
+        if "method" in value and value["method"] not in approved_methods:
+            raise ValueError("The prose method differs from the structured KPI; omit it to render the approved definition")
+        return {**value, **derived, "method": value.get("method", measurement_statement(contract, "vi"))}
 
     @model_validator(mode="after")
     def objective_scope(self):

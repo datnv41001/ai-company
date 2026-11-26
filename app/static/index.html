@@ -18,10 +18,12 @@
   <link rel="stylesheet" href="/static/campaign-engine.css">
   <script src="/static/campaign-operations.js" defer></script>
   <script src="/static/campaign-engine.js" defer></script>
+  <script src="/static/campaign-role-desk.js" defer></script>
   <script src="/static/catalog.js" defer></script>
   <script src="/static/marketing-brief.js" defer></script>
   <script src="/static/knowledge.js" defer></script>
   <link rel="stylesheet" href="/static/marketing-studio.css">
+  <script src="/static/production-studios.js" defer></script>
   <script src="/static/marketing-studio.js" defer></script>
   <script src="/static/workforce.js" defer></script>
   <script src="/static/recipients.js" defer></script>
@@ -151,6 +153,13 @@
           </header>
           <p id="engine-status" role="status" aria-live="polite"></p>
           <div id="engine-dashboard"></div>
+        </section>
+        <section id="campaign-role-desk" data-screen="campaigns" class="panel" aria-labelledby="desk-title" hidden>
+          <h3 id="desk-title">Bàn giao nghiệp vụ</h3>
+          <label>Chiến dịch bàn giao<select id="desk-campaign"></select></label>
+          <div id="desk-controls"></div>
+          <p id="desk-notice" role="status" aria-live="polite"></p>
+          <div id="desk-cases"></div>
         </section>
         <section id="campaign-lab" data-screen="campaigns" class="panel" aria-labelledby="lab-title" hidden>
           <div class="section-head"><div><h3 id="lab-title">Mô phỏng chiến dịch RFQ</h3><p>Từ kế hoạch tiếp cận người mua đến yêu cầu báo giá và doanh thu đối soát. Kịch bản dùng dữ liệu tổng hợp, mọi tác vụ chạy trong mô phỏng.</p></div></div>

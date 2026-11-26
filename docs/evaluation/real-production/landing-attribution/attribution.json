@@ -1,0 +1,69 @@
+{
+  "visit_receipt": "d8586e23-430d-45ba-8606-7ba56e98c0fc",
+  "submission_receipt": "d646f161-b2f9-4c57-a047-3237d79fc207",
+  "landing_source": {
+    "tenant_id": "748a00b4-07c7-4704-8426-1e90af938043",
+    "client_id": "d308379b-8fcf-4267-8f2b-7da323ed577d",
+    "brand_id": "e2f87af3-88e8-4e6a-83e7-91dbe93fa331",
+    "campaign_id": "7fdedf4c-3d40-468d-9bfb-cf12e96dfda6",
+    "plan_id": "87163b82-0e02-4cc2-808e-423edd91800d",
+    "plan_digest": "f7243d5de62a88e5c84a351d964318176b0ce6baaaeb766c4cad756a6fd3df26",
+    "document_id": "72ba6904-b295-4cf0-8e4d-0f061c7c6e72",
+    "studio_revision": 4,
+    "package_id": "e01d4691-f069-4522-b843-efdc862b3a4e",
+    "package_version": 1,
+    "package_digest": "9624e6904c0cb3b71027d4e17a50e826c27b084637dbda3912170b146dc317b3",
+    "file_digest": "3a53435d004845f5eaac011dfc1ce72e74bb6ded8d352507b339c7e67e87dd52"
+  },
+  "kpi": {
+    "contract": {
+      "version": "appointment-measurement/1",
+      "business_outcome": "appointment.confirmed_per_requested",
+      "window_days": 21,
+      "owner_role": "service_operations",
+      "numerator": {
+        "event": "confirmed",
+        "eligibility": "staff_confirmation_with_scheduled_time"
+      },
+      "denominator": {
+        "event": "requested",
+        "eligibility": "valid_service_request_with_consent"
+      },
+      "window": "rolling_utc_(start,end]_denominator_cohort",
+      "unit": "ratio",
+      "aggregation": "distinct_appointment_id",
+      "cancellations": "retain_prior_eligible_events_report_separately",
+      "refunds": "not_a_monetary_outcome",
+      "missing_attribution": "include_and_report_separately",
+      "reconciliation": "join_authorized_lifecycle_receipts_by_plan_and_appointment_id",
+      "id": "a8724d68-18d9-46ee-b771-31424e028778",
+      "revision": 1,
+      "digest": "4a2c4aaa50f7e384aaf8c67e493f8bb5e634bb5aaddb3c1a0c77cdfb38e05320"
+    },
+    "definition": "KPI chính trong 21 ngày: số lịch do nhân sự xác nhận trên số yêu cầu đặt lịch hợp lệ. Vận hành dịch vụ đối soát mỗi mã hẹn một lần. Giữ các sự kiện đủ điều kiện trước khi hủy. Tách hủy, vắng mặt và thiếu nguồn; hoàn tiền không đổi tỷ lệ.",
+    "plan_id": "87163b82-0e02-4cc2-808e-423edd91800d",
+    "window_start_exclusive": "2026-11-05T02:37:46.473126+00:00",
+    "as_of_inclusive": "2026-11-26T02:37:46.473126+00:00",
+    "numerator": 0,
+    "denominator": 1,
+    "ratio": 0.0,
+    "cancelled": 0,
+    "no_show": 0,
+    "unattributed": 0,
+    "attributed": 1,
+    "attribution": {
+      "landing_asset": 1,
+      "media_action": 0,
+      "unknown_media_action": 1,
+      "neither": 0
+    },
+    "source": "sandbox_appointment_receipts",
+    "secondary_metrics": [
+      {
+        "metric_id": "web.sessions",
+        "unit": "session_count",
+        "value": 1
+      }
+    ]
+  }
+}

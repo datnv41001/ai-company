@@ -1,0 +1,166 @@
+{
+  "45": {
+    "merge": {
+      "sha": "59949e24eea8cb4e3fcff1335aa57e8a16f78d09",
+      "tree": "6924d0d40655fab9f9fe62225bd514aa1e86b6e2",
+      "parents": [
+        "837ec9fc6c67868f5a88e263f06febc7d0ddf6bc",
+        "bea86a87ac82130d866ebc1d77018f7e85c7316f"
+      ]
+    },
+    "integration": {
+      "sha": "72509435063565bd7b78ef1e724a682a263b244b",
+      "tree": "6924d0d40655fab9f9fe62225bd514aa1e86b6e2",
+      "parents": [
+        "837ec9fc6c67868f5a88e263f06febc7d0ddf6bc",
+        "bea86a87ac82130d866ebc1d77018f7e85c7316f"
+      ]
+    },
+    "junit": {
+      "push": {
+        "file": "junit/45731440510/head/api-regression.xml",
+        "sha256": "c26ee6b4ae87e0d99a1178e56e795443dce2f2cb8f0eafa0e5fef171cb0adcf8",
+        "passed": 526,
+        "skipped": 2,
+        "url": "https://github.com/datnv41001/ai-company/actions/runs/45731440510"
+      },
+      "integration": {
+        "file": "junit/45731444402/integration/api-regression.xml",
+        "sha256": "b657fb482ec8e8d41e19d217bc467a814b2e03a388ca38c86fedb7062716f25f",
+        "passed": 526,
+        "skipped": 2,
+        "url": "https://github.com/datnv41001/ai-company/actions/runs/45731444402"
+      },
+      "post": {
+        "file": "junit/45738561950/head/api-regression.xml",
+        "sha256": "b5b6335f2cac7d97dbe2ac9263d10b376de504bbe5d65ed2df4a97f281966e3b",
+        "passed": 526,
+        "skipped": 2,
+        "url": "https://github.com/datnv41001/ai-company/actions/runs/45738561950"
+      }
+    }
+  },
+  "46": {
+    "merge": {
+      "sha": "ee8ea9d5687834b1653134cc036a6729020a7c3e",
+      "tree": "ce6bd5fa3665672050b90f8d1b6b6b1540a887d6",
+      "parents": [
+        "59949e24eea8cb4e3fcff1335aa57e8a16f78d09",
+        "73d6240314e9a626998bf0adf59feabc8e899a4f"
+      ]
+    },
+    "integration": {
+      "sha": "a5c15b0553cdf40d82eadb2300067aaade34e1f9",
+      "tree": "ce6bd5fa3665672050b90f8d1b6b6b1540a887d6",
+      "parents": [
+        "59949e24eea8cb4e3fcff1335aa57e8a16f78d09",
+        "73d6240314e9a626998bf0adf59feabc8e899a4f"
+      ]
+    },
+    "junit": {
+      "push": {
+        "file": "junit/45738749621/head/api-regression.xml",
+        "sha256": "5202dba4315d909e10ecac1e890fc968a49a5308da6a23738890111bd74770e8",
+        "passed": 528,
+        "skipped": 2,
+        "url": "https://github.com/datnv41001/ai-company/actions/runs/45738749621"
+      },
+      "integration": {
+        "file": "junit/45738754064/integration/api-regression.xml",
+        "sha256": "62e24cb106dc004c7618eaebe9d4ada1342da5df9d00b11555127b4c8db1fb1e",
+        "passed": 528,
+        "skipped": 2,
+        "url": "https://github.com/datnv41001/ai-company/actions/runs/45738754064"
+      },
+      "post": {
+        "file": "junit/45740557295/head/api-regression.xml",
+        "sha256": "ff7a3caa35e85fbc93585842eb433ea40ba7d26f5a3a7d6b99e70c5237e62716",
+        "passed": 528,
+        "skipped": 2,
+        "url": "https://github.com/datnv41001/ai-company/actions/runs/45740557295"
+      }
+    }
+  },
+  "47": {
+    "merge": {
+      "sha": "bb678908b767481d051a1364c9247f55fd8d2e2a",
+      "tree": "cd3efcb2d5798147e130c6258fe8c21e973a66b7",
+      "parents": [
+        "ee8ea9d5687834b1653134cc036a6729020a7c3e",
+        "3039a32d0da57f79a2566ce70d6464c58899b202"
+      ]
+    },
+    "integration": {
+      "sha": "79c9eae28b80ccad9cbd55438db802fe3389f1f4",
+      "tree": "cd3efcb2d5798147e130c6258fe8c21e973a66b7",
+      "parents": [
+        "ee8ea9d5687834b1653134cc036a6729020a7c3e",
+        "3039a32d0da57f79a2566ce70d6464c58899b202"
+      ]
+    },
+    "junit": {
+      "push": {
+        "file": "junit/45740594723/head/api-regression.xml",
+        "sha256": "b3168a464c3f16e57da5100c70166de28ff1258928f193535016f19ccadcc384",
+        "passed": 531,
+        "skipped": 2,
+        "url": "https://github.com/datnv41001/ai-company/actions/runs/45740594723"
+      },
+      "integration": {
+        "file": "junit/45740601698/integration/api-regression.xml",
+        "sha256": "bdf0a5f29d0bf7d1c105fe3acad5850635ea59ef68a4226977d536de847b3afd",
+        "passed": 531,
+        "skipped": 2,
+        "url": "https://github.com/datnv41001/ai-company/actions/runs/45740601698"
+      },
+      "post": {
+        "file": "junit/45742479869/head/api-regression.xml",
+        "sha256": "cb0b0f4888388ac3551b9edcdbebf879adb0bcf8bda16881a9b8b01db60da844",
+        "passed": 531,
+        "skipped": 2,
+        "url": "https://github.com/datnv41001/ai-company/actions/runs/45742479869"
+      }
+    }
+  },
+  "48": {
+    "merge": {
+      "sha": "380be3eb70a41424c6d45318b0b1890fa950970a",
+      "tree": "ae6cfcdef80d67650f7a245fe92431728ea0730c",
+      "parents": [
+        "bb678908b767481d051a1364c9247f55fd8d2e2a",
+        "16683d056486b7bba4f2396ebf2b9aad95ae79ce"
+      ]
+    },
+    "integration": {
+      "sha": "860ed776ba5ed4ce67e5b9b8666de8dbd9c5167a",
+      "tree": "ae6cfcdef80d67650f7a245fe92431728ea0730c",
+      "parents": [
+        "bb678908b767481d051a1364c9247f55fd8d2e2a",
+        "16683d056486b7bba4f2396ebf2b9aad95ae79ce"
+      ]
+    },
+    "junit": {
+      "push": {
+        "file": "junit/45742775745/head/api-regression.xml",
+        "sha256": "17d0b04e26af64f1abafee207dfff114791403d7d260468e3438ea089c41474e",
+        "passed": 537,
+        "skipped": 2,
+        "url": "https://github.com/datnv41001/ai-company/actions/runs/45742775745"
+      },
+      "integration": {
+        "file": "junit/45742779954/integration/api-regression.xml",
+        "sha256": "f42b5e1977e2e7bfbbf2d4c4635861b48ce28b52d5f74426128f13c91c38f5da",
+        "passed": 537,
+        "skipped": 2,
+        "url": "https://github.com/datnv41001/ai-company/actions/runs/45742779954"
+      },
+      "post": {
+        "file": "junit/45744737771/head/api-regression.xml",
+        "sha256": "f61278fddfb6ee9c56bb22ea7e448e1a7fd8e56136dc93f9b37ab3fa4f40d377",
+        "passed": 537,
+        "skipped": 2,
+        "url": "https://github.com/datnv41001/ai-company/actions/runs/45744737771"
+      }
+    }
+  }
+}

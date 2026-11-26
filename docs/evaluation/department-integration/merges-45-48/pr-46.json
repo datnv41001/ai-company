@@ -1,0 +1,266 @@
+{
+  "base": "59949e24eea8cb4e3fcff1335aa57e8a16f78d09",
+  "head": "73d6240314e9a626998bf0adf59feabc8e899a4f",
+  "integration": {
+    "sha": "a5c15b0553cdf40d82eadb2300067aaade34e1f9",
+    "tree": "ce6bd5fa3665672050b90f8d1b6b6b1540a887d6",
+    "parents": [
+      "59949e24eea8cb4e3fcff1335aa57e8a16f78d09",
+      "73d6240314e9a626998bf0adf59feabc8e899a4f"
+    ]
+  },
+  "pr_ci": {
+    "run": 45738754064,
+    "url": "https://github.com/datnv41001/ai-company/actions/runs/45738754064",
+    "head": "73d6240314e9a626998bf0adf59feabc8e899a4f",
+    "event": "pull_request",
+    "verification": {
+      "checkout": "a5c15b0553cdf40d82eadb2300067aaade34e1f9",
+      "tests_passed": 528,
+      "tests_skipped": 2,
+      "populated_upgrade_paths": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22
+      ],
+      "restore_tables": 34,
+      "studio_cutovers": [
+        [
+          "1",
+          "4"
+        ],
+        [
+          "2",
+          "4"
+        ],
+        [
+          "3",
+          "4"
+        ]
+      ]
+    },
+    "jobs": [
+      {
+        "id": 139638278806,
+        "name": "workforce-model (integration)",
+        "result": "success",
+        "url": "https://github.com/datnv41001/ai-company/actions/runs/45738754064/job/139638278806"
+      },
+      {
+        "id": 139638279064,
+        "name": "workforce-model (head)",
+        "result": "success",
+        "url": "https://github.com/datnv41001/ai-company/actions/runs/45738754064/job/139638279064"
+      },
+      {
+        "id": 139638279077,
+        "name": "compose-browser (integration)",
+        "result": "success",
+        "url": "https://github.com/datnv41001/ai-company/actions/runs/45738754064/job/139638279077"
+      },
+      {
+        "id": 139638279105,
+        "name": "compose-browser (head)",
+        "result": "success",
+        "url": "https://github.com/datnv41001/ai-company/actions/runs/45738754064/job/139638279105"
+      },
+      {
+        "id": 139638279162,
+        "name": "api-tests (head)",
+        "result": "success",
+        "url": "https://github.com/datnv41001/ai-company/actions/runs/45738754064/job/139638279162"
+      },
+      {
+        "id": 139638279930,
+        "name": "api-tests (integration)",
+        "result": "success",
+        "url": "https://github.com/datnv41001/ai-company/actions/runs/45738754064/job/139638279930"
+      },
+      {
+        "id": 139641468926,
+        "name": "matched-model",
+        "result": "skipped",
+        "url": "https://github.com/datnv41001/ai-company/actions/runs/45738754064/job/139641468926"
+      }
+    ]
+  },
+  "push_ci": {
+    "run": 45738749621,
+    "url": "https://github.com/datnv41001/ai-company/actions/runs/45738749621",
+    "head": "73d6240314e9a626998bf0adf59feabc8e899a4f",
+    "event": "push",
+    "verification": {
+      "checkout": "73d6240314e9a626998bf0adf59feabc8e899a4f",
+      "tests_passed": 528,
+      "tests_skipped": 2,
+      "populated_upgrade_paths": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22
+      ],
+      "restore_tables": 34,
+      "studio_cutovers": [
+        [
+          "1",
+          "4"
+        ],
+        [
+          "2",
+          "4"
+        ],
+        [
+          "3",
+          "4"
+        ]
+      ]
+    },
+    "jobs": [
+      {
+        "id": 139638265807,
+        "name": "workforce-model (head)",
+        "result": "success",
+        "url": "https://github.com/datnv41001/ai-company/actions/runs/45738749621/job/139638265807"
+      },
+      {
+        "id": 139638266060,
+        "name": "api-tests (head)",
+        "result": "success",
+        "url": "https://github.com/datnv41001/ai-company/actions/runs/45738749621/job/139638266060"
+      },
+      {
+        "id": 139638266114,
+        "name": "compose-browser (head)",
+        "result": "success",
+        "url": "https://github.com/datnv41001/ai-company/actions/runs/45738749621/job/139638266114"
+      },
+      {
+        "id": 139641477392,
+        "name": "matched-model",
+        "result": "skipped",
+        "url": "https://github.com/datnv41001/ai-company/actions/runs/45738749621/job/139641477392"
+      }
+    ]
+  },
+  "merged": {
+    "sha": "ee8ea9d5687834b1653134cc036a6729020a7c3e",
+    "tree": "ce6bd5fa3665672050b90f8d1b6b6b1540a887d6",
+    "parents": [
+      "59949e24eea8cb4e3fcff1335aa57e8a16f78d09",
+      "73d6240314e9a626998bf0adf59feabc8e899a4f"
+    ]
+  },
+  "post_ci": {
+    "run": 45740557295,
+    "url": "https://github.com/datnv41001/ai-company/actions/runs/45740557295",
+    "head": "ee8ea9d5687834b1653134cc036a6729020a7c3e",
+    "event": "push",
+    "verification": {
+      "checkout": "ee8ea9d5687834b1653134cc036a6729020a7c3e",
+      "tests_passed": 528,
+      "tests_skipped": 2,
+      "populated_upgrade_paths": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22
+      ],
+      "restore_tables": 34,
+      "studio_cutovers": [
+        [
+          "1",
+          "4"
+        ],
+        [
+          "2",
+          "4"
+        ],
+        [
+          "3",
+          "4"
+        ]
+      ]
+    },
+    "jobs": [
+      {
+        "id": 139644218391,
+        "name": "compose-browser (head)",
+        "result": "success",
+        "url": "https://github.com/datnv41001/ai-company/actions/runs/45740557295/job/139644218391"
+      },
+      {
+        "id": 139644218861,
+        "name": "workforce-model (head)",
+        "result": "success",
+        "url": "https://github.com/datnv41001/ai-company/actions/runs/45740557295/job/139644218861"
+      },
+      {
+        "id": 139644218873,
+        "name": "api-tests (head)",
+        "result": "success",
+        "url": "https://github.com/datnv41001/ai-company/actions/runs/45740557295/job/139644218873"
+      },
+      {
+        "id": 139647073723,
+        "name": "matched-model",
+        "result": "skipped",
+        "url": "https://github.com/datnv41001/ai-company/actions/runs/45740557295/job/139647073723"
+      }
+    ]
+  }
+}

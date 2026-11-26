@@ -2,7 +2,7 @@
 
 import re
 
-from . import c3_assets, c3_order_units
+from . import c3_assets, c3_order_units, measurement_integrity
 from .c3_actions import ACTIONS, BUYER_INPUTS
 
 VERSION = "amc.marketing-studio/1"
@@ -144,14 +144,32 @@ def compose(workflow, projection, checkpoints=None):
                 "Compare placing facts before versus after the call to action in the same audience.",
             ),
             "measurable_action": action or measurement.get("measurable_action", ""),
-            "measurement_method": measurement.get("measurement_method") or method,
+            "measurement_method": measurement_integrity.editorial_method(projection, measurement.get("measurement_method") or method),
         },
     }
 
 
+def includes_declarations(field, values, projection):
+    lines = set(values[field].splitlines())
+    facts = projection["facts"]
+    for fact in facts:
+        declaration = " ".join(c3_order_units.fact_lines(fact, projection))
+        if declaration in lines:
+            continue
+        # A fully qualified descriptive benefit can carry its own wording. Its
+        # exact restrictions still belong in terms; all other facts stay whole.
+        qualifiers = " ".join(fact.get("qualifiers") or [])
+        if (field == "commercial_terms" and (projection.get("task_intent") or {}).get("buyer_action") == "appointment"
+                and fact.get("category") == "description" and declaration == f"{fact['wording']} {qualifiers}"
+                and qualifiers and qualifiers in lines and values["benefit"] == declaration):
+            continue
+        return False
+    return bool(facts)
+
+
 def quality_issues(workflow, groups, projection):
     """Conservative structural signals; professional relevance still requires an independent review."""
-    result, seen = [], {}
+    result, seen = measurement_integrity.quality_issues({name: groups[name] for name in FIELDS[workflow]}, projection), {}
     norm = c3_assets.normalized
     intent = projection.get("task_intent") or {}
     entities = {norm(str(source.get(key) or "")) for source in (intent, projection) for key in ("audience", "region", "channel", "product", "sku")}
@@ -179,10 +197,8 @@ def quality_issues(workflow, groups, projection):
                 clauses = [part.strip() for part in re.split(r"[,;.!?\n]+", text) if len(part.split()) >= 6]
                 if len(clauses) != len(set(clauses)):
                     reason = "repetition"
-            if field in ("commercial_terms", "evidence"):
-                declarations = [" ".join(c3_order_units.fact_lines(f, projection)) for f in projection["facts"]]
-                if not declarations or any(line not in groups[group][field].splitlines() for line in declarations):
-                    reason = "missing_declaration"
+            if field in ("commercial_terms", "evidence") and not includes_declarations(field, groups[group], projection):
+                reason = "missing_declaration"
             if reason:
                 result.append({"group": group, "field": field, "reason": reason})
             seen[text] = field

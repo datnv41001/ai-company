@@ -35,6 +35,9 @@ def role_view(workflow, stage, projection):
     if is_current(workflow):
         view = c3_skill_library.role_view(stage, projection)
         intent = projection.get("task_intent", {})
+        if stage in ("director", "research", "strategy") and (metric := projection.get("measurement_contract")):
+            # Customer copy roles receive buyer-facing inputs only. Internal IDs never become model context.
+            view["primary_measurement"] = {k: v for k, v in metric.items() if k not in ("digest", "id")}
         if "buyer_action" in intent:
             view["buyer_action"] = intent["buyer_action"]
             view["editorial_style"] = intent["editorial_style"]

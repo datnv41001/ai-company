@@ -56,7 +56,7 @@ class BrandPatch(BrandCommand):
 
 class DraftBrief(BrandCommand):
     title: Name
-    selections: dict[brief_knowledge.Slot, Ref] = Field(default_factory=dict, max_length=3, exclude_if=lambda value: not value)
+    selections: dict[brief_knowledge.Slot, Ref] = Field(default_factory=dict, max_length=4, exclude_if=lambda value: not value)
 
 
 class Workspace:

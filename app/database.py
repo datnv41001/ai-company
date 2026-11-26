@@ -91,6 +91,8 @@ def prepare_database(bind, *, verify_identity=True):
                 conn.exec_driver_sql("ALTER TABLE workforce_briefs ADD COLUMN origin VARCHAR(12) NOT NULL DEFAULT 'agency'")
                 conn.exec_driver_sql("DROP TRIGGER IF EXISTS workforce_check_intake")
             Base.metadata.create_all(conn)
+            from migrations.sandbox_contract import sqlite_business_intake
+            sqlite_business_intake(conn)
             if bind.url.database not in (None, "", ":memory:"):
                 conn.exec_driver_sql("""CREATE TRIGGER IF NOT EXISTS sandbox_v2_commands BEFORE INSERT ON knowledge_commands
                     WHEN NEW.operation IN ('campaign_sandbox_v1','campaign_sandbox_v2','campaign_plan','campaign_plan_approve')
@@ -105,6 +107,8 @@ def prepare_database(bind, *, verify_identity=True):
                             BEFORE {verb} ON {table} BEGIN SELECT amc_channel_writer_v5(); END""")
             from .session_state import install_epoch_trigger
             install_epoch_trigger(conn)
+            from .campaign_role_desk import sqlite_membership_epochs
+            sqlite_membership_epochs(conn)
             for index in Base.metadata.tables["workforce_runs"].indexes:
                 index.create(conn, checkfirst=True)
             if not conn.exec_driver_sql("SELECT 1 FROM sqlite_master WHERE type='trigger' AND name='workforce_check_intake'").scalar():
@@ -144,9 +148,13 @@ def prepare_database(bind, *, verify_identity=True):
         from migrations.c3_writer_contract import WRITER_FENCE
         if not conn.scalar(text(WRITER_FENCE)):
             raise RuntimeError("Apply the compatible C3 delivery writer fence")
-        from migrations.sandbox_contract import SANDBOX_FENCE
+        from migrations.sandbox_contract import BUSINESS_INTAKE, ROLE_DESK, SANDBOX_FENCE
+        if not conn.scalar(text(BUSINESS_INTAKE)):
+            raise RuntimeError("Run the migration publisher to install the business intake writer fence")
         if 26 not in versions or not conn.scalar(text(SANDBOX_FENCE)):
             raise RuntimeError("Apply the compatible campaign sandbox journal writer fence")
+        if not conn.scalar(text(ROLE_DESK)):
+            raise RuntimeError("Run the migration publisher to install the scoped campaign handoff desk")
         if not conn.scalar(text("""
             SELECT EXISTS (SELECT FROM pg_attribute WHERE attrelid='public.workforce_briefs'::regclass
                             AND attname='origin' AND NOT attisdropped)

@@ -1,0 +1,62 @@
+{
+  "id": "cc570887-1a3b-44a7-8b5e-23fce93041c4",
+  "created_by": "cb3b9927-0b77-4972-8f0c-0641e8728644",
+  "did": "f5e715cf-8fca-4de2-956a-028dc5780d59",
+  "version": 1,
+  "kind": "landing",
+  "studio_revision": 4,
+  "manifest": {
+    "id": "03f8bee9-1de7-4b2f-8b67-ca47b6795718",
+    "digest": "16a8247bff139e3cde80991d4d2399967a8330d58187772d67bd4cc19fad5401"
+  },
+  "plan_id": "a42ea052-d18c-458f-a2c5-b85dc1824ab0",
+  "plan_digest": "ec429bc88771e2bf310bf006be311c1c09d333ca3546e73ef440ef684fb3deee",
+  "groups": {
+    "copy": "a9b5ca7f5d41287a12c0e10eb6b613e68d662635af01cc2da4c14e74a93f92a5",
+    "seo": "aae8538240c46167612d35b0c0bc94e7685d9d91a9cb0aeecc840e8af42a478e"
+  },
+  "group_receipts": {
+    "copy": "56a470b5-670d-480b-855e-88e20f664f67",
+    "seo": "b47e1b05-bdda-4797-a29d-9273ad2c8a43"
+  },
+  "inputs": "4ce01dab74d8d1f162278891d9a7b1a8f39e5399c0b80c7f287f4ea378402d95",
+  "master": {
+    "contract": "amc.sandbox-landing/1",
+    "kind": "appointment",
+    "seo": {
+      "page_title": "Dịch vụ kiểm tra bơm Lam | HN",
+      "meta_description": "Xem thông tin về Dịch vụ kiểm tra bơm Lam tại HN. Đặt lịch",
+      "search_intent": "Tìm hiểu điều kiện lựa chọn Dịch vụ kiểm tra bơm Lam tại HN."
+    },
+    "sections": {
+      "headline": "Dịch vụ kiểm tra bơm Lam",
+      "value_proposition": "Đối chiếu quy cách và điều kiện áp dụng của Dịch vụ kiểm tra bơm Lam trước khi lựa chọn.",
+      "benefit": "Phiếu kiểm tra ghi tình trạng máy. Áp dụng cho máy tại xưởng.",
+      "commercial_terms": "Phiếu kiểm tra ghi tình trạng máy. Áp dụng cho máy tại xưởng.\nGiá tham khảo: 270.000 VND / 1 máy, đã gồm thuế. Đơn tối thiểu: 1 máy. Áp dụng từ 1 máy. Số lượng đối chiếu: 1 máy. Xác nhận số lượng trước khi đặt.",
+      "call_to_action": "Đặt lịch"
+    },
+    "product_id": "bc5d1493-4136-4ebe-8a3e-bf227107223b",
+    "unit": "machine",
+    "scope": "synthetic_local",
+    "public_tracking": false
+  },
+  "files": {
+    "landing.html": {
+      "mime": "text/html",
+      "bytes": 4237,
+      "sha256": "597652d1737db9515d14fd7e6a365ea84ddfeb32df7ff4cc4f15d65288b9038a"
+    }
+  },
+  "digest": "5ffdf05ebdca458d8d7d2f53c99fa82e6671c0aa53ed1aec148f5b9b5f2bf943",
+  "measurement": {
+    "render_ms": 0.48,
+    "bytes": 4237,
+    "external_calls": 0,
+    "full_cost_vnd": null
+  },
+  "production_qa": {
+    "reviewer": "17efa09c-2ef6-4c33-899d-96f792ac7ee2",
+    "receipt": "52f69773-67b3-4e84-b30f-b3462f323824",
+    "digest": "5ffdf05ebdca458d8d7d2f53c99fa82e6671c0aa53ed1aec148f5b9b5f2bf943"
+  }
+}

@@ -1,0 +1,107 @@
+{
+  "main": "380be3eb70a41424c6d45318b0b1890fa950970a",
+  "reviewed_prs": [
+    {
+      "pr": 49,
+      "state": "OPEN",
+      "base": "380be3eb70a41424c6d45318b0b1890fa950970a",
+      "head": "0498949e64f4d030cc9ba2f0f961ab4dfc2e2ab0",
+      "integration": {
+        "sha": "dbb57879b9183d9a17495efe79dbbfcf131f8148",
+        "tree": "8bf39b93f1f390cb987c6b8684639d55824ab5e0",
+        "parents": [
+          "380be3eb70a41424c6d45318b0b1890fa950970a",
+          "0498949e64f4d030cc9ba2f0f961ab4dfc2e2ab0"
+        ]
+      },
+      "push": "https://github.com/datnv41001/ai-company/actions/runs/45744770227",
+      "pull_request": "https://github.com/datnv41001/ai-company/actions/runs/45744776951",
+      "required_jobs": 9
+    },
+    {
+      "pr": 50,
+      "state": "OPEN",
+      "base": "0498949e64f4d030cc9ba2f0f961ab4dfc2e2ab0",
+      "head": "104af78ba2475973404c1043706042595b3b97bf",
+      "integration": {
+        "sha": "0495ce29a43da94f3963ce0abef89f05f91454ab",
+        "tree": "28d14d6c7391b4b6ba38872624b9fbb5e899bc0f",
+        "parents": [
+          "0498949e64f4d030cc9ba2f0f961ab4dfc2e2ab0",
+          "104af78ba2475973404c1043706042595b3b97bf"
+        ]
+      },
+      "push": "https://github.com/datnv41001/ai-company/actions/runs/45744811777",
+      "pull_request": "https://github.com/datnv41001/ai-company/actions/runs/45744819917",
+      "required_jobs": 9
+    },
+    {
+      "pr": 51,
+      "state": "OPEN",
+      "base": "104af78ba2475973404c1043706042595b3b97bf",
+      "head": "a5909321ed012c6ea99fcc0fdfadceb3c334c3ca",
+      "integration": {
+        "sha": "4700355ccc560b737c1d5fae53dc8ccbd2c4039d",
+        "tree": "7e9575ce9906f4492f8a7efc5c5b917f7868548e",
+        "parents": [
+          "104af78ba2475973404c1043706042595b3b97bf",
+          "a5909321ed012c6ea99fcc0fdfadceb3c334c3ca"
+        ]
+      },
+      "push": "https://github.com/datnv41001/ai-company/actions/runs/45747354080",
+      "pull_request": "https://github.com/datnv41001/ai-company/actions/runs/45747360771",
+      "required_jobs": 9
+    },
+    {
+      "pr": 52,
+      "state": "OPEN",
+      "base": "a5909321ed012c6ea99fcc0fdfadceb3c334c3ca",
+      "head": "95aed621381c782114b18521d2b2d58eb17a7828",
+      "integration": {
+        "sha": "64e5187445c44b57c1bb79520fce95b903a73414",
+        "tree": "a9284d536530a65e18bf3cdbcd14c787a7ce8082",
+        "parents": [
+          "a5909321ed012c6ea99fcc0fdfadceb3c334c3ca",
+          "95aed621381c782114b18521d2b2d58eb17a7828"
+        ]
+      },
+      "push": "https://github.com/datnv41001/ai-company/actions/runs/45747367893",
+      "pull_request": "https://github.com/datnv41001/ai-company/actions/runs/45747374578",
+      "required_jobs": 9
+    },
+    {
+      "pr": 53,
+      "state": "OPEN",
+      "base": "380be3eb70a41424c6d45318b0b1890fa950970a",
+      "head": "56a120cac4bb3f77a4e1fc6fe93298cc838121ea",
+      "integration": {
+        "sha": "c21d1cdb9f77b3c1ba793d1e49ea27bcb21e3a5a",
+        "tree": "3157353f5b7f2e3a46294bb469356643a8a1f28c",
+        "parents": [
+          "380be3eb70a41424c6d45318b0b1890fa950970a",
+          "56a120cac4bb3f77a4e1fc6fe93298cc838121ea"
+        ]
+      },
+      "push": "https://github.com/datnv41001/ai-company/actions/runs/45751804786",
+      "pull_request": "https://github.com/datnv41001/ai-company/actions/runs/45751855771",
+      "required_jobs": 9
+    },
+    {
+      "pr": 54,
+      "state": "OPEN",
+      "base": "95aed621381c782114b18521d2b2d58eb17a7828",
+      "head": "eff86cda2f99dd10244dc8127451e941bb546a3c",
+      "integration": {
+        "sha": "d3c3b36431594e8d35363f9ee4c90f0ec011b9b5",
+        "tree": "914a83fd15a807a5b9c535c24f13066db174bc88",
+        "parents": [
+          "95aed621381c782114b18521d2b2d58eb17a7828",
+          "eff86cda2f99dd10244dc8127451e941bb546a3c"
+        ]
+      },
+      "push": "https://github.com/datnv41001/ai-company/actions/runs/45751921616",
+      "pull_request": "https://github.com/datnv41001/ai-company/actions/runs/45751927871",
+      "required_jobs": 9
+    }
+  ]
+}

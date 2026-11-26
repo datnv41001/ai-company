@@ -23,7 +23,7 @@ function createKnowledgePanel(root, api, refreshWorkforce) {
   const modes = {inherit:'Từ hồ sơ doanh nghiệp', override:'Điều chỉnh cho thương hiệu', empty:'Chủ động để trống'};
   const html = value => String(value ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
   const fields = Object.keys(names);
-  const briefSlots = {product:'Sản phẩm hoặc dịch vụ', audience:'Hồ sơ khách hàng', objective:'Mục tiêu đã khai báo'};
+  const briefSlots = {product:'Sản phẩm hoặc dịch vụ', audience:'Hồ sơ khách hàng', objective:'Mục tiêu đã khai báo', kpi:'KPI của chiến dịch'};
   const statusNames = {draft:'Bản nháp', approved:'Đã duyệt', superseded:'Đã thay thế', withdrawn:'Đã thu hồi', disputed:'Tranh chấp', expired:'Hết hạn', pending_effective:'Chưa có hiệu lực'};
   let scope, client, brand, view, data, edit, command, brief, conflict, reentry;
   let generation = 0;

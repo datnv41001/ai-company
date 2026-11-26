@@ -20,12 +20,14 @@ from .models import Brand, Campaign, Deliverable, User, new_id
 from .revision_qa import content_digest
 from .security import current_user, require_tenant
 from .workforce_models import WorkforceBrief, WorkforceRun
+from .business_intake import Selections
 from .campaign_planner_pack import KINDS, compose_plan
 
 router = APIRouter(prefix="/api/tenants/{tenant_id}/campaigns/{campaign_id}/engine", tags=["Campaign planner"])
 
 
 class Proposal(Input):
+    intake_fields: Selections | None = None
     key: Key
     expected_revision: Annotated[int, Field(ge=0)]
     manifest_ids: Annotated[list[Ref], Field(min_length=1, max_length=2)]
@@ -34,6 +36,7 @@ class Proposal(Input):
     duration_days: Annotated[int, Field(strict=True, ge=1, le=180)]
     channels: Annotated[list[Name], Field(min_length=1, max_length=4)] | None = None
     target_outcome: Name | None = None
+    secondary_rfq: bool = False
     optimization_basis: Annotated[str, Field(min_length=1, max_length=600)] | None = None
 
 
@@ -83,14 +86,14 @@ def history(store, campaign_id):
     ]
 
 
-def selection(store, cid, mid, *, stage):
+def selection(store, cid, mid, *, stage, lock_target=True):
     snap, body = c3_projection.unpack(store, mid)
     workflow = body["options"]["workflow"]
     if snap.campaign_id != cid or workflow not in KINDS:
         missing()
     brief = store.db.get(WorkforceBrief, snap.brief_id)
     ws = Workspace(SimpleNamespace(path_params=store.scope), store.db.get(User, store.actor), store.db, write=False)
-    _, public = c3_projection.recheck(store, ws, snap.id, snap.digest, workflow, brief, stage)
+    _, public = c3_projection.recheck(store, ws, snap.id, snap.digest, workflow, brief, stage,lock_target=lock_target)
     if not public["task_intent"].get("buyer_action"):
         conflict("Select an approved task with an explicit buyer action")
     return snap, body, public
@@ -138,13 +141,13 @@ def execution_terms(store, snap, projection, budget):
             "simulated_media_budget_vnd": active["budget_vnd"], "ai_budget_microusd_per_run": cap}
 
 
-def active_plan(store, campaign_id, *, revalidate=True):
+def active_plan(store, campaign_id, *, revalidate=True, lock_targets=True):
     current = next((row for row in history(store, campaign_id) if row["status"] == "approved"), None)
     if not current:
         conflict("Campaign has no approved plan")
     if revalidate:
         for ref in current["manifests"].values():
-            selection(store, campaign_id, ref["id"], stage="operate")
+            selection(store, campaign_id, ref["id"], stage="operate",lock_target=lock_targets)
     return current
 
 
@@ -180,6 +183,26 @@ def planner(tenant_id: str, campaign_id: str, user: User = Depends(current_user)
     }
 
 
+@router.get("/plans/{plan_id}/content-pack")
+def content_pack(tenant_id: str, campaign_id: str, plan_id: str, user: User = Depends(current_user), db: Session = Depends(get_db)):
+    from .campaign_content_pack import compose
+    from .production_studios import approved_landing_destination
+
+    store = campaign_store(db, user, tenant_id, campaign_id, write=False)
+    if not store.approver:
+        missing()
+    plan = active_plan(store, campaign_id, lock_targets=False)
+    if plan["id"] != plan_id:
+        conflict("Refresh the approved campaign revision")
+    ref = plan["manifests"].get("landing") or plan["manifests"]["strategy"]
+    _, _, projection = selection(store, campaign_id, ref["id"], stage="operate", lock_target=False)
+    pack = compose(plan, projection)
+    destination = approved_landing_destination(store, user, plan)
+    if destination:
+        pack["advertising"]["destination"] = {"kind": "sandbox_landing", "status": "approved", **destination}
+    return pack
+
+
 @router.post("/plans", status_code=201)
 def propose(tenant_id: str, campaign_id: str, body: Proposal, user: User = Depends(current_user), db: Session = Depends(get_db)):
     s = campaign_store(db, user, tenant_id, campaign_id, write=True)
@@ -198,6 +221,10 @@ def propose(tenant_id: str, campaign_id: str, body: Proposal, user: User = Depen
         return compose_plan(s, campaign_id, selected, body, new_id()), "restricted", None
 
     inputs = body.model_dump(mode="json")
+    if inputs["intake_fields"] is None:
+        inputs.pop("intake_fields")
+    if not inputs["secondary_rfq"]:
+        inputs.pop("secondary_rfq")
     # Existing retries used the implicit 10,000 µUSD ceiling before it was configurable.
     if inputs["ai_budget_microusd_per_run"] == 10000:
         del inputs["ai_budget_microusd_per_run"]

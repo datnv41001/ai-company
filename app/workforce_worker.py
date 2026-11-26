@@ -246,7 +246,7 @@ def finish(db, scope, config, task, result, error, *, node=None, commit=True):
         return False  # A stale worker must never append a second checkpoint or artifact.
     stage = node.skill if node else run.plan[len(run.checkpoints)]
     metrics = {}
-    needs_changed_input = False
+    verified_refusal = None
     if result is not None:
         raw, inputs, outputs = result
         try:
@@ -289,21 +289,28 @@ def finish(db, scope, config, task, result, error, *, node=None, commit=True):
             error = str(exc)
             # Only the dispatcher's own adapter validation can attest that the
             # pinned input fails deterministically. A mailbox error cannot.
-            needs_changed_input = error == "storyboard_needs_revision" and video_storyboard.is_run(run)
+            if storyboard_runtime.is_run(run) and error in {"storyboard_needs_revision", "storyboard_invalid_checkpoint"}:
+                verified_refusal = error
             if isinstance(exc, dynamic_plan.InvalidPlan):
                 metrics["plan_error"] = exc.reason
     run.lease = None
     if error:
-        if needs_changed_input:
+        if verified_refusal:
             metrics["retry_disposition"] = "terminal_for_pinned_input"
-            metrics["recovery"] = "revise_source_or_policy_and_queue_new_manifest"
-        elif error in ("timeout", "worker_terminated", "provider_unavailable"):
+            metrics["recovery"] = (
+                "revise_source_or_policy_and_queue_new_manifest"
+                if verified_refusal == "storyboard_needs_revision"
+                else "inspect_checkpoint_integrity_before_new_run"
+            )
+        elif error in ("timeout", "provider_process"):
             metrics["retry_disposition"] = "bounded_transport_retry"
+        elif error == "provider_or_format":
+            metrics["retry_disposition"] = "bounded_output_retry" if metrics else "bounded_provider_retry"
         elif error in ("invalid_output", "incomplete_output", "invalid_contract_output", "invalid_source", "invalid_plan", "invalid_storyboard_reply"):
             metrics["retry_disposition"] = "bounded_output_retry"
         close_attempt(run, outcome=error, **metrics)
         run.last_error = error
-        run.state = "failed" if needs_changed_input or run.attempts >= MAX_TRIES else "queued"
+        run.state = "failed" if verified_refusal or run.attempts >= MAX_TRIES else "queued"
         run.ready_at = utcnow() + timedelta(seconds=2**run.attempts)
     else:
         close_attempt(run, outcome="ok", **metrics)

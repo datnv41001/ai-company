@@ -21,6 +21,38 @@ TAG = TRAY | dict(id="swatch-tag", company="Xưởng Nhãn Thử", brand="Mép G
 REF = {"id": "synthetic-unit-test", "digest": "a" * 64}
 
 
+@PG
+def test_corrupt_handoff_stops_after_one_verified_attempt(pool, monkeypatch):
+    from app import workforce_worker
+    from app.pool_worker import report, run_job
+    from test_diamond import take_node
+
+    case, intent = case_input(TRAY)
+    base, owner, _, _, _, queued = start(pool, case, release=runtime.RELEASE, intent_overrides=intent)
+    rid = queued["id"]
+    work(pool, rid, "director", [])
+    work(pool, rid, "content", [])
+    # Simulate an integration regression while constructing the *next* envelope.
+    # The already persisted Content checkpoint remains available for diagnosis.
+    original = workforce_worker.node_request
+
+    def with_incorrect_handoff(*args, **kwargs):
+        return original(*args, **kwargs) | {"content_digest": "0" * 64}
+
+    monkeypatch.setattr(workforce_worker, "node_request", with_incorrect_handoff)
+    worker, job = take_node(pool)
+    assert job["run"] == rid and job["body"]["stage"] == "storyboard"
+    reply = run_job(pool.config, job["body"])
+    assert reply == ({"blocked": "storyboard_invalid_checkpoint"}, 0, 0)
+    assert report(worker.conn, job, list(reply)) and pool.consume()
+    result = accepted(pool.api.get(base + "/workforce/runs/" + rid, headers=owner["headers"]))
+    failure = result["journal"][-1]
+    assert result["state"] == "failed" and result["deliverable_id"] is None
+    assert failure["outcome"] == "storyboard_invalid_checkpoint" and failure["attempt"] == 1
+    assert failure["recovery"] == "inspect_checkpoint_integrity_before_new_run"
+    assert [c["skill"] for c in result["checkpoints"]] == ["director", "content"]
+
+
 def case_input(case, prepare=False):
     objective = brief.PURPOSES["rfq"][int(prepare)] + " " + case["product"]
     return case | {"objective": objective}, {

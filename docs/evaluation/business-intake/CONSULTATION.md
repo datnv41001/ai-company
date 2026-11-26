@@ -1,5 +1,7 @@
 # Tư vấn yêu cầu dưới MOQ và đối soát báo giá
 
+Để kiểm đường nâng cùng schema, chạy `python tests/check_consultation_cutover.py --container amc-test-pg` trong môi trường PostgreSQL loopback của job API. Phép thử dùng publisher và API thật của #55 để lập kế hoạch và ghi journal, sao lưu database cũ, chạy publisher mới hai lần, so từng hàng journal rồi mở bản restore bằng API cũ. Trên Windows thiếu bộ lệnh pg_dump/pg_restore, tùy chọn `--physical-copy` tạo bản sao database PostgreSQL khi các kết nối writer đã đóng. Lượt thử cục bộ đầu tiên dừng trước nâng cấp do thiếu binary pg_dump. Bản Linux CI sử dụng định dạng archive với pg_dump và pg_restore thực.
+
 ## AMC-R55-01 · Người phụ trách tư vấn
 
 Trên PR #55 ở `c5c63295`, form nhận ba hộp khi điều kiện bán là năm hộp. Marketing đọc được hồ sơ. Bước phân công Sales chỉ nhận trạng thái `qualified`, và Sales chỉ nhìn thấy hồ sơ đã được giao. Vì vậy biên nhận cũ chứng minh việc tiếp nhận để tư vấn, còn việc giao cho người tư vấn là khoảng trống.
@@ -34,6 +36,25 @@ Khoảng thời gian của bảng là vòng đời phiên bản kế hoạch đ�
 1. Checkout head của PR và dùng clone có lịch sử đến `c5c63295`. Cấu hình PostgreSQL test theo job API của CI. Chạy publisher `python migrations/apply.py` trước khi phục vụ lưu lượng. Core v26 giữ nguyên. Publisher cài phiên bản 2 của hàm Role Desk đã ký; runtime mới kiểm tra phiên bản này khi khởi động.
 2. Chạy `python -m pytest -q tests/test_production_studios.py -k "index-tray or (restricted_production and False)"`. Đặt `AMC_CONSULTATION_EVIDENCE` vào thư mục artifacts để lưu hai biên bản tổng hợp. Ca PG chạy cả API thật của head tiền nhiệm, hai người dùng, hai tab cạnh tranh một revision, thu hồi grant và phân công lại.
 3. Chạy `python -m pytest -q tests/browser_role_desk.py -k assigned_sales` với Chromium. `AMC_DESK_SCREENSHOTS` chọn nơi lưu ảnh và thời gian phản hồi. [Ca trình duyệt](../../../tests/browser_role_desk.py) · [Ca chuyển bước và đối soát](../../../tests/consultation_fixtures.py)
-4. Khi rollback, dừng writer, giữ journal và backup; thống kê các ca `consulting` cần xử lý tiếp. API cũ đọc được hồ sơ đã giao, chỉ runtime có hỗ trợ mới được ghi bước tư vấn. Có thể hoàn tất các ca này trước khi rút runtime, hoặc tạm giữ đến khi bật lại runtime tương thích. Xác minh bản khôi phục và receipt trên DB riêng trước khi đổi writer. [Quy trình rollback và đối soát](../sandbox-operations/CUTOVER.md)
+4. Khi rollback, dừng writer, giữ journal và backup; thống kê cả `consulting` và `awaiting_assignment`. API cũ đọc được hồ sơ đã giao. Runtime mới có thể hoàn tất tư vấn và phân công thương mại trước khi rút, hoặc giữ nguyên hai trạng thái đó để tiếp tục khi bật lại runtime tương thích. Xác minh bản khôi phục và receipt trên DB riêng trước khi đổi writer. [Quy trình rollback và đối soát](../sandbox-operations/CUTOVER.md)
 
 Chi phí thử nghiệm gồm thời gian CPU và công kiểm tra cục bộ, chưa đo chi phí lao động thực tế. Số tư vấn viên nghiệp vụ tham gia bằng 0. Phản biện dành cho reviewer là kiểm tra thời điểm người tư vấn mất quyền khi hồ sơ được chuyển sang người bán khác, rồi đối chiếu từng biến động doanh thu sau hoàn tiền và hủy với lần đầu ghi nhận đơn.
+
+## Điểm kiểm tra trong source của bản sửa
+
+- R55-01 áp dụng từ [hợp đồng tư vấn, dòng 159](https://github.com/datnv41001/ai-company/blob/d95c5cd3f0e73c357c870d86774c40e31a4ac05d/app/campaign_operations_contracts.py#L159), [chuyển trạng thái CRM, dòng 82](https://github.com/datnv41001/ai-company/blob/d95c5cd3f0e73c357c870d86774c40e31a4ac05d/app/campaign_operations_crm.py#L82) và [quyền Role Desk, dòng 216](https://github.com/datnv41001/ai-company/blob/d95c5cd3f0e73c357c870d86774c40e31a4ac05d/app/campaign_role_desk.py#L216).
+- R55-02 đối chiếu chữ ký nguồn form và toàn bộ số đếm theo cùng plan tại [funnel, dòng 102](https://github.com/datnv41001/ai-company/blob/d95c5cd3f0e73c357c870d86774c40e31a4ac05d/app/business_intake.py#L102). Số báo giá tăng khi Sales ghi nhận bước `quote` trong sandbox.
+
+## Kết quả từ bản sửa d95c5cd
+
+Nhóm kiểm tra API/native có 15 ca đạt, Chromium có một ca đạt và kiểm tra riêng cho quyền tư vấn khi thiếu consent hoặc thiếu grant có một ca đạt. [Tên từng ca, thời gian và SHA-256](consultation/runs.json)
+
+Hai lượt chạy độc lập tạo cùng kết quả nghiệp vụ. Hai lần gửi form hợp lệ sinh hai hồ sơ. Hồ sơ đầu đủ điều kiện sau tư vấn, Sales tiếp nhận, phát hành báo giá và ghi đơn. Xác nhận 5.000 VND, hoàn 1.000 VND và hủy đơn lần lượt cho doanh thu hiện hành 5.000, 4.000 rồi 0 VND. Hồ sơ thứ hai từ chối tăng số lượng và dừng ở trạng thái từ chối. Tổng cuối kỳ có một báo giá lịch sử và một đơn lịch sử. [SQLite](consultation/sqlite.json) · [PostgreSQL với role runtime](consultation/postgres.json)
+
+Trong Chromium, người điều phối giao hồ sơ 3 hộp bằng giao diện. Người tư vấn cập nhật 5 hộp và xác nhận bằng bàn phím. Bàn điều hành hiển thị 1 RFQ đủ điều kiện và 0 báo giá. Ba kích thước đã kiểm tra focus và reflow. Lượt cục bộ này mất 297 ms từ thao tác ghi đến khi thấy trạng thái chờ giao Sales. Thời gian chỉ phản ánh máy thử. [Kết quả trình duyệt](consultation/observations.json)
+
+| Chiều rộng viewport | Giao diện sáng | Giao diện tối |
+|---|---|---|
+| 390 px | [Ảnh](consultation/sales-390-light.png) | [Ảnh](consultation/sales-390-dark.png) |
+| 820 px | [Ảnh](consultation/sales-820-light.png) | [Ảnh](consultation/sales-820-dark.png) |
+| 1280 px | [Ảnh](consultation/sales-1280-light.png) | [Ảnh](consultation/sales-1280-dark.png) |

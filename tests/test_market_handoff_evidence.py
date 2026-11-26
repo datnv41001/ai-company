@@ -1,5 +1,6 @@
 """Check archived, synthetic evidence offline without loading weights or contacting a server."""
 
+import hashlib
 import json
 from pathlib import Path
 import sys
@@ -20,13 +21,18 @@ def test_receipts_and_scores_replay_without_inference(tmp_path):
     cards = load(inputs)
     output = tmp_path / "replay"
     predictions(inputs, output)
-    with zipfile.ZipFile(DATA / "FIRST-RUN.zip") as saved:
+    archive = DATA / "FIRST-RUN.zip"
+    assert digest(archive) == "743453b38d7738aca5931494cf1d204a3c610e7c5ce5af297538013a9bba51a3"
+    with zipfile.ZipFile(archive) as saved:
         names = {"control.json", "rules.json", "qwen.json", "run.json", "host.json"} | {"receipts/" + c["id"] + ".json" for c in cards}
         assert set(saved.namelist()) == names and len(saved.namelist()) == len(names)
         for arm in ("control", "rules"):
             assert load(output / (arm + ".json")) == json.loads(saved.read(arm + ".json"))
         frozen_run = json.loads(saved.read("run.json"))
         assert frozen_run["cohort_sha256"] == digest(inputs)
+        for key, source in (("runner_sha256", DATA.parent / "handoff_infer.py"), ("protocol_sha256", DATA / "PROTOCOL.md")):
+            # The original runner used LF. Git may materialize identical source with CRLF on Windows.
+            assert hashlib.sha256(source.read_bytes().replace(b"\r\n", b"\n")).hexdigest() == frozen_run[key]
         assert frozen_run["wall_seconds"] <= WALL_CAP and frozen_run["new_provider_fee"] == 0
         assert json.loads(saved.read("host.json"))["weights"] == MODEL
         replies = []
@@ -43,7 +49,7 @@ def test_receipts_and_scores_replay_without_inference(tmp_path):
                 answer = json.loads(receipt["raw_output"])
                 assert answer["id"] == card["id"]
                 replies.append(answer)
-        assert attempted <= REQUEST_CAP and replies == json.loads(saved.read("qwen.json"))
+        assert attempted == REQUEST_CAP == len(cards) and replies == json.loads(saved.read("qwen.json"))
         (output / "qwen.json").write_bytes(saved.read("qwen.json"))
     assert results(inputs, labels, output) == load(DATA / "metrics.json")
 

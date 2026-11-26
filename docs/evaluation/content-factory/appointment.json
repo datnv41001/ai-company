@@ -1,17 +1,17 @@
 {
   "source": "synthetic API lifecycle",
   "plan": {
-    "plan_id": "fe1c3558-8011-4928-81a6-906bfd8d7fcd",
+    "plan_id": "023ee2b8-6f00-4d5f-be0b-e2e833490d46",
     "plan_revision": 1,
-    "plan_digest": "13b71bc9524073444e4e8896c8bff40534f45944a4f6164cd385eb08d9a78e14",
-    "plan_receipt": "277c8a17-d109-437b-a330-413d06e61eee",
+    "plan_digest": "10290bf0449c95ff82ab23c4bc8bdfbbd01170003f606edfb8c0275d1f04a820",
+    "plan_receipt": "46293019-37f1-4d76-a647-265edc443b5f",
     "manifest": {
-      "id": "6fac2a4a-e90e-4a82-b8c9-c76db9c8be87",
-      "digest": "b3def27a198f4c4e2b8a3a3a4e6fc96a90033525d39cecf922b7c734447617bb",
-      "brief_id": "9da91b7e-5187-4a99-9ab8-ca8bd975971d",
+      "id": "1a160029-9c46-48e5-82f1-256cd7b91988",
+      "digest": "2dfa23a384517f6a5154e1797057ac970b6cc90b9363869870e9a2adcbc24ccf",
+      "brief_id": "188fe26c-a77e-4744-8808-96616f3ba772",
       "workflow": "WF-13/landing-seo-draft@6"
     },
-    "queue_receipt": "160273db-9e33-4e5a-8f93-8d8672d0f1b1",
+    "queue_receipt": "794f6b04-07b6-4869-8ec1-10409c092995",
     "channel_plan": [
       "web"
     ],
@@ -24,13 +24,13 @@
     }
   },
   "revision": 4,
-  "snapshot_digest": "ab26a2b356598e0020190b122c8d4a9d0ae51a5c1da66e37b74819c057200674",
-  "customer_preview": "Nội dung trang đích\n\nTiêu đề\nDịch vụ kiểm tra bơm Lam\n\nGiá trị cho người mua\nĐối chiếu quy cách và điều kiện áp dụng của Dịch vụ kiểm tra bơm Lam trước khi lựa chọn.\n\nLợi ích\nPhiếu kiểm tra ghi tình trạng máy. Áp dụng cho máy tại xưởng.\n\nĐiều kiện thương mại\nGiá tham khảo: 270.000 VND / 1 máy, đã gồm thuế. Đơn tối thiểu: 1 máy. Áp dụng từ 1 máy. Số lượng đối chiếu: 1 máy. Xác nhận số lượng trước khi đặt.\nPhiếu kiểm tra ghi tình trạng máy. Áp dụng cho máy tại xưởng.\n\nLời mời hành động\nĐặt lịch\n\nThông tin SEO\n\nTiêu đề SEO\nDịch vụ kiểm tra bơm Lam | HN\n\nMô tả tìm kiếm\nXem thông tin về Dịch vụ kiểm tra bơm Lam tại HN. Đặt lịch\n\nÝ định tìm kiếm\nTìm hiểu điều kiện lựa chọn Dịch vụ kiểm tra bơm Lam tại HN.\n\nBài mạng xã hội\n\nTrụ cột nội dung\nchuẩn bị lịch hẹn\n\nMở bài\nAnh chị muốn sắp xếp lịch cho Dịch vụ kiểm tra bơm Lam?\n\nDữ kiện và điều kiện\nGiá tham khảo: 270.000 VND / 1 máy, đã gồm thuế. Đơn tối thiểu: 1 máy. Áp dụng từ 1 máy. Số lượng đối chiếu: 1 máy. Xác nhận số lượng trước khi đặt.\nPhiếu kiểm tra ghi tình trạng máy. Áp dụng cho máy tại xưởng.\n\nLời mời hành động\nĐặt lịch\n\nĐề xuất quảng cáo\n\nĐề xuất chiến dịch\nĐề xuất thử thông điệp về Dịch vụ kiểm tra bơm Lam.\n\nGiả thuyết nhóm người mua\nGiả thuyết cần thử với nhóm Quản đốc nhà máy.\n\nÝ định và từ khóa đề xuất\nTừ khóa thử nghiệm: Dịch vụ kiểm tra bơm Lam · chuẩn bị lịch hẹn.\n\nTiêu đề quảng cáo\nDịch vụ kiểm tra bơm Lam\n\nLời quảng cáo\nAnh chị muốn sắp xếp lịch cho Dịch vụ kiểm tra bơm Lam?\n\nLời mời hành động\nĐặt lịch\n\nThử nghiệm sáng tạo\nSo sánh hai cách mở đầu. Giữ nguyên lời mời hành động, vị trí và điều kiện.\n\nPhân bổ đề xuất\nĐề xuất chia đều hạn mức media đã duyệt giữa hai biến thể trong mô phỏng.\n\nPhép đo\nSo sánh số lịch được nhân sự xác nhận trên lượt yêu cầu. Ghi riêng ca hủy hoặc vắng mặt.\n\nBrief thiết kế\n\nÝ tưởng hình ảnh\nPhác thảo khung hình cho Dịch vụ kiểm tra bơm Lam có chỗ đặt điều kiện và lời mời hành động.\n\nChỉ dẫn thương hiệu\nĐối chiếu màu, giọng điệu và dấu hiệu nhận diện với bản hướng dẫn thương hiệu đã ghim.\n\nĐặc tả ảnh\nĐề xuất bố cục dọc và ngang. Giữ chủ thể, điều kiện và CTA trong vùng an toàn khi cắt.\n\nKịch bản video\nKịch bản gồm cảnh nhu cầu của người mua, cảnh đối chiếu dữ kiện và cảnh chọn bước tiếp theo.\n\nĐiều kiện quyền sử dụng\nChờ kiểm tra chủ sở hữu, giấy phép, phạm vi và thời hạn trước khi dùng tư liệu.\n\nNguồn tài sản\nBản giao chỉ gồm chỉ dẫn sản xuất. Chưa có tệp hình ảnh hoặc video được cấp phép.\n\nLịch nội dung\n\nKênh trong kế hoạch\nweb\n\nMốc đề xuất\nNgày 10: soát brief. Ngày 10: chuẩn bị bài. Ngày 10: duyệt mẫu quảng cáo. Ngày 14: đối soát lịch.\n\nThứ tự nội dung\nMở bằng câu hỏi của người mua, tiếp đến là bài đối chiếu điều kiện, kết thúc bằng lời mời hành động.\n\nBộ phận nhận việc\nSocial soạn bài, Media soạn quảng cáo, Design nhận brief và Campaign Manager đối soát lịch.\n\nĐiểm duyệt\nChỉ đề xuất lịch. Kiểm tra nguồn, quyền sử dụng và bản QA đã duyệt trước khi mô phỏng.",
+  "snapshot_digest": "23e1d8495003933f5d95a9ef6b8a421b67da9e600f3dfb813f29f0777588099e",
+  "customer_preview": "Nội dung trang đích\n\nTiêu đề\nDịch vụ kiểm tra bơm Lam\n\nGiá trị cho người mua\nĐối chiếu quy cách và điều kiện áp dụng của Dịch vụ kiểm tra bơm Lam trước khi lựa chọn.\n\nLợi ích\nPhiếu kiểm tra ghi tình trạng máy. Áp dụng cho máy tại xưởng.\n\nĐiều kiện thương mại\nPhiếu kiểm tra ghi tình trạng máy. Áp dụng cho máy tại xưởng.\nGiá tham khảo: 270.000 VND / 1 máy, đã gồm thuế. Đơn tối thiểu: 1 máy. Áp dụng từ 1 máy. Số lượng đối chiếu: 1 máy. Xác nhận số lượng trước khi đặt.\n\nLời mời hành động\nĐặt lịch\n\nThông tin SEO\n\nTiêu đề SEO\nDịch vụ kiểm tra bơm Lam | HN\n\nMô tả tìm kiếm\nXem thông tin về Dịch vụ kiểm tra bơm Lam tại HN. Đặt lịch\n\nÝ định tìm kiếm\nTìm hiểu điều kiện lựa chọn Dịch vụ kiểm tra bơm Lam tại HN.\n\nBài mạng xã hội\n\nTrụ cột nội dung\nchuẩn bị lịch hẹn\n\nMở bài\nAnh chị muốn sắp xếp lịch cho Dịch vụ kiểm tra bơm Lam?\n\nDữ kiện và điều kiện\nPhiếu kiểm tra ghi tình trạng máy. Áp dụng cho máy tại xưởng.\nGiá tham khảo: 270.000 VND / 1 máy, đã gồm thuế. Đơn tối thiểu: 1 máy. Áp dụng từ 1 máy. Số lượng đối chiếu: 1 máy. Xác nhận số lượng trước khi đặt.\n\nLời mời hành động\nĐặt lịch\n\nĐề xuất quảng cáo\n\nĐề xuất chiến dịch\nĐề xuất thử thông điệp về Dịch vụ kiểm tra bơm Lam.\n\nGiả thuyết nhóm người mua\nGiả thuyết cần thử với nhóm Quản đốc nhà máy.\n\nÝ định và từ khóa đề xuất\nTừ khóa thử nghiệm: Dịch vụ kiểm tra bơm Lam · chuẩn bị lịch hẹn.\n\nTiêu đề quảng cáo\nDịch vụ kiểm tra bơm Lam\n\nLời quảng cáo\nAnh chị muốn sắp xếp lịch cho Dịch vụ kiểm tra bơm Lam?\n\nLời mời hành động\nĐặt lịch\n\nThử nghiệm sáng tạo\nSo sánh hai cách mở đầu. Giữ nguyên lời mời hành động, vị trí và điều kiện.\n\nPhân bổ đề xuất\nĐề xuất chia đều hạn mức media đã duyệt giữa hai biến thể trong mô phỏng.\n\nPhép đo\nSo sánh số lịch được nhân sự xác nhận trên lượt yêu cầu. Ghi riêng ca hủy hoặc vắng mặt.\n\nBrief thiết kế\n\nÝ tưởng hình ảnh\nPhác thảo khung hình cho Dịch vụ kiểm tra bơm Lam có chỗ đặt điều kiện và lời mời hành động.\n\nChỉ dẫn thương hiệu\nÁp dụng hướng dẫn thương hiệu bản 1. Tách phần chuẩn bị của người mua khỏi bước xác nhận lịch của nhân sự.\n\nĐặc tả ảnh\nGiao mẫu dọc và ngang, bản nguồn chỉnh sửa được và ảnh xem trước. Giữ chủ thể, điều kiện và lời mời hành động trong vùng an toàn khi cắt. Duyệt độ đọc ở kích thước điện thoại.\n\nKịch bản video\nGiao storyboard có cảnh nhu cầu, cảnh đối chiếu dữ kiện và cảnh chọn bước tiếp theo. Kèm chỉ dẫn cảnh quay, phụ đề, bản chép lời và danh mục nguồn. Duyệt khi tắt âm thanh trước khi xuất bản dựng.\n\nĐiều kiện quyền sử dụng\nChờ kiểm tra chủ sở hữu, giấy phép, phạm vi và thời hạn trước khi dùng tư liệu.\n\nNguồn tài sản\nBản giao chỉ gồm chỉ dẫn sản xuất. Chưa có tệp hình ảnh hoặc video được cấp phép.\n\nLịch nội dung\n\nKênh trong kế hoạch\nweb\n\nMốc đề xuất\nNgày 10: soát brief. Ngày 10: chuẩn bị bài. Ngày 10: duyệt mẫu quảng cáo. Ngày 14: đối soát lịch.\n\nThứ tự nội dung\nMở bằng câu hỏi của người mua, tiếp đến là bài đối chiếu điều kiện, kết thúc bằng lời mời hành động.\n\nBộ phận nhận việc\nSocial soạn bài, Media soạn quảng cáo, Design nhận brief và Campaign Manager đối soát lịch.\n\nĐiểm duyệt\nChỉ đề xuất lịch. Kiểm tra nguồn, quyền sử dụng và bản QA đã duyệt trước khi mô phỏng.",
   "assets": {
     "social": {
       "pillar": "chuẩn bị lịch hẹn",
       "opening": "Anh chị muốn sắp xếp lịch cho Dịch vụ kiểm tra bơm Lam?",
-      "approved_terms": "Giá tham khảo: 270.000 VND / 1 máy, đã gồm thuế. Đơn tối thiểu: 1 máy. Áp dụng từ 1 máy. Số lượng đối chiếu: 1 máy. Xác nhận số lượng trước khi đặt.\nPhiếu kiểm tra ghi tình trạng máy. Áp dụng cho máy tại xưởng.",
+      "approved_terms": "Phiếu kiểm tra ghi tình trạng máy. Áp dụng cho máy tại xưởng.\nGiá tham khảo: 270.000 VND / 1 máy, đã gồm thuế. Đơn tối thiểu: 1 máy. Áp dụng từ 1 máy. Số lượng đối chiếu: 1 máy. Xác nhận số lượng trước khi đặt.",
       "buyer_action": "Đặt lịch"
     },
     "ad": {
@@ -46,9 +46,9 @@
     },
     "creative_brief": {
       "concept": "Phác thảo khung hình cho Dịch vụ kiểm tra bơm Lam có chỗ đặt điều kiện và lời mời hành động.",
-      "brand_direction": "Đối chiếu màu, giọng điệu và dấu hiệu nhận diện với bản hướng dẫn thương hiệu đã ghim.",
-      "image_spec": "Đề xuất bố cục dọc và ngang. Giữ chủ thể, điều kiện và CTA trong vùng an toàn khi cắt.",
-      "video_spec": "Kịch bản gồm cảnh nhu cầu của người mua, cảnh đối chiếu dữ kiện và cảnh chọn bước tiếp theo.",
+      "brand_direction": "Áp dụng hướng dẫn thương hiệu bản 1. Tách phần chuẩn bị của người mua khỏi bước xác nhận lịch của nhân sự.",
+      "image_spec": "Giao mẫu dọc và ngang, bản nguồn chỉnh sửa được và ảnh xem trước. Giữ chủ thể, điều kiện và lời mời hành động trong vùng an toàn khi cắt. Duyệt độ đọc ở kích thước điện thoại.",
+      "video_spec": "Giao storyboard có cảnh nhu cầu, cảnh đối chiếu dữ kiện và cảnh chọn bước tiếp theo. Kèm chỉ dẫn cảnh quay, phụ đề, bản chép lời và danh mục nguồn. Duyệt khi tắt âm thanh trước khi xuất bản dựng.",
       "rights": "Chờ kiểm tra chủ sở hữu, giấy phép, phạm vi và thời hạn trước khi dùng tư liệu.",
       "provenance": "Bản giao chỉ gồm chỉ dẫn sản xuất. Chưa có tệp hình ảnh hoặc video được cấp phép."
     },
@@ -195,66 +195,66 @@
   ],
   "group_approvals": {
     "copy": {
-      "receipt": "14500229-eb2c-45a6-a32f-fbbad4b6f37a",
-      "actor": "a1752a99-969f-454c-b2c8-44663156f2ff",
+      "receipt": "47e39026-4e89-4e81-8312-afdab045d839",
+      "actor": "20eaedd4-8156-4e42-81d5-3aaee176ccc2",
       "note": "Đối chiếu trường với phạm vi và nguồn được duyệt."
     },
     "seo": {
-      "receipt": "bd8f3aad-131e-44bf-b590-1dc46efd7778",
-      "actor": "a1752a99-969f-454c-b2c8-44663156f2ff",
+      "receipt": "f682e07b-022e-49a2-aa6d-23b22a1d9688",
+      "actor": "20eaedd4-8156-4e42-81d5-3aaee176ccc2",
       "note": "Đối chiếu trường với phạm vi và nguồn được duyệt."
     },
     "social": {
-      "receipt": "8feb4d2c-637c-465f-839a-bd5288b34a66",
-      "actor": "a1752a99-969f-454c-b2c8-44663156f2ff",
+      "receipt": "660ea0e4-2aab-45d2-90a9-d84cff814864",
+      "actor": "20eaedd4-8156-4e42-81d5-3aaee176ccc2",
       "note": "Đối chiếu trường với phạm vi và nguồn được duyệt."
     },
     "ad": {
-      "receipt": "1cca5eaf-ac6d-4b9c-ac35-95179f384b58",
-      "actor": "a1752a99-969f-454c-b2c8-44663156f2ff",
+      "receipt": "b3608001-a1e3-4052-81de-26e06f0a4743",
+      "actor": "20eaedd4-8156-4e42-81d5-3aaee176ccc2",
       "note": "Đối chiếu trường với phạm vi và nguồn được duyệt."
     },
     "creative_brief": {
-      "receipt": "c06f4b80-5c39-465e-912b-61a703ba2196",
-      "actor": "a1752a99-969f-454c-b2c8-44663156f2ff",
+      "receipt": "65593574-25c2-4c34-b577-d006108be1ab",
+      "actor": "20eaedd4-8156-4e42-81d5-3aaee176ccc2",
       "note": "Đối chiếu trường với phạm vi và nguồn được duyệt."
     },
     "calendar": {
-      "receipt": "b6a047b1-94b7-444a-99e8-09c1d7ab0817",
-      "actor": "a1752a99-969f-454c-b2c8-44663156f2ff",
+      "receipt": "3b440ec7-4be7-4086-9a33-67391adaf7fe",
+      "actor": "20eaedd4-8156-4e42-81d5-3aaee176ccc2",
       "note": "Đối chiếu trường với phạm vi và nguồn được duyệt."
     }
   },
   "work_receipts": {
     "social": {
-      "id": "eae56021-7d5a-43cf-b73f-e295b53b10d4",
-      "campaign_id": "a7a4e662-d0a2-458c-9c1a-e54bd60aa7e6",
-      "plan_id": "fe1c3558-8011-4928-81a6-906bfd8d7fcd",
+      "id": "f0844bed-cc55-4252-bb48-007dbadff41c",
+      "campaign_id": "9d00a14a-bae9-40cb-8da1-fcc0bd4b0c44",
+      "plan_id": "023ee2b8-6f00-4d5f-be0b-e2e833490d46",
       "sequence": 11,
       "kind": "unit_receipt",
       "entity": "work_units",
-      "entity_id": "d3304a3f374b5a314cbbcb345a093f64a2b7c4018ecef946cead44d6f2348d52",
+      "entity_id": "ddcea1915103e1bf9750e70cef1abb6f51c90be715070c157752784366451046",
       "value": {
-        "id": "d3304a3f374b5a314cbbcb345a093f64a2b7c4018ecef946cead44d6f2348d52",
+        "id": "ddcea1915103e1bf9750e70cef1abb6f51c90be715070c157752784366451046",
         "package_id": "social",
         "scope": {
-          "tenant_id": "1fac056b-467e-4cbf-bf28-253f5e86eb84",
-          "client_id": "e9f124a0-24d4-430c-9906-2a6e020df526",
-          "brand_id": "78a2f429-77c3-45a3-8209-dbcd72cc2d6f",
-          "campaign_id": "a7a4e662-d0a2-458c-9c1a-e54bd60aa7e6"
+          "tenant_id": "edb773a6-4670-4d92-9425-2dad42ec06c6",
+          "client_id": "bbb32d20-f234-42c6-b30f-3938b59e7e0c",
+          "brand_id": "1063454b-273f-44ba-8375-57a8146e462a",
+          "campaign_id": "9d00a14a-bae9-40cb-8da1-fcc0bd4b0c44"
         },
-        "plan_id": "fe1c3558-8011-4928-81a6-906bfd8d7fcd",
+        "plan_id": "023ee2b8-6f00-4d5f-be0b-e2e833490d46",
         "category": "social",
         "assigned_role": "Social",
         "complexity": "single_asset",
         "expected_output": "social",
         "criteria": "Bài xã hội có hành động nhất quán với brief",
-        "commissioned_at": "2026-11-26T00:16:59.575111+00:00",
+        "commissioned_at": "2026-11-26T00:21:42.271049+00:00",
         "status": "fixture_accepted",
         "manifest": {
-          "id": "6fac2a4a-e90e-4a82-b8c9-c76db9c8be87",
-          "digest": "b3def27a198f4c4e2b8a3a3a4e6fc96a90033525d39cecf922b7c734447617bb",
-          "brief_id": "9da91b7e-5187-4a99-9ab8-ca8bd975971d",
+          "id": "1a160029-9c46-48e5-82f1-256cd7b91988",
+          "digest": "2dfa23a384517f6a5154e1797057ac970b6cc90b9363869870e9a2adcbc24ccf",
+          "brief_id": "188fe26c-a77e-4744-8808-96616f3ba772",
           "workflow": "WF-13/landing-seo-draft@6"
         },
         "origin": "deterministic-composition/1",
@@ -262,56 +262,56 @@
         "artifact_revision": 1,
         "acceptance": {
           "status": "fixture_accepted",
-          "review_id": "60392c8f-1afc-42cd-a2a9-2329a8573172",
-          "entry_id": "c4e31401-b433-4d6e-b0a4-233a10281c91",
-          "actor": "42f627f5-6c9c-4d54-95b1-7c51fb0f9490",
-          "share_receipt": "24918a44-4d7e-4d87-ae50-574f3fb21393",
+          "review_id": "c7fc4414-2983-4aa6-94cd-f3487354923e",
+          "entry_id": "ebd7ec1e-c129-4566-8316-caa3ad0b73a9",
+          "actor": "fab33458-a031-47dd-a7a2-6fd67cb0590c",
+          "share_receipt": "656dd81e-59f0-4e93-bb2a-f2b208325188",
           "group": "social",
-          "run_id": "1cb54c9f-e1c6-447b-9587-19cfee98b0cb",
-          "queue_receipt": "160273db-9e33-4e5a-8f93-8d8672d0f1b1",
-          "at": "2026-11-26T00:17:03.042819+00:00",
-          "plan_id": "fe1c3558-8011-4928-81a6-906bfd8d7fcd",
+          "run_id": "febb7e55-e159-492f-8aac-2662483d5e4d",
+          "queue_receipt": "794f6b04-07b6-4869-8ec1-10409c092995",
+          "at": "2026-11-26T00:21:46.650545+00:00",
+          "plan_id": "023ee2b8-6f00-4d5f-be0b-e2e833490d46",
           "revision": 4,
-          "elapsed_seconds": 3.467708,
-          "artifact_digest": "ce299889fa17b52f74db499a444224cf7b1287cdb2294ac68f19f0a6f330b688",
-          "snapshot_digest": "ab26a2b356598e0020190b122c8d4a9d0ae51a5c1da66e37b74819c057200674"
+          "elapsed_seconds": 4.379496,
+          "artifact_digest": "eb3a62c46c0de7f1b86b00f636e3b98703ff35debbef823d287bb5cc0367f4c9",
+          "snapshot_digest": "23e1d8495003933f5d95a9ef6b8a421b67da9e600f3dfb813f29f0777588099e"
         },
         "labor": [],
         "cost_statement": null,
         "plan_revision": 1
       },
-      "actor": "8bfb8114-bc77-486f-bc27-432c7e778cc6",
-      "recorded_at": "2026-11-26T00:17:03.107304+00:00"
+      "actor": "7771ba77-c156-4f5b-85f3-b6aca72ea7fb",
+      "recorded_at": "2026-11-26T00:21:46.726733+00:00"
     },
     "ad": {
-      "id": "7db09d84-838d-41f7-af5f-d0cb1afb2e8e",
-      "campaign_id": "a7a4e662-d0a2-458c-9c1a-e54bd60aa7e6",
-      "plan_id": "fe1c3558-8011-4928-81a6-906bfd8d7fcd",
+      "id": "53c61cc4-28a3-43d0-be4d-c636df52f2e6",
+      "campaign_id": "9d00a14a-bae9-40cb-8da1-fcc0bd4b0c44",
+      "plan_id": "023ee2b8-6f00-4d5f-be0b-e2e833490d46",
       "sequence": 12,
       "kind": "unit_receipt",
       "entity": "work_units",
-      "entity_id": "740a12661a2cb661fd7307dcb381c9e5c06bdecd9d71cc7ea832249463c31204",
+      "entity_id": "68302fb27cbb26f877f32c72521ff81f013fe86cae43b2b2cc08ddcfb315668e",
       "value": {
-        "id": "740a12661a2cb661fd7307dcb381c9e5c06bdecd9d71cc7ea832249463c31204",
+        "id": "68302fb27cbb26f877f32c72521ff81f013fe86cae43b2b2cc08ddcfb315668e",
         "package_id": "ad",
         "scope": {
-          "tenant_id": "1fac056b-467e-4cbf-bf28-253f5e86eb84",
-          "client_id": "e9f124a0-24d4-430c-9906-2a6e020df526",
-          "brand_id": "78a2f429-77c3-45a3-8209-dbcd72cc2d6f",
-          "campaign_id": "a7a4e662-d0a2-458c-9c1a-e54bd60aa7e6"
+          "tenant_id": "edb773a6-4670-4d92-9425-2dad42ec06c6",
+          "client_id": "bbb32d20-f234-42c6-b30f-3938b59e7e0c",
+          "brand_id": "1063454b-273f-44ba-8375-57a8146e462a",
+          "campaign_id": "9d00a14a-bae9-40cb-8da1-fcc0bd4b0c44"
         },
-        "plan_id": "fe1c3558-8011-4928-81a6-906bfd8d7fcd",
+        "plan_id": "023ee2b8-6f00-4d5f-be0b-e2e833490d46",
         "category": "ad",
         "assigned_role": "Media",
         "complexity": "single_asset",
         "expected_output": "ad",
         "criteria": "Mẫu quảng cáo nháp cho người mua đã chọn",
-        "commissioned_at": "2026-11-26T00:16:59.575111+00:00",
+        "commissioned_at": "2026-11-26T00:21:42.271049+00:00",
         "status": "fixture_accepted",
         "manifest": {
-          "id": "6fac2a4a-e90e-4a82-b8c9-c76db9c8be87",
-          "digest": "b3def27a198f4c4e2b8a3a3a4e6fc96a90033525d39cecf922b7c734447617bb",
-          "brief_id": "9da91b7e-5187-4a99-9ab8-ca8bd975971d",
+          "id": "1a160029-9c46-48e5-82f1-256cd7b91988",
+          "digest": "2dfa23a384517f6a5154e1797057ac970b6cc90b9363869870e9a2adcbc24ccf",
+          "brief_id": "188fe26c-a77e-4744-8808-96616f3ba772",
           "workflow": "WF-13/landing-seo-draft@6"
         },
         "origin": "deterministic-composition/1",
@@ -319,56 +319,56 @@
         "artifact_revision": 1,
         "acceptance": {
           "status": "fixture_accepted",
-          "review_id": "60392c8f-1afc-42cd-a2a9-2329a8573172",
-          "entry_id": "c4e31401-b433-4d6e-b0a4-233a10281c91",
-          "actor": "42f627f5-6c9c-4d54-95b1-7c51fb0f9490",
-          "share_receipt": "24918a44-4d7e-4d87-ae50-574f3fb21393",
+          "review_id": "c7fc4414-2983-4aa6-94cd-f3487354923e",
+          "entry_id": "ebd7ec1e-c129-4566-8316-caa3ad0b73a9",
+          "actor": "fab33458-a031-47dd-a7a2-6fd67cb0590c",
+          "share_receipt": "656dd81e-59f0-4e93-bb2a-f2b208325188",
           "group": "ad",
-          "run_id": "1cb54c9f-e1c6-447b-9587-19cfee98b0cb",
-          "queue_receipt": "160273db-9e33-4e5a-8f93-8d8672d0f1b1",
-          "at": "2026-11-26T00:17:03.042819+00:00",
-          "plan_id": "fe1c3558-8011-4928-81a6-906bfd8d7fcd",
+          "run_id": "febb7e55-e159-492f-8aac-2662483d5e4d",
+          "queue_receipt": "794f6b04-07b6-4869-8ec1-10409c092995",
+          "at": "2026-11-26T00:21:46.650545+00:00",
+          "plan_id": "023ee2b8-6f00-4d5f-be0b-e2e833490d46",
           "revision": 4,
-          "elapsed_seconds": 3.467708,
+          "elapsed_seconds": 4.379496,
           "artifact_digest": "5b45f30f9b1cac48d1b2fc4083e44eed62fab328376193c75dc81b5c944c0591",
-          "snapshot_digest": "ab26a2b356598e0020190b122c8d4a9d0ae51a5c1da66e37b74819c057200674"
+          "snapshot_digest": "23e1d8495003933f5d95a9ef6b8a421b67da9e600f3dfb813f29f0777588099e"
         },
         "labor": [],
         "cost_statement": null,
         "plan_revision": 1
       },
-      "actor": "8bfb8114-bc77-486f-bc27-432c7e778cc6",
-      "recorded_at": "2026-11-26T00:17:03.150421+00:00"
+      "actor": "7771ba77-c156-4f5b-85f3-b6aca72ea7fb",
+      "recorded_at": "2026-11-26T00:21:46.789319+00:00"
     },
     "creative_brief": {
-      "id": "07b01cab-f683-4fb9-b8d0-7729c9a2d0f7",
-      "campaign_id": "a7a4e662-d0a2-458c-9c1a-e54bd60aa7e6",
-      "plan_id": "fe1c3558-8011-4928-81a6-906bfd8d7fcd",
+      "id": "9813bacb-a3f0-4e9c-b545-7111d8daf7fa",
+      "campaign_id": "9d00a14a-bae9-40cb-8da1-fcc0bd4b0c44",
+      "plan_id": "023ee2b8-6f00-4d5f-be0b-e2e833490d46",
       "sequence": 13,
       "kind": "unit_receipt",
       "entity": "work_units",
-      "entity_id": "52b28055db2286276b76278feecb66bdb9f1ab565af1277a0d795518f3fc753b",
+      "entity_id": "842384cfc2d9e54b712e0d65ffa44d3433f618edd15960cf37fc89e4b5f47ebe",
       "value": {
-        "id": "52b28055db2286276b76278feecb66bdb9f1ab565af1277a0d795518f3fc753b",
+        "id": "842384cfc2d9e54b712e0d65ffa44d3433f618edd15960cf37fc89e4b5f47ebe",
         "package_id": "creative_brief",
         "scope": {
-          "tenant_id": "1fac056b-467e-4cbf-bf28-253f5e86eb84",
-          "client_id": "e9f124a0-24d4-430c-9906-2a6e020df526",
-          "brand_id": "78a2f429-77c3-45a3-8209-dbcd72cc2d6f",
-          "campaign_id": "a7a4e662-d0a2-458c-9c1a-e54bd60aa7e6"
+          "tenant_id": "edb773a6-4670-4d92-9425-2dad42ec06c6",
+          "client_id": "bbb32d20-f234-42c6-b30f-3938b59e7e0c",
+          "brand_id": "1063454b-273f-44ba-8375-57a8146e462a",
+          "campaign_id": "9d00a14a-bae9-40cb-8da1-fcc0bd4b0c44"
         },
-        "plan_id": "fe1c3558-8011-4928-81a6-906bfd8d7fcd",
+        "plan_id": "023ee2b8-6f00-4d5f-be0b-e2e833490d46",
         "category": "creative_brief",
         "assigned_role": "Design",
         "complexity": "single_asset",
         "expected_output": "creative_brief",
         "criteria": "Brief nêu sản phẩm, người xem và tiêu chí hình ảnh",
-        "commissioned_at": "2026-11-26T00:16:59.575111+00:00",
+        "commissioned_at": "2026-11-26T00:21:42.271049+00:00",
         "status": "fixture_accepted",
         "manifest": {
-          "id": "6fac2a4a-e90e-4a82-b8c9-c76db9c8be87",
-          "digest": "b3def27a198f4c4e2b8a3a3a4e6fc96a90033525d39cecf922b7c734447617bb",
-          "brief_id": "9da91b7e-5187-4a99-9ab8-ca8bd975971d",
+          "id": "1a160029-9c46-48e5-82f1-256cd7b91988",
+          "digest": "2dfa23a384517f6a5154e1797057ac970b6cc90b9363869870e9a2adcbc24ccf",
+          "brief_id": "188fe26c-a77e-4744-8808-96616f3ba772",
           "workflow": "WF-13/landing-seo-draft@6"
         },
         "origin": "deterministic-composition/1",
@@ -376,56 +376,56 @@
         "artifact_revision": 1,
         "acceptance": {
           "status": "fixture_accepted",
-          "review_id": "60392c8f-1afc-42cd-a2a9-2329a8573172",
-          "entry_id": "c4e31401-b433-4d6e-b0a4-233a10281c91",
-          "actor": "42f627f5-6c9c-4d54-95b1-7c51fb0f9490",
-          "share_receipt": "24918a44-4d7e-4d87-ae50-574f3fb21393",
+          "review_id": "c7fc4414-2983-4aa6-94cd-f3487354923e",
+          "entry_id": "ebd7ec1e-c129-4566-8316-caa3ad0b73a9",
+          "actor": "fab33458-a031-47dd-a7a2-6fd67cb0590c",
+          "share_receipt": "656dd81e-59f0-4e93-bb2a-f2b208325188",
           "group": "creative_brief",
-          "run_id": "1cb54c9f-e1c6-447b-9587-19cfee98b0cb",
-          "queue_receipt": "160273db-9e33-4e5a-8f93-8d8672d0f1b1",
-          "at": "2026-11-26T00:17:03.042819+00:00",
-          "plan_id": "fe1c3558-8011-4928-81a6-906bfd8d7fcd",
+          "run_id": "febb7e55-e159-492f-8aac-2662483d5e4d",
+          "queue_receipt": "794f6b04-07b6-4869-8ec1-10409c092995",
+          "at": "2026-11-26T00:21:46.650545+00:00",
+          "plan_id": "023ee2b8-6f00-4d5f-be0b-e2e833490d46",
           "revision": 4,
-          "elapsed_seconds": 3.467708,
-          "artifact_digest": "393c4f6910ae8e61e246873b368cb8099290c0a292e6e5851cffdd25d289e9a3",
-          "snapshot_digest": "ab26a2b356598e0020190b122c8d4a9d0ae51a5c1da66e37b74819c057200674"
+          "elapsed_seconds": 4.379496,
+          "artifact_digest": "b90a0c1ea2e86df7d20b85201ce8948c2180c1895e84cb4f29f224d7c2928a34",
+          "snapshot_digest": "23e1d8495003933f5d95a9ef6b8a421b67da9e600f3dfb813f29f0777588099e"
         },
         "labor": [],
         "cost_statement": null,
         "plan_revision": 1
       },
-      "actor": "8bfb8114-bc77-486f-bc27-432c7e778cc6",
-      "recorded_at": "2026-11-26T00:17:03.202605+00:00"
+      "actor": "7771ba77-c156-4f5b-85f3-b6aca72ea7fb",
+      "recorded_at": "2026-11-26T00:21:46.953068+00:00"
     },
     "calendar": {
-      "id": "c39631d8-4260-4a65-9446-06a7736613f6",
-      "campaign_id": "a7a4e662-d0a2-458c-9c1a-e54bd60aa7e6",
-      "plan_id": "fe1c3558-8011-4928-81a6-906bfd8d7fcd",
+      "id": "3087123e-73fd-42e2-b8fe-e08b5ffc6c0a",
+      "campaign_id": "9d00a14a-bae9-40cb-8da1-fcc0bd4b0c44",
+      "plan_id": "023ee2b8-6f00-4d5f-be0b-e2e833490d46",
       "sequence": 14,
       "kind": "unit_receipt",
       "entity": "work_units",
-      "entity_id": "0db8493d4b07318733cbe3a24cfd62f8161fd0e2adf77433c72cdd748c52bbd2",
+      "entity_id": "0c74b2a5141a6f1103f202913bbd8f840a6592dd351d47dae1162d618f6fb4e7",
       "value": {
-        "id": "0db8493d4b07318733cbe3a24cfd62f8161fd0e2adf77433c72cdd748c52bbd2",
+        "id": "0c74b2a5141a6f1103f202913bbd8f840a6592dd351d47dae1162d618f6fb4e7",
         "package_id": "calendar",
         "scope": {
-          "tenant_id": "1fac056b-467e-4cbf-bf28-253f5e86eb84",
-          "client_id": "e9f124a0-24d4-430c-9906-2a6e020df526",
-          "brand_id": "78a2f429-77c3-45a3-8209-dbcd72cc2d6f",
-          "campaign_id": "a7a4e662-d0a2-458c-9c1a-e54bd60aa7e6"
+          "tenant_id": "edb773a6-4670-4d92-9425-2dad42ec06c6",
+          "client_id": "bbb32d20-f234-42c6-b30f-3938b59e7e0c",
+          "brand_id": "1063454b-273f-44ba-8375-57a8146e462a",
+          "campaign_id": "9d00a14a-bae9-40cb-8da1-fcc0bd4b0c44"
         },
-        "plan_id": "fe1c3558-8011-4928-81a6-906bfd8d7fcd",
+        "plan_id": "023ee2b8-6f00-4d5f-be0b-e2e833490d46",
         "category": "calendar",
         "assigned_role": "Campaign Manager",
         "complexity": "multi_channel",
         "expected_output": "calendar",
         "criteria": "Lịch dự kiến có người nhận, mốc QA và kênh",
-        "commissioned_at": "2026-11-26T00:16:59.575111+00:00",
+        "commissioned_at": "2026-11-26T00:21:42.271049+00:00",
         "status": "fixture_accepted",
         "manifest": {
-          "id": "6fac2a4a-e90e-4a82-b8c9-c76db9c8be87",
-          "digest": "b3def27a198f4c4e2b8a3a3a4e6fc96a90033525d39cecf922b7c734447617bb",
-          "brief_id": "9da91b7e-5187-4a99-9ab8-ca8bd975971d",
+          "id": "1a160029-9c46-48e5-82f1-256cd7b91988",
+          "digest": "2dfa23a384517f6a5154e1797057ac970b6cc90b9363869870e9a2adcbc24ccf",
+          "brief_id": "188fe26c-a77e-4744-8808-96616f3ba772",
           "workflow": "WF-13/landing-seo-draft@6"
         },
         "origin": "deterministic-composition/1",
@@ -433,26 +433,26 @@
         "artifact_revision": 1,
         "acceptance": {
           "status": "fixture_accepted",
-          "review_id": "60392c8f-1afc-42cd-a2a9-2329a8573172",
-          "entry_id": "c4e31401-b433-4d6e-b0a4-233a10281c91",
-          "actor": "42f627f5-6c9c-4d54-95b1-7c51fb0f9490",
-          "share_receipt": "24918a44-4d7e-4d87-ae50-574f3fb21393",
+          "review_id": "c7fc4414-2983-4aa6-94cd-f3487354923e",
+          "entry_id": "ebd7ec1e-c129-4566-8316-caa3ad0b73a9",
+          "actor": "fab33458-a031-47dd-a7a2-6fd67cb0590c",
+          "share_receipt": "656dd81e-59f0-4e93-bb2a-f2b208325188",
           "group": "calendar",
-          "run_id": "1cb54c9f-e1c6-447b-9587-19cfee98b0cb",
-          "queue_receipt": "160273db-9e33-4e5a-8f93-8d8672d0f1b1",
-          "at": "2026-11-26T00:17:03.042819+00:00",
-          "plan_id": "fe1c3558-8011-4928-81a6-906bfd8d7fcd",
+          "run_id": "febb7e55-e159-492f-8aac-2662483d5e4d",
+          "queue_receipt": "794f6b04-07b6-4869-8ec1-10409c092995",
+          "at": "2026-11-26T00:21:46.650545+00:00",
+          "plan_id": "023ee2b8-6f00-4d5f-be0b-e2e833490d46",
           "revision": 4,
-          "elapsed_seconds": 3.467708,
+          "elapsed_seconds": 4.379496,
           "artifact_digest": "38f98ab714b30c8c3bcc8d9d1de0ba9680cab598704b9711a6cc4d9e415c2c02",
-          "snapshot_digest": "ab26a2b356598e0020190b122c8d4a9d0ae51a5c1da66e37b74819c057200674"
+          "snapshot_digest": "23e1d8495003933f5d95a9ef6b8a421b67da9e600f3dfb813f29f0777588099e"
         },
         "labor": [],
         "cost_statement": null,
         "plan_revision": 1
       },
-      "actor": "8bfb8114-bc77-486f-bc27-432c7e778cc6",
-      "recorded_at": "2026-11-26T00:17:03.228972+00:00"
+      "actor": "7771ba77-c156-4f5b-85f3-b6aca72ea7fb",
+      "recorded_at": "2026-11-26T00:21:47.047112+00:00"
     }
   }
 }

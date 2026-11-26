@@ -158,7 +158,10 @@ Media buyer phân bổ traffic/budget giữa các nhánh thử. Nhóm CRO đặt
 
 **Thử với người phụ trách đo lường.** Ghim sự kiện, mẫu số, thời gian, đơn vị phân bổ, chi phí và biến thay đổi trước khi thử. Đối soát đầu ra với người nhận. Cho phép kết luận “chưa đủ dữ liệu” nếu thiếu hóa đơn, bị lệch nhóm hoặc lượng mẫu nhỏ. Cần thực nghiệm độc lập mới biết quy trình có giảm giờ dựng báo cáo hoặc đổi quyết định đúng hơn. [WF-12, WF-13, WF-18, WF-19](APPLICABILITY_MATRIX.md#nine-jobs)
 
+<a id="k-17"></a>
 ## K-17 · Vì sao creative bị trả lại
+
+Ứng dụng cho tờ dựng nội bộ được cụ thể hóa ở [K-19 · từ động cơ mua đến cảnh có nguồn](#k-19).
 
 Ở agency, người nhận có thể góp ý từ nhiều kênh và đổi tiêu chí sau khi xem bản dựng. Với solo, người quyết định và người sản xuất đôi khi trùng nhau nhưng vẫn cần ghi rõ việc khách phải làm sau khi xem. Một marketer SME có thể quay clip bằng điện thoại nếu có thứ tự cảnh, thông tin phải thấy và CTA cụ thể. Đội Enterprise thường cần phê duyệt claim và quyền dùng tài sản từ nhiều người. Đây là giả thuyết theo bối cảnh, chưa có timesheet xác nhận.
 
@@ -170,7 +173,7 @@ Từ 15/06/2026, triển khai mới cho *offline conversion import* và *enhance
 
 Người chịu trách nhiệm measurement cần phân biệt một hồ sơ hợp lệ, một báo giá và doanh thu được xác nhận. Với adapter tương lai, lưu tenant, campaign, loại conversion đã duyệt, nguồn, thời điểm xảy ra có múi giờ, ID ổn định/receipt, giá trị và currency nếu áp dụng. Quyền liên hệ trong RFQ chưa cung cấp mục đích chia sẻ dữ liệu với nền tảng. Dedupe theo namespace destination/action/tenant và theo dõi sửa/hủy riêng. Mẫu validateOnly của nhà cung cấp vẫn có truyền dữ liệu ra ngoài. Vòng này dùng phép kiểm local với fixture đã công bố và cổng 501 hiện có. [Trường chính thức](https://developers.google.com/data-manager/api/devguides/events/google-ads/offline/send-events) · [Hợp đồng sandbox](../evaluation/department-study/OFFLINE-CONVERSION.md)
 
-<a id="k-17"></a>
-## K-17 · Biến ý đồ mua thành một cảnh có thể dựng
+<a id="k-19"></a>
+## K-19 · Biến ý đồ mua thành một cảnh có thể dựng
 
 Editor cần biết ai xem, việc gì xảy ra trên màn hình, bằng chứng nào cho phép đưa claim lên hình và hành động nào khách có thể làm tiếp. Dùng ánh xạ từ brief/nguồn tới cue có thời lượng và CTA. Khi thiếu footage có quyền, ghi loại hình minh họa trên preview. Kiểm thử trước mắt là reviewer đọc đúng giá, điều kiện và trạng thái sau submit khi tắt âm. Lượt xem đầu video và quyết định Sales thuộc hai cấp bằng chứng khác nhau. Chủ sở hữu là Creative lead và người quản lý chính sách thương mại của brand. [Nguồn nền tảng và quan sát nghề](SOURCE_REGISTRY.md) · [Ứng dụng O-05/O-06/O-07](APPLICABILITY_MATRIX.md#r58-wf08)

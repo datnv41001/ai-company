@@ -1,30 +1,30 @@
 {
   "case": "receipt-map",
   "scope": {
-    "tenant": "e8813f80-b82d-4605-a32f-8e122c3a8870",
-    "campaign": "Đặt lịch khảo sát luồng nhận hàng tại kho",
-    "campaign_id": "a872de95-393b-43b9-929c-0219b14c2f30",
-    "brief_id": "2bdd5581-9bbd-4689-910d-44ecb0fd6ee2"
+    "tenant": "67c8adb9-52ef-491b-acdb-4e083e53cd8a",
+    "campaign_objective": "Đặt lịch khảo sát luồng nhận hàng tại kho",
+    "campaign_id": "b3be1516-3191-4f33-bcfc-162b267ed2ff",
+    "brief_id": "5fa70f9b-7a37-4be8-8746-2fba3278b290"
   },
-  "run_id": "f4198059-cc8a-475f-9aed-629044c5fff3",
+  "run_id": "1f939161-f7d5-4fce-8dd2-8864a977f227",
   "states": [
     {
-      "id": "f4198059-cc8a-475f-9aed-629044c5fff3",
+      "id": "1f939161-f7d5-4fce-8dd2-8864a977f227",
       "state": "queued"
     },
     {
       "stage": "director",
-      "attempt": "2b45df01-8055-465f-b5f5-d1e63530973b",
+      "attempt": "967c2b94-b5a4-434c-b6a8-1a521f4e5e98",
       "state": "running"
     },
     {
       "stage": "storyboard",
-      "attempt": "5bef577f-f9b8-4cf5-a781-99b7215845aa",
+      "attempt": "d5cbf19f-6992-4af5-9a79-014d912502ad",
       "state": "running"
     },
     {
       "state": "awaiting_qa",
-      "document": "369c198e-548c-4a16-a004-59ddd2996dca"
+      "document": "7f9965ac-0924-469b-82e4-6f1dcaa237b2"
     }
   ],
   "registry": {
@@ -50,7 +50,7 @@
         "approval": "independent_internal_revision_qa",
         "attempts": [
           {
-            "id": "2b45df01-8055-465f-b5f5-d1e63530973b",
+            "id": "967c2b94-b5a4-434c-b6a8-1a521f4e5e98",
             "held": 0,
             "month": "2026-11-01",
             "spent": 0,
@@ -66,7 +66,7 @@
         "objective": "Produce a grounded illustrated storyboard for internal editing",
         "qa_policy": "wf08-source-and-revision@1",
         "attempt_ids": [
-          "2b45df01-8055-465f-b5f5-d1e63530973b"
+          "967c2b94-b5a4-434c-b6a8-1a521f4e5e98"
         ],
         "max_attempts": 3,
         "predecessors": [],
@@ -83,7 +83,7 @@
           "additionalProperties": false
         },
         "skill_version": 6,
-        "adapter_digest": "c9cdd01c346015f4572c0f28ff36633848f57bd7aacd9240b4f1d94ac2be3dbc",
+        "adapter_digest": "1cff466d97f960a7ca4c2eb2b5e6507e3d659412318ab50d1b0b7af9ac4a5ac9",
         "timeout_seconds": 300,
         "contract_version": 6,
         "success_criteria": [
@@ -117,7 +117,7 @@
         "approval": "independent_internal_revision_qa",
         "attempts": [
           {
-            "id": "5bef577f-f9b8-4cf5-a781-99b7215845aa",
+            "id": "d5cbf19f-6992-4af5-9a79-014d912502ad",
             "held": 0,
             "month": "2026-11-01",
             "spent": 0,
@@ -133,7 +133,7 @@
         "objective": "Produce a grounded illustrated storyboard for internal editing",
         "qa_policy": "wf08-source-and-revision@1",
         "attempt_ids": [
-          "5bef577f-f9b8-4cf5-a781-99b7215845aa"
+          "d5cbf19f-6992-4af5-9a79-014d912502ad"
         ],
         "max_attempts": 3,
         "predecessors": [],
@@ -150,7 +150,7 @@
           "additionalProperties": false
         },
         "skill_version": 1,
-        "adapter_digest": "c9cdd01c346015f4572c0f28ff36633848f57bd7aacd9240b4f1d94ac2be3dbc",
+        "adapter_digest": "1cff466d97f960a7ca4c2eb2b5e6507e3d659412318ab50d1b0b7af9ac4a5ac9",
         "timeout_seconds": 300,
         "contract_version": 1,
         "success_criteria": [
@@ -170,40 +170,40 @@
     ],
     "status": "pinned",
     "workflow": "WF-08/video-storyboard@1",
-    "plan_digest": "cbcb8c20c5e0ab863ee57fa4e0bbd751ef2e81c5a3b869bd67acd00206db4620",
+    "plan_digest": "5356f506b8ccef365bf2c7616829878b4357636dbafd65aff57de60dabc91f63",
     "workflow_id": "WF-08/video-storyboard",
-    "manifest_digest": "6e3a6ba01996b5e31c282be87057691bc95354077275829b19ec17653e21c829",
+    "manifest_digest": "4dd698583db731fc5e02dfba95eeb92c028466a885266b92a48367c8978ad40e",
     "workflow_version": 1
   },
   "original_revision": 1,
-  "raw_revision_digest": "3fe812ec64a3bdc8062ca5127587573eb5abc9156a7605ef2418f7da46abf9b8",
+  "raw_revision_digest": "eacfe62cec1a3d88509a0eb7272cb5a2c43c16d3161f6741d8a117953bf45a41",
   "reviewed_revision": 2,
-  "reviewed_digest": "ca53a9491209a7742d05b64e2bb080618ebec12fbc4f0f79fa38bfad36b826f1",
-  "reviewed_by": "9690aff0-5ebb-4b72-87b2-97f9e7e8d1dc",
+  "reviewed_digest": "92ac74a678e4512ae39f33f891af4f3842769e4d83e31d96e00bb11732d1a303",
+  "reviewed_by": "d3bf4df4-c1e8-4404-b976-5312ec0c1cf1",
   "reviewed_state": "approved",
   "editorial_change": "Approved audience hook variation; claims and commercial fields rebuilt from pinned authority.",
   "manifest": {
-    "digest": "8f001034616dbc9c4a3d79df0a209c079893286801123b50700ee2d960fb6b88",
-    "id": "57a71cd2-2a27-41d2-ab7c-1b2149b1a8d3"
+    "digest": "10b830cdbf9dcdc22bafa34e1e586453fb2f354b3e1bfa4f95c8aa188ee2cdaa",
+    "id": "9fc2f095-221e-4770-81fd-cae0cafab065"
   },
   "source_chain": {
-    "manifest_digest": "8f001034616dbc9c4a3d79df0a209c079893286801123b50700ee2d960fb6b88",
+    "manifest_digest": "10b830cdbf9dcdc22bafa34e1e586453fb2f354b3e1bfa4f95c8aa188ee2cdaa",
     "entries": [
       {
         "handle": "F1",
-        "claim_revision": "4497f130-572f-4d96-ab39-d56b23c7ee43",
-        "binding_revision": "c2ead9c4-63a7-4e1b-ab6e-3ad8529ab77c",
-        "source_revision": "005ec1d7-b0cf-41a3-80ce-a24c2462204c",
-        "source_digest": "8867bc691d4bd0cfe61acfcfbc4fff4c3cf5ba8aae2f7036ea900ebe42297597",
+        "claim_revision": "1f52d570-4dbb-469c-aa0b-172d9d2157e3",
+        "binding_revision": "dac7c5bc-a75f-4b8e-bc34-e9cc17134aeb",
+        "source_revision": "9a8a218b-a124-42b6-ad44-cec34dd74dba",
+        "source_digest": "cca7388ded73ad541d642b59222d63b21ce727ecc87bdb8c5e0c4fdb82b9796a",
         "document": "PRIVATE_SYNTHETIC_DOCUMENT",
         "locator": "private locator"
       },
       {
         "handle": "F2",
-        "claim_revision": "87542586-e493-456b-9ead-61420ab954ef",
-        "binding_revision": "4e0762d6-dbe2-43ad-8834-6376bc593f76",
-        "source_revision": "4dac28d6-4612-4c7e-881f-03af1b6a7340",
-        "source_digest": "eb48d2ca95603a95411b6f0e3cdb81f9cfad0ec044b0b4fc181a5696a349cce8",
+        "claim_revision": "70ce75e3-aaa1-49f7-9e8b-238daa216048",
+        "binding_revision": "3688983a-efd4-4857-b86b-9f63fbc5f0c7",
+        "source_revision": "a7aa2f7f-0165-4cf4-bb92-91a520147254",
+        "source_digest": "ec819c7b2e814ea9cdcabb2d4ea9c88ac6c93b36cb47bdd0058594351ebb3beb",
         "document": "PRIVATE_SYNTHETIC_DOCUMENT",
         "locator": "private locator"
       }
@@ -218,13 +218,13 @@
       "provider": "deterministic",
       "model": "local-storyboard/1",
       "prompt": "marketing-workforce-2",
-      "started_at": "2026-11-26T08:52:23.941068+00:00",
+      "started_at": "2026-11-26T08:58:53.239409+00:00",
       "outcome": "ok",
       "reserved_microusd": 0,
       "input_tokens": 0,
       "output_tokens": 0,
       "estimated_microusd": 0,
-      "finished_at": "2026-11-26T08:52:24.049923+00:00"
+      "finished_at": "2026-11-26T08:58:53.335566+00:00"
     },
     {
       "node_id": "n01",
@@ -234,16 +234,16 @@
       "provider": "deterministic",
       "model": "local-storyboard/1",
       "prompt": "marketing-workforce-2",
-      "started_at": "2026-11-26T08:52:24.059556+00:00",
+      "started_at": "2026-11-26T08:58:53.363328+00:00",
       "outcome": "ok",
       "reserved_microusd": 0,
       "input_tokens": 0,
       "output_tokens": 0,
       "estimated_microusd": 0,
-      "finished_at": "2026-11-26T08:52:24.139427+00:00"
+      "finished_at": "2026-11-26T08:58:53.429509+00:00"
     }
   ],
-  "execution_ms": 345.76,
+  "execution_ms": 353.67,
   "commercial_acceptance": null,
   "external_calls": 0,
   "input_tokens": 0,

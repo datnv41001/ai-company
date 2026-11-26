@@ -2,10 +2,18 @@
   "audience": "Trưởng vận hành kho phân phối",
   "brand": "Luồng Rõ",
   "brand_direction": "Liên kết mỗi cảnh với dữ kiện đã duyệt; dùng câu ngắn.",
+  "buyer_action": "appointment",
   "channel": "vertical-social",
   "concept": "service_deliverable",
   "cta": "Gửi đề nghị khảo sát",
   "duration_seconds": 32,
+  "editorial": {
+    "note": "Đối chiếu giá theo nguồn đã ghim.",
+    "price_source_ids": [
+      "F1"
+    ],
+    "price_status": "approved"
+  },
   "format": "9:16",
   "hook": "Khi gửi đề nghị, bạn cần biết điều gì?",
   "hook_variant": "direct",
@@ -32,10 +40,10 @@
       "end_s": 13,
       "purpose": "proof",
       "source_ids": [
-        "F1"
+        "F2"
       ],
       "start_s": 6,
-      "visual": "Vẽ luồng bàn giao rồi phóng vào kết quả được duyệt. Ghi đúng phạm vi của F1.",
+      "visual": "Vẽ luồng bàn giao rồi phóng vào kết quả được duyệt. Ghi đúng phạm vi của F2.",
       "visual_mode": "document",
       "voice": "Bàn giao sơ đồ luồng nhận hàng. Trong phạm vi buổi khảo sát."
     },
@@ -44,7 +52,7 @@
       "end_s": 21,
       "purpose": "terms",
       "source_ids": [
-        "F2"
+        "F1"
       ],
       "start_s": 13,
       "visual": "Tách số tiền, đơn vị tính thuế và mức đặt tối thiểu.",
@@ -56,7 +64,7 @@
       "end_s": 28,
       "purpose": "conditions",
       "source_ids": [
-        "F2"
+        "F1"
       ],
       "start_s": 21,
       "visual": "Giữ nguyên điều kiện trên thẻ chữ.",
@@ -75,14 +83,34 @@
     }
   ],
   "source_refs": {
+    "declarations": {
+      "F1": {
+        "category": "price",
+        "conditions": [
+          "Người phụ trách xác nhận lịch sau khi nhận đề nghị."
+        ],
+        "qualifiers": [
+          "Người phụ trách xác nhận lịch sau khi nhận đề nghị."
+        ],
+        "wording": "VND 760000 / 1 visit (tax included)"
+      },
+      "F2": {
+        "category": "description",
+        "conditions": [],
+        "qualifiers": [
+          "Trong phạm vi buổi khảo sát."
+        ],
+        "wording": "Bàn giao sơ đồ luồng nhận hàng"
+      }
+    },
     "facts": [
       "F1",
       "F2"
     ],
     "guidelines": "b44545db196285fb8c3b7ed25b603c0e333e8d9374725e561a5c3375be4bcf26",
     "manifest": {
-      "digest": "8f001034616dbc9c4a3d79df0a209c079893286801123b50700ee2d960fb6b88",
-      "id": "57a71cd2-2a27-41d2-ab7c-1b2149b1a8d3"
+      "digest": "10b830cdbf9dcdc22bafa34e1e586453fb2f354b3e1bfa4f95c8aa188ee2cdaa",
+      "id": "9fc2f095-221e-4770-81fd-cae0cafab065"
     }
   },
   "version": "amc.storyboard/1",

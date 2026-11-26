@@ -1,30 +1,30 @@
 {
   "case": "rhythm-class",
   "scope": {
-    "tenant": "b07f2b20-8471-488e-8eb5-e106237a19be",
-    "campaign": "Thu nhận lựa chọn buổi luyện đọc nhịp",
-    "campaign_id": "38c6afa9-6771-45da-b5a3-94b5c6e9bddd",
-    "brief_id": "481d0157-ed22-4937-8efb-bd312cf5602a"
+    "tenant": "d845f6af-653e-4900-8253-c235cd5b111a",
+    "campaign_objective": "Thu nhận lựa chọn buổi luyện đọc nhịp",
+    "campaign_id": "7427db21-b64e-4710-b661-9ccd83c0337e",
+    "brief_id": "bd65730a-8cac-4913-9347-a9dd696c394c"
   },
-  "run_id": "bfe06622-fb5b-4676-8a2f-95c3afc60608",
+  "run_id": "31d1e4f4-d02e-4d32-9594-7bf0e6ae2c88",
   "states": [
     {
-      "id": "bfe06622-fb5b-4676-8a2f-95c3afc60608",
+      "id": "31d1e4f4-d02e-4d32-9594-7bf0e6ae2c88",
       "state": "queued"
     },
     {
       "stage": "director",
-      "attempt": "394c65c7-3c6a-4051-b470-14f8da8d853e",
+      "attempt": "fadbe24f-f6f7-43be-8944-60d6d1d81bcc",
       "state": "running"
     },
     {
       "stage": "storyboard",
-      "attempt": "d8b7e7db-d392-448e-b1b1-29defabb18ed",
+      "attempt": "cf8637df-1380-43b9-aaee-a26b157558e4",
       "state": "running"
     },
     {
       "state": "awaiting_qa",
-      "document": "c4494c56-b9fc-416c-ae4b-859dc4b1ce9a"
+      "document": "a9e461ad-264f-4577-9833-bc97062b8fa5"
     }
   ],
   "registry": {
@@ -50,7 +50,7 @@
         "approval": "independent_internal_revision_qa",
         "attempts": [
           {
-            "id": "394c65c7-3c6a-4051-b470-14f8da8d853e",
+            "id": "fadbe24f-f6f7-43be-8944-60d6d1d81bcc",
             "held": 0,
             "month": "2026-11-01",
             "spent": 0,
@@ -66,7 +66,7 @@
         "objective": "Produce a grounded illustrated storyboard for internal editing",
         "qa_policy": "wf08-source-and-revision@1",
         "attempt_ids": [
-          "394c65c7-3c6a-4051-b470-14f8da8d853e"
+          "fadbe24f-f6f7-43be-8944-60d6d1d81bcc"
         ],
         "max_attempts": 3,
         "predecessors": [],
@@ -83,7 +83,7 @@
           "additionalProperties": false
         },
         "skill_version": 6,
-        "adapter_digest": "c9cdd01c346015f4572c0f28ff36633848f57bd7aacd9240b4f1d94ac2be3dbc",
+        "adapter_digest": "1cff466d97f960a7ca4c2eb2b5e6507e3d659412318ab50d1b0b7af9ac4a5ac9",
         "timeout_seconds": 300,
         "contract_version": 6,
         "success_criteria": [
@@ -117,7 +117,7 @@
         "approval": "independent_internal_revision_qa",
         "attempts": [
           {
-            "id": "d8b7e7db-d392-448e-b1b1-29defabb18ed",
+            "id": "cf8637df-1380-43b9-aaee-a26b157558e4",
             "held": 0,
             "month": "2026-11-01",
             "spent": 0,
@@ -133,7 +133,7 @@
         "objective": "Produce a grounded illustrated storyboard for internal editing",
         "qa_policy": "wf08-source-and-revision@1",
         "attempt_ids": [
-          "d8b7e7db-d392-448e-b1b1-29defabb18ed"
+          "cf8637df-1380-43b9-aaee-a26b157558e4"
         ],
         "max_attempts": 3,
         "predecessors": [],
@@ -150,7 +150,7 @@
           "additionalProperties": false
         },
         "skill_version": 1,
-        "adapter_digest": "c9cdd01c346015f4572c0f28ff36633848f57bd7aacd9240b4f1d94ac2be3dbc",
+        "adapter_digest": "1cff466d97f960a7ca4c2eb2b5e6507e3d659412318ab50d1b0b7af9ac4a5ac9",
         "timeout_seconds": 300,
         "contract_version": 1,
         "success_criteria": [
@@ -170,31 +170,31 @@
     ],
     "status": "pinned",
     "workflow": "WF-08/video-storyboard@1",
-    "plan_digest": "cbcb8c20c5e0ab863ee57fa4e0bbd751ef2e81c5a3b869bd67acd00206db4620",
+    "plan_digest": "5356f506b8ccef365bf2c7616829878b4357636dbafd65aff57de60dabc91f63",
     "workflow_id": "WF-08/video-storyboard",
-    "manifest_digest": "6e3a6ba01996b5e31c282be87057691bc95354077275829b19ec17653e21c829",
+    "manifest_digest": "4dd698583db731fc5e02dfba95eeb92c028466a885266b92a48367c8978ad40e",
     "workflow_version": 1
   },
   "original_revision": 1,
-  "raw_revision_digest": "9ddfa8680227df99edacbe5a16d19a2e939ecb7d3d2ba3ebe26c47a883bc4716",
+  "raw_revision_digest": "43505e1ea7580d3ed3ce4b1120c096da87b112813812af491620e49de7bb20c7",
   "reviewed_revision": 2,
-  "reviewed_digest": "36aa13eafc5aa68be949db9efb8f5d7caebe4f6422698660a2b1865e7f1699f8",
-  "reviewed_by": "1de65db0-4a83-420c-a082-3466a3d9a488",
+  "reviewed_digest": "7e5a86a523ea4a5823cef5d553ab2c5c5d5614aa2968fe88e60b3a5c99faa741",
+  "reviewed_by": "cc8c4683-cd52-4b25-94a2-a1f5c2adad98",
   "reviewed_state": "approved",
   "editorial_change": "Approved audience hook variation; claims and commercial fields rebuilt from pinned authority.",
   "manifest": {
-    "digest": "17ec6c25eb1dbae0f0684e5e98a4a062206ecce88ec141456c49ee35ed3a577f",
-    "id": "8819749e-158b-4113-b69c-3be0fceeeefa"
+    "digest": "a02a786fc01eb35a5dbbef5a356c2ad16ec29d31937d214cb5d9997d0dc7b459",
+    "id": "65f25c6b-62de-4ad0-bf08-e2b5384b637c"
   },
   "source_chain": {
-    "manifest_digest": "17ec6c25eb1dbae0f0684e5e98a4a062206ecce88ec141456c49ee35ed3a577f",
+    "manifest_digest": "a02a786fc01eb35a5dbbef5a356c2ad16ec29d31937d214cb5d9997d0dc7b459",
     "entries": [
       {
         "handle": "F1",
-        "claim_revision": "2c6f8084-4e27-4bc9-be7d-3aab12a5d69e",
-        "binding_revision": "f823460d-042b-4031-8a2f-162a5f45bb04",
-        "source_revision": "2d152a86-93b1-43b5-986e-e684aed8bf0c",
-        "source_digest": "34bbf22c78dd46c1e6daadb1d986ef75dad945fa5b9c529cb0c209d81e6463d3",
+        "claim_revision": "207424a8-793d-44b6-8d58-5ff05cc0c87b",
+        "binding_revision": "77bfbe9e-fdbd-4fe9-a0a0-6ac57cebc160",
+        "source_revision": "80ee747b-6644-4a75-842c-6fc98c9b2924",
+        "source_digest": "2170dd1ff6b98e647f3e9a28ceb7587aed7a1d9bd1826f5b1b20513f2c5dc305",
         "document": "PRIVATE_SYNTHETIC_DOCUMENT",
         "locator": "private locator"
       }
@@ -209,13 +209,13 @@
       "provider": "deterministic",
       "model": "local-storyboard/1",
       "prompt": "marketing-workforce-2",
-      "started_at": "2026-11-26T08:52:29.911930+00:00",
+      "started_at": "2026-11-26T08:59:03.948820+00:00",
       "outcome": "ok",
       "reserved_microusd": 0,
       "input_tokens": 0,
       "output_tokens": 0,
       "estimated_microusd": 0,
-      "finished_at": "2026-11-26T08:52:29.998152+00:00"
+      "finished_at": "2026-11-26T08:59:04.037388+00:00"
     },
     {
       "node_id": "n01",
@@ -225,16 +225,16 @@
       "provider": "deterministic",
       "model": "local-storyboard/1",
       "prompt": "marketing-workforce-2",
-      "started_at": "2026-11-26T08:52:30.030223+00:00",
+      "started_at": "2026-11-26T08:59:04.072983+00:00",
       "outcome": "ok",
       "reserved_microusd": 0,
       "input_tokens": 0,
       "output_tokens": 0,
       "estimated_microusd": 0,
-      "finished_at": "2026-11-26T08:52:30.068137+00:00"
+      "finished_at": "2026-11-26T08:59:04.128706+00:00"
     }
   ],
-  "execution_ms": 319.23,
+  "execution_ms": 348.85,
   "commercial_acceptance": null,
   "external_calls": 0,
   "input_tokens": 0,

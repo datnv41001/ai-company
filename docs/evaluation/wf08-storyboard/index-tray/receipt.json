@@ -1,30 +1,30 @@
 {
   "case": "index-tray",
   "scope": {
-    "tenant": "b0cb4148-b891-448d-b1ca-4cc8f049548e",
-    "campaign": "Nhận yêu cầu báo giá khay chia linh kiện theo hộp cho bàn lắp ráp",
-    "campaign_id": "d7febd57-2745-472b-82da-313cb35ea91a",
-    "brief_id": "59fbccd2-9cf3-425d-ab72-ad543bba45c2"
+    "tenant": "677b8316-d96e-4176-8d01-79631046d396",
+    "campaign_objective": "Nhận yêu cầu báo giá khay chia linh kiện theo hộp cho bàn lắp ráp",
+    "campaign_id": "e444ca37-e253-48e5-8c60-dd712a009519",
+    "brief_id": "0c1027e3-9520-445a-962b-44b16c565ce2"
   },
-  "run_id": "fbd131ca-ba9c-4d61-a3fc-3b226d8f6d05",
+  "run_id": "8b207621-1e9e-43d6-8e89-02e512d71c29",
   "states": [
     {
-      "id": "fbd131ca-ba9c-4d61-a3fc-3b226d8f6d05",
+      "id": "8b207621-1e9e-43d6-8e89-02e512d71c29",
       "state": "queued"
     },
     {
       "stage": "director",
-      "attempt": "15487ab0-eafe-4bb2-8743-213a009a4f8e",
+      "attempt": "49fb392f-a893-419e-9739-6e271370f51d",
       "state": "running"
     },
     {
       "stage": "storyboard",
-      "attempt": "a78b5588-d1f2-4d1d-a5ae-fb5e1d24e01d",
+      "attempt": "6554777a-d8f3-42f9-b905-6fa32f98f25b",
       "state": "running"
     },
     {
       "state": "awaiting_qa",
-      "document": "f288c439-38c0-41b2-b970-de8479345a28"
+      "document": "6af64bb9-1086-405c-8ec9-a01bae2c05ab"
     }
   ],
   "registry": {
@@ -50,7 +50,7 @@
         "approval": "independent_internal_revision_qa",
         "attempts": [
           {
-            "id": "15487ab0-eafe-4bb2-8743-213a009a4f8e",
+            "id": "49fb392f-a893-419e-9739-6e271370f51d",
             "held": 0,
             "month": "2026-11-01",
             "spent": 0,
@@ -66,7 +66,7 @@
         "objective": "Produce a grounded illustrated storyboard for internal editing",
         "qa_policy": "wf08-source-and-revision@1",
         "attempt_ids": [
-          "15487ab0-eafe-4bb2-8743-213a009a4f8e"
+          "49fb392f-a893-419e-9739-6e271370f51d"
         ],
         "max_attempts": 3,
         "predecessors": [],
@@ -83,7 +83,7 @@
           "additionalProperties": false
         },
         "skill_version": 6,
-        "adapter_digest": "c9cdd01c346015f4572c0f28ff36633848f57bd7aacd9240b4f1d94ac2be3dbc",
+        "adapter_digest": "1cff466d97f960a7ca4c2eb2b5e6507e3d659412318ab50d1b0b7af9ac4a5ac9",
         "timeout_seconds": 300,
         "contract_version": 6,
         "success_criteria": [
@@ -117,7 +117,7 @@
         "approval": "independent_internal_revision_qa",
         "attempts": [
           {
-            "id": "a78b5588-d1f2-4d1d-a5ae-fb5e1d24e01d",
+            "id": "6554777a-d8f3-42f9-b905-6fa32f98f25b",
             "held": 0,
             "month": "2026-11-01",
             "spent": 0,
@@ -133,7 +133,7 @@
         "objective": "Produce a grounded illustrated storyboard for internal editing",
         "qa_policy": "wf08-source-and-revision@1",
         "attempt_ids": [
-          "a78b5588-d1f2-4d1d-a5ae-fb5e1d24e01d"
+          "6554777a-d8f3-42f9-b905-6fa32f98f25b"
         ],
         "max_attempts": 3,
         "predecessors": [],
@@ -150,7 +150,7 @@
           "additionalProperties": false
         },
         "skill_version": 1,
-        "adapter_digest": "c9cdd01c346015f4572c0f28ff36633848f57bd7aacd9240b4f1d94ac2be3dbc",
+        "adapter_digest": "1cff466d97f960a7ca4c2eb2b5e6507e3d659412318ab50d1b0b7af9ac4a5ac9",
         "timeout_seconds": 300,
         "contract_version": 1,
         "success_criteria": [
@@ -170,40 +170,40 @@
     ],
     "status": "pinned",
     "workflow": "WF-08/video-storyboard@1",
-    "plan_digest": "cbcb8c20c5e0ab863ee57fa4e0bbd751ef2e81c5a3b869bd67acd00206db4620",
+    "plan_digest": "5356f506b8ccef365bf2c7616829878b4357636dbafd65aff57de60dabc91f63",
     "workflow_id": "WF-08/video-storyboard",
-    "manifest_digest": "6e3a6ba01996b5e31c282be87057691bc95354077275829b19ec17653e21c829",
+    "manifest_digest": "4dd698583db731fc5e02dfba95eeb92c028466a885266b92a48367c8978ad40e",
     "workflow_version": 1
   },
   "original_revision": 1,
-  "raw_revision_digest": "afa6e70ba062c67bcb4318c5471116a255fc3848ecf16d200713f684caeb00f6",
+  "raw_revision_digest": "1ef4cf66f66dd4a84d9b9905d4db8f5b8513e25e0e6367cf725d3e5e0c91f77e",
   "reviewed_revision": 2,
-  "reviewed_digest": "844f12e5ab95bb9ce51ff52170144ae30bd83ce26966f49b88fa3c65e31dc55f",
-  "reviewed_by": "d33f20d4-cadf-43ef-890d-4d7bdee93e9f",
+  "reviewed_digest": "bc6f75ab3b119b49d2fd1411df33f5ce1c53a89477cd039dd56e481df398673b",
+  "reviewed_by": "9157fc42-9c0e-4f59-a52e-74f3a742a09b",
   "reviewed_state": "approved",
   "editorial_change": "Approved audience hook variation; claims and commercial fields rebuilt from pinned authority.",
   "manifest": {
-    "digest": "f33e6777ee3a68efcd2fdefcc278c799de099eba775dca7bea53b23cb52f722a",
-    "id": "d0589b67-0314-427a-9e0e-1fbda5b51915"
+    "digest": "f947c5f849b92a07c76b2fe5a4826f8e79d92932d0326a346995c0afe35f2b7b",
+    "id": "6b464adb-6159-44eb-a2d2-058fde85ffda"
   },
   "source_chain": {
-    "manifest_digest": "f33e6777ee3a68efcd2fdefcc278c799de099eba775dca7bea53b23cb52f722a",
+    "manifest_digest": "f947c5f849b92a07c76b2fe5a4826f8e79d92932d0326a346995c0afe35f2b7b",
     "entries": [
       {
         "handle": "F1",
-        "claim_revision": "8d2891b6-3ddb-436e-948c-1e82441e3a27",
-        "binding_revision": "81a5d6e9-4caf-4a2e-9344-874e10a7ff71",
-        "source_revision": "7a15828e-73e4-4170-bd61-9aa00460f30a",
-        "source_digest": "779833707e76138749fec0ed9ffb16200b7e61a191246a278afb0b1642d77f2c",
+        "claim_revision": "3caba596-483a-42fa-9d05-331fe221b587",
+        "binding_revision": "07db8a31-b822-4a56-81b9-bc13a9cb0f13",
+        "source_revision": "af08a1fc-a15a-45a3-828f-af9d9bf36bd5",
+        "source_digest": "f4f97e727a4f39a63b99935c0851d2ba42f7e57b527033c50ba7fe5a62a77c21",
         "document": "PRIVATE_SYNTHETIC_DOCUMENT",
         "locator": "private locator"
       },
       {
         "handle": "F2",
-        "claim_revision": "941a54bd-c650-4f19-9875-c089cfe626ef",
-        "binding_revision": "296db3a0-6ac2-45ab-8ba0-d825555286d2",
-        "source_revision": "d0a73de3-7a05-484b-9515-e2e4f5721a80",
-        "source_digest": "90c6c75d3ac6f4719ba1b52e4b80f48329531078065f72a6bd62f9890fb4539c",
+        "claim_revision": "45326058-ea21-4278-86ff-ddf259a95d8c",
+        "binding_revision": "7b55a0a6-d9e7-4c36-a7a7-43f8178f9943",
+        "source_revision": "8e05da10-73b8-466c-a2bc-f664f9793c0b",
+        "source_digest": "f9ffec0972a80ad07db8d213d10b824414296fffbd19c6f9ad83b061202c6afa",
         "document": "PRIVATE_SYNTHETIC_DOCUMENT",
         "locator": "private locator"
       }
@@ -218,13 +218,13 @@
       "provider": "deterministic",
       "model": "local-storyboard/1",
       "prompt": "marketing-workforce-2",
-      "started_at": "2026-11-26T08:52:17.039618+00:00",
+      "started_at": "2026-11-26T08:58:41.073440+00:00",
       "outcome": "ok",
       "reserved_microusd": 0,
       "input_tokens": 0,
       "output_tokens": 0,
       "estimated_microusd": 0,
-      "finished_at": "2026-11-26T08:52:17.108960+00:00"
+      "finished_at": "2026-11-26T08:58:41.172429+00:00"
     },
     {
       "node_id": "n01",
@@ -234,16 +234,16 @@
       "provider": "deterministic",
       "model": "local-storyboard/1",
       "prompt": "marketing-workforce-2",
-      "started_at": "2026-11-26T08:52:17.133220+00:00",
+      "started_at": "2026-11-26T08:58:41.203377+00:00",
       "outcome": "ok",
       "reserved_microusd": 0,
       "input_tokens": 0,
       "output_tokens": 0,
       "estimated_microusd": 0,
-      "finished_at": "2026-11-26T08:52:17.175865+00:00"
+      "finished_at": "2026-11-26T08:58:41.253096+00:00"
     }
   ],
-  "execution_ms": 313.19,
+  "execution_ms": 340.09,
   "commercial_acceptance": null,
   "external_calls": 0,
   "input_tokens": 0,

@@ -11,7 +11,7 @@ docker compose -p amc-dev run --rm migrate python migrations/apply.py --publish-
 docker compose -p amc-dev --env-file .env --env-file .env.pool -f compose.yaml -f compose.pool.yaml up -d --build dispatcher worker-one
 ```
 
-Publisher hiện hữu xác minh runtime lock và định nghĩa bất biến; có thể gọi lại trên database v26 cũ hoặc mới. Admin vào endpoint registry có sẵn `PUT /api/tenants/{tenant}/workforce/registry/{campaign}` với `{"workflow":"WF-08/video-storyboard@1","action":"activate","skills":["director","storyboard"]}`. Budget của run bằng 0. Đặt route, năng lực pool và kỳ ngân sách trước khi giao việc. Sổ ledger ghi giữ và phí model bằng 0 cho binding này. Rollback bằng thao tác disable/revoke của registry theo runbook, giữ lại lịch sử PDF/JSON, checkpoint, bản ký QA và các release khác.
+Publisher hiện hữu xác minh runtime lock và định nghĩa bất biến; có thể gọi lại trên database v26 cũ hoặc mới. Admin vào endpoint registry có sẵn `PUT /api/tenants/{tenant}/workforce/registry/{campaign}` với `{"workflow":"WF-08/video-storyboard@1","action":"activate","skills":["director","storyboard"]}`. Budget của run bằng 0. Đặt route, năng lực pool và kỳ ngân sách trước khi giao việc. Sổ ledger ghi giữ và phí model bằng 0 cho binding này. Rollback bằng thao tác disable/revoke của registry theo runbook, giữ lại lịch sử JSON, checkpoint, bản ký QA và các release khác.
 
 ## Quy trình và trách nhiệm
 

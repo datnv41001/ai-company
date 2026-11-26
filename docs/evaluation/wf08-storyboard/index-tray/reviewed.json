@@ -10,17 +10,45 @@
   "hook": "Tổ trưởng lắp ráp điện tử cần biết gì?",
   "hook_variant": "audience",
   "cta": "Yêu cầu báo giá",
+  "buyer_action": "rfq",
   "rights": "synthetic_illustration_only",
+  "editorial": {
+    "price_status": "approved",
+    "note": "Đối chiếu giá theo nguồn đã ghim.",
+    "price_source_ids": [
+      "F2"
+    ]
+  },
   "source_refs": {
     "manifest": {
-      "id": "d0589b67-0314-427a-9e0e-1fbda5b51915",
-      "digest": "f33e6777ee3a68efcd2fdefcc278c799de099eba775dca7bea53b23cb52f722a"
+      "id": "6b464adb-6159-44eb-a2d2-058fde85ffda",
+      "digest": "f947c5f849b92a07c76b2fe5a4826f8e79d92932d0326a346995c0afe35f2b7b"
     },
     "guidelines": "b44545db196285fb8c3b7ed25b603c0e333e8d9374725e561a5c3375be4bcf26",
     "facts": [
       "F1",
       "F2"
-    ]
+    ],
+    "declarations": {
+      "F1": {
+        "wording": "Vách ngăn có thể tháo rời",
+        "category": "description",
+        "qualifiers": [
+          "Áp dụng cho mẫu tiêu chuẩn."
+        ],
+        "conditions": []
+      },
+      "F2": {
+        "wording": "VND 380000 / 1 box (tax included)",
+        "category": "price",
+        "qualifiers": [
+          "Xác nhận số lượng trước khi đặt."
+        ],
+        "conditions": [
+          "Xác nhận số lượng trước khi đặt."
+        ]
+      }
+    }
   },
   "brand_direction": "Liên kết mỗi cảnh với dữ kiện đã duyệt; dùng câu ngắn.",
   "method_ref": {
@@ -42,11 +70,11 @@
     {
       "purpose": "proof",
       "visual_mode": "mechanism",
-      "visual": "Tách thao tác thành hai trạng thái để người xem đối chiếu. Ghi đúng phạm vi của F2.",
+      "visual": "Tách thao tác thành hai trạng thái để người xem đối chiếu. Ghi đúng phạm vi của F1.",
       "voice": "Vách ngăn có thể tháo rời. Áp dụng cho mẫu tiêu chuẩn.",
       "caption": "Vách ngăn có thể tháo rời. Áp dụng cho\nmẫu tiêu chuẩn.",
       "source_ids": [
-        "F2"
+        "F1"
       ],
       "start_s": 6,
       "end_s": 13
@@ -58,7 +86,7 @@
       "voice": "Giá tham khảo: 380.000 VND / 1 hộp, đã gồm thuế. Đơn tối thiểu: 5 hộp.",
       "caption": "Giá tham khảo: 380.000 VND / 1 hộp, đã\ngồm thuế. Đơn tối thiểu: 5 hộp.",
       "source_ids": [
-        "F1"
+        "F2"
       ],
       "start_s": 13,
       "end_s": 21
@@ -70,7 +98,7 @@
       "voice": "Xác nhận số lượng trước khi đặt.",
       "caption": "Xác nhận số lượng trước khi đặt.",
       "source_ids": [
-        "F1"
+        "F2"
       ],
       "start_s": 21,
       "end_s": 27

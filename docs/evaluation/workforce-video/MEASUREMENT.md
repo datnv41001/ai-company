@@ -18,6 +18,8 @@ Từ gốc checkout, chạy `python -m pytest -q tests/test_creative_measurement
 
 ## Thiết kế đề xuất đã khóa cho sandbox · chưa mở tuyển hoặc chạy quảng cáo
 
+Đã chạy lại cùng phép đối chiếu trên hai package CTA mới. Kết quả mỗi hành trình giữ đúng các tầng ở bảng trên. Receipt, digest và cửa sổ của lượt mới ở [bản đọc lại sau biên tập](aligned-readback.json).
+
 **Câu hỏi cụ thể.** Với cùng một offer Khe Gọn, thay duy nhất câu mở đầu có làm thay đổi tỷ lệ người được phân bổ phát sinh ít nhất một RFQ đủ điều kiện không? Dùng cùng hình, CTA, giá/MOQ, phần sau video, landing, đối tượng đủ điều kiện và quyền xử lý. So nhiều concept khác nhau là một khảo sát sáng tạo riêng.
 
 | Thành phần | Quy tắc đề xuất |

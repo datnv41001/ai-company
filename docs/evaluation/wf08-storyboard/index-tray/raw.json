@@ -2,10 +2,18 @@
   "audience": "Tổ trưởng lắp ráp điện tử",
   "brand": "Khe Gọn",
   "brand_direction": "Liên kết mỗi cảnh với dữ kiện đã duyệt; dùng câu ngắn.",
+  "buyer_action": "rfq",
   "channel": "vertical-social",
   "concept": "product_demonstration",
   "cta": "Yêu cầu báo giá",
   "duration_seconds": 32,
+  "editorial": {
+    "note": "Đối chiếu giá theo nguồn đã ghim.",
+    "price_source_ids": [
+      "F2"
+    ],
+    "price_status": "approved"
+  },
   "format": "9:16",
   "hook": "Cách dùng nào phù hợp với công việc?",
   "hook_variant": "direct",
@@ -32,10 +40,10 @@
       "end_s": 13,
       "purpose": "proof",
       "source_ids": [
-        "F2"
+        "F1"
       ],
       "start_s": 6,
-      "visual": "Tách thao tác thành hai trạng thái để người xem đối chiếu. Ghi đúng phạm vi của F2.",
+      "visual": "Tách thao tác thành hai trạng thái để người xem đối chiếu. Ghi đúng phạm vi của F1.",
       "visual_mode": "mechanism",
       "voice": "Vách ngăn có thể tháo rời. Áp dụng cho mẫu tiêu chuẩn."
     },
@@ -44,7 +52,7 @@
       "end_s": 21,
       "purpose": "terms",
       "source_ids": [
-        "F1"
+        "F2"
       ],
       "start_s": 13,
       "visual": "Tách số tiền, đơn vị tính thuế và mức đặt tối thiểu.",
@@ -56,7 +64,7 @@
       "end_s": 27,
       "purpose": "conditions",
       "source_ids": [
-        "F1"
+        "F2"
       ],
       "start_s": 21,
       "visual": "Giữ nguyên điều kiện trên thẻ chữ.",
@@ -75,14 +83,34 @@
     }
   ],
   "source_refs": {
+    "declarations": {
+      "F1": {
+        "category": "description",
+        "conditions": [],
+        "qualifiers": [
+          "Áp dụng cho mẫu tiêu chuẩn."
+        ],
+        "wording": "Vách ngăn có thể tháo rời"
+      },
+      "F2": {
+        "category": "price",
+        "conditions": [
+          "Xác nhận số lượng trước khi đặt."
+        ],
+        "qualifiers": [
+          "Xác nhận số lượng trước khi đặt."
+        ],
+        "wording": "VND 380000 / 1 box (tax included)"
+      }
+    },
     "facts": [
       "F1",
       "F2"
     ],
     "guidelines": "b44545db196285fb8c3b7ed25b603c0e333e8d9374725e561a5c3375be4bcf26",
     "manifest": {
-      "digest": "f33e6777ee3a68efcd2fdefcc278c799de099eba775dca7bea53b23cb52f722a",
-      "id": "d0589b67-0314-427a-9e0e-1fbda5b51915"
+      "digest": "f947c5f849b92a07c76b2fe5a4826f8e79d92932d0326a346995c0afe35f2b7b",
+      "id": "6b464adb-6159-44eb-a2d2-058fde85ffda"
     }
   },
   "version": "amc.storyboard/1",

@@ -10,17 +10,45 @@
   "hook": "Trưởng vận hành kho phân phối cần biết gì?",
   "hook_variant": "audience",
   "cta": "Gửi đề nghị khảo sát",
+  "buyer_action": "appointment",
   "rights": "synthetic_illustration_only",
+  "editorial": {
+    "price_status": "approved",
+    "note": "Đối chiếu giá theo nguồn đã ghim.",
+    "price_source_ids": [
+      "F1"
+    ]
+  },
   "source_refs": {
     "manifest": {
-      "id": "57a71cd2-2a27-41d2-ab7c-1b2149b1a8d3",
-      "digest": "8f001034616dbc9c4a3d79df0a209c079893286801123b50700ee2d960fb6b88"
+      "id": "9fc2f095-221e-4770-81fd-cae0cafab065",
+      "digest": "10b830cdbf9dcdc22bafa34e1e586453fb2f354b3e1bfa4f95c8aa188ee2cdaa"
     },
     "guidelines": "b44545db196285fb8c3b7ed25b603c0e333e8d9374725e561a5c3375be4bcf26",
     "facts": [
       "F1",
       "F2"
-    ]
+    ],
+    "declarations": {
+      "F1": {
+        "wording": "VND 760000 / 1 visit (tax included)",
+        "category": "price",
+        "qualifiers": [
+          "Người phụ trách xác nhận lịch sau khi nhận đề nghị."
+        ],
+        "conditions": [
+          "Người phụ trách xác nhận lịch sau khi nhận đề nghị."
+        ]
+      },
+      "F2": {
+        "wording": "Bàn giao sơ đồ luồng nhận hàng",
+        "category": "description",
+        "qualifiers": [
+          "Trong phạm vi buổi khảo sát."
+        ],
+        "conditions": []
+      }
+    }
   },
   "brand_direction": "Liên kết mỗi cảnh với dữ kiện đã duyệt; dùng câu ngắn.",
   "method_ref": {
@@ -42,11 +70,11 @@
     {
       "purpose": "proof",
       "visual_mode": "document",
-      "visual": "Vẽ luồng bàn giao rồi phóng vào kết quả được duyệt. Ghi đúng phạm vi của F1.",
+      "visual": "Vẽ luồng bàn giao rồi phóng vào kết quả được duyệt. Ghi đúng phạm vi của F2.",
       "voice": "Bàn giao sơ đồ luồng nhận hàng. Trong phạm vi buổi khảo sát.",
       "caption": "Bàn giao sơ đồ luồng nhận hàng. Trong\nphạm vi buổi khảo sát.",
       "source_ids": [
-        "F1"
+        "F2"
       ],
       "start_s": 6,
       "end_s": 13
@@ -58,7 +86,7 @@
       "voice": "Giá tham khảo: 760.000 VND / 1 lượt, đã gồm thuế. Đơn tối thiểu: 1 lượt.",
       "caption": "Giá tham khảo: 760.000 VND / 1 lượt, đã\ngồm thuế. Đơn tối thiểu: 1 lượt.",
       "source_ids": [
-        "F2"
+        "F1"
       ],
       "start_s": 13,
       "end_s": 21
@@ -70,7 +98,7 @@
       "voice": "Người phụ trách xác nhận lịch sau khi nhận đề nghị.",
       "caption": "Người phụ trách xác nhận lịch sau khi\nnhận đề nghị.",
       "source_ids": [
-        "F2"
+        "F1"
       ],
       "start_s": 21,
       "end_s": 28

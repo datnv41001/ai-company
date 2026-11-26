@@ -20,6 +20,20 @@ def report(conn, job, result=None, error=None):
     return conn.execute("select amc_ops.report(%s,%s,%s)", (job["id"], Jsonb(result) if result is not None else None, error)).fetchone()[0]
 
 
+def run_job(config, body):
+    if "local_adapter" in body:
+        from .video_storyboard import execute
+        try:
+            return execute(body)
+        except GatewayError as exc:
+            if str(exc) != "storyboard_needs_revision":
+                raise
+            # The mailbox has a finite transport-error vocabulary. The dispatcher
+            # recomputes a domain refusal from the same pinned envelope.
+            return {"blocked": "storyboard_needs_revision"}, 0, 0
+    return bounded_call(config, body)
+
+
 def main():
     # Pool mailboxes may contain registry envelopes. Verify transport and inference
     # code before advertising readiness or collecting the first lease.
@@ -39,7 +53,7 @@ def main():
                 time.sleep(0.5)
                 continue
             try:
-                result = bounded_call(config, job["body"])
+                result = run_job(config, job["body"])
             except GatewayError as exc:
                 report(conn, job, result=exc.usage, error=str(exc))
             else:

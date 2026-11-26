@@ -19,7 +19,7 @@ from .registry_adapters import node_request, validate_output
 from .models import AuditEvent, Deliverable, Membership, utcnow
 from .workforce_gateway import Gateway, GatewayError, PROMPT_VERSION, infer, measured_cost, quality, request_body, reserve_tokens
 from .workforce_models import WorkforceRun
-from . import dynamic_plan, landing_qa, workflow_dag
+from . import dynamic_plan, landing_qa, workflow_dag, video_storyboard
 
 MAX_TRIES = 3
 
@@ -83,7 +83,8 @@ def claim(db, scope, config, *, run_id=None, node=None, commit=True):
     else:
         stage = run.plan[len(run.checkpoints)]
         body = request_body(run, config.model)
-    reserved = config.price(reserve_tokens(body), body["max_tokens"])
+    is_board = video_storyboard.is_run(run)
+    reserved = 0 if is_board else config.price(reserve_tokens(body), body["max_tokens"])
     prior_attempts = node.attempts if node else run.attempts
     if prior_attempts >= MAX_TRIES or run.reserved_microusd + reserved > run.budget_microusd or run.knowledge["prompt_version"] != PROMPT_VERSION:
         error = (
@@ -113,8 +114,8 @@ def claim(db, scope, config, *, run_id=None, node=None, commit=True):
             **({"node_id": node.id, "plan_revision": node.revision} if node else {}),
             "skill": stage,
             "attempt": run.attempts,
-            "provider": config.provider,
-            "model": config.model,
+            "provider": "deterministic" if is_board else config.provider,
+            "model": video_storyboard.ADAPTER if is_board else config.model,
             "prompt": PROMPT_VERSION,
             "started_at": now.isoformat(),
             "outcome": "running",
@@ -171,7 +172,10 @@ def save_checkpoint(db, scope, run, stage, output, node):
         from .registry_qa import assess_role
         contract = binding["contracts"][stage]
         from . import c3_releases
-        if binding.get("workflow") in c3_releases.WORKFLOWS:
+        if video_storyboard.is_run(run):
+            record["quality"]["role_qa"] = {"policy": contract["qa_policy"], "manifest_digest": run.knowledge["c3_manifest"]["digest"],
+                                           "source_ids":output["source_ids"], "adapter":video_storyboard.ADAPTER}
+        elif binding.get("workflow") in c3_releases.WORKFLOWS:
             record["quality"]["role_qa"] = {"policy": contract["qa_policy"], "findings": record["quality"]["claims"],
                                           "manifest_digest":run.knowledge["c3_manifest"]["digest"], "source_ids":output["source_ids"]}
         elif stage in ("research","strategy") and contract["adapter"] == stage+"@2":
@@ -192,6 +196,8 @@ def save_checkpoint(db, scope, run, stage, output, node):
         if binding and binding["contracts"]["director"]["adapter"] == "director@2":
             preview = research_strategy.proposal(run.checkpoints)
         title = run.knowledge["title"]
+        if video_storyboard.is_run(run):
+            preview = next(p["output"]["text"] for p in run.checkpoints if p["skill"]=="storyboard")
         studio = None
         if binding and binding.get("workflow") in c3_releases.WORKFLOWS:
             from . import c3_marketing, c3_order_units
@@ -243,7 +249,12 @@ def finish(db, scope, config, task, result, error, *, node=None, commit=True):
     if result is not None:
         raw, inputs, outputs = result
         try:
-            cost = measured_cost(config, body, inputs, outputs)
+            if video_storyboard.is_run(run):
+                if type(inputs) is not int or type(outputs) is not int or (inputs, outputs) != (0, 0):
+                    raise GatewayError("invalid_usage")
+                cost = 0
+            else:
+                cost = measured_cost(config, body, inputs, outputs)
             run.reserved_microusd += cost - run.journal[-1]["reserved_microusd"]
             metrics = {"input_tokens": inputs, "output_tokens": outputs, "estimated_microusd": cost}
             if not error:
@@ -259,13 +270,20 @@ def finish(db, scope, config, task, result, error, *, node=None, commit=True):
                     elif binding.get("contracts",{}).get("director",{}).get("adapter")=="director@2":
                         from .research_strategy import director_proposal
                         raw = director_proposal(raw)
-                    contract, digest = dynamic_plan.compile_plan(raw, run.knowledge["required_outputs"], run.knowledge.get('registry'))
+                    if video_storyboard.is_run(run):
+                        from .storyboard_contract import plan
+                        contract, digest = plan(raw,run.knowledge["required_outputs"],binding)
+                    else:
+                        contract, digest = dynamic_plan.compile_plan(raw, run.knowledge["required_outputs"], run.knowledge.get('registry'))
                     workflow_dag.freeze(db, token, contract, digest)
                     output = {"text": digest, "sections": {}, "source_ids": [], "plan_digest": digest}
                     if director_raw is not None:
                         output["raw_reply"] = director_raw
                 else:
-                    output = validate_output(raw, stage, run.plan, run.knowledge["sources"], run.knowledge.get('registry'))
+                    if video_storyboard.is_run(run):
+                        output = video_storyboard.validated(raw, body)
+                    else:
+                        output = validate_output(raw, stage, run.plan, run.knowledge["sources"], run.knowledge.get('registry'))
         except GatewayError as exc:
             error = str(exc)
             if isinstance(exc, dynamic_plan.InvalidPlan):

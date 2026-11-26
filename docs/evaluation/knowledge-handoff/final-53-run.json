@@ -1,0 +1,40 @@
+{
+  "sha": "56a120cac4bb3f77a4e1fc6fe93298cc838121ea",
+  "archive_sha256": "cd5a0b07474d2f0c0c1babd3636ff2f414dbf4bc30ba7a261fd92e9ba8cda8dc",
+  "environment": "fresh tracked source export, SQLite and localhost, preinstalled development dependencies",
+  "commands": [
+    {
+      "argv": [
+        "python",
+        "scripts/init_env.py"
+      ],
+      "exit": 0
+    },
+    {
+      "argv": [
+        "python",
+        "-m",
+        "pytest",
+        "-q",
+        "-p",
+        "no:cacheprovider",
+        "tests/test_api.py"
+      ],
+      "exit": 0
+    }
+  ],
+  "health": {
+    "status": 200,
+    "body": {
+      "status": "ok",
+      "stage": "engineering_bootstrap",
+      "environment": "local",
+      "production_ready": false
+    }
+  },
+  "read_http": {
+    "/": 200,
+    "/docs": 200
+  },
+  "pytest_summary": "12 passed in 8.22s"
+}

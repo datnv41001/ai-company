@@ -1,5 +1,7 @@
 # Tiếp quản AMC từ một checkout
 
+Trên cây ghép quản trị và sản phẩm, [mục đầu của HANDOFF](../HANDOFF.md) quyết định việc đang bàn giao. [Register tại checkout](evaluation/DEPARTMENT-CAPABILITY-REGISTER.md) mô tả năng lực có bằng chứng, [kết quả cold handoff #53](evaluation/knowledge-handoff/FINAL-53.md) ghi nhận trạng thái trên SHA lịch sử. Khi lần theo một quyết định kiến trúc, dùng tiêu đề và đường dẫn ADR đã phát hành trong bảng dưới. Số ADR trong danh sách dự kiến của đặc tả phản ánh kế hoạch ban đầu.
+
 Đọc theo thứ tự dưới đây. Trước khi báo cáo trạng thái, ghi kết quả của `git rev-parse HEAD`, `git status --short --branch` và nhánh đích. Khi làm việc ngoại tuyến, ghi mốc đồng bộ gần nhất. Mỗi kết quả nghiệm thu chỉ áp dụng cho phiên bản và hành trình đã thử.
 
 1. Đọc [README](../README.md) để chọn cách chạy và [AGENTS](../AGENTS.md) để biết quyền quyết định. [HANDOFF](../HANDOFF.md) mở đầu bằng mốc đang bàn giao. Các mục có ngày, schema hoặc PR cũ là lịch sử.

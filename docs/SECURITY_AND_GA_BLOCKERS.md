@@ -1,5 +1,7 @@
 # Security, Reliability and General Availability (GA) Blockers
 
+The #53/#55 integration review supplies engineering evidence for synthetic Sales permissions, intake metrics and a private practitioner pilot procedure. A release owner must evaluate the gates below for the intended environment. Production and Commercial GA are **NO-GO**. [Current handoff](../HANDOFF.md) · [Scope and measurement limits](evaluation/department-review/ROUND-53-55.md)
+
 AIRC v3 chỉ được sử dụng trên fixture tổng hợp. Kiểm định độc lập theo nghĩa vụ, custody giữa các OS principal, coverage ngữ nghĩa và mở rộng reviewer vẫn là cổng riêng. [Kết quả và các ngưỡng thử nghiệm](../engineering/airc500/UNION-STUDY.md).
 
 

@@ -1,5 +1,7 @@
 # Trạng thái hiện thực và nghiệm thu V1
 
+**Cây tích hợp đang review.** Phần bổ sung sau mốc main gồm chuỗi #49–52, #54–55 và tài liệu quản trị #53. Sales/Service và các chỉ số RFQ được kiểm định với giao dịch tổng hợp. Pilot nghề nghiệp chỉ có bằng chứng thiết kế và diễn tập. Bằng chứng kỹ thuật thuộc nhánh review, chưa có quyết định nâng mức nghiệm thu nghiệp vụ của module, vai trò hoặc workflow nào. [Công việc hiện hành](../HANDOFF.md) · [Sổ năng lực trên checkout](evaluation/DEPARTMENT-CAPABILITY-REGISTER.md) · [Quyết định theo finding](evaluation/department-review/ROUND-53-55.md)
+
 **Mốc đối chiếu ngày 26/11/2026** là `main` sau PR #48, commit `380be3eb70a41424c6d45318b0b1890fa950970a`, core v26, Business v3, C3 v5 và journal `ops/2`. Trên mốc này có bằng chứng tích hợp sandbox từ brief tới bản giao, QA, thực thi cục bộ và đối soát. Số yêu cầu **đầy đủ** có quyết định nghiệm thu nghiệp vụ ghi nhận trong hồ sơ là **0/49 module, 0/37 vai trò, 0/24 workflow**. Số đơn vị công việc được doanh nghiệp thực tiếp nhận trong các phép đo là **0**. Chi phí trên một đơn vị được tiếp nhận chưa xác định. Production và Commercial GA giữ **NO-GO**. [Commit nền][main] · [Cutover][cutover] · [Hồ sơ pilot][pilot] · [Điều kiện GA][ga]
 
 ## Cách đọc trạng thái
@@ -91,7 +93,7 @@ Tất cả **24/24 workflow mẹ** giữ nhãn catalog `specification_only`. Hai
 | WF-18, WF-19 | Có funnel, điều chỉnh doanh thu và đề xuất tối ưu theo trạng thái có nguồn. Chưa xác nhận báo cáo kỳ được khách nhận hoặc hiệu quả thay đổi thật. [Engine][engine] |
 | WF-21, WF-22 | WF-21 có quyết định trên snapshot, trả sửa và nộp lại. WF-22 có diễn tập backup/restore và fence writer qua cutover. Hành trình change order theo hợp đồng và xử lý sự cố vận hành thực còn mở. [Vòng đời review](../tests/test_review_lifecycle.py) · [Cutover][cutover] |
 
-## Bốn đề xuất sau mốc main
+## Lịch sử bốn đề xuất tại mốc main #48
 
 Ngày 26/11/2026, bốn PR dưới đây đang mở dưới dạng draft, xếp nối nhau. Mỗi dòng là hiện thực và bằng chứng kỹ thuật **trên nhánh đề xuất**. Kiểm lại merge commit, cây và CI trên main trước khi thay đổi trạng thái tương ứng ở trên.
 

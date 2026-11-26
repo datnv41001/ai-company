@@ -1,30 +1,30 @@
 {
   "case": "rhythm-class",
   "scope": {
-    "tenant": "d845f6af-653e-4900-8253-c235cd5b111a",
+    "tenant": "7d01f827-06ad-4ff3-a9ac-2fb3664bf45b",
     "campaign_objective": "Thu nhận lựa chọn buổi luyện đọc nhịp",
-    "campaign_id": "7427db21-b64e-4710-b661-9ccd83c0337e",
-    "brief_id": "bd65730a-8cac-4913-9347-a9dd696c394c"
+    "campaign_id": "d998b9d5-5905-4f66-ad73-7d1833f1c8ed",
+    "brief_id": "0d445249-d3f0-4784-9d36-fcc1babc4eda"
   },
-  "run_id": "31d1e4f4-d02e-4d32-9594-7bf0e6ae2c88",
+  "run_id": "ae31a495-4728-4bee-b5c7-47758f98cc17",
   "states": [
     {
-      "id": "31d1e4f4-d02e-4d32-9594-7bf0e6ae2c88",
+      "id": "ae31a495-4728-4bee-b5c7-47758f98cc17",
       "state": "queued"
     },
     {
       "stage": "director",
-      "attempt": "fadbe24f-f6f7-43be-8944-60d6d1d81bcc",
+      "attempt": "da4b1c02-aa92-452c-a576-2a214a84709e",
       "state": "running"
     },
     {
       "stage": "storyboard",
-      "attempt": "cf8637df-1380-43b9-aaee-a26b157558e4",
+      "attempt": "54f6b60e-893c-436d-b17d-6fd5800fc72a",
       "state": "running"
     },
     {
       "state": "awaiting_qa",
-      "document": "a9e461ad-264f-4577-9833-bc97062b8fa5"
+      "document": "faf0e891-31e5-445d-8e01-f5be0a10b87b"
     }
   ],
   "registry": {
@@ -50,7 +50,7 @@
         "approval": "independent_internal_revision_qa",
         "attempts": [
           {
-            "id": "fadbe24f-f6f7-43be-8944-60d6d1d81bcc",
+            "id": "da4b1c02-aa92-452c-a576-2a214a84709e",
             "held": 0,
             "month": "2026-11-01",
             "spent": 0,
@@ -66,7 +66,7 @@
         "objective": "Produce a grounded illustrated storyboard for internal editing",
         "qa_policy": "wf08-source-and-revision@1",
         "attempt_ids": [
-          "fadbe24f-f6f7-43be-8944-60d6d1d81bcc"
+          "da4b1c02-aa92-452c-a576-2a214a84709e"
         ],
         "max_attempts": 3,
         "predecessors": [],
@@ -117,7 +117,7 @@
         "approval": "independent_internal_revision_qa",
         "attempts": [
           {
-            "id": "cf8637df-1380-43b9-aaee-a26b157558e4",
+            "id": "54f6b60e-893c-436d-b17d-6fd5800fc72a",
             "held": 0,
             "month": "2026-11-01",
             "spent": 0,
@@ -133,7 +133,7 @@
         "objective": "Produce a grounded illustrated storyboard for internal editing",
         "qa_policy": "wf08-source-and-revision@1",
         "attempt_ids": [
-          "cf8637df-1380-43b9-aaee-a26b157558e4"
+          "54f6b60e-893c-436d-b17d-6fd5800fc72a"
         ],
         "max_attempts": 3,
         "predecessors": [],
@@ -176,25 +176,25 @@
     "workflow_version": 1
   },
   "original_revision": 1,
-  "raw_revision_digest": "43505e1ea7580d3ed3ce4b1120c096da87b112813812af491620e49de7bb20c7",
+  "raw_revision_digest": "5b7feb233f66eec0f33028e445eea9f353fd5d957d02b42b1746b998a3076a92",
   "reviewed_revision": 2,
-  "reviewed_digest": "7e5a86a523ea4a5823cef5d553ab2c5c5d5614aa2968fe88e60b3a5c99faa741",
-  "reviewed_by": "cc8c4683-cd52-4b25-94a2-a1f5c2adad98",
+  "reviewed_digest": "44903d9a7af0fceb8c8a6f81317c3149451c569cc6b49074b9f8d43ab804ed98",
+  "reviewed_by": "b70d4115-7668-40a6-9dff-441a99453ac6",
   "reviewed_state": "approved",
   "editorial_change": "Approved audience hook variation; claims and commercial fields rebuilt from pinned authority.",
   "manifest": {
-    "digest": "a02a786fc01eb35a5dbbef5a356c2ad16ec29d31937d214cb5d9997d0dc7b459",
-    "id": "65f25c6b-62de-4ad0-bf08-e2b5384b637c"
+    "digest": "2576eba15f4a66196d635d7f608aa44083a41e81c54d882d0b8919b36208fbbf",
+    "id": "8ba0485c-3313-4add-bed1-8db0081e6fbe"
   },
   "source_chain": {
-    "manifest_digest": "a02a786fc01eb35a5dbbef5a356c2ad16ec29d31937d214cb5d9997d0dc7b459",
+    "manifest_digest": "2576eba15f4a66196d635d7f608aa44083a41e81c54d882d0b8919b36208fbbf",
     "entries": [
       {
         "handle": "F1",
-        "claim_revision": "207424a8-793d-44b6-8d58-5ff05cc0c87b",
-        "binding_revision": "77bfbe9e-fdbd-4fe9-a0a0-6ac57cebc160",
-        "source_revision": "80ee747b-6644-4a75-842c-6fc98c9b2924",
-        "source_digest": "2170dd1ff6b98e647f3e9a28ceb7587aed7a1d9bd1826f5b1b20513f2c5dc305",
+        "claim_revision": "70b49f11-1041-449b-83e4-c87ff9f41c2c",
+        "binding_revision": "0905c71d-6bcb-44d8-b9e3-187ad53c040f",
+        "source_revision": "9f0fea7d-46ac-4817-bfb9-385549d24c7e",
+        "source_digest": "33b99c6076bb6b0dfd0c1ee1ccf2b55aae032d9ecaa41224257f173c69e4e1bf",
         "document": "PRIVATE_SYNTHETIC_DOCUMENT",
         "locator": "private locator"
       }
@@ -209,13 +209,13 @@
       "provider": "deterministic",
       "model": "local-storyboard/1",
       "prompt": "marketing-workforce-2",
-      "started_at": "2026-11-26T08:59:03.948820+00:00",
+      "started_at": "2026-11-26T09:22:12.951800+00:00",
       "outcome": "ok",
       "reserved_microusd": 0,
       "input_tokens": 0,
       "output_tokens": 0,
       "estimated_microusd": 0,
-      "finished_at": "2026-11-26T08:59:04.037388+00:00"
+      "finished_at": "2026-11-26T09:22:13.060561+00:00"
     },
     {
       "node_id": "n01",
@@ -225,16 +225,16 @@
       "provider": "deterministic",
       "model": "local-storyboard/1",
       "prompt": "marketing-workforce-2",
-      "started_at": "2026-11-26T08:59:04.072983+00:00",
+      "started_at": "2026-11-26T09:22:13.092934+00:00",
       "outcome": "ok",
       "reserved_microusd": 0,
       "input_tokens": 0,
       "output_tokens": 0,
       "estimated_microusd": 0,
-      "finished_at": "2026-11-26T08:59:04.128706+00:00"
+      "finished_at": "2026-11-26T09:22:13.142575+00:00"
     }
   ],
-  "execution_ms": 348.85,
+  "execution_ms": 413.0,
   "commercial_acceptance": null,
   "external_calls": 0,
   "input_tokens": 0,

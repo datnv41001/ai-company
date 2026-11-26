@@ -129,14 +129,18 @@ def prepare_database(bind, *, verify_identity=True):
         ) FROM pg_roles r WHERE rolname=current_user"""))
         if not safe:
             raise RuntimeError("PostgreSQL API requires the unprivileged amc_runtime login")
-        enabled = set(conn.scalars(text("""SELECT relname FROM pg_class
-            WHERE relnamespace='public'::regnamespace AND relrowsecurity""")))
-        if not set(Base.metadata.tables).issubset(enabled):
+        # Detect a historical marker gap before comparing the current ORM's RLS
+        # inventory. Which models were imported must not mask the recovery path.
+        if not conn.scalar(text("SELECT to_regclass('public.amc_schema_versions') IS NOT NULL")):
             raise RuntimeError("Apply the PostgreSQL schema migrations before starting the API")
         versions = set(conn.scalars(text("SELECT version FROM public.amc_schema_versions")))
         if 16 in versions and 15 not in versions:
             raise RuntimeError("Isolated schema v16 is missing migration 015; restore a pre-016 backup before upgrading")
         if versions not in (set(range(2, 26)), set(range(2, 27))):
+            raise RuntimeError("Apply the PostgreSQL schema migrations before starting the API")
+        enabled = set(conn.scalars(text("""SELECT relname FROM pg_class
+            WHERE relnamespace='public'::regnamespace AND relrowsecurity""")))
+        if not set(Base.metadata.tables).issubset(enabled):
             raise RuntimeError("Apply the PostgreSQL schema migrations before starting the API")
         from migrations.combined_contract import COMMERCIAL_CURRENT, DESK_CURRENT
         if not conn.scalar(text(COMMERCIAL_CURRENT)):

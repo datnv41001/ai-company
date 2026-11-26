@@ -1,30 +1,30 @@
 {
   "case": "index-tray",
   "scope": {
-    "tenant": "677b8316-d96e-4176-8d01-79631046d396",
+    "tenant": "3d3b3cc6-14c0-4d30-88ac-b15c7cf74559",
     "campaign_objective": "Nhận yêu cầu báo giá khay chia linh kiện theo hộp cho bàn lắp ráp",
-    "campaign_id": "e444ca37-e253-48e5-8c60-dd712a009519",
-    "brief_id": "0c1027e3-9520-445a-962b-44b16c565ce2"
+    "campaign_id": "2d6badf2-cd68-493d-94d0-bfdf6b720333",
+    "brief_id": "0a883cbf-6728-4d62-b1de-1e6227de57f4"
   },
-  "run_id": "8b207621-1e9e-43d6-8e89-02e512d71c29",
+  "run_id": "ca307c87-29c5-4b5f-8470-b65d739141f2",
   "states": [
     {
-      "id": "8b207621-1e9e-43d6-8e89-02e512d71c29",
+      "id": "ca307c87-29c5-4b5f-8470-b65d739141f2",
       "state": "queued"
     },
     {
       "stage": "director",
-      "attempt": "49fb392f-a893-419e-9739-6e271370f51d",
+      "attempt": "91bc7534-1449-489a-90f6-e14fead50be5",
       "state": "running"
     },
     {
       "stage": "storyboard",
-      "attempt": "6554777a-d8f3-42f9-b905-6fa32f98f25b",
+      "attempt": "04e24cc3-cb51-4fbe-913b-97bd3d760d0c",
       "state": "running"
     },
     {
       "state": "awaiting_qa",
-      "document": "6af64bb9-1086-405c-8ec9-a01bae2c05ab"
+      "document": "de54e7f4-8911-436d-8045-afc79919c1ee"
     }
   ],
   "registry": {
@@ -50,7 +50,7 @@
         "approval": "independent_internal_revision_qa",
         "attempts": [
           {
-            "id": "49fb392f-a893-419e-9739-6e271370f51d",
+            "id": "91bc7534-1449-489a-90f6-e14fead50be5",
             "held": 0,
             "month": "2026-11-01",
             "spent": 0,
@@ -66,7 +66,7 @@
         "objective": "Produce a grounded illustrated storyboard for internal editing",
         "qa_policy": "wf08-source-and-revision@1",
         "attempt_ids": [
-          "49fb392f-a893-419e-9739-6e271370f51d"
+          "91bc7534-1449-489a-90f6-e14fead50be5"
         ],
         "max_attempts": 3,
         "predecessors": [],
@@ -117,7 +117,7 @@
         "approval": "independent_internal_revision_qa",
         "attempts": [
           {
-            "id": "6554777a-d8f3-42f9-b905-6fa32f98f25b",
+            "id": "04e24cc3-cb51-4fbe-913b-97bd3d760d0c",
             "held": 0,
             "month": "2026-11-01",
             "spent": 0,
@@ -133,7 +133,7 @@
         "objective": "Produce a grounded illustrated storyboard for internal editing",
         "qa_policy": "wf08-source-and-revision@1",
         "attempt_ids": [
-          "6554777a-d8f3-42f9-b905-6fa32f98f25b"
+          "04e24cc3-cb51-4fbe-913b-97bd3d760d0c"
         ],
         "max_attempts": 3,
         "predecessors": [],
@@ -176,34 +176,34 @@
     "workflow_version": 1
   },
   "original_revision": 1,
-  "raw_revision_digest": "1ef4cf66f66dd4a84d9b9905d4db8f5b8513e25e0e6367cf725d3e5e0c91f77e",
+  "raw_revision_digest": "71f940f30041e07afbd871dc427bfd5d0d5566b54a6213c80e9e02554071302e",
   "reviewed_revision": 2,
-  "reviewed_digest": "bc6f75ab3b119b49d2fd1411df33f5ce1c53a89477cd039dd56e481df398673b",
-  "reviewed_by": "9157fc42-9c0e-4f59-a52e-74f3a742a09b",
+  "reviewed_digest": "d9f62432fbd95545bb06334bf86dc045d8818e2bcf8d47dc24ae779f4e794342",
+  "reviewed_by": "ffb99668-709d-4bb7-a0bc-6f81bd897a08",
   "reviewed_state": "approved",
   "editorial_change": "Approved audience hook variation; claims and commercial fields rebuilt from pinned authority.",
   "manifest": {
-    "digest": "f947c5f849b92a07c76b2fe5a4826f8e79d92932d0326a346995c0afe35f2b7b",
-    "id": "6b464adb-6159-44eb-a2d2-058fde85ffda"
+    "digest": "7d9dff37a0f47d048d0c045f58520e80a3dd48d387ff2c2f0d16c3fc09a2b8eb",
+    "id": "77a087a1-1f47-4223-a4eb-642d7b858d86"
   },
   "source_chain": {
-    "manifest_digest": "f947c5f849b92a07c76b2fe5a4826f8e79d92932d0326a346995c0afe35f2b7b",
+    "manifest_digest": "7d9dff37a0f47d048d0c045f58520e80a3dd48d387ff2c2f0d16c3fc09a2b8eb",
     "entries": [
       {
         "handle": "F1",
-        "claim_revision": "3caba596-483a-42fa-9d05-331fe221b587",
-        "binding_revision": "07db8a31-b822-4a56-81b9-bc13a9cb0f13",
-        "source_revision": "af08a1fc-a15a-45a3-828f-af9d9bf36bd5",
-        "source_digest": "f4f97e727a4f39a63b99935c0851d2ba42f7e57b527033c50ba7fe5a62a77c21",
+        "claim_revision": "27382695-809c-472e-92cf-44e48caca066",
+        "binding_revision": "677edb64-6c55-485b-a324-2eb0ad09266a",
+        "source_revision": "90eb6a26-8c65-49db-bc73-1eea044fee2e",
+        "source_digest": "3f49ecfac9bef7bc7760ba4674484bea0885440f905e6085a89d5fb47c2d36e7",
         "document": "PRIVATE_SYNTHETIC_DOCUMENT",
         "locator": "private locator"
       },
       {
         "handle": "F2",
-        "claim_revision": "45326058-ea21-4278-86ff-ddf259a95d8c",
-        "binding_revision": "7b55a0a6-d9e7-4c36-a7a7-43f8178f9943",
-        "source_revision": "8e05da10-73b8-466c-a2bc-f664f9793c0b",
-        "source_digest": "f9ffec0972a80ad07db8d213d10b824414296fffbd19c6f9ad83b061202c6afa",
+        "claim_revision": "7ba606e4-af59-49fd-b3f1-7fb3bd92728f",
+        "binding_revision": "58765478-864c-44b9-91b9-8f5472e92bdb",
+        "source_revision": "e817d8d9-7fc8-4834-9867-8512c4b36c2b",
+        "source_digest": "28c58c32d8895a6b5a7b405b959f2df3ccc125019dd49848da81e4521033a29d",
         "document": "PRIVATE_SYNTHETIC_DOCUMENT",
         "locator": "private locator"
       }
@@ -218,13 +218,13 @@
       "provider": "deterministic",
       "model": "local-storyboard/1",
       "prompt": "marketing-workforce-2",
-      "started_at": "2026-11-26T08:58:41.073440+00:00",
+      "started_at": "2026-11-26T09:21:47.916827+00:00",
       "outcome": "ok",
       "reserved_microusd": 0,
       "input_tokens": 0,
       "output_tokens": 0,
       "estimated_microusd": 0,
-      "finished_at": "2026-11-26T08:58:41.172429+00:00"
+      "finished_at": "2026-11-26T09:21:47.994929+00:00"
     },
     {
       "node_id": "n01",
@@ -234,16 +234,16 @@
       "provider": "deterministic",
       "model": "local-storyboard/1",
       "prompt": "marketing-workforce-2",
-      "started_at": "2026-11-26T08:58:41.203377+00:00",
+      "started_at": "2026-11-26T09:21:48.030995+00:00",
       "outcome": "ok",
       "reserved_microusd": 0,
       "input_tokens": 0,
       "output_tokens": 0,
       "estimated_microusd": 0,
-      "finished_at": "2026-11-26T08:58:41.253096+00:00"
+      "finished_at": "2026-11-26T09:21:48.067796+00:00"
     }
   ],
-  "execution_ms": 340.09,
+  "execution_ms": 304.91,
   "commercial_acceptance": null,
   "external_calls": 0,
   "input_tokens": 0,

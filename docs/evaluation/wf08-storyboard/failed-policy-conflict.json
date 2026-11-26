@@ -1,5 +1,5 @@
 {
-  "run_id": "ec9b554e-ca03-4802-9dcb-0a57cfcd5c62",
+  "run_id": "4a860a60-b078-46b2-a0bb-646fecdcbafc",
   "state": "failed",
   "last_error": "storyboard_needs_revision",
   "deliverable_id": null,
@@ -12,13 +12,13 @@
       "provider": "deterministic",
       "model": "local-storyboard/1",
       "prompt": "marketing-workforce-2",
-      "started_at": "2026-11-26T08:59:12.747633+00:00",
+      "started_at": "2026-11-26T09:22:21.413725+00:00",
       "outcome": "ok",
       "reserved_microusd": 0,
       "input_tokens": 0,
       "output_tokens": 0,
       "estimated_microusd": 0,
-      "finished_at": "2026-11-26T08:59:12.821731+00:00"
+      "finished_at": "2026-11-26T09:22:21.523945+00:00"
     },
     {
       "node_id": "n01",
@@ -28,13 +28,13 @@
       "provider": "deterministic",
       "model": "local-storyboard/1",
       "prompt": "marketing-workforce-2",
-      "started_at": "2026-11-26T08:59:12.841288+00:00",
+      "started_at": "2026-11-26T09:22:21.561477+00:00",
       "outcome": "storyboard_needs_revision",
       "reserved_microusd": 0,
       "input_tokens": 0,
       "output_tokens": 0,
       "estimated_microusd": 0,
-      "finished_at": "2026-11-26T08:59:12.870470+00:00"
+      "finished_at": "2026-11-26T09:22:21.619417+00:00"
     },
     {
       "node_id": "n01",
@@ -44,13 +44,13 @@
       "provider": "deterministic",
       "model": "local-storyboard/1",
       "prompt": "marketing-workforce-2",
-      "started_at": "2026-11-26T08:59:12.889616+00:00",
+      "started_at": "2026-11-26T09:22:21.627855+00:00",
       "outcome": "storyboard_needs_revision",
       "reserved_microusd": 0,
       "input_tokens": 0,
       "output_tokens": 0,
       "estimated_microusd": 0,
-      "finished_at": "2026-11-26T08:59:12.957442+00:00"
+      "finished_at": "2026-11-26T09:22:21.659702+00:00"
     },
     {
       "node_id": "n01",
@@ -60,13 +60,13 @@
       "provider": "deterministic",
       "model": "local-storyboard/1",
       "prompt": "marketing-workforce-2",
-      "started_at": "2026-11-26T08:59:12.977360+00:00",
+      "started_at": "2026-11-26T09:22:21.683957+00:00",
       "outcome": "storyboard_needs_revision",
       "reserved_microusd": 0,
       "input_tokens": 0,
       "output_tokens": 0,
       "estimated_microusd": 0,
-      "finished_at": "2026-11-26T08:59:13.013684+00:00"
+      "finished_at": "2026-11-26T09:22:21.714387+00:00"
     }
   ]
 }

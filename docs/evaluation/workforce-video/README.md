@@ -6,6 +6,8 @@ Main sau #58 là `1c40ad3185ac49415c3f555bb5b6406e2cdd8cb1`, tree `d3923be500fc7
 
 CI trên đúng commit merge đạt 3/3 job, 631 test đạt và hai biến thể SQLite được skip vì cần PostgreSQL. Có 22 đường nâng dữ liệu lên v26 và restore giữ dữ liệu giống nhau ở 34 bảng.
 
+Trên head thử đầu tiên của #59, việc nạp adapter làm ORM thấy thêm các bảng ra đời sau v16. Kiểm tra khởi động vì vậy trả thông báo chung cho database v16 thiếu marker 015. Đã sửa thứ tự chẩn đoán ở API. Tài khoản vẫn phải không có quyền đặc biệt và toàn bộ bảng hiện hành vẫn phải đạt RLS trước khi API khởi động. Phép thử trên database dev riêng xác nhận migrator và API đều yêu cầu khôi phục bản trước 016 và bảo toàn ledger, lease, snapshot. [Log RED](https://github.com/datnv41001/ai-company/actions/runs/45788109166) · [Phép thử nâng cấp](../../../tests/check_postgres_upgrade.py)
+
 ## 2. Bốn finding và sản phẩm bàn giao
 
 | Finding | Thay đổi có thể kiểm tra | Điều kiện còn mở |
@@ -27,9 +29,9 @@ Tệp `raw.json` lưu nội dung trước biên tập. Mỗi bản gồm concept
 
 | Brief và đầu ra đầu tiên | Bản sau QA | Lượt chạy Director + specialist trong PostgreSQL dev |
 | --- | --- | --- |
-| [Khe Gọn · bản gốc](../wf08-storyboard/index-tray/raw.json) | [Revision 2](../wf08-storyboard/index-tray/reviewed.json) · [Video](../storyboard-preview/index-tray/preview.webm) | [Receipt](../wf08-storyboard/index-tray/receipt.json) · 340,09 ms, 5 cảnh |
-| [Luồng Rõ · bản gốc](../wf08-storyboard/receipt-map/raw.json) | [Revision 2](../wf08-storyboard/receipt-map/reviewed.json) · [Video](../storyboard-preview/receipt-map/preview.webm) | [Receipt](../wf08-storyboard/receipt-map/receipt.json) · 353,67 ms, 5 cảnh |
-| [Phách Mở · bản gốc](../wf08-storyboard/rhythm-class/raw.json) | [Revision 2](../wf08-storyboard/rhythm-class/reviewed.json) · [Video](../storyboard-preview/rhythm-class/preview.webm) | [Receipt](../wf08-storyboard/rhythm-class/receipt.json) · 348,85 ms, 3 cảnh |
+| [Khe Gọn · bản gốc](../wf08-storyboard/index-tray/raw.json) | [Revision 2](../wf08-storyboard/index-tray/reviewed.json) · [Video](../storyboard-preview/index-tray/preview.webm) | [Receipt](../wf08-storyboard/index-tray/receipt.json) · 304,91 ms, 5 cảnh |
+| [Luồng Rõ · bản gốc](../wf08-storyboard/receipt-map/raw.json) | [Revision 2](../wf08-storyboard/receipt-map/reviewed.json) · [Video](../storyboard-preview/receipt-map/preview.webm) | [Receipt](../wf08-storyboard/receipt-map/receipt.json) · 611,17 ms, 5 cảnh |
+| [Phách Mở · bản gốc](../wf08-storyboard/rhythm-class/raw.json) | [Revision 2](../wf08-storyboard/rhythm-class/reviewed.json) · [Video](../storyboard-preview/rhythm-class/preview.webm) | [Receipt](../wf08-storyboard/rhythm-class/receipt.json) · 413,0 ms, 3 cảnh |
 
 Thời gian đồng hồ này đo từ khi bắt đầu xử lý Director đến khi nhận kết quả specialist trong phép thử một máy. Chưa tính tuyển người, chuẩn bị brief, QA, dựng video hoặc vòng trả sửa. Hai bản có offer dài 32 giây; brief đọc nhịp không có giá dùng 18 giây. Trường hợp policy mâu thuẫn kết thúc ở failed, có receipt và không xuất tài liệu. [Journal lần thất bại](../wf08-storyboard/failed-policy-conflict.json)
 

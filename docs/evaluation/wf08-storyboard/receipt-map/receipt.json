@@ -1,30 +1,30 @@
 {
   "case": "receipt-map",
   "scope": {
-    "tenant": "67c8adb9-52ef-491b-acdb-4e083e53cd8a",
+    "tenant": "77f6da4e-4547-4338-b0e5-00922a157048",
     "campaign_objective": "Đặt lịch khảo sát luồng nhận hàng tại kho",
-    "campaign_id": "b3be1516-3191-4f33-bcfc-162b267ed2ff",
-    "brief_id": "5fa70f9b-7a37-4be8-8746-2fba3278b290"
+    "campaign_id": "ce387a6c-16a7-4307-97c5-8ac67611d51f",
+    "brief_id": "26a60768-3f5d-4406-9be9-8c720d8d5acf"
   },
-  "run_id": "1f939161-f7d5-4fce-8dd2-8864a977f227",
+  "run_id": "c4e496d3-599a-4f75-be05-4e8340003bec",
   "states": [
     {
-      "id": "1f939161-f7d5-4fce-8dd2-8864a977f227",
+      "id": "c4e496d3-599a-4f75-be05-4e8340003bec",
       "state": "queued"
     },
     {
       "stage": "director",
-      "attempt": "967c2b94-b5a4-434c-b6a8-1a521f4e5e98",
+      "attempt": "bd0107d0-f682-463e-b232-b9880b721204",
       "state": "running"
     },
     {
       "stage": "storyboard",
-      "attempt": "d5cbf19f-6992-4af5-9a79-014d912502ad",
+      "attempt": "a666f9c8-27a4-4707-9f82-e9cf92378add",
       "state": "running"
     },
     {
       "state": "awaiting_qa",
-      "document": "7f9965ac-0924-469b-82e4-6f1dcaa237b2"
+      "document": "9227163a-acd9-400d-9f7b-52ac77ea09ba"
     }
   ],
   "registry": {
@@ -50,7 +50,7 @@
         "approval": "independent_internal_revision_qa",
         "attempts": [
           {
-            "id": "967c2b94-b5a4-434c-b6a8-1a521f4e5e98",
+            "id": "bd0107d0-f682-463e-b232-b9880b721204",
             "held": 0,
             "month": "2026-11-01",
             "spent": 0,
@@ -66,7 +66,7 @@
         "objective": "Produce a grounded illustrated storyboard for internal editing",
         "qa_policy": "wf08-source-and-revision@1",
         "attempt_ids": [
-          "967c2b94-b5a4-434c-b6a8-1a521f4e5e98"
+          "bd0107d0-f682-463e-b232-b9880b721204"
         ],
         "max_attempts": 3,
         "predecessors": [],
@@ -117,7 +117,7 @@
         "approval": "independent_internal_revision_qa",
         "attempts": [
           {
-            "id": "d5cbf19f-6992-4af5-9a79-014d912502ad",
+            "id": "a666f9c8-27a4-4707-9f82-e9cf92378add",
             "held": 0,
             "month": "2026-11-01",
             "spent": 0,
@@ -133,7 +133,7 @@
         "objective": "Produce a grounded illustrated storyboard for internal editing",
         "qa_policy": "wf08-source-and-revision@1",
         "attempt_ids": [
-          "d5cbf19f-6992-4af5-9a79-014d912502ad"
+          "a666f9c8-27a4-4707-9f82-e9cf92378add"
         ],
         "max_attempts": 3,
         "predecessors": [],
@@ -176,34 +176,34 @@
     "workflow_version": 1
   },
   "original_revision": 1,
-  "raw_revision_digest": "eacfe62cec1a3d88509a0eb7272cb5a2c43c16d3161f6741d8a117953bf45a41",
+  "raw_revision_digest": "c8fb58e3dffd4c8f2582687d318532b7d5aa6c154cf00752b8491937d732ac9e",
   "reviewed_revision": 2,
-  "reviewed_digest": "92ac74a678e4512ae39f33f891af4f3842769e4d83e31d96e00bb11732d1a303",
-  "reviewed_by": "d3bf4df4-c1e8-4404-b976-5312ec0c1cf1",
+  "reviewed_digest": "bb680f85ddc660a2a6215d2b87432df443cf47b440369d0ceb08347e6d853387",
+  "reviewed_by": "63c4d55f-3714-4b55-ac0a-dc13e5fb5838",
   "reviewed_state": "approved",
   "editorial_change": "Approved audience hook variation; claims and commercial fields rebuilt from pinned authority.",
   "manifest": {
-    "digest": "10b830cdbf9dcdc22bafa34e1e586453fb2f354b3e1bfa4f95c8aa188ee2cdaa",
-    "id": "9fc2f095-221e-4770-81fd-cae0cafab065"
+    "digest": "17477bc006dc98530c9f63aa814304c7386f3d69be49c1ba9761bed7975312b1",
+    "id": "4fd3fb22-1650-4eff-bdce-9e4ba65e72d2"
   },
   "source_chain": {
-    "manifest_digest": "10b830cdbf9dcdc22bafa34e1e586453fb2f354b3e1bfa4f95c8aa188ee2cdaa",
+    "manifest_digest": "17477bc006dc98530c9f63aa814304c7386f3d69be49c1ba9761bed7975312b1",
     "entries": [
       {
         "handle": "F1",
-        "claim_revision": "1f52d570-4dbb-469c-aa0b-172d9d2157e3",
-        "binding_revision": "dac7c5bc-a75f-4b8e-bc34-e9cc17134aeb",
-        "source_revision": "9a8a218b-a124-42b6-ad44-cec34dd74dba",
-        "source_digest": "cca7388ded73ad541d642b59222d63b21ce727ecc87bdb8c5e0c4fdb82b9796a",
+        "claim_revision": "3e94cba5-489f-4d8e-b831-d7f1ce4d8b36",
+        "binding_revision": "eae79fd9-209a-48a6-96ba-a17390b2e7b5",
+        "source_revision": "372ae2da-f876-41aa-bf1b-15965b33e878",
+        "source_digest": "95d5a886150aef38a17e65c465357aa355ea1e51aefdbb5d6de8ca6fb9d000be",
         "document": "PRIVATE_SYNTHETIC_DOCUMENT",
         "locator": "private locator"
       },
       {
         "handle": "F2",
-        "claim_revision": "70ce75e3-aaa1-49f7-9e8b-238daa216048",
-        "binding_revision": "3688983a-efd4-4857-b86b-9f63fbc5f0c7",
-        "source_revision": "a7aa2f7f-0165-4cf4-bb92-91a520147254",
-        "source_digest": "ec819c7b2e814ea9cdcabb2d4ea9c88ac6c93b36cb47bdd0058594351ebb3beb",
+        "claim_revision": "da1c967b-158c-49d3-aba4-3b1be63a05c5",
+        "binding_revision": "e7487b5d-578f-48eb-96f6-8e9e74cf9253",
+        "source_revision": "c9426eba-11a5-4ed1-b109-52782bbd0131",
+        "source_digest": "e62b5240f428b81987707eec24fc2f404beee35a668dec0d2ccf0655c59dbe4e",
         "document": "PRIVATE_SYNTHETIC_DOCUMENT",
         "locator": "private locator"
       }
@@ -218,13 +218,13 @@
       "provider": "deterministic",
       "model": "local-storyboard/1",
       "prompt": "marketing-workforce-2",
-      "started_at": "2026-11-26T08:58:53.239409+00:00",
+      "started_at": "2026-11-26T09:22:01.685014+00:00",
       "outcome": "ok",
       "reserved_microusd": 0,
       "input_tokens": 0,
       "output_tokens": 0,
       "estimated_microusd": 0,
-      "finished_at": "2026-11-26T08:58:53.335566+00:00"
+      "finished_at": "2026-11-26T09:22:01.804651+00:00"
     },
     {
       "node_id": "n01",
@@ -234,16 +234,16 @@
       "provider": "deterministic",
       "model": "local-storyboard/1",
       "prompt": "marketing-workforce-2",
-      "started_at": "2026-11-26T08:58:53.363328+00:00",
+      "started_at": "2026-11-26T09:22:01.839887+00:00",
       "outcome": "ok",
       "reserved_microusd": 0,
       "input_tokens": 0,
       "output_tokens": 0,
       "estimated_microusd": 0,
-      "finished_at": "2026-11-26T08:58:53.429509+00:00"
+      "finished_at": "2026-11-26T09:22:01.903492+00:00"
     }
   ],
-  "execution_ms": 353.67,
+  "execution_ms": 611.17,
   "commercial_acceptance": null,
   "external_calls": 0,
   "input_tokens": 0,

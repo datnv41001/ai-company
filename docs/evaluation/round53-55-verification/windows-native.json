@@ -1,0 +1,111 @@
+{
+  "checkout": "5b5e3ae625dddecf98fddfd063b0cb3855eb6fb2",
+  "tree": "46fc7eaffa03c78f738d64a35a1e5dc13a794072",
+  "xml_sha256": "913fc35609eca83efe921e1d7bc734dc28ba01747583713b6b018ac0b2d24ee6",
+  "tests": [
+    {
+      "name": "tests.test_business_authority_paths.test_compatible_business_writers_share_authority_and_revision[postgres]",
+      "seconds": "22.018"
+    },
+    {
+      "name": "tests.test_production_studios.test_scoped_production[acoustic-panel-sqlite]",
+      "seconds": "13.600"
+    },
+    {
+      "name": "tests.test_production_studios.test_scoped_production[pump-service-sqlite]",
+      "seconds": "15.633"
+    },
+    {
+      "name": "tests.test_production_studios.test_scoped_production[index-tray-sqlite]",
+      "seconds": "20.280"
+    },
+    {
+      "name": "tests.test_production_studios.test_scoped_production[receipt-map-sqlite]",
+      "seconds": "8.375"
+    },
+    {
+      "name": "tests.test_production_studios.test_restricted_production[False]",
+      "seconds": "137.178"
+    },
+    {
+      "name": "tests.test_production_studios.test_restricted_production[True]",
+      "seconds": "9.725"
+    },
+    {
+      "name": "tests.test_production_studios.test_predecessor_can_still_serve_approved_v1",
+      "seconds": "17.976"
+    },
+    {
+      "name": "tests.test_business_intake.test_optional_fields_change_the_plan_contract_without_weakening_the_approved_brief",
+      "seconds": "0.010"
+    },
+    {
+      "name": "tests.test_business_intake.test_explicit_buyer_list_requires_supported_fields[\\u0110\\u1eb7t l\\u1ecbch kh\\u1ea3o s\\xe1t, ghi \\u0111\\u1ecba \\u0111i\\u1ec3m v\\xe0 m\\xe3 d\\xe2y chuy\\u1ec1n.]",
+      "seconds": "0.009"
+    },
+    {
+      "name": "tests.test_business_intake.test_explicit_buyer_list_requires_supported_fields[Request a quote and provide number of boxes and cable ID.]",
+      "seconds": "0.002"
+    },
+    {
+      "name": "tests.test_business_intake.test_explicit_buyer_list_requires_supported_fields[\\u0110\\u1eb7t l\\u1ecbch kh\\u1ea3o s\\xe1t, ghi m\\xe3 d\\xe2y chuy\\u1ec1n.]",
+      "seconds": "0.001"
+    },
+    {
+      "name": "tests.test_business_intake.test_sales_followup_rechecks_moq_before_transition",
+      "seconds": "0.003"
+    },
+    {
+      "name": "tests.test_business_intake.test_consultation_referral_requires_buyer_permission_and_campaign_grant",
+      "seconds": "0.002"
+    },
+    {
+      "name": "tests.test_department_official_pilot.test_fresh_independent_design_and_blind_packet",
+      "seconds": "0.897"
+    },
+    {
+      "name": "tests.test_department_official_pilot.test_original_bytes_first_grade_and_separate_revision",
+      "seconds": "0.216"
+    },
+    {
+      "name": "tests.test_department_official_pilot.test_official_denominator_keeps_failure_rejection_missing_cost_and_exposure",
+      "seconds": "0.417"
+    },
+    {
+      "name": "tests.test_department_official_pilot.test_d_requires_distinct_bound_edited_and_delivered_qa",
+      "seconds": "0.283"
+    },
+    {
+      "name": "tests.test_department_handoff_benchmark.test_sealed_control_and_matched_design",
+      "seconds": "0.052"
+    },
+    {
+      "name": "tests.test_department_handoff_benchmark.test_historical_obligation_table_matches_original_reader",
+      "seconds": "0.022"
+    },
+    {
+      "name": "tests.test_department_four_arm.test_commissioned_arms_and_blind_packets",
+      "seconds": "0.138"
+    },
+    {
+      "name": "tests.test_department_four_arm.test_d_needs_distinct_reviewer_bound_to_retained_files",
+      "seconds": "0.071"
+    },
+    {
+      "name": "tests.test_optimization_scope.test_previous_plan_exception_cannot_steer_new_rfq_plan_or_invalidate_its_proposal",
+      "seconds": "0.003"
+    },
+    {
+      "name": "tests.test_optimization_scope.test_new_service_plan_uses_signed_denominator_cohort_even_with_secondary_rfq_or_old_no_show",
+      "seconds": "0.003"
+    },
+    {
+      "name": "tests.test_optimization_scope.test_replan_from_service_to_rfq_keeps_distinct_kpis_and_historical_reports[sqlite]",
+      "seconds": "4.306"
+    },
+    {
+      "name": "tests.test_optimization_scope.test_replan_from_service_to_rfq_keeps_distinct_kpis_and_historical_reports[postgres]",
+      "seconds": "6.153"
+    }
+  ]
+}

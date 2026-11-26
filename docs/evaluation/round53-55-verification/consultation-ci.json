@@ -1,0 +1,364 @@
+{
+  "postgres.json": {
+    "synthetic": true,
+    "plan_id": "00216b0c-2d64-4372-9321-44b9b4f1c72b",
+    "case_id": "a75d56064855894d784ca0ea10eb4d063d966a1333eda5f24ee641a9bba6c017",
+    "form_receipt": "184644c0-fdf3-41c1-8790-d91cc8158be9",
+    "events": [
+      {
+        "receipt": "2770642e-d3ab-40f8-960c-4672117ff445",
+        "step": "refer",
+        "actor": "72e04761-9019-419a-aa77-00c6523ff637",
+        "revision": 2,
+        "state": "consulting"
+      },
+      {
+        "receipt": "1edae1c6-c5fe-41ca-ade1-a3696cac006f",
+        "step": "consultation",
+        "actor": "0eeec3ae-5a00-481c-953f-2698e074a580",
+        "revision": 3,
+        "state": "consulting"
+      },
+      {
+        "receipt": "9586b1db-01f4-463b-9f96-fa89dd69f95d",
+        "step": "reassign",
+        "actor": "72e04761-9019-419a-aa77-00c6523ff637",
+        "revision": 4,
+        "state": "consulting"
+      },
+      {
+        "receipt": "76567750-4833-4c40-8eb0-4076060e1888",
+        "step": "consultation",
+        "actor": "d0b9ee49-fcb1-4b56-9de0-b34d0c8be9ba",
+        "revision": 5,
+        "state": "consulting"
+      },
+      {
+        "receipt": "3e861228-68fa-433a-bcdf-b097de23a238",
+        "step": "consultation",
+        "actor": "d0b9ee49-fcb1-4b56-9de0-b34d0c8be9ba",
+        "revision": 6,
+        "state": "awaiting_assignment"
+      },
+      {
+        "receipt": "a389cfe4-9691-4eb6-a27d-b8e75581126b",
+        "step": "assign",
+        "actor": "72e04761-9019-419a-aa77-00c6523ff637",
+        "revision": 7,
+        "state": "assigned"
+      },
+      {
+        "receipt": "128133c6-966c-4a31-adc5-f7017017165d",
+        "step": "accept",
+        "actor": "0eeec3ae-5a00-481c-953f-2698e074a580",
+        "revision": 8,
+        "state": "accepted"
+      },
+      {
+        "receipt": "c70eb721-5482-4bdc-bf59-a2922982cdee",
+        "step": "quote",
+        "actor": "0eeec3ae-5a00-481c-953f-2698e074a580",
+        "revision": 9,
+        "state": "quoted"
+      },
+      {
+        "receipt": "bf5c56de-cec7-4b74-b1f4-e8a4cd043628",
+        "step": "order",
+        "actor": "0eeec3ae-5a00-481c-953f-2698e074a580",
+        "revision": 10,
+        "state": "ordered"
+      },
+      {
+        "receipt": "17b3ec80-e852-4be1-8fc9-65688ccce180",
+        "step": "cancel",
+        "actor": "72e04761-9019-419a-aa77-00c6523ff637",
+        "revision": 13,
+        "state": "cancelled"
+      },
+      {
+        "receipt": "b4a3f44c-5b27-4ed3-b507-4e4d992766c0",
+        "step": "refer",
+        "actor": "72e04761-9019-419a-aa77-00c6523ff637",
+        "revision": 2,
+        "state": "consulting"
+      },
+      {
+        "receipt": "ee2960a9-11d8-41bb-82c1-fa5218897f02",
+        "step": "reject",
+        "actor": "0eeec3ae-5a00-481c-953f-2698e074a580",
+        "revision": 3,
+        "state": "rejected"
+      }
+    ],
+    "qualified": {
+      "version": "intake-funnel/2",
+      "contract_digest": "331b99976420734492f96c170b2285222298479cb7a5f4e7ed57bbf4153b74f8",
+      "window": "approved_plan_lifetime",
+      "action": "rfq",
+      "landing_visits": 1,
+      "valid_submissions": 1,
+      "manual_requests": 1,
+      "inquiries": 1,
+      "qualified_rfqs": 1,
+      "sales_accepted": 0,
+      "quotes_issued": 0,
+      "orders": 0,
+      "confirmed_revenue_vnd": 0,
+      "current_states": {
+        "awaiting_assignment": 1
+      },
+      "qualified_quotes": 1
+    },
+    "after_confirmation": {
+      "version": "intake-funnel/2",
+      "contract_digest": "331b99976420734492f96c170b2285222298479cb7a5f4e7ed57bbf4153b74f8",
+      "window": "approved_plan_lifetime",
+      "action": "rfq",
+      "landing_visits": 1,
+      "valid_submissions": 1,
+      "manual_requests": 1,
+      "inquiries": 1,
+      "qualified_rfqs": 1,
+      "sales_accepted": 1,
+      "quotes_issued": 1,
+      "orders": 1,
+      "confirmed_revenue_vnd": 5000,
+      "current_states": {
+        "confirmed": 1
+      },
+      "qualified_quotes": 1
+    },
+    "after_cancellation": {
+      "version": "intake-funnel/2",
+      "contract_digest": "331b99976420734492f96c170b2285222298479cb7a5f4e7ed57bbf4153b74f8",
+      "window": "approved_plan_lifetime",
+      "action": "rfq",
+      "landing_visits": 1,
+      "valid_submissions": 1,
+      "manual_requests": 1,
+      "inquiries": 1,
+      "qualified_rfqs": 1,
+      "sales_accepted": 1,
+      "quotes_issued": 1,
+      "orders": 1,
+      "confirmed_revenue_vnd": 0,
+      "current_states": {
+        "cancelled": 1
+      },
+      "qualified_quotes": 1
+    },
+    "after_rejection": {
+      "version": "intake-funnel/2",
+      "contract_digest": "331b99976420734492f96c170b2285222298479cb7a5f4e7ed57bbf4153b74f8",
+      "window": "approved_plan_lifetime",
+      "action": "rfq",
+      "landing_visits": 2,
+      "valid_submissions": 2,
+      "manual_requests": 1,
+      "inquiries": 2,
+      "qualified_rfqs": 1,
+      "sales_accepted": 1,
+      "quotes_issued": 1,
+      "orders": 1,
+      "confirmed_revenue_vnd": 0,
+      "current_states": {
+        "cancelled": 1,
+        "rejected": 1
+      },
+      "qualified_quotes": 1
+    }
+  },
+  "sqlite.json": {
+    "synthetic": true,
+    "plan_id": "ab58b2f9-8819-4409-8c4c-9d01d16c039c",
+    "case_id": "88ab7137ef23e7ea3e4b18241768d0b0da694fe939267f2dd700fd579e7289c6",
+    "form_receipt": "26352a19-06f7-474a-a431-0111e2aaf470",
+    "events": [
+      {
+        "receipt": "b471735a-fedc-4a0c-a4d1-b2b666edf94b",
+        "step": "refer",
+        "actor": "51980955-9d20-44b0-8928-03ee7d35e1a8",
+        "revision": 2,
+        "state": "consulting"
+      },
+      {
+        "receipt": "06a2f404-5f44-4c2e-8220-97f99c1081a5",
+        "step": "consultation",
+        "actor": "85390317-3b29-4ce0-9882-1cf50b669168",
+        "revision": 3,
+        "state": "consulting"
+      },
+      {
+        "receipt": "c8635203-eb6f-40da-a1fd-515b0aedb607",
+        "step": "reassign",
+        "actor": "51980955-9d20-44b0-8928-03ee7d35e1a8",
+        "revision": 4,
+        "state": "consulting"
+      },
+      {
+        "receipt": "eca8b590-6a93-4f30-bdb7-57c394c1ec9f",
+        "step": "consultation",
+        "actor": "04e0b07b-4d85-4365-923c-ef5c1f1d61b3",
+        "revision": 5,
+        "state": "consulting"
+      },
+      {
+        "receipt": "eaeb1b41-2ebb-42b4-8eb1-f9b2738dc99a",
+        "step": "consultation",
+        "actor": "04e0b07b-4d85-4365-923c-ef5c1f1d61b3",
+        "revision": 6,
+        "state": "awaiting_assignment"
+      },
+      {
+        "receipt": "2e7ebc6b-9521-4a99-b724-42898f22c7d7",
+        "step": "assign",
+        "actor": "51980955-9d20-44b0-8928-03ee7d35e1a8",
+        "revision": 7,
+        "state": "assigned"
+      },
+      {
+        "receipt": "00f39f52-c18b-4f7c-8446-32bed7c5dffc",
+        "step": "accept",
+        "actor": "85390317-3b29-4ce0-9882-1cf50b669168",
+        "revision": 8,
+        "state": "accepted"
+      },
+      {
+        "receipt": "b559a4de-bb15-4290-bd22-52f035cbccdf",
+        "step": "quote",
+        "actor": "85390317-3b29-4ce0-9882-1cf50b669168",
+        "revision": 9,
+        "state": "quoted"
+      },
+      {
+        "receipt": "09382ba8-0719-40f8-b5d2-b38665995570",
+        "step": "order",
+        "actor": "85390317-3b29-4ce0-9882-1cf50b669168",
+        "revision": 10,
+        "state": "ordered"
+      },
+      {
+        "receipt": "810cb04c-b013-4a90-91c0-79631c205000",
+        "step": "cancel",
+        "actor": "51980955-9d20-44b0-8928-03ee7d35e1a8",
+        "revision": 13,
+        "state": "cancelled"
+      },
+      {
+        "receipt": "04b7b85d-0d8a-4e71-b359-4e7b02fe630a",
+        "step": "refer",
+        "actor": "51980955-9d20-44b0-8928-03ee7d35e1a8",
+        "revision": 2,
+        "state": "consulting"
+      },
+      {
+        "receipt": "6a6f621e-2ff0-437b-a8a2-1b3fa69a56d7",
+        "step": "reject",
+        "actor": "85390317-3b29-4ce0-9882-1cf50b669168",
+        "revision": 3,
+        "state": "rejected"
+      }
+    ],
+    "qualified": {
+      "version": "intake-funnel/2",
+      "contract_digest": "3ccf193f1059ae0e3b946b41fbb7ed97f03ed8a36bac77e31a3c48ac6c442828",
+      "window": "approved_plan_lifetime",
+      "action": "rfq",
+      "landing_visits": 1,
+      "valid_submissions": 1,
+      "manual_requests": 1,
+      "inquiries": 1,
+      "qualified_rfqs": 1,
+      "sales_accepted": 0,
+      "quotes_issued": 0,
+      "orders": 0,
+      "confirmed_revenue_vnd": 0,
+      "current_states": {
+        "awaiting_assignment": 1
+      },
+      "qualified_quotes": 1
+    },
+    "after_confirmation": {
+      "version": "intake-funnel/2",
+      "contract_digest": "3ccf193f1059ae0e3b946b41fbb7ed97f03ed8a36bac77e31a3c48ac6c442828",
+      "window": "approved_plan_lifetime",
+      "action": "rfq",
+      "landing_visits": 1,
+      "valid_submissions": 1,
+      "manual_requests": 1,
+      "inquiries": 1,
+      "qualified_rfqs": 1,
+      "sales_accepted": 1,
+      "quotes_issued": 1,
+      "orders": 1,
+      "confirmed_revenue_vnd": 5000,
+      "current_states": {
+        "confirmed": 1
+      },
+      "qualified_quotes": 1
+    },
+    "after_cancellation": {
+      "version": "intake-funnel/2",
+      "contract_digest": "3ccf193f1059ae0e3b946b41fbb7ed97f03ed8a36bac77e31a3c48ac6c442828",
+      "window": "approved_plan_lifetime",
+      "action": "rfq",
+      "landing_visits": 1,
+      "valid_submissions": 1,
+      "manual_requests": 1,
+      "inquiries": 1,
+      "qualified_rfqs": 1,
+      "sales_accepted": 1,
+      "quotes_issued": 1,
+      "orders": 1,
+      "confirmed_revenue_vnd": 0,
+      "current_states": {
+        "cancelled": 1
+      },
+      "qualified_quotes": 1
+    },
+    "after_rejection": {
+      "version": "intake-funnel/2",
+      "contract_digest": "3ccf193f1059ae0e3b946b41fbb7ed97f03ed8a36bac77e31a3c48ac6c442828",
+      "window": "approved_plan_lifetime",
+      "action": "rfq",
+      "landing_visits": 2,
+      "valid_submissions": 2,
+      "manual_requests": 1,
+      "inquiries": 2,
+      "qualified_rfqs": 1,
+      "sales_accepted": 1,
+      "quotes_issued": 1,
+      "orders": 1,
+      "confirmed_revenue_vnd": 0,
+      "current_states": {
+        "cancelled": 1,
+        "rejected": 1
+      },
+      "qualified_quotes": 1
+    }
+  },
+  "sales-390-light.png": {
+    "path": "business-desk/consultation/sales-390-light.png",
+    "sha256": "104046eabfb2c7495a39ab901657b212ad5789ab7765315a08ce8421bfbbd8a3"
+  },
+  "sales-390-dark.png": {
+    "path": "business-desk/consultation/sales-390-dark.png",
+    "sha256": "9ccf55754a5a19fa42de55b50a9d7c5939853fe69b194abf9761bd58e709a79f"
+  },
+  "sales-820-light.png": {
+    "path": "business-desk/consultation/sales-820-light.png",
+    "sha256": "549aae3a8cc0baf02546581b46ff860d62193214cb1849df2d6b4578202d369d"
+  },
+  "sales-820-dark.png": {
+    "path": "business-desk/consultation/sales-820-dark.png",
+    "sha256": "a35f6fe623c46f7429679bddbe66a36d2980ba78ea1cb3677bc331e8277d7160"
+  },
+  "sales-1280-light.png": {
+    "path": "business-desk/consultation/sales-1280-light.png",
+    "sha256": "3aad26929b3a150c0612701cbaccf3b08e8ca132d37244a9d6edb18267f8ae73"
+  },
+  "sales-1280-dark.png": {
+    "path": "business-desk/consultation/sales-1280-dark.png",
+    "sha256": "b1081423d8d7057e2070f7bd84a19d2eac04e46d6cbb37f22167b5d9d56948b0"
+  }
+}

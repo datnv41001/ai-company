@@ -306,7 +306,7 @@ def approve(tenant_id: str, did: str, pid: str, body: Verdict, user: Actor, db: 
     return {"receipt": row.id, "digest": body.expected_digest}
 
 
-def intake(tenant, did, pid, body, user, db):
+def intake(tenant, did, pid, body, user, db, *, distribution=None):
     doc, run, store = scope(db, user, tenant, did, True)
     pkg = get_package(store, doc, pid)
     if pkg.result["kind"] != "landing":
@@ -328,7 +328,10 @@ def intake(tenant, did, pid, body, user, db):
     scope_key = [pid, user.id]
     visitor = digest(canonical(["synthetic-visitor", *scope_key]))
     key = "lp:" + digest(canonical([*scope_key, str(body.request_id)]))
-    fp = digest(canonical(body.model_dump(mode="json")))
+    request = body.model_dump(mode="json")
+    if distribution:
+        request["distribution"] = distribution
+    fp = digest(canonical(request))
     prior = next((r for r in rows if r.key == key), None)
     if prior:
         if prior.request_digest != fp:
@@ -345,6 +348,8 @@ def intake(tenant, did, pid, body, user, db):
     common = {"plan_id": plan["id"], "request_id": body.request_id.hex, "occurred_at": at}
     if contract:
         landing_source["intake_contract_digest"] = contract["digest"]
+    if distribution:
+        landing_source["storyboard_distribution"] = distribution
     if isinstance(body, (Submit, ContractSubmit)):
         visit = state["sessions"].get(body.visit_id)
         if not visit or visit["plan_id"] != plan["id"] or visit["visitor"] != visitor:

@@ -275,7 +275,7 @@ def assess_document(doc, run, signature):
                     # commercial declaration or user-edited sentence still needs evidence.
                     procedural = not dangerous_slot and key not in ("approved_terms", "headlines", "channels")
                     if key == "channels":
-                        procedural = all(normalized(ch) in ("web","website","email","search","social","linkedin","facebook","youtube","organic","paid search")
+                        procedural = all(normalized(ch) in ("web","website","email","search","social","vertical-social","linkedin","facebook","youtube","organic","paid search")
                                          for ch in ctx["channel_plan"])
                 fixed[field] = {normalized(proposed)} if proposed and procedural else set()
                 if projection.get("measurement_contract") and (group, key) in {

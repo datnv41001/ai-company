@@ -139,6 +139,24 @@ def test_assigned_sales_consultation(api,workforce,monkeypatch,tmp_path):  # noq
                 block=engine.locator("section").filter(has=manager.get_by_role("heading",name="Yêu cầu từ biểu mẫu đã duyệt")).last
                 expect(block.locator(".engine-row").filter(has_text="RFQ đã đủ điều kiện")).to_contain_text("1")
                 expect(block.locator(".engine-row").filter(has_text="Báo giá đã phát hành")).to_contain_text("0")
+                chooser=route.locator("#desk-campaign")
+                chooser.select_option("")
+                chooser.select_option(plan["campaign_id"])
+                select=card.locator("form select").first
+                select.select_option("cancel")
+                reason=card.locator("form input[required]")
+                expect(reason).to_have_count(1)
+                reason.fill("Buyer withdrew the synthetic request after their requirements changed.")
+                card.locator("form button").press("Enter")
+                expect(card).to_contain_text("Buyer withdrew the synthetic request")
+                expect(card.locator("form")).to_have_count(0)
+                for width,height in ((1280,900),(820,1000),(390,844)):
+                    manager.set_viewport_size({"width":width,"height":height})
+                    for mode in ("light","dark"):
+                        manager.emulate_media(color_scheme=mode)
+                        expect(manager.locator("html")).to_have_attribute("data-theme",mode)
+                        assert manager.evaluate("document.documentElement.scrollWidth<=innerWidth+1")
+                        card.screenshot(path=out/f"withdrawal-{width}-{mode}.png",animations="disabled")
                 (out/"observations.json").write_text(json.dumps({"viewports":[390,820,1280],"themes":["light","dark"],
                     "keyboard_submit":True,"local_decision_to_qualified_ms":elapsed,"capture_seconds":round(monotonic()-start,3)}),encoding="utf-8")
             finally:

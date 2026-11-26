@@ -8,7 +8,7 @@ from .models import Membership
 
 DISCRETE_UNITS = {"piece", "box", "machine", "visit", "participant", "subscription_month", "subscription_year", "service"}
 DETAIL_UNITS = {
-    "materials_v1": {"piece", "box", "m²", "tonne", "kg"},
+    "materials_v1": {"piece", "box", "mÂ²", "tonne", "kg"},
     "service_v1": {"machine", "visit", "service"},
     "seats_v1": {"participant", "subscription_month", "subscription_year"},
 }
@@ -16,7 +16,7 @@ FROM = {
     "refer": {"received"}, "assign": {"qualified","awaiting_assignment"}, "reassign": {"assigned", "consulting"}, "accept": {"assigned"},
     "reject": {"received", "qualified", "consulting", "assigned", "accepted", "quoted"},
     "quote": {"accepted"}, "order": {"quoted"}, "confirm": {"ordered"}, "refund": {"confirmed"},
-    "cancel": {"consulting", "assigned", "accepted", "quoted", "ordered", "confirmed"}, "correct": {"confirmed"},
+    "cancel": {"consulting", "awaiting_assignment", "assigned", "accepted", "quoted", "ordered", "confirmed"}, "correct": {"confirmed"},
 }
 STATES = {"assign": "assigned", "reassign":"assigned", "accept": "accepted", "reject": "rejected", "quote": "quoted",
           "order": "ordered", "confirm": "confirmed", "refund": "confirmed", "cancel": "cancelled", "correct": "confirmed"}
@@ -104,6 +104,8 @@ def observation(cmd, state, plan, store, *, recipient=None, coordinator=None):
     if row["state"] not in FROM[cmd.step] or cmd.occurred_at < parse_time(row["last_event_at"]):
         conflict("Invalid or out-of-order Sales transition")
     can_route=store.approver if coordinator is None else coordinator
+    if row["state"] == "awaiting_assignment" and cmd.step == "cancel" and coordinator is not True:
+        conflict("The campaign coordinator must record withdrawal before Sales assignment")
     if not can_route and row["assignee_id"] != store.actor:
         conflict("Sales decisions require the assigned staff member or a campaign approver")
     if cmd.step in ("refer","assign","reassign"):

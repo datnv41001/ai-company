@@ -58,3 +58,9 @@ Trong Chromium, người điều phối giao hồ sơ 3 hộp bằng giao diện
 | 390 px | [Ảnh](consultation/sales-390-light.png) | [Ảnh](consultation/sales-390-dark.png) |
 | 820 px | [Ảnh](consultation/sales-820-light.png) | [Ảnh](consultation/sales-820-dark.png) |
 | 1280 px | [Ảnh](consultation/sales-1280-light.png) | [Ảnh](consultation/sales-1280-dark.png) |
+
+## Khách rút yêu cầu trong lúc chờ giao Sales
+
+Khi khách đổi ý sau tư vấn và RFQ đang ở “Đủ điều kiện, chờ giao Sales”, điều phối Marketing hoặc người phụ trách kinh doanh mở hồ sơ của chiến dịch, chọn **Hủy**, nhập lý do khách cung cấp và ghi nhận. Hồ sơ hiển thị “Đã hủy” cùng lý do, sổ giao dịch lưu người ghi và revision. Phiếu khách đã gửi giữ nguyên. Nếu khách muốn đặt yêu cầu khác, tiếp nhận một biểu mẫu mới theo nhu cầu và sự đồng ý mới.
+
+RFQ đã đủ điều kiện vẫn được tính trong số từng đạt điều kiện. Việc rút trước phân công không phát sinh lượt Sales nhận, báo giá, đơn hàng hoặc doanh thu. Một tab đang mở ở revision cũ phải tải lại nếu đồng thời có người giao Sales hoặc hủy. Nhân viên vừa tư vấn và khách xem dữ liệu không có quyền ghi việc hủy ở giai đoạn này.

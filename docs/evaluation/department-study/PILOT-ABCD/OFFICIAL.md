@@ -49,7 +49,11 @@ Phép tính theo nhánh gồm chi phí của mọi việc được giao, kể c�
 
 ## 4. Phát hiện lộ nhãn, phục hồi và giới hạn
 
-Trước khi phát, kiểm tra cả nội dung, nguồn hoặc liên kết, mẫu từ vựng quen thuộc, prompt còn sót và tên tệp. CLI loại metadata ngoài văn bản, từ chối một số chuỗi lộ nhánh, byte fixture công khai và tên ZIP có nhãn do người điều phối tự đặt. Kiểm tra thủ công nguồn sở hữu, PII và bí mật trước khi nhận file. Hỏi người chấm riêng về tiếp xúc trước và khả năng nhận dạng; lưu suy đoán và căn cứ **trước** khi giải mã. Nếu đã nhận ra nhánh, ghi `unblinded=true` trên phiếu và ghi sự cố ngay khi phát hiện:
+Thiết kế mới `official-department-pilot/2` cấp phiếu theo đúng vai trò. Marketer và QA sản xuất nhánh D khai `treatment_exposure=within_assignment` khi chỉ biết phương pháp mình được giao, kể cả khi tự tạo hoặc trực tiếp kiểm bản giao. Khai `outside_assignment` khi thấy khóa phân nhánh, biết phân công khác ngoài phạm vi hoặc làm lộ nhãn cho người phải chấm mù. Reviewer độc lập và Sales/Service vẫn khai `unblinded` trên phiếu của họ. Khai báo của QA sản xuất nằm trên quyết định liên kết hai revision. Thiếu khai báo thì chưa thể tổng hợp ca hoàn tất. Sự cố ở bất kỳ vai trò nào loại quyết định khỏi kết quả chấm và giữ lại ca trong số đã phân công.
+
+Vault khóa theo thiết kế v1 tiếp tục cấp và đọc mẫu v1. Giữ nguyên cờ `unblinded` mà người tham gia đã nộp và giữ biên nhận cũ. Dùng thiết kế v2 cho vòng mới.
+
+Trước khi phát, kiểm tra cả nội dung, nguồn hoặc liên kết, mẫu từ vựng quen thuộc, prompt còn sót và tên tệp. CLI loại metadata ngoài văn bản, từ chối một số chuỗi lộ nhánh, byte fixture công khai và tên ZIP có nhãn do người điều phối tự đặt. Kiểm tra thủ công nguồn sở hữu, PII và bí mật trước khi nhận file. Hỏi người chấm riêng về tiếp xúc trước và khả năng nhận dạng, lưu suy đoán và căn cứ **trước** khi giải mã. Khi người được phân công chấm mù nhận ra nhánh, họ khai `unblinded=true`. Người điều phối ghi sự cố ngay khi phát hiện bằng lệnh dưới đây.
 
 ```sh
 python tests/evaluation/department/official_pilot.py incident /private/study/vault --lock LOCK WORK "Nguoi cham da thay bang anh xa; phieu da duoc cach ly"

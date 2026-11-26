@@ -57,7 +57,7 @@ function createCampaignRoleDesk(api) {
       if(routes)result=({requested:['confirm','cancel'],confirmed:['assign','reschedule','cancel'],assigned:['reassign','reschedule','cancel']})[state]||[];
       if(active==='service_assignee' && state==='assigned')result=['complete','no_show','cancel'];
     }else{
-      if(routes)result=({received:value.contact_purpose==='quote_request'?['refer']:[],consulting:['reassign','cancel'],qualified:['assign'],awaiting_assignment:['assign'],assigned:['reassign','cancel'],accepted:['cancel'],quoted:['cancel'],ordered:['cancel'],confirmed:['cancel']})[state]||[];
+      if(routes)result=({received:value.contact_purpose==='quote_request'?['refer']:[],consulting:['reassign','cancel'],qualified:['assign'],awaiting_assignment:['assign','cancel'],assigned:['reassign','cancel'],accepted:['cancel'],quoted:['cancel'],ordered:['cancel'],confirmed:['cancel']})[state]||[];
       if(active==='sales_recipient')result=({consulting:['consultation','reject'],assigned:['accept','reject'],accepted:['quote','reject'],quoted:['order','reject']})[state]||[];
     }
     if(['reviewer','business_owner'].includes(active))result=[...result,'review_feedback'];
@@ -77,6 +77,7 @@ function createCampaignRoleDesk(api) {
     if(value.feedback?.length)for(const entry of value.feedback.filter(x=>x.step==='consultation')){
       node(card,'p','Tư vấn · '+entry.text);
     }
+    if(value.state==='cancelled')for(const entry of (value.feedback||[]).filter(x=>x.step==='cancel'))node(card,'p',labels.cancel+' · '+entry.text);
     if(value.feedback?.some(x=>x.step==='consultation')){
       node(card,'p','Hồ sơ hiện tại · '+[value.quantity,value.location,value.required_date].filter(Boolean).join(' · '));
     }

@@ -43,15 +43,16 @@ CASES = [*CASES, THIRD]
 assert len(CASES) == 3
 
 
-def start(lab, case, *, conflicting=False):
+def start(lab, case, *, conflicting=False, release=video.RELEASE, intent_overrides=None):
     api = lab.api
     base, owner, buyer, client, campaign = lab.cases[0]
     lab.owner.execute("update workforce_runs set ready_at=now()+interval '1 day' where id=any(%s)", (lab.runs,))
-    disk = json.loads((ROOT / "catalog/video-storyboard-v1.json").read_text(encoding="utf8"))
-    assert disk == release_manifest()
+    version = 1 if release == video.RELEASE else 2
+    disk = json.loads((ROOT / f"catalog/video-storyboard-v{version}.json").read_text(encoding="utf8"))
+    assert disk == release_manifest(version)
     publish_registry(lab.owner, disk)
     publish_registry(lab.owner, disk)
-    accepted(policy(lab, "activate", skills=["director", "storyboard"], workflow=video.RELEASE))
+    accepted(policy(lab, "activate", skills=disk["required"], workflow=release))
     root = base + "/workforce/briefs"
     payload = dict(campaign_id=campaign, recipient_id=buyer["id"], title=case["objective"])
     bid = accepted(api.post(root, headers=owner["headers"], json=payload))["id"]
@@ -72,6 +73,7 @@ def start(lab, case, *, conflicting=False):
             acceptance_criteria=["Đối chiếu điều kiện thương mại theo đúng nguồn."],
         )
     )
+    intent.update(intent_overrides or {})
     accepted(api.put(path + "/submission", headers=buyer["headers"], json=DATA | {"task_intent": intent}))
     brand = lab.owner.execute("select brand_id from campaigns where id=%s", (campaign,)).fetchone()[0]
     evidence = (
@@ -85,14 +87,14 @@ def start(lab, case, *, conflicting=False):
         condition = "Người phụ trách xác nhận lịch sau khi nhận đề nghị."
         evidence[1]["price"]["conditions"] = [condition]
         evidence[1]["qualifiers"] = [condition]
-    prep = prepared(api, owner, base, client, brand, campaign, bid, video.RELEASE, case=case | dict(channel=intent["channel"], facts=evidence))
+    prep = prepared(api, owner, base, client, brand, campaign, bid, release, case=case | dict(channel=intent["channel"], facts=evidence))
     policy_text = dict(guidance="Liên kết mỗi cảnh với dữ kiện đã duyệt; dùng câu ngắn.")
     if conflicting:
         policy_text["prohibited_claims"] = [case["wording"]]
     guide = revision(api, owner, prep["path"], "video-brand-voice", "guidelines", policy_text)
     prep["params"]["guidelines"] = guide["id"]
     snap = capture(api, owner, prep)
-    terms = dict(workflow="dynamic-v1", registry_workflow=video.RELEASE, budget_microusd=0, knowledge_manifest={"id": snap["id"], "digest": snap["digest"]})
+    terms = dict(workflow="dynamic-v1", registry_workflow=release, budget_microusd=0, knowledge_manifest={"id": snap["id"], "digest": snap["digest"]})
 
     def queue(actor, body):
         return api.post(path + "/run", headers=actor["headers"], json=body)

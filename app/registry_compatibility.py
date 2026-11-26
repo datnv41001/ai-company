@@ -48,7 +48,7 @@ def validate_manifest(manifest):
 def check_workflow(manifest):
     if manifest.get("workflow_id") == "WF-08/video-storyboard":
         from .storyboard_contract import release_manifest
-        if manifest != release_manifest() or not all(resolve(c) for c in manifest["contracts"].values()):
+        if manifest != release_manifest(manifest['workflow_version']) or not all(resolve(c) for c in manifest["contracts"].values()):
             raise ValueError("Storyboard release differs from the installed capability")
         return
     contracts = manifest["contracts"]

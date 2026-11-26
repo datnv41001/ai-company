@@ -145,8 +145,8 @@ def save_submission(db,user,tenant_id,bid,payload):
 
 @router.post("/briefs/{bid}/run")
 def start(tenant_id: str, bid: str, body: Start, user: User = Depends(current_user), db: Session = Depends(get_db)):
-    from . import c3_boundaries, c3_marketing, video_storyboard
-    if body.registry_workflow == video_storyboard.RELEASE and (body.max_parallel_nodes != 1 or body.budget_microusd != 0):
+    from . import c3_boundaries, c3_marketing, storyboard_runtime
+    if body.registry_workflow in storyboard_runtime.RELEASES and (body.max_parallel_nodes != 1 or body.budget_microusd != 0):
         raise HTTPException(422, "This sequential local storyboard release requires a zero provider budget")
     from .c3_projection import TASK_RELEASES
     backed = body.registry_workflow in c3_marketing.ROLES or body.registry_workflow in TASK_RELEASES
@@ -213,7 +213,7 @@ def start(tenant_id: str, bid: str, body: Start, user: User = Depends(current_us
         from .registry_compatibility import required_outputs
         if backed:
             store, snap, public = c3_boundaries.checked(db, user, b, body.knowledge_manifest.model_dump(), body.registry_workflow, "queue")
-            if body.registry_workflow == video_storyboard.RELEASE:
+            if body.registry_workflow in storyboard_runtime.RELEASES:
                 from .c3_order_units import fact_lines
                 facts = {f["id"]:{"label":f["id"],"excerpt":" ".join(fact_lines(f,public))} for f in public["facts"]}
             elif body.registry_workflow in TASK_RELEASES:
@@ -228,7 +228,7 @@ def start(tenant_id: str, bid: str, body: Start, user: User = Depends(current_us
                 knowledge.update(objective=public["task_intent"]["purpose"],brand_rules=public["brand_guidelines"]["guidance"],
                                  internal_task=b.origin == "internal")
                 from .campaign_planner import execution_terms
-                commission = None if body.registry_workflow == video_storyboard.RELEASE else execution_terms(store, snap, public, body.budget_microusd)
+                commission = None if body.registry_workflow in storyboard_runtime.RELEASES else execution_terms(store, snap, public, body.budget_microusd)
                 if commission:
                     knowledge["campaign_commission"] = commission
         binding = pin(db, b, body.registry_workflow)

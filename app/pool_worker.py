@@ -22,7 +22,7 @@ def report(conn, job, result=None, error=None):
 
 def run_job(config, body):
     if "local_adapter" in body:
-        from .video_storyboard import execute
+        from .storyboard_runtime import execute
         try:
             return execute(body)
         except GatewayError as exc:

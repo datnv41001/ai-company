@@ -1,5 +1,7 @@
 # Tư vấn yêu cầu dưới MOQ và đối soát báo giá
 
+Để kiểm đường nâng cùng schema, chạy `python tests/check_consultation_cutover.py --container amc-test-pg` trong môi trường PostgreSQL loopback của job API. Phép thử dùng publisher và API thật của #55 để lập kế hoạch và ghi journal, sao lưu database cũ, chạy publisher mới hai lần, so từng hàng journal rồi mở bản restore bằng API cũ. Trên Windows thiếu bộ lệnh pg_dump/pg_restore, tùy chọn `--physical-copy` tạo bản sao database PostgreSQL khi các kết nối writer đã đóng. Lượt thử cục bộ đầu tiên dừng trước nâng cấp do thiếu binary pg_dump. Bản Linux CI sử dụng định dạng archive với pg_dump và pg_restore thực.
+
 ## AMC-R55-01 · Người phụ trách tư vấn
 
 Trên PR #55 ở `c5c63295`, form nhận ba hộp khi điều kiện bán là năm hộp. Marketing đọc được hồ sơ. Bước phân công Sales chỉ nhận trạng thái `qualified`, và Sales chỉ nhìn thấy hồ sơ đã được giao. Vì vậy biên nhận cũ chứng minh việc tiếp nhận để tư vấn, còn việc giao cho người tư vấn là khoảng trống.

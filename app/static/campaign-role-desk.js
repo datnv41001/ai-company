@@ -65,6 +65,13 @@ function createCampaignRoleDesk(api) {
   function renderCase(x) {
     const value=x.value, card=node(cases,'article');card.className='panel';
     node(card,'h4',(x.entity==='leads'?'Yêu cầu báo giá':'Lịch dịch vụ')+' · '+value.id);
+    if(value.intake){
+      for(const f of value.intake.fields){
+        const answer=value.intake.answers[f.id];
+        if(answer!==undefined)node(card,'p',f.label+' · '+(f.options?.find(o=>o.value===answer)?.label||answer)+(f.unit?' '+f.unit:''));
+      }
+      if(value.missing?.includes('commercial_moq'))node(card,'p','Cần đối chiếu số lượng đặt tối thiểu trước khi chuyển Sales.');
+    }
     node(card,'p',(labels[value.state]||value.state)+' · Lần cập nhật '+value.revision);
     if(value.location)node(card,'p',value.location);
     if(value.confirmed_for)node(card,'p','Lịch xác nhận · '+new Date(value.confirmed_for).toLocaleString('vi-VN'));

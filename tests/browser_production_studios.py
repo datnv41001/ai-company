@@ -82,9 +82,10 @@ def approved_ad_preview(page, plan, landing, out, width):
 
 
 @pytest.mark.parametrize("api", ["sqlite"], indirect=True)
-@pytest.mark.parametrize("case", CASES, ids=lambda c: c["id"])
+@pytest.mark.parametrize("case", CASES + json.loads((Path(__file__).parent / "evaluation/department/briefs-v1.json").read_text(encoding="utf8"))["cases"], ids=lambda c: c["id"])
 def test_production_browser(api, workforce, monkeypatch, case):  # noqa: F811
-    out = Path(os.getenv("AMC_PRODUCTION_SCREENS", "knowledge-browser-evidence/marketing-studio/production")) / case["buyer_action"]
+    folder = case["id"] if case["id"] in {"receipt-map", "index-tray"} else case["buyer_action"]
+    out = Path(os.getenv("AMC_PRODUCTION_SCREENS", "knowledge-browser-evidence/marketing-studio/production")) / folder
     out.mkdir(parents=True, exist_ok=True)
     observations = []
     advertising = []
@@ -143,17 +144,28 @@ def test_production_browser(api, workforce, monkeypatch, case):  # noqa: F811
                         assert width * 0.85 <= page_width <= width
                         assert large.locator(".grid").evaluate("e=>getComputedStyle(e).gridTemplateColumns.split(' ').length") == (1 if width == 390 else 2)
                         capture_themes(page, out / f"landing-{width}.png")
+                        intake = large.locator("form")
+                        assert intake.get_attribute("data-contract") == plan["intake_contract"]["digest"]
+                        assert intake.locator("[data-answer]").count() == len(plan["intake_contract"]["fields"])
+                        intake.screenshot(path=str(out / f"intake-{width}.png"))
                         page.keyboard.press("Escape")
                         expect(prod.get_by_role("dialog")).to_have_count(0)
                         assert frame.locator('meta[name="description"]').get_attribute("content") == exports["landing"]["master"]["seo"]["meta_description"]
                         if width == 390:
                             prod.get_by_role("button", name="Bắt đầu phiên thử").click()
                             expect(prod).to_contain_text("Đã ghi một lượt mở trang tổng hợp")
-                            q = frame.locator('[name="quantity"]')
-                            q.fill("0")
-                            frame.get_by_role("button").click()
-                            assert not q.evaluate("e=>e.validity.valid")
-                            q.fill("2")
+                            q = frame.locator('input[type=number]')
+                            if q.count():
+                                q.fill("0")
+                                frame.get_by_role("button").click()
+                                assert not q.evaluate("e=>e.validity.valid")
+                                q.fill("2")
+                            else:
+                                assert case["id"] == "receipt-map"
+                                expect(frame.locator('[name="receiving_shift"]')).to_be_visible()
+                            for control in frame.locator("select[required]").all():
+                                control.select_option(index=1)
+                            frame.locator('[name="consent"]').check()
                             frame.get_by_role("button").click()
                             expect(frame.get_by_role("status")).to_contain_text("Đã ghi nhận")
                             capture_themes(page, out / "form-390.png")

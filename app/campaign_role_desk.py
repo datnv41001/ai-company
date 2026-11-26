@@ -71,6 +71,8 @@ def sqlite_intake_guard(connection):
 def on_journal_create(_table,connection,**_):
     if connection.dialect.name=="sqlite":
         sqlite_intake_guard(connection)
+        from migrations.sandbox_contract import sqlite_business_intake
+        sqlite_business_intake(connection)
 
 
 @event.listens_for(Membership.__table__,"after_create")
@@ -259,7 +261,8 @@ def decide(tenant_id:str,campaign_id:str,role:Role,body:Decision,user:User=Depen
             _,_,value=crm.observation(body,state_slice,plan,desk.store,recipient=desk.eligible,coordinator=role in ROUTING)
         else:
             _,_,value=appointments.appointment(body,state_slice,plan,desk.store,recipient=desk.eligible)
-        event.update(sequence=state["sequence"],step=body.step,value=value)
+        event.update(sequence=state["sequence"],step=body.step,value=value, intake_writer="business-intake/1",
+                     origin="landing" if value.get("landing_source") else "manual")
     desk.append(prior["revision"],op,event,key,fingerprint)
     db.commit()
     return event

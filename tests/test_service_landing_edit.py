@@ -22,6 +22,18 @@ from test_claim_desk import reader
 @pytest.mark.parametrize("api", ["sqlite"], indirect=True)
 def test_service_landing_edit(api, workforce, monkeypatch):  # noqa: F811
     case = next(case for case in CASES if case["id"] == "pump-service")
+    # Recreate a pre-intake proposal and its original digest, then exercise approval, edit and replay normally.
+    from app import campaign_planner
+    from app.knowledge_store import canonical, digest
+    current_compose = campaign_planner.compose_plan
+
+    def archived_proposal(*args):
+        plan = current_compose(*args)
+        plan.pop("intake_contract")
+        plan.pop("digest")
+        return {**plan, "digest": digest(canonical(plan))}
+
+    monkeypatch.setattr(campaign_planner, "compose_plan", archived_proposal)
     doc, snap, plan, editor, _, _ = sqlite_channel(api, workforce, monkeypatch, case)
     owner, buyer, _, base, _, scope, *_ = workforce
     reviewer = reader(api, owner, "admin")

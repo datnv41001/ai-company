@@ -49,6 +49,9 @@ def append(store, cid, pid, kind, entity, ident, value, sequence, key, fingerpri
     at = store.now()
     event = {"id": receipt, "campaign_id": cid, "plan_id": pid, "sequence": sequence, "kind": kind,
              "entity": entity, "entity_id": ident, "value": value, "actor": store.actor, "recorded_at": stamp(at)}
+    if entity in {"sessions", "appointments", "leads"}:
+        event["intake_writer"] = "business-intake/1"
+        event["origin"] = "landing" if value.get("landing_source") else "manual"
     store.insert(KnowledgeCommand, "restricted", id=receipt, operation=OP, actor=store.actor, key=key,
                  request_digest=fingerprint, result=event, snapshot_id=None, effective_at=at, queued_at=None)
     return event
@@ -401,10 +404,13 @@ def view(tenant_id: str, campaign_id: str, user: User = Depends(current_user), d
     accepted = sum((u["acceptance"] or {}).get("status") == "business_accepted" for u in units)
     allocated = [labor["allocated_cost_vnd"] for u in units for labor in u["labor"]]
     coverage = costs.summarize(units)
+    from .business_intake import funnel
+    intake_funnel = funnel(selected, state)
     return {"synthetic": True, "campaign_id": campaign_id, **{k: list(v.values()) for k, v in state.items()}, "report": report,
             "optimization": {**optimization(evidence), "evidence": evidence}, "requested_units": len(units), "business_accepted_units": accepted,
             "recorded_allocated_cost_vnd": sum(v for v in allocated if v is not None) if any(v is not None for v in allocated) else None,
             **coverage,"appointment_summary":appointments.summary(state),
+            **({"intake_measurement": intake_funnel} if intake_funnel else {}),
             "receipts": [{"id": r.id, "kind": r.result["kind"], "actor": r.actor, "at": stamp(r.effective_at),
                           "sequence": r.result["sequence"], "entity_id": r.result["entity_id"]} for r in sorted(rows, key=lambda x: x.result["sequence"])]}
 

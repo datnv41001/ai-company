@@ -134,7 +134,7 @@ def test_production_browser(api, workforce, monkeypatch, case):  # noqa: F811
                         nav.get_by_role("button", name="Nội dung trang", exact=True).press("Enter")
                         prod = studio.locator(".production-studio")
                         prod.locator("summary").first.press("Enter")
-                        frame = prod.frame_locator("iframe")
+                        frame = prod.frame_locator('iframe[title="Trang đích sandbox"]')
                         expect(frame.locator("h1")).to_be_visible()
                         prod.get_by_role("button", name="Xem trang toàn màn hình").click()
                         large = prod.get_by_role("dialog").frame_locator("iframe")
@@ -144,6 +144,7 @@ def test_production_browser(api, workforce, monkeypatch, case):  # noqa: F811
                         assert large.locator(".grid").evaluate("e=>getComputedStyle(e).gridTemplateColumns.split(' ').length") == (1 if width == 390 else 2)
                         capture_themes(page, out / f"landing-{width}.png")
                         page.keyboard.press("Escape")
+                        expect(prod.get_by_role("dialog")).to_have_count(0)
                         assert frame.locator('meta[name="description"]').get_attribute("content") == exports["landing"]["master"]["seo"]["meta_description"]
                         if width == 390:
                             prod.get_by_role("button", name="Bắt đầu phiên thử").click()

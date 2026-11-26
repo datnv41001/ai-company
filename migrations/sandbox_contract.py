@@ -35,6 +35,7 @@ def sqlite_business_intake(connection):
 
 ROLE_DESK = """
 SELECT coalesce(has_function_privilege('amc_runtime',to_regprocedure('amc_acl.campaign_desk(text,text)'),'EXECUTE'),false)
+ AND obj_description(to_regprocedure('amc_acl.campaign_desk(text,text)'), 'pg_proc')='campaign-role-desk/2'
  AND to_regclass('amc_acl.campaign_member_epochs') IS NOT NULL
  AND EXISTS(SELECT FROM pg_trigger WHERE tgrelid='public.memberships'::regclass AND tgname='campaign_membership_changed'
      AND tgenabled IN ('A','O') AND tgfoid=to_regprocedure('amc_acl.advance_campaign_membership()'))

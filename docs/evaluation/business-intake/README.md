@@ -10,7 +10,7 @@ Hai brief nghiên cứu tổng hợp nằm trong `tests/evaluation/department/br
 
 | Hành trình | Dữ liệu được yêu cầu | Quyết định nghiệp vụ |
 | --- | --- | --- |
-| Khe Gọn | Số hộp nguyên, địa bàn, ngày cần hàng | Nhận liên hệ dưới MOQ. Ghi lý do cần đối chiếu thương mại. Sau khi sửa số lượng, hệ thống kiểm tra lại MOQ trước khi cho phép chuyển Sales. Đi qua báo giá và quyết định đặt hàng là hai bước riêng. |
+| Khe Gọn | Số hộp nguyên, địa bàn, ngày cần hàng | Nhận liên hệ dưới MOQ. Marketing có thể giao một nhân viên Sales tư vấn khi khách đã đồng ý. Sau khi cập nhật số lượng, hệ thống kiểm tra lại MOQ. Đủ điều kiện thì điều phối phân công xử lý báo giá. [Quyền, chỉ số và rollback](CONSULTATION.md) |
 | Luồng Rõ | Địa điểm, ca nhận hàng cần quan sát | Chuyển cả hai lựa chọn đến Service. Thời gian được xác nhận ở quyết định đặt lịch riêng. Số lượng và ngày hẹn để trống nếu brief chưa yêu cầu. |
 | Kiểm tra bơm | Số máy, địa điểm, thời gian dự kiến | Gắn đơn vị `machine` với lựa chọn. Giữ nguyên phần giá, thuế, MOQ và phạm vi trong các nhóm nội dung đã ký. |
 

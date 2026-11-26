@@ -43,7 +43,7 @@ def destination(owner, campaign, plan):
         return approved_landing_destination(store, user, plan)
 
 
-def qualify(api, base, doc, owner, buyer, other, plan, action, observe=None, predecessor=None):
+def qualify(api, base, doc, owner, buyer, other, plan, action, observe=None, predecessor=None, consult=False):
     studio = doc + "/studio"
     url = studio + "/production"
     decision = reader(api, owner, "admin")
@@ -226,6 +226,12 @@ def qualify(api, base, doc, owner, buyer, other, plan, action, observe=None, pre
             assert post(owner, result + "/submissions", form | {"request_id": uuid4().hex}).status_code == 409
             location = "site" if action == "appointment" else "destination"
             assert post(owner, result + "/submissions", form | {"answers": answers | {location: "south"}}).status_code == 409
+            if consult:
+                from consultation_fixtures import settle_inquiry
+                def additional_inquiry():
+                    other_visit=accepted(post(owner,result+"/visits",{"request_id":uuid4().hex}))
+                    return accepted(post(owner,result+"/submissions",form | {"visit_id":other_visit["entity_id"],"request_id":uuid4().hex}))
+                settle_inquiry(api, owner, buyer, other, operator, desk, sandbox, submitted, additional_inquiry, pg=predecessor is not None)
         exports[kind] = item
         if directory := os.getenv("AMC_PRODUCTION_EVIDENCE"):
             dest = Path(directory) / action / kind
@@ -240,7 +246,7 @@ def qualify(api, base, doc, owner, buyer, other, plan, action, observe=None, pre
     return exports
 
 
-def rehearsal(api, workforce, monkeypatch, case, observe=None):  # noqa: F811
+def rehearsal(api, workforce, monkeypatch, case, observe=None, consult=False):  # noqa: F811
     if os.getenv("AMC_INTAKE_EVIDENCE"):
         monkeypatch.setenv("AMC_INTAKE_CASE", case["id"])
     if case["id"] == "index-tray":
@@ -253,7 +259,7 @@ def rehearsal(api, workforce, monkeypatch, case, observe=None):  # noqa: F811
     artifacts = {}
 
     def inspect(*_):
-        artifacts.update(qualify(api, base, doc, owner, buyer, other, plan, case["buyer_action"], observe))
+        artifacts.update(qualify(api, base, doc, owner, buyer, other, plan, case["buyer_action"], observe, consult=consult))
 
     lifecycle(api, base, owner, buyer, other, doc, snap, plan, editor, inspect)
     url = doc + "/studio/production/" + artifacts["landing"]["id"]
@@ -265,7 +271,7 @@ def rehearsal(api, workforce, monkeypatch, case, observe=None):  # noqa: F811
 @pytest.mark.parametrize("api", ["sqlite"], indirect=True)
 @pytest.mark.parametrize("case", CASES + json.loads((Path(__file__).parent / "evaluation/department/briefs-v1.json").read_text(encoding="utf8"))["cases"], ids=lambda c: c["id"])
 def test_scoped_production(api, workforce, monkeypatch, case):  # noqa: F811
-    rehearsal(api, workforce, monkeypatch, case)
+    rehearsal(api, workforce, monkeypatch, case, consult=case["id"]=="index-tray")
 
 
 @PG
@@ -277,7 +283,8 @@ def test_restricted_production(pool, legacy_without_unit):  # noqa: F811
     def before(snap, *_):
         plan.update(commission(pool.api, base, owner, cid, snap))
 
-    doc, _, snap = agency_draft(pool, c3_assets.LANDING, rfq=True, before_queue=before, approved_facts=None if legacy_without_unit else facts(CASES[0]))
+    doc, _, snap = agency_draft(pool, c3_assets.LANDING, rfq=True, before_queue=before,
+                                approved_facts=None if legacy_without_unit else facts(CASES[0] | {"moq":"5"}))
     editor = reader(pool.api, owner, "editor")
     other = pool.cases[1][2]
 
@@ -297,7 +304,7 @@ def test_restricted_production(pool, legacy_without_unit):  # noqa: F811
             return
         from intake_previous_api import previous_api
         with previous_api() as predecessor:
-            packages = qualify(pool.api, base, doc, owner, buyer, other, plan, "rfq", predecessor=predecessor)
+            packages = qualify(pool.api, base, doc, owner, buyer, other, plan, "rfq", predecessor=predecessor, consult=True)
         _, foreign_owner, _, _, foreign_campaign = pool.cases[1]
         assert destination(foreign_owner, foreign_campaign, plan) is None
         reviewer = packages["landing"]["production_qa"]["reviewer"]

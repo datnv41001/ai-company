@@ -1,0 +1,25 @@
+{
+  "browser": "Chromium",
+  "version": "158.0.8127.88",
+  "video_sha256": "59ed1fb69bc396f8837d5955d633e9b36105025412faf3936abfe957c6a22f1d",
+  "decoded": {
+    "width": 540,
+    "height": 960,
+    "duration": 32
+  },
+  "times_s": [
+    0.5,
+    6.5,
+    13.5,
+    21.5,
+    28.5
+  ],
+  "sample_sha256_rgb": [
+    "a9354de37251015b5197aaee26d98d5e5fdb89f319d174e02d50f6e903a58022",
+    "0deadeae7da8c89e2257e806a782d4dd7fea84121954dd87f53849b596c64ed4",
+    "4f253456c1728b95a696b1de7bfe641353d10af63e5da53883cc2337d658dec9",
+    "31f5b2afed94d9cb04499248ef3b89d33651726f265076778ba158f87a2c69b9",
+    "dabab365029b6a11cf9d7c1ed38a854763aaf3e95e8ddd8733584ea71e54c32e"
+  ],
+  "contact_sheet_sha256": "06be4b602a855258cd98b0c1a01473c82cae5a9c458e22121eb038be4bd7fff1"
+}

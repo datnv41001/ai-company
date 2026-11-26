@@ -1,0 +1,182 @@
+{
+  "source_file": "reviewed.json",
+  "source_sha256": "f19f503c9c14813dd7e26c28fbef0cbe03bc270cd856a9f3cfa82a4019515236",
+  "renderer": "amc/storyboard-preview/1",
+  "style": "rhythm",
+  "format": "VP8/WebM",
+  "size": [
+    540,
+    960
+  ],
+  "duration_seconds": 32,
+  "safe_rect": [
+    42,
+    105,
+    453,
+    734
+  ],
+  "frames_per_second": 1,
+  "audio_tracks": 0,
+  "rights": "Original AMC synthetic diagrams and SIL OFL Studio font, internal sandbox only.",
+  "shots": [
+    {
+      "from_s": 0,
+      "to_s": 8,
+      "visual_mode": "comparison",
+      "glyph_boxes": [
+        [
+          44,
+          108,
+          251,
+          134
+        ],
+        [
+          44,
+          151,
+          265,
+          188
+        ],
+        [
+          44,
+          242,
+          354,
+          273
+        ],
+        [
+          44,
+          574,
+          409,
+          609
+        ],
+        [
+          44,
+          617,
+          329,
+          656
+        ]
+      ]
+    },
+    {
+      "from_s": 8,
+      "to_s": 18,
+      "visual_mode": "comparison",
+      "glyph_boxes": [
+        [
+          44,
+          108,
+          251,
+          134
+        ],
+        [
+          44,
+          151,
+          265,
+          188
+        ],
+        [
+          44,
+          242,
+          354,
+          273
+        ],
+        [
+          44,
+          574,
+          353,
+          606
+        ],
+        [
+          44,
+          613,
+          447,
+          643
+        ],
+        [
+          44,
+          650,
+          403,
+          686
+        ],
+        [
+          44,
+          693,
+          113,
+          723
+        ]
+      ]
+    },
+    {
+      "from_s": 18,
+      "to_s": 25,
+      "visual_mode": "document",
+      "glyph_boxes": [
+        [
+          44,
+          108,
+          251,
+          134
+        ],
+        [
+          44,
+          151,
+          265,
+          188
+        ],
+        [
+          44,
+          242,
+          354,
+          273
+        ],
+        [
+          44,
+          574,
+          335,
+          609
+        ],
+        [
+          44,
+          617,
+          150,
+          651
+        ]
+      ]
+    },
+    {
+      "from_s": 25,
+      "to_s": 32,
+      "visual_mode": "request",
+      "glyph_boxes": [
+        [
+          44,
+          108,
+          251,
+          134
+        ],
+        [
+          44,
+          151,
+          265,
+          188
+        ],
+        [
+          44,
+          242,
+          354,
+          273
+        ],
+        [
+          44,
+          574,
+          211,
+          614
+        ]
+      ]
+    }
+  ],
+  "files": {
+    "preview.webm": "88342f40b7452fb3f0d416c9783eb47fab2879e89df0b1abce7ed2b8c3a57590",
+    "captions.vtt": "b7769903ae81dd4c8cee765c63f84a6d5f4db16cd7dededed49c4f25f77b07eb",
+    "poster.png": "42ba6dfd2524b61fd3f7ffbaa25f44a5d5f346d4d7e5d159a158905a198f76bc"
+  }
+}

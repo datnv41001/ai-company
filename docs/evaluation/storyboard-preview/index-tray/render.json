@@ -1,0 +1,225 @@
+{
+  "source_file": "reviewed.json",
+  "source_sha256": "7e4c0ec766405c9700c1ce8e8bb1e22dfb4c6150cca86faac68a96846549f0d5",
+  "renderer": "amc/storyboard-preview/1",
+  "style": "parts",
+  "format": "VP8/WebM",
+  "size": [
+    540,
+    960
+  ],
+  "duration_seconds": 32,
+  "safe_rect": [
+    42,
+    105,
+    453,
+    734
+  ],
+  "frames_per_second": 1,
+  "audio_tracks": 0,
+  "rights": "Original AMC synthetic diagrams and SIL OFL Studio font, internal sandbox only.",
+  "shots": [
+    {
+      "from_s": 0,
+      "to_s": 6,
+      "visual_mode": "mechanism",
+      "glyph_boxes": [
+        [
+          44,
+          108,
+          251,
+          134
+        ],
+        [
+          44,
+          151,
+          233,
+          195
+        ],
+        [
+          44,
+          242,
+          396,
+          268
+        ],
+        [
+          44,
+          574,
+          411,
+          614
+        ],
+        [
+          44,
+          622,
+          281,
+          659
+        ]
+      ]
+    },
+    {
+      "from_s": 6,
+      "to_s": 13,
+      "visual_mode": "mechanism",
+      "glyph_boxes": [
+        [
+          44,
+          108,
+          251,
+          134
+        ],
+        [
+          44,
+          151,
+          233,
+          195
+        ],
+        [
+          44,
+          242,
+          396,
+          268
+        ],
+        [
+          44,
+          574,
+          420,
+          612
+        ],
+        [
+          44,
+          620,
+          396,
+          661
+        ],
+        [
+          44,
+          669,
+          226,
+          701
+        ]
+      ]
+    },
+    {
+      "from_s": 13,
+      "to_s": 21,
+      "visual_mode": "offer",
+      "glyph_boxes": [
+        [
+          44,
+          108,
+          251,
+          134
+        ],
+        [
+          44,
+          151,
+          233,
+          195
+        ],
+        [
+          44,
+          242,
+          396,
+          268
+        ],
+        [
+          44,
+          574,
+          434,
+          601
+        ],
+        [
+          44,
+          609,
+          366,
+          645
+        ],
+        [
+          44,
+          653,
+          376,
+          684
+        ],
+        [
+          44,
+          692,
+          115,
+          724
+        ]
+      ]
+    },
+    {
+      "from_s": 21,
+      "to_s": 27,
+      "visual_mode": "document",
+      "glyph_boxes": [
+        [
+          44,
+          108,
+          251,
+          134
+        ],
+        [
+          44,
+          151,
+          233,
+          195
+        ],
+        [
+          44,
+          242,
+          396,
+          268
+        ],
+        [
+          44,
+          574,
+          444,
+          613
+        ],
+        [
+          44,
+          621,
+          169,
+          654
+        ]
+      ]
+    },
+    {
+      "from_s": 27,
+      "to_s": 32,
+      "visual_mode": "request",
+      "glyph_boxes": [
+        [
+          44,
+          108,
+          251,
+          134
+        ],
+        [
+          44,
+          151,
+          233,
+          195
+        ],
+        [
+          44,
+          242,
+          396,
+          268
+        ],
+        [
+          44,
+          574,
+          311,
+          611
+        ]
+      ]
+    }
+  ],
+  "files": {
+    "preview.webm": "ec48000e7e4104245259a62ed9ec3ff95f59d15f8290651299e6a4d425d84cbb",
+    "captions.vtt": "2ab52844d95aba11143a5c7084f2fab165273c691dd4ec315e9b5513b771c3d7",
+    "poster.png": "8b8332c489e6d19d042063b2c7aafb06e8642b25a768a1a24c3e6d3895f9e42a"
+  }
+}

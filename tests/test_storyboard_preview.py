@@ -2,10 +2,34 @@
 
 from hashlib import sha256
 import json
+from pathlib import Path
 
 import pytest
 
 from scripts.render_storyboard_preview import render
+
+
+@pytest.mark.parametrize("case", ["index-tray", "receipt-map", "rhythm-class"])
+def test_delivered_preview_matches_reviewed_runtime_revision(case):
+    evaluation = Path(__file__).resolve().parents[1] / "docs/evaluation"
+    source = evaluation / "wf08-storyboard" / case
+    media = evaluation / "storyboard-preview" / case
+    exported = (source / "reviewed.json").read_bytes()
+    board = json.loads(exported)
+    run = json.loads((source / "receipt.json").read_bytes())
+    rendered = json.loads((media / "render.json").read_bytes())
+    decoded = json.loads((media / "decoder.json").read_bytes())
+    assert run["reviewed_state"] == "approved" and run["reviewed_revision"] > run["original_revision"]
+    assert board["source_refs"]["manifest"] == run["manifest"]
+    assert rendered["source_sha256"] == sha256(exported).hexdigest()
+    for filename in ("preview.webm", "poster.png", "captions.vtt"):
+        assert rendered["files"][filename] == sha256((media / filename).read_bytes()).hexdigest()
+    assert rendered["files"]["preview.webm"] == decoded["video_sha256"]
+    assert sha256((media / "decoded-shots.png").read_bytes()).hexdigest() == decoded["contact_sheet_sha256"]
+    assert (media / "captions.vtt").read_bytes().decode() == board["vtt"]
+    assert decoded["decoded"] == {"width": 540, "height": 960, "duration": board["duration_seconds"]}
+    assert decoded["times_s"] == [s["start_s"] + 0.5 for s in board["shots"]]
+    assert len(set(decoded["sample_sha256_rgb"])) == len(board["shots"])
 
 
 def board_fixture(path):

@@ -1,7 +1,7 @@
 {
   "source_file": "reviewed.json",
-  "source_sha256": "7e4c0ec766405c9700c1ce8e8bb1e22dfb4c6150cca86faac68a96846549f0d5",
-  "renderer": "amc/storyboard-preview/1",
+  "source_sha256": "9eba87492eef683c49eb631819eb1554c6d33a35f9abbdc193705ae422d85258",
+  "renderer": "amc/storyboard-preview/2",
   "style": "parts",
   "format": "VP8/WebM",
   "size": [
@@ -54,6 +54,10 @@
           281,
           659
         ]
+      ],
+      "illustration": "installed_tray",
+      "illustration_source_ids": [
+        "F1"
       ]
     },
     {
@@ -97,6 +101,10 @@
           226,
           701
         ]
+      ],
+      "illustration": "removable_divider",
+      "illustration_source_ids": [
+        "F1"
       ]
     },
     {
@@ -146,6 +154,10 @@
           115,
           724
         ]
+      ],
+      "illustration": "offer_ticket",
+      "illustration_source_ids": [
+        "F2"
       ]
     },
     {
@@ -183,6 +195,10 @@
           169,
           654
         ]
+      ],
+      "illustration": "document",
+      "illustration_source_ids": [
+        "F2"
       ]
     },
     {
@@ -214,12 +230,14 @@
           311,
           611
         ]
-      ]
+      ],
+      "illustration": "outgoing_request",
+      "illustration_source_ids": []
     }
   ],
   "files": {
-    "preview.webm": "ec48000e7e4104245259a62ed9ec3ff95f59d15f8290651299e6a4d425d84cbb",
+    "preview.webm": "079b7170b196636406e9b803fe78f4511dbc6e78623c1cefdb0248829c149937",
     "captions.vtt": "2ab52844d95aba11143a5c7084f2fab165273c691dd4ec315e9b5513b771c3d7",
-    "poster.png": "8b8332c489e6d19d042063b2c7aafb06e8642b25a768a1a24c3e6d3895f9e42a"
+    "poster.png": "12a5c06e91a7f1c409084fb3121612186c5fc170795b7a96682c4df21bdd5cbf"
   }
 }

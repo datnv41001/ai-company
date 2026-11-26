@@ -12,9 +12,15 @@ Renderer lấy tên brand, sản phẩm, quyền, thời lượng, chế độ m
 
 ## Kết quả đọc hình
 
-Chromium 158.0.8127.88 đã giải mã đủ 32 giây cho từng video. Người đọc kỹ thuật AI xem các khung trích ở cả 14 điểm đầu cảnh. Lượt đầu cho thấy câu claim và điều kiện bị dính nhau khi đọc thành tiếng. Riêng Luồng Rõ còn mang câu xác nhận số lượng vốn dùng cho hàng hóa. Hai điểm được trả về nguồn: bộ tạo storyboard phân cách câu với qualifier, còn brief dịch vụ ghim điều kiện người phụ trách xác nhận lịch sau khi nhận đề nghị. Ba video phía trên được dựng lại bằng **revision 2 đã QA của ba run mới**. Phụ đề, khung trích và video đều có digest; kiểm thử đối chiếu `reviewed.json` với chính biên nhận dựng.
+Chromium 158.0.8127.88 giải mã hai bản 32 giây và bản giáo dục 18 giây. Người đọc kỹ thuật AI xem đủ 13 điểm đầu cảnh và kiểm thêm chuyển động trong cảnh. Biên nhận giải mã so riêng các pixel vùng hình đầu và cuối cảnh nhấc vách, nhấn phách và chọn buổi. Mỗi video đi từ revision 2 đã QA; phụ đề và video kiểm được bằng digest của bản xuất.
 
-Ở lần đọc cuối, Khe Gọn ghi giá tham khảo 380.000 VND/hộp, đã gồm thuế và MOQ 5 hộp. Luồng Rõ tách 760.000 VND/lượt khỏi việc xác nhận lịch, rồi kết bằng “Gửi đề nghị khảo sát”. Phách Mở hiển thị “Chưa có giá được duyệt.” và kết bằng “Chọn buổi”. Hook dựa vào tên nhóm người xem còn chung, bố cục thẻ chữ chiếm phần lớn hình. Người dựng cần xác nhận cách mở đầu và nhịp đọc trên thiết bị thật trước khi đầu tư quay; chưa có phép đo hiệu quả với khách hàng.
+Lượt đọc đầu phát hiện thiếu dấu câu giữa claim và điều kiện, và một điều kiện về số lượng hàng xuất hiện trong brief dịch vụ. Đã sửa tại bộ tạo storyboard và nguồn điều kiện dịch vụ. Ở lượt phản biện sau, người đọc vẫn chưa thấy thao tác cụ thể trong hình và gặp một ghi chú giá nội bộ trên video âm nhạc. Bản dựng cập nhật thể hiện:
+
+- **Khe Gọn.** So song song cùng một khay trước và sau khi nhấc vách khỏi đế. Renderer chỉ chọn hình này khi cảnh trỏ đúng fact tháo vách và điều kiện mẫu tiêu chuẩn. Chữ hiển thị giá tham khảo 380.000 VND/hộp, gồm thuế, MOQ 5 hộp.
+- **Luồng Rõ.** Phóng tờ sơ đồ bàn giao ở cảnh chứng minh. Sau offer 760.000 VND/lượt, cảnh điều kiện chuyển từ phong bì tới người nhận “Chờ xác nhận”, rồi mới đến CTA gửi đề nghị. Hình này yêu cầu điều kiện lịch nằm trong khai báo đã duyệt.
+- **Phách Mở.** Hai dấu mạnh/nhẹ có chú giải và đổi nhấn. Đây là ví dụ minh họa do AMC tự vẽ. Cảnh cuối có thẻ lựa chọn buổi học. Trạng thái giá chưa duyệt nằm trong ghi chú biên tập riêng của storyboard; video chỉ giữ ba cảnh hook, nội dung và chọn buổi.
+
+Tính hữu ích khi người dựng cầm brief mới và khả năng người mua hiểu CTA vẫn cần người hành nghề nghiệm thu. Hiện sơ đồ và các điều kiện chuyên biệt chỉ phủ một số ý nghĩa đã kiểm. Một thương hiệu mới cần có quyền hình, claim và điều kiện đúng ngữ cảnh để bổ sung hướng dựng.
 
 ## Chạy trên máy khác
 

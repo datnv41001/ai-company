@@ -6,7 +6,19 @@ from pathlib import Path
 
 import pytest
 
-from scripts.render_storyboard_preview import render
+from scripts.render_storyboard_preview import render, visual_direction
+
+
+def test_operator_style_cannot_authorize_a_product_demonstration():
+    statement, qualifier = "Vách ngăn có thể tháo rời", "Áp dụng cho mẫu tiêu chuẩn."
+    shot = {"purpose": "proof", "visual_mode": "mechanism", "caption": statement + ". " + qualifier, "source_ids": ["F2"]}
+    fact = {"wording": statement, "qualifiers": [qualifier]}
+    board = {"source_refs": {"declarations": {"F2": fact}}, "shots": [shot]}
+    assert visual_direction(board, shot, "parts") == ("removable_divider", ["F2"])
+    assert visual_direction(board, shot | {"source_ids": ["F7"]}, "parts")[0] == "opening"
+    assert visual_direction(board, shot | {"caption": statement}, "parts")[0] == "opening"
+    fact["wording"] = "Vách ngăn được gắn cố định"
+    assert visual_direction(board, shot, "parts")[0] == "opening"
 
 
 @pytest.mark.parametrize("case", ["index-tray", "receipt-map", "rhythm-class"])
@@ -30,6 +42,19 @@ def test_delivered_preview_matches_reviewed_runtime_revision(case):
     assert decoded["decoded"] == {"width": 540, "height": 960, "duration": board["duration_seconds"]}
     assert decoded["times_s"] == [s["start_s"] + 0.5 for s in board["shots"]]
     assert len(set(decoded["sample_sha256_rgb"])) == len(board["shots"])
+    treatments = [s["illustration"] for s in rendered["shots"]]
+    expected = {
+        "index-tray": {"removable_divider"},
+        "receipt-map": {"deliverable_map", "pending_confirmation"},
+        "rhythm-class": {"pulse_strength", "session_selection"},
+    }
+    assert expected[case] <= set(treatments)
+    for shot in rendered["shots"]:
+        if shot["illustration"] in {"removable_divider", "deliverable_map", "pending_confirmation", "pulse_strength"}:
+            assert shot["illustration_source_ids"] and set(shot["illustration_source_ids"]) <= board["source_refs"]["declarations"].keys()
+    if case == "rhythm-class":
+        assert "outgoing_request" not in treatments
+        assert "Chưa có giá được duyệt" not in board["vtt"]
 
 
 def board_fixture(path):

@@ -1,0 +1,44 @@
+{"timestamp": "2026-11-26T09:24:25.458781+00:00", "sha": "01295a7eaf8a4650c417df4f9dbcba751addc7c0", "op": "list", "path": "", "args": [], "size": 301}
+{"timestamp": "2026-11-26T09:24:34.237786+00:00", "sha": "01295a7eaf8a4650c417df4f9dbcba751addc7c0", "op": "read", "path": "README.md", "args": ["1", "215"], "size": 7700}
+{"timestamp": "2026-11-26T09:24:34.807626+00:00", "sha": "01295a7eaf8a4650c417df4f9dbcba751addc7c0", "op": "read", "path": "HANDOFF.md", "args": ["1", "210"], "size": 33319}
+{"timestamp": "2026-11-26T09:24:35.477886+00:00", "sha": "01295a7eaf8a4650c417df4f9dbcba751addc7c0", "op": "list", "path": "docs", "args": [], "size": 920}
+{"timestamp": "2026-11-26T09:24:36.358497+00:00", "sha": "01295a7eaf8a4650c417df4f9dbcba751addc7c0", "op": "read", "path": "pyproject.toml", "args": ["1", "110"], "size": 215}
+{"timestamp": "2026-11-26T09:24:37.296770+00:00", "sha": "01295a7eaf8a4650c417df4f9dbcba751addc7c0", "op": "read", "path": "AGENTS.md", "args": ["1", "100"], "size": 6013}
+{"timestamp": "2026-11-26T09:24:44.667839+00:00", "sha": "01295a7eaf8a4650c417df4f9dbcba751addc7c0", "op": "read", "path": "docs/evaluation/workforce-video/README.md", "args": ["1", "100"], "size": 10458}
+{"timestamp": "2026-11-26T09:24:45.408975+00:00", "sha": "01295a7eaf8a4650c417df4f9dbcba751addc7c0", "op": "read", "path": "docs/IMPLEMENTATION_STATUS.md", "args": ["1", "40"], "size": 5735}
+{"timestamp": "2026-11-26T09:24:45.875900+00:00", "sha": "01295a7eaf8a4650c417df4f9dbcba751addc7c0", "op": "list", "path": "docs/evaluation/workforce-video", "args": [], "size": 72}
+{"timestamp": "2026-11-26T09:24:47.294600+00:00", "sha": "01295a7eaf8a4650c417df4f9dbcba751addc7c0", "op": "read", "path": "docs/PRODUCT_MISSION.md", "args": ["1", "90"], "size": 12503}
+{"timestamp": "2026-11-26T09:24:48.547504+00:00", "sha": "01295a7eaf8a4650c417df4f9dbcba751addc7c0", "op": "read", "path": "docs/evaluation/workforce-video/MEASUREMENT.md", "args": ["1", "160"], "size": 4629}
+{"timestamp": "2026-11-26T09:24:49.689786+00:00", "sha": "01295a7eaf8a4650c417df4f9dbcba751addc7c0", "op": "read", "path": "docs/KNOWLEDGE_MAP.md", "args": ["1", "60"], "size": 6528}
+{"timestamp": "2026-11-26T09:24:57.760792+00:00", "sha": "01295a7eaf8a4650c417df4f9dbcba751addc7c0", "op": "list", "path": "docs/evaluation", "args": [], "size": 639}
+{"timestamp": "2026-11-26T09:24:58.534113+00:00", "sha": "01295a7eaf8a4650c417df4f9dbcba751addc7c0", "op": "list", "path": "migrations", "args": [], "size": 991}
+{"timestamp": "2026-11-26T09:24:59.344780+00:00", "sha": "01295a7eaf8a4650c417df4f9dbcba751addc7c0", "op": "read", "path": "docs/evaluation/workforce-video/README.md", "args": ["1", "38"], "size": 5790}
+{"timestamp": "2026-11-26T09:25:00.364390+00:00", "sha": "01295a7eaf8a4650c417df4f9dbcba751addc7c0", "op": "list", "path": "catalog", "args": [], "size": 265}
+{"timestamp": "2026-11-26T09:25:01.854841+00:00", "sha": "01295a7eaf8a4650c417df4f9dbcba751addc7c0", "op": "read", "path": "docs/evaluation/sandbox-operations/CUTOVER.md", "args": ["1", "125"], "size": 3270}
+{"timestamp": "2026-11-26T09:25:02.981630+00:00", "sha": "01295a7eaf8a4650c417df4f9dbcba751addc7c0", "op": "list", "path": "docs/evaluation/wf08-storyboard", "args": [], "size": 89}
+{"timestamp": "2026-11-26T09:25:11.512122+00:00", "sha": "01295a7eaf8a4650c417df4f9dbcba751addc7c0", "op": "read", "path": "docs/evaluation/wf08-storyboard/RUNTIME.md", "args": ["1", "95"], "size": 5513}
+{"timestamp": "2026-11-26T09:25:12.417727+00:00", "sha": "01295a7eaf8a4650c417df4f9dbcba751addc7c0", "op": "read", "path": "docs/evaluation/wf08-storyboard/failed-policy-conflict.json", "args": ["1", "65"], "size": 2161}
+{"timestamp": "2026-11-26T09:25:13.190987+00:00", "sha": "01295a7eaf8a4650c417df4f9dbcba751addc7c0", "op": "read", "path": "docs/evaluation/aligned-intake/README.md", "args": ["1", "76"], "size": 4699}
+{"timestamp": "2026-11-26T09:25:13.974909+00:00", "sha": "01295a7eaf8a4650c417df4f9dbcba751addc7c0", "op": "read", "path": "docs/evaluation/wf08-storyboard/index-tray/reviewed.json", "args": ["1", "66"], "size": 2159}
+{"timestamp": "2026-11-26T09:25:14.630525+00:00", "sha": "01295a7eaf8a4650c417df4f9dbcba751addc7c0", "op": "read", "path": "catalog/video-storyboard-v1.json", "args": ["1", "90"], "size": 2546}
+{"timestamp": "2026-11-26T09:25:15.367519+00:00", "sha": "01295a7eaf8a4650c417df4f9dbcba751addc7c0", "op": "read", "path": "docs/evaluation/wf08-storyboard/index-tray/receipt.json", "args": ["1", "105"], "size": 3144}
+{"timestamp": "2026-11-26T09:25:40.914011+00:00", "sha": "01295a7eaf8a4650c417df4f9dbcba751addc7c0", "op": "read", "path": "tests/test_creative_measurement_readback.py", "args": ["1", "115"], "size": 2017}
+{"timestamp": "2026-11-26T09:25:41.638385+00:00", "sha": "01295a7eaf8a4650c417df4f9dbcba751addc7c0", "op": "read", "path": "tests/test_video_storyboard.py", "args": ["1", "140"], "size": 7018}
+{"timestamp": "2026-11-26T09:25:42.376977+00:00", "sha": "01295a7eaf8a4650c417df4f9dbcba751addc7c0", "op": "list", "path": "app", "args": [], "size": 1745}
+{"timestamp": "2026-11-26T09:25:43.247621+00:00", "sha": "01295a7eaf8a4650c417df4f9dbcba751addc7c0", "op": "read", "path": "docs/SECURITY_AND_GA_BLOCKERS.md", "args": ["1", "37"], "size": 5831}
+{"timestamp": "2026-11-26T09:25:44.201591+00:00", "sha": "01295a7eaf8a4650c417df4f9dbcba751addc7c0", "op": "read", "path": "docs/evaluation/storyboard-preview/README.md", "args": ["1", "100"], "size": 5318}
+{"timestamp": "2026-11-26T09:25:45.869910+00:00", "sha": "01295a7eaf8a4650c417df4f9dbcba751addc7c0", "op": "read", "path": "docs/evaluation/department-study/PILOT-ABCD/OFFICIAL.md", "args": ["1", "80"], "size": 11055}
+{"timestamp": "2026-11-26T09:25:56.256412+00:00", "sha": "01295a7eaf8a4650c417df4f9dbcba751addc7c0", "op": "read", "path": "docs/evaluation/workforce-video/aligned-readback.json", "args": ["1", "120"], "size": 4175}
+{"timestamp": "2026-11-26T09:25:58.557416+00:00", "sha": "01295a7eaf8a4650c417df4f9dbcba751addc7c0", "op": "read", "path": "docs/ADR-001-OWN-SaaS-CORE.md", "args": ["1", "50"], "size": 4841}
+{"timestamp": "2026-11-26T09:25:59.108401+00:00", "sha": "01295a7eaf8a4650c417df4f9dbcba751addc7c0", "op": "read", "path": "docs/GITHUB_RESEARCH_AND_REUSE.md", "args": ["1", "25"], "size": 3705}
+{"timestamp": "2026-11-26T09:26:00.178829+00:00", "sha": "01295a7eaf8a4650c417df4f9dbcba751addc7c0", "op": "read", "path": "docs/PRODUCT_SPEC_V1.md", "args": ["1", "35"], "size": 3707}
+{"timestamp": "2026-11-26T09:26:01.959131+00:00", "sha": "01295a7eaf8a4650c417df4f9dbcba751addc7c0", "op": "read", "path": "docs/CODEX_LOCAL_HANDOFF.md", "args": ["1", "35"], "size": 2285}
+{"timestamp": "2026-11-26T09:26:20.805796+00:00", "sha": "01295a7eaf8a4650c417df4f9dbcba751addc7c0", "op": "read", "path": "app/database.py", "args": ["1", "90"], "size": 6184}
+{"timestamp": "2026-11-26T09:26:21.870456+00:00", "sha": "01295a7eaf8a4650c417df4f9dbcba751addc7c0", "op": "list", "path": "docs/evaluation/knowledge-handoff", "args": [], "size": 82}
+{"timestamp": "2026-11-26T09:26:22.825060+00:00", "sha": "01295a7eaf8a4650c417df4f9dbcba751addc7c0", "op": "read", "path": "docs/evaluation/workforce-video/aligned-readback.json", "args": ["10", "65"], "size": 1983}
+{"timestamp": "2026-11-26T09:26:23.499680+00:00", "sha": "01295a7eaf8a4650c417df4f9dbcba751addc7c0", "op": "read", "path": "app/main.py", "args": ["1", "96"], "size": 4902}
+{"timestamp": "2026-11-26T09:26:24.504555+00:00", "sha": "01295a7eaf8a4650c417df4f9dbcba751addc7c0", "op": "list", "path": "docs/evaluation/department-review", "args": [], "size": 192}
+{"timestamp": "2026-11-26T09:26:25.050291+00:00", "sha": "01295a7eaf8a4650c417df4f9dbcba751addc7c0", "op": "read", "path": "tests/check_postgres_upgrade.py", "args": ["1", "90"], "size": 5085}
+{"timestamp": "2026-11-26T09:26:32.131452+00:00", "sha": "01295a7eaf8a4650c417df4f9dbcba751addc7c0", "op": "read", "path": "tests/check_postgres_upgrade.py", "args": ["550", "620"], "size": 16}
+{"timestamp": "2026-11-26T09:26:34.319044+00:00", "sha": "01295a7eaf8a4650c417df4f9dbcba751addc7c0", "op": "read", "path": "app/database.py", "args": ["130", "205"], "size": 4009}
+ "size": 6844}

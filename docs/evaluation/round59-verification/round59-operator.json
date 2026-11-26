@@ -1,0 +1,42 @@
+{
+  "sha": "01295a7eaf8a4650c417df4f9dbcba751addc7c0",
+  "archive_sha256": "286378baf23e673241dc247b059fd44e1b15a234e77730fd8466540b58c3e373",
+  "environment": "fresh tracked source export, SQLite and localhost, preinstalled development dependencies",
+  "commands": [
+    {
+      "argv": [
+        "python",
+        "scripts/init_env.py"
+      ],
+      "exit": 0
+    },
+    {
+      "argv": [
+        "python",
+        "-m",
+        "pytest",
+        "-q",
+        "-p",
+        "no:cacheprovider",
+        "--basetemp=C:\\Users\\PC\\Documents\\Codex\\2026-11-23\\o\\work\\round59-cold-fixtures-01295a7eaf8a",
+        "tests/test_video_storyboard.py",
+        "tests/test_creative_measurement_readback.py"
+      ],
+      "exit": 0
+    }
+  ],
+  "health": {
+    "status": 200,
+    "body": {
+      "status": "ok",
+      "stage": "engineering_bootstrap",
+      "environment": "local",
+      "production_ready": false
+    }
+  },
+  "read_http": {
+    "/": 200,
+    "/docs": 200
+  },
+  "pytest_summary": "4 passed, 4 skipped in 2.98s"
+}

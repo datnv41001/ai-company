@@ -1,0 +1,1 @@
+PASS: isolated v16 without 015 refused by migrator and API; ledger, leases and approved snapshot preserved

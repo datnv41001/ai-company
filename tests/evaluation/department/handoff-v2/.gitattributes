@@ -1,2 +1,4 @@
 *.json -text
 *.jsonl -text
+# Keep the Windows reader returns byte-for-byte; CRLF is their original line ending.
+blind-read/reader-*.json -text whitespace=cr-at-eol

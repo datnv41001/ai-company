@@ -9,6 +9,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parent / "evaluation/department"
 from handoff_comparison import DATA, digest, load, predictions, results  # noqa: E402
 from handoff_infer import INPUT_CAP, OUTPUT_CAP, REQUEST_CAP, WALL_CAP, render  # noqa: E402
 from advisory_study import MODEL  # noqa: E402
+from handoff_blind_read import analyze  # noqa: E402
 
 
 def test_receipts_and_scores_replay_without_inference(tmp_path):
@@ -45,3 +46,8 @@ def test_receipts_and_scores_replay_without_inference(tmp_path):
         assert attempted <= REQUEST_CAP and replies == json.loads(saved.read("qwen.json"))
         (output / "qwen.json").write_bytes(saved.read("qwen.json"))
     assert results(inputs, labels, output) == load(DATA / "metrics.json")
+
+
+def test_anonymous_reader_results_reconcile_with_original_receipts():
+    directory = DATA / "blind-read"
+    assert analyze(DATA / "FIRST-RUN.zip", directory) == load(directory / "summary.json")

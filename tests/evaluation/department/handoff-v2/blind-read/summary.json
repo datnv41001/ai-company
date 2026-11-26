@@ -1,0 +1,74 @@
+{
+  "anonymous_items": 48,
+  "covered_arm_outputs": 72,
+  "readers": [
+    {
+      "reader": "Reader A | Codex, GPT-6-based AI | independent bilingual desk review",
+      "elapsed_seconds": 36.142,
+      "arms": {
+        "control": {
+          "outputs": 24,
+          "asks": 4,
+          "asks_passing_all": 0,
+          "additional_correct_asks": 0,
+          "additional_correct_asks_passing_all": 0,
+          "edits_proposed": 18,
+          "unauthorized": 0
+        },
+        "rules": {
+          "outputs": 24,
+          "asks": 4,
+          "asks_passing_all": 0,
+          "additional_correct_asks": 0,
+          "additional_correct_asks_passing_all": 0,
+          "edits_proposed": 18,
+          "unauthorized": 0
+        },
+        "qwen": {
+          "outputs": 24,
+          "asks": 11,
+          "asks_passing_all": 5,
+          "additional_correct_asks": 5,
+          "additional_correct_asks_passing_all": 3,
+          "edits_proposed": 21,
+          "unauthorized": 0
+        }
+      }
+    },
+    {
+      "reader": "OpenAI Codex, GPT-6 AI service-copy reader B",
+      "elapsed_seconds": 54.978,
+      "arms": {
+        "control": {
+          "outputs": 24,
+          "asks": 4,
+          "asks_passing_all": 0,
+          "additional_correct_asks": 0,
+          "additional_correct_asks_passing_all": 0,
+          "edits_proposed": 18,
+          "unauthorized": 0
+        },
+        "rules": {
+          "outputs": 24,
+          "asks": 4,
+          "asks_passing_all": 0,
+          "additional_correct_asks": 0,
+          "additional_correct_asks_passing_all": 0,
+          "edits_proposed": 18,
+          "unauthorized": 0
+        },
+        "qwen": {
+          "outputs": 24,
+          "asks": 11,
+          "asks_passing_all": 5,
+          "additional_correct_asks": 5,
+          "additional_correct_asks_passing_all": 3,
+          "edits_proposed": 21,
+          "unauthorized": 0
+        }
+      }
+    }
+  ],
+  "flag_disagreements": [],
+  "disagree_on_edit_needed": []
+}

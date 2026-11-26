@@ -18,7 +18,7 @@ from sqlalchemy.engine import make_url
 from check_c3_cutover import PUBLISH,ROOT,STARTUP,unpack
 
 
-PREDECESSOR = "d4c3d6492dead146fa25aecebc7c54b0d944cfc8"
+PREDECESSOR = "bb678908b767481d051a1364c9247f55fd8d2e2a"
 # This archived process only drives ordinary localhost application calls. Its pipe is private to the fixture.
 HOST = """
 import json,sys

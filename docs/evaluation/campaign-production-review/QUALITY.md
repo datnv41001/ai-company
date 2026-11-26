@@ -4,7 +4,13 @@
 
 So sánh đúng hai SKU trên cùng brief. Đối chứng gồm `creative.master.brief` và `creative.master.scenes` bên trong [receipt Khe Gọn](index-tray/evidence.json) và [receipt Luồng Rõ](receipt-map/evidence.json). Đây là bản dựng sáu giây thực tế, có timecode. Nhánh biên tập là hai `edit.json` với phụ đề A/B. Phép chấm chỉ đo vật liệu người dựng có trong tay. Các bảng kênh trong ZIP cũ vốn đã có thông điệp, giá, CTA và một ý tưởng test; thông tin tồn tại ở một đề xuất media chưa có nghĩa là đã lên màn hình trong shot tương ứng.
 
-## Rubric đối chiếu
+## Kết luận của người đọc thứ hai và sửa theo phản biện
+
+Một phiên AI khác đọc mù bốn phương án. Điểm từ bản Studio đến bản biên tập **v1** là **1/7 → 7/7** cho Khe Gọn và **0/7 → 7/7** cho Luồng Rõ. Người đọc chấm 0 phần đọc khi tắt âm của hai đối chứng vì câu giữa quá dài cho hai giây. CTA gốc “Đặt lịch” cũng bị trừ do không phân biệt rõ đề nghị với lịch xác nhận. Đây là bất đồng với đội biên tập ở hai tiêu chí của bảng tự chấm bên dưới. Hai PNG Studio dùng artwork hình học cùng họa tiết và typography. CTA trên ảnh dịch vụ vẫn ghi “Đặt lịch”; cần sửa và QA một artwork mới trước khi dùng làm bản campaign. [Phiếu gốc, mã giải và nguyên bản v1](blind/README.md)
+
+Dù hai bản v1 đạt bảy tiêu chí về tờ dựng, người đọc phát hiện các thẻ giá đều bỏ chữ **“tham khảo”**. Bản **v2** khôi phục trạng thái giá theo nguồn, chia các cue dài thành tối đa hai dòng, giữ CTA cuối của dịch vụ ở “Gửi đề nghị khảo sát”. Kiểm tra kỹ thuật đối chiếu số tiền, đơn vị, thuế và lượng tối thiểu trong cùng cue với điều khoản Studio. Nó còn kiểm ngưỡng biên tập nội bộ 40 ký tự/dòng, 15 ký tự/giây. Hai tờ v1 vẫn trượt phép kiểm giá. Hai tờ v2 đạt. Khả năng đọc trên điện thoại ở bản phim thật, hiệu quả sáng tạo và sự chấp nhận của người hành nghề vẫn phải đo. **V2 chưa có điểm chấm mù riêng.**
+
+## Rubric tự chấm trên nguyên bản v1 trước khi nhận phiếu mù
 
 Người soạn kiểm từng điều kiện một điểm, không trừ thêm vì độ dài hay cộng vì nhiều tài liệu. Kết quả dưới đây là đối chiếu kỹ thuật hồi cứu của chính đội biên tập. Việc giao brief cùng rubric cho chuyên viên độc lập vẫn còn mở.
 

@@ -21,19 +21,19 @@
       "start": 3,
       "end": 8,
       "picture": "Cận tay người dựng nhấc một vách ra khỏi khay mẫu rồi đặt lại. Cho thấy một thao tác liên tục, không ghép biến thể.",
-      "caption": "Mẫu Khe Gọn tiêu chuẩn có vách ngăn tháo rời."
+      "caption": "Mẫu Khe Gọn tiêu chuẩn\ncó vách ngăn tháo rời."
     },
     {
       "start": 8,
       "end": 14,
       "picture": "Giữ khay trong hình. Đặt thẻ giá bên cạnh khay, tách đơn vị bán khỏi cỡ khay để tránh hiểu giá theo chiếc.",
-      "caption": "380.000 đồng mỗi hộp, đã gồm thuế. Đơn từ 5 hộp."
+      "caption": "Giá tham khảo 380.000 đồng/hộp.\nĐã gồm thuế. Đơn từ 5 hộp."
     },
     {
       "start": 14,
       "end": 21,
       "picture": "Cuộn tới ba nhãn trên form thử. Gõ dữ liệu tổng hợp đúng phạm vi, không hiển thị thông tin liên hệ.",
-      "caption": "Ghi số hộp, địa bàn và thời điểm cần hàng."
+      "caption": "Ghi số hộp, địa bàn\nvà thời điểm cần hàng."
     },
     {
       "start": 21,
@@ -41,5 +41,6 @@
       "picture": "Dừng trên nút yêu cầu báo giá. Giữ CTA 4 giây, không thể hiện đơn đã được duyệt.",
       "caption": "Gửi yêu cầu báo giá theo hộp."
     }
-  ]
+  ],
+  "revision": 2
 }

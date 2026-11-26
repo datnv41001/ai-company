@@ -4,6 +4,7 @@ import argparse
 import hashlib
 import json
 from pathlib import Path
+import re
 from shutil import copyfile
 
 
@@ -41,6 +42,29 @@ def tracks(edit):
     }
 
 
+def check_price_and_readability(edit, approved_terms):
+    """Read the Vietnamese indicative-price clause used by these two signed fixtures."""
+    terms = re.search(
+        r"Giá tham khảo: ([\d.]+) VND / 1 ([^,]+), đã gồm thuế\. Đơn tối thiểu: (\d+) \2\.", approved_terms
+    )
+    if not terms:
+        raise ValueError("Review the current approved pricing terms before using this editorial check")
+    amount, unit, minimum = terms.groups()
+    price_cues = [s["caption"] for s in edit["shots"] if amount in s["caption"]]
+    if len(price_cues) != 1:
+        raise ValueError("Use one price card for the approved amount")
+    cue = " ".join(price_cues[0].lower().split())
+    if (f"giá tham khảo {amount} đồng/{unit}" not in cue or "đã gồm thuế" not in cue
+            or not re.search(r"(?:tối thiểu|đơn từ) " + re.escape(f"{minimum} {unit}") + r"\b", cue)):
+        raise ValueError("Retain indicative price, selling unit, tax and minimum on the price card")
+    for shot in edit["shots"]:
+        options = edit["hooks"].values() if shot["caption"] == "{hook}" else [shot["caption"]]
+        for value in options:
+            lines = value.splitlines()
+            if len(lines) > 2 or max(map(len, lines)) > 40 or len(" ".join(lines)) > 15 * (shot["end"] - shot["start"]):
+                raise ValueError("Review caption line length or reading hold")
+
+
 def check_bundle(folder):
     for case, action in CASES.items():
         root = folder / case
@@ -51,6 +75,7 @@ def check_bundle(folder):
             raise ValueError("Wrong or non-synthetic fixture")
         if creative["master"]["headline"] != edit["product"] or edit["approval"] != "editorial_candidate":
             raise ValueError("Incorrect product or editorial status")
+        check_price_and_readability(edit, intake["commercial_terms"])
         for package in (creative, landing):
             if package["plan_digest"] != intake["plan_digest"] or package["plan_id"] != intake["plan_id"]:
                 raise ValueError("Mismatched plan and package")

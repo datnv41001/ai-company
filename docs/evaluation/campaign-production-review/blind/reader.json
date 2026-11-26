@@ -1,0 +1,236 @@
+{
+  "metadata": {
+    "reviewer": "OpenAI Codex, GPT-6-based AI assistant",
+    "role": "Independent technical editorial reviewer",
+    "started_utc": "2026-11-26T07:46:06Z",
+    "completed_utc": "2026-11-26T07:46:49Z",
+    "input": "round57-creative-anon.json",
+    "method": "Four anonymous storyboard treatments scored individually against seven binary obligations. A one denotes visible evidence satisfying the stated obligation. Muted readability was assessed from scripted captions and durations. No rendered video, human or platform evaluation was involved."
+  },
+  "items": [
+    {
+      "item": "7de5b679",
+      "score": 1,
+      "possible": 7,
+      "criteria": [
+        {
+          "id": 1,
+          "criterion": "Request-aligned CTA without an implied outcome",
+          "score": 1,
+          "evidence": "4–6 s says “Yêu cầu báo giá”, which asks for a quote and promises no acceptance.",
+          "suggested_edit": "Keep this line on the final RFQ button."
+        },
+        {
+          "id": 2,
+          "criterion": "Approved product or service claim and qualifier in a shot",
+          "score": 0,
+          "evidence": "2–4 s asks viewers to check specifications. No timed copy states which model has removable dividers.",
+          "suggested_edit": "Show a divider lifted from the tray and caption it “Mẫu tiêu chuẩn có vách ngăn tháo rời.”"
+        },
+        {
+          "id": 3,
+          "criterion": "Price, selling unit, tax and minimum together in timed copy",
+          "score": 0,
+          "evidence": "No shot gives the amount, unit, tax status or minimum.",
+          "suggested_edit": "Hold a card reading “Giá tham khảo 380.000 đồng/hộp, đã gồm thuế. Tối thiểu 5 hộp.”"
+        },
+        {
+          "id": 4,
+          "criterion": "Buyer preparation covers every required field meaning",
+          "score": 0,
+          "evidence": "None of the three captions names quantity in boxes, destination area or required delivery time.",
+          "suggested_edit": "Before the CTA, show the form with “Chuẩn bị số hộp, địa bàn và thời điểm cần hàng.”"
+        },
+        {
+          "id": 5,
+          "criterion": "Every shot specifies a visible action or prop",
+          "score": 0,
+          "evidence": "All three picture fields are empty. The scope describes the intended storyboard but gives no shot-specific picture.",
+          "suggested_edit": "Specify an overhead tray with screws in the opener, a close-up of the divider, a price card, three form labels and the final RFQ button."
+        },
+        {
+          "id": 6,
+          "criterion": "Two usable opening lines with picture, body and CTA held constant",
+          "score": 0,
+          "evidence": "The variants array is empty. The product-name caption is the only opening.",
+          "suggested_edit": "Over the same tray, test “Vít của hai công đoạn để đâu?” and “Vách khay này tháo ra được không?” Hold the remaining sequence and CTA fixed."
+        },
+        {
+          "id": 7,
+          "criterion": "Timed, intelligible captions support a muted storyboard review",
+          "score": 0,
+          "evidence": "Timecodes are present, but the generic middle sentence repeats the product name inside a long instruction held for just two seconds. No specific condition is communicated.",
+          "suggested_edit": "Shorten the middle copy to the verified feature, give the conditions a separate hold and replay both complete caption sequences muted."
+        }
+      ]
+    },
+    {
+      "item": "135e642f",
+      "score": 7,
+      "possible": 7,
+      "criteria": [
+        {
+          "id": 1,
+          "criterion": "Request-aligned CTA without an implied outcome",
+          "score": 1,
+          "evidence": "21–25 s holds on an RFQ button. “Gửi yêu cầu báo giá theo hộp” accurately describes the action.",
+          "suggested_edit": "Keep the four-second button hold."
+        },
+        {
+          "id": 2,
+          "criterion": "Approved product or service claim and qualifier in a shot",
+          "score": 1,
+          "evidence": "3–8 s shows the divider being removed and replaced. Its caption explicitly limits the feature to the standard Khe Gọn model.",
+          "suggested_edit": "Keep “mẫu … tiêu chuẩn” in the same shot as the demonstration."
+        },
+        {
+          "id": 3,
+          "criterion": "Price, selling unit, tax and minimum together in timed copy",
+          "score": 1,
+          "evidence": "8–14 s contains 380.000 đồng, per box, tax included and an order from five boxes, all in one caption.",
+          "suggested_edit": "Restore the approved “Giá tham khảo” wording on the price card so the amount reads as indicative."
+        },
+        {
+          "id": 4,
+          "criterion": "Buyer preparation covers every required field meaning",
+          "score": 1,
+          "evidence": "14–21 s names all three required meanings in the form shot: number of boxes, destination area and time goods are needed.",
+          "suggested_edit": "Preserve those three form labels in frame."
+        },
+        {
+          "id": 5,
+          "criterion": "Every shot specifies a visible action or prop",
+          "score": 1,
+          "evidence": "Each shot has a definite subject: overhead tray and parts, hand lifting the divider, price card beside the tray, form entries, then the RFQ button.",
+          "suggested_edit": "Use distinguishable mock components so the first hook's two groups are visible on mute."
+        },
+        {
+          "id": 6,
+          "criterion": "Two usable opening lines with picture, body and CTA held constant",
+          "score": 1,
+          "evidence": "Two short actual questions fit the same three-second opener. Only the {hook} slot changes and the rest of the shots, including CTA, are shared.",
+          "suggested_edit": "Use the same framing, hand movement and caption placement for both exports."
+        },
+        {
+          "id": 7,
+          "criterion": "Timed, intelligible captions support a muted storyboard review",
+          "score": 1,
+          "evidence": "Each of five shots has a timed caption, including a three-second opening line and six seconds for the price and minimum. The full sequence works in text alone.",
+          "suggested_edit": "At export, verify the price and form labels remain legible on the intended phone display."
+        }
+      ]
+    },
+    {
+      "item": "c01f0e96",
+      "score": 7,
+      "possible": 7,
+      "criteria": [
+        {
+          "id": 1,
+          "criterion": "Request-aligned CTA without an implied outcome",
+          "score": 1,
+          "evidence": "21–27 s says “Gửi đề nghị khảo sát” and holds on a request state. The follow-up clause describes calendar review without promising a booked slot.",
+          "suggested_edit": "Use “Gửi đề nghị khảo sát” alone unless the team has confirmed the stated follow-up process."
+        },
+        {
+          "id": 2,
+          "criterion": "Approved product or service claim and qualifier in a shot",
+          "score": 1,
+          "evidence": "9–15 s shows a sample diagram marked “Minh họa”. The caption names the receiving-flow diagram and confines delivery to the survey session.",
+          "suggested_edit": "Keep the illustration label visible alongside the scoped claim."
+        },
+        {
+          "id": 3,
+          "criterion": "Price, selling unit, tax and minimum together in timed copy",
+          "score": 1,
+          "evidence": "15–21 s gives 760.000 đồng per lượt, tax included and a minimum of one lượt in the same caption.",
+          "suggested_edit": "Add “Giá tham khảo” to retain the approved status of the price."
+        },
+        {
+          "id": 4,
+          "criterion": "Buyer preparation covers every required field meaning",
+          "score": 1,
+          "evidence": "3–9 s asks for the receiving shift and location. 21–27 s shows both selections. Those correspond to site and receiving shift to observe.",
+          "suggested_edit": "Keep the final form labels explicit: “Địa điểm” and “Ca nhận hàng cần quan sát”."
+        },
+        {
+          "id": 5,
+          "criterion": "Every shot specifies a visible action or prop",
+          "score": 1,
+          "evidence": "The five shot descriptions specify a model and card, an arrow and waiting point, an illustrated diagram, a conditions card and a form showing site/shift selection.",
+          "suggested_edit": "Keep the indicated waiting point clearly visible in the overhead framing."
+        },
+        {
+          "id": 6,
+          "criterion": "Two usable opening lines with picture, body and CTA held constant",
+          "score": 1,
+          "evidence": "The two supplied questions use a single three-second model shot. The {hook} slot is the only copy that varies and the following four shots and CTA are shared.",
+          "suggested_edit": "Use the same model, camera position and hold for each opener."
+        },
+        {
+          "id": 7,
+          "criterion": "Timed, intelligible captions support a muted storyboard review",
+          "score": 1,
+          "evidence": "The opening gets three seconds and the following four captions each get six. The captions carry the required inputs, scoped deliverable, conditions and request even without narration.",
+          "suggested_edit": "In the rendered proof, keep the diagram label and captions in separate parts of the frame."
+        }
+      ]
+    },
+    {
+      "item": "36c7b8c9",
+      "score": 0,
+      "possible": 7,
+      "criteria": [
+        {
+          "id": 1,
+          "criterion": "Request-aligned CTA without an implied outcome",
+          "score": 0,
+          "evidence": "4–6 s says “Đặt lịch”. With no request qualifier or pending-state picture, that wording suggests booking a slot.",
+          "suggested_edit": "Use “Gửi đề nghị khảo sát” and hold on the request button."
+        },
+        {
+          "id": 2,
+          "criterion": "Approved product or service claim and qualifier in a shot",
+          "score": 0,
+          "evidence": "No timed shot mentions handover of the receiving-flow diagram or limits it to the survey.",
+          "suggested_edit": "Show an illustrative diagram with “Trong buổi khảo sát, Luồng Rõ bàn giao sơ đồ luồng nhận hàng.”"
+        },
+        {
+          "id": 3,
+          "criterion": "Price, selling unit, tax and minimum together in timed copy",
+          "score": 0,
+          "evidence": "The generic reference to conditions at 2–4 s gives none of the four commercial terms.",
+          "suggested_edit": "Hold the caption “Giá tham khảo 760.000 đồng/lượt, đã gồm thuế. Tối thiểu 1 lượt.”"
+        },
+        {
+          "id": 4,
+          "criterion": "Buyer preparation covers every required field meaning",
+          "score": 0,
+          "evidence": "No caption tells the buyer to choose the site or receiving shift to observe.",
+          "suggested_edit": "Show the two required selectors and caption “Chọn địa điểm và ca nhận hàng cần quan sát.”"
+        },
+        {
+          "id": 5,
+          "criterion": "Every shot specifies a visible action or prop",
+          "score": 0,
+          "evidence": "All three picture fields are empty, including the shot with the booking CTA.",
+          "suggested_edit": "Write shots around a model receiving area, a hand tracing a diagram, a price card and a request form with both selectors."
+        },
+        {
+          "id": 6,
+          "criterion": "Two usable opening lines with picture, body and CTA held constant",
+          "score": 0,
+          "evidence": "The variants array is empty. The single service name does not give a second executable opening.",
+          "suggested_edit": "On the same model shot, try “Hàng đang chờ ở khâu nào?” and “Khảo sát xong, kho nhận được gì?” Use one body and request CTA."
+        },
+        {
+          "id": 7,
+          "criterion": "Timed, intelligible captions support a muted storyboard review",
+          "score": 0,
+          "evidence": "The two-second middle caption repeats the full service name in a long general instruction. Its nominal timecode does not give a workable reading hold.",
+          "suggested_edit": "Break out a short site/shift prompt, a scoped deliverable and a timed conditions card. Review at actual playback speed with sound off."
+        }
+      ]
+    }
+  ]
+}

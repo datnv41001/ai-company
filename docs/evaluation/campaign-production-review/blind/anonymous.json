@@ -1,0 +1,330 @@
+[
+  {
+    "item": "7de5b679",
+    "product": "Khay chia linh kiện Khe Gọn",
+    "audience": "Tổ trưởng lắp ráp điện tử ở Hà Nội",
+    "approved": "Giá tham khảo: 380.000 VND / 1 hộp, đã gồm thuế. Đơn tối thiểu: 5 hộp. Áp dụng từ 5 hộp. Số lượng đối chiếu: 5 hộp. Xác nhận số lượng trước khi đặt.\nVách ngăn có thể tháo rời Áp dụng cho mẫu tiêu chuẩn.",
+    "fields": [
+      {
+        "id": "box_count",
+        "required": true,
+        "label": "số hộp",
+        "maps_to": "quantity",
+        "type": "integer",
+        "unit": "box",
+        "unit_label": "hộp",
+        "minimum": 1,
+        "maximum": 100
+      },
+      {
+        "id": "destination",
+        "required": true,
+        "label": "địa bàn",
+        "maps_to": "location",
+        "type": "enum",
+        "options": [
+          {
+            "value": "north",
+            "label": "Cơ sở thử A"
+          },
+          {
+            "value": "south",
+            "label": "Cơ sở thử B"
+          }
+        ]
+      },
+      {
+        "id": "need_date",
+        "required": true,
+        "label": "thời điểm cần hàng",
+        "maps_to": "required_date",
+        "type": "enum",
+        "options": [
+          {
+            "value": "2",
+            "label": "Sau hai ngày"
+          },
+          {
+            "value": "7",
+            "label": "Sau một tuần"
+          }
+        ]
+      }
+    ],
+    "material": {
+      "scope": "Phác thảo khung hình cho Khay chia linh kiện Khe Gọn có chỗ đặt điều kiện và lời mời hành động. Giao storyboard có cảnh nhu cầu, cảnh đối chiếu dữ kiện và cảnh chọn bước tiếp theo. Kèm chỉ dẫn cảnh quay, phụ đề, bản chép lời và danh mục nguồn. Duyệt khi tắt âm thanh trước khi xuất bản dựng.",
+      "rights": "Chờ kiểm tra chủ sở hữu, giấy phép, phạm vi và thời hạn trước khi dùng tư liệu.",
+      "variants": [],
+      "shots": [
+        {
+          "start": 0,
+          "end": 2,
+          "picture": "",
+          "caption": "Khay chia linh kiện Khe Gọn"
+        },
+        {
+          "start": 2,
+          "end": 4,
+          "picture": "",
+          "caption": "Đối chiếu quy cách và điều kiện áp dụng của Khay chia linh kiện Khe Gọn trước khi lựa chọn."
+        },
+        {
+          "start": 4,
+          "end": 6,
+          "picture": "",
+          "caption": "Yêu cầu báo giá"
+        }
+      ]
+    }
+  },
+  {
+    "item": "135e642f",
+    "product": "Khay chia linh kiện Khe Gọn",
+    "audience": "Tổ trưởng lắp ráp điện tử ở Hà Nội",
+    "approved": "Giá tham khảo: 380.000 VND / 1 hộp, đã gồm thuế. Đơn tối thiểu: 5 hộp. Áp dụng từ 5 hộp. Số lượng đối chiếu: 5 hộp. Xác nhận số lượng trước khi đặt.\nVách ngăn có thể tháo rời Áp dụng cho mẫu tiêu chuẩn.",
+    "fields": [
+      {
+        "id": "box_count",
+        "required": true,
+        "label": "số hộp",
+        "maps_to": "quantity",
+        "type": "integer",
+        "unit": "box",
+        "unit_label": "hộp",
+        "minimum": 1,
+        "maximum": 100
+      },
+      {
+        "id": "destination",
+        "required": true,
+        "label": "địa bàn",
+        "maps_to": "location",
+        "type": "enum",
+        "options": [
+          {
+            "value": "north",
+            "label": "Cơ sở thử A"
+          },
+          {
+            "value": "south",
+            "label": "Cơ sở thử B"
+          }
+        ]
+      },
+      {
+        "id": "need_date",
+        "required": true,
+        "label": "thời điểm cần hàng",
+        "maps_to": "required_date",
+        "type": "enum",
+        "options": [
+          {
+            "value": "2",
+            "label": "Sau hai ngày"
+          },
+          {
+            "value": "7",
+            "label": "Sau một tuần"
+          }
+        ]
+      }
+    ],
+    "material": {
+      "scope": "Dọc 9:16, thoại tiếng Việt, chữ đọc được khi tắt âm; giữ chữ và vách ngăn trong vùng an toàn.",
+      "rights": "Chỉ quay mẫu tiêu chuẩn đã được chủ sản phẩm xác nhận và cho phép. Dùng nhãn công đoạn giả lập, tránh logo bên thứ ba và con người thật.",
+      "variants": [
+        "Cần tách vít theo công đoạn?",
+        "Khay này có tháo được vách?"
+      ],
+      "shots": [
+        {
+          "start": 0,
+          "end": 3,
+          "picture": "Máy cố định từ trên xuống. Hai nhóm chi tiết giả trên bàn, một khay trống ở giữa. Cùng một hình và chuyển động cho cả hai hook.",
+          "caption": "{hook}"
+        },
+        {
+          "start": 3,
+          "end": 8,
+          "picture": "Cận tay người dựng nhấc một vách ra khỏi khay mẫu rồi đặt lại. Cho thấy một thao tác liên tục, không ghép biến thể.",
+          "caption": "Mẫu Khe Gọn tiêu chuẩn có vách ngăn tháo rời."
+        },
+        {
+          "start": 8,
+          "end": 14,
+          "picture": "Giữ khay trong hình. Đặt thẻ giá bên cạnh khay, tách đơn vị bán khỏi cỡ khay để tránh hiểu giá theo chiếc.",
+          "caption": "380.000 đồng mỗi hộp, đã gồm thuế. Đơn từ 5 hộp."
+        },
+        {
+          "start": 14,
+          "end": 21,
+          "picture": "Cuộn tới ba nhãn trên form thử. Gõ dữ liệu tổng hợp đúng phạm vi, không hiển thị thông tin liên hệ.",
+          "caption": "Ghi số hộp, địa bàn và thời điểm cần hàng."
+        },
+        {
+          "start": 21,
+          "end": 25,
+          "picture": "Dừng trên nút yêu cầu báo giá. Giữ CTA 4 giây, không thể hiện đơn đã được duyệt.",
+          "caption": "Gửi yêu cầu báo giá theo hộp."
+        }
+      ]
+    }
+  },
+  {
+    "item": "c01f0e96",
+    "product": "Buổi khảo sát luồng nhận hàng Luồng Rõ",
+    "audience": "Trưởng vận hành kho phân phối tại Hà Nội",
+    "approved": "Bàn giao sơ đồ luồng nhận hàng Trong phạm vi buổi khảo sát.\nGiá tham khảo: 760.000 VND / 1 lượt, đã gồm thuế. Đơn tối thiểu: 1 lượt. Áp dụng từ 1 lượt. Số lượng đối chiếu: 1 lượt. Xác nhận số lượng trước khi đặt.",
+    "fields": [
+      {
+        "id": "site",
+        "required": true,
+        "label": "địa điểm",
+        "maps_to": "location",
+        "type": "enum",
+        "options": [
+          {
+            "value": "north",
+            "label": "Cơ sở thử A"
+          },
+          {
+            "value": "south",
+            "label": "Cơ sở thử B"
+          }
+        ]
+      },
+      {
+        "id": "receiving_shift",
+        "required": true,
+        "label": "ca nhận hàng cần quan sát",
+        "maps_to": "receiving_shift",
+        "type": "enum",
+        "options": [
+          {
+            "value": "morning",
+            "label": "Ca sáng"
+          },
+          {
+            "value": "evening",
+            "label": "Ca chiều"
+          },
+          {
+            "value": "night",
+            "label": "Ca đêm"
+          }
+        ]
+      }
+    ],
+    "material": {
+      "scope": "Dọc 9:16, thoại tiếng Việt, mỗi cảnh một thao tác. Chữ phải đọc được trong bản tắt tiếng.",
+      "rights": "Dùng sa bàn, phiếu trắng và sơ đồ tự vẽ ghi Minh họa. Không quay phiếu giao nhận, biển số, nhân viên, mặt bằng hoặc thương hiệu khách.",
+      "variants": [
+        "Ca nhận hàng đang chờ ở đâu?",
+        "Một buổi khảo sát bàn giao gì?"
+      ],
+      "shots": [
+        {
+          "start": 0,
+          "end": 3,
+          "picture": "Quay từ trên cùng sa bàn ba điểm tiếp nhận. Một thẻ hàng đứng trước bàn kiểm. Giữ nguyên góc máy, hình và thời lượng giữa hai bản.",
+          "caption": "{hook}"
+        },
+        {
+          "start": 3,
+          "end": 9,
+          "picture": "Đặt mũi tên từ cửa nhận sang bàn kiểm; làm dấu hỏi ở chỗ chờ. Không viết con số tiết kiệm hay nguyên nhân chưa kiểm chứng.",
+          "caption": "Chọn một ca nhận hàng và địa điểm muốn quan sát."
+        },
+        {
+          "start": 9,
+          "end": 15,
+          "picture": "Đổi sang tờ sơ đồ phác thảo ba điểm, gắn nhãn Minh họa. Tay chỉ vào đường đi đang được quan sát.",
+          "caption": "Trong buổi khảo sát, Luồng Rõ bàn giao sơ đồ luồng nhận hàng."
+        },
+        {
+          "start": 15,
+          "end": 21,
+          "picture": "Cận thẻ điều kiện được duyệt ở cạnh form thử. Để rõ đơn vị dịch vụ và phạm vi buổi khảo sát.",
+          "caption": "760.000 đồng một lượt, đã gồm thuế. Tối thiểu một lượt."
+        },
+        {
+          "start": 21,
+          "end": 27,
+          "picture": "Chọn địa điểm và ca nhận trong bản thử. Dừng ở trạng thái gửi đề nghị, không xuất hiện lịch đã xác nhận.",
+          "caption": "Gửi đề nghị khảo sát. Người phụ trách sẽ đối chiếu lịch."
+        }
+      ]
+    }
+  },
+  {
+    "item": "36c7b8c9",
+    "product": "Buổi khảo sát luồng nhận hàng Luồng Rõ",
+    "audience": "Trưởng vận hành kho phân phối tại Hà Nội",
+    "approved": "Bàn giao sơ đồ luồng nhận hàng Trong phạm vi buổi khảo sát.\nGiá tham khảo: 760.000 VND / 1 lượt, đã gồm thuế. Đơn tối thiểu: 1 lượt. Áp dụng từ 1 lượt. Số lượng đối chiếu: 1 lượt. Xác nhận số lượng trước khi đặt.",
+    "fields": [
+      {
+        "id": "site",
+        "required": true,
+        "label": "địa điểm",
+        "maps_to": "location",
+        "type": "enum",
+        "options": [
+          {
+            "value": "north",
+            "label": "Cơ sở thử A"
+          },
+          {
+            "value": "south",
+            "label": "Cơ sở thử B"
+          }
+        ]
+      },
+      {
+        "id": "receiving_shift",
+        "required": true,
+        "label": "ca nhận hàng cần quan sát",
+        "maps_to": "receiving_shift",
+        "type": "enum",
+        "options": [
+          {
+            "value": "morning",
+            "label": "Ca sáng"
+          },
+          {
+            "value": "evening",
+            "label": "Ca chiều"
+          },
+          {
+            "value": "night",
+            "label": "Ca đêm"
+          }
+        ]
+      }
+    ],
+    "material": {
+      "scope": "Phác thảo khung hình cho Buổi khảo sát luồng nhận hàng Luồng Rõ có chỗ đặt điều kiện và lời mời hành động. Giao storyboard có cảnh nhu cầu, cảnh đối chiếu dữ kiện và cảnh chọn bước tiếp theo. Kèm chỉ dẫn cảnh quay, phụ đề, bản chép lời và danh mục nguồn. Duyệt khi tắt âm thanh trước khi xuất bản dựng.",
+      "rights": "Chờ kiểm tra chủ sở hữu, giấy phép, phạm vi và thời hạn trước khi dùng tư liệu.",
+      "variants": [],
+      "shots": [
+        {
+          "start": 0,
+          "end": 2,
+          "picture": "",
+          "caption": "Buổi khảo sát luồng nhận hàng Luồng Rõ"
+        },
+        {
+          "start": 2,
+          "end": 4,
+          "picture": "",
+          "caption": "Đối chiếu quy cách và điều kiện áp dụng của Buổi khảo sát luồng nhận hàng Luồng Rõ trước khi lựa chọn."
+        },
+        {
+          "start": 4,
+          "end": 6,
+          "picture": "",
+          "caption": "Đặt lịch"
+        }
+      ]
+    }
+  }
+]

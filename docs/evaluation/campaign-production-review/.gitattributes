@@ -1,2 +1,3 @@
 # The signed landing receipt identifies its exact UTF-8 bytes on every OS.
 */*.html -text
+blind/*.json -text whitespace=cr-at-eol

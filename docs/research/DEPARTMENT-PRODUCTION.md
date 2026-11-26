@@ -1,0 +1,13 @@
+# Nghiên cứu ứng dụng cho khâu sản xuất Marketing
+
+Đối chiếu ngày 26/11/2026. Các nguồn dưới đây được đọc từ nội dung công khai của đơn vị phát hành. Bộ soạn chạy ngoại tuyến. Tài liệu nguồn không nhận brief, repo, dữ liệu cá nhân hoặc dữ liệu khách hàng của AMC.
+
+| Nguồn và loại bằng chứng | Phạm vi và giới hạn | Áp dụng vào sản phẩm và cách kiểm |
+|---|---|---|
+| [Google Ads Help · Responsive search ads](https://support.google.com/google-ads/answer/7684791) · quy cách nền tảng | Mẫu tìm kiếm có 3–15 tiêu đề và 2–4 mô tả, giới hạn 30 và 90 ký tự. Chữ rộng tính hai đơn vị. Quy cách này không dự đoán phân phối hoặc hiệu quả. | WF-12 trả từng biến thể quá dài để Media sửa. Bộ kiểm thử kiểm độ dài biên, cụm tiếng Việt và ký tự rộng. Duyệt chính sách, URL công khai, quyền tài khoản và thực thi vẫn là các gate riêng. |
+| [Google Search Central · Helpful content](https://developers.google.com/search/docs/fundamentals/creating-helpful-content) · hướng dẫn chính thức | Google đề nghị nội dung đáp ứng nhu cầu của người đọc. Hướng dẫn không cung cấp bảo đảm xếp hạng cho một bài. | WF-11 xuất câu hỏi của người mua, phần trả lời dùng dữ kiện đã ghim và hành động tiếp theo. Người đánh giá phải chỉ ra người đọc làm được gì sau khi đọc. |
+| [Trần Quốc Huy / Wecommit · Bản đồ cho đội AI agent](https://www.wecommit.com.vn/bai-viet/tam-ban-do-tong-the-cho-doi-ai-agent) · bài viết thực hành đi kèm demo | Kinh nghiệm thiết kế luồng vào/ra và kiểm tra việc bàn giao giữa các tác nhân. Bài viết không đo hiệu quả thương mại của AMC. | WF-06 và WF-07 cùng ghim đầu ra vào digest kế hoạch, manifest và lịch có người phụ trách. Kiểm lại khi kế hoạch bị thay thế hoặc nguồn hết hiệu lực. |
+| [Calendly · Routing](https://calendly.com/scheduling/routing) · mô tả của nhà cung cấp | Dùng câu trả lời biểu mẫu để định tuyến người có nhu cầu. Chưa kiểm nghiệm tài khoản trả phí hoặc tuyên bố về tỷ lệ tăng trưởng. | Ca dịch vụ đặt câu hỏi nghiên cứu về người nhận yêu cầu, quyền xác nhận và biên nhận. |
+| [HubSpot · Meeting scheduler](https://www.hubspot.com/products/sales/schedule-meeting) · mô tả của nhà cung cấp | Nhà cung cấp mô tả một trang cho phép khách hẹn gặp. Chưa đo tốc độ hoặc chất lượng trong ngành của khách. | WF-13 phân biệt tự đặt lịch và gửi yêu cầu chờ nhân sự xác nhận. Nhân viên phải kiểm tra quy trình thật trước khi dùng lời hứa về lịch. |
+
+Hai trang lịch hẹn là mẫu so sánh công khai về quy trình. Để có hồ sơ đối thủ của một doanh nghiệp cụ thể, người nghiên cứu phải xác nhận tên, thị trường, nguồn, ngày hiệu lực và phạm vi sử dụng trước khi đưa vào brief. Trường quan sát đối thủ của chiến dịch hiện để trống. Người phụ trách có thể kiểm tra giả thuyết mới ở pilot, giữ nguyên kết quả lần đầu và ghi claim nào đã phải sửa.

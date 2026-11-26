@@ -160,6 +160,7 @@ function createCampaignEngine(api) {
       command(proposed,'Duyệt phiên bản '+proposal.revision,()=>({path:'/engine/plans/'+proposal.id+'/approve',
         idField:'key',payload:{expected_digest:proposal.digest}}));
     }
+    if(active)productionPack(goals,active);
     planEditor(goals,planner);
     const timeline=card(grid,'Lịch làm việc và phân công');
     if(plan)for(const item of plan.work_packages)line(timeline,kinds[item.kind]||item.kind,department(item.role)+' · '+item.criteria,'Ngày '+item.due_day);
@@ -262,6 +263,54 @@ function createCampaignEngine(api) {
       jump.onclick=()=>section.focus();
     }
     const reload=add(board,'button','Tải lại trạng thái','secondary');reload.type='button';reload.onclick=load;
+  }
+  function productionPack(parent,plan){
+    const panel=details(parent,'Bộ nội dung và kế hoạch quảng cáo');
+    const epoch=generation, target=route()+'/engine/plans/'+encodeURIComponent(plan.id)+'/content-pack';
+    let loading=false, rendered=false;
+    panel.ontoggle=async()=>{
+      if(!panel.open || loading || rendered)return;
+      loading=true;
+      let child=panel.querySelector('section');
+      if(!child)child=add(panel,'section');
+      child.setAttribute('aria-busy','true');child.textContent='Đang lấy bản theo kế hoạch đã duyệt…';
+      try{
+        const pack=await api(target);
+        if(epoch!==generation || !panel.isConnected)return;
+        child.replaceChildren();rendered=true;
+        add(child,'p','Bản nháp nội bộ · Kế hoạch v'+pack.plan_revision+' · '+pack.plan_digest.slice(0,12));
+        for(const post of pack.social){
+          const item=details(child,post.platform+' · '+post.pillar);
+          add(item,'p',post.copy).style.whiteSpace='pre-line';
+        }
+        const page=details(child,'Trang web và tìm kiếm');
+        for(const value of [pack.website.headline,pack.website.body,pack.website.commercial_terms,
+          pack.website.cta,pack.organic_search.question,pack.organic_search.answer])add(page,'p',value).style.whiteSpace='pre-line';
+        const ad=details(child,'Advertising Studio · Mẫu quảng cáo tìm kiếm');
+        add(ad,'p',pack.objective);add(ad,'small','Nhóm người mua: '+pack.audience);
+        const format=add(ad,'section',null,'engine-card');
+        add(format,'strong',pack.advertising.headlines.join(' · '));
+        for(const description of pack.advertising.descriptions)add(format,'p',description);
+        for(const item of pack.advertising.ad_groups)line(ad,item.hypothesis,'Ngân sách đề xuất',money(item.budget_vnd));
+        add(ad,'p',pack.advertising.experiment);
+        const measure=pack.advertising.measurement;
+        if(measure.status==='requires_measurement_contract'){
+          add(ad,'p','Cần ghim định nghĩa KPI trước khi dùng kế hoạch đo: '+measure.approved_label);
+        }else{
+          const eventLabel={requested:'yêu cầu đặt lịch đủ điều kiện',confirmed:'lịch được nhân sự xác nhận',completed:'buổi được người phụ trách xác nhận hoàn tất'};
+          add(ad,'strong',plan.measurement_plan.kpi+' · KPI v'+measure.revision);
+          line(ad,'Tử số',eventLabel[measure.numerator.event]||measure.numerator.event);
+          line(ad,'Mẫu số',eventLabel[measure.denominator.event]||measure.denominator.event);
+          line(ad,'Kỳ đối soát',measure.window_days+' ngày · UTC');
+        }
+        for(const issue of pack.advertising.format_issues)add(ad,'p','Cần biên tập '+issue.field+' '+(issue.variant||'')+(issue.limit?' · '+issue.length+'/'+issue.limit+' ký tự':' · kiểm số biến thể'));
+        add(ad,'p','Đích đến cần chọn trong Landing Studio · số tiền bản nháp đã chi '+money(pack.advertising.external_spend_vnd));
+        const cal=details(child,'Lịch biên tập · '+pack.calendar_timezone);
+        for(const item of pack.calendar)line(cal,item.date+' · '+department(item.owner),item.acceptance,kinds[item.kind]||item.kind);
+        add(child,'small','Giả thuyết thị trường cần đối chiếu với bằng chứng theo phạm vi chiến dịch.');
+      }catch(error){if(epoch===generation)child.textContent=error.message;}
+      finally{loading=false;child.setAttribute('aria-busy','false');}
+    };
   }
   function sandbox(plan,payload) {
     return {path:'/sandbox/commands',idField:'request_id',payload:{...payload,plan_id:plan.id}};

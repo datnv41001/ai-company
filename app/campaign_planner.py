@@ -181,6 +181,21 @@ def planner(tenant_id: str, campaign_id: str, user: User = Depends(current_user)
     }
 
 
+@router.get("/plans/{plan_id}/content-pack")
+def content_pack(tenant_id: str, campaign_id: str, plan_id: str, user: User = Depends(current_user), db: Session = Depends(get_db)):
+    from .campaign_content_pack import compose
+
+    store = campaign_store(db, user, tenant_id, campaign_id, write=False)
+    if not store.approver:
+        missing()
+    plan = active_plan(store, campaign_id)
+    if plan["id"] != plan_id:
+        conflict("Refresh the approved campaign revision")
+    ref = plan["manifests"].get("landing") or plan["manifests"]["strategy"]
+    _, _, projection = selection(store, campaign_id, ref["id"], stage="operate")
+    return compose(plan, projection)
+
+
 @router.post("/plans", status_code=201)
 def propose(tenant_id: str, campaign_id: str, body: Proposal, user: User = Depends(current_user), db: Session = Depends(get_db)):
     s = campaign_store(db, user, tenant_id, campaign_id, write=True)

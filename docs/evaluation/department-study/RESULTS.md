@@ -1,5 +1,7 @@
 # Đánh giá một gói công việc Marketing từ brief đến bản giao
 
+Đợt đối chứng tiếp theo dùng 84 câu đối chiếu điều khoản và 24 sản phẩm viết thuộc sáu nhiệm vụ Marketing. Có thể kiểm tra từng lời gọi, quy tắc chấm và chi phí đã quan sát trong [hồ sơ đánh giá độc lập](advisory/RESULTS.md).
+
 **Giữ Commercial GA ở mức NO-GO.** Trên hai brief B2B mới, Qwen 7B tạo được vài đề xuất có ích ở bản đầu. Khi đi hết luồng biên tập và QA hiện hành, cả bốn tài liệu chiến lược/landing của nhánh này đều quay về câu chữ của bộ soạn xác định. Bản social cho khay bị cụt ngay phần điều kiện đơn hàng. Hai mẫu social và ad của dịch vụ lặp nguyên văn một lời hứa tăng hiệu quả thiếu căn cứ. Hai ca chưa cho thấy lợi ích đủ để mặc định dùng 7B. [Hai bộ tài liệu thực tế sau biên tập](DELIVERABLES.md) · [Đối chiếu từng nguyên bản trong archive](DEPARTMENT-RECEIPTS.zip)
 
 ## Thiết kế và các lần chạy

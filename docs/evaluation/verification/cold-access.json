@@ -1,0 +1,432 @@
+[
+  {
+    "timestamp": "2026-11-26T05:14:21.879048+00:00",
+    "sha": "c5c6329599a66fd2dc6011428e7ab8eed9208df4",
+    "op": "list",
+    "path": "",
+    "args": [],
+    "size": 301
+  },
+  {
+    "timestamp": "2026-11-26T05:14:27.305412+00:00",
+    "sha": "c5c6329599a66fd2dc6011428e7ab8eed9208df4",
+    "op": "list",
+    "path": "docs",
+    "args": [],
+    "size": 903
+  },
+  {
+    "timestamp": "2026-11-26T05:14:27.732013+00:00",
+    "sha": "c5c6329599a66fd2dc6011428e7ab8eed9208df4",
+    "op": "read",
+    "path": "AGENTS.md",
+    "args": [
+      "1",
+      "250"
+    ],
+    "size": 3586
+  },
+  {
+    "timestamp": "2026-11-26T05:14:28.208076+00:00",
+    "sha": "c5c6329599a66fd2dc6011428e7ab8eed9208df4",
+    "op": "list",
+    "path": "tests",
+    "args": [],
+    "size": 3671
+  },
+  {
+    "timestamp": "2026-11-26T05:14:28.803679+00:00",
+    "sha": "c5c6329599a66fd2dc6011428e7ab8eed9208df4",
+    "op": "read",
+    "path": "README.md",
+    "args": [
+      "1",
+      "250"
+    ],
+    "size": 7389
+  },
+  {
+    "timestamp": "2026-11-26T05:14:29.251755+00:00",
+    "sha": "c5c6329599a66fd2dc6011428e7ab8eed9208df4",
+    "op": "read",
+    "path": "HANDOFF.md",
+    "args": [
+      "1",
+      "250"
+    ],
+    "size": 39210
+  },
+  {
+    "timestamp": "2026-11-26T05:14:34.506656+00:00",
+    "sha": "c5c6329599a66fd2dc6011428e7ab8eed9208df4",
+    "op": "read",
+    "path": "tests/test_department_dispatch_integration.py",
+    "args": [
+      "1",
+      "120"
+    ],
+    "size": 7769
+  },
+  {
+    "timestamp": "2026-11-26T05:14:35.012967+00:00",
+    "sha": "c5c6329599a66fd2dc6011428e7ab8eed9208df4",
+    "op": "read",
+    "path": "tests/test_optimization_scope.py",
+    "args": [
+      "1",
+      "100"
+    ],
+    "size": 4439
+  },
+  {
+    "timestamp": "2026-11-26T05:14:35.508757+00:00",
+    "sha": "c5c6329599a66fd2dc6011428e7ab8eed9208df4",
+    "op": "read",
+    "path": "tests/conftest.py",
+    "args": [
+      "1",
+      "140"
+    ],
+    "size": 948
+  },
+  {
+    "timestamp": "2026-11-26T05:14:36.623626+00:00",
+    "sha": "c5c6329599a66fd2dc6011428e7ab8eed9208df4",
+    "op": "list",
+    "path": "app",
+    "args": [],
+    "size": 1702
+  },
+  {
+    "timestamp": "2026-11-26T05:14:37.441959+00:00",
+    "sha": "c5c6329599a66fd2dc6011428e7ab8eed9208df4",
+    "op": "read",
+    "path": "docs/evaluation/department-review/README.md",
+    "args": [
+      "1",
+      "160"
+    ],
+    "size": 4849
+  },
+  {
+    "timestamp": "2026-11-26T05:14:44.602279+00:00",
+    "sha": "c5c6329599a66fd2dc6011428e7ab8eed9208df4",
+    "op": "read",
+    "path": "tests/test_business_intake.py",
+    "args": [
+      "1",
+      "130"
+    ],
+    "size": 3896
+  },
+  {
+    "timestamp": "2026-11-26T05:14:45.073760+00:00",
+    "sha": "c5c6329599a66fd2dc6011428e7ab8eed9208df4",
+    "op": "read",
+    "path": "app/database.py",
+    "args": [
+      "1",
+      "110"
+    ],
+    "size": 7943
+  },
+  {
+    "timestamp": "2026-11-26T05:14:45.612184+00:00",
+    "sha": "c5c6329599a66fd2dc6011428e7ab8eed9208df4",
+    "op": "read",
+    "path": "app/main.py",
+    "args": [
+      "1",
+      "210"
+    ],
+    "size": 9877
+  },
+  {
+    "timestamp": "2026-11-26T05:14:46.052324+00:00",
+    "sha": "c5c6329599a66fd2dc6011428e7ab8eed9208df4",
+    "op": "read",
+    "path": "docs/evaluation/department-review/AUTHORITY.md",
+    "args": [
+      "1",
+      "130"
+    ],
+    "size": 6516
+  },
+  {
+    "timestamp": "2026-11-26T05:14:46.677084+00:00",
+    "sha": "c5c6329599a66fd2dc6011428e7ab8eed9208df4",
+    "op": "read",
+    "path": "docs/evaluation/department-review/baseline.json",
+    "args": [
+      "1",
+      "150"
+    ],
+    "size": 4336
+  },
+  {
+    "timestamp": "2026-11-26T05:14:47.626104+00:00",
+    "sha": "c5c6329599a66fd2dc6011428e7ab8eed9208df4",
+    "op": "read",
+    "path": "tests/test_department_pilot.py",
+    "args": [
+      "1",
+      "90"
+    ],
+    "size": 4652
+  },
+  {
+    "timestamp": "2026-11-26T05:14:58.530451+00:00",
+    "sha": "c5c6329599a66fd2dc6011428e7ab8eed9208df4",
+    "op": "read",
+    "path": "docs/ADR-001-OWN-SaaS-CORE.md",
+    "args": [
+      "1",
+      "65"
+    ],
+    "size": 4841
+  },
+  {
+    "timestamp": "2026-11-26T05:14:59.040618+00:00",
+    "sha": "c5c6329599a66fd2dc6011428e7ab8eed9208df4",
+    "op": "read",
+    "path": "docs/PRODUCT_MISSION.md",
+    "args": [
+      "1",
+      "130"
+    ],
+    "size": 12503
+  },
+  {
+    "timestamp": "2026-11-26T05:14:59.549337+00:00",
+    "sha": "c5c6329599a66fd2dc6011428e7ab8eed9208df4",
+    "op": "read",
+    "path": "docs/PRODUCT_SPEC_V1.md",
+    "args": [
+      "1",
+      "85"
+    ],
+    "size": 8289
+  },
+  {
+    "timestamp": "2026-11-26T05:14:59.989292+00:00",
+    "sha": "c5c6329599a66fd2dc6011428e7ab8eed9208df4",
+    "op": "read",
+    "path": "docs/evaluation/business-intake/README.md",
+    "args": [
+      "1",
+      "150"
+    ],
+    "size": 9348
+  },
+  {
+    "timestamp": "2026-11-26T05:15:00.277435+00:00",
+    "sha": "c5c6329599a66fd2dc6011428e7ab8eed9208df4",
+    "op": "read",
+    "path": "docs/evaluation/optimization-scope/README.md",
+    "args": [
+      "1",
+      "155"
+    ],
+    "size": 4576
+  },
+  {
+    "timestamp": "2026-11-26T05:15:01.513082+00:00",
+    "sha": "c5c6329599a66fd2dc6011428e7ab8eed9208df4",
+    "op": "read",
+    "path": "docs/GITHUB_RESEARCH_AND_REUSE.md",
+    "args": [
+      "1",
+      "48"
+    ],
+    "size": 6213
+  },
+  {
+    "timestamp": "2026-11-26T05:15:02.243739+00:00",
+    "sha": "c5c6329599a66fd2dc6011428e7ab8eed9208df4",
+    "op": "read",
+    "path": "docs/SECURITY_AND_GA_BLOCKERS.md",
+    "args": [
+      "1",
+      "90"
+    ],
+    "size": 7530
+  },
+  {
+    "timestamp": "2026-11-26T05:15:03.200725+00:00",
+    "sha": "c5c6329599a66fd2dc6011428e7ab8eed9208df4",
+    "op": "read",
+    "path": "docs/CODEX_LOCAL_HANDOFF.md",
+    "args": [
+      "1",
+      "60"
+    ],
+    "size": 4114
+  },
+  {
+    "timestamp": "2026-11-26T05:15:09.308933+00:00",
+    "sha": "c5c6329599a66fd2dc6011428e7ab8eed9208df4",
+    "op": "read",
+    "path": "docs/evaluation/department-study/PILOT.md",
+    "args": [
+      "1",
+      "135"
+    ],
+    "size": 4523
+  },
+  {
+    "timestamp": "2026-11-26T05:15:09.717208+00:00",
+    "sha": "c5c6329599a66fd2dc6011428e7ab8eed9208df4",
+    "op": "read",
+    "path": "docs/evaluation/department-study/advisory/SPECIALISTS.md",
+    "args": [
+      "1",
+      "140"
+    ],
+    "size": 4213
+  },
+  {
+    "timestamp": "2026-11-26T05:15:09.974874+00:00",
+    "sha": "c5c6329599a66fd2dc6011428e7ab8eed9208df4",
+    "op": "list",
+    "path": "docs/evaluation/department-review",
+    "args": [],
+    "size": 56
+  },
+  {
+    "timestamp": "2026-11-26T05:15:10.548646+00:00",
+    "sha": "c5c6329599a66fd2dc6011428e7ab8eed9208df4",
+    "op": "read",
+    "path": "docs/evaluation/department-study/advisory/REPLAY.md",
+    "args": [
+      "1",
+      "110"
+    ],
+    "size": 3564
+  },
+  {
+    "timestamp": "2026-11-26T05:15:10.943935+00:00",
+    "sha": "c5c6329599a66fd2dc6011428e7ab8eed9208df4",
+    "op": "list",
+    "path": "docs/evaluation/department-study",
+    "args": [],
+    "size": 181
+  },
+  {
+    "timestamp": "2026-11-26T05:15:16.993918+00:00",
+    "sha": "c5c6329599a66fd2dc6011428e7ab8eed9208df4",
+    "op": "read",
+    "path": "docs/evaluation/department-study/PILOT-ABCD/README.md",
+    "args": [
+      "1",
+      "95"
+    ],
+    "size": 3688
+  },
+  {
+    "timestamp": "2026-11-26T05:15:17.550782+00:00",
+    "sha": "c5c6329599a66fd2dc6011428e7ab8eed9208df4",
+    "op": "read",
+    "path": "docs/evaluation/department-study/RESULTS.md",
+    "args": [
+      "1",
+      "90"
+    ],
+    "size": 9526
+  },
+  {
+    "timestamp": "2026-11-26T05:15:17.892530+00:00",
+    "sha": "c5c6329599a66fd2dc6011428e7ab8eed9208df4",
+    "op": "list",
+    "path": "docs/evaluation/department-study/advisory",
+    "args": [],
+    "size": 112
+  },
+  {
+    "timestamp": "2026-11-26T05:15:18.475335+00:00",
+    "sha": "c5c6329599a66fd2dc6011428e7ab8eed9208df4",
+    "op": "read",
+    "path": "docs/evaluation/business-intake/README.md",
+    "args": [
+      "29",
+      "36"
+    ],
+    "size": 1043
+  },
+  {
+    "timestamp": "2026-11-26T05:15:18.967620+00:00",
+    "sha": "c5c6329599a66fd2dc6011428e7ab8eed9208df4",
+    "op": "read",
+    "path": "tests/test_optimization_scope.py",
+    "args": [
+      "120",
+      "250"
+    ],
+    "size": 4520
+  },
+  {
+    "timestamp": "2026-11-26T05:15:19.412943+00:00",
+    "sha": "c5c6329599a66fd2dc6011428e7ab8eed9208df4",
+    "op": "read",
+    "path": "docs/evaluation/DEPARTMENT-CAPABILITY-REGISTER.md",
+    "args": [
+      "1",
+      "62"
+    ],
+    "size": 8052
+  },
+  {
+    "timestamp": "2026-11-26T05:15:25.014748+00:00",
+    "sha": "c5c6329599a66fd2dc6011428e7ab8eed9208df4",
+    "op": "read",
+    "path": "docs/SECURITY_AND_GA_BLOCKERS.md",
+    "args": [
+      "1",
+      "80"
+    ],
+    "size": 7530
+  },
+  {
+    "timestamp": "2026-11-26T05:15:25.500619+00:00",
+    "sha": "c5c6329599a66fd2dc6011428e7ab8eed9208df4",
+    "op": "read",
+    "path": "docs/evaluation/department-review/authority-runs.json",
+    "args": [
+      "1",
+      "60"
+    ],
+    "size": 2446
+  },
+  {
+    "timestamp": "2026-11-26T05:15:25.915508+00:00",
+    "sha": "c5c6329599a66fd2dc6011428e7ab8eed9208df4",
+    "op": "read",
+    "path": "docs/evaluation/department-study/advisory/RESULTS.md",
+    "args": [
+      "1",
+      "110"
+    ],
+    "size": 11603
+  },
+  {
+    "timestamp": "2026-11-26T05:15:26.497077+00:00",
+    "sha": "c5c6329599a66fd2dc6011428e7ab8eed9208df4",
+    "op": "read",
+    "path": "docs/evaluation/sandbox-operations/CUTOVER.md",
+    "args": [
+      "1",
+      "70"
+    ],
+    "size": 3270
+  },
+  {
+    "timestamp": "2026-11-26T05:15:26.985055+00:00",
+    "sha": "c5c6329599a66fd2dc6011428e7ab8eed9208df4",
+    "op": "read",
+    "path": "tests/test_optimization_scope.py",
+    "args": [
+      "201",
+      "240"
+    ],
+    "size": 123
+  }
+]

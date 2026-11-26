@@ -1,0 +1,17 @@
+{
+  "junit": [
+    {
+      "case": "tests.test_device_sessions.test_wrong_tab_leaves_postgres_family_and_history_unchanged[sqlite]",
+      "reason": "PostgreSQL storage assertions",
+      "replacement_test": "tests.test_device_sessions.test_wrong_tab_leaves_postgres_family_and_history_unchanged[postgres]",
+      "replacement_passed": true
+    },
+    {
+      "case": "tests.test_device_sessions.test_two_workers_commit_orders_and_credential_change[sqlite]",
+      "reason": "real HTTP and PostgreSQL case",
+      "replacement_test": "tests.test_device_sessions.test_two_workers_commit_orders_and_credential_change[postgres]",
+      "replacement_passed": true
+    }
+  ],
+  "workflow_matched_model": "Optional study job limited in ci.yml to feature/marketing-product-qualification. The mandatory workforce-model jobs completed on this PR."
+}

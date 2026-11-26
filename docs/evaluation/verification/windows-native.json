@@ -1,0 +1,120 @@
+{
+  "source_sha256": "b569feba60a1e804f51d8b81a5db860f837e1feede1c1f445e4ae26bbe92d171",
+  "cases": [
+    {
+      "name": "tests.test_business_authority_paths.test_compatible_business_writers_share_authority_and_revision[postgres]",
+      "seconds": "14.233",
+      "result": "passed"
+    },
+    {
+      "name": "tests.test_optimization_scope.test_previous_plan_exception_cannot_steer_new_rfq_plan_or_invalidate_its_proposal",
+      "seconds": "0.001",
+      "result": "passed"
+    },
+    {
+      "name": "tests.test_optimization_scope.test_new_service_plan_uses_signed_denominator_cohort_even_with_secondary_rfq_or_old_no_show",
+      "seconds": "0.001",
+      "result": "passed"
+    },
+    {
+      "name": "tests.test_optimization_scope.test_replan_from_service_to_rfq_keeps_distinct_kpis_and_historical_reports[sqlite]",
+      "seconds": "3.321",
+      "result": "passed"
+    },
+    {
+      "name": "tests.test_optimization_scope.test_replan_from_service_to_rfq_keeps_distinct_kpis_and_historical_reports[postgres]",
+      "seconds": "5.670",
+      "result": "passed"
+    },
+    {
+      "name": "tests.test_business_intake.test_optional_fields_change_the_plan_contract_without_weakening_the_approved_brief",
+      "seconds": "0.001",
+      "result": "passed"
+    },
+    {
+      "name": "tests.test_business_intake.test_explicit_buyer_list_requires_supported_fields[\\u0110\\u1eb7t l\\u1ecbch kh\\u1ea3o s\\xe1t, ghi \\u0111\\u1ecba \\u0111i\\u1ec3m v\\xe0 m\\xe3 d\\xe2y chuy\\u1ec1n.]",
+      "seconds": "0.001",
+      "result": "passed"
+    },
+    {
+      "name": "tests.test_business_intake.test_explicit_buyer_list_requires_supported_fields[Request a quote and provide number of boxes and cable ID.]",
+      "seconds": "0.001",
+      "result": "passed"
+    },
+    {
+      "name": "tests.test_business_intake.test_explicit_buyer_list_requires_supported_fields[\\u0110\\u1eb7t l\\u1ecbch kh\\u1ea3o s\\xe1t, ghi m\\xe3 d\\xe2y chuy\\u1ec1n.]",
+      "seconds": "0.001",
+      "result": "passed"
+    },
+    {
+      "name": "tests.test_business_intake.test_sales_followup_rechecks_moq_before_transition",
+      "seconds": "0.001",
+      "result": "passed"
+    },
+    {
+      "name": "tests.test_production_studios.test_scoped_production[acoustic-panel-sqlite]",
+      "seconds": "12.477",
+      "result": "passed"
+    },
+    {
+      "name": "tests.test_production_studios.test_scoped_production[pump-service-sqlite]",
+      "seconds": "14.641",
+      "result": "passed"
+    },
+    {
+      "name": "tests.test_production_studios.test_scoped_production[index-tray-sqlite]",
+      "seconds": "15.402",
+      "result": "passed"
+    },
+    {
+      "name": "tests.test_production_studios.test_scoped_production[receipt-map-sqlite]",
+      "seconds": "13.677",
+      "result": "passed"
+    },
+    {
+      "name": "tests.test_production_studios.test_restricted_production[False]",
+      "seconds": "27.725",
+      "result": "passed"
+    },
+    {
+      "name": "tests.test_production_studios.test_restricted_production[True]",
+      "seconds": "10.040",
+      "result": "passed"
+    },
+    {
+      "name": "tests.test_production_studios.test_predecessor_can_still_serve_approved_v1",
+      "seconds": "16.864",
+      "result": "passed"
+    },
+    {
+      "name": "tests.test_service_landing_edit.test_service_landing_edit[sqlite]",
+      "seconds": "6.927",
+      "result": "passed"
+    },
+    {
+      "name": "tests.test_service_landing_edit.test_terms_require_all_restrictions_and_the_full_qualified_benefit",
+      "seconds": "0.001",
+      "result": "passed"
+    },
+    {
+      "name": "tests.test_department_four_arm.test_commissioned_arms_and_blind_packets",
+      "seconds": "0.081",
+      "result": "passed"
+    },
+    {
+      "name": "tests.test_department_four_arm.test_d_needs_distinct_reviewer_bound_to_retained_files",
+      "seconds": "0.030",
+      "result": "passed"
+    },
+    {
+      "name": "tests.test_department_advisory_archive.test_archived_claims_quotes_specialist_drafts_and_scoring",
+      "seconds": "0.054",
+      "result": "passed"
+    },
+    {
+      "name": "tests.test_department_advisory_archive.test_reader_decisions_match_all_sealed_candidates",
+      "seconds": "0.061",
+      "result": "passed"
+    }
+  ]
+}

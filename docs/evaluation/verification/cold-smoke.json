@@ -1,0 +1,41 @@
+{
+  "sha": "c5c6329599a66fd2dc6011428e7ab8eed9208df4",
+  "archive_sha256": "74b3a7a51a15a5d9c0bcc854574b334f9a38dbe71d76b88dcda9a7a12415916e",
+  "environment": "fresh tracked source export, SQLite and localhost, preinstalled development dependencies",
+  "commands": [
+    {
+      "argv": [
+        "python",
+        "scripts/init_env.py"
+      ],
+      "exit": 0
+    },
+    {
+      "argv": [
+        "python",
+        "-m",
+        "pytest",
+        "-q",
+        "-p",
+        "no:cacheprovider",
+        "tests/test_optimization_scope.py",
+        "tests/test_business_intake.py"
+      ],
+      "exit": 0
+    }
+  ],
+  "health": {
+    "status": 200,
+    "body": {
+      "status": "ok",
+      "stage": "engineering_bootstrap",
+      "environment": "local",
+      "production_ready": false
+    }
+  },
+  "read_http": {
+    "/": 200,
+    "/docs": 200
+  },
+  "pytest_summary": "8 passed, 1 skipped in 5.77s"
+}

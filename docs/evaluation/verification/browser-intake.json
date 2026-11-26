@@ -1,0 +1,197 @@
+{
+  "checkout": "65b3032684654f76c932298fc7f225379db66e48",
+  "browser_artifact": "https://github.com/datnv41001/ai-company/actions/runs/45760239795/artifacts/15089414323",
+  "pngs": [
+    {
+      "path": "optimization-scope/rfq-390-light.png",
+      "crop_size_px": [
+        362,
+        362
+      ],
+      "sha256": "4fd8d743116050277c720b7ad2abd2982e1ebb97b0e3b3d1d2064cdf3492e271"
+    },
+    {
+      "path": "optimization-scope/rfq-390-dark.png",
+      "crop_size_px": [
+        362,
+        362
+      ],
+      "sha256": "c3a0f388b1e8c746553c258f6b28029dc157b50de576949263b99d03c82010ac"
+    },
+    {
+      "path": "optimization-scope/rfq-820-light.png",
+      "crop_size_px": [
+        380,
+        366
+      ],
+      "sha256": "8fd2258ffda63feb94c7f1c7cf0f5e5a86dc92489eff701a18d3e4dc97045d7a"
+    },
+    {
+      "path": "optimization-scope/rfq-820-dark.png",
+      "crop_size_px": [
+        380,
+        366
+      ],
+      "sha256": "c245428502968b39ea68b427535174c722805b930e6324ad3efa26eec137af24"
+    },
+    {
+      "path": "optimization-scope/rfq-1280-light.png",
+      "crop_size_px": [
+        485,
+        334
+      ],
+      "sha256": "f4abe170442e26aa551d8a8e68efb320b66ad1f1a0f6d3339faddffb9ecdadae"
+    },
+    {
+      "path": "optimization-scope/rfq-1280-dark.png",
+      "crop_size_px": [
+        485,
+        334
+      ],
+      "sha256": "dfbc8130ea07bf7c5a0991200f2f03649e1bafa87b374996291b283a283c7ad4"
+    },
+    {
+      "path": "optimization-scope/appointment-390-light.png",
+      "crop_size_px": [
+        362,
+        365
+      ],
+      "sha256": "f5d6608ea23138d0c6ba80a6550ea1c8b9b545608c7080bd3b4a244a7f6fe14e"
+    },
+    {
+      "path": "optimization-scope/appointment-390-dark.png",
+      "crop_size_px": [
+        362,
+        365
+      ],
+      "sha256": "d26e1acd293fd0c790e6ba092ea0ed39bd69afb49d31a0bb3484160cece4bbd9"
+    },
+    {
+      "path": "optimization-scope/appointment-820-light.png",
+      "crop_size_px": [
+        380,
+        370
+      ],
+      "sha256": "391b89380aa2db2069091fd2dbfd12fae9b7e4863a3a25980cbe68225f6e44e1"
+    },
+    {
+      "path": "optimization-scope/appointment-820-dark.png",
+      "crop_size_px": [
+        380,
+        370
+      ],
+      "sha256": "30b5ee6952ae0d8a85de8d1bbf6572170430012fc73ff707c8d58e73736e1b74"
+    },
+    {
+      "path": "optimization-scope/appointment-1280-light.png",
+      "crop_size_px": [
+        485,
+        333
+      ],
+      "sha256": "d00341f36664e340fc26671fdc28310437b6d2249b5185413e7885f81e3e9c19"
+    },
+    {
+      "path": "optimization-scope/appointment-1280-dark.png",
+      "crop_size_px": [
+        485,
+        333
+      ],
+      "sha256": "bb12759e5a1e3b706f1a42314d75b5bd9d6881b3133496dadb05d04798383ad6"
+    },
+    {
+      "path": "production-studios/appointment/intake-390.png",
+      "crop_size_px": [
+        326,
+        490
+      ],
+      "sha256": "d4b0eceff3e7a9c2761b3d5470f9a81376b4f2e826f513532947d8b5dc12b182"
+    },
+    {
+      "path": "production-studios/appointment/intake-820.png",
+      "crop_size_px": [
+        707,
+        480
+      ],
+      "sha256": "ce3e0870df9bbcf75f80e583105a6010f61255b93f71d34b8f9300de132bd96a"
+    },
+    {
+      "path": "production-studios/appointment/intake-1280.png",
+      "crop_size_px": [
+        1094,
+        497
+      ],
+      "sha256": "26b2a09bc47e81e01bbe50e542971959f36629b9f8735d6cedacddf82035cd64"
+    },
+    {
+      "path": "production-studios/index-tray/intake-390.png",
+      "crop_size_px": [
+        326,
+        490
+      ],
+      "sha256": "246c5510605058e11f73fe75e89990c4e20fb8a2b70ed102849717456351c0bf"
+    },
+    {
+      "path": "production-studios/index-tray/intake-820.png",
+      "crop_size_px": [
+        707,
+        480
+      ],
+      "sha256": "1b5bd3f0e07ac248d75dcc3f220e0f1ea6da60b695aa47f63b5f4d5fe1deb60d"
+    },
+    {
+      "path": "production-studios/index-tray/intake-1280.png",
+      "crop_size_px": [
+        1094,
+        497
+      ],
+      "sha256": "f5496a39a8299e9cd47fcda7e70e2e222e7227d19bb23724a44d7402133e8df9"
+    },
+    {
+      "path": "production-studios/receipt-map/intake-390.png",
+      "crop_size_px": [
+        326,
+        409
+      ],
+      "sha256": "fe6b25a1e42ed3f2d96150541db74f1b1cf790e6a1446dde3471eca2746f2d11"
+    },
+    {
+      "path": "production-studios/receipt-map/intake-820.png",
+      "crop_size_px": [
+        707,
+        397
+      ],
+      "sha256": "e3abf2b9bf743a394784774b6b528cf3e19e0b4b876e8c379f8d9964e8021129"
+    },
+    {
+      "path": "production-studios/receipt-map/intake-1280.png",
+      "crop_size_px": [
+        1094,
+        414
+      ],
+      "sha256": "7ece46882d7f1c93725a333e8550502b29bdbc8faf337bdf6b1d889084b0a626"
+    }
+  ],
+  "signed_submissions": [
+    {
+      "case": "pump-service",
+      "form_html_sha256": "99bfdd8615385fdbd62d490c63396c00cc1e4015b0b05bcb94adf57da796e376",
+      "contract_digest": "ac59670f75e4259b7828d11bd1490346f1538436aaf2486c466808bc0bf7845f",
+      "plan_digest": "12adf491a3d8aaa017914e20914402c914161a3e4d816deb746fc3eff23db178",
+      "receipt": "44e8b454-d58e-4352-ac1f-a1b3f6ccf87d"
+    },
+    {
+      "case": "receipt-map",
+      "form_html_sha256": "4d506e2477c3e4f1261c30b839eab2166c71285b9edb0070c23abebaeec46606",
+      "contract_digest": "e928e63f2eb7f3788c60f692ae6708488486cc8c6067e94c070f3963caaf205c",
+      "plan_digest": "1140a63250a3034e236ebf2601f25f3cce6a1da935133b4bdd92f2bfe9530b0c",
+      "receipt": "6ce95eb5-2ecf-4643-b7d9-a885c23aab31"
+    },
+    {
+      "case": "index-tray",
+      "form_html_sha256": "6d16012326f5f76ade94f96ab2b6a827654ee5a0198a223bdb5b288dcdb2d41b",
+      "contract_digest": "90a715bc18a80d23aeb3976a2176fb2a1f6b73952b96a7c228e441e2c013b4f9",
+      "plan_digest": "e197da84097b5786ea3ac86ce07a7cf1be3f37bc962c76856a399ca6b70d96c1",
+      "receipt": "7cfa7c23-42ef-4bbb-ac65-d82598c2e91e"
+    }
+  ]
+}

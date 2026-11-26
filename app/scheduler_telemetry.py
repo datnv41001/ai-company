@@ -5,6 +5,7 @@ from types import SimpleNamespace
 from sqlalchemy import text
 from migrations.runtime_bundle import runtime_fingerprint, APPROVAL
 from .registry_adapters import node_request, resolve, runtimes
+from . import storyboard_runtime
 from .workforce_gateway import Gateway, reserve_tokens, PROMPT_VERSION
 
 
@@ -29,6 +30,10 @@ def worker_heartbeat(conn, config):
 
 
 def estimate(run, node, parents, caps):
+    # Matches worker admission: both storyboard releases execute locally with
+    # zero provider usage even in a pool that also hosts metered model jobs.
+    if storyboard_runtime.is_run(run):
+        return 0
     config = Gateway(caps["provider"], caps["model"], "", caps["input_rate"], caps["output_rate"], caps["timeout"])
     earlier = {p["id"]: p["checkpoint"]["output"]["text"][:1400] for p in parents if p["id"] != "director"}
     assignment = node.assignment or ""

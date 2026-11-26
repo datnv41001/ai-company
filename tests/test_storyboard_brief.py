@@ -2,11 +2,15 @@ import copy
 import json
 import os
 from pathlib import Path
+from types import SimpleNamespace
 
 import pytest
 
 from app import storyboard_brief as brief, storyboard_runtime as runtime, video_storyboard as legacy
 from app.knowledge_store import canonical, digest
+from app.scheduler_telemetry import estimate
+from app.storyboard_contract import release_manifest
+from app.workforce_gateway import Gateway, reserve_tokens
 from knowledge_fixtures import accepted
 from test_c3_authority import doc_and_decision
 from test_claim_desk import reader
@@ -51,6 +55,19 @@ def test_corrupt_handoff_stops_after_one_verified_attempt(pool, monkeypatch):
     assert failure["outcome"] == "storyboard_invalid_checkpoint" and failure["attempt"] == 1
     assert failure["recovery"] == "inspect_checkpoint_integrity_before_new_run"
     assert [c["skill"] for c in result["checkpoints"]] == ["director", "content"]
+
+
+@pytest.mark.parametrize("release", runtime.RELEASES)
+def test_zero_budget_deterministic_nodes_in_a_metered_pool(release):
+    rates = dict(provider="local", model="local-model", input_rate=150, output_rate=240, timeout=60)
+    contracts = release_manifest(1 if release == legacy.RELEASE else 2)["contracts"]
+    run = SimpleNamespace(knowledge={"registry": {"workflow": release, "contracts": contracts}})
+    for skill in (("director", "storyboard") if release == legacy.RELEASE else ("director", "content", "storyboard")):
+        node = SimpleNamespace(id=skill, skill=skill, template="dynamic-v1", assignment="")
+        builder = legacy.request if release == legacy.RELEASE else runtime.request
+        envelope = builder(run, "local-model", node=node)
+        assert Gateway("local", "local-model", "", 150, 240, 60).price(reserve_tokens(envelope), envelope["max_tokens"]) > 0
+        assert estimate(run, node, [], rates) == 0
 
 
 def case_input(case, prepare=False):

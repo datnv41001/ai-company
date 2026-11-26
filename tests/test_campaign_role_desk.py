@@ -98,6 +98,8 @@ def test_scoped_role_cannot_read_another_customers_business_case(api,agency):
     assert apt_command(replacement,"service_assignee","complete",5,5,feedback="Inspection performed",key="lost-ack").status_code==404
     report=accepted(api.get(root+"/sandbox",headers=owner["headers"]))["report"]
     assert report["appointments"]["completed"]==1 and report["sales_accepted"]==1 and report["confirmed_revenue_vnd"]==0
+    assert report["secondary_rfq_funnel"]["plan_id"]==plan["id"]
+    assert report["secondary_rfq_funnel"]["sales_accepted"]==1
     change_fixture_membership(api,owner["tenant"],sales["id"],"editor")
     change_fixture_membership(api,owner["tenant"],sales["id"],"viewer")
     assert get("sales_recipient",sales).status_code==404

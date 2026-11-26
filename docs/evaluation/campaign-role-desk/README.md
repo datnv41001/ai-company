@@ -32,6 +32,10 @@ Core v26, Business v3 và C3 v5. Chạy `python migrations/apply.py` để cài 
 
 ## Kiểm chứng và giới hạn
 
+KPI theo nhóm lịch xác nhận sử dụng lần xác nhận hợp lệ đầu tiên. Đổi giờ trên một lịch đã xác nhận giữ nguyên ngày tiếp nhận vào nhóm. Bảng báo giá phụ hiển thị từ khi duyệt đúng phiên bản cho phép nhận RFQ, bao gồm số hồ sơ, kết quả Sales, tiền xác nhận và hoàn tiền mô phỏng. Báo cáo KPI chính dịch vụ tiếp tục tính theo kỳ và mẫu số đã ký. Các ảnh `ui/secondary-rfq-*.png` ghi một RFQ hợp lệ và chưa có lịch hẹn, trên Chrome tại ba kích thước trong hai theme.
+
+Hai phép thử `test_rescheduling_cannot_reenter_a_prior_confirmation_cohort` và `test_secondary_quotes_count_only_the_explicit_plan_and_settlements` trong `tests/test_measurement_integrity.py` thất bại trên cây `044a914`. Trường hợp đầu đưa ngày xác nhận cũ vào kỳ do đổi lịch, trường hợp sau thiếu báo cáo riêng. Browser trên cùng cây không tìm thấy thẻ số yêu cầu đặt lịch của kế hoạch. Sau thay đổi, hai regression và hành trình `tests/browser_campaign_engine.py::test_campaign_commands_and_scope_switch` đạt trên dữ liệu tổng hợp.
+
 Dùng cấu hình kiểm thử local của repository. Chạy `python -m pytest -q tests/test_campaign_role_desk.py tests/test_campaign_appointments.py tests/test_campaign_operations.py` với `AMC_TEST_PG=1`. Chạy `python -m pytest -q tests/browser_role_desk.py tests/browser_campaign_engine.py` với Chromium; có thể đặt `AMC_BROWSER_EXECUTABLE` tới trình duyệt cục bộ. `AMC_DESK_SCREENSHOTS` là thư mục ảnh, `AMC_DEPT_OPS_EVIDENCE` là thư mục receipt không chứa token. Các tệp trong thư mục này ghi lại một ca giả lập và giao diện tại 1280, 820, 390 px trong hai theme. Người phản biện có thể kiểm lại nghiệm thu bằng cách thu hồi quyền giữa hai lần gửi cùng receipt, đổi người phụ trách, đổi tư cách thành viên rồi cấp lại và so sánh dữ liệu của hai khách cùng agency.
 
 Phạm vi gồm phối hợp nghiệp vụ nội bộ. Chưa có đồng bộ lịch ngoài, CRM/ERP ngoài, hóa đơn, ghi nhận chi tiêu thật hoặc dữ liệu khách thật. Không có kết luận về hiệu quả nghề nghiệp hoặc tiết kiệm chi phí. Commercial GA vẫn NO-GO.

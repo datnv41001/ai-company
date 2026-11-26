@@ -141,3 +141,14 @@ def reconcile(state):
             "simulated_spend_vnd": sum(a["cost_vnd"] for a in actions.values() if a["state"] == "executed"),
             "confirmed_revenue_vnd": revenue, "attributed_revenue_vnd": attributed,
             "unattributed_revenue_vnd": revenue - attributed, "attributed_by_asset_vnd": breakdown}
+
+
+def secondary_rfq_funnel(plan,state):
+    if not plan or plan["buyer_action"]!="appointment" or "rfq" not in plan.get("secondary_conversions",[]):
+        return None
+    scoped={bucket:{key:row for key,row in state[bucket].items() if row["plan_id"]==plan["id"]}
+            for bucket in ("leads","sessions","actions")}
+    report=reconcile(scoped)
+    fields=("rfqs","qualified_leads","sales_accepted","quotations","confirmed_orders","cancelled_orders",
+            "confirmed_revenue_vnd","attributed_revenue_vnd","unattributed_revenue_vnd","refunds_vnd")
+    return {"plan_id":plan["id"],"window":"plan_lifetime",**{field:report[field] for field in fields}}

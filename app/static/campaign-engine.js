@@ -122,8 +122,11 @@ function createCampaignEngine(api) {
     nav.setAttribute('aria-label','Các phần của chiến dịch');
     const kpis=add(board,'div',null,'engine-kpis');
     const report=ops.report;
+    const isService = plan?.buyer_action === 'appointment';
+    const intakeMetric=isService?['Yêu cầu đặt lịch của kế hoạch',ops.appointments.filter(a=>a.plan_id===plan.id).length]:
+      ['Yêu cầu báo giá sandbox',report.rfqs];
     for(const [caption,value] of [['Kế hoạch được duyệt',active?'v'+active.revision:'Chưa có'],
-      ['Lượt Workforce',production.runs.length], ['Yêu cầu báo giá sandbox',report.rfqs],
+      ['Lượt Workforce',production.runs.length], intakeMetric,
       ['Chi phí mô phỏng',money(report.simulated_spend_vnd)]]) {
       const metric=add(kpis,'div',null,'metric');add(metric,'span',caption);add(metric,'strong',value);
     }
@@ -208,7 +211,6 @@ function createCampaignEngine(api) {
       line(progress,department(u.assigned_role),kinds[u.category]||u.category,label(u.status));
     }
     if(!active)add(progress,'p','Duyệt kế hoạch để giao việc cho từng bộ phận.');
-    const isService = plan?.buyer_action === 'appointment';
     const funnel=card(grid,isService ? 'Lịch hẹn dịch vụ trong sandbox' : 'Từ RFQ đến doanh thu sandbox');
     if (report.primary_measurement) {
       const metric = report.primary_measurement;
@@ -223,15 +225,24 @@ function createCampaignEngine(api) {
       line(primary, 'Thiếu nguồn', 'Trong mẫu số của KPI', String(metric.unattributed));
       line(primary, 'Phiên web', 'Chỉ số phụ trong cùng kỳ', String(metric.secondary_metrics[0].value));
     }
-    if (!isService) {
-      for(const [key,text] of [['sessions','Phiên'],['rfqs','Yêu cầu báo giá'],['qualified_leads','Đủ điều kiện'],['sales_accepted','Sales tiếp nhận'],
-      ['quotations','Báo giá'],['confirmed_orders','Đơn xác nhận'],['cancelled_orders','Đơn hủy']])line(funnel,text,'',String(report[key]));
-    line(funnel,'Doanh thu sau điều chỉnh','Số liệu sandbox',money(report.confirmed_revenue_vnd));
-    line(funnel,'Có nguồn chiến dịch','',money(report.attributed_revenue_vnd));line(funnel,'Thiếu nguồn','',money(report.unattributed_revenue_vnd));
-      line(funnel,'Hoàn tiền','',money(report.refunds_vnd));
+    const quoteReport=isService?report.secondary_rfq_funnel:report;
+    if (quoteReport) {
+      const parent=isService?add(funnel,'section'):funnel;
+      if(isService){
+        parent.dataset.secondaryRfq=quoteReport.plan_id;
+        add(parent,'h4','Báo giá phụ của kế hoạch');
+        add(parent,'p','Số liệu sandbox từ khi duyệt phiên bản này. Mỗi yêu cầu báo giá được tính một lần.');
+      } else line(parent,'Phiên','',String(quoteReport.sessions));
+      for(const [key,text] of [['rfqs','Yêu cầu báo giá'],['qualified_leads','Đủ điều kiện'],['sales_accepted','Sales tiếp nhận'],
+        ['quotations','Báo giá'],['confirmed_orders','Đơn xác nhận'],['cancelled_orders','Đơn hủy']])line(parent,text,'',String(quoteReport[key]));
+      line(parent,'Doanh thu sau điều chỉnh','Số liệu sandbox',money(quoteReport.confirmed_revenue_vnd));
+      line(parent,'Có nguồn chiến dịch','',money(quoteReport.attributed_revenue_vnd));
+      line(parent,'Thiếu nguồn','',money(quoteReport.unattributed_revenue_vnd));
+      line(parent,'Hoàn tiền','',money(quoteReport.refunds_vnd));
     }
     if(ops.appointment_summary.requests || plan?.buyer_action==='appointment'){
       const a=ops.appointment_summary;
+      add(funnel,'h4','Lịch dịch vụ toàn chiến dịch');
       for (const [key, label] of [['requests','Yêu cầu đặt lịch'],['confirmed','Lịch từng được xác nhận'],
         ['completed','Buổi đã hoàn tất'],['cancelled','Đã hủy'],['no_show','Vắng mặt']]) {
         line(funnel, label, 'Toàn chiến dịch', String(a[key]));

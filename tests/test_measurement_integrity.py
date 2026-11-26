@@ -93,6 +93,32 @@ def test_frozen_holdout_rejects_denominator_window_attribution_and_duplicates():
     assert metrics.evaluate(contract, "holdout", state, cutoff) == report
 
 
+def test_rescheduling_cannot_reenter_a_prior_confirmation_cohort():
+    cutoff,state=holdout_state()
+    contract=metrics.terms(definition("appointment.completed_per_confirmed",14))
+    report=metrics.evaluate(contract,"holdout",state,cutoff)
+    # This confirmation is exactly on the open lower bound. The service is still pending
+    # when Marketing reschedules inside the reporting period, then finishes it normally.
+    row=state["appointments"]["too-early"]
+    row["history"]=[*row["history"][:2],
+        {"event":"confirmed","step":"reschedule","at":(cutoff-timedelta(days=10)).isoformat()},
+        {"event":"assigned","step":"assign","at":(cutoff-timedelta(days=9)).isoformat()},
+        {"event":"completed","at":(cutoff-timedelta(days=8)).isoformat()}]
+    assert metrics.evaluate(contract,"holdout",state,cutoff)==report
+
+
+def test_secondary_quotes_count_only_the_explicit_plan_and_settlements():
+    from app import campaign_operations_crm as crm
+    lead={"confirmed":True,"state":"confirmed","session_id":None,"gross_vnd":90,"refunded_vnd":10,"missing":[],
+          "sales_accepted":True,"quoted":True,"ordered":True}
+    state={"sessions":{},"actions":{},"leads":{"scoped":dict(lead,plan_id="v2"),"previous":dict(lead,plan_id="v1")}}
+    plan={"id":"v2","buyer_action":"appointment"}
+    assert crm.secondary_rfq_funnel(plan,state) is None
+    secondary=crm.secondary_rfq_funnel(dict(plan,secondary_conversions=["rfq"]),state)
+    assert (secondary["plan_id"],secondary["window"],secondary["rfqs"],secondary["confirmed_orders"])==("v2","plan_lifetime",1,1)
+    assert (secondary["confirmed_revenue_vnd"],secondary["refunds_vnd"])==(80,10)
+
+
 @pytest.mark.parametrize("case_name", ["luong-ro", "holdout"])
 def test_scoped_campaign_through_final_edition_and_crm(api, agency, case_name):
     owner, base, ((customer, scope), (other, other_scope)) = agency

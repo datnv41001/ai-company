@@ -3,6 +3,8 @@
 
 ## Bàn giao theo vai trò Sales, dịch vụ và Marketing
 
+Khi đổi giờ hẹn, KPI theo nhóm lịch xác nhận giữ ngày xác nhận đầu tiên. Một kế hoạch dịch vụ có thể tiếp nhận RFQ sau khi người phụ trách bật tùy chọn và duyệt phiên bản. Bảng **Báo giá phụ của kế hoạch** tính số hồ sơ và doanh thu sandbox trên đúng phiên bản đó. [Ca hồi quy và ảnh giao diện](docs/evaluation/campaign-role-desk/README.md)
+
 Tiếp quản từ bản journal core v26 tại `3dc7e4e`. Chạy lại publisher để có quyền truy cập theo campaign và kiểm tra RFQ ở tầng database. Trong **Chiến dịch → Bàn giao nghiệp vụ**, trao vai trò cho thành viên rồi kiểm tra bằng tài khoản viewer của người nhận. Giao diện theo dõi revision, phản hồi, thay đổi người phụ trách và kết quả thực hiện. [Hợp đồng, kiểm thử, ảnh thật và rollback](docs/evaluation/campaign-role-desk/README.md)
 
 

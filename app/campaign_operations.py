@@ -11,7 +11,7 @@ from . import c3_boundaries, campaign_channels, measurement_integrity
 from .c3_reviewer import active_approver
 from .campaign_operations_contracts import Appointment, AppointmentDecision, ActionTarget, CompleteRFQ, CostClose, DecideAction, Execute, Labor, Optimization, ReconcileCost, RFQ, Sales, SandboxCommand, Schedule, SessionEvent
 from . import campaign_operations_appointments as appointments, campaign_operations_capabilities as capabilities, campaign_operations_cost as costs
-from .campaign_operations_crm import observation, reconcile
+from .campaign_operations_crm import observation, reconcile, secondary_rfq_funnel
 from .campaign_planner import active_plan, campaign_store, history
 from .campaign_planner_pack import compose_assets
 from .database import get_db
@@ -318,6 +318,8 @@ def measurement_report(state, plan, cutoff):
     report = reconcile(state)
     if plan and (contract := plan.get("measurement_contract")):
         report["primary_measurement"] = measurement_integrity.evaluate(contract, plan["id"], state, cutoff, plan["locale"])
+    if secondary := secondary_rfq_funnel(plan, state):
+        report["secondary_rfq_funnel"] = secondary
     return report
 
 

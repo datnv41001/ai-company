@@ -15,6 +15,8 @@
   <script src="/static/command-center.js" defer></script>
   <link rel="stylesheet" href="/static/campaign-lab.css">
   <script src="/static/campaign-lab.js" defer></script>
+  <link rel="stylesheet" href="/static/campaign-engine.css">
+  <script src="/static/campaign-engine.js" defer></script>
   <script src="/static/catalog.js" defer></script>
   <script src="/static/marketing-brief.js" defer></script>
   <script src="/static/knowledge.js" defer></script>
@@ -142,6 +144,13 @@
         </div>
         <div data-screen="campaigns" class="section-head"><div><h2>Chiến dịch & nhiệm vụ</h2></div></div>
         <div data-screen="campaigns" class="panel"><div id="campaigns-list" class="empty">Chưa có chiến dịch. Hãy tạo khách hàng, thương hiệu và chiến dịch ở trên.</div></div>
+        <section id="campaign-engine" data-screen="campaigns" aria-labelledby="engine-title" hidden>
+          <header class="engine-header"><div><h3 id="engine-title">Điều hành chiến dịch</h3><p id="engine-caption">Chọn chiến dịch để xem mục tiêu, kế hoạch và kết quả sandbox.</p></div>
+            <label>Chiến dịch điều hành<select id="engine-select"></select></label>
+          </header>
+          <p id="engine-status" role="status" aria-live="polite"></p>
+          <div id="engine-dashboard"></div>
+        </section>
         <section id="campaign-lab" data-screen="campaigns" class="panel" aria-labelledby="lab-title" hidden>
           <div class="section-head"><div><h3 id="lab-title">Mô phỏng chiến dịch RFQ</h3><p>Từ kế hoạch tiếp cận người mua đến yêu cầu báo giá và doanh thu đối soát. Kịch bản dùng dữ liệu tổng hợp, mọi tác vụ chạy trong mô phỏng.</p></div></div>
           <form id="lab-form"><label>Chiến dịch làm việc<select id="lab-campaign" required></select></label><button type="submit">Chạy kịch bản B2B</button></form>

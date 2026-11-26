@@ -22,6 +22,7 @@ function mountMarketingStudio(host,api,path,role,afterSave) {
     known_contradiction:'Mâu thuẫn với nguồn hoặc quy tắc đã duyệt',semantic_interpretation:'Cần người có chuyên môn xác minh ý nghĩa'};
   let view,group,draft,dirty=false,openRequest=0;
   let edition=false;
+  let journeyIndex='', dismissed=new Set();
   const use=()=>body.isConnected && panel.open;
   function button(p,title,fn) {
     const b=add(p,'button',title);b.type='button';
@@ -34,6 +35,7 @@ function mountMarketingStudio(host,api,path,role,afterSave) {
     host.dispatchEvent(new Event('studiochange'));
   }
   function install(value){
+    if(view?.revision!==value.revision){journeyIndex='';dismissed.clear();}
     view=value;draft=structuredClone(view.groups);setDirty(false);
     edition=Boolean(view.delivery_version);
     if(!draft[group])group=Object.keys(draft)[0];
@@ -62,6 +64,17 @@ function mountMarketingStudio(host,api,path,role,afterSave) {
     const layout=add(body,'div');layout.className='studio-layout';
     const edit=add(layout,'section');edit.setAttribute('aria-label',name(group));
     add(edit,'h4',name(group));
+    const journeys=view.buyer_journeys;
+    if(journeys?.eligible.length){
+      const selector=add(edit,'label','Ngành và loại sản phẩm áp dụng cho đề xuất');
+      const choose=add(selector,'select');choose.add(new Option('Chọn sau khi đối chiếu brief',''));
+      journeys.eligible.forEach((v,i)=>choose.add(new Option(v.industry+' · '+v.product_type+' · '+v.unit,String(i))));
+      choose.add(new Option('Ngành hoặc loại sản phẩm khác','other'));
+      choose.value=journeyIndex;choose.onchange=()=>{journeyIndex=choose.value;draw();};
+      if(journeyIndex==='other')add(edit,'small','Dùng quy trình chung cho tổ hợp này. Có thể bổ sung thông tin từ brief trước khi chọn lại.');
+    }else if(journeys){
+      add(edit,'small','Dùng quy trình chung. Xác nhận ngành, loại sản phẩm, kênh và đơn vị bán trước khi chọn playbook chuyên ngành.');
+    }
     if(edition)add(edit,'p',Object.hasOwn(spec.fields,group)?'Thuộc bộ tài liệu giao khách.':'Chỉ dành cho đội ngũ nội bộ.');
     const state=add(edit,'p',view.approvals[group]?'Đã duyệt phần này':'Chờ duyệt độc lập');
     state.className='studio-decision';state.dataset.signed=String(Boolean(view.approvals[group]));
@@ -86,6 +99,18 @@ function mountMarketingStudio(host,api,path,role,afterSave) {
         for(const ref of refs){add(refsPanel,'strong',ref.handle);add(refsPanel,'p',ref.text);}
       }
       const suggestion=view.suggestions[group]?.[key];
+      const selected=journeys?.eligible[journeyIndex], field=group+'.'+key, offer=selected?.fields[field];
+      if(offer && offer.text!==value && !dismissed.has(journeyIndex+field)){
+        const box=add(edit,'details');add(box,'summary','So sánh đề xuất theo hành trình mua');
+        add(box,'strong','Nội dung hiện tại');const original=add(box,'p',input.value);
+        box.ontoggle=()=>{if(box.open)original.textContent=input.value;};
+        add(box,'strong',offer.kind==='hypothesis'?'Giả thuyết đề xuất':'Đề xuất biên tập');
+        add(box,'p',offer.text);add(box,'p',selected.reason);
+        add(box,'small',journeys.version+' · '+journeys.channel+' · '+selected.unit);
+        for(const ref of view.references.filter(r=>journeys.source_handles.includes(r.handle)))add(box,'p',ref.handle+' · '+ref.text);
+        button(box,'Dùng và biên tập',()=>{input.value=offer.text;input.dispatchEvent(new Event('input'));box.open=false;input.focus();});
+        button(box,'Bỏ qua đề xuất',()=>{dismissed.add(journeyIndex+field);box.remove();input.focus();});
+      }
       if(suggestion && suggestion!==value){
         const proposal=add(edit,'details');add(proposal,'summary','Xem đề xuất từ brief đã ghim');
         add(proposal,'p',suggestion);

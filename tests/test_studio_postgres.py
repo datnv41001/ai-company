@@ -30,7 +30,7 @@ pytestmark = PG
 WORKFLOW = c3_assets.RESEARCH
 
 
-def agency_draft(lab, workflow, *, rfq=False):
+def agency_draft(lab, workflow, *, rfq=False, before_queue=None):
     api = lab.api
     base, owner, recipient, client, campaign = lab.cases[0]
     lab.owner.execute("update workforce_runs set ready_at=now()+interval '1 day' where id=any(%s)", (lab.runs,))
@@ -66,6 +66,8 @@ def agency_draft(lab, workflow, *, rfq=False):
     guide = revision(api, owner, prep["path"], "voice", "guidelines", {"guidance": "Use plain words."})
     prep["params"]["guidelines"] = guide["id"]
     snap = capture(api, owner, prep)
+    if before_queue:
+        before_queue(snap, prep, intent)
     terms.update(knowledge_manifest={"id": snap["id"], "digest": snap["digest"]}, registry_workflow=workflow)
     rid = accepted(api.post(path, headers=owner["headers"], json=terms))["id"]
     for stage in ("director", *c3_assets.ROLES[workflow]):

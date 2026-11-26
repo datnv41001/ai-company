@@ -1,0 +1,24 @@
+# Lập kế hoạch và sản xuất cho một chiến dịch
+
+Người phụ trách chọn một chiến dịch trong không gian vận hành. Chọn hồ sơ WF-03 nếu cần chiến lược và kế hoạch đo lường, thêm WF-13 nếu cần trang đích và SEO. Mỗi hồ sơ cần có brief đã nộp, mục tiêu chiến dịch và các phiên bản kiến thức đã duyệt. Kế hoạch đầu tiên dùng kênh trong hồ sơ làm kênh đề xuất. Người phụ trách có thể chỉnh mục tiêu đầu ra, các kênh đề xuất, thời lượng và ngân sách truyền thông giả lập trước khi duyệt.
+
+## Quyền và phiên bản
+
+Owner hoặc admin tạo và duyệt kế hoạch. Các kế hoạch và biên nhận kết hợp dữ liệu thương mại với kiến thức có giới hạn truy cập, nên được lưu bằng lệnh `restricted` của Knowledge Store. Việc xem dữ liệu đi qua cùng kiểm tra tenant, client và brand của business workspace. Khách hàng nhận bản giao qua cổng duyệt đã có.
+
+Đọc `GET /api/tenants/{tenant}/campaigns/{campaign}/engine/planner` để lấy lựa chọn, phiên bản đề xuất và phiên bản đang thực hiện. `POST .../engine/plans` nhận revision gần nhất và một khóa idempotency. Lưu chỉnh sửa tạo một phiên bản đề xuất mới. Bản đã duyệt tiếp tục có hiệu lực cho tới khi người có quyền duyệt bản thay thế bằng `POST .../engine/plans/{id}/approve`, kèm digest và khóa yêu cầu. Kiểm tra lại scope, phiên bản và quyền trên nguồn khi duyệt. Một brief đang chờ và manifest y hệt có thể chuyển sang bản kế hoạch mới. Một brief đã xếp cho Workforce cần được thay bằng brief và manifest mới. Lịch sử cho biết bản nào đã được duyệt, thời điểm và người duyệt.
+
+Các vai trò, tiêu chí bàn giao và mốc ngày nằm trong từng work package. Khi duyệt, toàn bộ biên nhận yêu cầu công việc được ghi trước khi tạo bài xã hội, mẫu quảng cáo, brief thiết kế và lịch dự kiến. Những bản này có nguồn `deterministic-composition/1` và cần QA theo kênh. Bài và lịch lấy thông tin từ cùng bản kế hoạch, sản phẩm, điều kiện và buyer action. Số tiền do người dùng nhập là hạn mức đề xuất bằng VND cho mô phỏng. Chi phí mô hình và đầu ra ghi ở Worker journal riêng.
+
+## Từ đề bài đến bản giao
+
+`POST .../engine/plans/{id}/runs/strategy` và `.../runs/landing` gọi API Workforce hiện hành. Chọn release trong registry và kích hoạt tại campaign trước khi xếp việc. Hạ tầng worker thực thi WF-03 và WF-13 bằng provider mà môi trường nội bộ đã cấu hình. Yêu cầu xếp lại cùng hồ sơ trả về run hiện hữu. `GET .../engine/plans/{id}/production` cho biết run, checkpoint, lỗi, tài liệu và nguồn sinh. Bản chỉnh qua Studio có mã băm toàn tài liệu và mã băm theo nhóm trường cùng biên nhận ký QA còn hiệu lực. Mọi bản giao cho khách vẫn đi qua các bước submit, QA độc lập, tạo snapshot và quyết định của khách.
+
+## Chạy lại bằng dữ liệu tổng hợp
+
+1. Dùng môi trường Python và các ràng buộc phiên bản trong HANDOFF. Chạy migration trên PostgreSQL loopback mới có tên bắt đầu bằng `amc_test` và cấp tài khoản runtime hạn quyền theo CI. Schema 25 giữ nguyên. Dữ liệu lập kế hoạch dùng Knowledge Store và Workforce hiện hữu.
+2. Chạy `python -m pytest tests/test_campaign_planner.py`. Đặt `AMC_TEST_PG=1` với môi trường PostgreSQL trên để chạy cả hai adapter. Các bài test kiểm tra cách ly client/brand/tenant, thay phiên bản, chống thực hiện lại và hiệu lực của bằng chứng. Ca có chữ số đứng riêng trong tên sản phẩm kiểm tra rằng người QA vẫn phải xử lý các trường bị gắn cờ.
+3. Chạy llama.cpp trên loopback bằng Qwen đã ghim trong job Local Workforce. Đặt `AMC_LOCAL_MODEL_URL`, `AMC_EVAL_MODEL_FILE` và `AMC_MIGRATION_DSN` giống job đó. Để chụp ảnh, cài Chromium của Playwright hoặc chỉ `AMC_BROWSER_EXECUTABLE` tới Chrome/Chromium và đặt `AMC_ENGINE_EVIDENCE` tới thư mục ảnh mới. Chạy `python tests/campaign_planner_journey.py artifacts/new-run`. Chọn thư mục mới cho từng lần chạy để giữ kết quả cũ.
+4. Mỗi thư mục ca có hồ sơ đầu vào đã duyệt, plan và các biên nhận trong `journey.json`. Các thư mục `strategy` và `landing` có `worker.json` với model output, retry, token và thời gian thực của gateway. File `editor-review.json` ghi giá trị do model đề xuất, phương án xác định, từng thay đổi thử và kết quả QA, nội dung đã chọn cùng revision. Chạy `python tests/check_engine_receipts.py artifacts/new-run --screens <thư-mục-ảnh>` để đối chiếu provenance với lần gọi model, nguồn và bản giao đã ký. `failure.json` giữ nguyên lỗi ứng dụng hoặc lỗi harness. Bằng chứng UI chính là ảnh và kết quả browser trong thư mục đã chọn. Hai chiến dịch sử dụng địa chỉ thử và danh tính script độc lập. Kết quả biên tập, quyết định khách hàng và doanh thu đều thuộc tình huống tổng hợp.
+
+Để quay lui trước khi đưa vào sử dụng nội bộ, dừng nhận yêu cầu mới và workers, giữ bản sao DB cùng danh tính môi trường. Khởi động phiên bản trước theo trình tự chuyển giao Studio đã kiểm tra, giữ nguyên lịch sử kế hoạch và bản giao. Các phiên bản cũ không có giao diện đọc lịch sử của lệnh mới, cần dùng lại runtime này để tra cứu. Tham khảo [hướng dẫn vận hành](../../HANDOFF.md).

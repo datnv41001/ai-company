@@ -1,0 +1,17 @@
+{
+  "protocol": "studio-eligibility-1",
+  "locale": "vi-VN",
+  "channel": "web",
+  "cases": [
+    ["e01", "Kệ phơi Nắng Mai", "Hộ có ban công", "purchase", "piece", "Nội thất", "Hàng gia dụng"],
+    ["e02", "Nơ gói quà Sen", "Cửa hàng hoa", "colour_card_request", "piece", "Quà tặng", "Sản phẩm có lựa chọn màu"],
+    ["e03", "Giấy ốp Lúa", "Kiến trúc sư", "sample_request", "m²", "Vật liệu", "Vật liệu hoàn thiện"],
+    ["e04", "Thanh nẹp Cồn", "Đội thi công", "rfq", "piece", "Vật liệu", "Vật tư công trình"],
+    ["e05", "Hộp vòng đệm Sóc", "Xưởng lắp ráp", "rfq", "box", "Phân phối", "Hàng đóng hộp"],
+    ["e06", "Bảo dưỡng máy chiếu Dừa", "Quản lý rạp", "appointment", "machine", "Dịch vụ kỹ thuật", "Dịch vụ theo thiết bị"],
+    ["e07", "Lớp vẽ men Sứ", "Nhân viên thiết kế", "registration", "participant", "Đào tạo", "Lớp thực hành"],
+    ["e08", "Danh mục khóa cài Lá", "Đại lý phụ kiện", "catalogue_download", "box", "Phân phối", "Danh mục hàng đóng hộp"],
+    ["e09", "Gói tư vấn Lựu", "Nhóm sáng lập", "appointment", "hour", null, null],
+    ["e10", "Gói thuê Phù Sa", "Nhóm triển lãm", "registration", "month", null, null]
+  ]
+}

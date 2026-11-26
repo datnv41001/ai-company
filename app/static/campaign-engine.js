@@ -1,0 +1,286 @@
+/* Workspace data lives in memory; a scope change invalidates every in-flight response. */
+function createCampaignEngine(api) {
+  const by = id => document.getElementById(id);
+  const panel = by('campaign-engine'), selector = by('engine-select'), board = by('engine-dashboard');
+  const status = by('engine-status'), caption = by('engine-caption'), number = new Intl.NumberFormat('vi-VN');
+  const kinds = {strategy:'Chiến lược',measurement:'Đo lường',landing:'Trang đích',seo:'SEO',social:'Nội dung mạng xã hội',
+    ad:'Quảng cáo',creative_brief:'Brief thiết kế',calendar:'Lịch nội dung'};
+  const states = {proposed:'Chờ duyệt',approved:'Đã duyệt',superseded:'Đã thay thế',draft:'Nháp',submitted:'Chờ QA',
+    queued:'Đã xếp hàng',running:'Đang chạy',awaiting_qa:'Chờ QA',failed:'Thất bại',requested:'Đã giao việc',generated:'Đã tạo',
+    scheduled:'Đã lên lịch',authorized:'Được phép chạy',executed:'Đã thực thi mô phỏng',cancelled:'Đã hủy',
+    qualified:'Đủ điều kiện',received:'Đã nhận',assigned:'Đã phân công',accepted:'Sales đã nhận',rejected:'Từ chối',
+    quoted:'Đã báo giá',ordered:'Đã đặt hàng',confirmed:'Đã xác nhận',refunded:'Đã hoàn tiền',
+    shared:'Đã giao khách',qa_passed:'Đã qua QA',business_accepted:'Đã được tiếp nhận',fixture_accepted:'Nghiệm thu mô phỏng',incomplete:'Chưa hoàn tất'};
+  const origins = {staff_saved_studio_revision:'Bản đã lưu trong Studio',staff_saved_revision:'Bản do tài khoản biên tập lưu',
+    workforce_draft:'Bản nháp từ Workforce','deterministic-composition/1':'Soạn theo quy tắc'};
+  const label = v => states[v] || v || 'Chưa ghi nhận';
+  let tenant = '', role = '', actor = '', generation = 0, abort, selected = '', campaigns = [];
+  function add(parent, tag, title, cls) {
+    const e = document.createElement(tag);
+    if (title != null) e.textContent = title;
+    if (cls) e.className = cls;
+    parent.append(e); return e;
+  }
+  function reset() {
+    generation++; abort?.abort(); abort = null;
+    board.replaceChildren(); status.textContent = ''; panel.removeAttribute('aria-busy');
+    caption.textContent = 'Chọn chiến dịch để xem mục tiêu, kế hoạch và kết quả sandbox.';
+  }
+  function scope(nextTenant, nextRole, rows, userId) {
+    if (nextTenant !== tenant || role !== nextRole || actor!==userId || !rows.some(c => c.id === selected)) { reset(); selected = ''; }
+    tenant = nextTenant; role = nextRole; actor=userId; campaigns = rows;
+    panel.hidden = !['owner','admin'].includes(role) || !rows.length;
+    selector.replaceChildren(new Option('Chọn chiến dịch',''), ...rows.map(c => new Option(c.name,c.id)));
+    selector.value = selected;
+  }
+  selector.addEventListener('change', () => { selected=selector.value; load(); });
+  const route = () => '/api/tenants/' + encodeURIComponent(tenant) + '/campaigns/' + encodeURIComponent(selected);
+  const money = value => Number.isFinite(value) ? number.format(value)+' ₫' : 'Chưa đo';
+  function card(grid,title) { const section=add(grid,'section',null,'engine-card'); add(section,'h4',title); return section; }
+  function details(parent,title) { const box=add(parent,'details'); add(box,'summary',title); return box; }
+  function line(parent,title,detail,chip) {
+    const row=add(parent,'div',null,'engine-row'), body=add(row,'div');
+    add(body,'strong',title); if(detail)add(body,'small',detail); if(chip)add(row,'span',chip,'state-chip');return body;
+  }
+  function field(form,title,type,defaultValue='',required=true) {
+    const node=add(add(form,'label',title),'input');node.type=type;node.value=defaultValue;node.required=required;
+    return node;
+  }
+  function pick(form,title,items) {
+    const node=add(add(form,'label',title),'select');items.forEach(([id,name])=>node.add(new Option(name,id)));
+    return node;
+  }
+  // Keep a logical request's id across a lost response. A changed payload is a new intent.
+  function command(parent,title,build,{form=false}={}) {
+    const source=route(), epoch=generation; let key, signature;
+    const button=add(parent,'button',title);button.type=form?'submit':'button';
+    const run=async e=>{
+      e.preventDefault(); if(epoch!==generation || button.disabled)return;
+      try {
+        const {path, payload, idField} = build();
+        const next=JSON.stringify([path,payload]);if(next!==signature){key=crypto.randomUUID();signature=next;}
+        if(idField)payload[idField]=key;
+        button.disabled=true; status.textContent='Đang ghi nhận…';
+        await api(source+path,'POST',payload);
+        if(epoch===generation)await load();
+      }catch(err){if(epoch===generation)status.textContent=err.message;}
+      finally{button.disabled=false;}
+    };
+    if(form)parent.addEventListener('submit',run);else button.addEventListener('click',run);
+    return button;
+  }
+  function planEditor(section, planner) {
+    if(!planner.choices.length){add(section,'p','Chưa có hồ sơ C3 có hành động người mua để lập kế hoạch.');return;}
+    const old=planner.proposed || planner.active, form=add(details(section,old?'Đề xuất phiên bản kế tiếp':'Lập kế hoạch từ hồ sơ đã duyệt'),'form');
+    const selections = planner.choices.map(item=>{
+      const node=add(form,'label'), check=add(node,'input');check.type='checkbox';check.value=item.id;
+      check.checked=Object.values(old?.manifests || {}).some(ref=>ref.id===item.id);
+      node.append(document.createTextNode(item.workflow.split('/')[0]+' · '+item.product+' · '+item.audience+' · '+item.digest.slice(0,8)));
+      return check;
+    });
+    const target=field(form,'Kết quả mong muốn','text',old?.target_outcome||'',false);
+    const days=field(form,'Thời hạn (ngày)','number',old?.duration_days||14);days.min=1;days.max=180;
+    const budget=field(form,'Trần chi phí mô phỏng (VND)','number',old?.budget_vnd??0);budget.min=0;
+    const channels=field(form,'Kênh đề xuất (cách nhau bằng dấu phẩy)','text',(old?.channels||[]).join(', '),false);
+    command(form,'Lưu đề xuất',()=>{
+      const ids=selections.filter(input=>input.checked).map(input=>input.value);
+      if(!ids.length || ids.length>2)throw Error('Chọn một hoặc hai hồ sơ, mỗi workflow một hồ sơ.');
+      return {path:'/engine/plans',idField:'key',payload:{manifest_ids:ids,expected_revision:planner.revisions[0]?.revision||0,
+        duration_days:days.valueAsNumber,budget_vnd:budget.valueAsNumber,...(target.value?{target_outcome:target.value}:{}),
+        ...(channels.value?{channels:channels.value.split(',').map(x=>x.trim()).filter(Boolean)}:{})}};
+    },{form:true});
+  }
+  function draw(planner, production, ops) {
+    const active=planner.active, proposal=planner.proposed, plan=active||proposal;
+    const title=campaigns.find(item=>item.id===selected)?.name;
+    caption.textContent=title+(plan?' · '+plan.product+' · '+plan.audience:'');
+    const kpis=add(board,'div',null,'engine-kpis');
+    const report=ops.report;
+    for(const [caption,value] of [['Kế hoạch được duyệt',active?'v'+active.revision:'Chưa có'],
+      ['Lượt Workforce',production.runs.length], ['Yêu cầu báo giá sandbox',report.rfqs],
+      ['Chi phí mô phỏng',money(report.simulated_spend_vnd)]]) {
+      const metric=add(kpis,'div',null,'metric');add(metric,'span',caption);add(metric,'strong',value);
+    }
+    const grid=add(board,'div',null,'engine-grid'), goals=card(grid,'Mục tiêu và phiên bản');
+    if(plan){line(goals,plan.objective,plan.target_outcome!==plan.objective?plan.target_outcome:'',label(plan.status));
+      add(goals,'p',plan.measurement_plan.kpi);add(goals,'small','Kênh đề xuất · '+plan.channels.join(', '));
+      add(goals,'small','Ngân sách đề xuất '+money(plan.budget_vnd)+' · '+plan.duration_days+' ngày');
+      if(plan.research_gaps?.length)add(goals,'p','Cần làm rõ: '+plan.research_gaps.join(' · '));}
+    if(planner.revisions.length>1){
+      const versions=details(goals,'Lịch sử kế hoạch');
+      for(const v of planner.revisions)line(versions,'v'+v.revision+' · '+v.target_outcome,v.digest.slice(0,12),label(v.status));
+    }
+    if(proposal) {
+      const proposed=details(goals,'Xem bản chờ duyệt v'+proposal.revision);
+      line(proposed,proposal.product,proposal.audience,label(proposal.status));
+      add(proposed,'p',proposal.objective);
+      if(proposal.target_outcome!==proposal.objective)add(proposed,'p',proposal.target_outcome);
+      add(proposed,'p',proposal.measurement_plan.kpi);
+      add(proposed,'p',proposal.duration_days+' ngày · '+money(proposal.budget_vnd)+' · '+proposal.channels.join(', '));
+      for(const [kind,ref] of Object.entries(proposal.manifests))
+        line(proposed,kinds[kind],ref.workflow+' · Brief '+ref.brief_id+' · Manifest '+ref.id+' · SHA-256 '+ref.digest);
+      for(const item of proposal.work_packages)
+        line(proposed,kinds[item.kind]||item.kind,item.role+' · '+item.criteria,'Ngày '+item.due_day);
+      add(proposed,'small','SHA-256 kế hoạch · '+proposal.digest);
+      command(proposed,'Duyệt phiên bản '+proposal.revision,()=>({path:'/engine/plans/'+proposal.id+'/approve',
+        idField:'key',payload:{expected_digest:proposal.digest}}));
+    }
+    planEditor(goals,planner);
+    const timeline=card(grid,'Lịch làm việc và phân công');
+    if(plan)for(const item of plan.work_packages)line(timeline,kinds[item.kind]||item.kind,item.role+' · '+item.criteria,'Ngày '+item.due_day);
+    else add(timeline,'p','Lịch và vai trò phụ trách xuất hiện sau khi lập kế hoạch.');
+    const assets=card(grid,'Sản xuất và hàng chờ QA');
+    for(const [kind] of Object.entries(active?.manifests||{})) {
+      const run=production.runs.find(r=>r.kind===kind);
+      if(run)line(assets,kinds[kind],run.checkpoint_count+' checkpoint · '+run.id.slice(0,8),label(run.state));
+      else command(assets,'Xếp việc '+(kinds[kind]||kind),()=>({path:'/engine/plans/'+active.id+'/runs/'+kind,payload:null}));
+    }
+    for(const item of production.assets) {
+      const b=details(assets,item.title+' · '+label(item.status));add(b,'p',item.body);
+      add(b,'small',(origins[item.provenance] || item.provenance)+' · v'+item.revision+' · '+item.digest.slice(0,12));
+      if(item.deliverable_id){const a=add(b,'a','Mở hàng chờ duyệt');a.href='#/reviews';}
+    }
+    if(!production.assets.length)add(assets,'p','Chưa có tài sản được tạo cho kế hoạch đã duyệt.');
+    const ledger=card(grid,'Đơn vị công việc');
+    for(const u of ops.work_units){
+      const unit=details(ledger,(kinds[u.category]||u.expected_output)+' · '+label(u.status));
+      add(unit,'p',u.assigned_role+' · '+u.criteria);
+      if(u.artifact_digest)add(unit,'small','SHA-256 · '+u.artifact_digest);
+      if(u.acceptance)add(unit,'p','Biên nhận '+u.acceptance.share_receipt+' · '+label(u.acceptance.status));
+      for(const entry of u.labor)add(unit,'p',entry.observation+' · '+entry.seconds+' giây · '+money(entry.allocated_cost_vnd));
+      const form=add(details(unit,'Ghi nhận thời gian thực hiện'),'form');
+      const phase=pick(form,'Loại công việc',[['clarification','Làm rõ brief'],['editing','Biên tập'],['qa','Kiểm tra QA'],['production','Sản xuất']]);
+      const seconds=field(form,'Thời gian đã đo (giây)','number');seconds.min=0;
+      const fee=field(form,'Chi phí phân bổ (VND, nếu đã đo)','number','',false);fee.min=0;
+      const note=field(form,'Căn cứ ghi nhận','text');
+      command(form,'Ghi công thực hiện',()=>sandbox({id:u.plan_id},{kind:'labor',package_id:u.id,phase:phase.value,
+        seconds:seconds.valueAsNumber,allocated_cost_vnd:fee.value===''?null:fee.valueAsNumber,observation:note.value}),{form:true});
+    }
+    if(!ops.work_units.length)add(ledger,'p','Đơn vị công việc được ghi trước lúc thực hiện.');
+    else{
+      line(ledger,'Công việc được doanh nghiệp tiếp nhận','',String(ops.business_accepted_units));
+      line(ledger,'Chi phí trên bản được tiếp nhận','Gồm chi phí sản xuất của các lần thử',money(ops.cost_per_business_accepted_vnd));
+    }
+    if(active)controls(grid,active,production,ops);
+    const funnel=card(grid,'Từ RFQ đến doanh thu sandbox');
+    for(const [key,text] of [['sessions','Phiên'],['rfqs','Yêu cầu báo giá'],['qualified_leads','Đủ điều kiện'],['sales_accepted','Sales tiếp nhận'],
+      ['quotations','Báo giá'],['confirmed_orders','Đơn xác nhận'],['cancelled_orders','Đơn hủy']])line(funnel,text,'',String(report[key]));
+    line(funnel,'Doanh thu sau điều chỉnh','Số liệu sandbox',money(report.confirmed_revenue_vnd));
+    line(funnel,'Có nguồn chiến dịch','',money(report.attributed_revenue_vnd));line(funnel,'Thiếu nguồn','',money(report.unattributed_revenue_vnd));
+    line(funnel,'Hoàn tiền','',money(report.refunds_vnd));
+    const opt=card(grid,'Đề xuất tối ưu');drawOptimization(opt,active,ops);
+    const reload=add(board,'button','Tải lại trạng thái','secondary');reload.type='button';reload.onclick=load;
+  }
+  function sandbox(plan,payload) {
+    return {path:'/sandbox/commands',idField:'request_id',payload:{...payload,plan_id:plan.id}};
+  }
+  function controls(grid,plan,production,ops) {
+    const actions=card(grid,'Thực thi trong sandbox');
+    for(const action of ops.actions){
+      const row=line(actions,action.id,money(action.cost_vnd)+' · '+(action.due_at || ''),label(action.state));
+      const next=({scheduled:[['authorize','Cho phép chạy'],['cancel','Hủy lịch']],authorized:[['execute','Chạy mô phỏng'],['cancel','Hủy']],
+        failed:[['execute','Thử lại'],['cancel','Hủy']]})[action.state]||[];
+      for(const [kind,name] of next){
+        if(action.plan_id!==plan.id && kind!=='cancel')continue;
+        if(kind==='authorize' && action.scheduled_by===actor)continue;
+        command(row,name,()=>sandbox({id:action.plan_id},{kind,action_id:action.id}));
+      }
+    }
+    if(!ops.actions.length)add(actions,'p','Chưa có lịch thực thi.');
+    // Schedule the complete signed customer document once even when it projects several asset groups.
+    const ready=Array.from(new Map(production.assets.filter(x=>x.deliverable_id && ['approved','shared'].includes(x.status))
+      .map(x=>[x.deliverable_id,x])).values());
+    if(ready.length){
+      const form=add(details(actions,'Lên lịch từ tài sản đã qua QA'),'form');
+      const doc=pick(form,'Bản đã duyệt',ready.map(a=>[a.deliverable_id,a.title+' · v'+a.revision]));
+      const id=field(form,'Mã lịch','text'), due=field(form,'Thời điểm chạy (giờ địa phương)','datetime-local');
+      const cost=field(form,'Chi phí mô phỏng (VND)','number','0');cost.min=0;
+      command(form,'Lưu lịch chờ duyệt',()=>{const a=ready.find(x=>x.deliverable_id===doc.value);
+        return sandbox(plan,{kind:'schedule',action_id:id.value,deliverable_id:a.deliverable_id,
+          expected_revision:a.revision,expected_digest:a.document_digest,due_at:new Date(due.value).toISOString(),cost_vnd:cost.valueAsNumber});
+      },{form:true});
+    }
+    const sales=card(grid,'Tiếp nhận và bàn giao Sales');
+    const visit=add(details(sales,'Ghi nhận phiên truy cập sandbox'),'form');
+    const visitId=field(visit,'Mã phiên','text'), visitor=field(visit,'Mã khách tổng hợp','text');
+    const origin=pick(visit,'Nguồn tác vụ',[['','Chưa rõ nguồn'],...ops.actions.filter(a=>a.plan_id===plan.id && a.state==='executed').map(a=>[a.id,a.id])]);
+    let visited;
+    command(visit,'Lưu phiên',()=>sandbox(plan,{kind:'session',session_id:visitId.value,actor_key:visitor.value,
+      action_id:origin.value||null,occurred_at:visited??=new Date().toISOString()}),{form:true});
+    if(plan.selling_unit) {
+      const form=add(details(sales,'Ghi nhận yêu cầu báo giá'),'form');
+      const id=field(form,'Mã yêu cầu','text'),qty=field(form,'Số lượng ('+plan.selling_unit+')','number','',false);
+      qty.min='0.001';qty.step='any';
+      const loc=field(form,'Địa bàn giao','text','',false),day=field(form,'Ngày cần hàng','date','',false);
+      const purpose=pick(form,'Mục đích liên hệ do khách chọn',[['none','Chưa được phép phản hồi'],['quote_request','Phản hồi yêu cầu báo giá']]);
+      const extras=commercialDetails(form,plan.selling_unit);
+      const session=pick(form,'Nguồn phiên truy cập',[['','Chưa rõ nguồn'],...ops.sessions.filter(s=>s.plan_id===plan.id).map(s=>[s.id,s.id])]);
+      let observed;
+      command(form,'Ghi nhận RFQ sandbox',()=>sandbox(plan,{kind:'rfq',rfq_id:id.value,occurred_at:observed??=new Date().toISOString(),
+        product_id:plan.product_id,unit:plan.selling_unit,quantity:qty.value||null,location:loc.value||null,required_date:day.value||null,
+        contact_purpose:purpose.value,session_id:session.value||null,details:extras()}),{form:true});
+    }
+    for(const lead of ops.leads) {
+      const summary=details(sales,lead.id+' · '+label(lead.state));
+      add(summary,'p',[lead.quantity,lead.unit,lead.location,lead.required_date].filter(Boolean).join(' · '));
+      if(lead.details)add(summary,'p',Object.entries(lead.details).filter(([k,v])=>k!=='schema_id' && v).map(([,v])=>v).join(' · '));
+      for(const item of lead.feedback || [])add(summary,'p',item.text);
+      const originatingPlan={id:lead.plan_id};
+      if(lead.state==='received') {
+        const form=add(details(summary,'Bổ sung thông tin theo yêu cầu của khách'),'form');
+        const qty=field(form,'Số lượng ('+lead.unit+')','number',lead.quantity||'');qty.step='any';qty.min='0.001';
+        const place=field(form,'Địa bàn giao','text',lead.location||''),when=field(form,'Ngày cần hàng','date',lead.required_date||'');
+        const consent=field(form,'Khách yêu cầu phản hồi báo giá','checkbox');
+        command(form,'Lưu thông tin bổ sung',()=>sandbox(originatingPlan,{kind:'complete_rfq',rfq_id:lead.id,expected_revision:lead.revision,
+          quantity:qty.value,location:place.value,required_date:when.value,contact_purpose:consent.checked?'quote_request':'none'}),{form:true});
+      }
+      const steps=({received:['reject'],qualified:['assign','reject'],assigned:['accept','reject','cancel'],accepted:['quote','reject','cancel'],
+        quoted:['order','reject','cancel'],ordered:['confirm','cancel'],confirmed:['refund','correct','cancel']})[lead.state]||[];
+      if(!steps.length)continue;
+      const names={assign:'Nhận phụ trách',accept:'Sales tiếp nhận',reject:'Từ chối',quote:'Ghi nhận báo giá',order:'Ghi nhận đơn',
+        confirm:'Xác nhận doanh thu',refund:'Ghi hoàn tiền',correct:'Đính chính số tiền',cancel:'Ghi nhận hủy'};
+      const form=add(summary,'form'),step=pick(form,'Bước Sales',steps.map(s=>[s,names[s]]));
+      const note=field(form,'Phản hồi của Sales','text','',false),amount=field(form,'Số tiền khi xác nhận hoặc điều chỉnh (VND)','number','',false);
+      amount.min=1;let observed;
+      command(form,'Lưu quyết định Sales',()=>sandbox(originatingPlan,{kind:'sales',rfq_id:lead.id,expected_revision:lead.revision,
+        occurred_at:observed??=new Date().toISOString(),step:step.value,...(note.value?{reason:note.value}:{}),
+        ...(step.value==='assign'?{assignee_id:actor}:{}),...(['confirm','correct','refund'].includes(step.value)?{amount_vnd:amount.valueAsNumber}:{})}),{form:true});
+    }
+  }
+  function commercialDetails(form,unit) {
+    const config = [
+      [['piece','box','m²','tonne','kg'],'materials_v1','application','Ứng dụng vật liệu'],
+      [['machine','visit','service'],'service_v1','service_scope','Phạm vi dịch vụ'],
+      [['participant','subscription_month','subscription_year'],'seats_v1','program','Chương trình đăng ký']
+    ].find(([units])=>units.includes(unit));
+    if(!config)return ()=>null;
+    const [,schema,key,title]=config, value=field(form,title+' (nếu có)','text','',false);
+    const mode=schema==='seats_v1'?pick(form,'Hình thức',[['onsite','Trực tiếp'],['online','Trực tuyến'],['hybrid','Kết hợp']]):null;
+    return ()=>value.value.trim()?{schema_id:schema,[key]:value.value.trim(),...(mode?{delivery_mode:mode.value}:{})}:null;
+  }
+  function drawOptimization(parent,active,ops){
+    const proposal=ops.optimization;
+    if(proposal?.recommendation)add(parent,'p',proposal.recommendation);
+    else add(parent,'p','Đối soát kết quả Sales và nguồn doanh thu trước khi giao việc tối ưu.');
+    if(!active)return;
+    const proposalId=crypto.randomUUID();
+    command(parent,'Tạo đề xuất từ báo cáo',()=>sandbox(active,{kind:'propose_optimization',proposal_id:proposalId}));
+    for(const item of ops.proposals||[]) {
+      const row=line(parent,item.recommendation||item.id,item.work_package?.criteria,label(item.status));
+      if(item.plan_id===active.id && item.status==='proposed' && item.author!==actor)command(row,'Duyệt gói việc tối ưu',()=>sandbox(active,{kind:'approve_optimization',proposal_id:item.id}));
+    }
+  }
+  async function load() {
+    reset(); if(!selected)return;
+    const epoch=generation;abort=new AbortController();const source=route(),signal=abort.signal;
+    status.textContent='Đang đọc kế hoạch và biên nhận…';panel.setAttribute('aria-busy','true');
+    const get=path=>api(source+path,'GET',null,false,signal);
+    try {
+      const [planner,ops]=await Promise.all([get('/engine/planner'),get('/sandbox')]);
+      const prod=planner.active?await get('/engine/plans/'+planner.active.id+'/production'):{runs:[],assets:[]};
+      if(epoch!==generation)return;draw(planner,prod,ops);status.textContent='Đã cập nhật dữ liệu sandbox.';
+    }catch(e){if(epoch===generation){board.replaceChildren();status.textContent=e.message;const retry=add(board,'button','Thử tải lại');retry.onclick=load;}}
+    finally{if(epoch===generation)panel.removeAttribute('aria-busy');}
+  }
+  return {scope};
+}

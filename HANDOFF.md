@@ -1,5 +1,11 @@
 # Bắt đầu ở đây khi tiếp quản AI Marketing Company
 
+## Điều hành chiến dịch từ mục tiêu đã duyệt
+
+Bản nền trên main sau bốn lần merge là `1b9e3a9643014122d4c6e510efffc3d02b9843cf`. Bảng đối chiếu ghi cả hai parent, tree, bản tích hợp và CI của từng PR, cùng đường dẫn để kiểm tra trên GitHub. [Bằng chứng hợp nhất #40, #43, #41 và #42](docs/evaluation/campaign-engine/INTEGRATIONS.md)
+
+Chọn **Chiến dịch → Điều hành chiến dịch** để chuyển dữ liệu đã duyệt của từng khách và brand thành kế hoạch có phiên bản, tài sản, lịch chạy sandbox và bàn giao Sales. Mọi phép đo có nguồn từ bản ghi campaign đang xem. Pilot người làm nghề còn thiếu người tham gia. [Quy trình, Docker, bằng chứng và rollback](docs/evaluation/campaign-engine/README.md) · [Giao thức chấm cố định](docs/evaluation/campaign-engine/PILOT.md). Commercial GA vẫn NO-GO.
+
 ## Mốc tích hợp nền của Studio và Campaign Lab
 
 | PR | Head đã duyệt → head đồng bộ | Bản tích hợp đã test → merge trên main | Bằng chứng |

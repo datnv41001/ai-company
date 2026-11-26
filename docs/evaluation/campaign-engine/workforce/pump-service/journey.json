@@ -1,0 +1,1281 @@
+{
+  "case": "pump-service",
+  "conditions": {
+    "checkout": "2a862d9e89ca4c6196858eab500a19ff8b5f7c5a",
+    "provider": "llama.cpp loopback",
+    "model_sha256": "74a4da8c9fdbcd15bd1f6d01d621410d31c6fc00986f5eb687824e7b93d7a9db",
+    "build": "b12649-1f8baae28",
+    "cases_sha256": "40291aa58da6abde852454e7cf7197f4e0dfd8011327c3998192526013ed2052",
+    "worker_concurrency": 1
+  },
+  "plan": {
+    "id": "ea96447a-b370-461c-a8f1-c4abfb2c9f95",
+    "sku": "BOM-KT",
+    "scope": {
+      "brand_id": "d1c61282-917f-43b1-95ad-5d5cbef80de6",
+      "client_id": "e6f5c8c5-78d2-445f-9fc8-30e363fe8fb6",
+      "tenant_id": "0df91e0f-1732-4e11-957b-06a06faf5911",
+      "campaign_id": "1ebedd01-3a4f-4b5c-9501-970f48731de1"
+    },
+    "digest": "ddf93c38bda5410245958708a6f2d778b44840184a0f3b3700f5d9ce97c6fd71",
+    "locale": "vi-VN",
+    "method": "deterministic-campaign-planner/1",
+    "status": "approved",
+    "product": "Dịch vụ kiểm tra bơm Lam",
+    "audience": "Quản đốc nhà máy",
+    "channels": [
+      "web"
+    ],
+    "revision": 1,
+    "manifests": {
+      "landing": {
+        "id": "8219039f-1053-4d6b-ab72-bd9b048a7dac",
+        "digest": "cd301b2bfde11a0d70e34c48b4a63be1a65f011574e405e0ed5db63e184870af",
+        "brief_id": "50dda397-e36a-4d90-a758-37bc7e5686dc",
+        "workflow": "WF-13/landing-seo-draft@6"
+      }
+    },
+    "objective": "Tăng lịch khảo sát bảo trì tại xưởng",
+    "budget_vnd": 3000000,
+    "product_id": "9101b839-b4f3-4dec-8588-d3fa99d31b7a",
+    "campaign_id": "1ebedd01-3a4f-4b5c-9501-970f48731de1",
+    "budget_scope": "simulated_media_only",
+    "buyer_action": "appointment",
+    "selling_unit": "machine",
+    "duration_days": 21,
+    "research_gaps": [
+      "Kiểm chứng nhu cầu với khách hàng trong thị trường đã chọn.",
+      "Xác minh số liệu nền và kết quả bằng dữ liệu đo thực tế."
+    ],
+    "work_packages": [
+      {
+        "id": "landing",
+        "kind": "landing",
+        "role": "Content",
+        "due_day": 14,
+        "criteria": "Nội dung trang có CTA và điều kiện theo manifest",
+        "complexity": "multi_section"
+      },
+      {
+        "id": "seo",
+        "kind": "seo",
+        "role": "SEO",
+        "due_day": 14,
+        "criteria": "Tiêu đề SEO và mô tả khớp trang",
+        "complexity": "single_asset"
+      },
+      {
+        "id": "social",
+        "kind": "social",
+        "role": "Social",
+        "due_day": 14,
+        "criteria": "Bài xã hội có hành động nhất quán với brief",
+        "complexity": "single_asset"
+      },
+      {
+        "id": "ad",
+        "kind": "ad",
+        "role": "Media",
+        "due_day": 14,
+        "criteria": "Mẫu quảng cáo nháp cho người mua đã chọn",
+        "complexity": "single_asset"
+      },
+      {
+        "id": "creative_brief",
+        "kind": "creative_brief",
+        "role": "Design",
+        "due_day": 14,
+        "criteria": "Brief nêu sản phẩm, người xem và tiêu chí hình ảnh",
+        "complexity": "single_asset"
+      },
+      {
+        "id": "calendar",
+        "kind": "calendar",
+        "role": "Campaign Manager",
+        "due_day": 21,
+        "criteria": "Lịch dự kiến có người nhận, mốc QA và kênh",
+        "complexity": "multi_channel"
+      }
+    ],
+    "target_outcome": "Tăng lịch khảo sát bảo trì tại xưởng",
+    "brand_guidelines": {
+      "tone": "Cụ thể",
+      "digest": "8667f503425c83801d0702e0a96932e171bcc578d401f55e68de2dc1d3e1e675",
+      "guidance": "Dùng câu ngắn và nêu rõ điều kiện áp dụng.",
+      "revision": 1,
+      "prohibited_claims": []
+    },
+    "commercial_facts": [
+      {
+        "id": "F1",
+        "price": {
+          "moq": "1",
+          "tax": "included",
+          "unit": "machine",
+          "currency": "VND",
+          "tier_max": null,
+          "tier_min": "1",
+          "conditions": [
+            "Xác nhận số lượng trước khi đặt."
+          ],
+          "amount_minor": 270000,
+          "basis_quantity": "1"
+        },
+        "wording": "VND 270000 / 1 machine (tax included)",
+        "category": "price",
+        "quantity": "1",
+        "qualifiers": [
+          "Xác nhận số lượng trước khi đặt."
+        ]
+      },
+      {
+        "id": "F2",
+        "wording": "Phiếu kiểm tra ghi tình trạng máy.",
+        "category": "description",
+        "qualifiers": [
+          "Áp dụng cho máy tại xưởng."
+        ]
+      }
+    ],
+    "measurement_plan": {
+      "kpi": "Lịch khảo sát được xác nhận · requests · 30 days · Count completed request forms",
+      "hypothesis": "Thử một CTA cho Quản đốc nhà máy rồi đối soát với kết quả Sales.",
+      "attribution": "Theo mã yêu cầu và biên nhận, ghi riêng kết quả thiếu nguồn.",
+      "buyer_action": "appointment"
+    },
+    "audience_revision": {
+      "id": "9c0b1070-6421-4e0f-8d35-a7740b626a02",
+      "digest": "11c06898a4436e051888157e82e30f3f993e23540ee8d416a2cc204c399acef2",
+      "saved_state": "approved"
+    },
+    "objective_revision": {
+      "id": "a65a2456-2238-4cc6-8079-6799924965c6",
+      "digest": "0b2dbdcbc3d03ea2d599610ceba0cf2cc63d1dc023fe35f92c4b4594280a80b6",
+      "saved_state": "approved"
+    },
+    "optimization_basis": null,
+    "approval": {
+      "actor": "55050f5b-526d-4b38-b0ae-a6d8a1a019b6",
+      "receipt": "99888627-487d-4709-af3e-ee36d324714e",
+      "at": "2026-11-25T19:46:38.971036+07:00"
+    },
+    "composed_assets": [
+      {
+        "id": "social",
+        "body": "Quản đốc nhà máy đang cân nhắc Dịch vụ kiểm tra bơm Lam? Đặt lịch để trao đổi nhu cầu về sản phẩm và điều kiện áp dụng.",
+        "kind": "social",
+        "title": "Nội dung mạng xã hội",
+        "digest": "10b06651bdde062f9a2cdccb5b507183e1f21f70541bb774a5e400a5a4339f29",
+        "status": "draft",
+        "plan_id": "ea96447a-b370-461c-a8f1-c4abfb2c9f95",
+        "manifest": {
+          "id": "8219039f-1053-4d6b-ab72-bd9b048a7dac",
+          "digest": "cd301b2bfde11a0d70e34c48b4a63be1a65f011574e405e0ed5db63e184870af",
+          "brief_id": "50dda397-e36a-4d90-a758-37bc7e5686dc",
+          "workflow": "WF-13/landing-seo-draft@6"
+        },
+        "revision": 1,
+        "product_id": "9101b839-b4f3-4dec-8588-d3fa99d31b7a",
+        "provenance": "deterministic-composition/1",
+        "buyer_action": "appointment",
+        "plan_revision": 1,
+        "guideline_digest": "8667f503425c83801d0702e0a96932e171bcc578d401f55e68de2dc1d3e1e675",
+        "requires_channel_evidence": true,
+        "referenced_workflow_skills": {
+          "seo": {
+            "search-intent-seo@1": "95015035ae8f0183d82fa88c9851879885736b82032ce11d9b8f12230dc0152d"
+          },
+          "content": {
+            "landing-conversion@1": "65fed41e31b470d9ac009c03a5ee376851fe86664f2c73f2c5e08af49385bcc6"
+          }
+        }
+      },
+      {
+        "id": "ad",
+        "body": "Dịch vụ kiểm tra bơm Lam dành cho Quản đốc nhà máy. Đặt lịch.",
+        "kind": "ad",
+        "title": "Nội dung quảng cáo",
+        "digest": "0ddb7015be81a7e1cb6009d85df2424341a098e83dcbefece208cdaa136d5529",
+        "status": "draft",
+        "plan_id": "ea96447a-b370-461c-a8f1-c4abfb2c9f95",
+        "manifest": {
+          "id": "8219039f-1053-4d6b-ab72-bd9b048a7dac",
+          "digest": "cd301b2bfde11a0d70e34c48b4a63be1a65f011574e405e0ed5db63e184870af",
+          "brief_id": "50dda397-e36a-4d90-a758-37bc7e5686dc",
+          "workflow": "WF-13/landing-seo-draft@6"
+        },
+        "revision": 1,
+        "product_id": "9101b839-b4f3-4dec-8588-d3fa99d31b7a",
+        "provenance": "deterministic-composition/1",
+        "buyer_action": "appointment",
+        "plan_revision": 1,
+        "guideline_digest": "8667f503425c83801d0702e0a96932e171bcc578d401f55e68de2dc1d3e1e675",
+        "requires_channel_evidence": true,
+        "referenced_workflow_skills": {
+          "seo": {
+            "search-intent-seo@1": "95015035ae8f0183d82fa88c9851879885736b82032ce11d9b8f12230dc0152d"
+          },
+          "content": {
+            "landing-conversion@1": "65fed41e31b470d9ac009c03a5ee376851fe86664f2c73f2c5e08af49385bcc6"
+          }
+        }
+      },
+      {
+        "id": "creative_brief",
+        "body": "Thiết kế cho Quản đốc nhà máy trên web. Đặt Dịch vụ kiểm tra bơm Lam ở vị trí chính và dùng CTA “Đặt lịch”. Giọng điệu: Dùng câu ngắn và nêu rõ điều kiện áp dụng. Kiểm tra quyền sử dụng hình ảnh trước bàn giao.",
+        "kind": "creative_brief",
+        "title": "Brief sản xuất hình ảnh",
+        "digest": "992dd87e398bade1888131cfaea66cb6f0e77a837194d7266c28b63dbfb48e1c",
+        "status": "draft",
+        "plan_id": "ea96447a-b370-461c-a8f1-c4abfb2c9f95",
+        "manifest": {
+          "id": "8219039f-1053-4d6b-ab72-bd9b048a7dac",
+          "digest": "cd301b2bfde11a0d70e34c48b4a63be1a65f011574e405e0ed5db63e184870af",
+          "brief_id": "50dda397-e36a-4d90-a758-37bc7e5686dc",
+          "workflow": "WF-13/landing-seo-draft@6"
+        },
+        "revision": 1,
+        "product_id": "9101b839-b4f3-4dec-8588-d3fa99d31b7a",
+        "provenance": "deterministic-composition/1",
+        "buyer_action": "appointment",
+        "plan_revision": 1,
+        "guideline_digest": "8667f503425c83801d0702e0a96932e171bcc578d401f55e68de2dc1d3e1e675",
+        "requires_channel_evidence": true,
+        "referenced_workflow_skills": {
+          "seo": {
+            "search-intent-seo@1": "95015035ae8f0183d82fa88c9851879885736b82032ce11d9b8f12230dc0152d"
+          },
+          "content": {
+            "landing-conversion@1": "65fed41e31b470d9ac009c03a5ee376851fe86664f2c73f2c5e08af49385bcc6"
+          }
+        }
+      },
+      {
+        "id": "calendar",
+        "body": "Ngày 14 · Content · Nội dung trang có CTA và điều kiện theo manifest\nNgày 14 · SEO · Tiêu đề SEO và mô tả khớp trang\nNgày 14 · Social · Bài xã hội có hành động nhất quán với brief\nNgày 14 · Media · Mẫu quảng cáo nháp cho người mua đã chọn\nNgày 14 · Design · Brief nêu sản phẩm, người xem và tiêu chí hình ảnh\nNgày 21 · Campaign Manager · Lịch dự kiến có người nhận, mốc QA và kênh\nKênh đề xuất: web. Điểm duyệt: kiểm tra chứng cứ và phê duyệt từng tài sản trước thực thi.",
+        "kind": "calendar",
+        "title": "Lịch nội dung dự kiến",
+        "digest": "6cfe82f9675906cfadc0f535e526ea788d89ccf06f96cdf2418d4422f41e4cac",
+        "status": "draft",
+        "plan_id": "ea96447a-b370-461c-a8f1-c4abfb2c9f95",
+        "manifest": {
+          "id": "8219039f-1053-4d6b-ab72-bd9b048a7dac",
+          "digest": "cd301b2bfde11a0d70e34c48b4a63be1a65f011574e405e0ed5db63e184870af",
+          "brief_id": "50dda397-e36a-4d90-a758-37bc7e5686dc",
+          "workflow": "WF-13/landing-seo-draft@6"
+        },
+        "revision": 1,
+        "product_id": "9101b839-b4f3-4dec-8588-d3fa99d31b7a",
+        "provenance": "deterministic-composition/1",
+        "buyer_action": "appointment",
+        "plan_revision": 1,
+        "guideline_digest": "8667f503425c83801d0702e0a96932e171bcc578d401f55e68de2dc1d3e1e675",
+        "requires_channel_evidence": true,
+        "referenced_workflow_skills": {
+          "seo": {
+            "search-intent-seo@1": "95015035ae8f0183d82fa88c9851879885736b82032ce11d9b8f12230dc0152d"
+          },
+          "content": {
+            "landing-conversion@1": "65fed41e31b470d9ac009c03a5ee376851fe86664f2c73f2c5e08af49385bcc6"
+          }
+        }
+      }
+    ]
+  },
+  "runs": [
+    {
+      "run_id": "e7aee923-2467-49ad-a64d-14f9ba283119",
+      "state": "awaiting_qa",
+      "last_error": null,
+      "input_tokens": 1494,
+      "output_tokens": 267,
+      "runtime_s": 15.844,
+      "provider_fee_usd": 0,
+      "attempts": [
+        {
+          "attempt_id": "f5f3236b-0df5-467f-a6fa-149d20fde83d",
+          "schema": "c3_skills_director",
+          "request_sha256": "c9937e7843807e26ab3245b3b19717159b40ac31d62437df7899c913f0e1f449",
+          "input_tokens": 481,
+          "output_tokens": 55,
+          "raw_output": {
+            "primary_assignment": "Write buyer copy with the approved terms and requested action.",
+            "secondary_assignment": "Describe search intent and draft a relevant title and snippet."
+          }
+        },
+        {
+          "attempt_id": "7e8866dc-359d-44aa-9ffe-df128a4b38e3",
+          "schema": "c3_skills_content",
+          "request_sha256": "59e22ddaf7549f493553b38ad66b81284a013afa95a71dad91345fc3baf7c821",
+          "input_tokens": 470,
+          "output_tokens": 114,
+          "raw_output": {
+            "benefit": "Đặt lịch hẹn với dịch vụ kiểm tra bơm Lam tại Xưởng bơm Lam",
+            "headline": "Đặt lịch hẹn với dịch vụ kiểm tra bơm Lam",
+            "source_ids": [
+              "F1",
+              "F2"
+            ],
+            "call_to_action": "đặt lịch hẹn",
+            "value_proposition": "Đặt lịch hẹn với dịch vụ kiểm tra bơm Lam tại Xưởng bơm Lam để kiểm tra bơm và đảm bảo chất lượng sản phẩm."
+          }
+        },
+        {
+          "attempt_id": "2961a6ef-c6ae-4d21-8c5f-0426f13243cf",
+          "schema": "c3_skills_seo",
+          "request_sha256": "0d37df635a0b22b3c8b651e3bb5d8abb092216d5e5fd69173991730c8aabcb76",
+          "input_tokens": 543,
+          "output_tokens": 98,
+          "raw_output": {
+            "page_title": "Dịch vụ kiểm tra bơm Lam tại Xưởng bơm Lam",
+            "source_ids": [
+              "F1",
+              "F2"
+            ],
+            "search_intent": "appointment",
+            "meta_description": "Đặt lịch hẹn với dịch vụ kiểm tra bơm Lam tại Xưởng bơm Lam để kiểm tra bơm và đảm bảo chất lượng sản phẩm."
+          }
+        }
+      ]
+    }
+  ],
+  "accepted_editions": [
+    {
+      "source": "scripted editor and QA, synthetic customer",
+      "groups": {
+        "copy": {
+          "headline": "Dịch vụ kiểm tra bơm Lam",
+          "value_proposition": "Đối chiếu quy cách và điều kiện áp dụng của Dịch vụ kiểm tra bơm Lam trước khi lựa chọn.",
+          "benefit": "Phiếu kiểm tra ghi tình trạng máy. Áp dụng cho máy tại xưởng.",
+          "commercial_terms": "Giá tham khảo: 270.000 VND / 1 máy, đã gồm thuế. Đơn tối thiểu: 1 máy. Áp dụng từ 1 máy. Số lượng đối chiếu: 1 máy. Xác nhận số lượng trước khi đặt.\nPhiếu kiểm tra ghi tình trạng máy. Áp dụng cho máy tại xưởng.",
+          "call_to_action": "Đặt lịch"
+        },
+        "seo": {
+          "page_title": "Dịch vụ kiểm tra bơm Lam | HN",
+          "meta_description": "Xem thông tin về Dịch vụ kiểm tra bơm Lam tại HN. Đặt lịch",
+          "search_intent": "Tìm hiểu điều kiện lựa chọn Dịch vụ kiểm tra bơm Lam tại HN."
+        }
+      },
+      "approval_terms": {
+        "expected_qa_revision": 9,
+        "expected_content_digest": "7aae4dfdeb538a9fdf6325aea9eda750d88bc032635285e2ffed3db7326d9329"
+      },
+      "snapshot": {
+        "id": "b10e295a-96ba-41a3-b96a-5a98da8cbe42",
+        "version": 1,
+        "digest": "7aae4dfdeb538a9fdf6325aea9eda750d88bc032635285e2ffed3db7326d9329",
+        "status": "approved",
+        "preview": "Nội dung trang đích\n\nTiêu đề\nDịch vụ kiểm tra bơm Lam\n\nGiá trị cho người mua\nĐối chiếu quy cách và điều kiện áp dụng của Dịch vụ kiểm tra bơm Lam trước khi lựa chọn.\n\nLợi ích\nPhiếu kiểm tra ghi tình trạng máy. Áp dụng cho máy tại xưởng.\n\nĐiều kiện thương mại\nGiá tham khảo: 270.000 VND / 1 máy, đã gồm thuế. Đơn tối thiểu: 1 máy. Áp dụng từ 1 máy. Số lượng đối chiếu: 1 máy. Xác nhận số lượng trước khi đặt.\nPhiếu kiểm tra ghi tình trạng máy. Áp dụng cho máy tại xưởng.\n\nLời mời hành động\nĐặt lịch\n\nThông tin SEO\n\nTiêu đề SEO\nDịch vụ kiểm tra bơm Lam | HN\n\nMô tả tìm kiếm\nXem thông tin về Dịch vụ kiểm tra bơm Lam tại HN. Đặt lịch\n\nÝ định tìm kiếm\nTìm hiểu điều kiện lựa chọn Dịch vụ kiểm tra bơm Lam tại HN."
+      }
+    }
+  ],
+  "participants": "Scripted synthetic operator, editor, reviewer and customer. Practitioner results unmeasured.",
+  "production": {
+    "runs": [
+      {
+        "kind": "landing",
+        "queue_receipt": "0dfc114d-2af7-41db-8e86-057cd52d8da9",
+        "manifest": {
+          "id": "8219039f-1053-4d6b-ab72-bd9b048a7dac",
+          "digest": "cd301b2bfde11a0d70e34c48b4a63be1a65f011574e405e0ed5db63e184870af",
+          "brief_id": "50dda397-e36a-4d90-a758-37bc7e5686dc",
+          "workflow": "WF-13/landing-seo-draft@6"
+        },
+        "id": "e7aee923-2467-49ad-a64d-14f9ba283119",
+        "state": "awaiting_qa",
+        "deliverable_id": "ef0e2413-dab3-4eb5-ae69-88c1b75bfd39",
+        "last_error": null,
+        "budget_microusd": 10000,
+        "reserved_microusd": 0,
+        "journal": [
+          {
+            "node_id": "director",
+            "plan_revision": 1,
+            "skill": "director",
+            "attempt": 1,
+            "provider": "local",
+            "model": "amc-local",
+            "prompt": "marketing-workforce-2",
+            "started_at": "2026-11-25T12:46:40.490525+00:00",
+            "outcome": "ok",
+            "reserved_microusd": 0,
+            "input_tokens": 481,
+            "output_tokens": 55,
+            "estimated_microusd": 0,
+            "finished_at": "2026-11-25T12:46:43.791956+00:00"
+          },
+          {
+            "node_id": "n01",
+            "plan_revision": 1,
+            "skill": "content",
+            "attempt": 1,
+            "provider": "local",
+            "model": "amc-local",
+            "prompt": "marketing-workforce-2",
+            "started_at": "2026-11-25T12:46:43.816025+00:00",
+            "outcome": "ok",
+            "reserved_microusd": 0,
+            "input_tokens": 470,
+            "output_tokens": 114,
+            "estimated_microusd": 0,
+            "finished_at": "2026-11-25T12:46:49.915316+00:00"
+          },
+          {
+            "node_id": "n02",
+            "plan_revision": 1,
+            "skill": "seo",
+            "attempt": 1,
+            "provider": "local",
+            "model": "amc-local",
+            "prompt": "marketing-workforce-2",
+            "started_at": "2026-11-25T12:46:49.937031+00:00",
+            "outcome": "ok",
+            "reserved_microusd": 0,
+            "input_tokens": 543,
+            "output_tokens": 98,
+            "estimated_microusd": 0,
+            "finished_at": "2026-11-25T12:46:55.947238+00:00"
+          }
+        ],
+        "checkpoint_count": 3,
+        "registry": {
+          "skills": [
+            "content",
+            "director",
+            "seo"
+          ],
+          "workflow": "WF-13/landing-seo-draft@6",
+          "contracts": {
+            "seo": {
+              "model": "local",
+              "owner": "agency marketing lead",
+              "tools": [],
+              "inputs": [
+                "brief",
+                "brand",
+                "sources"
+              ],
+              "adapter": "seo@5",
+              "outputs": [
+                "meta_description",
+                "page_title",
+                "search_intent",
+                "source_ids"
+              ],
+              "role_id": "ai-seo-geo-specialist",
+              "approval": "revision_qa_and_client_snapshot",
+              "fallback": "agency editor",
+              "node_cap": 1000,
+              "skill_id": "seo",
+              "objective": "Use this role's approved knowledge projection to prepare internal Marketing work",
+              "qa_policy": "c3-seo@2",
+              "max_attempts": 3,
+              "predecessors": [
+                "content"
+              ],
+              "output_schema": {
+                "type": "object",
+                "required": [
+                  "meta_description",
+                  "page_title",
+                  "search_intent",
+                  "source_ids"
+                ],
+                "properties": {
+                  "page_title": {
+                    "type": "string"
+                  },
+                  "source_ids": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  },
+                  "search_intent": {
+                    "type": "string"
+                  },
+                  "meta_description": {
+                    "type": "string"
+                  }
+                },
+                "additionalProperties": false
+              },
+              "skill_version": 5,
+              "adapter_digest": "c8c7649ce2ef9d2d9e02e2a8ca83ba3cee22da2e9c90525248a26af693ff385f",
+              "timeout_seconds": 300,
+              "contract_version": 5,
+              "success_criteria": [
+                "meta_description",
+                "page_title",
+                "search_intent",
+                "source_ids"
+              ],
+              "forbidden_actions": [
+                "external_write",
+                "publish",
+                "spend"
+              ],
+              "marketing_methods": {
+                "search-intent-seo@1": "95015035ae8f0183d82fa88c9851879885736b82032ce11d9b8f12230dc0152d"
+              }
+            },
+            "content": {
+              "model": "local",
+              "owner": "agency marketing lead",
+              "tools": [],
+              "inputs": [
+                "brief",
+                "brand",
+                "sources"
+              ],
+              "adapter": "content@4",
+              "outputs": [
+                "benefit",
+                "call_to_action",
+                "headline",
+                "source_ids",
+                "value_proposition"
+              ],
+              "role_id": "ai-copywriter-content-strategist",
+              "approval": "revision_qa_and_client_snapshot",
+              "fallback": "agency editor",
+              "node_cap": 1000,
+              "skill_id": "content",
+              "objective": "Use this role's approved knowledge projection to prepare internal Marketing work",
+              "qa_policy": "c3-content@2",
+              "max_attempts": 3,
+              "predecessors": [],
+              "output_schema": {
+                "type": "object",
+                "required": [
+                  "benefit",
+                  "call_to_action",
+                  "headline",
+                  "source_ids",
+                  "value_proposition"
+                ],
+                "properties": {
+                  "benefit": {
+                    "type": "string"
+                  },
+                  "headline": {
+                    "type": "string"
+                  },
+                  "source_ids": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  },
+                  "call_to_action": {
+                    "type": "string"
+                  },
+                  "value_proposition": {
+                    "type": "string"
+                  }
+                },
+                "additionalProperties": false
+              },
+              "skill_version": 4,
+              "adapter_digest": "fcea91e89e8806897a72d314ca258a87c6e509f6ec34ee737edf9d8897d28aa8",
+              "timeout_seconds": 300,
+              "contract_version": 4,
+              "success_criteria": [
+                "benefit",
+                "call_to_action",
+                "headline",
+                "source_ids",
+                "value_proposition"
+              ],
+              "forbidden_actions": [
+                "external_write",
+                "publish",
+                "spend"
+              ],
+              "marketing_methods": {
+                "landing-conversion@1": "65fed41e31b470d9ac009c03a5ee376851fe86664f2c73f2c5e08af49385bcc6"
+              }
+            },
+            "director": {
+              "model": "local",
+              "owner": "agency marketing lead",
+              "tools": [],
+              "inputs": [
+                "brief",
+                "brand",
+                "sources"
+              ],
+              "adapter": "director@4",
+              "outputs": [
+                "primary_assignment",
+                "secondary_assignment"
+              ],
+              "role_id": "ai-managing-director",
+              "approval": "revision_qa_and_client_snapshot",
+              "fallback": "agency editor",
+              "node_cap": 1000,
+              "skill_id": "director",
+              "objective": "Use this role's approved knowledge projection to prepare internal Marketing work",
+              "qa_policy": "c3-director@2",
+              "max_attempts": 3,
+              "predecessors": [],
+              "output_schema": {
+                "type": "object",
+                "required": [
+                  "primary_assignment",
+                  "secondary_assignment"
+                ],
+                "properties": {
+                  "primary_assignment": {
+                    "type": "string"
+                  },
+                  "secondary_assignment": {
+                    "type": "string"
+                  }
+                },
+                "additionalProperties": false
+              },
+              "skill_version": 4,
+              "adapter_digest": "de8896dfee4aaf662dbf31bdda67606e3ae2376b8e4b4542acfeb3993646724d",
+              "timeout_seconds": 300,
+              "contract_version": 4,
+              "success_criteria": [
+                "primary_assignment",
+                "secondary_assignment"
+              ],
+              "forbidden_actions": [
+                "external_write",
+                "publish",
+                "spend"
+              ],
+              "marketing_methods": {}
+            }
+          },
+          "workflow_id": "WF-13/landing-seo-draft",
+          "manifest_digest": "0cfe96302a0d7698b09e379f38b98f1708311ce706d83694f595d11ddc56399f",
+          "workflow_version": 6
+        }
+      }
+    ],
+    "assets": [
+      {
+        "id": "social",
+        "body": "Quản đốc nhà máy đang cân nhắc Dịch vụ kiểm tra bơm Lam? Đặt lịch để trao đổi nhu cầu về sản phẩm và điều kiện áp dụng.",
+        "kind": "social",
+        "title": "Nội dung mạng xã hội",
+        "digest": "10b06651bdde062f9a2cdccb5b507183e1f21f70541bb774a5e400a5a4339f29",
+        "status": "draft",
+        "plan_id": "ea96447a-b370-461c-a8f1-c4abfb2c9f95",
+        "manifest": {
+          "id": "8219039f-1053-4d6b-ab72-bd9b048a7dac",
+          "digest": "cd301b2bfde11a0d70e34c48b4a63be1a65f011574e405e0ed5db63e184870af",
+          "brief_id": "50dda397-e36a-4d90-a758-37bc7e5686dc",
+          "workflow": "WF-13/landing-seo-draft@6"
+        },
+        "revision": 1,
+        "product_id": "9101b839-b4f3-4dec-8588-d3fa99d31b7a",
+        "provenance": "deterministic-composition/1",
+        "buyer_action": "appointment",
+        "plan_revision": 1,
+        "guideline_digest": "8667f503425c83801d0702e0a96932e171bcc578d401f55e68de2dc1d3e1e675",
+        "requires_channel_evidence": true,
+        "referenced_workflow_skills": {
+          "seo": {
+            "search-intent-seo@1": "95015035ae8f0183d82fa88c9851879885736b82032ce11d9b8f12230dc0152d"
+          },
+          "content": {
+            "landing-conversion@1": "65fed41e31b470d9ac009c03a5ee376851fe86664f2c73f2c5e08af49385bcc6"
+          }
+        }
+      },
+      {
+        "id": "ad",
+        "body": "Dịch vụ kiểm tra bơm Lam dành cho Quản đốc nhà máy. Đặt lịch.",
+        "kind": "ad",
+        "title": "Nội dung quảng cáo",
+        "digest": "0ddb7015be81a7e1cb6009d85df2424341a098e83dcbefece208cdaa136d5529",
+        "status": "draft",
+        "plan_id": "ea96447a-b370-461c-a8f1-c4abfb2c9f95",
+        "manifest": {
+          "id": "8219039f-1053-4d6b-ab72-bd9b048a7dac",
+          "digest": "cd301b2bfde11a0d70e34c48b4a63be1a65f011574e405e0ed5db63e184870af",
+          "brief_id": "50dda397-e36a-4d90-a758-37bc7e5686dc",
+          "workflow": "WF-13/landing-seo-draft@6"
+        },
+        "revision": 1,
+        "product_id": "9101b839-b4f3-4dec-8588-d3fa99d31b7a",
+        "provenance": "deterministic-composition/1",
+        "buyer_action": "appointment",
+        "plan_revision": 1,
+        "guideline_digest": "8667f503425c83801d0702e0a96932e171bcc578d401f55e68de2dc1d3e1e675",
+        "requires_channel_evidence": true,
+        "referenced_workflow_skills": {
+          "seo": {
+            "search-intent-seo@1": "95015035ae8f0183d82fa88c9851879885736b82032ce11d9b8f12230dc0152d"
+          },
+          "content": {
+            "landing-conversion@1": "65fed41e31b470d9ac009c03a5ee376851fe86664f2c73f2c5e08af49385bcc6"
+          }
+        }
+      },
+      {
+        "id": "creative_brief",
+        "body": "Thiết kế cho Quản đốc nhà máy trên web. Đặt Dịch vụ kiểm tra bơm Lam ở vị trí chính và dùng CTA “Đặt lịch”. Giọng điệu: Dùng câu ngắn và nêu rõ điều kiện áp dụng. Kiểm tra quyền sử dụng hình ảnh trước bàn giao.",
+        "kind": "creative_brief",
+        "title": "Brief sản xuất hình ảnh",
+        "digest": "992dd87e398bade1888131cfaea66cb6f0e77a837194d7266c28b63dbfb48e1c",
+        "status": "draft",
+        "plan_id": "ea96447a-b370-461c-a8f1-c4abfb2c9f95",
+        "manifest": {
+          "id": "8219039f-1053-4d6b-ab72-bd9b048a7dac",
+          "digest": "cd301b2bfde11a0d70e34c48b4a63be1a65f011574e405e0ed5db63e184870af",
+          "brief_id": "50dda397-e36a-4d90-a758-37bc7e5686dc",
+          "workflow": "WF-13/landing-seo-draft@6"
+        },
+        "revision": 1,
+        "product_id": "9101b839-b4f3-4dec-8588-d3fa99d31b7a",
+        "provenance": "deterministic-composition/1",
+        "buyer_action": "appointment",
+        "plan_revision": 1,
+        "guideline_digest": "8667f503425c83801d0702e0a96932e171bcc578d401f55e68de2dc1d3e1e675",
+        "requires_channel_evidence": true,
+        "referenced_workflow_skills": {
+          "seo": {
+            "search-intent-seo@1": "95015035ae8f0183d82fa88c9851879885736b82032ce11d9b8f12230dc0152d"
+          },
+          "content": {
+            "landing-conversion@1": "65fed41e31b470d9ac009c03a5ee376851fe86664f2c73f2c5e08af49385bcc6"
+          }
+        }
+      },
+      {
+        "id": "calendar",
+        "body": "Ngày 14 · Content · Nội dung trang có CTA và điều kiện theo manifest\nNgày 14 · SEO · Tiêu đề SEO và mô tả khớp trang\nNgày 14 · Social · Bài xã hội có hành động nhất quán với brief\nNgày 14 · Media · Mẫu quảng cáo nháp cho người mua đã chọn\nNgày 14 · Design · Brief nêu sản phẩm, người xem và tiêu chí hình ảnh\nNgày 21 · Campaign Manager · Lịch dự kiến có người nhận, mốc QA và kênh\nKênh đề xuất: web. Điểm duyệt: kiểm tra chứng cứ và phê duyệt từng tài sản trước thực thi.",
+        "kind": "calendar",
+        "title": "Lịch nội dung dự kiến",
+        "digest": "6cfe82f9675906cfadc0f535e526ea788d89ccf06f96cdf2418d4422f41e4cac",
+        "status": "draft",
+        "plan_id": "ea96447a-b370-461c-a8f1-c4abfb2c9f95",
+        "manifest": {
+          "id": "8219039f-1053-4d6b-ab72-bd9b048a7dac",
+          "digest": "cd301b2bfde11a0d70e34c48b4a63be1a65f011574e405e0ed5db63e184870af",
+          "brief_id": "50dda397-e36a-4d90-a758-37bc7e5686dc",
+          "workflow": "WF-13/landing-seo-draft@6"
+        },
+        "revision": 1,
+        "product_id": "9101b839-b4f3-4dec-8588-d3fa99d31b7a",
+        "provenance": "deterministic-composition/1",
+        "buyer_action": "appointment",
+        "plan_revision": 1,
+        "guideline_digest": "8667f503425c83801d0702e0a96932e171bcc578d401f55e68de2dc1d3e1e675",
+        "requires_channel_evidence": true,
+        "referenced_workflow_skills": {
+          "seo": {
+            "search-intent-seo@1": "95015035ae8f0183d82fa88c9851879885736b82032ce11d9b8f12230dc0152d"
+          },
+          "content": {
+            "landing-conversion@1": "65fed41e31b470d9ac009c03a5ee376851fe86664f2c73f2c5e08af49385bcc6"
+          }
+        }
+      },
+      {
+        "deliverable_id": "ef0e2413-dab3-4eb5-ae69-88c1b75bfd39",
+        "revision": 9,
+        "document_digest": "7aae4dfdeb538a9fdf6325aea9eda750d88bc032635285e2ffed3db7326d9329",
+        "status": "shared",
+        "plan_id": "ea96447a-b370-461c-a8f1-c4abfb2c9f95",
+        "plan_revision": 1,
+        "manifest": {
+          "id": "8219039f-1053-4d6b-ab72-bd9b048a7dac",
+          "digest": "cd301b2bfde11a0d70e34c48b4a63be1a65f011574e405e0ed5db63e184870af",
+          "brief_id": "50dda397-e36a-4d90-a758-37bc7e5686dc",
+          "workflow": "WF-13/landing-seo-draft@6"
+        },
+        "run_id": "e7aee923-2467-49ad-a64d-14f9ba283119",
+        "product_id": "9101b839-b4f3-4dec-8588-d3fa99d31b7a",
+        "buyer_action": "appointment",
+        "guideline_digest": "8667f503425c83801d0702e0a96932e171bcc578d401f55e68de2dc1d3e1e675",
+        "registry": {
+          "skills": [
+            "content",
+            "director",
+            "seo"
+          ],
+          "workflow": "WF-13/landing-seo-draft@6",
+          "contracts": {
+            "seo": {
+              "model": "local",
+              "owner": "agency marketing lead",
+              "tools": [],
+              "inputs": [
+                "brief",
+                "brand",
+                "sources"
+              ],
+              "adapter": "seo@5",
+              "outputs": [
+                "meta_description",
+                "page_title",
+                "search_intent",
+                "source_ids"
+              ],
+              "role_id": "ai-seo-geo-specialist",
+              "approval": "revision_qa_and_client_snapshot",
+              "fallback": "agency editor",
+              "node_cap": 1000,
+              "skill_id": "seo",
+              "objective": "Use this role's approved knowledge projection to prepare internal Marketing work",
+              "qa_policy": "c3-seo@2",
+              "max_attempts": 3,
+              "predecessors": [
+                "content"
+              ],
+              "output_schema": {
+                "type": "object",
+                "required": [
+                  "meta_description",
+                  "page_title",
+                  "search_intent",
+                  "source_ids"
+                ],
+                "properties": {
+                  "page_title": {
+                    "type": "string"
+                  },
+                  "source_ids": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  },
+                  "search_intent": {
+                    "type": "string"
+                  },
+                  "meta_description": {
+                    "type": "string"
+                  }
+                },
+                "additionalProperties": false
+              },
+              "skill_version": 5,
+              "adapter_digest": "c8c7649ce2ef9d2d9e02e2a8ca83ba3cee22da2e9c90525248a26af693ff385f",
+              "timeout_seconds": 300,
+              "contract_version": 5,
+              "success_criteria": [
+                "meta_description",
+                "page_title",
+                "search_intent",
+                "source_ids"
+              ],
+              "forbidden_actions": [
+                "external_write",
+                "publish",
+                "spend"
+              ],
+              "marketing_methods": {
+                "search-intent-seo@1": "95015035ae8f0183d82fa88c9851879885736b82032ce11d9b8f12230dc0152d"
+              }
+            },
+            "content": {
+              "model": "local",
+              "owner": "agency marketing lead",
+              "tools": [],
+              "inputs": [
+                "brief",
+                "brand",
+                "sources"
+              ],
+              "adapter": "content@4",
+              "outputs": [
+                "benefit",
+                "call_to_action",
+                "headline",
+                "source_ids",
+                "value_proposition"
+              ],
+              "role_id": "ai-copywriter-content-strategist",
+              "approval": "revision_qa_and_client_snapshot",
+              "fallback": "agency editor",
+              "node_cap": 1000,
+              "skill_id": "content",
+              "objective": "Use this role's approved knowledge projection to prepare internal Marketing work",
+              "qa_policy": "c3-content@2",
+              "max_attempts": 3,
+              "predecessors": [],
+              "output_schema": {
+                "type": "object",
+                "required": [
+                  "benefit",
+                  "call_to_action",
+                  "headline",
+                  "source_ids",
+                  "value_proposition"
+                ],
+                "properties": {
+                  "benefit": {
+                    "type": "string"
+                  },
+                  "headline": {
+                    "type": "string"
+                  },
+                  "source_ids": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  },
+                  "call_to_action": {
+                    "type": "string"
+                  },
+                  "value_proposition": {
+                    "type": "string"
+                  }
+                },
+                "additionalProperties": false
+              },
+              "skill_version": 4,
+              "adapter_digest": "fcea91e89e8806897a72d314ca258a87c6e509f6ec34ee737edf9d8897d28aa8",
+              "timeout_seconds": 300,
+              "contract_version": 4,
+              "success_criteria": [
+                "benefit",
+                "call_to_action",
+                "headline",
+                "source_ids",
+                "value_proposition"
+              ],
+              "forbidden_actions": [
+                "external_write",
+                "publish",
+                "spend"
+              ],
+              "marketing_methods": {
+                "landing-conversion@1": "65fed41e31b470d9ac009c03a5ee376851fe86664f2c73f2c5e08af49385bcc6"
+              }
+            },
+            "director": {
+              "model": "local",
+              "owner": "agency marketing lead",
+              "tools": [],
+              "inputs": [
+                "brief",
+                "brand",
+                "sources"
+              ],
+              "adapter": "director@4",
+              "outputs": [
+                "primary_assignment",
+                "secondary_assignment"
+              ],
+              "role_id": "ai-managing-director",
+              "approval": "revision_qa_and_client_snapshot",
+              "fallback": "agency editor",
+              "node_cap": 1000,
+              "skill_id": "director",
+              "objective": "Use this role's approved knowledge projection to prepare internal Marketing work",
+              "qa_policy": "c3-director@2",
+              "max_attempts": 3,
+              "predecessors": [],
+              "output_schema": {
+                "type": "object",
+                "required": [
+                  "primary_assignment",
+                  "secondary_assignment"
+                ],
+                "properties": {
+                  "primary_assignment": {
+                    "type": "string"
+                  },
+                  "secondary_assignment": {
+                    "type": "string"
+                  }
+                },
+                "additionalProperties": false
+              },
+              "skill_version": 4,
+              "adapter_digest": "de8896dfee4aaf662dbf31bdda67606e3ae2376b8e4b4542acfeb3993646724d",
+              "timeout_seconds": 300,
+              "contract_version": 4,
+              "success_criteria": [
+                "primary_assignment",
+                "secondary_assignment"
+              ],
+              "forbidden_actions": [
+                "external_write",
+                "publish",
+                "spend"
+              ],
+              "marketing_methods": {}
+            }
+          },
+          "workflow_id": "WF-13/landing-seo-draft",
+          "manifest_digest": "0cfe96302a0d7698b09e379f38b98f1708311ce706d83694f595d11ddc56399f",
+          "workflow_version": 6
+        },
+        "id": "landing",
+        "kind": "landing",
+        "title": "Nội dung trang đích",
+        "body": "Dịch vụ kiểm tra bơm Lam\nĐối chiếu quy cách và điều kiện áp dụng của Dịch vụ kiểm tra bơm Lam trước khi lựa chọn.\nPhiếu kiểm tra ghi tình trạng máy. Áp dụng cho máy tại xưởng.\nGiá tham khảo: 270.000 VND / 1 máy, đã gồm thuế. Đơn tối thiểu: 1 máy. Áp dụng từ 1 máy. Số lượng đối chiếu: 1 máy. Xác nhận số lượng trước khi đặt.\nPhiếu kiểm tra ghi tình trạng máy. Áp dụng cho máy tại xưởng.\nĐặt lịch",
+        "fields": {
+          "headline": "Dịch vụ kiểm tra bơm Lam",
+          "value_proposition": "Đối chiếu quy cách và điều kiện áp dụng của Dịch vụ kiểm tra bơm Lam trước khi lựa chọn.",
+          "benefit": "Phiếu kiểm tra ghi tình trạng máy. Áp dụng cho máy tại xưởng.",
+          "commercial_terms": "Giá tham khảo: 270.000 VND / 1 máy, đã gồm thuế. Đơn tối thiểu: 1 máy. Áp dụng từ 1 máy. Số lượng đối chiếu: 1 máy. Xác nhận số lượng trước khi đặt.\nPhiếu kiểm tra ghi tình trạng máy. Áp dụng cho máy tại xưởng.",
+          "call_to_action": "Đặt lịch"
+        },
+        "digest": "0f05998c5520c57c6e44b5e9139f257a96d4caed09eeea9ab0515dcc0f348f62",
+        "approval_receipt": "7efa4619-e1d3-4191-9267-8b50add2dc01",
+        "provenance": "staff_saved_studio_revision"
+      },
+      {
+        "deliverable_id": "ef0e2413-dab3-4eb5-ae69-88c1b75bfd39",
+        "revision": 9,
+        "document_digest": "7aae4dfdeb538a9fdf6325aea9eda750d88bc032635285e2ffed3db7326d9329",
+        "status": "shared",
+        "plan_id": "ea96447a-b370-461c-a8f1-c4abfb2c9f95",
+        "plan_revision": 1,
+        "manifest": {
+          "id": "8219039f-1053-4d6b-ab72-bd9b048a7dac",
+          "digest": "cd301b2bfde11a0d70e34c48b4a63be1a65f011574e405e0ed5db63e184870af",
+          "brief_id": "50dda397-e36a-4d90-a758-37bc7e5686dc",
+          "workflow": "WF-13/landing-seo-draft@6"
+        },
+        "run_id": "e7aee923-2467-49ad-a64d-14f9ba283119",
+        "product_id": "9101b839-b4f3-4dec-8588-d3fa99d31b7a",
+        "buyer_action": "appointment",
+        "guideline_digest": "8667f503425c83801d0702e0a96932e171bcc578d401f55e68de2dc1d3e1e675",
+        "registry": {
+          "skills": [
+            "content",
+            "director",
+            "seo"
+          ],
+          "workflow": "WF-13/landing-seo-draft@6",
+          "contracts": {
+            "seo": {
+              "model": "local",
+              "owner": "agency marketing lead",
+              "tools": [],
+              "inputs": [
+                "brief",
+                "brand",
+                "sources"
+              ],
+              "adapter": "seo@5",
+              "outputs": [
+                "meta_description",
+                "page_title",
+                "search_intent",
+                "source_ids"
+              ],
+              "role_id": "ai-seo-geo-specialist",
+              "approval": "revision_qa_and_client_snapshot",
+              "fallback": "agency editor",
+              "node_cap": 1000,
+              "skill_id": "seo",
+              "objective": "Use this role's approved knowledge projection to prepare internal Marketing work",
+              "qa_policy": "c3-seo@2",
+              "max_attempts": 3,
+              "predecessors": [
+                "content"
+              ],
+              "output_schema": {
+                "type": "object",
+                "required": [
+                  "meta_description",
+                  "page_title",
+                  "search_intent",
+                  "source_ids"
+                ],
+                "properties": {
+                  "page_title": {
+                    "type": "string"
+                  },
+                  "source_ids": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  },
+                  "search_intent": {
+                    "type": "string"
+                  },
+                  "meta_description": {
+                    "type": "string"
+                  }
+                },
+                "additionalProperties": false
+              },
+              "skill_version": 5,
+              "adapter_digest": "c8c7649ce2ef9d2d9e02e2a8ca83ba3cee22da2e9c90525248a26af693ff385f",
+              "timeout_seconds": 300,
+              "contract_version": 5,
+              "success_criteria": [
+                "meta_description",
+                "page_title",
+                "search_intent",
+                "source_ids"
+              ],
+              "forbidden_actions": [
+                "external_write",
+                "publish",
+                "spend"
+              ],
+              "marketing_methods": {
+                "search-intent-seo@1": "95015035ae8f0183d82fa88c9851879885736b82032ce11d9b8f12230dc0152d"
+              }
+            },
+            "content": {
+              "model": "local",
+              "owner": "agency marketing lead",
+              "tools": [],
+              "inputs": [
+                "brief",
+                "brand",
+                "sources"
+              ],
+              "adapter": "content@4",
+              "outputs": [
+                "benefit",
+                "call_to_action",
+                "headline",
+                "source_ids",
+                "value_proposition"
+              ],
+              "role_id": "ai-copywriter-content-strategist",
+              "approval": "revision_qa_and_client_snapshot",
+              "fallback": "agency editor",
+              "node_cap": 1000,
+              "skill_id": "content",
+              "objective": "Use this role's approved knowledge projection to prepare internal Marketing work",
+              "qa_policy": "c3-content@2",
+              "max_attempts": 3,
+              "predecessors": [],
+              "output_schema": {
+                "type": "object",
+                "required": [
+                  "benefit",
+                  "call_to_action",
+                  "headline",
+                  "source_ids",
+                  "value_proposition"
+                ],
+                "properties": {
+                  "benefit": {
+                    "type": "string"
+                  },
+                  "headline": {
+                    "type": "string"
+                  },
+                  "source_ids": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  },
+                  "call_to_action": {
+                    "type": "string"
+                  },
+                  "value_proposition": {
+                    "type": "string"
+                  }
+                },
+                "additionalProperties": false
+              },
+              "skill_version": 4,
+              "adapter_digest": "fcea91e89e8806897a72d314ca258a87c6e509f6ec34ee737edf9d8897d28aa8",
+              "timeout_seconds": 300,
+              "contract_version": 4,
+              "success_criteria": [
+                "benefit",
+                "call_to_action",
+                "headline",
+                "source_ids",
+                "value_proposition"
+              ],
+              "forbidden_actions": [
+                "external_write",
+                "publish",
+                "spend"
+              ],
+              "marketing_methods": {
+                "landing-conversion@1": "65fed41e31b470d9ac009c03a5ee376851fe86664f2c73f2c5e08af49385bcc6"
+              }
+            },
+            "director": {
+              "model": "local",
+              "owner": "agency marketing lead",
+              "tools": [],
+              "inputs": [
+                "brief",
+                "brand",
+                "sources"
+              ],
+              "adapter": "director@4",
+              "outputs": [
+                "primary_assignment",
+                "secondary_assignment"
+              ],
+              "role_id": "ai-managing-director",
+              "approval": "revision_qa_and_client_snapshot",
+              "fallback": "agency editor",
+              "node_cap": 1000,
+              "skill_id": "director",
+              "objective": "Use this role's approved knowledge projection to prepare internal Marketing work",
+              "qa_policy": "c3-director@2",
+              "max_attempts": 3,
+              "predecessors": [],
+              "output_schema": {
+                "type": "object",
+                "required": [
+                  "primary_assignment",
+                  "secondary_assignment"
+                ],
+                "properties": {
+                  "primary_assignment": {
+                    "type": "string"
+                  },
+                  "secondary_assignment": {
+                    "type": "string"
+                  }
+                },
+                "additionalProperties": false
+              },
+              "skill_version": 4,
+              "adapter_digest": "de8896dfee4aaf662dbf31bdda67606e3ae2376b8e4b4542acfeb3993646724d",
+              "timeout_seconds": 300,
+              "contract_version": 4,
+              "success_criteria": [
+                "primary_assignment",
+                "secondary_assignment"
+              ],
+              "forbidden_actions": [
+                "external_write",
+                "publish",
+                "spend"
+              ],
+              "marketing_methods": {}
+            }
+          },
+          "workflow_id": "WF-13/landing-seo-draft",
+          "manifest_digest": "0cfe96302a0d7698b09e379f38b98f1708311ce706d83694f595d11ddc56399f",
+          "workflow_version": 6
+        },
+        "id": "seo",
+        "kind": "seo",
+        "title": "Thông tin SEO",
+        "body": "Dịch vụ kiểm tra bơm Lam | HN\nXem thông tin về Dịch vụ kiểm tra bơm Lam tại HN. Đặt lịch\nTìm hiểu điều kiện lựa chọn Dịch vụ kiểm tra bơm Lam tại HN.",
+        "fields": {
+          "page_title": "Dịch vụ kiểm tra bơm Lam | HN",
+          "meta_description": "Xem thông tin về Dịch vụ kiểm tra bơm Lam tại HN. Đặt lịch",
+          "search_intent": "Tìm hiểu điều kiện lựa chọn Dịch vụ kiểm tra bơm Lam tại HN."
+        },
+        "digest": "1ad0b5a81cd500f1cb37aaef8a38cdbc7bf310995c696c5981a646633921b4dd",
+        "approval_receipt": "34b76a94-4067-4c80-a187-730459762435",
+        "provenance": "staff_saved_studio_revision"
+      }
+    ],
+    "plan_id": "ea96447a-b370-461c-a8f1-c4abfb2c9f95",
+    "plan_digest": "ddf93c38bda5410245958708a6f2d778b44840184a0f3b3700f5d9ce97c6fd71"
+  }
+}

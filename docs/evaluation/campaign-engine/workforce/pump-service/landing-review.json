@@ -1,0 +1,246 @@
+{
+  "groups": {
+    "copy": {
+      "headline": "Dịch vụ kiểm tra bơm Lam",
+      "value_proposition": "Đối chiếu quy cách và điều kiện áp dụng của Dịch vụ kiểm tra bơm Lam trước khi lựa chọn.",
+      "benefit": "Phiếu kiểm tra ghi tình trạng máy. Áp dụng cho máy tại xưởng.",
+      "commercial_terms": "Giá tham khảo: 270.000 VND / 1 máy, đã gồm thuế. Đơn tối thiểu: 1 máy. Áp dụng từ 1 máy. Số lượng đối chiếu: 1 máy. Xác nhận số lượng trước khi đặt.\nPhiếu kiểm tra ghi tình trạng máy. Áp dụng cho máy tại xưởng.",
+      "call_to_action": "Đặt lịch"
+    },
+    "seo": {
+      "page_title": "Dịch vụ kiểm tra bơm Lam | HN",
+      "meta_description": "Xem thông tin về Dịch vụ kiểm tra bơm Lam tại HN. Đặt lịch",
+      "search_intent": "Tìm hiểu điều kiện lựa chọn Dịch vụ kiểm tra bơm Lam tại HN."
+    }
+  },
+  "unresolved": [],
+  "terms": {
+    "expected_qa_revision": 9,
+    "expected_content_digest": "7aae4dfdeb538a9fdf6325aea9eda750d88bc032635285e2ffed3db7326d9329"
+  },
+  "field_history": {
+    "copy.headline": {
+      "customer_visible": true,
+      "control": "Dịch vụ kiểm tra bơm Lam",
+      "before": "Đặt lịch hẹn với dịch vụ kiểm tra bơm Lam",
+      "after": "Dịch vụ kiểm tra bơm Lam",
+      "decision": "retained_control",
+      "model_candidate": "Đặt lịch hẹn với dịch vụ kiểm tra bơm Lam",
+      "worker_field": "headline",
+      "role": "content",
+      "attempt": "7e8866dc-359d-44aa-9ffe-df128a4b38e3",
+      "request_sha256": "59e22ddaf7549f493553b38ad66b81284a013afa95a71dad91345fc3baf7c821",
+      "tested_revision": 2,
+      "quality_issues": [],
+      "unresolved": [
+        {
+          "field": "title",
+          "text": "Đặt lịch hẹn với dịch vụ kiểm tra bơm Lam",
+          "outcome": "unresolved",
+          "reason": "unsupported"
+        },
+        {
+          "field": "client_preview",
+          "text": "Đặt lịch hẹn với dịch vụ kiểm tra bơm Lam",
+          "outcome": "unresolved",
+          "reason": "unsupported"
+        },
+        {
+          "field": "studio.copy.headline",
+          "text": "Đặt lịch hẹn với dịch vụ kiểm tra bơm Lam",
+          "outcome": "unresolved",
+          "reason": "unsupported"
+        }
+      ]
+    },
+    "copy.value_proposition": {
+      "customer_visible": true,
+      "control": "Đối chiếu quy cách và điều kiện áp dụng của Dịch vụ kiểm tra bơm Lam trước khi lựa chọn.",
+      "before": "Đặt lịch hẹn với dịch vụ kiểm tra bơm Lam tại Xưởng bơm Lam để kiểm tra bơm và đảm bảo chất lượng sản phẩm.",
+      "after": "Đối chiếu quy cách và điều kiện áp dụng của Dịch vụ kiểm tra bơm Lam trước khi lựa chọn.",
+      "decision": "retained_control",
+      "model_candidate": "Đặt lịch hẹn với dịch vụ kiểm tra bơm Lam tại Xưởng bơm Lam để kiểm tra bơm và đảm bảo chất lượng sản phẩm.",
+      "worker_field": "value_proposition",
+      "role": "content",
+      "attempt": "7e8866dc-359d-44aa-9ffe-df128a4b38e3",
+      "request_sha256": "59e22ddaf7549f493553b38ad66b81284a013afa95a71dad91345fc3baf7c821",
+      "tested_revision": 3,
+      "quality_issues": [],
+      "unresolved": [
+        {
+          "field": "client_preview",
+          "text": "Đặt lịch hẹn với dịch vụ kiểm tra bơm Lam tại Xưởng bơm Lam để kiểm tra bơm và đảm bảo chất lượng sản phẩm.",
+          "outcome": "unresolved",
+          "reason": "unsupported"
+        },
+        {
+          "field": "studio.copy.value_proposition",
+          "text": "Đặt lịch hẹn với dịch vụ kiểm tra bơm Lam tại Xưởng bơm Lam để kiểm tra bơm và đảm bảo chất lượng sản phẩm.",
+          "outcome": "unresolved",
+          "reason": "unsupported"
+        }
+      ]
+    },
+    "copy.benefit": {
+      "customer_visible": true,
+      "control": "Phiếu kiểm tra ghi tình trạng máy. Áp dụng cho máy tại xưởng.",
+      "before": "Đặt lịch hẹn với dịch vụ kiểm tra bơm Lam tại Xưởng bơm Lam",
+      "after": "Phiếu kiểm tra ghi tình trạng máy. Áp dụng cho máy tại xưởng.",
+      "decision": "retained_control",
+      "model_candidate": "Đặt lịch hẹn với dịch vụ kiểm tra bơm Lam tại Xưởng bơm Lam",
+      "worker_field": "benefit",
+      "role": "content",
+      "attempt": "7e8866dc-359d-44aa-9ffe-df128a4b38e3",
+      "request_sha256": "59e22ddaf7549f493553b38ad66b81284a013afa95a71dad91345fc3baf7c821",
+      "tested_revision": 4,
+      "quality_issues": [],
+      "unresolved": [
+        {
+          "field": "client_preview",
+          "text": "Đặt lịch hẹn với dịch vụ kiểm tra bơm Lam tại Xưởng bơm Lam",
+          "outcome": "unresolved",
+          "reason": "unsupported"
+        },
+        {
+          "field": "studio.copy.benefit",
+          "text": "Đặt lịch hẹn với dịch vụ kiểm tra bơm Lam tại Xưởng bơm Lam",
+          "outcome": "unresolved",
+          "reason": "unsupported"
+        }
+      ]
+    },
+    "copy.commercial_terms": {
+      "customer_visible": true,
+      "control": "Giá tham khảo: 270.000 VND / 1 máy, đã gồm thuế. Đơn tối thiểu: 1 máy. Áp dụng từ 1 máy. Số lượng đối chiếu: 1 máy. Xác nhận số lượng trước khi đặt.\nPhiếu kiểm tra ghi tình trạng máy. Áp dụng cho máy tại xưởng.",
+      "before": "Giá tham khảo: 270.000 VND / 1 máy, đã gồm thuế. Đơn tối thiểu: 1 máy. Áp dụng từ 1 máy. Số lượng đối chiếu: 1 máy. Xác nhận số lượng trước khi đặt.\nPhiếu kiểm tra ghi tình trạng máy. Áp dụng cho máy tại xưởng.",
+      "after": "Giá tham khảo: 270.000 VND / 1 máy, đã gồm thuế. Đơn tối thiểu: 1 máy. Áp dụng từ 1 máy. Số lượng đối chiếu: 1 máy. Xác nhận số lượng trước khi đặt.\nPhiếu kiểm tra ghi tình trạng máy. Áp dụng cho máy tại xưởng.",
+      "decision": "grounded_composer",
+      "model_candidate": null
+    },
+    "copy.call_to_action": {
+      "customer_visible": true,
+      "control": "Đặt lịch",
+      "before": "Đặt lịch",
+      "after": "Đặt lịch",
+      "decision": "retained_control",
+      "model_candidate": "đặt lịch hẹn",
+      "worker_field": "call_to_action",
+      "role": "content",
+      "attempt": "7e8866dc-359d-44aa-9ffe-df128a4b38e3",
+      "request_sha256": "59e22ddaf7549f493553b38ad66b81284a013afa95a71dad91345fc3baf7c821",
+      "tested_revision": 5,
+      "quality_issues": [
+        {
+          "group": "copy",
+          "field": "call_to_action",
+          "reason": "buyer_action"
+        }
+      ],
+      "unresolved": [
+        {
+          "field": "client_preview",
+          "text": "đặt lịch hẹn",
+          "outcome": "unresolved",
+          "reason": "unsupported"
+        },
+        {
+          "field": "studio.copy.call_to_action",
+          "text": "đặt lịch hẹn",
+          "outcome": "unresolved",
+          "reason": "unsupported"
+        }
+      ]
+    },
+    "seo.page_title": {
+      "customer_visible": true,
+      "control": "Dịch vụ kiểm tra bơm Lam | HN",
+      "before": "Dịch vụ kiểm tra bơm Lam tại Xưởng bơm Lam",
+      "after": "Dịch vụ kiểm tra bơm Lam | HN",
+      "decision": "retained_control",
+      "model_candidate": "Dịch vụ kiểm tra bơm Lam tại Xưởng bơm Lam",
+      "worker_field": "page_title",
+      "role": "seo",
+      "attempt": "2961a6ef-c6ae-4d21-8c5f-0426f13243cf",
+      "request_sha256": "0d37df635a0b22b3c8b651e3bb5d8abb092216d5e5fd69173991730c8aabcb76",
+      "tested_revision": 6,
+      "quality_issues": [],
+      "unresolved": [
+        {
+          "field": "client_preview",
+          "text": "Dịch vụ kiểm tra bơm Lam tại Xưởng bơm Lam",
+          "outcome": "unresolved",
+          "reason": "unsupported"
+        },
+        {
+          "field": "studio.seo.page_title",
+          "text": "Dịch vụ kiểm tra bơm Lam tại Xưởng bơm Lam",
+          "outcome": "unresolved",
+          "reason": "unsupported"
+        }
+      ]
+    },
+    "seo.meta_description": {
+      "customer_visible": true,
+      "control": "Xem thông tin về Dịch vụ kiểm tra bơm Lam tại HN. Đặt lịch",
+      "before": "Đặt lịch hẹn với dịch vụ kiểm tra bơm Lam tại Xưởng bơm Lam để kiểm tra bơm và đảm bảo chất lượng sản phẩm.",
+      "after": "Xem thông tin về Dịch vụ kiểm tra bơm Lam tại HN. Đặt lịch",
+      "decision": "retained_control",
+      "model_candidate": "Đặt lịch hẹn với dịch vụ kiểm tra bơm Lam tại Xưởng bơm Lam để kiểm tra bơm và đảm bảo chất lượng sản phẩm.",
+      "worker_field": "meta_description",
+      "role": "seo",
+      "attempt": "2961a6ef-c6ae-4d21-8c5f-0426f13243cf",
+      "request_sha256": "0d37df635a0b22b3c8b651e3bb5d8abb092216d5e5fd69173991730c8aabcb76",
+      "tested_revision": 7,
+      "quality_issues": [],
+      "unresolved": [
+        {
+          "field": "client_preview",
+          "text": "Đặt lịch hẹn với dịch vụ kiểm tra bơm Lam tại Xưởng bơm Lam để kiểm tra bơm và đảm bảo chất lượng sản phẩm.",
+          "outcome": "unresolved",
+          "reason": "unsupported"
+        },
+        {
+          "field": "studio.seo.meta_description",
+          "text": "Đặt lịch hẹn với dịch vụ kiểm tra bơm Lam tại Xưởng bơm Lam để kiểm tra bơm và đảm bảo chất lượng sản phẩm.",
+          "outcome": "unresolved",
+          "reason": "unsupported"
+        }
+      ]
+    },
+    "seo.search_intent": {
+      "customer_visible": true,
+      "control": "Tìm hiểu điều kiện lựa chọn Dịch vụ kiểm tra bơm Lam tại HN.",
+      "before": "appointment",
+      "after": "Tìm hiểu điều kiện lựa chọn Dịch vụ kiểm tra bơm Lam tại HN.",
+      "decision": "retained_control",
+      "model_candidate": "appointment",
+      "worker_field": "search_intent",
+      "role": "seo",
+      "attempt": "2961a6ef-c6ae-4d21-8c5f-0426f13243cf",
+      "request_sha256": "0d37df635a0b22b3c8b651e3bb5d8abb092216d5e5fd69173991730c8aabcb76",
+      "tested_revision": 8,
+      "quality_issues": [
+        {
+          "group": "seo",
+          "field": "search_intent",
+          "reason": "relevance"
+        }
+      ],
+      "unresolved": [
+        {
+          "field": "client_preview",
+          "text": "appointment",
+          "outcome": "unresolved",
+          "reason": "unsupported"
+        },
+        {
+          "field": "studio.seo.search_intent",
+          "text": "appointment",
+          "outcome": "unresolved",
+          "reason": "unsupported"
+        }
+      ]
+    }
+  },
+  "retained_distinct_model_fields": 0
+}

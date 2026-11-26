@@ -1,0 +1,482 @@
+{
+  "source": "synthetic API lifecycle",
+  "plan": {
+    "plan_id": "addfb22a-0e3f-4d64-81bc-f2d46bb08a8a",
+    "plan_revision": 1,
+    "plan_digest": "d477d7c52fe3d5072a010ba6801f19bcbbab4f6f5f337d1ab79b7125ff2cb030",
+    "plan_receipt": "fa639fb0-37c2-4bb6-828f-9298fa6ffa17",
+    "manifest": {
+      "id": "ba4089c3-fa6c-49dd-970a-f57c1db392d9",
+      "digest": "4036d7345feb3eea7426d1366ca715886438df899ba81b271de604c0889b86e5",
+      "brief_id": "7df3be35-aad7-4620-8f77-881a23b885a0",
+      "workflow": "WF-13/landing-seo-draft@6"
+    },
+    "queue_receipt": "5b991cff-e1f3-4b20-8d34-dd23179c5d74",
+    "measurement_contract": {
+      "version": "appointment-measurement/1",
+      "business_outcome": "appointment.confirmed_per_requested",
+      "window_days": 21,
+      "owner_role": "service_operations",
+      "numerator": {
+        "event": "confirmed",
+        "eligibility": "staff_confirmation_with_scheduled_time"
+      },
+      "denominator": {
+        "event": "requested",
+        "eligibility": "valid_service_request_with_consent"
+      },
+      "window": "rolling_utc_(start,end]_denominator_cohort",
+      "unit": "ratio",
+      "aggregation": "distinct_appointment_id",
+      "cancellations": "retain_prior_eligible_events_report_separately",
+      "refunds": "not_a_monetary_outcome",
+      "missing_attribution": "include_and_report_separately",
+      "reconciliation": "join_authorized_lifecycle_receipts_by_plan_and_appointment_id",
+      "id": "c54b932f-371c-4b08-930d-7f632a5111e7",
+      "revision": 1,
+      "digest": "7d85efd3d3d1822e6117e2e7389387e9270de0b01415f6d102fd9bc6064b6d4c"
+    },
+    "channel_plan": [
+      "web"
+    ],
+    "guideline_digest": "8667f503425c83801d0702e0a96932e171bcc578d401f55e68de2dc1d3e1e675",
+    "due_days": {
+      "social": 10,
+      "ad": 10,
+      "creative_brief": 10,
+      "calendar": 14
+    }
+  },
+  "revision": 4,
+  "snapshot_digest": "ad66ff779c3891e8dcaae9ad2f3692550d642a55cbc7ab0a569d666323ba47f2",
+  "customer_preview": "Nội dung trang đích\n\nTiêu đề\nBuổi khảo sát luồng nhận hàng Luồng Rõ\n\nGiá trị cho người mua\nĐối chiếu quy cách và điều kiện áp dụng của Buổi khảo sát luồng nhận hàng Luồng Rõ trước khi lựa chọn.\n\nLợi ích\nBàn giao sơ đồ luồng nhận hàng Trong phạm vi buổi khảo sát.\n\nĐiều kiện thương mại\nBàn giao sơ đồ luồng nhận hàng Trong phạm vi buổi khảo sát.\nGiá tham khảo: 760.000 VND / 1 lượt, đã gồm thuế. Đơn tối thiểu: 1 lượt. Áp dụng từ 1 lượt. Số lượng đối chiếu: 1 lượt. Xác nhận số lượng trước khi đặt.\n\nLời mời hành động\nGửi đề nghị khảo sát\n\nThông tin SEO\n\nTiêu đề SEO\nBuổi khảo sát luồng nhận hàng Luồng Rõ | HN\n\nMô tả tìm kiếm\nXem thông tin về Buổi khảo sát luồng nhận hàng Luồng Rõ tại HN. Gửi đề nghị khảo sát\n\nÝ định tìm kiếm\nTìm hiểu điều kiện lựa chọn Buổi khảo sát luồng nhận hàng Luồng Rõ tại HN.\n\nBài mạng xã hội\n\nTrụ cột nội dung\nchuẩn bị lịch hẹn\n\nMở bài\nAnh chị muốn sắp xếp lịch cho Buổi khảo sát luồng nhận hàng Luồng Rõ?\n\nDữ kiện và điều kiện\nBàn giao sơ đồ luồng nhận hàng Trong phạm vi buổi khảo sát.\nGiá tham khảo: 760.000 VND / 1 lượt, đã gồm thuế. Đơn tối thiểu: 1 lượt. Áp dụng từ 1 lượt. Số lượng đối chiếu: 1 lượt. Xác nhận số lượng trước khi đặt.\n\nLời mời hành động\nGửi đề nghị khảo sát\n\nĐề xuất quảng cáo\n\nĐề xuất chiến dịch\nĐề xuất thử thông điệp về Buổi khảo sát luồng nhận hàng Luồng Rõ.\n\nGiả thuyết nhóm người mua\nGiả thuyết cần thử với nhóm Trưởng vận hành kho phân phối.\n\nÝ định và từ khóa đề xuất\nTừ khóa thử nghiệm: Buổi khảo sát luồng nhận hàng Luồng Rõ · chuẩn bị lịch hẹn.\n\nTiêu đề quảng cáo\nBuổi khảo sát luồng nhận hàng Luồng Rõ\n\nLời quảng cáo\nXem phạm vi của Buổi khảo sát luồng nhận hàng Luồng Rõ và chọn khung giờ muốn đề nghị.\n\nLời mời hành động\nGửi đề nghị khảo sát\n\nThử nghiệm sáng tạo\nSo sánh hai cách mở đầu. Giữ nguyên lời mời hành động, vị trí và điều kiện.\n\nPhân bổ đề xuất\nĐề xuất chia đều hạn mức media đã duyệt giữa hai biến thể trong mô phỏng.\n\nPhép đo\nKPI chính trong 21 ngày: số lịch do nhân sự xác nhận trên số yêu cầu đặt lịch hợp lệ. Vận hành dịch vụ đối soát mỗi mã hẹn một lần. Giữ các sự kiện đủ điều kiện trước khi hủy. Tách hủy, vắng mặt và thiếu nguồn; hoàn tiền không đổi tỷ lệ.\n\nBrief thiết kế\n\nÝ tưởng hình ảnh\nPhác thảo khung hình cho Buổi khảo sát luồng nhận hàng Luồng Rõ có chỗ đặt điều kiện và lời mời hành động.\n\nChỉ dẫn thương hiệu\nÁp dụng hướng dẫn thương hiệu bản 1. Tách phần chuẩn bị của người mua khỏi bước xác nhận lịch của nhân sự.\n\nĐặc tả ảnh\nGiao mẫu dọc và ngang, bản nguồn chỉnh sửa được và ảnh xem trước. Giữ chủ thể, điều kiện và lời mời hành động trong vùng an toàn khi cắt. Duyệt độ đọc ở kích thước điện thoại.\n\nKịch bản video\nGiao storyboard có cảnh nhu cầu, cảnh đối chiếu dữ kiện và cảnh chọn bước tiếp theo. Kèm chỉ dẫn cảnh quay, phụ đề, bản chép lời và danh mục nguồn. Duyệt khi tắt âm thanh trước khi xuất bản dựng.\n\nĐiều kiện quyền sử dụng\nChờ kiểm tra chủ sở hữu, giấy phép, phạm vi và thời hạn trước khi dùng tư liệu.\n\nNguồn tài sản\nBản giao chỉ gồm chỉ dẫn sản xuất. Chưa có tệp hình ảnh hoặc video được cấp phép.\n\nLịch nội dung\n\nKênh trong kế hoạch\nweb\n\nMốc đề xuất\nNgày 10: soát brief. Ngày 10: chuẩn bị bài. Ngày 10: duyệt mẫu quảng cáo. Ngày 14: đối soát lịch.\n\nThứ tự nội dung\nMở bằng câu hỏi của người mua, tiếp đến là bài đối chiếu điều kiện, kết thúc bằng lời mời hành động.\n\nBộ phận nhận việc\nSocial soạn bài, Media soạn quảng cáo, Design nhận brief và Campaign Manager đối soát lịch.\n\nĐiểm duyệt\nChỉ đề xuất lịch. Kiểm tra nguồn, quyền sử dụng và bản QA đã duyệt trước khi mô phỏng.",
+  "assets": {
+    "social": {
+      "pillar": "chuẩn bị lịch hẹn",
+      "opening": "Anh chị muốn sắp xếp lịch cho Buổi khảo sát luồng nhận hàng Luồng Rõ?",
+      "approved_terms": "Bàn giao sơ đồ luồng nhận hàng Trong phạm vi buổi khảo sát.\nGiá tham khảo: 760.000 VND / 1 lượt, đã gồm thuế. Đơn tối thiểu: 1 lượt. Áp dụng từ 1 lượt. Số lượng đối chiếu: 1 lượt. Xác nhận số lượng trước khi đặt.",
+      "buyer_action": "Gửi đề nghị khảo sát"
+    },
+    "ad": {
+      "campaign": "Đề xuất thử thông điệp về Buổi khảo sát luồng nhận hàng Luồng Rõ.",
+      "ad_group": "Giả thuyết cần thử với nhóm Trưởng vận hành kho phân phối.",
+      "intent": "Từ khóa thử nghiệm: Buổi khảo sát luồng nhận hàng Luồng Rõ · chuẩn bị lịch hẹn.",
+      "headlines": "Buổi khảo sát luồng nhận hàng Luồng Rõ",
+      "description": "Xem phạm vi của Buổi khảo sát luồng nhận hàng Luồng Rõ và chọn khung giờ muốn đề nghị.",
+      "buyer_action": "Gửi đề nghị khảo sát",
+      "test": "So sánh hai cách mở đầu. Giữ nguyên lời mời hành động, vị trí và điều kiện.",
+      "allocation": "Đề xuất chia đều hạn mức media đã duyệt giữa hai biến thể trong mô phỏng.",
+      "measurement": "KPI chính trong 21 ngày: số lịch do nhân sự xác nhận trên số yêu cầu đặt lịch hợp lệ. Vận hành dịch vụ đối soát mỗi mã hẹn một lần. Giữ các sự kiện đủ điều kiện trước khi hủy. Tách hủy, vắng mặt và thiếu nguồn; hoàn tiền không đổi tỷ lệ."
+    },
+    "creative_brief": {
+      "concept": "Phác thảo khung hình cho Buổi khảo sát luồng nhận hàng Luồng Rõ có chỗ đặt điều kiện và lời mời hành động.",
+      "brand_direction": "Áp dụng hướng dẫn thương hiệu bản 1. Tách phần chuẩn bị của người mua khỏi bước xác nhận lịch của nhân sự.",
+      "image_spec": "Giao mẫu dọc và ngang, bản nguồn chỉnh sửa được và ảnh xem trước. Giữ chủ thể, điều kiện và lời mời hành động trong vùng an toàn khi cắt. Duyệt độ đọc ở kích thước điện thoại.",
+      "video_spec": "Giao storyboard có cảnh nhu cầu, cảnh đối chiếu dữ kiện và cảnh chọn bước tiếp theo. Kèm chỉ dẫn cảnh quay, phụ đề, bản chép lời và danh mục nguồn. Duyệt khi tắt âm thanh trước khi xuất bản dựng.",
+      "rights": "Chờ kiểm tra chủ sở hữu, giấy phép, phạm vi và thời hạn trước khi dùng tư liệu.",
+      "provenance": "Bản giao chỉ gồm chỉ dẫn sản xuất. Chưa có tệp hình ảnh hoặc video được cấp phép."
+    },
+    "calendar": {
+      "channels": "web",
+      "editorial_order": "Mở bằng câu hỏi của người mua, tiếp đến là bài đối chiếu điều kiện, kết thúc bằng lời mời hành động.",
+      "sequence": "Ngày 10: soát brief. Ngày 10: chuẩn bị bài. Ngày 10: duyệt mẫu quảng cáo. Ngày 14: đối soát lịch.",
+      "owners": "Social soạn bài, Media soạn quảng cáo, Design nhận brief và Campaign Manager đối soát lịch.",
+      "release_gate": "Chỉ đề xuất lịch. Kiểm tra nguồn, quyền sử dụng và bản QA đã duyệt trước khi mô phỏng."
+    }
+  },
+  "field_evidence": [
+    {
+      "field": "studio.social.pillar",
+      "outcome": "editorial",
+      "handles": []
+    },
+    {
+      "field": "studio.social.opening",
+      "outcome": "editorial",
+      "handles": []
+    },
+    {
+      "field": "studio.social.approved_terms",
+      "outcome": "verified",
+      "handles": [
+        "F1"
+      ]
+    },
+    {
+      "field": "studio.social.approved_terms",
+      "outcome": "verified",
+      "handles": [
+        "F2"
+      ]
+    },
+    {
+      "field": "studio.social.buyer_action",
+      "outcome": "editorial",
+      "handles": []
+    },
+    {
+      "field": "studio.ad.campaign",
+      "outcome": "editorial",
+      "handles": []
+    },
+    {
+      "field": "studio.ad.ad_group",
+      "outcome": "editorial",
+      "handles": []
+    },
+    {
+      "field": "studio.ad.intent",
+      "outcome": "editorial",
+      "handles": []
+    },
+    {
+      "field": "studio.ad.headlines",
+      "outcome": "verified",
+      "handles": [
+        "PRODUCT"
+      ]
+    },
+    {
+      "field": "studio.ad.description",
+      "outcome": "editorial",
+      "handles": []
+    },
+    {
+      "field": "studio.ad.buyer_action",
+      "outcome": "editorial",
+      "handles": []
+    },
+    {
+      "field": "studio.ad.test",
+      "outcome": "editorial",
+      "handles": []
+    },
+    {
+      "field": "studio.ad.allocation",
+      "outcome": "editorial",
+      "handles": []
+    },
+    {
+      "field": "studio.ad.measurement",
+      "outcome": "editorial",
+      "handles": []
+    },
+    {
+      "field": "studio.creative_brief.concept",
+      "outcome": "editorial",
+      "handles": []
+    },
+    {
+      "field": "studio.creative_brief.brand_direction",
+      "outcome": "editorial",
+      "handles": []
+    },
+    {
+      "field": "studio.creative_brief.image_spec",
+      "outcome": "editorial",
+      "handles": []
+    },
+    {
+      "field": "studio.creative_brief.video_spec",
+      "outcome": "editorial",
+      "handles": []
+    },
+    {
+      "field": "studio.creative_brief.rights",
+      "outcome": "editorial",
+      "handles": []
+    },
+    {
+      "field": "studio.creative_brief.provenance",
+      "outcome": "editorial",
+      "handles": []
+    },
+    {
+      "field": "studio.calendar.channels",
+      "outcome": "editorial",
+      "handles": []
+    },
+    {
+      "field": "studio.calendar.sequence",
+      "outcome": "editorial",
+      "handles": []
+    },
+    {
+      "field": "studio.calendar.editorial_order",
+      "outcome": "editorial",
+      "handles": []
+    },
+    {
+      "field": "studio.calendar.owners",
+      "outcome": "editorial",
+      "handles": []
+    },
+    {
+      "field": "studio.calendar.release_gate",
+      "outcome": "editorial",
+      "handles": []
+    }
+  ],
+  "group_approvals": {
+    "copy": {
+      "receipt": "0bc34a96-ea3b-4121-afbc-8b25b07e7b92",
+      "actor": "bd925fac-d4e3-43a2-a440-b6d927b87bd9",
+      "note": "Đối chiếu trường với phạm vi và nguồn được duyệt."
+    },
+    "seo": {
+      "receipt": "3ccb7326-ae7b-4fd0-8d98-d81c11040494",
+      "actor": "bd925fac-d4e3-43a2-a440-b6d927b87bd9",
+      "note": "Đối chiếu trường với phạm vi và nguồn được duyệt."
+    },
+    "social": {
+      "receipt": "a197c1b3-82af-4db0-a153-13c6fb208a1d",
+      "actor": "bd925fac-d4e3-43a2-a440-b6d927b87bd9",
+      "note": "Đối chiếu trường với phạm vi và nguồn được duyệt."
+    },
+    "ad": {
+      "receipt": "33657ad8-61d5-4bb3-94d3-8387f91c4980",
+      "actor": "bd925fac-d4e3-43a2-a440-b6d927b87bd9",
+      "note": "Đối chiếu trường với phạm vi và nguồn được duyệt."
+    },
+    "creative_brief": {
+      "receipt": "bb3aa466-dbda-4016-8171-2002ea86e0c5",
+      "actor": "bd925fac-d4e3-43a2-a440-b6d927b87bd9",
+      "note": "Đối chiếu trường với phạm vi và nguồn được duyệt."
+    },
+    "calendar": {
+      "receipt": "f5432bf5-4b99-4d4f-ae56-4c82046cdaa9",
+      "actor": "bd925fac-d4e3-43a2-a440-b6d927b87bd9",
+      "note": "Đối chiếu trường với phạm vi và nguồn được duyệt."
+    }
+  },
+  "work_receipts": {
+    "social": {
+      "id": "bd957030-5381-4a33-b787-d98e3f983b74",
+      "campaign_id": "b9f31b70-4473-4d27-a112-35422eb2a5a8",
+      "plan_id": "addfb22a-0e3f-4d64-81bc-f2d46bb08a8a",
+      "sequence": 11,
+      "kind": "unit_receipt",
+      "entity": "work_units",
+      "entity_id": "2760eafdb4d4e5644dca8144f569ec37526fe40f68a9aaf4fe8bc1d621fe65a9",
+      "value": {
+        "id": "2760eafdb4d4e5644dca8144f569ec37526fe40f68a9aaf4fe8bc1d621fe65a9",
+        "package_id": "social",
+        "scope": {
+          "tenant_id": "69bfa856-b004-47c0-885b-d42e236d1510",
+          "client_id": "b9978d5f-5602-48ea-a789-4f5b5277db19",
+          "brand_id": "a76bcabb-5077-4d86-9478-349c6a507e40",
+          "campaign_id": "b9f31b70-4473-4d27-a112-35422eb2a5a8"
+        },
+        "plan_id": "addfb22a-0e3f-4d64-81bc-f2d46bb08a8a",
+        "category": "social",
+        "assigned_role": "Social",
+        "complexity": "single_asset",
+        "expected_output": "social",
+        "criteria": "Bài xã hội có hành động nhất quán với brief",
+        "commissioned_at": "2026-11-26T08:52:21.809719+00:00",
+        "status": "fixture_accepted",
+        "manifest": {
+          "id": "ba4089c3-fa6c-49dd-970a-f57c1db392d9",
+          "digest": "4036d7345feb3eea7426d1366ca715886438df899ba81b271de604c0889b86e5",
+          "brief_id": "7df3be35-aad7-4620-8f77-881a23b885a0",
+          "workflow": "WF-13/landing-seo-draft@6"
+        },
+        "origin": "deterministic-composition/1",
+        "artifact_digest": "c870727d935af77d161d0b6c1a4950d189611c8784a4b1b6b15653982d860372",
+        "artifact_revision": 1,
+        "acceptance": {
+          "status": "fixture_accepted",
+          "review_id": "f7177d7b-a804-407d-bf58-bba85f78be7c",
+          "entry_id": "334a6e1e-9321-480c-aff3-47a171eae3b1",
+          "actor": "266e7d73-8b14-4003-a77a-9ffdd4e10a92",
+          "share_receipt": "d9810e47-d817-496b-8523-5d0c0fff66db",
+          "group": "social",
+          "run_id": "346f0648-abc4-464b-9c73-05a89bab4104",
+          "queue_receipt": "5b991cff-e1f3-4b20-8d34-dd23179c5d74",
+          "at": "2026-11-26T08:52:23.721382+00:00",
+          "plan_id": "addfb22a-0e3f-4d64-81bc-f2d46bb08a8a",
+          "revision": 4,
+          "elapsed_seconds": 1.911663,
+          "artifact_digest": "d2bdbe6df42523567e317727c930b5db0342010c9889d1d66a24baa93bc40b6e",
+          "snapshot_digest": "ad66ff779c3891e8dcaae9ad2f3692550d642a55cbc7ab0a569d666323ba47f2"
+        },
+        "labor": [],
+        "cost_statement": null,
+        "plan_revision": 1
+      },
+      "actor": "0aa41b35-7d63-47e6-9754-f956a087b1b7",
+      "recorded_at": "2026-11-26T08:52:23.767258+00:00"
+    },
+    "ad": {
+      "id": "7c8dcc71-8736-4d94-91d1-f7b36e79503b",
+      "campaign_id": "b9f31b70-4473-4d27-a112-35422eb2a5a8",
+      "plan_id": "addfb22a-0e3f-4d64-81bc-f2d46bb08a8a",
+      "sequence": 12,
+      "kind": "unit_receipt",
+      "entity": "work_units",
+      "entity_id": "b898bc90da747f0c6c45937b8423b6e0ce1f9c6b8ee98735837debb2f14e327c",
+      "value": {
+        "id": "b898bc90da747f0c6c45937b8423b6e0ce1f9c6b8ee98735837debb2f14e327c",
+        "package_id": "ad",
+        "scope": {
+          "tenant_id": "69bfa856-b004-47c0-885b-d42e236d1510",
+          "client_id": "b9978d5f-5602-48ea-a789-4f5b5277db19",
+          "brand_id": "a76bcabb-5077-4d86-9478-349c6a507e40",
+          "campaign_id": "b9f31b70-4473-4d27-a112-35422eb2a5a8"
+        },
+        "plan_id": "addfb22a-0e3f-4d64-81bc-f2d46bb08a8a",
+        "category": "ad",
+        "assigned_role": "Media",
+        "complexity": "single_asset",
+        "expected_output": "ad",
+        "criteria": "Mẫu quảng cáo nháp cho người mua đã chọn",
+        "commissioned_at": "2026-11-26T08:52:21.809719+00:00",
+        "status": "fixture_accepted",
+        "manifest": {
+          "id": "ba4089c3-fa6c-49dd-970a-f57c1db392d9",
+          "digest": "4036d7345feb3eea7426d1366ca715886438df899ba81b271de604c0889b86e5",
+          "brief_id": "7df3be35-aad7-4620-8f77-881a23b885a0",
+          "workflow": "WF-13/landing-seo-draft@6"
+        },
+        "origin": "deterministic-composition/1",
+        "artifact_digest": "6c947f55c5990f804fcbc9f8b6ae168cf8910a53275d18e816497e731a581006",
+        "artifact_revision": 1,
+        "acceptance": {
+          "status": "fixture_accepted",
+          "review_id": "f7177d7b-a804-407d-bf58-bba85f78be7c",
+          "entry_id": "334a6e1e-9321-480c-aff3-47a171eae3b1",
+          "actor": "266e7d73-8b14-4003-a77a-9ffdd4e10a92",
+          "share_receipt": "d9810e47-d817-496b-8523-5d0c0fff66db",
+          "group": "ad",
+          "run_id": "346f0648-abc4-464b-9c73-05a89bab4104",
+          "queue_receipt": "5b991cff-e1f3-4b20-8d34-dd23179c5d74",
+          "at": "2026-11-26T08:52:23.721382+00:00",
+          "plan_id": "addfb22a-0e3f-4d64-81bc-f2d46bb08a8a",
+          "revision": 4,
+          "elapsed_seconds": 1.911663,
+          "artifact_digest": "031c9b73fe32f319775a89f1010ec09d15be8aceb6b53e08e63ce3dce2d72488",
+          "snapshot_digest": "ad66ff779c3891e8dcaae9ad2f3692550d642a55cbc7ab0a569d666323ba47f2"
+        },
+        "labor": [],
+        "cost_statement": null,
+        "plan_revision": 1
+      },
+      "actor": "0aa41b35-7d63-47e6-9754-f956a087b1b7",
+      "recorded_at": "2026-11-26T08:52:23.812721+00:00"
+    },
+    "creative_brief": {
+      "id": "d1191f23-e59a-4985-9014-ed1391ae6dc1",
+      "campaign_id": "b9f31b70-4473-4d27-a112-35422eb2a5a8",
+      "plan_id": "addfb22a-0e3f-4d64-81bc-f2d46bb08a8a",
+      "sequence": 13,
+      "kind": "unit_receipt",
+      "entity": "work_units",
+      "entity_id": "d73892f27d33283e35116a741ff8f5e463d503c35bbc1f457555fdd07fd9df05",
+      "value": {
+        "id": "d73892f27d33283e35116a741ff8f5e463d503c35bbc1f457555fdd07fd9df05",
+        "package_id": "creative_brief",
+        "scope": {
+          "tenant_id": "69bfa856-b004-47c0-885b-d42e236d1510",
+          "client_id": "b9978d5f-5602-48ea-a789-4f5b5277db19",
+          "brand_id": "a76bcabb-5077-4d86-9478-349c6a507e40",
+          "campaign_id": "b9f31b70-4473-4d27-a112-35422eb2a5a8"
+        },
+        "plan_id": "addfb22a-0e3f-4d64-81bc-f2d46bb08a8a",
+        "category": "creative_brief",
+        "assigned_role": "Design",
+        "complexity": "single_asset",
+        "expected_output": "creative_brief",
+        "criteria": "Brief nêu sản phẩm, người xem và tiêu chí hình ảnh",
+        "commissioned_at": "2026-11-26T08:52:21.809719+00:00",
+        "status": "fixture_accepted",
+        "manifest": {
+          "id": "ba4089c3-fa6c-49dd-970a-f57c1db392d9",
+          "digest": "4036d7345feb3eea7426d1366ca715886438df899ba81b271de604c0889b86e5",
+          "brief_id": "7df3be35-aad7-4620-8f77-881a23b885a0",
+          "workflow": "WF-13/landing-seo-draft@6"
+        },
+        "origin": "deterministic-composition/1",
+        "artifact_digest": "53d18cdd7cf8011c0218828082151f5409ae630092e46c02efaaa5c5f26b3159",
+        "artifact_revision": 1,
+        "acceptance": {
+          "status": "fixture_accepted",
+          "review_id": "f7177d7b-a804-407d-bf58-bba85f78be7c",
+          "entry_id": "334a6e1e-9321-480c-aff3-47a171eae3b1",
+          "actor": "266e7d73-8b14-4003-a77a-9ffdd4e10a92",
+          "share_receipt": "d9810e47-d817-496b-8523-5d0c0fff66db",
+          "group": "creative_brief",
+          "run_id": "346f0648-abc4-464b-9c73-05a89bab4104",
+          "queue_receipt": "5b991cff-e1f3-4b20-8d34-dd23179c5d74",
+          "at": "2026-11-26T08:52:23.721382+00:00",
+          "plan_id": "addfb22a-0e3f-4d64-81bc-f2d46bb08a8a",
+          "revision": 4,
+          "elapsed_seconds": 1.911663,
+          "artifact_digest": "e2f1fdaf32014b5b1a99863f05b1c0b3f23f2b99c4a0ff26bc987ce40ddce0f1",
+          "snapshot_digest": "ad66ff779c3891e8dcaae9ad2f3692550d642a55cbc7ab0a569d666323ba47f2"
+        },
+        "labor": [],
+        "cost_statement": null,
+        "plan_revision": 1
+      },
+      "actor": "0aa41b35-7d63-47e6-9754-f956a087b1b7",
+      "recorded_at": "2026-11-26T08:52:23.846208+00:00"
+    },
+    "calendar": {
+      "id": "11ef74c5-86e8-4802-aae1-8e8ddfd6074d",
+      "campaign_id": "b9f31b70-4473-4d27-a112-35422eb2a5a8",
+      "plan_id": "addfb22a-0e3f-4d64-81bc-f2d46bb08a8a",
+      "sequence": 14,
+      "kind": "unit_receipt",
+      "entity": "work_units",
+      "entity_id": "c77f9246af67cc4edd68e35b7b3e0fd51f0bb9ee1760e50f96fbb1fec831816d",
+      "value": {
+        "id": "c77f9246af67cc4edd68e35b7b3e0fd51f0bb9ee1760e50f96fbb1fec831816d",
+        "package_id": "calendar",
+        "scope": {
+          "tenant_id": "69bfa856-b004-47c0-885b-d42e236d1510",
+          "client_id": "b9978d5f-5602-48ea-a789-4f5b5277db19",
+          "brand_id": "a76bcabb-5077-4d86-9478-349c6a507e40",
+          "campaign_id": "b9f31b70-4473-4d27-a112-35422eb2a5a8"
+        },
+        "plan_id": "addfb22a-0e3f-4d64-81bc-f2d46bb08a8a",
+        "category": "calendar",
+        "assigned_role": "Campaign Manager",
+        "complexity": "multi_channel",
+        "expected_output": "calendar",
+        "criteria": "Lịch dự kiến có người nhận, mốc QA và kênh",
+        "commissioned_at": "2026-11-26T08:52:21.810904+00:00",
+        "status": "fixture_accepted",
+        "manifest": {
+          "id": "ba4089c3-fa6c-49dd-970a-f57c1db392d9",
+          "digest": "4036d7345feb3eea7426d1366ca715886438df899ba81b271de604c0889b86e5",
+          "brief_id": "7df3be35-aad7-4620-8f77-881a23b885a0",
+          "workflow": "WF-13/landing-seo-draft@6"
+        },
+        "origin": "deterministic-composition/1",
+        "artifact_digest": "8eecd79ddc1e9254ea674386d91a4890e2347512bed5b63125669bc813d9d001",
+        "artifact_revision": 1,
+        "acceptance": {
+          "status": "fixture_accepted",
+          "review_id": "f7177d7b-a804-407d-bf58-bba85f78be7c",
+          "entry_id": "334a6e1e-9321-480c-aff3-47a171eae3b1",
+          "actor": "266e7d73-8b14-4003-a77a-9ffdd4e10a92",
+          "share_receipt": "d9810e47-d817-496b-8523-5d0c0fff66db",
+          "group": "calendar",
+          "run_id": "346f0648-abc4-464b-9c73-05a89bab4104",
+          "queue_receipt": "5b991cff-e1f3-4b20-8d34-dd23179c5d74",
+          "at": "2026-11-26T08:52:23.721382+00:00",
+          "plan_id": "addfb22a-0e3f-4d64-81bc-f2d46bb08a8a",
+          "revision": 4,
+          "elapsed_seconds": 1.910478,
+          "artifact_digest": "38f98ab714b30c8c3bcc8d9d1de0ba9680cab598704b9711a6cc4d9e415c2c02",
+          "snapshot_digest": "ad66ff779c3891e8dcaae9ad2f3692550d642a55cbc7ab0a569d666323ba47f2"
+        },
+        "labor": [],
+        "cost_statement": null,
+        "plan_revision": 1
+      },
+      "actor": "0aa41b35-7d63-47e6-9754-f956a087b1b7",
+      "recorded_at": "2026-11-26T08:52:23.879246+00:00"
+    }
+  }
+}

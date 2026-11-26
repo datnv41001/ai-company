@@ -145,7 +145,9 @@ def save_submission(db,user,tenant_id,bid,payload):
 
 @router.post("/briefs/{bid}/run")
 def start(tenant_id: str, bid: str, body: Start, user: User = Depends(current_user), db: Session = Depends(get_db)):
-    from . import c3_boundaries, c3_marketing
+    from . import c3_boundaries, c3_marketing, video_storyboard
+    if body.registry_workflow == video_storyboard.RELEASE and (body.max_parallel_nodes != 1 or body.budget_microusd != 0):
+        raise HTTPException(422, "This sequential local storyboard release requires a zero provider budget")
     from .c3_projection import TASK_RELEASES
     backed = body.registry_workflow in c3_marketing.ROLES or body.registry_workflow in TASK_RELEASES
     if backed != bool(body.knowledge_manifest):
@@ -211,7 +213,10 @@ def start(tenant_id: str, bid: str, body: Start, user: User = Depends(current_us
         from .registry_compatibility import required_outputs
         if backed:
             store, snap, public = c3_boundaries.checked(db, user, b, body.knowledge_manifest.model_dump(), body.registry_workflow, "queue")
-            if body.registry_workflow in TASK_RELEASES:
+            if body.registry_workflow == video_storyboard.RELEASE:
+                from .c3_order_units import fact_lines
+                facts = {f["id"]:{"label":f["id"],"excerpt":" ".join(fact_lines(f,public))} for f in public["facts"]}
+            elif body.registry_workflow in TASK_RELEASES:
                 from .c3_releases import fact_text
                 facts = {fact["id"]: {"label":fact["id"],"excerpt":fact_text(body.registry_workflow,fact,public)} for fact in public["facts"]}
             else:
@@ -223,7 +228,7 @@ def start(tenant_id: str, bid: str, body: Start, user: User = Depends(current_us
                 knowledge.update(objective=public["task_intent"]["purpose"],brand_rules=public["brand_guidelines"]["guidance"],
                                  internal_task=b.origin == "internal")
                 from .campaign_planner import execution_terms
-                commission = execution_terms(store, snap, public, body.budget_microusd)
+                commission = None if body.registry_workflow == video_storyboard.RELEASE else execution_terms(store, snap, public, body.budget_microusd)
                 if commission:
                     knowledge["campaign_commission"] = commission
         binding = pin(db, b, body.registry_workflow)
@@ -282,6 +287,40 @@ def display_state(run, graph):
     if run.state == "queued" and graph and any(n["status"] == "running" for n in graph["nodes"]):
         return "running"
     return run.state
+
+
+class StoryboardEdit(Input):
+    expected_qa_revision: int = Field(ge=1, strict=True)
+    expected_content_digest: str = Field(pattern=r"^[0-9a-f]{64}$")
+    hook_variant: Literal["direct", "audience"]
+
+
+@router.post("/runs/{rid}/storyboard-edition")
+def edit_storyboard(tenant_id: str, rid: str, body: StoryboardEdit, user: User = Depends(current_user), db: Session = Depends(get_db)):
+    from . import c3_boundaries, video_storyboard as video
+    from .delivery import working_copy, save_working_revision
+    from .revision_qa import content_digest
+    from .registry import pin
+
+    require_tenant(db, user, tenant_id, "editor")
+    run = db.scalar(select(WorkforceRun).filter_by(tenant_id=tenant_id, id=rid))
+    if not video.is_run(run) or not run.deliverable_id:
+        raise HTTPException(404, "Storyboard unavailable")
+    doc = working_copy(db, tenant_id, run.deliverable_id)
+    if (doc.qa_revision,content_digest(doc.title,doc.content["client_preview"])) != (body.expected_qa_revision,body.expected_content_digest):
+        raise HTTPException(412,"Reload the current storyboard revision")
+    brief = db.get(WorkforceBrief,run.brief_id)
+    ref = run.knowledge["c3_manifest"]
+    _, _, projection = c3_boundaries.checked(db,user,brief,ref,video.RELEASE,"edit")
+    if pin(db,brief,video.RELEASE) != run.knowledge["registry"]:
+        raise HTTPException(409,"The storyboard binding is no longer current")
+    try:
+        board = video.compose(projection,ref,body.hook_variant)
+    except ValueError as exc:
+        raise HTTPException(409,str(exc)) from exc
+    save_working_revision(db,doc,user.id,run.knowledge["title"],video.json_text(board))
+    db.commit()
+    return {"document_id":doc.id,"revision":doc.qa_revision,"content_digest":doc.qa_evidence["content_digest"],"storyboard":board}
 
 
 def display_plan(run, graph):

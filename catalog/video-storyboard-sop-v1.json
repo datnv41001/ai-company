@@ -1,0 +1,12 @@
+{
+  "version": "wf08-production-sop/1",
+  "source": "docs/research/KNOWLEDGE_CARDS.md#k-17",
+  "purpose": "A short illustrated vertical edit for a stated work decision.",
+  "rules": [
+    "Select a hook for the authorized buyer action.",
+    "Show the approved evidence with all qualifiers.",
+    "Show commercial terms in the same sequence, including tax and minimum when available.",
+    "Keep captions in two lines and use an explicit request CTA.",
+    "Use newly drawn diagrams only; external media require separate rights."
+  ]
+}

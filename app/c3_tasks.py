@@ -53,7 +53,15 @@ class CommissionIntent(ActionIntent):
 
 COMMISSION_VERSION = "amc.task-intent/3"
 INTENT_TYPES = {TASK_VERSION: TaskIntent, ACTION_VERSION: ActionIntent, COMMISSION_VERSION: CommissionIntent}
-SubmittedIntent = CommissionIntent | ActionIntent | TaskIntent
+class StoryboardIntent(ActionIntent):
+    deliverable_type: Literal["video_storyboard"]
+    duration_seconds: Annotated[int, Field(strict=True, ge=12, le=32)]
+    aspect_ratio: Literal["9:16"]
+    rights: Literal["synthetic_illustration_only"]
+
+
+INTENT_TYPES["amc.storyboard-intent/1"] = StoryboardIntent
+SubmittedIntent = StoryboardIntent | CommissionIntent | ActionIntent | TaskIntent
 
 
 def task_payload(intent):

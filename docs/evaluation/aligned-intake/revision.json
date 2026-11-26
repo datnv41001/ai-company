@@ -1,0 +1,296 @@
+{
+  "source": "synthetic same-document API replay of the previous CTA",
+  "previous": {
+    "creative": {
+      "id": "f6b1867a-eb6c-4b06-a55c-f4b592f772d8",
+      "did": "ea95201e-9616-4d47-9c7f-6c2334ce2610",
+      "kind": "creative",
+      "version": 1,
+      "studio_revision": 2,
+      "plan_digest": "ef7ae4f25b0f8f4a0071e0834e1416439b93a6dac11f927be2459338b6339496",
+      "manifest": {
+        "id": "8378d822-8204-4364-a812-8da8cb50d923",
+        "digest": "09bae9a448393f37eaddbd683d8392b704bee52e4ff57ced1d7a33f410e6bebb"
+      },
+      "digest": "0ae12cec79cb86eda5befe51ac1fd6f4c4aa6d9c2c30d2da4e2d7938a272be4b",
+      "group_receipts": {
+        "copy": "cfa30c0c-a893-40e6-a6bd-ba6bb0fe3734",
+        "creative_brief": "5d9b460c-22e5-431c-b161-36a8b26103f2"
+      },
+      "production_qa": {
+        "receipt": "7f80571b-df49-48f4-9c11-467e36fecd8e",
+        "digest": "0ae12cec79cb86eda5befe51ac1fd6f4c4aa6d9c2c30d2da4e2d7938a272be4b"
+      },
+      "files": {
+        "source.png": {
+          "mime": "image/png",
+          "bytes": 7965,
+          "sha256": "2b6a6bbecd7deec625f3086755e1dcee9d4cc89b0b03bb50bd6665e63d1c714b"
+        },
+        "portrait.png": {
+          "mime": "image/png",
+          "bytes": 136235,
+          "sha256": "4d03179a3a0223eef075d179ac6d3d432a6f3d6f9c23ea32369ae9ce01369f58"
+        },
+        "landscape.png": {
+          "mime": "image/png",
+          "bytes": 79302,
+          "sha256": "8fd7879d39d2710ed12286e377c92a994248a9b5292b65c3ed757d77475af26b"
+        },
+        "square.png": {
+          "mime": "image/png",
+          "bytes": 105225,
+          "sha256": "549906ea7efece302b8d5b229f67998d869ce8bfd3893b198ebf34c584675e28"
+        },
+        "preview.webm": {
+          "mime": "video/webm",
+          "bytes": 48470,
+          "sha256": "09230bc224f2796ac0e56084ed03a437e8289812a0b28967eb8c1288e8a1f0ed"
+        },
+        "captions.vtt": {
+          "mime": "text/vtt",
+          "bytes": 306,
+          "sha256": "4568e179c244acdd6a6c81dc8e6218e871e4d6f741a2bb14be8bebc7ee8fc09d"
+        },
+        "master.json": {
+          "mime": "application/json",
+          "bytes": 2549,
+          "sha256": "2bf5341963bb95677aa0cfb26ab7349da4e70a3199b5c8f08b604ad9bf6690d7"
+        }
+      }
+    },
+    "landing": {
+      "id": "1b4387e4-6aa1-4084-84e4-7b8e88a13c62",
+      "did": "ea95201e-9616-4d47-9c7f-6c2334ce2610",
+      "kind": "landing",
+      "version": 1,
+      "studio_revision": 2,
+      "plan_digest": "ef7ae4f25b0f8f4a0071e0834e1416439b93a6dac11f927be2459338b6339496",
+      "manifest": {
+        "id": "8378d822-8204-4364-a812-8da8cb50d923",
+        "digest": "09bae9a448393f37eaddbd683d8392b704bee52e4ff57ced1d7a33f410e6bebb"
+      },
+      "digest": "097e0744020aa0f5a64e7b6027e350a68c585d10a6a57100719ba1c33f313ed1",
+      "group_receipts": {
+        "copy": "cfa30c0c-a893-40e6-a6bd-ba6bb0fe3734",
+        "seo": "efb89698-2f87-406a-9e65-47c5747d5e4b"
+      },
+      "production_qa": {
+        "receipt": "f8781f69-01f2-4ea8-bec2-4ad31055ddf7",
+        "digest": "097e0744020aa0f5a64e7b6027e350a68c585d10a6a57100719ba1c33f313ed1"
+      },
+      "files": {
+        "landing.html": {
+          "mime": "text/html",
+          "bytes": 4936,
+          "sha256": "05f2f68b2fee1eaa1d3060cc22dd2df3e85e03bbd54916fd8551010fc782c984"
+        }
+      }
+    }
+  },
+  "revised": {
+    "creative": {
+      "id": "7c931765-c545-443e-9e58-49a4dad44fe2",
+      "did": "ea95201e-9616-4d47-9c7f-6c2334ce2610",
+      "kind": "creative",
+      "version": 2,
+      "studio_revision": 3,
+      "plan_digest": "ef7ae4f25b0f8f4a0071e0834e1416439b93a6dac11f927be2459338b6339496",
+      "manifest": {
+        "id": "8378d822-8204-4364-a812-8da8cb50d923",
+        "digest": "09bae9a448393f37eaddbd683d8392b704bee52e4ff57ced1d7a33f410e6bebb"
+      },
+      "digest": "0276d570e16ef371b10b589d9171fad50cd1e1416bfa62c2f184c66aef7fc5bd",
+      "group_receipts": {
+        "copy": "ddc8caed-cd5c-4c25-ab7e-fed70c468338",
+        "creative_brief": "15655424-8a57-4b13-b91e-22a73b6b2d99"
+      },
+      "production_qa": {
+        "receipt": "6a60ff62-ad97-4059-8f9e-3231f151e33b",
+        "digest": "0276d570e16ef371b10b589d9171fad50cd1e1416bfa62c2f184c66aef7fc5bd"
+      },
+      "files": {
+        "source.png": {
+          "mime": "image/png",
+          "bytes": 7965,
+          "sha256": "2b6a6bbecd7deec625f3086755e1dcee9d4cc89b0b03bb50bd6665e63d1c714b"
+        },
+        "portrait.png": {
+          "mime": "image/png",
+          "bytes": 139416,
+          "sha256": "dab29224f2d783842afc0a641122137fda540205c9a5e34d2426b89ba64a3ec6"
+        },
+        "landscape.png": {
+          "mime": "image/png",
+          "bytes": 81574,
+          "sha256": "5f30913cadd1f33e37e41750f7b9fe4f6a890d3917abdff14152e8cced95cb4d"
+        },
+        "square.png": {
+          "mime": "image/png",
+          "bytes": 108319,
+          "sha256": "089c012b07e29011f16a977f9674b6362850510c02949cf136503df87a276d54"
+        },
+        "preview.webm": {
+          "mime": "video/webm",
+          "bytes": 52459,
+          "sha256": "4426c1061a14a79aea1ebd4f8d8225e3df6c4eda3c3aeb4c0bf196dbc48bde10"
+        },
+        "captions.vtt": {
+          "mime": "text/vtt",
+          "bytes": 323,
+          "sha256": "c58636a19274e032648f72b6d085d5d5bafc27a11957a489f700f5ff4f154fb9"
+        },
+        "master.json": {
+          "mime": "application/json",
+          "bytes": 2583,
+          "sha256": "6608eed8477173fae6f3c9b9a78f7a74c048c8d1f3e6c61a99e44ca156777510"
+        }
+      }
+    },
+    "landing": {
+      "id": "255f2995-8eb9-4532-a28f-4bef0d895fcc",
+      "did": "ea95201e-9616-4d47-9c7f-6c2334ce2610",
+      "kind": "landing",
+      "version": 2,
+      "studio_revision": 3,
+      "plan_digest": "ef7ae4f25b0f8f4a0071e0834e1416439b93a6dac11f927be2459338b6339496",
+      "manifest": {
+        "id": "8378d822-8204-4364-a812-8da8cb50d923",
+        "digest": "09bae9a448393f37eaddbd683d8392b704bee52e4ff57ced1d7a33f410e6bebb"
+      },
+      "digest": "70e2bb6bcb04400beb5013abc1817f982d5863f69457b6306fdb3142814c0dcd",
+      "group_receipts": {
+        "copy": "ddc8caed-cd5c-4c25-ab7e-fed70c468338",
+        "seo": "fe7185f2-0402-4ae3-90ad-63ada0e92bca"
+      },
+      "production_qa": {
+        "receipt": "a9002355-0d76-4948-9619-74cd355f1baf",
+        "digest": "70e2bb6bcb04400beb5013abc1817f982d5863f69457b6306fdb3142814c0dcd"
+      },
+      "files": {
+        "landing.html": {
+          "mime": "text/html",
+          "bytes": 5004,
+          "sha256": "092459a140371fb1886a3e6813e0422f4c3a9bcebd40b04bb7c7d9b831b2ec4c"
+        }
+      }
+    }
+  },
+  "original_snapshot": "57c49549631e11fd31102cc36abb01ded01ae8cf82c49845917fdcd02a2d5e17",
+  "revised_snapshot": "988430fe2e2fc8cbf752564ec3d6b4e77064fc3a88960432ca4b2d24d5bc60e6",
+  "old_decision_http": 412,
+  "visit": "5f5d7840-d25e-472c-bfe3-3a45e816668f",
+  "submission": {
+    "id": "bcf0c963-02a0-4749-a662-f27e18147d6d",
+    "campaign_id": "752d266f-7742-4fd1-afa0-ae05cac5da0c",
+    "plan_id": "abba97f3-cde3-4d41-aeec-c4625d356e7f",
+    "sequence": 12,
+    "kind": "appointment",
+    "entity": "appointments",
+    "entity_id": "59cf94bc6c8ebf60364951824d16c4db041b3fff24ada36a9ea1b013e26add15",
+    "value": {
+      "id": "59cf94bc6c8ebf60364951824d16c4db041b3fff24ada36a9ea1b013e26add15",
+      "plan_id": "abba97f3-cde3-4d41-aeec-c4625d356e7f",
+      "revision": 1,
+      "state": "requested",
+      "assignee_id": null,
+      "confirmed_for": null,
+      "history": [
+        {
+          "event": "requested",
+          "actor": "ff16a54d-7a17-4ab9-8ef3-fc848b6061fb",
+          "at": "2026-11-26T08:52:00.227888+00:00",
+          "feedback": null
+        }
+      ],
+      "occurred_at": "2026-11-26T08:52:00.227888Z",
+      "contract": "service-intake/2",
+      "product_id": "a77b4d24-1572-486d-8173-599ed492ce63",
+      "unit": "visit",
+      "quantity": null,
+      "requested_for": null,
+      "service_scope": "Buổi khảo sát luồng nhận hàng Luồng Rõ",
+      "location": "Synthetic site A",
+      "contact_purpose": "appointment_request",
+      "session_id": "c84dae09c923f2b1e14213d877941eeeeee1aa04fad080465034e7d85e29fc85",
+      "last_event_at": "2026-11-26T08:52:00.227888+00:00",
+      "intake": {
+        "contract_digest": "af0314a50f85cbd1efc68eea51f6b7b7964d821ce5f09463fcb145213b77b0a0",
+        "revision": 1,
+        "answers": {
+          "site": "north",
+          "receiving_shift": "evening"
+        },
+        "fields": [
+          {
+            "id": "site",
+            "required": true,
+            "label": "địa điểm",
+            "maps_to": "location",
+            "type": "enum",
+            "options": [
+              {
+                "value": "north",
+                "label": "Cơ sở thử A"
+              },
+              {
+                "value": "south",
+                "label": "Cơ sở thử B"
+              }
+            ]
+          },
+          {
+            "id": "receiving_shift",
+            "required": true,
+            "label": "ca nhận hàng cần quan sát",
+            "maps_to": "receiving_shift",
+            "type": "enum",
+            "options": [
+              {
+                "value": "morning",
+                "label": "Ca sáng"
+              },
+              {
+                "value": "evening",
+                "label": "Ca chiều"
+              },
+              {
+                "value": "night",
+                "label": "Ca đêm"
+              }
+            ]
+          }
+        ],
+        "mapped": {
+          "location": "north",
+          "receiving_shift": "evening"
+        },
+        "consent": {
+          "purpose": "appointment_request",
+          "granted": true
+        }
+      },
+      "landing_package": "255f2995-8eb9-4532-a28f-4bef0d895fcc",
+      "landing_digest": "70e2bb6bcb04400beb5013abc1817f982d5863f69457b6306fdb3142814c0dcd",
+      "landing_source": {
+        "tenant_id": "96f31564-5868-48fa-9826-3a57298d2580",
+        "client_id": "f15c77ad-987e-4833-b851-9493e0a2d87a",
+        "brand_id": "5f194d81-c80a-44ab-be08-1c7bbc7c3318",
+        "campaign_id": "752d266f-7742-4fd1-afa0-ae05cac5da0c",
+        "plan_id": "abba97f3-cde3-4d41-aeec-c4625d356e7f",
+        "plan_digest": "ef7ae4f25b0f8f4a0071e0834e1416439b93a6dac11f927be2459338b6339496",
+        "document_id": "ea95201e-9616-4d47-9c7f-6c2334ce2610",
+        "studio_revision": 3,
+        "package_id": "255f2995-8eb9-4532-a28f-4bef0d895fcc",
+        "package_version": 2,
+        "package_digest": "70e2bb6bcb04400beb5013abc1817f982d5863f69457b6306fdb3142814c0dcd",
+        "file_digest": "092459a140371fb1886a3e6813e0422f4c3a9bcebd40b04bb7c7d9b831b2ec4c",
+        "intake_contract_digest": "af0314a50f85cbd1efc68eea51f6b7b7964d821ce5f09463fcb145213b77b0a0"
+      }
+    },
+    "actor": "ff16a54d-7a17-4ab9-8ef3-fc848b6061fb",
+    "recorded_at": "2026-11-26T08:52:00.228679+00:00",
+    "intake_writer": "business-intake/1",
+    "origin": "landing"
+  }
+}

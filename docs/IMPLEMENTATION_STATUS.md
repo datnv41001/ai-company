@@ -1,5 +1,7 @@
 # Trạng thái hiện thực và nghiệm thu V1
 
+**Vòng WF-08 sau #58.** Main đã tích hợp bộ campaign cũ ở `1c40ad31`. Nhánh kế tiếp tập trung một nhiệm vụ director → storyboard qua queue nội bộ, trên manifest của từng khách, với biên nhận và QA. [Trạng thái theo bản](evaluation/workforce-video/README.md) · [KPI và ranh giới bằng chứng](evaluation/workforce-video/MEASUREMENT.md). Các mốc dưới đây mô tả khả năng ở phiên bản ghi trên từng dòng.
+
 **Mốc sau PR #57.** Main nội bộ `26578088519d99f4aed5be9c516ac247f3d4735e` giữ core v26, Business v3, C3 v5 và journal ops/2. Tạo và bổ sung RFQ theo m² đã được sửa. Bước rút hồ sơ trước phân công và pilot v2 có nghiệm thu kỹ thuật. Trên head sửa và trial, cả ba JUnit ghi 622 đạt, 2 skip. [CI trước merge](https://github.com/datnv41001/ai-company/actions/runs/45777424779) · [CI trên main](https://github.com/datnv41001/ai-company/actions/runs/45780019694). Nhánh kế tiếp có hai gói sản xuất, preflight grammar và bộ mời practitioner. Chưa có người hành nghề tham gia. Số Business-accepted Marketing Work Units vẫn là 0. [Bằng chứng theo luồng](evaluation/department-review/ROUND-57-PRODUCTION.md)
 
 **Mốc main sau PR #56.** Đã hợp nhất chuỗi #49–55 qua một merge commit `bbb0b9c41b92e666e133499e9c71f53592828c3d`, tree `46fc7eaffa03c78f738d64a35a1e5dc13a794072`. CI push trên commit này có 3 job bắt buộc đạt. JUnit ghi 602 đạt và 2 skip. Core v26, Business v3, C3 v5, journal ops/2. Các kiểm thử sandbox cho WF-14, WF-18 và WF-20 đã có trên main. Chưa có nghiệm thu toàn bộ nào trong 49 module, 37 vai trò, 24 workflow. Phần sau merge đang được phản biện ở [báo cáo thị trường và handoff](evaluation/department-review/MARKET-HANDOFF.md). [Biên nhận theo SHA](evaluation/department-review/MAIN-56.json) · [GitHub Actions](https://github.com/datnv41001/ai-company/actions/runs/45770716137)
@@ -69,27 +71,28 @@ Mỗi ID dưới đây tra được mô tả đầy đủ ở mục 3 của [đ�
 
 ## 37 vai trò AI
 
-Tất cả **37/37 ID** trong [catalog][roles] mang `specification_only` ở cấp vai trò đầy đủ. Bảng ánh xạ của runtime có **5 ID riêng biệt**. Ba lượt commission có biên nhận từng request và bản giao dừng ở `awaiting_qa`. Nghiên cứu hai brief khác ghi lại đầu ra trước/sau biên tập và các quyết định của tài khoản fixture. [Ánh xạ adapter](../app/registry_adapters.py) · [Biên nhận commission][commission] · [Nghiên cứu hai brief][study]
+Tất cả **37/37 ID** trong [catalog][roles] mang `specification_only` ở cấp vai trò đầy đủ. Main sau #58 có 5 ID đã chạy. Trên nhánh WF-08 có **6 ID riêng biệt** với binding cho từng nhiệm vụ. Ba lượt commission có biên nhận từng request và bản giao dừng ở `awaiting_qa`. Nghiên cứu hai brief khác ghi lại đầu ra trước/sau biên tập và các quyết định của tài khoản fixture. [Ánh xạ adapter](../app/registry_adapters.py) · [Biên nhận commission][commission] · [Nghiên cứu hai brief][study]
 
-| ID | Phần việc được gọi trong runtime trên main |
+| ID | Phần việc được gọi trong runtime và bản áp dụng |
 |---|---|
-| `ai-managing-director` | Lập phân công trong cả hai tiểu quy trình. [WF-03 @3][wf03] · [WF-13 @6][wf13] |
+| `ai-managing-director` | Lập phân công cho các tiểu quy trình WF-03, WF-13 và, trên nhánh mới, WF-08. [WF-03 @3][wf03] · [WF-13 @6][wf13] |
 | `ai-market-researcher`, `ai-marketing-strategist` | Đọc nguồn ghim rồi soạn chiến lược trong WF-03. [Manifest][wf03] · [Ba request cho một brief](evaluation/campaign-engine/commission/acoustic-panel/strategy/commission-receipts.json) |
 | `ai-copywriter-content-strategist`, `ai-seo-geo-specialist` | Soạn landing copy và metadata trong WF-13. [Manifest][wf13] · [Ba request cho một brief](evaluation/campaign-engine/commission/acoustic-panel/landing/commission-receipts.json) |
+| `ai-video-storyboard` | Từ nhánh sau #58, nhận nhiệm vụ từ Director và tạo storyboard bằng adapter tất định nội bộ. [Lượt chạy thật](evaluation/workforce-video/README.md) |
 
-**32 ID còn lại** ở mức đặc tả vai trò, chưa có binding của chính ID trong bảng adapter trên main. Có thể tra nguyên văn từng ID dưới đây trong [catalog][roles]. Một chức danh ghi trong brief, tài khoản fixture, bước QA của người hoặc nội dung do bộ soạn theo quy tắc tạo ra không chứng minh agent tương ứng đã chạy.
+**31 ID còn lại** ở mức đặc tả vai trò, chưa có binding của chính ID trên nhánh này. Có thể tra nguyên văn từng ID dưới đây trong [catalog][roles]. Một chức danh ghi trong brief, tài khoản fixture, bước QA của người hoặc nội dung do bộ soạn theo quy tắc tạo ra không chứng minh agent tương ứng đã chạy.
 
 | Nhóm tra cứu | ID |
 |---|---|
 | Điều hành, khách hàng | `ai-marketing-operations-director`, `ai-resource-project-manager`, `ai-executive-assistant`, `ai-business-development`, `ai-solutions-consultant`, `ai-account-director`, `ai-client-success`, `ai-commercial-proposal-specialist` |
 | Nghiên cứu, chiến lược | `ai-consumer-insights-analyst`, `ai-competitor-intelligence`, `ai-brand-strategist`, `ai-product-marketing-gtm`, `ai-customer-journey-planner` |
-| Nội dung, sáng tạo | `ai-creative-director`, `ai-social-content-specialist`, `ai-visual-design`, `ai-video-storyboard`, `ai-editorial-localization`, `ai-digital-asset-librarian` |
+| Nội dung, sáng tạo | `ai-creative-director`, `ai-social-content-specialist`, `ai-visual-design`, `ai-editorial-localization`, `ai-digital-asset-librarian` |
 | Media, web, CRM, PR | `ai-performance-media-planner`, `ai-google-ads-specialist`, `ai-meta-ads-specialist`, `ai-tiktok-linkedin-channel-specialist`, `ai-website-cro-specialist`, `ai-crm-lifecycle-specialist`, `ai-pr-influencer-event-coordinator` |
 | Đo lường, QA, kiểm soát | `ai-marketing-data-analyst`, `ai-attribution-experiment-analyst`, `ai-martech-tracking-specialist`, `ai-content-qa`, `ai-policy-brand-compliance`, `ai-cost-capacity-analyst` |
 
 ## 24 workflow nghiệp vụ
 
-Tất cả **24/24 workflow mẹ** giữ nhãn catalog `specification_only`. Hai họ tiểu quy trình có manifest chạy, gồm `WF-03/research-strategy-draft@3` và `WF-13/landing-seo-draft@6` ở release C3 hiện hành. Phần mềm giữ các phiên bản cũ cho lịch sử và tương thích. Khi tra một ID bên dưới, đối chiếu phần đã chạy với trigger, các bước cuối và quy tắc duyệt trong [catalog][flows]. [Mã nhận dạng release](../app/c3_assets.py) · [Điều phối theo phiên bản](../app/c3_releases.py)
+Tất cả **24/24 workflow mẹ** giữ nhãn catalog `specification_only`. Nhánh WF-08 bổ sung `WF-08/video-storyboard@1`, nâng số họ tiểu quy trình có manifest chạy từ hai lên ba. Hai họ có trước gồm `WF-03/research-strategy-draft@3` và `WF-13/landing-seo-draft@6` ở release C3 hiện hành. Phần mềm giữ các phiên bản cũ cho lịch sử và tương thích. Khi tra một ID bên dưới, đối chiếu phần đã chạy với trigger, các bước cuối và quy tắc duyệt trong [catalog][flows]. [Mã nhận dạng release](../app/c3_assets.py) · [Điều phối theo phiên bản](../app/c3_releases.py)
 
 | ID workflow mẹ | Bằng chứng thành phần trên main và giới hạn |
 |---|---|

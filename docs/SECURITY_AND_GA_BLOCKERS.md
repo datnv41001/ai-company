@@ -1,5 +1,7 @@
 # Security, Reliability and General Availability (GA) Blockers
 
+PR #58 merged for internal engineering at `1c40ad3185ac49415c3f555bb5b6406e2cdd8cb1`. The WF-08 follow-up uses synthetic material with a scoped job, revision-bound QA and a local deterministic producer. External publishing, model budgets, customer media rights, real outcomes and practitioner release approval remain separate gates. [Run evidence and outstanding gates](evaluation/workforce-video/README.md)
+
 The internal merge of #57 at `26578088519d99f4aed5be9c516ac247f3d4735e` includes the corrected commercial unit, scoped pre-assignment withdrawal and role-specific treatment disclosure. Production and Commercial GA are **NO-GO**. Sandbox campaign receipts, local grammar validation and technical editorial scores do not establish practitioner acceptance, provider permissions or actual unit economics. [Internal merge CI](https://github.com/datnv41001/ai-company/actions/runs/45780019694) · [Current handoff](../HANDOFF.md)
 
 Main after #56 includes synthetic Sales permissions, intake metrics and the private practitioner-pilot procedure. Producer disclosure and customer withdrawal are under follow-up review. Practitioner acceptance, full costs per accepted job and authorization for external platform writes remain outstanding. Production and Commercial GA are **NO-GO**. [Main receipt](evaluation/department-review/MAIN-56.json) · [Review scope](evaluation/department-review/MARKET-HANDOFF.md)

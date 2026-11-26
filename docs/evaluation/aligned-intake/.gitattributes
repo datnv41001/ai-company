@@ -1,0 +1,2 @@
+# Preserve the issued SHA-256 of the rendered HTML on every checkout.
+*/*.html -text

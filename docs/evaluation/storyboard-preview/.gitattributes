@@ -1,0 +1,5 @@
+# The receipt hashes binary media and exact UTF-8 sidecars on Windows and Linux.
+*.webm binary
+*.png binary
+*.vtt -text
+*.json text eol=lf

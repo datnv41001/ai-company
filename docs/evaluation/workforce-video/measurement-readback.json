@@ -1,0 +1,108 @@
+[
+  {
+    "case": "index-tray",
+    "plan_digest": "5d9123261a56f57595c89d06d432f964dd8ddf760525843c277db658283d96ad",
+    "contract_digest": "4e151c0b2a1d66ee638265f42023068e5799fecbdb93390193b2745db1feec20",
+    "landing_sha256": "d552e0f4863e0abb2a485d6d077431433d15c2a1b0bd5c32b8abda7c277057fe",
+    "journal_receipts": [
+      "52b18752-b34c-47de-b5d4-a433c5b8cc5e",
+      "b1a5a9ab-9dfb-47c5-b0a9-9970a94dce15"
+    ],
+    "window": "approved_plan_lifetime",
+    "visit": 1,
+    "inquiry": 1,
+    "qualified_rfq": 0,
+    "sales_acceptance": 0,
+    "quote": 0,
+    "order": 0,
+    "confirmed_revenue_vnd": 0,
+    "appointment_request": null,
+    "confirmed_appointment": null,
+    "assignee_at_submission": null,
+    "primary_measurement": null,
+    "creative_effect_estimate": null,
+    "missing_for_effect": [
+      "randomized_assignment_receipts",
+      "variant_exposure",
+      "complete_followup"
+    ]
+  },
+  {
+    "case": "receipt-map",
+    "plan_digest": "435b2cfa8a4e4b564ae8a01db975a0de25c7d56796660e0e796677b50d37dda7",
+    "contract_digest": "fc8613d484383b91721bb197605a6916f99116fdd11d9afe344d33ea38c7d864",
+    "landing_sha256": "8ad6c879c647dfe4b23f867a22f32d1af31020fd2569fcd54b8b92eadaa9c839",
+    "journal_receipts": [
+      "0fbc3f6f-f581-4ea9-87ca-c6c2247e96f9",
+      "6054fb13-375e-4a58-87f8-6fbbc6239c23"
+    ],
+    "window": "approved_plan_lifetime",
+    "visit": 1,
+    "inquiry": null,
+    "qualified_rfq": null,
+    "sales_acceptance": null,
+    "quote": null,
+    "order": null,
+    "confirmed_revenue_vnd": null,
+    "appointment_request": 1,
+    "confirmed_appointment": 0,
+    "assignee_at_submission": null,
+    "primary_measurement": {
+      "contract": {
+        "version": "appointment-measurement/1",
+        "business_outcome": "appointment.confirmed_per_requested",
+        "window_days": 21,
+        "owner_role": "service_operations",
+        "numerator": {
+          "event": "confirmed",
+          "eligibility": "staff_confirmation_with_scheduled_time"
+        },
+        "denominator": {
+          "event": "requested",
+          "eligibility": "valid_service_request_with_consent"
+        },
+        "window": "rolling_utc_(start,end]_denominator_cohort",
+        "unit": "ratio",
+        "aggregation": "distinct_appointment_id",
+        "cancellations": "retain_prior_eligible_events_report_separately",
+        "refunds": "not_a_monetary_outcome",
+        "missing_attribution": "include_and_report_separately",
+        "reconciliation": "join_authorized_lifecycle_receipts_by_plan_and_appointment_id",
+        "id": "859f2059-6532-42a8-af57-da3deb7b4c82",
+        "revision": 1,
+        "digest": "776ec45d9ef62f4ac42fa702b441dfabb55fefb8dbe6d585055b875d271382a0"
+      },
+      "definition": "KPI chính trong 21 ngày: số lịch do nhân sự xác nhận trên số yêu cầu đặt lịch hợp lệ. Vận hành dịch vụ đối soát mỗi mã hẹn một lần. Giữ các sự kiện đủ điều kiện trước khi hủy. Tách hủy, vắng mặt và thiếu nguồn; hoàn tiền không đổi tỷ lệ.",
+      "plan_id": "25b1b54e-ebf5-4337-9294-c05b5fbef2af",
+      "window_start_exclusive": "2026-11-05T07:38:55.282598+00:00",
+      "as_of_inclusive": "2026-11-26T07:38:55.282598+00:00",
+      "numerator": 0,
+      "denominator": 1,
+      "ratio": 0.0,
+      "cancelled": 0,
+      "no_show": 0,
+      "unattributed": 0,
+      "attributed": 1,
+      "attribution": {
+        "landing_asset": 1,
+        "media_action": 0,
+        "unknown_media_action": 1,
+        "neither": 0
+      },
+      "source": "sandbox_appointment_receipts",
+      "secondary_metrics": [
+        {
+          "metric_id": "web.sessions",
+          "unit": "session_count",
+          "value": 1
+        }
+      ]
+    },
+    "creative_effect_estimate": null,
+    "missing_for_effect": [
+      "randomized_assignment_receipts",
+      "variant_exposure",
+      "complete_followup"
+    ]
+  }
+]

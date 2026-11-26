@@ -2,7 +2,7 @@
 
 from . import c3_assets, c3_skill_library
 from . import business_intake
-from .c3_actions import ACTIONS
+from .c3_actions import action_label
 from .knowledge_store import canonical, conflict, digest
 from .revision_qa import content_digest
 
@@ -121,7 +121,7 @@ def compose_assets(plan):
     refs, packages, channels = plan["manifests"], plan["work_packages"], plan["channels"]
     offer, buyer = plan["product"], plan["audience"]
     vi = plan["locale"].lower().startswith("vi")
-    cta = ACTIONS[action]["vi" if vi else "en"]
+    cta = action_label(action, plan["locale"], offer)
     channels_text = ", ".join(channels)
     copy = {
         "social": ("Nội dung mạng xã hội", f"{buyer} đang cân nhắc {offer}? {cta} để trao đổi nhu cầu về sản phẩm và điều kiện áp dụng."),

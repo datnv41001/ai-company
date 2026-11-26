@@ -1,6 +1,12 @@
 # Bắt đầu ở đây khi tiếp quản AI Marketing Company
 
-## Công việc hiện hành sau review #57
+## Công việc hiện hành sau review #58
+
+Main nội bộ đã tích hợp #58 tại `1c40ad3185ac49415c3f555bb5b6406e2cdd8cb1`. Tree `d3923be500fc756b7f64fe611b3a967015e96941` khớp bản ghép đã review. [CI trên main](https://github.com/datnv41001/ai-company/actions/runs/45784910737) · [Bản campaign gốc đã nghiệm thu kỹ thuật](https://github.com/datnv41001/ai-company/tree/58b28ea1d75c63bbe05f9ce13fe233e173cf1dbb/docs/evaluation/round57-verification).
+
+Trên nhánh WF-08, người điều phối giao một brief có manifest và quyền tư liệu cho worker nội bộ. Người dựng nhận bản đầu, bản qua QA và preview minh họa; Sales/Service dùng CTA đã chỉnh trên phiên bản mới. Bắt đầu từ [hành trình, cách chạy và bằng chứng](docs/evaluation/workforce-video/README.md). Khi đối chiếu kết quả, kiểm receipt của người nhận và mẫu số KPI theo [hướng dẫn measurement](docs/evaluation/workforce-video/MEASUREMENT.md). Phần pilot với người hành nghề còn chờ consent và điều kiện tổ chức.
+
+## Mốc lịch sử sau review #57
 
 Main nội bộ đã merge bản sửa đơn vị tại `26578088519d99f4aed5be9c516ac247f3d4735e`, cùng tree `744f35a73ddf069e7de2c0c34cc7d9de4226ee0f` với bản ghép được kiểm. [CI trên merge commit](https://github.com/datnv41001/ai-company/actions/runs/45780019694) · [Biên nhận lỗi và test hồi quy](docs/evaluation/department-review/R57-MATERIAL-UNITS.md). Trên nhánh sản xuất tiếp theo, điểm bắt đầu cho người phản biện là [hai bộ campaign](docs/evaluation/campaign-production-review/README.md). Mở storyboard và landing của cùng một brief, kiểm giá tham khảo, đơn vị, điều kiện, CTA, rồi theo receipt tới đúng người nhận.
 

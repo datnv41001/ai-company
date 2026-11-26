@@ -1,0 +1,243 @@
+{
+  "source_file": "reviewed.json",
+  "source_sha256": "6d24be4ed67a3322000433cfbbc434daa9a40c01250147f31d3dab3c372aa698",
+  "renderer": "amc/storyboard-preview/2",
+  "style": "parts",
+  "format": "VP8/WebM",
+  "size": [
+    540,
+    960
+  ],
+  "duration_seconds": 32,
+  "safe_rect": [
+    42,
+    105,
+    453,
+    734
+  ],
+  "frames_per_second": 1,
+  "audio_tracks": 0,
+  "rights": "Original AMC synthetic diagrams and SIL OFL Studio font, internal sandbox only.",
+  "shots": [
+    {
+      "from_s": 0,
+      "to_s": 6,
+      "visual_mode": "mechanism",
+      "glyph_boxes": [
+        [
+          44,
+          108,
+          251,
+          134
+        ],
+        [
+          44,
+          151,
+          233,
+          195
+        ],
+        [
+          44,
+          242,
+          396,
+          268
+        ],
+        [
+          44,
+          574,
+          411,
+          614
+        ],
+        [
+          44,
+          622,
+          281,
+          659
+        ]
+      ],
+      "illustration": "installed_tray",
+      "illustration_source_ids": [
+        "F1"
+      ]
+    },
+    {
+      "from_s": 6,
+      "to_s": 13,
+      "visual_mode": "mechanism",
+      "glyph_boxes": [
+        [
+          44,
+          108,
+          251,
+          134
+        ],
+        [
+          44,
+          151,
+          233,
+          195
+        ],
+        [
+          44,
+          242,
+          396,
+          268
+        ],
+        [
+          44,
+          574,
+          420,
+          612
+        ],
+        [
+          44,
+          620,
+          396,
+          661
+        ],
+        [
+          44,
+          669,
+          226,
+          701
+        ]
+      ],
+      "illustration": "removable_divider",
+      "illustration_source_ids": [
+        "F1"
+      ]
+    },
+    {
+      "from_s": 13,
+      "to_s": 21,
+      "visual_mode": "offer",
+      "glyph_boxes": [
+        [
+          44,
+          108,
+          251,
+          134
+        ],
+        [
+          44,
+          151,
+          233,
+          195
+        ],
+        [
+          44,
+          242,
+          396,
+          268
+        ],
+        [
+          44,
+          574,
+          434,
+          601
+        ],
+        [
+          44,
+          609,
+          366,
+          645
+        ],
+        [
+          44,
+          653,
+          376,
+          684
+        ],
+        [
+          44,
+          692,
+          115,
+          724
+        ]
+      ],
+      "illustration": "offer_ticket",
+      "illustration_source_ids": [
+        "F2"
+      ]
+    },
+    {
+      "from_s": 21,
+      "to_s": 27,
+      "visual_mode": "document",
+      "glyph_boxes": [
+        [
+          44,
+          108,
+          251,
+          134
+        ],
+        [
+          44,
+          151,
+          233,
+          195
+        ],
+        [
+          44,
+          242,
+          396,
+          268
+        ],
+        [
+          44,
+          574,
+          444,
+          613
+        ],
+        [
+          44,
+          621,
+          169,
+          654
+        ]
+      ],
+      "illustration": "document",
+      "illustration_source_ids": [
+        "F2"
+      ]
+    },
+    {
+      "from_s": 27,
+      "to_s": 32,
+      "visual_mode": "request",
+      "glyph_boxes": [
+        [
+          44,
+          108,
+          251,
+          134
+        ],
+        [
+          44,
+          151,
+          233,
+          195
+        ],
+        [
+          44,
+          242,
+          396,
+          268
+        ],
+        [
+          44,
+          574,
+          311,
+          611
+        ]
+      ],
+      "illustration": "outgoing_request",
+      "illustration_source_ids": []
+    }
+  ],
+  "files": {
+    "preview.webm": "079b7170b196636406e9b803fe78f4511dbc6e78623c1cefdb0248829c149937",
+    "captions.vtt": "2ab52844d95aba11143a5c7084f2fab165273c691dd4ec315e9b5513b771c3d7",
+    "poster.png": "12a5c06e91a7f1c409084fb3121612186c5fc170795b7a96682c4df21bdd5cbf"
+  }
+}

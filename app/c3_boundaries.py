@@ -33,7 +33,8 @@ def record(store, snap, operation, key, result):
 
 def run_for(db, doc):
     run = db.scalar(select(WorkforceRun).filter_by(tenant_id=doc.tenant_id, deliverable_id=doc.id))
-    if c3_content_evidence.marketing_run(run):
+    from .video_storyboard import is_run
+    if c3_content_evidence.marketing_run(run) or is_run(run):
         return run
     return None
 
@@ -72,6 +73,22 @@ def boundary(db, user, doc, content_digest, stage, *, inspect_only=False):
     from .registry import pin
     if pin(db, brief, binding["workflow"]) != binding:
         conflict("The approved campaign registry binding changed")
+    from . import video_storyboard as video
+    if video.is_run(run):
+        if stage == "share" or not store.approver:
+            conflict("The storyboard requires independent internal QA and is restricted to preproduction")
+        from .knowledge_store import digest,canonical
+        import json
+        try:
+            current = json.loads(doc.content["client_preview"])
+            expected = video.compose(run.knowledge["c3_projection"],ref,current["hook_variant"])
+            if video.json_text(current) != video.json_text(expected) or doc.title != run.knowledge["title"]:
+                raise ValueError("Changed material outside the approved storyboard revision")
+        except (ValueError, KeyError, TypeError):
+            conflict("Correct the storyboard, offer, source references or layout against the pinned manifest")
+        return store,snap,{"run_id":run.id,"document_id":doc.id,"qa_revision":doc.qa_revision,
+                           "content_digest":content_digest,"manifest_digest":snap.digest,"release_digest":binding["manifest_digest"],
+                           "storyboard_digest":digest(canonical(current)),"hook_variant":current["hook_variant"]}
     values = {"run_id":run.id, "document_id":doc.id, "qa_revision":doc.qa_revision, "content_digest":content_digest,
               "manifest_digest":snap.digest, "release_digest":binding["manifest_digest"]}
     from .c3_evidence_review import decision_evidence

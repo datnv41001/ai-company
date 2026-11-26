@@ -145,6 +145,14 @@ def test_production_browser(api, workforce, monkeypatch, case):  # noqa: F811
                         assert large.locator(".grid").evaluate("e=>getComputedStyle(e).gridTemplateColumns.split(' ').length") == (1 if width == 390 else 2)
                         capture_themes(page, out / f"landing-{width}.png")
                         intake = large.locator("form")
+                        if case["id"] == "receipt-map":
+                            label = "Gửi đề nghị khảo sát"
+                            expect(large.get_by_role("link", name=label, exact=True)).to_have_attribute("href", "#request")
+                            expect(intake.get_by_role("heading")).to_have_text(label)
+                            expect(intake.get_by_role("button")).to_have_text(label)
+                            expect(intake).to_contain_text("trước khi xác nhận lịch")
+                        elif case["id"] == "index-tray":
+                            expect(intake).to_contain_text("chưa đủ điều kiện báo giá")
                         assert intake.get_attribute("data-contract") == plan["intake_contract"]["digest"]
                         assert intake.locator("[data-answer]").count() == len(plan["intake_contract"]["fields"])
                         intake.screenshot(path=str(out / f"intake-{width}.png"))
@@ -168,6 +176,13 @@ def test_production_browser(api, workforce, monkeypatch, case):  # noqa: F811
                             frame.locator('[name="consent"]').check()
                             frame.get_by_role("button").click()
                             expect(frame.get_by_role("status")).to_contain_text("Đã ghi nhận")
+                            if case["id"] == "receipt-map":
+                                expect(frame.get_by_role("status")).to_contain_text("Người phụ trách sẽ đối chiếu trước khi xác nhận lịch.")
+                            elif case["id"] == "index-tray":
+                                expect(frame.get_by_role("status")).to_contain_text("Đã ghi nhận nhu cầu tư vấn.")
+                            if case["id"] in ("index-tray", "receipt-map"):
+                                assert frame.get_by_role("status").evaluate(
+                                    "el=>{const box=el.getBoundingClientRect();return box.top>=0 && box.bottom<=innerHeight+1}")
                             capture_themes(page, out / "form-390.png")
                         if case["buyer_action"] == "appointment":
                             page.goto(origin + "/?workspace=" + owner["tenant"] + "#/campaigns")

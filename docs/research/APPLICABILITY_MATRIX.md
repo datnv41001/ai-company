@@ -49,3 +49,15 @@ Phân loại theo phạm vi. **Đã có** hợp đồng nhập dữ liệu và k
 | Agency nhiều nhãn hàng và Enterprise | Nhiều người góp ý làm lẫn hai revision hoặc hai thương hiệu. Mục đích measurement khác quyền xem hồ sơ. | Snapshot, QA, phân quyền và report sandbox. Đại diện có thẩm quyền chốt revision; nhóm measurement kiểm receipt, consent và destination. Thiếu quyết định thật của doanh nghiệp. |
 
 Bằng chứng nền gồm hướng dẫn nhà cung cấp, khảo sát và lời kể có giới hạn. Các ứng dụng trên là giả thuyết theo từng phân khúc. [K-17 và K-18](KNOWLEDGE_CARDS.md) · [Sổ năng lực](../evaluation/DEPARTMENT-CAPABILITY-REGISTER.md)
+
+<a id="r58-wf08"></a>
+## Đối chiếu WF-08 với các cơ hội V1
+
+| Cơ hội | Hiện trạng và cách dùng |
+| --- | --- |
+| O-01, O-02 | Dùng lại manifest và bản ghim kỹ năng của Workforce. Mỗi cảnh cần nguồn đã duyệt, kiểm scope/quyền và fail có receipt khi nguồn hết hiệu lực. |
+| O-03, O-04 | Giữ queue, quyết định ưu tiên và quyền của Director. Chỉ bổ sung công việc Video/Storyboard; chưa có căn cứ đổi Command Center hoặc thuật toán xếp hạng. |
+| O-05 | Một bản timeline tạo preview có phụ đề. Người dựng đối chiếu CTA, điều kiện, bố cục và quyền theo kênh; việc publish vẫn cần quyết định khác. |
+| O-06, O-07 | Chạy lại phép đo intake và hợp đồng lịch hẹn trên receipt sandbox. Cần cohort phân bổ trước khi so hai hook. Không suy ra hiệu quả Creative từ một đơn hoặc một form. |
+| O-08 | Giữ lại lỗi thông điệp và ca đúng cú pháp sai nghiệp vụ làm regression. Người QA kiểm revision và dữ kiện được duyệt. |
+| O-09 | Giữ lab hỏi làm rõ độc lập. 12 trace theo câu khai báo, 14 fixture grammar và điểm Qwen lịch sử chỉ có giá trị trong các phép thử tương ứng. |

@@ -3,7 +3,7 @@
 import re
 
 from . import c3_assets, c3_order_units, measurement_integrity
-from .c3_actions import ACTIONS, BUYER_INPUTS
+from .c3_actions import BUYER_INPUTS, action_label
 
 VERSION = "amc.marketing-studio/1"
 FIELDS = {
@@ -21,11 +21,10 @@ FIELDS = {
 
 def buyer_action(projection):
     intent = projection.get("task_intent", {})
-    chosen = ACTIONS.get(intent.get("buyer_action"))
-    if not chosen:
+    label = action_label(intent.get("buyer_action"), projection["locale"], projection["product"])
+    if not label:
         return ""
     lang = "vi" if projection["locale"] == "vi-VN" else "en"
-    label = chosen[lang]
     material = BUYER_INPUTS.get(intent.get("buyer_input"))
     if material and material[lang].casefold() not in label.casefold():
         instruction = "Gửi kèm " if lang == "vi" else "Include "
@@ -193,6 +192,10 @@ def quality_issues(workflow, groups, projection):
                 expected = buyer_action(projection)
                 if not expected or text != norm(expected):
                     reason = "buyer_action"
+            elif (field in ("meta_description", "page_title") and intent.get("buyer_action") == "appointment"
+                  and (booking := re.search(r"(?:^|[.!?|·:]\s*)(đặt lịch|book an appointment)\b", text))
+                  and booking[1] != norm(buyer_action(projection))):
+                reason = "buyer_action"
             if not reason and field in ("execution", "positioning", "rationale", "measurement_method", "test_hypothesis"):
                 clauses = [part.strip() for part in re.split(r"[,;.!?\n]+", text) if len(part.split()) >= 6]
                 if len(clauses) != len(set(clauses)):

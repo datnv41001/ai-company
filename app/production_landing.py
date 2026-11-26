@@ -1,6 +1,7 @@
 """A self-contained local page with an allow-listed bridge to the authenticated parent."""
 
 from html import escape
+from decimal import Decimal
 
 CSS = """
 :root{color-scheme:light;--bg:#f6f6ed;--ink:#152f26;--panel:#fffef7;--line:#b4c3af;--lime:#d8f282}
@@ -32,7 +33,7 @@ window.addEventListener('message',e=>{if(e.source===parent&&e.data?.type==='amc-
 
 
 # Legacy exports keep their original bytes. New exports ask only the fields approved in this plan.
-def approved_form(contract, cta, submit):
+def approved_form(contract, cta):
     controls = []
     for field in contract["fields"]:
         name = escape(field["id"])
@@ -48,9 +49,20 @@ def approved_form(contract, cta, submit):
             options = "".join(f'<option value="{escape(o["value"])}">{escape(o["label"])}</option>' for o in field["options"])
             control = f'<select {attrs}><option value=""></option>{options}</select>'
         controls.append(f"<label>{label}{control}</label>")
+    note = ""
+    vi = contract["locale"] == "vi-VN"
+    qualification = contract["qualification"]
+    minimums = qualification["minimum_order_quantities"]
+    if contract["action"] == "appointment":
+        note = ("Người phụ trách sẽ đối chiếu đề nghị trước khi xác nhận lịch." if vi
+                else "Staff will review your request before confirming an appointment.")
+    elif qualification["accept_inquiries"] and len(minimums) == 1 and Decimal(minimums[0]) > 1:
+        note = ("Nếu cần ít hơn mức tối thiểu, bạn vẫn có thể gửi nhu cầu để được tư vấn. Yêu cầu này chưa đủ điều kiện báo giá."
+                if vi else "Below the minimum order, you can still send an inquiry for advice. It does not yet qualify for a quote.")
     return (f'<form id="request" data-contract="{escape(contract["digest"])}"><h2>{escape(cta)}</h2>'
+            + (f'<p>{escape(note)}</p>' if note else "")
             + "".join(controls) + f'<label><input type="checkbox" name="consent" required>{escape(contract["consent"]["label"])}</label>'
-            + f'<button type="submit">{escape(submit)}</button><p role="status" aria-live="polite"></p></form>')
+            + f'<button type="submit">{escape(cta)}</button><p role="status" aria-live="polite"></p></form>')
 
 
 def produce(groups, plan, projection):
@@ -71,8 +83,8 @@ def produce(groups, plan, projection):
 
     contract = plan.get("intake_contract")
     if contract:
-        form = approved_form(contract, cta, t("Gửi yêu cầu tổng hợp", "Submit test request"))
-        message = """{type:'amc-landing-submit/2',contract_digest:form.dataset.contract,consent:form.consent.checked,
+        form = approved_form(contract, cta)
+        message = """{type:'amc-landing-submit/2',lang:document.documentElement.lang,contract_digest:form.dataset.contract,consent:form.consent.checked,
  answers:Object.fromEntries(Array.from(form.querySelectorAll('[data-answer]')).filter(el=>el.value!=='')
  .map(el=>[el.name,el.type==='number'?Number(el.value):el.value]))}"""
     else:
@@ -82,6 +94,12 @@ def produce(groups, plan, projection):
 <label>{t("Lịch dịch vụ dự kiến" if action == "appointment" else "Ngày cần hàng", "Requested service slot" if action == "appointment" else "Required delivery date")}<select name="days"><option value="2">{t("Sau hai ngày", "In two days")}</option><option value="7">{t("Sau một tuần", "In one week")}</option></select></label>
 <button type="submit">{t("Gửi yêu cầu tổng hợp", "Submit test request")}</button><p role="status" aria-live="polite"></p></form>"""
     bridge = BRIDGE.replace("__AMC_SELECTIONS__", message)
+    if contract:
+        # In the small Studio frame, adding a receipt expands the form below the submit button.
+        bridge += """
+new MutationObserver(()=>output.scrollIntoView({block:'nearest',inline:'nearest'}))
+ .observe(output,{childList:true});
+"""
     html = f"""<!doctype html><html lang="{"vi" if vi else "en"}"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1"><meta name="robots" content="noindex,nofollow,noarchive">
 <meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'unsafe-inline'; script-src 'unsafe-inline'; connect-src 'none'; form-action 'none'; base-uri 'none';">

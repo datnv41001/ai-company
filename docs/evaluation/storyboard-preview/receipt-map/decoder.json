@@ -1,0 +1,26 @@
+{
+  "browser": "Chromium",
+  "version": "158.0.8127.88",
+  "video_sha256": "08d0615d11a6619868eef2183cd3865da0afa2c70090c558ae612f66b7cbe960",
+  "decoded": {
+    "width": 540,
+    "height": 960,
+    "duration": 32
+  },
+  "times_s": [
+    0.5,
+    6.5,
+    13.5,
+    21.5,
+    28.5
+  ],
+  "motion_samples": [],
+  "sample_sha256_rgb": [
+    "283b77afaacba4cc4e127375c49d874afb0846e12d9223a01cf93385d0ddf8ab",
+    "386247bb4df1f845ba304ad066f637d08549402e11bbb9791c9827eb92f3e3ef",
+    "4f253456c1728b95a696b1de7bfe641353d10af63e5da53883cc2337d658dec9",
+    "a18d9a941713627c576d8ffaf0120f02727e076d34846d439b2da442912ee705",
+    "dabab365029b6a11cf9d7c1ed38a854763aaf3e95e8ddd8733584ea71e54c32e"
+  ],
+  "contact_sheet_sha256": "f7e8c8de59a150bdd2d8f6541700464f923d17235b62d089b2d7de95492d44f7"
+}

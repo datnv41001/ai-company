@@ -11,11 +11,12 @@ from typing import Callable
 from migrations.registry_release import adapter_digest
 from migrations.runtime_bundle import approved_adapter_digests
 from . import dynamic_plan, landing_qa, research_strategy, registry_seo_v2, workforce_gateway as gateway
-from . import c3_marketing, c3_skill_library
+from . import c3_marketing, c3_skill_library, video_storyboard
 
 V1_DIGEST = "c64cf3e0e691a1bad191b954b07d06a28c7cd8675bb5fe8328ee0ae0e620880a"
 ROLES = {
     "director": "ai-managing-director",
+    "storyboard": video_storyboard.ROLE,
     "research": "ai-market-researcher",
     "strategy": "ai-marketing-strategist",
     "content": "ai-copywriter-content-strategist",
@@ -71,6 +72,8 @@ def runtimes():
         adapters[f"{skill}@{version}"] = Adapter(skill, version, c3_digest(), c3_marketing.request, c3_marketing.validate)
     for skill, version in c3_skill_library.VERSIONS.items():
         adapters[f"{skill}@{version}"] = Adapter(skill, version, c3_skill_library.adapter_digest(skill), c3_skill_library.request, c3_skill_library.validate)
+    for skill, version in (("director", video_storyboard.DIRECTOR_VERSION), ("storyboard", 1)):
+        adapters[f"{skill}@{version}"] = Adapter(skill, version, video_storyboard.source_digest(), video_storyboard.request, video_storyboard.validated)
     return {name: adapter for name, adapter in adapters.items() if adapter.digest in approved}
 
 

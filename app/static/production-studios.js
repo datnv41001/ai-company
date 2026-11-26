@@ -61,7 +61,13 @@ function mountProductionStudio(host,api,path,view,kind,isDirty){
             ? {contract_digest:data.contract_digest,consent:data.consent,answers:data.answers}
             : {quantity:data.quantity,place:data.place,days:data.days};
           const receipt=await api(base+'/'+item.id+'/submissions','POST',{request_id:visit.submit,visit_id:visit.id,...answers});
-          const message='Đã ghi nhận '+(receipt.kind==='appointment'?'lịch hẹn thử':'yêu cầu báo giá thử')+' · '+receipt.id;
+          const en=data.lang==='en';
+          let status=en?'Your test quote request was recorded.':'Đã ghi nhận yêu cầu báo giá thử.';
+          if(receipt.kind==='appointment')status=en?'Your request was recorded. Staff will review it before confirming an appointment.':
+            'Đã ghi nhận đề nghị. Người phụ trách sẽ đối chiếu trước khi xác nhận lịch.';
+          else if(receipt.value.missing?.includes('commercial_moq'))status=en?'Your inquiry was recorded for advice. The minimum order must be checked before it qualifies for a quote.':
+            'Đã ghi nhận nhu cầu tư vấn. Cần đối chiếu mức tối thiểu trước khi đủ điều kiện báo giá.';
+          const message=status+' · '+receipt.id;
           tell.textContent=message;f.contentWindow.postMessage({type:'amc-landing-result/1',ok:true,message},'*');
         }catch(e){f.contentWindow.postMessage({type:'amc-landing-result/1',ok:false,message:e.message},'*');}
       });

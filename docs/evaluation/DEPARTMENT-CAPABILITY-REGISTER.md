@@ -1,5 +1,7 @@
 # Sổ năng lực phòng Marketing
 
+**Sau #58, trên nhánh WF-08.** Creative lead có thể giao lát cắt Video/Storyboard cho Workforce với một adapter cục bộ tất định. Giới hạn qua thử nghiệm gồm brief tiếng Việt, tư liệu minh họa tổng hợp, giá/điều kiện theo nguồn, QA theo revision. Làm phim từ footage thật, năng lực mô hình suy rộng, nghiệm thu bởi người dựng và thực thi media còn mở. [Hợp đồng, đầu ra trước/sau QA và receipt](workforce-video/README.md)
+
 **Sau review #57.** Hai brief Khe Gọn và Luồng Rõ có đường Studio → QA → landing → tiếp nhận sandbox kiểm lại trên đúng dữ kiện. Bản dựng creative, lời thoại hai hook và phụ đề là đầu ra biên tập bổ sung. Phần đối chiếu nguồn và policy O-09 ở lab, chưa là một worker sản xuất. Năng lực chuyên môn được phân loại theo đầu ra tạo được, ai làm và ai có quyền chấp thuận. Chủ doanh nghiệp chưa chấp nhận đơn vị công việc nào. [Hai gói và nguồn gốc](campaign-production-review/README.md) · [Mapping vai trò](campaign-production-review/SKILLS.md) · [Routing chín nhóm việc](department-study/advisory/TASK-ROUTING.md)
 
 Sau khi merge #56, WF-14 và WF-20 có bằng chứng sandbox về điều kiện hồ sơ và quyền tư vấn, WF-18 có đối soát theo giai đoạn. Handoff khi khách đổi ý, pilot theo vai trò và ba phương pháp làm rõ yêu cầu được kiểm tra trên nhánh tiếp theo. Chỉ nâng mức cho từng workflow khi có đầu ra và quyết định tương ứng của người dùng. [Biên nhận main](department-review/MAIN-56.json) · [Phép thử trên cohort mới và giới hạn](department-review/MARKET-HANDOFF.md)
@@ -39,7 +41,7 @@ Nghiệm thu chuyên môn của người hành nghề, quyền thực thi ra n�
 | WF-05 Product Launch/GTM | Đặc tả | Phê duyệt battlecard và kế hoạch launch hoàn chỉnh |
 | WF-06 Campaign Factory | Sandbox kế hoạch, điều phối, biên nhận và bàn giao | Chi phí và thời gian trên campaign được nhận |
 | WF-07 Content Calendar | Đầu ra lịch theo mốc phê duyệt, nhóm và việc | Đối soát các mốc với công suất thật |
-| WF-08 Creative & Video | Đầu ra deterministic, nguồn, cảnh, file render trên nhánh Creative | Kiểm quyền tư liệu thực, người làm thiết kế chấm |
+| WF-08 Creative & Video | Studio giữ renderer và QA; nhánh sau #58 bổ sung nhiệm vụ storyboard chạy trên worker, đầu ra có timeline, VTT và nguồn. [Phạm vi và bản chạy](workforce-video/README.md) | Công việc tất định cho tiền kỳ nội bộ. Còn thiếu footage thật có quyền và nghiệm thu của người dựng. |
 | WF-09 Social Publishing | Đầu ra copy và mô phỏng hành động có receipt | Chờ quyền adapter và remote ID |
 | WF-10 Community & Reputation | Đặc tả | Moderation, nhạy cảm và escalation |
 | WF-11 SEO/GEO | Đầu ra metadata và nội dung search | Crawl có quyền và đo hiệu quả |

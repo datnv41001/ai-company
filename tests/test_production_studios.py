@@ -260,6 +260,12 @@ def rehearsal(api, workforce, monkeypatch, case, observe=None, consult=False):  
 
     def inspect(*_):
         artifacts.update(qualify(api, base, doc, owner, buyer, other, plan, case["buyer_action"], observe, consult=consult))
+        if case["id"] == "receipt-map":
+            label = "Gửi đề nghị khảo sát"
+            creative, landing = (artifacts[k]["master"] for k in ("creative", "landing"))
+            assert creative["cta"] == creative["scenes"][-1]["caption"] == landing["sections"]["call_to_action"] == label
+            assert label in landing["seo"]["meta_description"] and "Đặt lịch" not in landing["seo"]["meta_description"]
+            assert landing["intake_contract"]["consent"]["purpose"] == "appointment_request"
 
     lifecycle(api, base, owner, buyer, other, doc, snap, plan, editor, inspect)
     url = doc + "/studio/production/" + artifacts["landing"]["id"]

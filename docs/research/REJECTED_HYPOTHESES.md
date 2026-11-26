@@ -27,3 +27,7 @@
 - Loại phương án dùng tỷ lệ tăng trưởng trong case study TikTok để dự báo kết quả AMC. Chỉ tái sử dụng cách lập giả thuyết, chọn một biến, người nghiệm thu và mẫu số.
 - Loại phương án coi consent xử lý RFQ là quyền gửi sự kiện cho Google hoặc gọi validateOnly lên tài khoản thật. Quyền dữ liệu, adapter, destination, đối soát và thẩm quyền phát hành là các dependency riêng.
 - Loại việc diễn giải 14/24 nhãn thô của Qwen thành 14 bản bàn giao dùng được. Lịch sử chấm đủ hợp đồng là 7/24. Khả năng grammar loại lỗi định dạng và khả năng hiểu nghiệp vụ cần hai phép thử riêng. [Kết quả đã khóa](../evaluation/department-study/advisory/PROSPECTIVE-HANDOFF.md)
+
+## R58 · Diễn giải hiệu quả creative
+
+Bác giả thuyết có thể xếp hạng creative từ tỷ lệ xác nhận trên số người đã gửi form. Mẫu số đó loại cả những người được phân bổ nhưng không chuyển đổi, còn thời điểm Service xác nhận phụ thuộc nhân sự. Điều kiện xem xét lại gồm receipt phân bổ, theo dõi chung cho cả hai nhánh và outcome đã khóa. Tách thử thay hook khỏi so sánh nhiều concept. [Protocol và đọc lại hai receipt](../evaluation/workforce-video/MEASUREMENT.md)

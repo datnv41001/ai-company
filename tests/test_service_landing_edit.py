@@ -23,9 +23,11 @@ from test_claim_desk import reader
 def test_service_landing_edit(api, workforce, monkeypatch):  # noqa: F811
     case = next(case for case in CASES if case["id"] == "pump-service")
     # Recreate a pre-intake proposal and its original digest, then exercise approval, edit and replay normally.
-    from app import campaign_planner
+    from app import campaign_planner, c3_actions
     from app.knowledge_store import canonical, digest
     current_compose = campaign_planner.compose_plan
+    # This exercise reproduces the archived pre-intake writer byte-for-byte.
+    monkeypatch.setitem(c3_actions.ACTIONS["appointment"], "vi", "Đặt lịch")
 
     def archived_proposal(*args):
         plan = current_compose(*args)

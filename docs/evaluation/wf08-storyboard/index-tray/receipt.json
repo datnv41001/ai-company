@@ -1,0 +1,253 @@
+{
+  "case": "index-tray",
+  "scope": {
+    "tenant": "3d3b3cc6-14c0-4d30-88ac-b15c7cf74559",
+    "campaign_objective": "Nhận yêu cầu báo giá khay chia linh kiện theo hộp cho bàn lắp ráp",
+    "campaign_id": "2d6badf2-cd68-493d-94d0-bfdf6b720333",
+    "brief_id": "0a883cbf-6728-4d62-b1de-1e6227de57f4"
+  },
+  "run_id": "ca307c87-29c5-4b5f-8470-b65d739141f2",
+  "states": [
+    {
+      "id": "ca307c87-29c5-4b5f-8470-b65d739141f2",
+      "state": "queued"
+    },
+    {
+      "stage": "director",
+      "attempt": "91bc7534-1449-489a-90f6-e14fead50be5",
+      "state": "running"
+    },
+    {
+      "stage": "storyboard",
+      "attempt": "04e24cc3-cb51-4fbe-913b-97bd3d760d0c",
+      "state": "running"
+    },
+    {
+      "state": "awaiting_qa",
+      "document": "de54e7f4-8911-436d-8045-afc79919c1ee"
+    }
+  ],
+  "registry": {
+    "nodes": [
+      {
+        "held": 0,
+        "model": "local",
+        "owner": "agency creative lead",
+        "spent": 0,
+        "tools": [],
+        "inputs": [
+          "brief",
+          "brand",
+          "sources"
+        ],
+        "adapter": "director@6",
+        "node_id": "director",
+        "outputs": [
+          "assignment"
+        ],
+        "overage": 0,
+        "role_id": "ai-managing-director",
+        "approval": "independent_internal_revision_qa",
+        "attempts": [
+          {
+            "id": "91bc7534-1449-489a-90f6-e14fead50be5",
+            "held": 0,
+            "month": "2026-11-01",
+            "spent": 0,
+            "status": "closed",
+            "ordinal": 1,
+            "outcome": "ok"
+          }
+        ],
+        "exposure": 0,
+        "fallback": "agency creative editor",
+        "node_cap": 0,
+        "skill_id": "director",
+        "objective": "Produce a grounded illustrated storyboard for internal editing",
+        "qa_policy": "wf08-source-and-revision@1",
+        "attempt_ids": [
+          "91bc7534-1449-489a-90f6-e14fead50be5"
+        ],
+        "max_attempts": 3,
+        "predecessors": [],
+        "output_schema": {
+          "type": "object",
+          "required": [
+            "assignment"
+          ],
+          "properties": {
+            "assignment": {
+              "type": "string"
+            }
+          },
+          "additionalProperties": false
+        },
+        "skill_version": 6,
+        "adapter_digest": "1cff466d97f960a7ca4c2eb2b5e6507e3d659412318ab50d1b0b7af9ac4a5ac9",
+        "timeout_seconds": 300,
+        "contract_version": 6,
+        "success_criteria": [
+          "pinned scope",
+          "deterministic validation"
+        ],
+        "forbidden_actions": [
+          "external_write",
+          "publish",
+          "spend"
+        ]
+      },
+      {
+        "held": 0,
+        "model": "local",
+        "owner": "agency creative lead",
+        "spent": 0,
+        "tools": [],
+        "inputs": [
+          "brief",
+          "brand",
+          "sources"
+        ],
+        "adapter": "storyboard@1",
+        "node_id": "n01",
+        "outputs": [
+          "board_json"
+        ],
+        "overage": 0,
+        "role_id": "ai-video-storyboard",
+        "approval": "independent_internal_revision_qa",
+        "attempts": [
+          {
+            "id": "04e24cc3-cb51-4fbe-913b-97bd3d760d0c",
+            "held": 0,
+            "month": "2026-11-01",
+            "spent": 0,
+            "status": "closed",
+            "ordinal": 1,
+            "outcome": "ok"
+          }
+        ],
+        "exposure": 0,
+        "fallback": "agency creative editor",
+        "node_cap": 0,
+        "skill_id": "storyboard",
+        "objective": "Produce a grounded illustrated storyboard for internal editing",
+        "qa_policy": "wf08-source-and-revision@1",
+        "attempt_ids": [
+          "04e24cc3-cb51-4fbe-913b-97bd3d760d0c"
+        ],
+        "max_attempts": 3,
+        "predecessors": [],
+        "output_schema": {
+          "type": "object",
+          "required": [
+            "board_json"
+          ],
+          "properties": {
+            "board_json": {
+              "type": "string"
+            }
+          },
+          "additionalProperties": false
+        },
+        "skill_version": 1,
+        "adapter_digest": "1cff466d97f960a7ca4c2eb2b5e6507e3d659412318ab50d1b0b7af9ac4a5ac9",
+        "timeout_seconds": 300,
+        "contract_version": 1,
+        "success_criteria": [
+          "pinned scope",
+          "deterministic validation"
+        ],
+        "forbidden_actions": [
+          "external_write",
+          "publish",
+          "spend"
+        ]
+      }
+    ],
+    "skills": [
+      "director",
+      "storyboard"
+    ],
+    "status": "pinned",
+    "workflow": "WF-08/video-storyboard@1",
+    "plan_digest": "5356f506b8ccef365bf2c7616829878b4357636dbafd65aff57de60dabc91f63",
+    "workflow_id": "WF-08/video-storyboard",
+    "manifest_digest": "4dd698583db731fc5e02dfba95eeb92c028466a885266b92a48367c8978ad40e",
+    "workflow_version": 1
+  },
+  "original_revision": 1,
+  "raw_revision_digest": "71f940f30041e07afbd871dc427bfd5d0d5566b54a6213c80e9e02554071302e",
+  "reviewed_revision": 2,
+  "reviewed_digest": "d9f62432fbd95545bb06334bf86dc045d8818e2bcf8d47dc24ae779f4e794342",
+  "reviewed_by": "ffb99668-709d-4bb7-a0bc-6f81bd897a08",
+  "reviewed_state": "approved",
+  "editorial_change": "Approved audience hook variation; claims and commercial fields rebuilt from pinned authority.",
+  "manifest": {
+    "digest": "7d9dff37a0f47d048d0c045f58520e80a3dd48d387ff2c2f0d16c3fc09a2b8eb",
+    "id": "77a087a1-1f47-4223-a4eb-642d7b858d86"
+  },
+  "source_chain": {
+    "manifest_digest": "7d9dff37a0f47d048d0c045f58520e80a3dd48d387ff2c2f0d16c3fc09a2b8eb",
+    "entries": [
+      {
+        "handle": "F1",
+        "claim_revision": "27382695-809c-472e-92cf-44e48caca066",
+        "binding_revision": "677edb64-6c55-485b-a324-2eb0ad09266a",
+        "source_revision": "90eb6a26-8c65-49db-bc73-1eea044fee2e",
+        "source_digest": "3f49ecfac9bef7bc7760ba4674484bea0885440f905e6085a89d5fb47c2d36e7",
+        "document": "PRIVATE_SYNTHETIC_DOCUMENT",
+        "locator": "private locator"
+      },
+      {
+        "handle": "F2",
+        "claim_revision": "7ba606e4-af59-49fd-b3f1-7fb3bd92728f",
+        "binding_revision": "58765478-864c-44b9-91b9-8f5472e92bdb",
+        "source_revision": "e817d8d9-7fc8-4834-9867-8512c4b36c2b",
+        "source_digest": "28c58c32d8895a6b5a7b405b959f2df3ccc125019dd49848da81e4521033a29d",
+        "document": "PRIVATE_SYNTHETIC_DOCUMENT",
+        "locator": "private locator"
+      }
+    ]
+  },
+  "worker_journal": [
+    {
+      "node_id": "director",
+      "plan_revision": 1,
+      "skill": "director",
+      "attempt": 1,
+      "provider": "deterministic",
+      "model": "local-storyboard/1",
+      "prompt": "marketing-workforce-2",
+      "started_at": "2026-11-26T09:21:47.916827+00:00",
+      "outcome": "ok",
+      "reserved_microusd": 0,
+      "input_tokens": 0,
+      "output_tokens": 0,
+      "estimated_microusd": 0,
+      "finished_at": "2026-11-26T09:21:47.994929+00:00"
+    },
+    {
+      "node_id": "n01",
+      "plan_revision": 1,
+      "skill": "storyboard",
+      "attempt": 1,
+      "provider": "deterministic",
+      "model": "local-storyboard/1",
+      "prompt": "marketing-workforce-2",
+      "started_at": "2026-11-26T09:21:48.030995+00:00",
+      "outcome": "ok",
+      "reserved_microusd": 0,
+      "input_tokens": 0,
+      "output_tokens": 0,
+      "estimated_microusd": 0,
+      "finished_at": "2026-11-26T09:21:48.067796+00:00"
+    }
+  ],
+  "execution_ms": 304.91,
+  "commercial_acceptance": null,
+  "external_calls": 0,
+  "input_tokens": 0,
+  "output_tokens": 0,
+  "provider_fee_microusd": 0,
+  "editing_labor_minutes": null
+}

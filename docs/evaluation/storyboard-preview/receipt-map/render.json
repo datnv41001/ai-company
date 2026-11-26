@@ -1,0 +1,273 @@
+{
+  "source_file": "reviewed.json",
+  "source_sha256": "b7d7acb7cca09a03a5eb2271e705e80d5994cab73b4774828bcc5192dcca50eb",
+  "renderer": "amc/storyboard-preview/2",
+  "style": "route",
+  "format": "VP8/WebM",
+  "size": [
+    540,
+    960
+  ],
+  "duration_seconds": 32,
+  "safe_rect": [
+    42,
+    105,
+    453,
+    734
+  ],
+  "frames_per_second": 1,
+  "audio_tracks": 0,
+  "rights": "Original AMC synthetic diagrams and SIL OFL Studio font, internal sandbox only.",
+  "shots": [
+    {
+      "from_s": 0,
+      "to_s": 6,
+      "visual_mode": "process",
+      "glyph_boxes": [
+        [
+          44,
+          108,
+          251,
+          134
+        ],
+        [
+          44,
+          151,
+          256,
+          202
+        ],
+        [
+          44,
+          242,
+          412,
+          271
+        ],
+        [
+          44,
+          277,
+          158,
+          304
+        ],
+        [
+          44,
+          574,
+          388,
+          610
+        ],
+        [
+          44,
+          618,
+          411,
+          655
+        ]
+      ],
+      "illustration": "route_overview",
+      "illustration_source_ids": [
+        "F2"
+      ]
+    },
+    {
+      "from_s": 6,
+      "to_s": 13,
+      "visual_mode": "document",
+      "glyph_boxes": [
+        [
+          44,
+          108,
+          251,
+          134
+        ],
+        [
+          44,
+          151,
+          256,
+          202
+        ],
+        [
+          44,
+          242,
+          412,
+          271
+        ],
+        [
+          44,
+          277,
+          158,
+          304
+        ],
+        [
+          44,
+          574,
+          389,
+          611
+        ],
+        [
+          44,
+          619,
+          435,
+          654
+        ],
+        [
+          44,
+          662,
+          315,
+          694
+        ]
+      ],
+      "illustration": "deliverable_map",
+      "illustration_source_ids": [
+        "F2"
+      ]
+    },
+    {
+      "from_s": 13,
+      "to_s": 21,
+      "visual_mode": "offer",
+      "glyph_boxes": [
+        [
+          44,
+          108,
+          251,
+          134
+        ],
+        [
+          44,
+          151,
+          256,
+          202
+        ],
+        [
+          44,
+          242,
+          412,
+          271
+        ],
+        [
+          44,
+          277,
+          158,
+          304
+        ],
+        [
+          44,
+          574,
+          432,
+          601
+        ],
+        [
+          44,
+          609,
+          368,
+          645
+        ],
+        [
+          44,
+          653,
+          447,
+          691
+        ]
+      ],
+      "illustration": "offer_ticket",
+      "illustration_source_ids": [
+        "F1"
+      ]
+    },
+    {
+      "from_s": 21,
+      "to_s": 28,
+      "visual_mode": "document",
+      "glyph_boxes": [
+        [
+          44,
+          108,
+          251,
+          134
+        ],
+        [
+          44,
+          151,
+          256,
+          202
+        ],
+        [
+          44,
+          242,
+          412,
+          271
+        ],
+        [
+          44,
+          277,
+          158,
+          304
+        ],
+        [
+          44,
+          574,
+          381,
+          609
+        ],
+        [
+          44,
+          617,
+          402,
+          651
+        ],
+        [
+          44,
+          659,
+          176,
+          698
+        ]
+      ],
+      "illustration": "pending_confirmation",
+      "illustration_source_ids": [
+        "F1"
+      ]
+    },
+    {
+      "from_s": 28,
+      "to_s": 32,
+      "visual_mode": "request",
+      "glyph_boxes": [
+        [
+          44,
+          108,
+          251,
+          134
+        ],
+        [
+          44,
+          151,
+          256,
+          202
+        ],
+        [
+          44,
+          242,
+          412,
+          271
+        ],
+        [
+          44,
+          277,
+          158,
+          304
+        ],
+        [
+          44,
+          574,
+          380,
+          613
+        ]
+      ],
+      "illustration": "outgoing_request",
+      "illustration_source_ids": []
+    }
+  ],
+  "files": {
+    "preview.webm": "08d0615d11a6619868eef2183cd3865da0afa2c70090c558ae612f66b7cbe960",
+    "captions.vtt": "33770a3b8f0a46d1ce4a75a9c3e6ff7ca8d748b05039cb12993183fe88ff097b",
+    "poster.png": "b5d3c0848515352c77a1f682381eedae6beb6def73c75dca28f29b8b9dc7b8da"
+  }
+}

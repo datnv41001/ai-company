@@ -1,0 +1,35 @@
+{
+  "browser": "Chromium",
+  "version": "158.0.8127.88",
+  "video_sha256": "51db02c2839ec7c216443e8a2b8cb4375c03dc4850c3676aad698cfb94ee14a9",
+  "decoded": {
+    "width": 540,
+    "height": 960,
+    "duration": 18
+  },
+  "times_s": [
+    0.5,
+    6.5,
+    14.5
+  ],
+  "motion_samples": [
+    {
+      "from_s": 6.5,
+      "to_s": 13.5,
+      "first_art_sha256": "6174dbe304200957595987282fc25cd887f9f414ba724ab590184fff5ba8bb80",
+      "last_art_sha256": "72c44678824afe20c2b15eaab064d4dba01ed8ca2c76cf6fbfcc993f92fa52a1"
+    },
+    {
+      "from_s": 14.5,
+      "to_s": 17.5,
+      "first_art_sha256": "fd1aa1e81ef73d83136bfa91b1c0b180e3b123f53f205d454dcae4e77f242f29",
+      "last_art_sha256": "33975ee8d1351cd505c94fe499f00b5bda1cd1171db26d15c7a70446fa6097f1"
+    }
+  ],
+  "sample_sha256_rgb": [
+    "a83b34c5a56ba49307b85fa303af550708909aa62fe8f4a70e59c7909bf65d80",
+    "7f098431ed072d654612f923e489f6782bc20047d5f70b96387a9e3a93024706",
+    "386ea2dd442fe6f4400a8665ddf053840244592fea7b5ca483042cdef3c0a680"
+  ],
+  "contact_sheet_sha256": "10fdf34193bd6367fd9bd724998e61311e893a01bf4ded796349d59a71a3b95c"
+}

@@ -1,6 +1,11 @@
 # Bắt đầu ở đây khi tiếp quản AI Marketing Company
 
 
+## Bàn giao Creative và Landing Production nội bộ
+
+Từ **Biên tập tài liệu Marketing**, mở **Brief thiết kế → Creative Studio** để dựng master, ảnh theo ba tỉ lệ, WebM và VTT. Mở **Nội dung trang → Landing Studio** để dựng HTML, kiểm tra trên mobile và chạy phiên thử RFQ/appointment sau khi reviewer thứ hai duyệt file. [Quy trình Docker, file thực tế, ảnh giao diện và phép đo](docs/evaluation/real-production/README.md).
+
+
 ## Bàn giao theo vai trò Sales, dịch vụ và Marketing
 
 Khi đổi giờ hẹn, KPI theo nhóm lịch xác nhận giữ ngày xác nhận đầu tiên. Một kế hoạch dịch vụ có thể tiếp nhận RFQ sau khi người phụ trách bật tùy chọn và duyệt phiên bản. Bảng **Báo giá phụ của kế hoạch** tính số hồ sơ và doanh thu sandbox trên đúng phiên bản đó. [Ca hồi quy và ảnh giao diện](docs/evaluation/campaign-role-desk/README.md)

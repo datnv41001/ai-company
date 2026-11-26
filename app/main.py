@@ -26,6 +26,7 @@ from .campaign_lab import replay as replay_campaign_lab
 from .campaign_planner import router as campaign_planner_router
 from .campaign_operations import router as campaign_operations_router
 from .campaign_role_desk import router as campaign_role_router
+from .production_studios import router as production_studios_router
 from .business_workspace import router as workspace_router
 from .marketing_catalog import router as catalog_router
 from .company_objectives import router as objective_router
@@ -80,6 +81,7 @@ app.include_router(objective_router)
 app.include_router(campaign_planner_router)
 app.include_router(campaign_operations_router)
 app.include_router(campaign_role_router)
+app.include_router(production_studios_router)
 app.mount("/static", StaticFiles(directory=ROOT / "static"), name="static")
 
 

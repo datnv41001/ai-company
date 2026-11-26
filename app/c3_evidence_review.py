@@ -134,8 +134,8 @@ def current_report(store, snap, doc, run, signature, *, include_sources=False, l
     return report
 
 
-def decision_evidence(store, snap, doc, run, signature):
-    report = current_report(store, snap, doc, run, signature, include_sources=True, lock_reviewers=True)
+def decision_evidence(store, snap, doc, run, signature, *, lock_reviewers=True):
+    report = current_report(store, snap, doc, run, signature, include_sources=True, lock_reviewers=lock_reviewers)
     if not report["ready"]:
         conflict("Content evidence requires a correction or a qualified decision on unsupported claims")
     # Private per-span source revisions/digests remain reconstructible from the immutable

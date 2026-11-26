@@ -12,16 +12,16 @@ from .knowledge_store import canonical, conflict, digest
 from .workforce_models import WorkforceBrief, WorkforceRun
 
 
-def context(db, user, brief):
+def context(db, user, brief, *, write=True):
     scope = dict(tenant_id=brief.tenant_id, client_id=brief.client_id, brand_id=brief.brand_id)
     # Use the same client → brand → exact target lock order as internal brief capture.
-    workspace = Workspace(SimpleNamespace(path_params=scope), user, db, write=True)
-    return workspace, projection.store(workspace, True)
+    workspace = Workspace(SimpleNamespace(path_params=scope), user, db, write=write)
+    return workspace, projection.store(workspace, write)
 
 
-def checked(db, user, brief, manifest, workflow, stage):
-    workspace, store = context(db, user, brief)
-    snap, public = projection.recheck(store, workspace, manifest["id"], manifest["digest"], workflow, brief, stage)
+def checked(db, user, brief, manifest, workflow, stage, *, write=True):
+    workspace, store = context(db, user, brief, write=write)
+    snap, public = projection.recheck(store, workspace, manifest["id"], manifest["digest"], workflow, brief, stage,lock_target=write)
     return store, snap, public
 
 
@@ -44,7 +44,9 @@ def internal_author(brief):
     return None
 
 
-def boundary(db, user, doc, content_digest, stage):
+def boundary(db, user, doc, content_digest, stage, *, inspect_only=False):
+    if inspect_only and stage != "replay_qa":
+        raise ValueError("Read-only inspection can only replay an existing QA decision")
     run = run_for(db, doc)
     if not run:
         return None
@@ -61,28 +63,28 @@ def boundary(db, user, doc, content_digest, stage):
         if binding["workflow"] in PUBLIC and (doc.content.get("studio") or {}).get("delivery_version") not in (VERSION, CHANNEL_VERSION):
             conflict("Prepare the customer asset edition in Marketing Studio and review it before sharing")
     ref = run.knowledge["c3_manifest"]
-    store, snap, _ = checked(db, user, brief, ref, binding["workflow"], stage)
+    store, snap, _ = checked(db, user, brief, ref, binding["workflow"], stage,write=not inspect_only)
     if doc.content.get("studio") and not store.approver:
         conflict("Current approval authority is required for this Studio decision")
     if (doc.content.get("studio") or {}).get("channel_context"):
         from .campaign_channels import require_current
-        require_current(store, doc, run)
+        require_current(store, doc, run,lock_targets=not inspect_only)
     from .registry import pin
     if pin(db, brief, binding["workflow"]) != binding:
         conflict("The approved campaign registry binding changed")
     values = {"run_id":run.id, "document_id":doc.id, "qa_revision":doc.qa_revision, "content_digest":content_digest,
               "manifest_digest":snap.digest, "release_digest":binding["manifest_digest"]}
     from .c3_evidence_review import decision_evidence
-    values.update(decision_evidence(store, snap, doc, run, content_digest))
+    values.update(decision_evidence(store, snap, doc, run, content_digest,lock_reviewers=not inspect_only))
     if doc.content.get("studio"):
         from .c3_studio_routes import require_all_approved
-        values["studio_approvals"] = require_all_approved(db,doc,run)
+        values["studio_approvals"] = require_all_approved(db,doc,run,lock_reviewers=not inspect_only)
         if doc.content["studio"].get("delivery_version"):
             from .c3_customer_assets import manifest
             values["customer_delivery"] = manifest(doc, run, values["studio_approvals"])
     if stage in ("share", "replay_qa"):
         from .c3_reviewer import active_approver
-        if doc.content.get("studio") and not active_approver(db, doc.tenant_id, doc.reviewed_by, lock=True):
+        if doc.content.get("studio") and not active_approver(db, doc.tenant_id, doc.reviewed_by, lock=not inspect_only):
             conflict("The final Studio reviewer no longer has approval authority")
         key = decision_key(run.id, doc.qa_revision, content_digest)
         query = store.query(KnowledgeCommand).filter_by(snapshot_id=snap.id, operation="c3_qa", actor=doc.reviewed_by)

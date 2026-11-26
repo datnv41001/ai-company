@@ -338,12 +338,12 @@ def provenance(manifest_id: str, workspace=Depends(ws.reader)):
     return {"manifest_digest":snap.digest, "entries":entries}
 
 
-def recheck(s, workspace, id_, expected, workflow, brief, stage):
+def recheck(s, workspace, id_, expected, workflow, brief, stage, *, lock_target=True):
     snap, payload = unpack(s, id_)
     opts = payload["options"]
     if snap.digest != expected or opts["workflow"] != workflow or (snap.campaign_id, snap.brief_id) != (brief.campaign_id, brief.id):
         conflict("Manifest does not match this workflow and campaign brief")
-    target = describe(s, Target.model_validate(opts["target"]), lock=True)
+    target = describe(s, Target.model_validate(opts["target"]), lock=lock_target)
     at = s.now()
     if target != payload["target"] or not target["submitted"] or (stage == "queue" and at >= aware(snap.expires_at)):
         conflict("Campaign, recipient, brief or queue expiry changed")

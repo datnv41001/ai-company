@@ -1,0 +1,62 @@
+[
+  {
+    "id": "bc430f2b-07cd-4fc2-a9fb-e1d3e3516516",
+    "campaign_id": "d2f11fb7-a5ed-4e95-9f0a-03e17fe90058",
+    "plan_id": "a42ea052-d18c-458f-a2c5-b85dc1824ab0",
+    "sequence": 15,
+    "kind": "session",
+    "entity": "sessions",
+    "entity_id": "861a0e7b56c209aa295b7d5e0e2eabfa22bf760e027a6eb935b9b367ff7ec361",
+    "value": {
+      "id": "861a0e7b56c209aa295b7d5e0e2eabfa22bf760e027a6eb935b9b367ff7ec361",
+      "visitor": "fa041c6411303d708655c232ce30ea427eb7b34ec97d046f376f713727359e6a",
+      "action_id": null,
+      "occurred_at": "2026-11-26T02:03:43.118430+00:00",
+      "plan_id": "a42ea052-d18c-458f-a2c5-b85dc1824ab0",
+      "landing_package": "cc570887-1a3b-44a7-8b5e-23fce93041c4",
+      "landing_digest": "5ffdf05ebdca458d8d7d2f53c99fa82e6671c0aa53ed1aec148f5b9b5f2bf943"
+    },
+    "actor": "cb3b9927-0b77-4972-8f0c-0641e8728644",
+    "recorded_at": "2026-11-26T02:03:43.118999+00:00"
+  },
+  {
+    "id": "d74f48a3-69b6-424a-9570-140b8543ae20",
+    "campaign_id": "d2f11fb7-a5ed-4e95-9f0a-03e17fe90058",
+    "plan_id": "a42ea052-d18c-458f-a2c5-b85dc1824ab0",
+    "sequence": 16,
+    "kind": "appointment",
+    "entity": "appointments",
+    "entity_id": "e29a4a6595eb156bd5a67d229d0c613e32fa4d115489f850f9c34b891f33369d",
+    "value": {
+      "id": "e29a4a6595eb156bd5a67d229d0c613e32fa4d115489f850f9c34b891f33369d",
+      "plan_id": "a42ea052-d18c-458f-a2c5-b85dc1824ab0",
+      "revision": 1,
+      "state": "requested",
+      "assignee_id": null,
+      "confirmed_for": null,
+      "history": [
+        {
+          "event": "requested",
+          "actor": "cb3b9927-0b77-4972-8f0c-0641e8728644",
+          "at": "2026-11-26T02:03:43.895145+00:00",
+          "feedback": null
+        }
+      ],
+      "occurred_at": "2026-11-26T02:03:43.895145Z",
+      "contract": "service-appointment/1",
+      "product_id": "bc5d1493-4136-4ebe-8a3e-bf227107223b",
+      "unit": "machine",
+      "quantity": "3",
+      "requested_for": "2026-12-03T02:03:43.895145Z",
+      "service_scope": "Synthetic service assessment",
+      "location": "Synthetic site A",
+      "contact_purpose": "appointment_request",
+      "session_id": "861a0e7b56c209aa295b7d5e0e2eabfa22bf760e027a6eb935b9b367ff7ec361",
+      "last_event_at": "2026-11-26T02:03:43.895145+00:00",
+      "landing_package": "cc570887-1a3b-44a7-8b5e-23fce93041c4",
+      "landing_digest": "5ffdf05ebdca458d8d7d2f53c99fa82e6671c0aa53ed1aec148f5b9b5f2bf943"
+    },
+    "actor": "cb3b9927-0b77-4972-8f0c-0641e8728644",
+    "recorded_at": "2026-11-26T02:03:43.896140+00:00"
+  }
+]

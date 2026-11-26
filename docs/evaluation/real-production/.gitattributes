@@ -1,0 +1,6 @@
+# These files are checked against the exact byte digests in each package receipt.
+*.html text eol=lf
+*.json text eol=lf
+*.vtt text eol=lf
+*.png -text
+*.webm -text

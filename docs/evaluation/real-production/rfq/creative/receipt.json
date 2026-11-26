@@ -1,0 +1,139 @@
+{
+  "id": "77ffb2c7-7fa0-4d40-9752-dae8bbeceec0",
+  "created_by": "f77afeac-8b6d-42ef-b096-f0918c0e3895",
+  "did": "224316f1-c800-4fb1-b2e9-b70e3471819f",
+  "version": 2,
+  "kind": "creative",
+  "studio_revision": 4,
+  "manifest": {
+    "id": "1d878308-559e-4813-8dca-8151bda32947",
+    "digest": "0b6df79d5e5503e8721c95c1606f8ffc817336126baf5ecef7df3933b3b4bc0e"
+  },
+  "plan_id": "dc4238ad-0a77-44bd-8e9c-302680dcfd28",
+  "plan_digest": "c6e939d13801949cf2aa92aee8e7e57839ff02092b4fd824497eef5318a70437",
+  "groups": {
+    "copy": "043abfa1a387996fe0391d6f64b9746d3379b6069c61f6982fd75ba074486e53",
+    "creative_brief": "6a899641ba0bc9d0e4abc3fd2c75200d4db75b76b5793d758855faf57fa85c2e"
+  },
+  "group_receipts": {
+    "copy": "84ea6b7c-05ce-4ab9-964b-44e74971d3c7",
+    "creative_brief": "aa0cf420-3be3-4483-8c0d-bb0e2336cdf3"
+  },
+  "inputs": "ed6d897bbd075e8f95c10855ac9bd1d62da6f40ffda0c07df366cb27918fcf9c",
+  "master": {
+    "contract": "amc.creative-master/1",
+    "palette": "forest",
+    "motif": "planes",
+    "layout": "art_first",
+    "colors": [
+      "#123D31",
+      "#E5F39A",
+      "#FCF9ED"
+    ],
+    "headline": "Tấm gỗ tiêu âm Mộc",
+    "cta": "Yêu cầu báo giá",
+    "brief": {
+      "concept": "Phác thảo khung hình cho Tấm gỗ tiêu âm Mộc có chỗ đặt điều kiện và lời mời hành động.",
+      "brand_direction": "Áp dụng hướng dẫn thương hiệu bản 1. Dành một vùng cho đơn vị báo giá và điều kiện chọn số lượng.",
+      "image_spec": "Giao mẫu dọc và ngang, bản nguồn chỉnh sửa được và ảnh xem trước. Giữ chủ thể, điều kiện và lời mời hành động trong vùng an toàn khi cắt. Duyệt độ đọc ở kích thước điện thoại.",
+      "video_spec": "Giao storyboard có cảnh nhu cầu, cảnh đối chiếu dữ kiện và cảnh chọn bước tiếp theo. Kèm chỉ dẫn cảnh quay, phụ đề, bản chép lời và danh mục nguồn. Duyệt khi tắt âm thanh trước khi xuất bản dựng.",
+      "rights": "Chờ kiểm tra chủ sở hữu, giấy phép, phạm vi và thời hạn trước khi dùng tư liệu.",
+      "provenance": "Bản giao chỉ gồm chỉ dẫn sản xuất. Chưa có tệp hình ảnh hoặc video được cấp phép."
+    },
+    "brand_guideline_digest": "8667f503425c83801d0702e0a96932e171bcc578d401f55e68de2dc1d3e1e675",
+    "variations": {
+      "portrait": [
+        720,
+        900
+      ],
+      "landscape": [
+        960,
+        540
+      ],
+      "square": [
+        720,
+        720
+      ]
+    },
+    "safe_inset_percent": 6.5,
+    "typeface": "Be Vietnam Pro SemiBold",
+    "scenes": [
+      {
+        "from": 0,
+        "to": 2,
+        "caption": "Tấm gỗ tiêu âm Mộc"
+      },
+      {
+        "from": 2,
+        "to": 4,
+        "caption": "Đối chiếu quy cách và điều kiện áp dụng của Tấm gỗ tiêu âm Mộc trước khi lựa chọn."
+      },
+      {
+        "from": 4,
+        "to": 6,
+        "caption": "Yêu cầu báo giá"
+      }
+    ],
+    "source": {
+      "file": "source.png",
+      "sha256": "b8c0a8704829c527c4ac7d61659413dec61366e4aafdffdb2f989f7fe5a1651e",
+      "type": "AMC original synthetic geometry",
+      "rights": "AMC synthetic source for internal sandbox use. No external media or photography."
+    },
+    "renderer": {
+      "engine": "Pillow",
+      "version": "13.0.0",
+      "freetype": "2.14.3",
+      "webp": "1.6.0"
+    }
+  },
+  "files": {
+    "source.png": {
+      "mime": "image/png",
+      "bytes": 8031,
+      "sha256": "b8c0a8704829c527c4ac7d61659413dec61366e4aafdffdb2f989f7fe5a1651e"
+    },
+    "portrait.png": {
+      "mime": "image/png",
+      "bytes": 117188,
+      "sha256": "144ece288b8f5087a316f81f5b03901eab8c8501d7524dc2c54e8f62a500a239"
+    },
+    "landscape.png": {
+      "mime": "image/png",
+      "bytes": 90239,
+      "sha256": "7a654be40a4cc43da004ba62e4c025ba0b61ea4168a10134a2ef577899dbda5e"
+    },
+    "square.png": {
+      "mime": "image/png",
+      "bytes": 101773,
+      "sha256": "700c5c4c099d35559c31e493f1d956db71a3c9ebaefb849ed62575f335e84a9d"
+    },
+    "preview.webm": {
+      "mime": "video/webm",
+      "bytes": 47766,
+      "sha256": "7c607529f5ea639dbbbe0779346492a51689e7b22a44a7cf072cc1b80a6b4ef2"
+    },
+    "captions.vtt": {
+      "mime": "text/vtt",
+      "bytes": 263,
+      "sha256": "786971168a9900feaf959bee4b79435b97ce88bd4d2297a43ce1df904ea8fd6f"
+    },
+    "master.json": {
+      "mime": "application/json",
+      "bytes": 2450,
+      "sha256": "8ec17d4ff0728fc7d04ed1870e265975c3454959e28cfc91669680ea1e5b528c"
+    }
+  },
+  "digest": "333ade0df72d605e4778fa116290474b0c9c1373a170bdfacb5103451d531cf6",
+  "measurement": {
+    "render_ms": 774.37,
+    "bytes": 367710,
+    "external_calls": 0,
+    "full_cost_vnd": null
+  },
+  "production_qa": {
+    "reviewer": "804f98e1-7517-45eb-ada4-4adb2dc047ee",
+    "receipt": "02416e95-1527-4ec1-90b0-da25b00d0fa9",
+    "digest": "333ade0df72d605e4778fa116290474b0c9c1373a170bdfacb5103451d531cf6"
+  }
+}

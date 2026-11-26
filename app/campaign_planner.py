@@ -84,14 +84,14 @@ def history(store, campaign_id):
     ]
 
 
-def selection(store, cid, mid, *, stage):
+def selection(store, cid, mid, *, stage, lock_target=True):
     snap, body = c3_projection.unpack(store, mid)
     workflow = body["options"]["workflow"]
     if snap.campaign_id != cid or workflow not in KINDS:
         missing()
     brief = store.db.get(WorkforceBrief, snap.brief_id)
     ws = Workspace(SimpleNamespace(path_params=store.scope), store.db.get(User, store.actor), store.db, write=False)
-    _, public = c3_projection.recheck(store, ws, snap.id, snap.digest, workflow, brief, stage)
+    _, public = c3_projection.recheck(store, ws, snap.id, snap.digest, workflow, brief, stage,lock_target=lock_target)
     if not public["task_intent"].get("buyer_action"):
         conflict("Select an approved task with an explicit buyer action")
     return snap, body, public
@@ -139,13 +139,13 @@ def execution_terms(store, snap, projection, budget):
             "simulated_media_budget_vnd": active["budget_vnd"], "ai_budget_microusd_per_run": cap}
 
 
-def active_plan(store, campaign_id, *, revalidate=True):
+def active_plan(store, campaign_id, *, revalidate=True, lock_targets=True):
     current = next((row for row in history(store, campaign_id) if row["status"] == "approved"), None)
     if not current:
         conflict("Campaign has no approved plan")
     if revalidate:
         for ref in current["manifests"].values():
-            selection(store, campaign_id, ref["id"], stage="operate")
+            selection(store, campaign_id, ref["id"], stage="operate",lock_target=lock_targets)
     return current
 
 

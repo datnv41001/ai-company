@@ -14,6 +14,10 @@ Không có DDL trong G01. Khi thử bản mới, tách DB phát triển, sao lư
 
 Trong **Chiến dịch → Điều hành chiến dịch**, duyệt kế hoạch và chạy brief chính. Từ bản làm việc của chiến dịch, mở **Biên tập tài liệu Marketing → Soạn bộ nội dung theo kế hoạch** để biên tập bài Social, lời quảng cáo, brief thiết kế và lịch nội dung. Mỗi nhóm có bằng chứng trường, người duyệt độc lập, phiên bản và biên nhận. Xem cách chạy lại, nâng cấp writer C3 v5, ảnh giao diện và hai ví dụ bàn giao ở [hồ sơ Content Factory](docs/evaluation/content-factory/README.md).
 
+## Lịch dịch vụ và thực thi trong sandbox
+
+Trên nền merge #44 `837ec9fc`, nhân viên có thể tiếp nhận và đối soát lịch dịch vụ riêng, duyệt tác vụ cho đúng nhóm tài sản, chạy bộ điều phối loopback và kiểm tra chứng từ theo từng đầu việc. Mẫu số nghiệm thu thật hiện bằng 0. Hợp đồng tài sản C3 /1 dùng cho bản này; khi nối nhánh Studio /2 cần kiểm tra lại quyền từng nhóm mới. [Cấu hình, kiểm thử, biên nhận, ảnh sáu cấu hình và rollback](docs/evaluation/sandbox-operations/README.md)
+
 ## Điều hành chiến dịch từ mục tiêu đã duyệt
 
 Bản nền trên main sau bốn lần merge là `1b9e3a9643014122d4c6e510efffc3d02b9843cf`. Bảng đối chiếu ghi cả hai parent, tree, bản tích hợp và CI của từng PR, cùng đường dẫn để kiểm tra trên GitHub. [Bằng chứng hợp nhất #40, #43, #41 và #42](docs/evaluation/campaign-engine/INTEGRATIONS.md)

@@ -1,14 +1,16 @@
 """Durable sandbox operations. A campaign uses the existing brand lock and signed append journal."""
 import os
+import hmac
 from typing import Annotated
 
-from fastapi import APIRouter, Depends
+from fastapi import APIRouter, Depends, Query, Request
 from sqlalchemy import select
 from sqlalchemy.orm import Session
 
 from . import c3_boundaries, campaign_channels
 from .c3_reviewer import active_approver
-from .campaign_operations_contracts import CompleteRFQ, CostClose, DecideAction, Execute, Labor, Optimization, RFQ, Sales, SandboxCommand, Schedule, SessionEvent
+from .campaign_operations_contracts import Appointment, AppointmentDecision, ActionTarget, CompleteRFQ, CostClose, DecideAction, Execute, Labor, Optimization, ReconcileCost, RFQ, Sales, SandboxCommand, Schedule, SessionEvent
+from . import campaign_operations_appointments as appointments, campaign_operations_capabilities as capabilities, campaign_operations_cost as costs
 from .campaign_operations_crm import observation, reconcile
 from .campaign_planner import active_plan, campaign_store, history
 from .campaign_planner_pack import compose_assets
@@ -25,7 +27,7 @@ from .workforce_models import WorkforceRun
 
 router = APIRouter(prefix="/api/tenants/{tenant_id}/campaigns/{campaign_id}/sandbox", tags=["Campaign sandbox"])
 OP = "campaign_sandbox_v1"
-BUCKETS = ("actions", "leads", "sessions", "work_units", "proposals")
+BUCKETS = ("actions", "leads", "sessions", "work_units", "proposals", "appointments")
 GROUP = {"strategy": "client_strategy", "measurement": "client_measurement", "landing": "copy", "seo": "seo",
          **{group: group for group in campaign_channels.FIELDS}}
 
@@ -144,16 +146,18 @@ def current_asset(store, user, cid, plan, did, revision, signature, *, gate):
     return doc
 
 
-def action_command(cmd, state, plan, store, user, cid):
+def action_command(cmd, state, plan, store, user, cid, *, dispatched=False):
     actions = state["actions"]
     if isinstance(cmd, Schedule):
         if cmd.action_id in actions:
             conflict("Action ID already commissioned")
-        current_asset(store, user, cid, plan, cmd.deliverable_id, cmd.expected_revision, cmd.expected_digest, gate=False)
+        doc = current_asset(store, user, cid, plan, cmd.deliverable_id, cmd.expected_revision, cmd.expected_digest, gate=False)
+        target = capabilities.bind(store.db, doc, cmd.target) if cmd.target else None
         return "actions", cmd.action_id, {"id": cmd.action_id, "plan_id": plan["id"], "plan_digest": plan["digest"],
                 "deliverable_id": cmd.deliverable_id, "asset_revision": cmd.expected_revision, "asset_digest": cmd.expected_digest,
                 "cost_vnd": cmd.cost_vnd, "due_at": stamp(cmd.due_at), "state": "scheduled", "scheduled_by": user.id,
-                "authorized_by": None, "attempts": 0, "execution_receipt": None, "executed_at": None}
+                "authorized_by": None, "attempts": 0, "execution_receipt": None, "executed_at": None,
+                "target":target, "execution_mode":target["mode"] if target else "manual"}
     old = actions.get(cmd.action_id)
     if not old or old["plan_id"] != cmd.plan_id:
         missing()
@@ -163,12 +167,19 @@ def action_command(cmd, state, plan, store, user, cid):
             conflict("Only pending sandbox work can be cancelled")
         row["state"] = "cancelled"
         return "actions", row["id"], row
-    current_asset(store, user, cid, plan, row["deliverable_id"], row["asset_revision"], row["asset_digest"], gate=True)
+    doc = current_asset(store, user, cid, plan, row["deliverable_id"], row["asset_revision"], row["asset_digest"], gate=True)
+    target = row.get("target")
+    if target:
+        typed = ActionTarget.model_validate({k:target[k] for k in ActionTarget.model_fields})
+        if capabilities.bind(store.db,doc,typed) != target:
+            conflict("Scheduled capability or its group approval changed")
     if cmd.kind == "authorize":
         if row["state"] != "scheduled" or not store.approver or row["scheduled_by"] == user.id:
             conflict("A different campaign approver must authorize the scheduled action")
         row.update(state="authorized", authorized_by=user.id)
     else:
+        if (row.get("execution_mode") == "scheduled") != dispatched:
+            conflict("Use the execution path authorized for this sandbox action")
         if row["state"] not in {"authorized", "failed"} or row["attempts"] >= 3 or aware(store.now()) < parse_time(row["due_at"]):
             conflict("Execution is not due or is no longer retryable")
         if not active_approver(store.db, store.scope["tenant_id"], row["authorized_by"], lock=True):
@@ -177,7 +188,10 @@ def action_command(cmd, state, plan, store, user, cid):
         if cmd.outcome == "temporary_failure":
             row["state"] = "failed"
         else:
-            row.update(state="executed", execution_receipt=new_id(), executed_at=stamp(store.now()))
+            row.update(state="executed", execution_receipt=new_id(), executed_at=stamp(store.now()),
+                       executed_via="local_dispatcher" if dispatched else "manual_sandbox")
+            if target:
+                row["sandbox_output"] = capabilities.perform(store.db,doc,target)
     # The scope lock serializes budget reservations. Old revisions cannot run, but completed spend survives every replan.
     committed = sum(a["cost_vnd"] for a in actions.values() if a["id"] != row["id"] and
                     (a["state"] == "executed" or (a["plan_id"] == cmd.plan_id and a["state"] in {"authorized", "failed"})))
@@ -192,6 +206,11 @@ def work_receipt(cmd, state, plan, store, cid, rows):
     if not unit or unit["plan_id"] != plan["id"]:
         missing()
     row = dict(unit)
+    if isinstance(cmd, ReconcileCost):
+        witnessed = dict(unit)
+        enrich_units(store,cid,[witnessed])
+        row["meter"] = costs.verify(cmd,witnessed,rows)
+        return "work_units",unit["id"],row
     if isinstance(cmd, Labor):
         row["labor"] = [*row["labor"], {"actor": store.actor, "phase": cmd.phase, "seconds": cmd.seconds,
                          "allocated_cost_vnd": cmd.allocated_cost_vnd, "observation": cmd.observation, "at": stamp(store.now())}]
@@ -262,7 +281,7 @@ def enrich_units(store, cid, units):
             studio = doc.content.get("studio", {}) if doc else {}
             if studio.get("channel_context", {}).get("plan_id") != unit["plan_id"] or unit["package_id"] not in studio.get("groups", {}):
                 continue
-        unit.update(run_id=run.id, queue_receipt=receipt_id)
+        unit.update(run_id=run.id, run_state=run.state, queue_receipt=receipt_id)
         if not channel:
             unit.update(worker_attempts=run.attempts, last_error=run.last_error,
                         worker_journal=run.journal, reserved_microusd=run.reserved_microusd)
@@ -281,6 +300,11 @@ def enrich_units(store, cid, units):
 
 
 def optimization(report):
+    service = report.get("appointments") or {}
+    if service.get("requests"):
+        if service["no_show"] or service["cancelled"]:
+            return {"basis":"appointment_exceptions","recommendation":"Đối chiếu lịch hủy và khách vắng mặt với thời điểm xác nhận trước khi đổi quy trình nhắc lịch."}
+        return {"basis":"appointment_followup","recommendation":"Đối chiếu lịch đã xác nhận và phản hồi sau dịch vụ trước khi tăng số lịch tiếp nhận."}
     if not report["rfqs"]:
         return {"basis": "no_rfqs", "recommendation": "Kiểm tra biểu mẫu và nguồn lượt vào trước khi tăng ngân sách."}
     if report["missing_attribution"]:
@@ -322,14 +346,11 @@ def view(tenant_id: str, campaign_id: str, user: User = Depends(current_user), d
     enrich_units(store, campaign_id, units)
     accepted = sum((u["acceptance"] or {}).get("status") == "business_accepted" for u in units)
     allocated = [labor["allocated_cost_vnd"] for u in units for labor in u["labor"]]
-    statements = [u.get("cost_statement") for u in units]
-    complete = bool(statements) and all(statements)
-    total = sum(record["total_vnd"] for record in statements) if complete else None
+    coverage = costs.summarize(units)
     return {"synthetic": True, "campaign_id": campaign_id, **{k: list(v.values()) for k, v in state.items()}, "report": report,
             "optimization": optimization(report), "requested_units": len(units), "business_accepted_units": accepted,
             "recorded_allocated_cost_vnd": sum(v for v in allocated if v is not None) if any(v is not None for v in allocated) else None,
-            "cost_per_business_accepted_vnd": total / accepted if complete and accepted else None,
-            "cost_status": "all_units_costed" if complete else "unmeasured_complete_production_cost",
+            **coverage,"appointment_summary":appointments.summary(state),
             "receipts": [{"id": r.id, "kind": r.result["kind"], "actor": r.actor, "at": stamp(r.effective_at),
                           "sequence": r.result["sequence"], "entity_id": r.result["entity_id"]} for r in sorted(rows, key=lambda x: x.result["sequence"])]}
 
@@ -337,6 +358,10 @@ def view(tenant_id: str, campaign_id: str, user: User = Depends(current_user), d
 @router.post("/commands")
 def command(tenant_id: str, campaign_id: str, body: SandboxCommand, user: Annotated[User, Depends(current_user)],
             db: Annotated[Session, Depends(get_db)]):
+    return apply_command(tenant_id,campaign_id,body,user,db)
+
+
+def apply_command(tenant_id, campaign_id, body, user, db, *, dispatched=False):
     before = campaign_store(db, user, tenant_id, campaign_id, write=False)
     if not before.approver:
         missing()
@@ -354,14 +379,17 @@ def command(tenant_id: str, campaign_id: str, body: SandboxCommand, user: Annota
         missing()
     rows = entries(store, campaign_id)
     key = "sandbox:" + digest(canonical([campaign_id, body.request_id]))
-    fingerprint = digest(canonical(body.model_dump(mode="json")))
+    payload = body.model_dump(mode="json")
+    if isinstance(body,Schedule) and body.target is None:
+        payload.pop("target",None)  # Preserve retries of document schedules written by the earlier contract.
+    fingerprint = digest(canonical(["local_dispatcher",payload] if dispatched else payload))
     existing = next((r for r in rows if r.key == key), None)
     if existing:
         if existing.actor != user.id or existing.request_digest != fingerprint:
             conflict("Request ID belongs to another actor or payload")
         return existing.result
     state = state_of(rows)
-    if body.kind in {"cancel", "sales", "complete_rfq", "session", "labor", "close_unit_cost", "unit_receipt"}:
+    if body.kind in {"cancel", "sales", "complete_rfq", "session", "labor", "close_unit_cost", "unit_receipt","appointment_decision","verify_unit_cost"}:
         # Settling previously booked work, including refunds, survives replans or source expiry.
         plan = next((p for p in history(store, campaign_id) if p["id"] == body.plan_id and p["approval"]), None)
         if not plan:
@@ -371,7 +399,9 @@ def command(tenant_id: str, campaign_id: str, body: SandboxCommand, user: Annota
     if body.plan_id != plan["id"]:
         conflict("Campaign revision is no longer active")
     if isinstance(body, (Schedule, DecideAction, Execute)):
-        kind, ident, value = action_command(body, state, plan, store, user, campaign_id)
+        kind, ident, value = action_command(body, state, plan, store, user, campaign_id, dispatched=dispatched)
+    elif isinstance(body,(Appointment,AppointmentDecision)):
+        kind, ident, value = appointments.appointment(body,state,plan,store)
     elif isinstance(body, (RFQ, SessionEvent, Sales, CompleteRFQ)):
         kind, ident, value = observation(body, state, plan, store)
     elif isinstance(body, Optimization):
@@ -381,3 +411,37 @@ def command(tenant_id: str, campaign_id: str, body: SandboxCommand, user: Annota
     event = append(store, campaign_id, body.plan_id, body.kind, kind, ident, value, len(rows) + 1, key, fingerprint)
     db.commit()
     return event
+
+
+def dispatch_service(request):
+    secret = os.getenv("AMC_SANDBOX_DISPATCH_KEY","")
+    supplied = request.headers.get("X-AMC-Sandbox-Dispatch","")
+    if (not request.client or request.client.host not in {"127.0.0.1","::1"} or len(secret) < 32
+            or not hmac.compare_digest(secret.encode(),supplied.encode())):
+        missing()
+
+
+@router.get("/dispatch-ready")
+def dispatch_ready(tenant_id: str,campaign_id: str,request: Request,after: str="",limit: int=Query(10,ge=1,le=25),
+                   user: User=Depends(current_user),db: Session=Depends(get_db)):
+    dispatch_service(request)
+    store = campaign_store(db,user,tenant_id,campaign_id,write=False)
+    if not store.approver:
+        missing()
+    active = next((p for p in history(store,campaign_id) if p["approval"]),None)
+    if not active:
+        return []
+    now = aware(store.now())
+    rows = state_of(entries(store,campaign_id))["actions"].values()
+    due = [a for a in rows if a["plan_id"]==active["id"] and a.get("execution_mode")=="scheduled"
+           and a["state"] in ("authorized","failed") and a["attempts"]<3 and parse_time(a["due_at"])<=now]
+    ordered = sorted(due,key=lambda a:(a["id"] <= after,a["id"]))
+    return [{"action_id":a["id"],"plan_id":a["plan_id"],"attempts":a["attempts"]} for a in ordered[:limit]]
+
+
+@router.post("/dispatch")
+def dispatch(tenant_id: str,campaign_id: str,request: Request,body: Execute,user: User=Depends(current_user),db: Session=Depends(get_db)):
+    dispatch_service(request)
+    if body.outcome != "success":
+        conflict("Dispatcher executes only a real local sandbox operation")
+    return apply_command(tenant_id,campaign_id,body,user,db,dispatched=True)

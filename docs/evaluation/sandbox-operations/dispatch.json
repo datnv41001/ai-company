@@ -1,0 +1,62 @@
+{
+  "conditions": "Synthetic agency, independent QA, restricted PostgreSQL and separate loopback dispatcher process.",
+  "schedule": "7ef7a8ff-5f5f-48d3-a78e-7e07abcbb638",
+  "authorization": "83c19e07-00ce-4838-8478-c3ce327e585d",
+  "execution": {
+    "tick": 0,
+    "action": "service-preview",
+    "http": 200,
+    "receipt": "4e96cda1-9178-440b-91db-170038617ea6"
+  },
+  "restart_dispatches": 0,
+  "action": {
+    "id": "service-preview",
+    "state": "executed",
+    "due_at": "2026-11-26T00:10:19.295223+00:00",
+    "target": {
+      "mode": "scheduled",
+      "group": "copy",
+      "run_id": "5b382e63-470d-416c-833e-9fab58683eaa",
+      "channel": "website",
+      "contract": "sandbox-capability/1",
+      "action_type": "render_preview",
+      "destination": "sandbox_page",
+      "group_digest": "6653d184880232b3ac5dce1f14b976e218d07070acd78283d5dc69cd19eba418",
+      "approval_receipt": "ef534363-fd45-4aec-90fc-8828b6b6dcda",
+      "capability_digest": "31c7f01a675db4f7f0dc072311cc7f39885c8562395b18c3b31b1ac2ff444324"
+    },
+    "plan_id": "9eef5139-6b24-4631-aa90-cf652c962ea0",
+    "attempts": 1,
+    "cost_vnd": 100,
+    "executed_at": "2026-11-26T00:10:25.954705+00:00",
+    "plan_digest": "1eec14c65284fb3a3599d030cff79dd000bb65c89f1c7aa142cee35f077acb10",
+    "asset_digest": "98c76127b9fa12f854d13986871c525ae247325f136c5ca5c7f336913e0c23d2",
+    "executed_via": "local_dispatcher",
+    "scheduled_by": "2c0c7288-32ad-4629-86eb-73d699050b75",
+    "authorized_by": "94335535-1b70-47bb-bd23-737ee1be4321",
+    "asset_revision": 2,
+    "deliverable_id": "9487fc59-c940-4106-b2b2-6c0752876d0b",
+    "execution_mode": "scheduled",
+    "sandbox_output": {
+      "type": "render_preview",
+      "group": "copy",
+      "fields": {
+        "benefit": "Bề mặt mờ Dùng trong nhà",
+        "headline": "Bộ mẫu vải",
+        "call_to_action": "Yêu cầu báo giá",
+        "commercial_terms": "Bề mặt mờ Dùng trong nhà",
+        "value_proposition": "Đối chiếu quy cách và điều kiện áp dụng của Bộ mẫu vải trước khi lựa chọn."
+      },
+      "destination": "sandbox_page",
+      "group_digest": "6653d184880232b3ac5dce1f14b976e218d07070acd78283d5dc69cd19eba418",
+      "content_sha256": "e434b2c8db89acd92a86d7527673d7d5ba494904cbb88a7b2e964414e33ea81f",
+      "external_writes": 0
+    },
+    "execution_receipt": "e9f7e4ec-434f-46d4-9c38-42005eb9b49c"
+  },
+  "observed_attempts": 3,
+  "observed_input_tokens": 300,
+  "observed_output_tokens": 105,
+  "cost_status": "unmeasured_complete_production_cost",
+  "cost_per_business_accepted_vnd": null
+}

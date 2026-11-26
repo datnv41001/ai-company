@@ -167,6 +167,13 @@ function createCampaignEngine(api) {
       add(unit,'p',u.assigned_role+' · '+u.criteria);
       if(u.artifact_digest)add(unit,'small','SHA-256 · '+u.artifact_digest);
       if(u.acceptance)add(unit,'p','Biên nhận '+u.acceptance.share_receipt+' · '+label(u.acceptance.status));
+      if(u.cost_coverage){
+        add(unit,'p','Lượt thực hiện có nhật ký: '+u.cost_coverage.attempts.length+' · Token đầu vào/ra: '+u.cost_coverage.observed_input_tokens+'/'+u.cost_coverage.observed_output_tokens);
+        const missing={model:'phí model',compute:'tài nguyên máy',tools:'công cụ',human:'nhân công',unfinished_work:'công việc đang mở',
+          attempt_inventory:'nhật ký lượt chạy',unmeasured_attempts:'số liệu của lượt chạy'};
+        add(unit,'small',u.cost_coverage.missing.length?'Cần đối soát: '+u.cost_coverage.missing.map(k=>missing[k]||k).join(', '):
+          'Chi phí có chứng từ: '+money(u.cost_coverage.verified_vnd));
+      }
       for(const entry of u.labor)add(unit,'p',entry.observation+' · '+entry.seconds+' giây · '+money(entry.allocated_cost_vnd));
       const form=add(details(unit,'Ghi nhận thời gian thực hiện'),'form');
       const phase=pick(form,'Loại công việc',[['clarification','Làm rõ brief'],['editing','Biên tập'],['qa','Kiểm tra QA'],['production','Sản xuất']]);
@@ -193,6 +200,10 @@ function createCampaignEngine(api) {
     line(funnel,'Doanh thu sau điều chỉnh','Số liệu sandbox',money(report.confirmed_revenue_vnd));
     line(funnel,'Có nguồn chiến dịch','',money(report.attributed_revenue_vnd));line(funnel,'Thiếu nguồn','',money(report.unattributed_revenue_vnd));
     line(funnel,'Hoàn tiền','',money(report.refunds_vnd));
+    if(ops.appointment_summary.requests || plan?.buyer_action==='appointment'){
+      const a=ops.appointment_summary;
+      line(funnel,'Lịch dịch vụ · yêu cầu / hoàn thành','Hủy: '+a.cancelled+' · Vắng mặt: '+a.no_show,a.requests+' / '+a.completed);
+    }
     const opt=card(grid,'Đề xuất tối ưu');drawOptimization(opt,active,ops);
     for(const [key,name,section] of [['overview','Tổng quan',kpis],['plan','Kế hoạch',goals],
       ['production','Sản xuất',assets],['execution','Thực thi',destinations.actions],
@@ -215,10 +226,13 @@ function createCampaignEngine(api) {
     const actions=card(grid,'Thực thi trong sandbox');
     for(const action of ops.actions){
       const row=line(actions,action.id,money(action.cost_vnd)+' · '+(action.due_at || ''),label(action.state));
+      if(action.target)add(row,'small',action.target.channel+' · '+action.target.group+' · '+action.target.destination+' · '+(action.execution_mode==='scheduled'?'Điều phối cục bộ':'Thủ công'));
+      if(action.sandbox_output)add(row,'small','Biên nhận '+action.execution_receipt+' · '+action.sandbox_output.content_sha256.slice(0,12));
       const next=({scheduled:[['authorize','Cho phép chạy'],['cancel','Hủy lịch']],authorized:[['execute','Chạy mô phỏng'],['cancel','Hủy']],
         failed:[['execute','Thử lại'],['cancel','Hủy']]})[action.state]||[];
       for(const [kind,name] of next){
         if(action.plan_id!==plan.id && kind!=='cancel')continue;
+        if(kind==='execute' && action.execution_mode==='scheduled')continue;
         if(kind==='authorize' && action.scheduled_by===actor)continue;
         command(row,name,()=>sandbox({id:action.plan_id},{kind,action_id:action.id}));
       }
@@ -238,6 +252,7 @@ function createCampaignEngine(api) {
       },{form:true});
     }
     const sales=card(grid,'Tiếp nhận và bàn giao Sales');
+    campaignOperationForms({plan,production,ops,actions,sales,add,details,field,pick,command,sandbox,actor});
     const visit=add(details(sales,'Ghi nhận phiên truy cập sandbox'),'form');
     const visitId=field(visit,'Mã phiên','text'), visitor=field(visit,'Mã khách tổng hợp','text');
     const origin=pick(visit,'Nguồn tác vụ',[['','Chưa rõ nguồn'],...ops.actions.filter(a=>a.plan_id===plan.id && a.state==='executed').map(a=>[a.id,a.id])]);

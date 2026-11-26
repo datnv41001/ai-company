@@ -17,7 +17,7 @@ pool = registry_pool
 pytestmark = PG
 
 
-def test_queue_owner_and_unique_share_group_survive_later_commissions(pool):
+def test_queue_owner_and_unique_share_group_survive_later_commissions(pool,monkeypatch):
     api = pool.api
     base, owner, customer, _, cid = pool.cases[0]
     root = base + "/campaigns/" + cid
@@ -85,6 +85,8 @@ def test_queue_owner_and_unique_share_group_survive_later_commissions(pool):
     accepted(api.post(base + "/reviews/" + share["id"] + "/events",headers=customer["headers"],
                       json={"kind":"approved","digest":share["digest"],"request_key":uuid4().hex}))
 
+    from campaign_capability_fixtures import exercise_dispatch
+    exercise_dispatch(pool,base,root,owner,qa,plans[2],monkeypatch)
     commission(3,plans["separate_manifest"],plans["separate_manifest"]["projection"]["objective"])
     assert unit(3,"landing")["status"] == "requested" and not unit(3,"landing").get("run_id")
     receipt = {"package_id":"landing","review_id":share["id"]}

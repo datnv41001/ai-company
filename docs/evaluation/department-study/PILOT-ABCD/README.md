@@ -1,5 +1,7 @@
 # So sánh bốn cách thực hiện cùng công việc Marketing
 
+**Fixture minh họa công khai.** Khóa, alias, brief và tài sản trong thư mục này đã được công bố. Kết quả từ hai lệnh lịch sử bên dưới được phân loại `fixture_replay`. Khi tổ chức pilot với người thực hành, cấp bộ mới và khóa thiết kế trước khi phát tài sản theo [quy trình chính thức và hợp đồng bản đầu, bản sửa, bản giao](OFFICIAL.md).
+
 Có hai brief tổng hợp trong [gói pilot gốc](../PILOT.md), gồm yêu cầu báo giá và đặt lịch dịch vụ. Tám phiếu giao việc được tạo trước khi mời người thực hành. Chưa có quan sát của người hành nghề. Chỉ người điều phối giữ khóa và gói phân công. Người chấm cuối chỉ nhận brief, sản phẩm gắn mã ẩn và phiếu chấm của vai trò mình.
 
 | Nhánh | Công việc được giao |

@@ -50,14 +50,14 @@ def prepare(out):
     (out / "custodian.json").write_text(dump(design), encoding="utf-8")
 
 
-def score(design, submissions, qa_reviews, directory):
+def score(design, submissions, qa_reviews, directory, *, staged=False):
     if any(arm not in ARMS for arm in design.values()):
         raise ValueError("Unrecognized arm")
     for submission in submissions:
         overhead = submission["overhead"]
         if overhead.get("model_vnd") is not None and (submission["role"] != "marketer" or not overhead["receipt_refs"]):
             raise ValueError("The marketer supplies model cost and a receipt reference")
-    result = check(design, submissions, directory)
+    result = check(design, submissions, directory, staged=staged)
     reviewers = {}
     observers = {row["actor_code"] for row in submissions}
     for review in qa_reviews:
@@ -82,7 +82,7 @@ def score(design, submissions, qa_reviews, directory):
         extra_labor = 0
         if arm == "ai_plus_independent_qa":
             review = reviewers.get(name, {})
-            path = (directory / name / "first.artifact").resolve()
+            path = (directory / Path(name).name / "edited/artifact.md" if staged else directory / name / "first.artifact").resolve()
             previous = None
             if path.is_relative_to(directory.resolve()) and path.is_file():
                 with path.open("rb") as data:
@@ -102,7 +102,7 @@ def score(design, submissions, qa_reviews, directory):
         costs = [row["recorded_total_vnd"], model_cost, extra_labor]
         row["recorded_total_vnd"] = sum(costs) if None not in costs else None
         row["all_in_cost_per_business_accepted_vnd"] = row["recorded_total_vnd"] if row["verified_business_decision"] is True else None
-    return {"packages": result, "arms": by_arm(result)}
+    return {"packages": result, "arms": by_arm(result), "mode": "fixture_replay"}
 
 
 if __name__ == "__main__":

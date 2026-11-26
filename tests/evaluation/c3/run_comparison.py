@@ -90,7 +90,7 @@ def queue_legacy(lab, kind):
     return queued.json()["id"], workflow
 
 
-def run_one(lab, kind, arm, folder, *, queued=None, request_log=None):
+def run_one(lab, kind, arm, folder, *, queued=None, request_log=None, attempt_sink=None):
     if queued is not None:
         rid, release = queued
     elif arm == "legacy":
@@ -118,15 +118,21 @@ def run_one(lab, kind, arm, folder, *, queued=None, request_log=None):
             request_log[job["id"]] = body
         entry = {"attempt_id": job["id"], "schema": body["response_format"]["json_schema"]["name"],
                  "request_sha256": hashlib.sha256(json.dumps(body, sort_keys=True, ensure_ascii=False).encode()).hexdigest()}
+        if attempt_sink:
+            attempt_sink(entry, body)
         try:
             output, inputs, outputs = infer(lab.config, body)
-            assert report(worker.conn, job, [output, inputs, outputs])
             entry.update(input_tokens=inputs, output_tokens=outputs, raw_output=output)
+            if attempt_sink:
+                attempt_sink(entry, body)
+            assert report(worker.conn, job, [output, inputs, outputs])
         except GatewayError as exc:
-            assert report(worker.conn, job, result=exc.usage, error=str(exc))
             entry["error"] = str(exc)
             if exc.usage:
                 entry.update(input_tokens=exc.usage[1], output_tokens=exc.usage[2])
+            if attempt_sink:
+                attempt_sink(entry, body)
+            assert report(worker.conn, job, result=exc.usage, error=str(exc))
         attempts.append(entry)
     data = lab.api.get(base + "/workforce/runs/" + rid, headers=admin["headers"])
     data.raise_for_status()

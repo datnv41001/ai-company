@@ -1,0 +1,69 @@
+{
+  "version": "department-study/1",
+  "locale": "vi-VN",
+  "channel": "web",
+  "region": "HN",
+  "cases": [
+    {
+      "id": "index-tray",
+      "company": "Xưởng Nhịp Kho",
+      "brand": "Khe Gọn",
+      "product": "Khay chia linh kiện Khe Gọn",
+      "sku": "KG-P",
+      "audience": "Tổ trưởng lắp ráp điện tử",
+      "objective": "Nhận yêu cầu báo giá khay chia linh kiện theo hộp cho bàn lắp ráp",
+      "kpi": "Yêu cầu có số hộp, địa bàn và thời điểm cần hàng",
+      "buyer_action": "rfq",
+      "unit": "box",
+      "amount": 380000,
+      "wording": "Vách ngăn có thể tháo rời",
+      "qualifier": "Áp dụng cho mẫu tiêu chuẩn.",
+      "cta": "Yêu cầu báo giá theo hộp và ghi số hộp, địa bàn, thời điểm cần hàng.",
+      "hypotheses": [
+        "Người phụ trách có thể cần chia vách theo công đoạn; phải phỏng vấn để xác minh."
+      ],
+      "exclusions": [
+        "Không suy diễn chứng nhận an toàn điện hoặc công bố mức giảm thời gian lắp ráp."
+      ],
+      "kpi_method": "Đếm yêu cầu báo giá đủ ba thông tin trên số phiên vào trang rồi đối soát mã yêu cầu với Sales.",
+      "kpi_unit": "requests",
+      "kpi_window": "21 ngày",
+      "must_ask": [
+        "số hộp",
+        "địa bàn",
+        "thời điểm"
+      ],
+      "unit_word": "hộp"
+    },
+    {
+      "id": "receipt-map",
+      "company": "Tư vấn Mạch Kho",
+      "brand": "Luồng Rõ",
+      "product": "Buổi khảo sát luồng nhận hàng Luồng Rõ",
+      "sku": "LR-KS",
+      "audience": "Trưởng vận hành kho phân phối",
+      "objective": "Đặt lịch khảo sát luồng nhận hàng tại kho",
+      "kpi": "Lịch hẹn được người phụ trách kho xác nhận",
+      "buyer_action": "appointment",
+      "unit": "visit",
+      "amount": 760000,
+      "wording": "Bàn giao sơ đồ luồng nhận hàng",
+      "qualifier": "Trong phạm vi buổi khảo sát.",
+      "cta": "Đặt lịch khảo sát, ghi địa điểm và ca nhận hàng cần quan sát.",
+      "hypotheses": [
+        "Ca giao nhận có thể tạo điểm chờ; cần quan sát trước khi kết luận."
+      ],
+      "exclusions": [
+        "Không cam kết tiết kiệm chi phí, chứng nhận tuân thủ hay thời gian bàn giao."
+      ],
+      "kpi_method": "Đếm lịch được xác nhận trên số đề nghị khảo sát; tách hủy lịch, ghi người đối soát theo mã hẹn.",
+      "kpi_unit": "appointments",
+      "kpi_window": "21 ngày",
+      "must_ask": [
+        "địa điểm",
+        "ca nhận"
+      ],
+      "unit_word": "buổi"
+    }
+  ]
+}

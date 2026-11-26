@@ -80,6 +80,15 @@ def compose(projection, ctx):
         open_copy = tr(f"Anh chị đang cân nhắc {product}?", f"Considering {product}?")
         measure = tr("Đối soát hành động hoàn tất theo mã duy nhất và ghi riêng kết quả chưa xác minh.", "Reconcile completed actions by unique ID and separate unverified results.")
     terms = "\n".join(" ".join(c3_order_units.fact_lines(f, projection)) for f in projection["facts"])
+    brand = projection.get("brand_guidelines") or {}
+    brand_revision = brand.get("revision")
+    brand_direction = tr("Áp dụng hướng dẫn thương hiệu đã duyệt.", "Use the approved brand guide.")
+    if brand_revision is not None:
+        brand_direction = tr(f"Áp dụng hướng dẫn thương hiệu bản {brand_revision}.", f"Apply brand guide revision {brand_revision}.")
+    if action == "rfq":
+        brand_direction += tr(" Dành một vùng cho đơn vị báo giá và điều kiện chọn số lượng.", "Reserve a panel for the quotation unit and quantity terms.")
+    elif action in ("appointment", "choose_session", "request_assessment"):
+        brand_direction += tr(" Tách phần chuẩn bị của người mua khỏi bước xác nhận lịch của nhân sự.", "Distinguish buyer preparation from staff confirmation of the booking.")
     days = ctx["due_days"]
     return {
         "social": {"pillar": key, "opening": open_copy, "approved_terms": terms, "buyer_action": cta},
@@ -94,9 +103,9 @@ def compose(projection, ctx):
         },
         "creative_brief": {
             "concept": tr(f"Phác thảo khung hình cho {product} có chỗ đặt điều kiện và lời mời hành động.", f"Storyboard {product} with space for the applicable terms and call to action."),
-            "brand_direction": tr("Đối chiếu màu, giọng điệu và dấu hiệu nhận diện với bản hướng dẫn thương hiệu đã ghim.", "Check colours, tone and identifiers against the pinned brand guide."),
-            "image_spec": tr("Đề xuất bố cục dọc và ngang. Giữ chủ thể, điều kiện và CTA trong vùng an toàn khi cắt.", "Brief portrait and landscape compositions. Keep the subject, terms and CTA in the crop-safe area."),
-            "video_spec": tr("Kịch bản gồm cảnh nhu cầu của người mua, cảnh đối chiếu dữ kiện và cảnh chọn bước tiếp theo.", "Storyboard the buyer need, a check against approved facts, then the next action."),
+            "brand_direction": brand_direction,
+            "image_spec": tr("Giao mẫu dọc và ngang, bản nguồn chỉnh sửa được và ảnh xem trước. Giữ chủ thể, điều kiện và lời mời hành động trong vùng an toàn khi cắt. Duyệt độ đọc ở kích thước điện thoại.", "Supply portrait and landscape layouts, an editable master and a preview. Keep the subject, terms and action crop-safe. Check legibility at phone size."),
+            "video_spec": tr("Giao storyboard có cảnh nhu cầu, cảnh đối chiếu dữ kiện và cảnh chọn bước tiếp theo. Kèm chỉ dẫn cảnh quay, phụ đề, bản chép lời và danh mục nguồn. Duyệt khi tắt âm thanh trước khi xuất bản dựng.", "Deliver a storyboard covering the buyer need, evidence check and next action. Include shot notes, captions, transcript and source list. Review with sound off before rendering."),
             "rights": tr("Chờ kiểm tra chủ sở hữu, giấy phép, phạm vi và thời hạn trước khi dùng tư liệu.", "Verify owner, licence, scope and expiry before using any material."),
             "provenance": tr("Bản giao chỉ gồm chỉ dẫn sản xuất. Chưa có tệp hình ảnh hoặc video được cấp phép.", "Production instructions only. No licensed image or video file is attached."),
         },

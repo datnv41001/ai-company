@@ -72,7 +72,7 @@ function mountMarketingStudio(host,api,path,role,afterSave) {
     const layout=add(body,'div');layout.className='studio-layout';
     const edit=add(layout,'section');edit.setAttribute('aria-label',name(group));
     add(edit,'h4',name(group));
-    const journeys=view.buyer_journeys;
+    const journeys=['social','ad','creative_brief','calendar'].includes(group)?null:view.buyer_journeys;
     if(journeys?.eligible.length){
       const selector=add(edit,'label','Ngành và loại sản phẩm áp dụng cho đề xuất');
       const choose=add(selector,'select');choose.add(new Option('Chọn sau khi đối chiếu brief',''));

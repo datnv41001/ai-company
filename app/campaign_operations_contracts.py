@@ -18,6 +18,16 @@ class Command(Input):
     plan_id: Id
 
 
+class ActionTarget(Input):
+    contract: Literal["sandbox-capability/1"]
+    action_type: Literal["render_preview", "rehearse_placement"]
+    channel: Literal["website", "organic_search", "organic_social", "paid_media", "internal"]
+    destination: Literal["sandbox_page", "sandbox_search", "sandbox_social", "sandbox_ad_slot", "sandbox_review"]
+    group: Literal["copy", "seo", "client_strategy", "client_measurement", "social", "ad", "creative_brief", "calendar"]
+    group_digest: Annotated[str, Field(pattern=r"^[a-f0-9]{64}$")]
+    mode: Literal["manual", "scheduled"]
+
+
 class Schedule(Command):
     kind: Literal["schedule"]
     action_id: Id
@@ -26,6 +36,7 @@ class Schedule(Command):
     expected_digest: Annotated[str, Field(pattern=r"^[a-f0-9]{64}$")]
     cost_vnd: Money
     due_at: AwareDatetime
+    target: ActionTarget | None = None
 
 
 class DecideAction(Command):
@@ -55,6 +66,30 @@ class SessionEvent(Observation):
     session_id: Id
     actor_key: Id  # Synthetic anonymous visitor key; no email or tracking cookie.
     action_id: Id | None = None
+
+
+class Appointment(Observation):
+    kind: Literal["appointment"]
+    contract: Literal["service-appointment/1"]
+    appointment_id: Id
+    product_id: Id
+    unit: Unit
+    quantity: Amount
+    requested_for: AwareDatetime
+    service_scope: Note
+    location: Note
+    contact_purpose: Literal["appointment_request"]
+    session_id: Id | None = None
+
+
+class AppointmentDecision(Observation):
+    kind: Literal["appointment_decision"]
+    appointment_id: Id
+    expected_revision: Positive
+    step: Literal["confirm","assign","complete","cancel","no_show"]
+    assignee_id: Id | None = None
+    confirmed_for: AwareDatetime | None = None
+    feedback: Note | None = None
 
 
 class MaterialsRequest(Input):
@@ -135,12 +170,26 @@ class CostClose(Command):
     basis: Note
 
 
+class MeterLine(Input):
+    category: Literal["model","compute","tools","human"]
+    allocation_id: Id
+    amount_vnd: Money
+
+
+class ReconcileCost(Command):
+    kind: Literal["verify_unit_cost"]
+    package_id: Id
+    inventory_digest: Annotated[str, Field(pattern=r"^[a-f0-9]{64}$")]
+    lines: Annotated[list[MeterLine], Field(min_length=4,max_length=4)]
+    signature: Annotated[str, Field(pattern=r"^[a-f0-9]{64}$")]
+
+
 class Optimization(Command):
     kind: Literal["propose_optimization", "approve_optimization"]
     proposal_id: Id
 
 
 SandboxCommand = Annotated[
-    Schedule | DecideAction | Execute | SessionEvent | RFQ | CompleteRFQ | Sales | Labor | UnitReceipt | CostClose | Optimization,
+    Schedule | DecideAction | Execute | SessionEvent | RFQ | CompleteRFQ | Sales | Labor | UnitReceipt | CostClose | ReconcileCost | Optimization | Appointment | AppointmentDecision,
     Field(discriminator="kind"),
 ]

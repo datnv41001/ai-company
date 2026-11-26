@@ -71,7 +71,7 @@ def migrate(dsn: str, runtime_password: str | None = None):
             raise ValueError("amc_runtime must be an unprivileged role without inherited roles")
         conn.execute("CREATE TABLE IF NOT EXISTS amc_schema_versions (version int PRIMARY KEY)")
         versions = {row[0] for row in conn.execute("SELECT version FROM amc_schema_versions")}
-        if versions - set(range(2, 26)):
+        if versions - set(range(2, 27)):
             raise ValueError("Unknown schema version; use its matching application revision")
         if 16 in versions and 15 not in versions:
             raise ValueError("Isolated schema v16 is missing migration 015; restore a pre-016 backup before upgrading")
@@ -182,6 +182,11 @@ def migrate(dsn: str, runtime_password: str | None = None):
         from migrations.c3_writer_contract import WRITER_FENCE
         if not conn.execute(WRITER_FENCE).fetchone()[0]:
             raise ValueError("Incomplete C3 delivery writer fence")
+        if 26 not in versions:
+            conn.execute((HERE / "026_campaign_sandbox_writer.sql").read_text(encoding="utf-8"))
+        from migrations.sandbox_contract import SANDBOX_FENCE
+        if not conn.execute(SANDBOX_FENCE).fetchone()[0]:
+            raise ValueError("Incomplete campaign sandbox writer fence")
 
 
 def install_device_sessions(conn, material):
@@ -282,4 +287,4 @@ if __name__ == "__main__":
             publish_registry(conn, json.loads(args.publish_registry.read_text(encoding="utf-8")))
     else:
         migrate(os.environ["AMC_MIGRATION_DSN"], os.getenv("AMC_RUNTIME_PASSWORD"))
-    print("AMC schema version 25 ready")
+    print("AMC schema version 26 ready")

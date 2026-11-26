@@ -83,7 +83,7 @@ def verify():
     with psycopg.connect(dsn) as db:
         assert db.execute(CURRENT).fetchone()==(True,)
         assert db.execute("SELECT version FROM amc_business.versions ORDER BY version").fetchall() == [(1,), (2,), (3,)]
-        assert db.execute("SELECT version FROM amc_schema_versions ORDER BY version").fetchall() == core + [(23,), (24,), (25,)]
+        assert db.execute("SELECT version FROM amc_schema_versions ORDER BY version").fetchall() == core + [(23,), (24,), (25,), (26,)]
         assert db.execute("SELECT to_jsonb(k) FROM knowledge_revisions k ORDER BY id").fetchall() == before
         assert db.execute("SELECT count(*) FROM business_company_objectives").fetchone()==(0,)
         assert db.execute("SELECT to_jsonb(w) FROM business_workspace_records w").fetchall() == workspace_before

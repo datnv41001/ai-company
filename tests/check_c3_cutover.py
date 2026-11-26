@@ -175,7 +175,7 @@ def run(phase):
             subprocess.run([sys.executable, "-m", "pytest", "-q", "--tb=short", "--maxfail=1",
                             "tests/test_c3_content_gate.py::test_published_content_gate"],
                            cwd=ROOT, env=env, check=True)
-            print("GREEN v24 to v25, 3 live-writer denials, predecessor startup/replay denied, new runtime started,"
+            print("GREEN v24 to v26, 3 live-writer denials, predecessor startup/replay denied, new runtime started,"
                   " rollback and historical rows preserved", {k:len(v) for k,v in before.items()})
     runtime.dispose()
 

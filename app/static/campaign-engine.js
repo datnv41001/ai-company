@@ -160,6 +160,7 @@ function createCampaignEngine(api) {
       command(proposed,'Duyệt phiên bản '+proposal.revision,()=>({path:'/engine/plans/'+proposal.id+'/approve',
         idField:'key',payload:{expected_digest:proposal.digest}}));
     }
+    if(active)productionPack(goals,active);
     planEditor(goals,planner);
     const timeline=card(grid,'Lịch làm việc và phân công');
     if(plan)for(const item of plan.work_packages)line(timeline,kinds[item.kind]||item.kind,department(item.role)+' · '+item.criteria,'Ngày '+item.due_day);
@@ -222,7 +223,14 @@ function createCampaignEngine(api) {
         style: 'percent', maximumFractionDigits: 1
       }).format(metric.ratio);
       line(primary, 'Tỷ lệ trong kỳ', metric.numerator + ' / ' + metric.denominator, value);
-      line(primary, 'Thiếu nguồn', 'Trong mẫu số của KPI', String(metric.unattributed));
+      if(metric.attribution){
+        line(primary, 'Có nguồn trang đích', 'Cùng bản trang đã duyệt trên lượt vào và biểu mẫu', String(metric.attribution.landing_asset));
+        line(primary, 'Có nguồn media', 'Lượt vào gắn với tác vụ media đã thực thi', String(metric.attribution.media_action));
+        line(primary, 'Chưa rõ nguồn media', 'Trong mẫu số của KPI', String(metric.attribution.unknown_media_action));
+        line(primary, 'Thiếu nguồn', 'Chưa đối chiếu được trang đích hoặc tác vụ media', String(metric.unattributed));
+      }else{
+        line(primary, 'Chưa rõ nguồn media', 'Báo cáo trước khi có đối chiếu phiên bản trang đích', String(metric.unattributed));
+      }
       line(primary, 'Phiên web', 'Chỉ số phụ trong cùng kỳ', String(metric.secondary_metrics[0].value));
     }
     const quoteReport=isService?report.secondary_rfq_funnel:report;
@@ -262,6 +270,77 @@ function createCampaignEngine(api) {
       jump.onclick=()=>section.focus();
     }
     const reload=add(board,'button','Tải lại trạng thái','secondary');reload.type='button';reload.onclick=load;
+  }
+  function productionPack(parent,plan){
+    const panel=details(parent,'Bộ nội dung và kế hoạch quảng cáo');
+    const epoch=generation, target=route()+'/engine/plans/'+encodeURIComponent(plan.id)+'/content-pack';
+    let loading=false, rendered=false;
+    panel.ontoggle=async()=>{
+      if(!panel.open || loading || rendered)return;
+      loading=true;
+      let child=panel.querySelector('section');
+      if(!child)child=add(panel,'section');
+      child.setAttribute('aria-busy','true');child.textContent='Đang lấy bản theo kế hoạch đã duyệt…';
+      try{
+        const pack=await api(target);
+        if(epoch!==generation || !panel.isConnected)return;
+        child.replaceChildren();rendered=true;
+        add(child,'p','Bản nháp nội bộ · Kế hoạch v'+pack.plan_revision+' · '+pack.plan_digest.slice(0,12));
+        for(const post of pack.social){
+          const item=details(child,post.platform+' · '+post.pillar);
+          add(item,'p',post.copy).style.whiteSpace='pre-line';
+        }
+        const page=details(child,'Trang web và tìm kiếm');
+        for(const value of [pack.website.headline,pack.website.body,pack.website.commercial_terms,
+          pack.website.cta,pack.organic_search.question,pack.organic_search.answer])add(page,'p',value).style.whiteSpace='pre-line';
+        const ad=details(child,'Advertising Studio · Mẫu quảng cáo tìm kiếm');
+        add(ad,'p',pack.objective);add(ad,'small','Nhóm người mua: '+pack.audience);
+        const format=add(ad,'section',null,'engine-card');
+        add(format,'strong',pack.advertising.headlines.join(' · '));
+        for(const description of pack.advertising.descriptions)add(format,'p',description);
+        for(const item of pack.advertising.ad_groups)line(ad,item.hypothesis,'Ngân sách đề xuất',money(item.budget_vnd));
+        add(ad,'p',pack.advertising.experiment);
+        const measure=pack.advertising.measurement;
+        if(measure.status==='requires_measurement_contract'){
+          add(ad,'p','Cần ghim định nghĩa KPI trước khi dùng kế hoạch đo: '+measure.approved_label);
+        }else{
+          const eventLabel={requested:'yêu cầu đặt lịch đủ điều kiện',confirmed:'lịch được nhân sự xác nhận',completed:'buổi được người phụ trách xác nhận hoàn tất'};
+          add(ad,'strong',plan.measurement_plan.kpi+' · KPI v'+measure.revision);
+          line(ad,'Tử số',eventLabel[measure.numerator.event]||measure.numerator.event);
+          line(ad,'Mẫu số',eventLabel[measure.denominator.event]||measure.denominator.event);
+          line(ad,'Kỳ đối soát',measure.window_days+' ngày · UTC');
+        }
+        for(const issue of pack.advertising.format_issues)add(ad,'p','Cần biên tập '+issue.field+' '+(issue.variant||'')+(issue.limit?' · '+issue.length+'/'+issue.limit+' ký tự':' · kiểm số biến thể'));
+        const destination=pack.advertising.destination;
+        if(destination.status==='approved'){
+          line(ad,'Trang đích sandbox đã duyệt','Bản Studio '+destination.studio_revision+' · '+destination.file_digest.slice(0,12));
+          const preview=add(ad,'button','Xem trang đích đã duyệt');preview.type='button';
+          preview.onclick=async()=>{
+            preview.disabled=true;
+            try{
+              const live=(await api(target)).advertising.destination;
+              if(live.status!=='approved'||live.package_digest!==destination.package_digest)throw new Error('Trang đích đã đổi. Mở lại kế hoạch để đối chiếu.');
+              const artifact=await api(live.download_url);
+              if(artifact.sha256!==live.file_digest)throw new Error('Dấu vân tay của tệp đã đổi.');
+              const bytes=Uint8Array.from(atob(artifact.base64),c=>c.charCodeAt(0));
+              const digest=Array.from(new Uint8Array(await crypto.subtle.digest('SHA-256',bytes)),b=>b.toString(16).padStart(2,'0')).join('');
+              if(digest!==live.file_digest)throw new Error('Nội dung tải về không khớp biên nhận.');
+              if(epoch!==generation||!panel.isConnected)return;
+              const frame=add(ad,'iframe');
+              frame.title='Bản xem trang đích sandbox';frame.setAttribute('sandbox','');frame.referrerPolicy='no-referrer';
+              frame.style.cssText='display:block;width:100%;height:26rem;border:0';
+              frame.srcdoc=new TextDecoder().decode(bytes);
+              preview.remove();
+            }catch(error){if(epoch===generation)status.textContent=error.message;preview.disabled=false;}
+          };
+        }else add(ad,'p','Đích đến cần chọn trong Landing Studio.');
+        add(ad,'small','Số tiền bản nháp đã chi '+money(pack.advertising.external_spend_vnd));
+        const cal=details(child,'Lịch biên tập · '+pack.calendar_timezone);
+        for(const item of pack.calendar)line(cal,item.date+' · '+department(item.owner),item.acceptance,kinds[item.kind]||item.kind);
+        add(child,'small','Giả thuyết thị trường cần đối chiếu với bằng chứng theo phạm vi chiến dịch.');
+      }catch(error){if(epoch===generation)child.textContent=error.message;}
+      finally{loading=false;child.setAttribute('aria-busy','false');}
+    };
   }
   function sandbox(plan,payload) {
     return {path:'/sandbox/commands',idField:'request_id',payload:{...payload,plan_id:plan.id}};

@@ -1,0 +1,11 @@
+# Nguồn trang đích và nguồn media của lịch hẹn
+
+Trong chiến dịch dịch vụ tổng hợp, nhân viên mở bản trang dịch vụ đã được người thứ hai duyệt và gửi một yêu cầu đặt lịch. Sổ CRM ghi một lượt vào và một biểu mẫu trên cùng bản Studio. Analytics ghi **1 lịch có nguồn trang đích**, **0 lịch có nguồn media** và **1 lịch chưa rõ nguồn media**. Chưa có lịch do nhân sự xác nhận nên KPI chính là **0/1**. Đây là dữ liệu tổng hợp, chưa phát sinh chi phí quảng cáo hoặc lượt gọi model. [Hai biên nhận thực](sandbox-events.json) · [Định nghĩa KPI và số đếm](attribution.json)
+
+Biên nhận mở trang và gửi form đều do máy chủ lập sau khi xác minh bản được duyệt. Để một lịch được gắn với trang, hệ thống đối chiếu phiên đến trước hoặc đúng lúc gửi, tenant, client, brand, campaign, kế hoạch và digest, tài liệu, QA revision, phiên bản và digest gói, cùng SHA-256 của tệp HTML. Người dùng không điền được các trường này qua form. Khi phiên có biên nhận tác vụ media đã thực thi, hệ thống đếm riêng nguồn media. Một lịch có cả hai nguồn vẫn chỉ góp một đơn vị vào mẫu số. Số tiền doanh thu quy cho media giữ quy tắc đối soát giao dịch hiện có.
+
+Biên nhận trước thay đổi chỉ ghi ID và digest gói. Khi chưa có đủ cặp nguồn theo phiên bản, Analytics vẫn giữ lịch trong mẫu số và hiển thị thiếu bằng chứng cho cấp trang. Bản đã giao, QA, dữ liệu CRM và migration giữ nguyên. Có thể quay lại binary trước sau khi dừng writer mới theo runbook. Giữ bộ biên nhận mới để đối soát lại khi tiếp tục nâng cấp.
+
+Chromium kiểm 1280, 820 và 390 px trong hai chế độ màu trên cùng hành trình. Máy tính và tablet thấy một lịch có nguồn trang. Trình duyệt mobile đã gửi thêm form qua chính trang nên thấy hai lịch có nguồn trang, cả hai đều chưa biết nguồn media. [Desktop](attribution-1280-light.png) · [Tablet](attribution-820-dark.png) · [Mobile](attribution-390-light.png)
+
+Chạy `python -m pytest -q tests/test_production_studios.py::test_scoped_production tests/test_measurement_integrity.py` với cấu hình PostgreSQL thử nghiệm của dự án. Chạy `python -m pytest -q tests/browser_production_studios.py -k pump-service` với Chromium. Biến `AMC_PRODUCTION_EVIDENCE` và `AMC_PRODUCTION_SCREENS` chọn thư mục lưu JSON và ảnh. Các bài thử đối chiếu cả scope sai, phiên bản không khớp, hash HTML khác, biên nhận cũ và thiếu source.

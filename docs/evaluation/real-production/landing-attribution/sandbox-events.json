@@ -1,0 +1,90 @@
+[
+  {
+    "id": "d8586e23-430d-45ba-8606-7ba56e98c0fc",
+    "campaign_id": "7fdedf4c-3d40-468d-9bfb-cf12e96dfda6",
+    "plan_id": "87163b82-0e02-4cc2-808e-423edd91800d",
+    "sequence": 15,
+    "kind": "session",
+    "entity": "sessions",
+    "entity_id": "9e512eaf25a2e5042adcf9b3d85c6c2f9b50441c502bedf445f6b4ef2d0d8f63",
+    "value": {
+      "id": "9e512eaf25a2e5042adcf9b3d85c6c2f9b50441c502bedf445f6b4ef2d0d8f63",
+      "visitor": "5d583cc5aa7dd599737f6fc7a5f874ac8da85e8ca1cc4fb877d1ea36e4996d64",
+      "action_id": null,
+      "occurred_at": "2026-11-26T02:37:46.162654+00:00",
+      "plan_id": "87163b82-0e02-4cc2-808e-423edd91800d",
+      "landing_package": "e01d4691-f069-4522-b843-efdc862b3a4e",
+      "landing_digest": "9624e6904c0cb3b71027d4e17a50e826c27b084637dbda3912170b146dc317b3",
+      "landing_source": {
+        "tenant_id": "748a00b4-07c7-4704-8426-1e90af938043",
+        "client_id": "d308379b-8fcf-4267-8f2b-7da323ed577d",
+        "brand_id": "e2f87af3-88e8-4e6a-83e7-91dbe93fa331",
+        "campaign_id": "7fdedf4c-3d40-468d-9bfb-cf12e96dfda6",
+        "plan_id": "87163b82-0e02-4cc2-808e-423edd91800d",
+        "plan_digest": "f7243d5de62a88e5c84a351d964318176b0ce6baaaeb766c4cad756a6fd3df26",
+        "document_id": "72ba6904-b295-4cf0-8e4d-0f061c7c6e72",
+        "studio_revision": 4,
+        "package_id": "e01d4691-f069-4522-b843-efdc862b3a4e",
+        "package_version": 1,
+        "package_digest": "9624e6904c0cb3b71027d4e17a50e826c27b084637dbda3912170b146dc317b3",
+        "file_digest": "3a53435d004845f5eaac011dfc1ce72e74bb6ded8d352507b339c7e67e87dd52"
+      }
+    },
+    "actor": "7e084490-efa2-42fd-a942-fcb9273cde60",
+    "recorded_at": "2026-11-26T02:37:46.163177+00:00"
+  },
+  {
+    "id": "d646f161-b2f9-4c57-a047-3237d79fc207",
+    "campaign_id": "7fdedf4c-3d40-468d-9bfb-cf12e96dfda6",
+    "plan_id": "87163b82-0e02-4cc2-808e-423edd91800d",
+    "sequence": 16,
+    "kind": "appointment",
+    "entity": "appointments",
+    "entity_id": "997b591cdcb84dfcceda09a58617b8f8aa8d7d107387da3b70837cb55a47c699",
+    "value": {
+      "id": "997b591cdcb84dfcceda09a58617b8f8aa8d7d107387da3b70837cb55a47c699",
+      "plan_id": "87163b82-0e02-4cc2-808e-423edd91800d",
+      "revision": 1,
+      "state": "requested",
+      "assignee_id": null,
+      "confirmed_for": null,
+      "history": [
+        {
+          "event": "requested",
+          "actor": "7e084490-efa2-42fd-a942-fcb9273cde60",
+          "at": "2026-11-26T02:37:46.449405+00:00",
+          "feedback": null
+        }
+      ],
+      "occurred_at": "2026-11-26T02:37:46.449405Z",
+      "contract": "service-appointment/1",
+      "product_id": "6562b9fd-c34a-4a4b-bfb2-cf53b9b85edc",
+      "unit": "machine",
+      "quantity": "3",
+      "requested_for": "2026-12-03T02:37:46.449405Z",
+      "service_scope": "Synthetic service assessment",
+      "location": "Synthetic site A",
+      "contact_purpose": "appointment_request",
+      "session_id": "9e512eaf25a2e5042adcf9b3d85c6c2f9b50441c502bedf445f6b4ef2d0d8f63",
+      "last_event_at": "2026-11-26T02:37:46.449405+00:00",
+      "landing_package": "e01d4691-f069-4522-b843-efdc862b3a4e",
+      "landing_digest": "9624e6904c0cb3b71027d4e17a50e826c27b084637dbda3912170b146dc317b3",
+      "landing_source": {
+        "tenant_id": "748a00b4-07c7-4704-8426-1e90af938043",
+        "client_id": "d308379b-8fcf-4267-8f2b-7da323ed577d",
+        "brand_id": "e2f87af3-88e8-4e6a-83e7-91dbe93fa331",
+        "campaign_id": "7fdedf4c-3d40-468d-9bfb-cf12e96dfda6",
+        "plan_id": "87163b82-0e02-4cc2-808e-423edd91800d",
+        "plan_digest": "f7243d5de62a88e5c84a351d964318176b0ce6baaaeb766c4cad756a6fd3df26",
+        "document_id": "72ba6904-b295-4cf0-8e4d-0f061c7c6e72",
+        "studio_revision": 4,
+        "package_id": "e01d4691-f069-4522-b843-efdc862b3a4e",
+        "package_version": 1,
+        "package_digest": "9624e6904c0cb3b71027d4e17a50e826c27b084637dbda3912170b146dc317b3",
+        "file_digest": "3a53435d004845f5eaac011dfc1ce72e74bb6ded8d352507b339c7e67e87dd52"
+      }
+    },
+    "actor": "7e084490-efa2-42fd-a942-fcb9273cde60",
+    "recorded_at": "2026-11-26T02:37:46.450582+00:00"
+  }
+]

@@ -1,0 +1,24 @@
+{
+  "appointment_receipt": "babb7f57-c138-4159-bcfe-be8a9c537dbe",
+  "backup": "physical snapshot",
+  "core_transition": [
+    25,
+    26
+  ],
+  "database_write_refusal": "55000",
+  "historical_receipts": 10,
+  "old_execute_http": 404,
+  "pre_cutover_archive_restore": "same predecessor API response",
+  "predecessor": "bb678908b767481d051a1364c9247f55fd8d2e2a",
+  "restarted_replay": "same receipt",
+  "typed_archive_sample": "b2fa3cbd-80a0-4e4e-a4c7-ab9dd0b325d7",
+  "source": "16683d056486b7bba4f2396ebf2b9aad95ae79ce",
+  "tree": "ae6cfcdef80d67650f7a245fe92431728ea0730c",
+  "predecessor_tree": "cd3efcb2d5798147e130c6258fe8c21e973a66b7",
+  "postgres": "postgres (PostgreSQL) 16.16",
+  "exit_code": 0,
+  "synthetic": true,
+  "verified_utc": "2026-11-26T02:34:18.416634+00:00",
+  "method": "python tests/check_sandbox_journal.py --physical-copy",
+  "external_writes": 0
+}

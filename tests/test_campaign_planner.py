@@ -46,6 +46,15 @@ def test_plan_is_revision_scoped_and_commissions_only_current_approved_inputs(ap
     active = stage()["active"]
     assert (active["id"], active["revision"], active["duration_days"], active["selling_unit"]) == (second["id"], 2, 28, "box")
     assert set(active["manifests"]) == {"strategy", "landing"}
+    material = "/plans/" + second["id"] + "/content-pack"
+    for actor in (customer, other):
+        assert api.get(path + material, headers=actor["headers"]).status_code in (403, 404)
+    assert api.get(foreign + material, headers=owner["headers"]).status_code in (404, 409)
+    content = accepted(api.get(path + material, headers=owner["headers"]))
+    assert content["plan_digest"] == active["digest"] and content["status"] == "internal_draft"
+    assert sum(item["budget_vnd"] for item in content["advertising"]["ad_groups"]) == active["budget_vnd"]
+    assert content["website"]["commercial_terms"] and content["organic_search"]["answer"]
+    assert all(post["copy"] != content["advertising"]["descriptions"][0] for post in content["social"])
     assert len({p["id"] for p in active["work_packages"]}) == 8
     assert stage()["revisions"][1]["status"] == "superseded"
     pack = accepted(api.get(path + "/plans/" + second["id"] + "/production", headers=owner["headers"]))
@@ -53,6 +62,7 @@ def test_plan_is_revision_scoped_and_commissions_only_current_approved_inputs(ap
     assert all(a["manifest"] in active["manifests"].values() and a["plan_id"] == active["id"] for a in pack["assets"])
     third = accepted(create(draft | {"key": uuid4().hex, "expected_revision": 2, "budget_vnd": 100000}))
     assert sign(third, third["digest"]).status_code == 200
+    assert api.get(path + material, headers=owner["headers"]).status_code == 409
     accepted(withdraw(api, owner, setup))
     assert api.post(path + "/plans/" + third["id"] + "/runs/landing", headers=owner["headers"]).status_code == 409
 

@@ -1,0 +1,12 @@
+{
+  "case": "receipt-map",
+  "plan_digest": "bdb80d2eb78daeb55ad40c643950eeaa125f01b0f5fcd98d7e45e3434c701e4f",
+  "wall_seconds": 0.277,
+  "api_process_cpu_seconds": 0.1562,
+  "response_bytes": 7266,
+  "model_invocations": 0,
+  "provider_fees": 0,
+  "human_labor_cost": null,
+  "electricity_cost": null,
+  "accepted_work_cost": null
+}

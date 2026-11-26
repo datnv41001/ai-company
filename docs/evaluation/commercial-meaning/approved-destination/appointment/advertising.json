@@ -1,0 +1,62 @@
+{
+  "source_sha": "a0777651da38a76afb0bd66dab4a6e195d313fa2",
+  "test_sha256": "ec69ead9e65a027c5cda7e47f7597dcccae5dfb8bca41121bd492a4bd22c84c3",
+  "synthetic": true,
+  "browser": "157.0.8103.52",
+  "sessions": [
+    {
+      "width": 1280,
+      "plan_digest": "01add29fd402f9771e0f3b9a241c7ea195496764cf40819ebb5df768723b7da2",
+      "destination": {
+        "kind": "sandbox_landing",
+        "status": "approved",
+        "deliverable_id": "2df370c2-cda2-447f-b5d2-4dc5d3d4cffc",
+        "package_id": "c6162dd9-582c-4e13-b674-a90399b856dc",
+        "package_digest": "cf194180a9812c4579cff99a6562252c4c36826f0a09840cd907fbf66c01a73d",
+        "studio_revision": 4,
+        "file_digest": "3a53435d004845f5eaac011dfc1ce72e74bb6ded8d352507b339c7e67e87dd52",
+        "download_url": "/api/tenants/14258716-b9a5-4062-a035-47562eafc86b/deliverables/2df370c2-cda2-447f-b5d2-4dc5d3d4cffc/studio/production/c6162dd9-582c-4e13-b674-a90399b856dc/files/landing.html"
+      },
+      "file_bytes": 4237,
+      "iframe_html_sha256": "3a53435d004845f5eaac011dfc1ce72e74bb6ded8d352507b339c7e67e87dd52",
+      "headline": "Dịch vụ kiểm tra bơm Lam",
+      "sandbox_event_writes": 0
+    },
+    {
+      "width": 820,
+      "plan_digest": "01add29fd402f9771e0f3b9a241c7ea195496764cf40819ebb5df768723b7da2",
+      "destination": {
+        "kind": "sandbox_landing",
+        "status": "approved",
+        "deliverable_id": "2df370c2-cda2-447f-b5d2-4dc5d3d4cffc",
+        "package_id": "c6162dd9-582c-4e13-b674-a90399b856dc",
+        "package_digest": "cf194180a9812c4579cff99a6562252c4c36826f0a09840cd907fbf66c01a73d",
+        "studio_revision": 4,
+        "file_digest": "3a53435d004845f5eaac011dfc1ce72e74bb6ded8d352507b339c7e67e87dd52",
+        "download_url": "/api/tenants/14258716-b9a5-4062-a035-47562eafc86b/deliverables/2df370c2-cda2-447f-b5d2-4dc5d3d4cffc/studio/production/c6162dd9-582c-4e13-b674-a90399b856dc/files/landing.html"
+      },
+      "file_bytes": 4237,
+      "iframe_html_sha256": "3a53435d004845f5eaac011dfc1ce72e74bb6ded8d352507b339c7e67e87dd52",
+      "headline": "Dịch vụ kiểm tra bơm Lam",
+      "sandbox_event_writes": 0
+    },
+    {
+      "width": 390,
+      "plan_digest": "01add29fd402f9771e0f3b9a241c7ea195496764cf40819ebb5df768723b7da2",
+      "destination": {
+        "kind": "sandbox_landing",
+        "status": "approved",
+        "deliverable_id": "2df370c2-cda2-447f-b5d2-4dc5d3d4cffc",
+        "package_id": "c6162dd9-582c-4e13-b674-a90399b856dc",
+        "package_digest": "cf194180a9812c4579cff99a6562252c4c36826f0a09840cd907fbf66c01a73d",
+        "studio_revision": 4,
+        "file_digest": "3a53435d004845f5eaac011dfc1ce72e74bb6ded8d352507b339c7e67e87dd52",
+        "download_url": "/api/tenants/14258716-b9a5-4062-a035-47562eafc86b/deliverables/2df370c2-cda2-447f-b5d2-4dc5d3d4cffc/studio/production/c6162dd9-582c-4e13-b674-a90399b856dc/files/landing.html"
+      },
+      "file_bytes": 4237,
+      "iframe_html_sha256": "3a53435d004845f5eaac011dfc1ce72e74bb6ded8d352507b339c7e67e87dd52",
+      "headline": "Dịch vụ kiểm tra bơm Lam",
+      "sandbox_event_writes": 0
+    }
+  ]
+}

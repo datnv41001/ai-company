@@ -98,7 +98,17 @@ def compose(projection, ctx):
             "campaign": tr(f"Đề xuất thử thông điệp về {product}.", f"Test messaging about {product}."),
             "ad_group": tr(f"Giả thuyết cần thử với nhóm {buyer}.", f"Test the audience hypothesis with {buyer}."),
             "intent": tr(f"Từ khóa thử nghiệm: {product} · {key}.", f"Proposed query: {product} · {key}."),
-            "headlines": product, "description": open_copy, "buyer_action": cta,
+            "headlines": product,
+            "description": (
+                tr(f"Đối chiếu điều kiện của {product} trước khi gửi số lượng cần báo giá.",
+                   f"Check the terms for {product} before submitting your required quantity.")
+                if action == "rfq" else
+                tr(f"Xem phạm vi của {product} và chọn khung giờ muốn đề nghị.",
+                   f"Check what {product} covers and request a time that suits you.")
+                if action in ("appointment", "choose_session", "request_assessment") else
+                tr(f"Xem điều kiện áp dụng cho {product} và chọn bước tiếp theo.",
+                   f"Review the terms for {product} and choose your next step.")
+            ), "buyer_action": cta,
             "test": tr("So sánh hai cách mở đầu. Giữ nguyên lời mời hành động, vị trí và điều kiện.", "Compare two opening lines while holding action, placement and terms constant."),
             "allocation": tr("Đề xuất chia đều hạn mức media đã duyệt giữa hai biến thể trong mô phỏng.", "Propose an equal split of the approved media cap between the two simulated variants."),
             "measurement": measure,

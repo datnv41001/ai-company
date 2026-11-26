@@ -47,3 +47,5 @@ Thiết kế dùng JSON versioned trong Knowledge, manifest, plan và Studio. B�
 **Đề nghị reviewer thách thức.** Đổi riêng số ngày hoặc mẫu số trong bản đã biên tập, thêm một câu thay KPI chính ở phần quảng cáo, chọn KPI khác lúc materialize, chốt cửa sổ đúng thời điểm hủy rồi thử mẫu số 0. Đối chiếu revision, biên nhận phủ nhận, tử/mẫu thực và bản portal cuối. Đo thời gian/chi phí thực cùng người dùng trước khi đánh giá hiệu quả nghề nghiệp.
 
 Đề xuất tối ưu lưu báo cáo, mốc chốt kỳ đo, phiên bản kế hoạch và mã băm các dữ kiện CRM đã dùng. Khi người thứ hai duyệt, hệ thống đối soát cùng mốc. Chỉ thời gian trôi qua vẫn cho phép duyệt. Nếu dữ liệu đầu vào đã thay đổi thì tạo đề xuất mới dù tỷ lệ tổng hợp vẫn bằng nhau. Với đề xuất cũ chưa có mã băm nguồn, hệ thống tiếp tục đối soát nội dung báo cáo đã lưu.
+
+Khi trang đích đã duyệt tạo lượt vào và form, hệ thống ghi hai nguồn riêng cho lịch hẹn. [Quy tắc đối chiếu và bằng chứng thấy được trên desktop, tablet và mobile](../real-production/landing-attribution/README.md)

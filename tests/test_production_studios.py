@@ -20,6 +20,7 @@ from app.database import get_db
 from app.main import app
 from app.models import User
 from app.production_studios import approved_landing_destination
+from app.measurement_integrity import matched_landing
 from app.security import sign_actor
 from campaign_planner_fixtures import CASES, facts
 from knowledge_fixtures import accepted
@@ -97,6 +98,10 @@ def qualify(api, base, doc, owner, buyer, other, plan, action, observe=None):
                 "download_url": result + "/files/landing.html",
             }
             assert destination(owner, plan["campaign_id"], plan | {"digest": "f" * 64}) is None
+            pack_url = doc.split("/deliverables/")[0] + "/campaigns/" + plan["campaign_id"] + "/engine/plans/" + plan["id"] + "/content-pack"
+            advertised = accepted(api.get(pack_url, headers=owner["headers"]))["advertising"]["destination"]
+            assert advertised == {"kind":"sandbox_landing","status":"approved", **target}
+            assert api.get(pack_url, headers=other["headers"]).status_code in (403,404)
         files = {}
         for name, meta in item["files"].items():
             path = result + "/files/" + name
@@ -119,6 +124,29 @@ def qualify(api, base, doc, owner, buyer, other, plan, action, observe=None):
             assert post(decision, result + "/submissions", form).status_code == 409
             submitted = accepted(post(owner, result + "/submissions", form))
             assert submitted["kind"] == action and submitted["value"]["landing_digest"] == item["digest"]
+            if plan.get("measurement_contract"):
+                source = visit["value"]["landing_source"]
+                assert source == submitted["value"]["landing_source"]
+                scope = {k: source[k] for k in ("tenant_id", "client_id", "brand_id", "campaign_id", "plan_id", "plan_digest")}
+                assert source["studio_revision"] == view["revision"] and source["package_version"] == item["version"]
+                assert source["file_digest"] == item["files"]["landing.html"]["sha256"]
+                legacy_visit = {k: v for k, v in visit["value"].items() if k != "landing_source"}
+                assert not matched_landing(legacy_visit, submitted["value"], scope)
+                for key in ("tenant_id", "client_id", "brand_id", "campaign_id", "plan_id", "plan_digest"):
+                    assert not matched_landing(visit["value"], submitted["value"], scope | {key: "foreign"})
+                for key in ("package_id", "file_digest", "package_digest", "studio_revision", "package_version", "document_id"):
+                    mismatched = submitted["value"] | {"landing_source": source | {key: "different"}}
+                    assert not matched_landing(visit["value"], mismatched, scope)
+                report = accepted(api.get(base + "/campaigns/" + plan["campaign_id"] + "/sandbox", headers=owner["headers"]))["report"]["primary_measurement"]
+                assert (report["numerator"], report["denominator"], report["ratio"]) == (0, 1, 0)
+                assert report["attribution"] == {"landing_asset": 1, "media_action": 0, "unknown_media_action": 1, "neither": 0}
+                assert report["attributed"] == 1 and report["unattributed"] == 0
+                assert report["secondary_metrics"][0]["value"] == 1
+                if directory := os.getenv("AMC_PRODUCTION_EVIDENCE"):
+                    dest = Path(directory) / action / "landing"
+                    dest.mkdir(parents=True, exist_ok=True)
+                    (dest / "attribution.json").write_text(json.dumps({"visit_receipt": visit["id"], "submission_receipt": submitted["id"],
+                        "landing_source": source, "kpi": report}, ensure_ascii=False, indent=2) + "\n", encoding="utf8")
             assert accepted(post(owner, result + "/submissions", form))["id"] == submitted["id"]
             assert post(owner, result + "/submissions", form | {"request_id": uuid4().hex}).status_code == 409
             assert post(owner, result + "/submissions", form | {"quantity": 4}).status_code == 409
@@ -137,6 +165,9 @@ def qualify(api, base, doc, owner, buyer, other, plan, action, observe=None):
 
 
 def rehearsal(api, workforce, monkeypatch, case, observe=None):  # noqa: F811
+    if case["buyer_action"] == "appointment":
+        case = case | {"measurement": {"version": "appointment-measurement/1", "business_outcome": "appointment.confirmed_per_requested",
+                                       "window_days": 21, "owner_role": "service_operations"}}
     doc, snap, plan, editor, other, _ = sqlite_channel(api, workforce, monkeypatch, case)
     owner, buyer, _, base, *_ = workforce
     artifacts = {}

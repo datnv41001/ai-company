@@ -18,6 +18,7 @@ function mountMarketingStudio(host,api,path,role,afterSave) {
   const states={missing:'Thiếu nội dung',repetition:'Nội dung bị lặp, cần biên tập lại',entity_only:'Cần diễn giải ý nghĩa, hiện chỉ có tên hoặc đối tượng trong brief',placeholder:'Cần thay nội dung hướng dẫn',
     buyer_action:'Chưa khớp hành động đã giao',channel_contract:'Đối chiếu với kênh, mốc, hành động, điều kiện và quyền đã ghim',private_context:'Cần bỏ nội dung chỉ dùng nội bộ khỏi bản giao khách',missing_declaration:'Thiếu công bố hoặc điều kiện đã duyệt',relevance:'Cần liên hệ rõ hơn với sản phẩm được giao',
     contradiction:'Mâu thuẫn cần sửa',unresolved:'Cần xác minh',needs_correction:'Cần đối chiếu cách viết',reviewed:'Đã xác minh',verified:'Khớp nguồn',editorial:'Nội dung biên tập',
+    payment_direction:'Đảo chiều thanh toán',payment_kind:'Biến giá bán thành khoản hoàn hoặc ưu đãi',component_scope:'Gán đặc tính của bộ phận cho cả sản phẩm',observation_status:'Trình bày giả thuyết như kết quả đã quan sát',
     missing_qualifier:'Thiếu điều kiện áp dụng',unsupported_format:'Cách trình bày chưa đối chiếu được',unsupported_assertion:'Chưa có căn cứ cho nhận định này',
     known_contradiction:'Mâu thuẫn với nguồn hoặc quy tắc đã duyệt',semantic_interpretation:'Cần người có chuyên môn xác minh ý nghĩa'};
   let view,group,draft,dirty=false,openRequest=0;
@@ -65,7 +66,12 @@ function mountMarketingStudio(host,api,path,role,afterSave) {
     if(spec.plan)add(body,'p','Kế hoạch v'+spec.plan.plan_revision+' · '+spec.plan.channel_plan.join(' · ')+' · '+spec.plan.plan_digest.slice(0,12));
     const nav=add(body,'div');nav.className='studio-nav';nav.setAttribute('aria-label','Phần tài liệu');
     for(const id of Object.keys(draft)){
-      const b=button(nav,name(id),()=>{group=id;draw();});
+      const b=button(nav,name(id),()=>{
+        group=id;draw();
+        const current=body.querySelector('.studio-nav [aria-pressed=true]');
+        current.focus({preventScroll:true});
+        current.scrollIntoView({block:'nearest',inline:'center'});
+      });
       if(id!==group)b.className='secondary';
       b.setAttribute('aria-pressed',String(id===group));
     }
@@ -136,7 +142,29 @@ function mountMarketingStudio(host,api,path,role,afterSave) {
         button(box,'Dùng và biên tập',()=>{input.value=offer.text;input.dispatchEvent(new Event('input'));box.open=false;input.focus();});
         button(box,'Bỏ qua đề xuất',()=>{dismissed.add(journeyIndex+field);box.remove();input.focus();});
       }
-      if(suggestion && suggestion!==value){
+      const segments=(view.segment_suggestions||[]).filter(s=>s.field==='studio.'+field);
+      for(const s of segments){
+        if(dismissed.has(s.finding))continue;
+        const box=add(edit,'details');add(box,'summary',states[s.reason]||'Sửa câu theo căn cứ');
+        add(box,'strong','Câu trong bản đã lưu');add(box,'p',s.original);
+        add(box,'strong','Căn cứ '+(s.handles.join(', ')||'từ giả thuyết đã ghim'));add(box,'p',s.evidence);
+        const label=add(box,'label','Câu thay thế có thể biên tập');const replacement=add(label,'textarea');replacement.value=s.proposed;
+        button(box,'Thay câu này',()=>{
+          // Evidence offsets are Unicode code points. Re-anchor only a unique,
+          // unchanged sentence if an earlier edit moved it within this draft.
+          const saved=view.groups[group][key], points=Array.from(saved);
+          if(points.slice(s.start,s.end).join('')!==s.original)throw new Error('Tải lại bản đã lưu để đối chiếu câu.');
+          const start=input.value===saved?points.slice(0,s.start).join('').length:input.value.indexOf(s.original);
+          if(start<0 || (input.value!==saved && start!==input.value.lastIndexOf(s.original)))throw new Error('Câu đã thay đổi hoặc lặp lại. Lưu và kiểm tra QA lại.');
+          if(input.value!==saved && (saved.indexOf(s.original)!==saved.lastIndexOf(s.original) ||
+             (input.value.slice(0,start)!==points.slice(0,s.start).join('') &&
+              input.value.slice(start+s.original.length)!==points.slice(s.end).join(''))))throw new Error('Ngữ cảnh đã đổi. Lưu và kiểm tra QA lại.');
+          input.setRangeText(replacement.value,start,start+s.original.length,'end');
+          input.dispatchEvent(new Event('input'));dismissed.add(s.finding);box.remove();input.focus();
+        });
+        button(box,'Bỏ qua câu đề xuất',()=>{dismissed.add(s.finding);box.remove();input.focus();});
+      }
+      if(!segments.length && suggestion && suggestion!==value){
         const proposal=add(edit,'details');add(proposal,'summary','Xem đề xuất từ brief đã ghim');
         add(proposal,'p',suggestion);
         button(proposal,'Dùng đề xuất cho trường này',()=>{

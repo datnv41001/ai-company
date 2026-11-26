@@ -81,8 +81,16 @@ def lifecycle(api, base, owner, buyer, other, doc, snap, plan, editor, observe=N
     reviewer = reader(api, owner, "admin")
     changed = deepcopy(groups)
     changed["ad"]["description"] = "Giảm giá 90%."
+    price = next((f for f in snap["projection"]["facts"] if f.get("price")), None)
+    wrong = f"Receive {int(price['price']['amount_minor']):,} VND when you book." if price else "Giảm giá 90%."
+    changed["social"]["opening"] = groups["social"]["opening"] + " " + wrong
     changed["creative_brief"]["provenance"] = "Video đã sản xuất."
     bad = accepted(write(editor, saved, changed))
+    if price:
+        offer, = [s for s in bad["segment_suggestions"] if s["field"] == "studio.social.opening" and s["reason"] == "payment_direction"]
+        assert offer["original"] == wrong and offer["handles"] == [price["id"]]
+        assert changed["social"]["opening"][:offer["start"]] == groups["social"]["opening"] + " "
+        assert offer["end"] == len(changed["social"]["opening"])
     assert any(r["field"] == "provenance" for r in bad["quality_issues"])
     assert any(r["field"] == "studio.ad.description" and r["outcome"] == "needs_correction" for r in bad["findings"])
     assert write(owner, saved, groups).status_code == 412
@@ -90,7 +98,7 @@ def lifecycle(api, base, owner, buyer, other, doc, snap, plan, editor, observe=N
     def sign(current, group):
         return api.post(url + "/approvals", headers=reviewer["headers"], json={"group":group, "expected_revision":current["revision"],
                         "expected_asset_digest":current["asset_digests"][group], "note":"Đối chiếu trường với phạm vi và nguồn được duyệt."})
-    assert sign(bad, "ad").status_code == sign(bad, "creative_brief").status_code == 409
+    assert sign(bad, "ad").status_code == sign(bad, "creative_brief").status_code == sign(bad, "social").status_code == 409
     final = accepted(write(editor, bad, groups))
     assert not final["approvals"] and sign(bad, "social").status_code == 412
     submitted = accepted(api.post(doc + "/submit", headers=editor["headers"]))

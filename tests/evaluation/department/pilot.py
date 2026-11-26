@@ -1,8 +1,10 @@
 """Prepare source-blind complete packages and validate separately submitted practitioner observations."""
 
 import argparse
+import hashlib
 import json
 from pathlib import Path
+import re
 import secrets
 from zipfile import ZIP_DEFLATED, ZipFile
 
@@ -104,6 +106,7 @@ def blank(alias, brief):
         "usable_after_editing": None,
         "decision_reason": None,
         "reference_to_delivered_revision": None,
+        "delivered_artifact_sha256": None,
         "sales_usefulness_0_2": None,
         "business_accepted": None,
         "effort": {k: None for k in EFFORT},
@@ -151,7 +154,29 @@ def pack(data, out):
     (out / "custodian.json").write_text(dump(labels), encoding="utf-8")
 
 
-def check(key, rows):
+def verify_artifact(name, observations, directory):
+    """Bind three independent submissions to the bytes retained for this blind package."""
+    if set(observations) != set(ROLES):
+        return {"status": "missing_roles"}
+    digests = [row["delivered_artifact_sha256"] for row in observations.values()]
+    if not all(digests):
+        return {"status": "missing_declared_digest"}
+    references = {row["reference_to_delivered_revision"] for row in observations.values()}
+    if len(set(digests)) != 1 or len(references) != 1:
+        return {"status": "different_submitted_revisions"}
+    if directory is None:
+        return {"status": "artifact_unavailable"}
+    root = directory.resolve()
+    path = (root / name / "delivered.artifact").resolve()
+    if not path.is_relative_to(root) or not path.is_file():
+        return {"status": "artifact_unavailable"}
+    with path.open("rb") as artifact:
+        digest = hashlib.file_digest(artifact, "sha256").hexdigest()
+    status = "verified" if digest == digests[0] else "artifact_mismatch"
+    return {"status": status, "retained_sha256": digest, "submitted_revision": next(iter(references))}
+
+
+def check(key, rows, artifacts=None):
     result = {}
     observed = set()
     identities = {}
@@ -165,8 +190,12 @@ def check(key, rows):
             raise ValueError("Duplicate observation or non-independent role")
         identities[actor] = role
         observed.add((name, role))
-        if not row["decision_reason"] or not row["reference_to_delivered_revision"]:
+        revision = row["reference_to_delivered_revision"]
+        if not row["decision_reason"] or not isinstance(revision, str) or not revision.strip():
             raise ValueError("Record the decision basis and reviewed revision")
+        declared = row.get("delivered_artifact_sha256")
+        if declared is not None and (not isinstance(declared, str) or not re.fullmatch(r"[0-9a-fA-F]{64}", declared)):
+            raise ValueError("Artifact digest must be SHA-256 hex")
         for v in row["effort"].values():
             if v is not None and (type(v) is not int or v < 0):
                 raise ValueError("Timing must be a nonnegative number of seconds")
@@ -205,15 +234,21 @@ def check(key, rows):
                 "allocated_cost_vnd",
                 "cost_source",
                 "overhead",
+                "reference_to_delivered_revision",
             )
         }
+        by["observations"][role]["delivered_artifact_sha256"] = declared.lower() if declared else None
     for name, arm in key.items():
         out = result.setdefault(name, {"arm": arm, "observations": {}})
         obs = out["observations"]
         out["missing_roles"] = [r for r in ROLES if r not in obs]
+        out["artifact_verification"] = verify_artifact(name, obs, artifacts)
+        out["verified_business_decision"] = (
+            obs["sales_or_owner"]["business_accepted"] if out["artifact_verification"]["status"] == "verified" else None
+        )
         out["recorded_labor_cost_per_business_accepted_vnd"] = (
             sum(v["allocated_cost_vnd"] for v in obs.values())
-            if not out["missing_roles"] and obs["sales_or_owner"]["business_accepted"] and all(v["allocated_cost_vnd"] is not None for v in obs.values())
+            if out["verified_business_decision"] is True and all(v["allocated_cost_vnd"] is not None for v in obs.values())
             else None
         )
         evidence = obs.get("marketer", {}).get("overhead", {})
@@ -223,7 +258,7 @@ def check(key, rows):
             not out["missing_roles"] and evidence.get("receipt_refs") and evidence.get("includes_failed_attempts") is True and None not in labor + nonlabor
         )
         out["recorded_total_vnd"] = sum(labor + nonlabor) if observed else None
-        out["all_in_cost_per_business_accepted_vnd"] = out["recorded_total_vnd"] if obs.get("sales_or_owner", {}).get("business_accepted") else None
+        out["all_in_cost_per_business_accepted_vnd"] = out["recorded_total_vnd"] if out["verified_business_decision"] is True else None
     return result
 
 
@@ -231,12 +266,14 @@ def by_arm(packages):
     result = {}
     for arm in sorted({p["arm"] for p in packages.values()}):
         commissioned = [p for p in packages.values() if p["arm"] == arm]
-        accepted = sum(p["observations"].get("sales_or_owner", {}).get("business_accepted") is True for p in commissioned)
+        accepted = sum(p["verified_business_decision"] is True for p in commissioned)
+        unknown = sum(p["verified_business_decision"] is None for p in commissioned)
         costs = [p["recorded_total_vnd"] for p in commissioned]
         result[arm] = {
             "commissioned": len(commissioned),
             "business_accepted": accepted,
-            "recorded_cost_per_business_accepted_vnd": sum(costs) / accepted if accepted and None not in costs else None,
+            "unverified_decisions": unknown,
+            "recorded_cost_per_business_accepted_vnd": sum(costs) / accepted if accepted and not unknown and None not in costs else None,
         }
     return result
 
@@ -248,9 +285,11 @@ if __name__ == "__main__":
         sub = subs.add_parser(command)
         sub.add_argument("first", type=Path)
         sub.add_argument("second", type=Path)
+        if command == "check":
+            sub.add_argument("--artifacts", type=Path, help="Retained delivery files arranged as <brief>/<blind alias>/delivered.artifact")
     args = parser.parse_args()
     if args.cmd == "pack":
         pack(args.first, args.second)
     else:
-        packages = check(read(args.first), read(args.second))
+        packages = check(read(args.first), read(args.second), args.artifacts)
         print(dump({"packages": packages, "arms": by_arm(packages)}))

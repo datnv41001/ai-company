@@ -1,6 +1,11 @@
 # Bắt đầu ở đây khi tiếp quản AI Marketing Company
 
 
+## Biên tập từng câu và bộ nội dung theo kế hoạch
+
+Với kế hoạch nội bộ đã duyệt, mở Campaign Command Center → Bộ nội dung và kế hoạch quảng cáo. Hai bài theo nền tảng, nội dung web/search, lịch, brief thiết kế và đề xuất Media đều mang digest kế hoạch. Trong Marketing Studio, mở cảnh báo có nguồn để xem nguyên câu và căn cứ, sửa đề xuất hoặc bỏ qua. Khi lưu, digest và revision mới đi qua QA hiện có. Bản khách đã nhận giữ snapshot riêng. [Cách chạy, bằng chứng và giới hạn](docs/evaluation/commercial-meaning/README.md) · [Sổ 19 năng lực và 24 workflow](docs/evaluation/DEPARTMENT-CAPABILITY-REGISTER.md)
+
+
 ## Bàn giao Creative và Landing Production nội bộ
 
 Từ **Biên tập tài liệu Marketing**, mở **Brief thiết kế → Creative Studio** để dựng master, ảnh theo ba tỉ lệ, WebM và VTT. Mở **Nội dung trang → Landing Studio** để dựng HTML, kiểm tra trên mobile và chạy phiên thử RFQ/appointment sau khi reviewer thứ hai duyệt file. [Quy trình Docker, file thực tế, ảnh giao diện và phép đo](docs/evaluation/real-production/README.md).

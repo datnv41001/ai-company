@@ -134,11 +134,23 @@ def quality_issues(groups, projection):
     return issues
 
 
-def evaluate(contract, plan_id, state, as_of, locale="vi-VN"):
+def matched_landing(session, appointment, expected_scope):
+    """Both receipts must bind the same scoped edition. Legacy receipts only recorded a package ID and digest."""
+    source = session.get("landing_source")
+    if not source or not expected_scope or source != appointment.get("landing_source"):
+        return False
+    required = ("tenant_id", "client_id", "brand_id", "campaign_id", "plan_digest", "document_id",
+                "studio_revision", "package_id", "package_version", "package_digest", "file_digest")
+    return (all(source.get(key) for key in required) and all(source.get(k) == v for k, v in expected_scope.items())
+            and source["package_digest"] == session.get("landing_digest") == appointment.get("landing_digest")
+            and source["package_id"] == session.get("landing_package") == appointment.get("landing_package"))
+
+
+def evaluate(contract, plan_id, state, as_of, locale="vi-VN", *, landing_scope=None):
     """Request/confirmation cohorts include only eligible transitions observed by the cutoff."""
     end = aware(as_of)
     start = end - timedelta(days=contract["window_days"])
-    numerator = denominator = cancelled = no_show = unattributed = 0
+    numerator = denominator = cancelled = no_show = unattributed = landing_count = media_count = 0
     for row in state["appointments"].values():
         if row["plan_id"] != plan_id:
             continue
@@ -159,8 +171,13 @@ def evaluate(contract, plan_id, state, as_of, locale="vi-VN"):
         cancelled += int("cancelled" in events)
         no_show += int("no_show" in events)
         session = state["sessions"].get(row.get("session_id"))
-        attributable = session and session["plan_id"] == plan_id and session.get("action_id") and parse_time(session["occurred_at"]) <= events["requested"]
-        unattributed += int(not attributable)
+        in_scope = session and session["plan_id"] == plan_id and parse_time(session["occurred_at"]) <= events["requested"]
+        # Intake accepts media IDs only for already executed actions in the same plan.
+        media = bool(in_scope and session.get("action_id"))
+        landing = bool(in_scope and matched_landing(session, row, landing_scope))
+        landing_count += int(landing)
+        media_count += int(media)
+        unattributed += int(not (landing or media))
     return {
         "contract": contract,
         "definition": statement(contract, locale),
@@ -174,6 +191,8 @@ def evaluate(contract, plan_id, state, as_of, locale="vi-VN"):
         "no_show": no_show,
         "unattributed": unattributed,
         "attributed": denominator - unattributed,
+        "attribution": {"landing_asset": landing_count, "media_action": media_count,
+                        "unknown_media_action": denominator - media_count, "neither": unattributed},
         "source": "sandbox_appointment_receipts",
         "secondary_metrics": [
             {

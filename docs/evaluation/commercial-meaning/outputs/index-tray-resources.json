@@ -1,0 +1,12 @@
+{
+  "case": "index-tray",
+  "plan_digest": "892546cf95741b1431a7403b0b7db2d239a9e6f70fa70914764cd7de97aa87a2",
+  "wall_seconds": 0.2908,
+  "api_process_cpu_seconds": 0.1875,
+  "response_bytes": 6751,
+  "model_invocations": 0,
+  "provider_fees": 0,
+  "human_labor_cost": null,
+  "electricity_cost": null,
+  "accepted_work_cost": null
+}

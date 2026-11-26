@@ -8,7 +8,7 @@ Trong **Chiến dịch → Điều hành chiến dịch**, chọn kế hoạch �
 
 ## Tác vụ có quyền và bộ điều phối
 
-Ở **Thực thi trong sandbox**, chọn nhóm bản giao đã được QA qua C3, đích nội bộ, chế độ thủ công hoặc điều phối, dự toán và thời điểm. Một admin hoặc owner khác xác nhận trước khi chạy. Các capability là render bản xem trước website/tìm kiếm/duyệt nội bộ và diễn tập vị trí quảng cáo trên dữ liệu đã duyệt. Kết quả lưu trường nội dung, SHA-256 và biên nhận vào journal trong cùng giao dịch với khoản mô phỏng. Ở hợp đồng C3 /1 hiện hỗ trợ copy, SEO, chiến lược và đo lường. Mẫu quảng cáo từ copy là diễn tập bố trí. Kênh social/ad chuyên biệt của nhánh mở rộng Studio /2 cần nối và kiểm thử sau khi tích hợp. [Biên nhận điều phối](dispatch.json)
+Ở **Thực thi trong sandbox**, chọn nhóm bản giao đã được QA qua C3, đích nội bộ, chế độ thủ công hoặc điều phối, dự toán và thời điểm. Một admin hoặc owner khác xác nhận trước khi chạy. Các capability là render bản xem trước website/tìm kiếm/duyệt nội bộ và diễn tập vị trí quảng cáo trên dữ liệu đã duyệt. Kết quả lưu trường nội dung, SHA-256 và biên nhận vào journal trong cùng giao dịch với khoản mô phỏng. Ở hợp đồng C3 /1 hiện hỗ trợ copy, SEO, chiến lược và đo lường. Mẫu quảng cáo từ copy là diễn tập bố trí. Cùng nhánh kênh Studio /2, bốn nhóm bổ sung được kiểm chứng qua hợp đồng bên dưới. [Biên nhận điều phối](dispatch.json)
 
 Để chạy trên máy khác, dùng API và database local theo HANDOFF. Cấu hình một bí mật ngẫu nhiên ít nhất 32 byte ở biến `AMC_SANDBOX_DISPATCH_KEY` cho cả tiến trình API và runner. Chỉ cấp cho runner một access token hiện hành của admin được phép đọc đúng chiến dịch qua `AMC_SANDBOX_DISPATCH_TOKEN`. Truyền các bí mật qua môi trường local, lưu ngoài Git. API chỉ chấp nhận đầu nối loopback cho đường điều phối và đọc lại quyền nhóm, revision, kế hoạch và ngân sách. Mỗi vòng lấy tối đa 25 tác vụ. Giữ nguyên database khi restart. Lệnh sau chạy một số vòng hữu hạn và in ID biên nhận, không in token.
 
@@ -17,6 +17,10 @@ python scripts/dispatch_campaign_sandbox.py --origin http://127.0.0.1:8000 --ten
 ```
 
 ## Đối soát chi phí
+
+Chỉ tài khoản được phân công cho lịch hẹn mới được ghi hoàn thành dịch vụ. Bảng đo phân biệt trường hợp đồng hồ báo 0, trường hợp có số liệu cho một phần lượt và trường hợp chưa có số đọc. Các nhóm dùng chung run được hợp nhất theo danh tính từng lần thử. Số đọc mâu thuẫn của cùng lần thử được đánh dấu để đối soát.
+
+Nếu cài đồng thời phần mở rộng Studio của #47, bộ điều phối kiểm tra phiên bản /2 và đối chiếu kế hoạch, manifest, queue receipt và QA cho từng nhóm. Quảng cáo diễn tập ở `sandbox_ad_slot`, social xem trước ở `sandbox_social`, brief sáng tạo và lịch nội dung ở `sandbox_review`. Bản chạy riêng trên #44 tiếp tục từ chối edition /2. Ca liên nhánh nằm ở `tests/test_department_dispatch_integration.py`.
 
 Bảng đầu việc lấy mọi lần thử từ journal thực của run, gồm lượt thất bại, token chưa đo, thời điểm và outcome. Số liệu cấp chiến dịch đếm mỗi run một lần ngay cả khi hai nhóm nội dung dùng chung run. Người thực hiện ghi riêng thời gian làm rõ, biên tập, QA, sản xuất và baseline thủ công. Lệnh `close_unit_cost` lưu khai báo của người vận hành; nó không chứng nhận hóa đơn.
 

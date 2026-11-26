@@ -147,7 +147,7 @@ def action_command(cmd, state, plan, store, user, cid, *, dispatched=False):
         if cmd.action_id in actions:
             conflict("Action ID already commissioned")
         doc = current_asset(store, user, cid, plan, cmd.deliverable_id, cmd.expected_revision, cmd.expected_digest, gate=False)
-        target = capabilities.bind(store.db, doc, cmd.target) if cmd.target else None
+        target = capabilities.bind(store, doc, cmd.target) if cmd.target else None
         return "actions", cmd.action_id, {"id": cmd.action_id, "plan_id": plan["id"], "plan_digest": plan["digest"],
                 "deliverable_id": cmd.deliverable_id, "asset_revision": cmd.expected_revision, "asset_digest": cmd.expected_digest,
                 "cost_vnd": cmd.cost_vnd, "due_at": stamp(cmd.due_at), "state": "scheduled", "scheduled_by": user.id,
@@ -166,7 +166,7 @@ def action_command(cmd, state, plan, store, user, cid, *, dispatched=False):
     target = row.get("target")
     if target:
         typed = ActionTarget.model_validate({k:target[k] for k in ActionTarget.model_fields})
-        if capabilities.bind(store.db,doc,typed) != target:
+        if capabilities.bind(store,doc,typed) != target:
             conflict("Scheduled capability or its group approval changed")
     if cmd.kind == "authorize":
         if row["state"] != "scheduled" or not store.approver or row["scheduled_by"] == user.id:
@@ -186,7 +186,7 @@ def action_command(cmd, state, plan, store, user, cid, *, dispatched=False):
             row.update(state="executed", execution_receipt=new_id(), executed_at=stamp(store.now()),
                        executed_via="local_dispatcher" if dispatched else "manual_sandbox")
             if target:
-                row["sandbox_output"] = capabilities.perform(store.db,doc,target)
+                row["sandbox_output"] = capabilities.perform(store,doc,target)
     # The scope lock serializes budget reservations. Old revisions cannot run, but completed spend survives every replan.
     committed = sum(a["cost_vnd"] for a in actions.values() if a["id"] != row["id"] and
                     (a["state"] == "executed" or (a["plan_id"] == cmd.plan_id and a["state"] in {"authorized", "failed"})))

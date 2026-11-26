@@ -148,7 +148,9 @@ function createCampaignEngine(api) {
       if(u.artifact_digest)add(unit,'small','SHA-256 · '+u.artifact_digest);
       if(u.acceptance)add(unit,'p','Biên nhận '+u.acceptance.share_receipt+' · '+label(u.acceptance.status));
       if(u.cost_coverage){
-        add(unit,'p','Lượt thực hiện có nhật ký: '+u.cost_coverage.attempts.length+' · Token đầu vào/ra: '+u.cost_coverage.observed_input_tokens+'/'+u.cost_coverage.observed_output_tokens);
+        const c=u.cost_coverage;
+        add(unit,'p','Token đã ghi nhận (vào/ra): '+(c.observed_input_tokens??'chưa đo')+' / '+(c.observed_output_tokens??'chưa đo')+
+          ' · Lượt đủ số đo: '+c.fully_metered_attempts+'/'+c.attempts.length);
         const missing={model:'phí model',compute:'tài nguyên máy',tools:'công cụ',human:'nhân công',unfinished_work:'công việc đang mở',
           attempt_inventory:'nhật ký lượt chạy',unmeasured_attempts:'số liệu của lượt chạy'};
         add(unit,'small',u.cost_coverage.missing.length?'Cần đối soát: '+u.cost_coverage.missing.map(k=>missing[k]||k).join(', '):
@@ -189,7 +191,8 @@ function createCampaignEngine(api) {
     const actions=card(grid,'Thực thi trong sandbox');
     for(const action of ops.actions){
       const row=line(actions,action.id,money(action.cost_vnd)+' · '+(action.due_at || ''),label(action.state));
-      if(action.target)add(row,'small',action.target.channel+' · '+action.target.group+' · '+action.target.destination+' · '+(action.execution_mode==='scheduled'?'Điều phối cục bộ':'Thủ công'));
+      if(action.target)add(row,'small',action.target.channel+' · '+action.target.group+' · '+action.target.destination+' · '+(action.execution_mode==='scheduled'?'Bộ điều phối CLI cục bộ':'Thực thi nhóm bằng tay'));
+      else add(row,'small','Tài liệu đã qua QA · thao tác sandbox thủ công');
       if(action.sandbox_output)add(row,'small','Biên nhận '+action.execution_receipt+' · '+action.sandbox_output.content_sha256.slice(0,12));
       const next=({scheduled:[['authorize','Cho phép chạy'],['cancel','Hủy lịch']],authorized:[['execute','Chạy mô phỏng'],['cancel','Hủy']],
         failed:[['execute','Thử lại'],['cancel','Hủy']]})[action.state]||[];

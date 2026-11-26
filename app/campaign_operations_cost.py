@@ -9,6 +9,16 @@ from .knowledge_store import canonical, conflict, digest
 CATEGORIES = {"model", "compute", "tools", "human"}
 
 
+def token_totals(attempts):
+    # An absent meter reading differs from the integer zero reported by a meter.
+    inputs = [a["input_tokens"] for a in attempts if a["input_tokens"] is not None]
+    outputs = [a["output_tokens"] for a in attempts if a["output_tokens"] is not None]
+    fully_metered = sum(a["input_tokens"] is not None and a["output_tokens"] is not None for a in attempts)
+    return {"reported_input_attempts":len(inputs), "reported_output_attempts":len(outputs),
+            "fully_metered_attempts":fully_metered,"unmeasured_token_attempts":len(attempts)-fully_metered,
+            "observed_input_tokens":sum(inputs) if inputs else None,"observed_output_tokens":sum(outputs) if outputs else None}
+
+
 def inventory(unit):
     attempts = [{k:j.get(k) for k in ("skill","node_id","attempt","model","provider","started_at","finished_at","outcome",
                                       "input_tokens","output_tokens","estimated_microusd")} for j in unit.get("worker_journal", [])]
@@ -23,9 +33,7 @@ def inventory(unit):
                 "run":unit.get("run_id"), "queue":unit.get("queue_receipt"), "attempts":attempts, "labor":unit["labor"],
                 "artifact_revision":unit.get("artifact_revision"),"artifact_digest":unit.get("artifact_digest"),
                 "acceptance":unit.get("acceptance"),"cost_statement":unit.get("cost_statement")}
-    return {"digest":digest(canonical(coverage)), "attempts":attempts, "missing":missing,
-            "observed_input_tokens":sum(a["input_tokens"] for a in attempts if a["input_tokens"] is not None),
-            "observed_output_tokens":sum(a["output_tokens"] for a in attempts if a["output_tokens"] is not None),
+    return {"digest":digest(canonical(coverage)), "attempts":attempts, "missing":missing, **token_totals(attempts),
             "manual_baseline_seconds":(unit.get("cost_statement") or {}).get("manual_baseline_seconds")}
 
 
@@ -52,7 +60,8 @@ def verify(cmd, unit, rows):
 
 
 def summarize(units):
-    actual_runs = {}
+    actual_runs = set()
+    observations = {}
     complete = bool(units)
     total = 0
     for unit in units:
@@ -67,10 +76,19 @@ def summarize(units):
         coverage["verified_vnd"] = meter["total_vnd"] if ok else None
         unit["cost_coverage"] = coverage
         if unit.get("run_id"):
-            actual_runs[unit["run_id"]] = coverage
+            actual_runs.add(unit["run_id"])
+            for a in coverage["attempts"]:
+                identity = (unit["run_id"],a["node_id"],a["skill"],a["attempt"],a["started_at"])
+                # Several groups can cite the same run. Merge individual readings once; an empty later
+                # inventory, including that of a composed sibling, cannot erase observed worker calls.
+                readings = observations.setdefault(identity, {"input_tokens":set(),"output_tokens":set()})
+                for metric in readings:
+                    if a[metric] is not None:
+                        readings[metric].add(a[metric])
+    attempts = [{k:next(iter(v)) if len(v)==1 else None for k,v in readings.items()} for readings in observations.values()]
+    conflicts = sum(any(len(v)>1 for v in readings.values()) for readings in observations.values())
+    complete = complete and not conflicts
     accepted = sum((u.get("acceptance") or {}).get("status") == "business_accepted" for u in units)
     return {"cost_status":"all_units_costed" if complete else "unmeasured_complete_production_cost",
             "cost_per_business_accepted_vnd":total / accepted if complete and accepted else None,
-            "observed_runs":len(actual_runs),"observed_attempts":sum(len(c["attempts"]) for c in actual_runs.values()),
-            "observed_input_tokens":sum(c["observed_input_tokens"] for c in actual_runs.values()),
-            "observed_output_tokens":sum(c["observed_output_tokens"] for c in actual_runs.values())}
+            "observed_runs":len(actual_runs),"observed_attempts":len(attempts),"conflicting_token_attempts":conflicts,**token_totals(attempts)}

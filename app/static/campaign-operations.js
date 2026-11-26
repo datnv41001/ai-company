@@ -1,12 +1,15 @@
 /* Render from scoped API receipts. Controls reuse the campaign's revision and retry handling. */
 function campaignOperationForms({plan,production,ops,actions,sales,add,details,field,pick,command,sandbox,actor}) {
-  const groupFor = {landing:'copy',seo:'seo',strategy:'client_strategy',measurement:'client_measurement'};
+  const groupFor = {landing:'copy',seo:'seo',strategy:'client_strategy',measurement:'client_measurement',
+    ad:'ad',social:'social',calendar:'calendar',creative_brief:'creative_brief'};
   const options = [];
   for (const asset of production.assets) {
     const group=groupFor[asset.kind];
     if (!group || !asset.approval_receipt || !['approved','shared'].includes(asset.status)) continue;
-    const routes=group==='copy'?[['website','sandbox_page','render_preview','Trang web'],['paid_media','sandbox_ad_slot','rehearse_placement','Vị trí quảng cáo']]:
-      group==='seo'?[['organic_search','sandbox_search','render_preview','Kết quả tìm kiếm']]:[['internal','sandbox_review','render_preview','Duyệt nội bộ']];
+    const placement=['paid_media','sandbox_ad_slot','rehearse_placement','Vị trí quảng cáo'];
+    const routes=({copy:[['website','sandbox_page','render_preview','Trang web'],placement],ad:[placement],
+      seo:[['organic_search','sandbox_search','render_preview','Kết quả tìm kiếm']],
+      social:[['organic_social','sandbox_social','render_preview','Mạng xã hội']]})[group]||[['internal','sandbox_review','render_preview','Duyệt nội bộ']];
     for (const [channel,destination,action_type,name] of routes) options.push({asset,group,channel,destination,action_type,name});
   }
   if (options.length) {
@@ -21,6 +24,7 @@ function campaignOperationForms({plan,production,ops,actions,sales,add,details,f
         target:{contract:'sandbox-capability/1',action_type:o.action_type,channel:o.channel,destination:o.destination,group:o.group,group_digest:o.asset.digest,mode:mode.value}});
     },{form:true});
   }
+  if(production.assets.some(asset=>!asset.approval_receipt))add(actions,'small','Chỉ nhóm nội dung trên bản giao đã qua QA và có biên nhận duyệt riêng mới xuất hiện trong danh sách điều phối.');
   if (plan.buyer_action==='appointment' && plan.selling_unit) {
     const f=add(details(sales,'Yêu cầu lịch dịch vụ'),'form');
     const id=field(f,'Mã lịch hẹn','text'), qty=field(f,'Số lượng ('+plan.selling_unit+')','number','1'),
@@ -38,6 +42,7 @@ function campaignOperationForms({plan,production,ops,actions,sales,add,details,f
     for(const h of row.history) if(h.feedback)add(box,'p',h.feedback);
     const next={requested:['confirm','cancel'],confirmed:['assign','cancel','no_show'],assigned:['complete','cancel','no_show']}[row.state]||[];
     for(const step of next){
+      if(step==='complete' && row.assignee_id!==actor)continue;
       const label={confirm:'Xác nhận lịch hẹn',assign:'Nhận phụ trách lịch',complete:'Hoàn thành dịch vụ',cancel:'Hủy lịch hẹn',no_show:'Ghi nhận vắng mặt'}[step];
       const f=add(details(box,label),'form');
       const when=step==='confirm'?field(f,'Giờ hẹn đã thống nhất','datetime-local'):null;

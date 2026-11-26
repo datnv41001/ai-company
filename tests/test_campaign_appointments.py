@@ -51,6 +51,7 @@ def test_service_results_do_not_count_as_quotes_or_revenue(api,agency,monkeypatc
     decide("pump-001","confirm",1,1,confirmed_for=t(3))
     decide("pump-001","assign",2,2,assignee_id=other["id"],status=409)
     decide("pump-001","assign",2,2,assignee_id=staff["id"])
+    decide("pump-001","complete",3,4,actor=owner,feedback="Unassigned owner",status=409)
     decide("pump-001","no_show",3,2,feedback="Premature",status=409)
     decide("pump-001","complete",3,4,actor=staff,feedback="Đã kiểm tra hai máy và bàn giao phiếu kiểm tra.")
     send("appointment",**(req|{"appointment_id":"pump-002"}))
@@ -92,3 +93,28 @@ def test_service_results_do_not_count_as_quotes_or_revenue(api,agency,monkeypatc
             "revenue_vnd":view["report"]["confirmed_revenue_vnd"],"receipt_ids":[r["id"] for r in view["receipts"] if r["kind"].startswith("appointment")],
             "cost_measurement":{"observed_baseline_seconds":60,"synthetic_signed_allocation_vnd":6,"subsequent_cost_state":"Missing fresh evidence",
                                 "business_accepted_units":0,"cost_per_business_accepted_vnd":None}})
+
+
+def test_attempt_coverage_is_unknown_without_readings_and_deduplicates_shared_runs():
+    from app.campaign_operations_cost import summarize
+    common={"scope":{},"status":"incomplete","plan_id":"plan","run_id":"shared","labor":[],"acceptance":None}
+    unknown={"skill":"director","node_id":"d","attempt":1,"started_at":"a","finished_at":"b","outcome":"provider_timeout"}
+    zero={"skill":"content","node_id":"c","attempt":1,"started_at":"c","finished_at":"d","outcome":"ok","input_tokens":0,"output_tokens":0}
+    partial={"skill":"seo","node_id":"s","attempt":1,"started_at":"e","finished_at":"f","outcome":"failed","input_tokens":25}
+    empty=common|{"id":"social","worker_journal":[]}
+    failed=common|{"id":"landing","worker_journal":[unknown]}
+    result=summarize([failed,empty])
+    assert result["observed_attempts"]==result["unmeasured_token_attempts"]==1
+    assert result["observed_input_tokens"] is None and result["observed_output_tokens"] is None
+    assert "unmeasured_attempts" in failed["cost_coverage"]["missing"]
+    full=common|{"id":"copy","worker_journal":[unknown,zero,partial]}
+    mirror=common|{"id":"seo","worker_journal":[zero,partial]}
+    for units in ([full,mirror,empty],[empty,mirror,full]):
+        result=summarize(units)
+        assert result["observed_runs"]==1 and result["observed_attempts"]==3
+        assert result["fully_metered_attempts"]==1 and result["unmeasured_token_attempts"]==2
+        assert result["observed_input_tokens"]==25 and result["observed_output_tokens"]==0
+    mismatch=common|{"id":"other","worker_journal":[zero|{"input_tokens":999}]}
+    result=summarize([mirror,mismatch])
+    assert result["conflicting_token_attempts"]==1 and result["observed_input_tokens"]==25
+    assert result["cost_per_business_accepted_vnd"] is None

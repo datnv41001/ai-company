@@ -1,0 +1,1208 @@
+{
+  "control": {
+    "total": {
+      "cases": 24,
+      "exact": 8,
+      "invalid_or_missing": 0,
+      "unsafe_ready": 14
+    },
+    "groups": {
+      "locale": {
+        "en": {
+          "cases": 12,
+          "exact": 4,
+          "invalid_or_missing": 0,
+          "unsafe_ready": 7
+        },
+        "vi": {
+          "cases": 12,
+          "exact": 4,
+          "invalid_or_missing": 0,
+          "unsafe_ready": 7
+        }
+      },
+      "gold": {
+        "ask": {
+          "cases": 8,
+          "exact": 2,
+          "invalid_or_missing": 0,
+          "unsafe_ready": 6
+        },
+        "clarify_policy": {
+          "cases": 8,
+          "exact": 0,
+          "invalid_or_missing": 0,
+          "unsafe_ready": 8
+        },
+        "ready": {
+          "cases": 8,
+          "exact": 6,
+          "invalid_or_missing": 0,
+          "unsafe_ready": 0
+        }
+      }
+    },
+    "matched": {
+      "both": 4,
+      "vi_only": 0,
+      "en_only": 0,
+      "neither": 8
+    },
+    "cases": [
+      {
+        "id": "h15d22b51",
+        "locale": "vi",
+        "pair": "m12",
+        "gold": "clarify_policy",
+        "field": "",
+        "predicted": "ready",
+        "predicted_field": "",
+        "valid": true,
+        "exact": false,
+        "unsafe_ready": true
+      },
+      {
+        "id": "h16a100e6",
+        "locale": "vi",
+        "pair": "m1",
+        "gold": "ask",
+        "field": "roll_core",
+        "predicted": "ask",
+        "predicted_field": "roll_core",
+        "valid": true,
+        "exact": true,
+        "unsafe_ready": false
+      },
+      {
+        "id": "h1919de08",
+        "locale": "en",
+        "pair": "m12",
+        "gold": "clarify_policy",
+        "field": "",
+        "predicted": "ready",
+        "predicted_field": "",
+        "valid": true,
+        "exact": false,
+        "unsafe_ready": true
+      },
+      {
+        "id": "h1f4a432c",
+        "locale": "en",
+        "pair": "m9",
+        "gold": "ask",
+        "field": "gauge",
+        "predicted": "ready",
+        "predicted_field": "",
+        "valid": true,
+        "exact": false,
+        "unsafe_ready": true
+      },
+      {
+        "id": "h21cafda4",
+        "locale": "en",
+        "pair": "m11",
+        "gold": "clarify_policy",
+        "field": "",
+        "predicted": "ready",
+        "predicted_field": "",
+        "valid": true,
+        "exact": false,
+        "unsafe_ready": true
+      },
+      {
+        "id": "h244207a5",
+        "locale": "en",
+        "pair": "m1",
+        "gold": "ask",
+        "field": "roll_core",
+        "predicted": "ask",
+        "predicted_field": "roll_core",
+        "valid": true,
+        "exact": true,
+        "unsafe_ready": false
+      },
+      {
+        "id": "h28fea0cf",
+        "locale": "en",
+        "pair": "m5",
+        "gold": "clarify_policy",
+        "field": "",
+        "predicted": "ready",
+        "predicted_field": "",
+        "valid": true,
+        "exact": false,
+        "unsafe_ready": true
+      },
+      {
+        "id": "h2a92b98e",
+        "locale": "en",
+        "pair": "m6",
+        "gold": "clarify_policy",
+        "field": "",
+        "predicted": "ready",
+        "predicted_field": "",
+        "valid": true,
+        "exact": false,
+        "unsafe_ready": true
+      },
+      {
+        "id": "h2fb7d3cb",
+        "locale": "vi",
+        "pair": "m8",
+        "gold": "ready",
+        "field": "",
+        "predicted": "ask",
+        "predicted_field": "channel_count",
+        "valid": true,
+        "exact": false,
+        "unsafe_ready": false
+      },
+      {
+        "id": "h3306db62",
+        "locale": "en",
+        "pair": "m10",
+        "gold": "ready",
+        "field": "",
+        "predicted": "ready",
+        "predicted_field": "",
+        "valid": true,
+        "exact": true,
+        "unsafe_ready": false
+      },
+      {
+        "id": "h3de1a49e",
+        "locale": "vi",
+        "pair": "m5",
+        "gold": "clarify_policy",
+        "field": "",
+        "predicted": "ready",
+        "predicted_field": "",
+        "valid": true,
+        "exact": false,
+        "unsafe_ready": true
+      },
+      {
+        "id": "h44800dc0",
+        "locale": "vi",
+        "pair": "m10",
+        "gold": "ready",
+        "field": "",
+        "predicted": "ready",
+        "predicted_field": "",
+        "valid": true,
+        "exact": true,
+        "unsafe_ready": false
+      },
+      {
+        "id": "h4db1cce6",
+        "locale": "en",
+        "pair": "m8",
+        "gold": "ready",
+        "field": "",
+        "predicted": "ask",
+        "predicted_field": "channel_count",
+        "valid": true,
+        "exact": false,
+        "unsafe_ready": false
+      },
+      {
+        "id": "h4fe6dda5",
+        "locale": "en",
+        "pair": "m4",
+        "gold": "ask",
+        "field": "service_intent",
+        "predicted": "ready",
+        "predicted_field": "",
+        "valid": true,
+        "exact": false,
+        "unsafe_ready": true
+      },
+      {
+        "id": "h50978460",
+        "locale": "en",
+        "pair": "m2",
+        "gold": "ask",
+        "field": "access_day",
+        "predicted": "ready",
+        "predicted_field": "",
+        "valid": true,
+        "exact": false,
+        "unsafe_ready": true
+      },
+      {
+        "id": "h540337e3",
+        "locale": "vi",
+        "pair": "m9",
+        "gold": "ask",
+        "field": "gauge",
+        "predicted": "ready",
+        "predicted_field": "",
+        "valid": true,
+        "exact": false,
+        "unsafe_ready": true
+      },
+      {
+        "id": "h547872c8",
+        "locale": "en",
+        "pair": "m7",
+        "gold": "ready",
+        "field": "",
+        "predicted": "ready",
+        "predicted_field": "",
+        "valid": true,
+        "exact": true,
+        "unsafe_ready": false
+      },
+      {
+        "id": "h64ef8b0f",
+        "locale": "vi",
+        "pair": "m6",
+        "gold": "clarify_policy",
+        "field": "",
+        "predicted": "ready",
+        "predicted_field": "",
+        "valid": true,
+        "exact": false,
+        "unsafe_ready": true
+      },
+      {
+        "id": "h657b3159",
+        "locale": "en",
+        "pair": "m3",
+        "gold": "ready",
+        "field": "",
+        "predicted": "ready",
+        "predicted_field": "",
+        "valid": true,
+        "exact": true,
+        "unsafe_ready": false
+      },
+      {
+        "id": "h6b03f43b",
+        "locale": "vi",
+        "pair": "m2",
+        "gold": "ask",
+        "field": "access_day",
+        "predicted": "ready",
+        "predicted_field": "",
+        "valid": true,
+        "exact": false,
+        "unsafe_ready": true
+      },
+      {
+        "id": "h6d42f78",
+        "locale": "vi",
+        "pair": "m7",
+        "gold": "ready",
+        "field": "",
+        "predicted": "ready",
+        "predicted_field": "",
+        "valid": true,
+        "exact": true,
+        "unsafe_ready": false
+      },
+      {
+        "id": "h72d191a",
+        "locale": "vi",
+        "pair": "m11",
+        "gold": "clarify_policy",
+        "field": "",
+        "predicted": "ready",
+        "predicted_field": "",
+        "valid": true,
+        "exact": false,
+        "unsafe_ready": true
+      },
+      {
+        "id": "h7ae4fe1b",
+        "locale": "vi",
+        "pair": "m4",
+        "gold": "ask",
+        "field": "service_intent",
+        "predicted": "ready",
+        "predicted_field": "",
+        "valid": true,
+        "exact": false,
+        "unsafe_ready": true
+      },
+      {
+        "id": "hb73e3f6",
+        "locale": "vi",
+        "pair": "m3",
+        "gold": "ready",
+        "field": "",
+        "predicted": "ready",
+        "predicted_field": "",
+        "valid": true,
+        "exact": true,
+        "unsafe_ready": false
+      }
+    ],
+    "phenomena": {
+      "unresolved_territory": {
+        "cards": 2,
+        "exact": 0,
+        "false_ready": 2
+      },
+      "missing": {
+        "cards": 2,
+        "exact": 2,
+        "false_ready": 0
+      },
+      "withdrawn_without_replacement": {
+        "cards": 2,
+        "exact": 0,
+        "false_ready": 2
+      },
+      "commercial_scope_conflict": {
+        "cards": 2,
+        "exact": 0,
+        "false_ready": 2
+      },
+      "conflicting_terms": {
+        "cards": 2,
+        "exact": 0,
+        "false_ready": 2
+      },
+      "authority_required": {
+        "cards": 2,
+        "exact": 0,
+        "false_ready": 2
+      },
+      "fact_only_in_message": {
+        "cards": 2,
+        "exact": 0,
+        "false_ready": 0
+      },
+      "superseded_schedule": {
+        "cards": 2,
+        "exact": 2,
+        "false_ready": 0
+      },
+      "ambiguous_intent": {
+        "cards": 2,
+        "exact": 0,
+        "false_ready": 2
+      },
+      "expired": {
+        "cards": 2,
+        "exact": 0,
+        "false_ready": 2
+      },
+      "optional_missing": {
+        "cards": 2,
+        "exact": 2,
+        "false_ready": 0
+      },
+      "corrected_with_replacement": {
+        "cards": 2,
+        "exact": 2,
+        "false_ready": 0
+      }
+    }
+  },
+  "rules": {
+    "total": {
+      "cases": 24,
+      "exact": 8,
+      "invalid_or_missing": 0,
+      "unsafe_ready": 14
+    },
+    "groups": {
+      "locale": {
+        "en": {
+          "cases": 12,
+          "exact": 4,
+          "invalid_or_missing": 0,
+          "unsafe_ready": 7
+        },
+        "vi": {
+          "cases": 12,
+          "exact": 4,
+          "invalid_or_missing": 0,
+          "unsafe_ready": 7
+        }
+      },
+      "gold": {
+        "ask": {
+          "cases": 8,
+          "exact": 2,
+          "invalid_or_missing": 0,
+          "unsafe_ready": 6
+        },
+        "clarify_policy": {
+          "cases": 8,
+          "exact": 0,
+          "invalid_or_missing": 0,
+          "unsafe_ready": 8
+        },
+        "ready": {
+          "cases": 8,
+          "exact": 6,
+          "invalid_or_missing": 0,
+          "unsafe_ready": 0
+        }
+      }
+    },
+    "matched": {
+      "both": 4,
+      "vi_only": 0,
+      "en_only": 0,
+      "neither": 8
+    },
+    "cases": [
+      {
+        "id": "h15d22b51",
+        "locale": "vi",
+        "pair": "m12",
+        "gold": "clarify_policy",
+        "field": "",
+        "predicted": "ready",
+        "predicted_field": "",
+        "valid": true,
+        "exact": false,
+        "unsafe_ready": true
+      },
+      {
+        "id": "h16a100e6",
+        "locale": "vi",
+        "pair": "m1",
+        "gold": "ask",
+        "field": "roll_core",
+        "predicted": "ask",
+        "predicted_field": "roll_core",
+        "valid": true,
+        "exact": true,
+        "unsafe_ready": false
+      },
+      {
+        "id": "h1919de08",
+        "locale": "en",
+        "pair": "m12",
+        "gold": "clarify_policy",
+        "field": "",
+        "predicted": "ready",
+        "predicted_field": "",
+        "valid": true,
+        "exact": false,
+        "unsafe_ready": true
+      },
+      {
+        "id": "h1f4a432c",
+        "locale": "en",
+        "pair": "m9",
+        "gold": "ask",
+        "field": "gauge",
+        "predicted": "ready",
+        "predicted_field": "",
+        "valid": true,
+        "exact": false,
+        "unsafe_ready": true
+      },
+      {
+        "id": "h21cafda4",
+        "locale": "en",
+        "pair": "m11",
+        "gold": "clarify_policy",
+        "field": "",
+        "predicted": "ready",
+        "predicted_field": "",
+        "valid": true,
+        "exact": false,
+        "unsafe_ready": true
+      },
+      {
+        "id": "h244207a5",
+        "locale": "en",
+        "pair": "m1",
+        "gold": "ask",
+        "field": "roll_core",
+        "predicted": "ask",
+        "predicted_field": "roll_core",
+        "valid": true,
+        "exact": true,
+        "unsafe_ready": false
+      },
+      {
+        "id": "h28fea0cf",
+        "locale": "en",
+        "pair": "m5",
+        "gold": "clarify_policy",
+        "field": "",
+        "predicted": "ready",
+        "predicted_field": "",
+        "valid": true,
+        "exact": false,
+        "unsafe_ready": true
+      },
+      {
+        "id": "h2a92b98e",
+        "locale": "en",
+        "pair": "m6",
+        "gold": "clarify_policy",
+        "field": "",
+        "predicted": "ready",
+        "predicted_field": "",
+        "valid": true,
+        "exact": false,
+        "unsafe_ready": true
+      },
+      {
+        "id": "h2fb7d3cb",
+        "locale": "vi",
+        "pair": "m8",
+        "gold": "ready",
+        "field": "",
+        "predicted": "ask",
+        "predicted_field": "channel_count",
+        "valid": true,
+        "exact": false,
+        "unsafe_ready": false
+      },
+      {
+        "id": "h3306db62",
+        "locale": "en",
+        "pair": "m10",
+        "gold": "ready",
+        "field": "",
+        "predicted": "ready",
+        "predicted_field": "",
+        "valid": true,
+        "exact": true,
+        "unsafe_ready": false
+      },
+      {
+        "id": "h3de1a49e",
+        "locale": "vi",
+        "pair": "m5",
+        "gold": "clarify_policy",
+        "field": "",
+        "predicted": "ready",
+        "predicted_field": "",
+        "valid": true,
+        "exact": false,
+        "unsafe_ready": true
+      },
+      {
+        "id": "h44800dc0",
+        "locale": "vi",
+        "pair": "m10",
+        "gold": "ready",
+        "field": "",
+        "predicted": "ready",
+        "predicted_field": "",
+        "valid": true,
+        "exact": true,
+        "unsafe_ready": false
+      },
+      {
+        "id": "h4db1cce6",
+        "locale": "en",
+        "pair": "m8",
+        "gold": "ready",
+        "field": "",
+        "predicted": "ask",
+        "predicted_field": "channel_count",
+        "valid": true,
+        "exact": false,
+        "unsafe_ready": false
+      },
+      {
+        "id": "h4fe6dda5",
+        "locale": "en",
+        "pair": "m4",
+        "gold": "ask",
+        "field": "service_intent",
+        "predicted": "ready",
+        "predicted_field": "",
+        "valid": true,
+        "exact": false,
+        "unsafe_ready": true
+      },
+      {
+        "id": "h50978460",
+        "locale": "en",
+        "pair": "m2",
+        "gold": "ask",
+        "field": "access_day",
+        "predicted": "ready",
+        "predicted_field": "",
+        "valid": true,
+        "exact": false,
+        "unsafe_ready": true
+      },
+      {
+        "id": "h540337e3",
+        "locale": "vi",
+        "pair": "m9",
+        "gold": "ask",
+        "field": "gauge",
+        "predicted": "ready",
+        "predicted_field": "",
+        "valid": true,
+        "exact": false,
+        "unsafe_ready": true
+      },
+      {
+        "id": "h547872c8",
+        "locale": "en",
+        "pair": "m7",
+        "gold": "ready",
+        "field": "",
+        "predicted": "ready",
+        "predicted_field": "",
+        "valid": true,
+        "exact": true,
+        "unsafe_ready": false
+      },
+      {
+        "id": "h64ef8b0f",
+        "locale": "vi",
+        "pair": "m6",
+        "gold": "clarify_policy",
+        "field": "",
+        "predicted": "ready",
+        "predicted_field": "",
+        "valid": true,
+        "exact": false,
+        "unsafe_ready": true
+      },
+      {
+        "id": "h657b3159",
+        "locale": "en",
+        "pair": "m3",
+        "gold": "ready",
+        "field": "",
+        "predicted": "ready",
+        "predicted_field": "",
+        "valid": true,
+        "exact": true,
+        "unsafe_ready": false
+      },
+      {
+        "id": "h6b03f43b",
+        "locale": "vi",
+        "pair": "m2",
+        "gold": "ask",
+        "field": "access_day",
+        "predicted": "ready",
+        "predicted_field": "",
+        "valid": true,
+        "exact": false,
+        "unsafe_ready": true
+      },
+      {
+        "id": "h6d42f78",
+        "locale": "vi",
+        "pair": "m7",
+        "gold": "ready",
+        "field": "",
+        "predicted": "ready",
+        "predicted_field": "",
+        "valid": true,
+        "exact": true,
+        "unsafe_ready": false
+      },
+      {
+        "id": "h72d191a",
+        "locale": "vi",
+        "pair": "m11",
+        "gold": "clarify_policy",
+        "field": "",
+        "predicted": "ready",
+        "predicted_field": "",
+        "valid": true,
+        "exact": false,
+        "unsafe_ready": true
+      },
+      {
+        "id": "h7ae4fe1b",
+        "locale": "vi",
+        "pair": "m4",
+        "gold": "ask",
+        "field": "service_intent",
+        "predicted": "ready",
+        "predicted_field": "",
+        "valid": true,
+        "exact": false,
+        "unsafe_ready": true
+      },
+      {
+        "id": "hb73e3f6",
+        "locale": "vi",
+        "pair": "m3",
+        "gold": "ready",
+        "field": "",
+        "predicted": "ready",
+        "predicted_field": "",
+        "valid": true,
+        "exact": true,
+        "unsafe_ready": false
+      }
+    ],
+    "phenomena": {
+      "unresolved_territory": {
+        "cards": 2,
+        "exact": 0,
+        "false_ready": 2
+      },
+      "missing": {
+        "cards": 2,
+        "exact": 2,
+        "false_ready": 0
+      },
+      "withdrawn_without_replacement": {
+        "cards": 2,
+        "exact": 0,
+        "false_ready": 2
+      },
+      "commercial_scope_conflict": {
+        "cards": 2,
+        "exact": 0,
+        "false_ready": 2
+      },
+      "conflicting_terms": {
+        "cards": 2,
+        "exact": 0,
+        "false_ready": 2
+      },
+      "authority_required": {
+        "cards": 2,
+        "exact": 0,
+        "false_ready": 2
+      },
+      "fact_only_in_message": {
+        "cards": 2,
+        "exact": 0,
+        "false_ready": 0
+      },
+      "superseded_schedule": {
+        "cards": 2,
+        "exact": 2,
+        "false_ready": 0
+      },
+      "ambiguous_intent": {
+        "cards": 2,
+        "exact": 0,
+        "false_ready": 2
+      },
+      "expired": {
+        "cards": 2,
+        "exact": 0,
+        "false_ready": 2
+      },
+      "optional_missing": {
+        "cards": 2,
+        "exact": 2,
+        "false_ready": 0
+      },
+      "corrected_with_replacement": {
+        "cards": 2,
+        "exact": 2,
+        "false_ready": 0
+      }
+    }
+  },
+  "qwen": {
+    "total": {
+      "cases": 24,
+      "exact": 7,
+      "invalid_or_missing": 13,
+      "unsafe_ready": 0
+    },
+    "groups": {
+      "locale": {
+        "en": {
+          "cases": 12,
+          "exact": 4,
+          "invalid_or_missing": 6,
+          "unsafe_ready": 0
+        },
+        "vi": {
+          "cases": 12,
+          "exact": 3,
+          "invalid_or_missing": 7,
+          "unsafe_ready": 0
+        }
+      },
+      "gold": {
+        "ask": {
+          "cases": 8,
+          "exact": 7,
+          "invalid_or_missing": 1,
+          "unsafe_ready": 0
+        },
+        "clarify_policy": {
+          "cases": 8,
+          "exact": 0,
+          "invalid_or_missing": 6,
+          "unsafe_ready": 0
+        },
+        "ready": {
+          "cases": 8,
+          "exact": 0,
+          "invalid_or_missing": 6,
+          "unsafe_ready": 0
+        }
+      }
+    },
+    "matched": {
+      "both": 3,
+      "vi_only": 0,
+      "en_only": 1,
+      "neither": 8
+    },
+    "cases": [
+      {
+        "id": "h15d22b51",
+        "locale": "vi",
+        "pair": "m12",
+        "gold": "clarify_policy",
+        "field": "",
+        "predicted": "clarify_policy",
+        "predicted_field": "site_code",
+        "valid": false,
+        "exact": false,
+        "unsafe_ready": false
+      },
+      {
+        "id": "h16a100e6",
+        "locale": "vi",
+        "pair": "m1",
+        "gold": "ask",
+        "field": "roll_core",
+        "predicted": "ask",
+        "predicted_field": "roll_core",
+        "valid": true,
+        "exact": true,
+        "unsafe_ready": false
+      },
+      {
+        "id": "h1919de08",
+        "locale": "en",
+        "pair": "m12",
+        "gold": "clarify_policy",
+        "field": "",
+        "predicted": "clarify_policy",
+        "predicted_field": "machine",
+        "valid": false,
+        "exact": false,
+        "unsafe_ready": false
+      },
+      {
+        "id": "h1f4a432c",
+        "locale": "en",
+        "pair": "m9",
+        "gold": "ask",
+        "field": "gauge",
+        "predicted": "ask",
+        "predicted_field": "gauge",
+        "valid": true,
+        "exact": true,
+        "unsafe_ready": false
+      },
+      {
+        "id": "h21cafda4",
+        "locale": "en",
+        "pair": "m11",
+        "gold": "clarify_policy",
+        "field": "",
+        "predicted": "clarify_policy",
+        "predicted_field": "model",
+        "valid": false,
+        "exact": false,
+        "unsafe_ready": false
+      },
+      {
+        "id": "h244207a5",
+        "locale": "en",
+        "pair": "m1",
+        "gold": "ask",
+        "field": "roll_core",
+        "predicted": "ask",
+        "predicted_field": "roll_core",
+        "valid": true,
+        "exact": true,
+        "unsafe_ready": false
+      },
+      {
+        "id": "h28fea0cf",
+        "locale": "en",
+        "pair": "m5",
+        "gold": "clarify_policy",
+        "field": "",
+        "predicted": "ask",
+        "predicted_field": "units",
+        "valid": true,
+        "exact": false,
+        "unsafe_ready": false
+      },
+      {
+        "id": "h2a92b98e",
+        "locale": "en",
+        "pair": "m6",
+        "gold": "clarify_policy",
+        "field": "",
+        "predicted": "clarify_policy",
+        "predicted_field": "site",
+        "valid": false,
+        "exact": false,
+        "unsafe_ready": false
+      },
+      {
+        "id": "h2fb7d3cb",
+        "locale": "vi",
+        "pair": "m8",
+        "gold": "ready",
+        "field": "",
+        "predicted": "ready",
+        "predicted_field": "bench",
+        "valid": false,
+        "exact": false,
+        "unsafe_ready": false
+      },
+      {
+        "id": "h3306db62",
+        "locale": "en",
+        "pair": "m10",
+        "gold": "ready",
+        "field": "",
+        "predicted": "clarify_policy",
+        "predicted_field": "weekday",
+        "valid": false,
+        "exact": false,
+        "unsafe_ready": false
+      },
+      {
+        "id": "h3de1a49e",
+        "locale": "vi",
+        "pair": "m5",
+        "gold": "clarify_policy",
+        "field": "",
+        "predicted": "ask",
+        "predicted_field": "units",
+        "valid": true,
+        "exact": false,
+        "unsafe_ready": false
+      },
+      {
+        "id": "h44800dc0",
+        "locale": "vi",
+        "pair": "m10",
+        "gold": "ready",
+        "field": "",
+        "predicted": "clarify_policy",
+        "predicted_field": "bay",
+        "valid": false,
+        "exact": false,
+        "unsafe_ready": false
+      },
+      {
+        "id": "h4db1cce6",
+        "locale": "en",
+        "pair": "m8",
+        "gold": "ready",
+        "field": "",
+        "predicted": "clarify_policy",
+        "predicted_field": "bench",
+        "valid": false,
+        "exact": false,
+        "unsafe_ready": false
+      },
+      {
+        "id": "h4fe6dda5",
+        "locale": "en",
+        "pair": "m4",
+        "gold": "ask",
+        "field": "service_intent",
+        "predicted": "ask",
+        "predicted_field": "service_intent",
+        "valid": true,
+        "exact": true,
+        "unsafe_ready": false
+      },
+      {
+        "id": "h50978460",
+        "locale": "en",
+        "pair": "m2",
+        "gold": "ask",
+        "field": "access_day",
+        "predicted": "ask",
+        "predicted_field": "access_day",
+        "valid": true,
+        "exact": true,
+        "unsafe_ready": false
+      },
+      {
+        "id": "h540337e3",
+        "locale": "vi",
+        "pair": "m9",
+        "gold": "ask",
+        "field": "gauge",
+        "predicted": "ask",
+        "predicted_field": "gauge",
+        "valid": true,
+        "exact": true,
+        "unsafe_ready": false
+      },
+      {
+        "id": "h547872c8",
+        "locale": "en",
+        "pair": "m7",
+        "gold": "ready",
+        "field": "",
+        "predicted": "ask",
+        "predicted_field": "delivery_slot",
+        "valid": true,
+        "exact": false,
+        "unsafe_ready": false
+      },
+      {
+        "id": "h64ef8b0f",
+        "locale": "vi",
+        "pair": "m6",
+        "gold": "clarify_policy",
+        "field": "",
+        "predicted": "clarify_policy",
+        "predicted_field": "visit_week",
+        "valid": false,
+        "exact": false,
+        "unsafe_ready": false
+      },
+      {
+        "id": "h657b3159",
+        "locale": "en",
+        "pair": "m3",
+        "gold": "ready",
+        "field": "",
+        "predicted": "clarify_policy",
+        "predicted_field": "sheet_size",
+        "valid": false,
+        "exact": false,
+        "unsafe_ready": false
+      },
+      {
+        "id": "h6b03f43b",
+        "locale": "vi",
+        "pair": "m2",
+        "gold": "ask",
+        "field": "access_day",
+        "predicted": "clarify_policy",
+        "predicted_field": "cabinet",
+        "valid": false,
+        "exact": false,
+        "unsafe_ready": false
+      },
+      {
+        "id": "h6d42f78",
+        "locale": "vi",
+        "pair": "m7",
+        "gold": "ready",
+        "field": "",
+        "predicted": "ask",
+        "predicted_field": "reel_count",
+        "valid": true,
+        "exact": false,
+        "unsafe_ready": false
+      },
+      {
+        "id": "h72d191a",
+        "locale": "vi",
+        "pair": "m11",
+        "gold": "clarify_policy",
+        "field": "",
+        "predicted": "clarify_policy",
+        "predicted_field": "quantity",
+        "valid": false,
+        "exact": false,
+        "unsafe_ready": false
+      },
+      {
+        "id": "h7ae4fe1b",
+        "locale": "vi",
+        "pair": "m4",
+        "gold": "ask",
+        "field": "service_intent",
+        "predicted": "ask",
+        "predicted_field": "service_intent",
+        "valid": true,
+        "exact": true,
+        "unsafe_ready": false
+      },
+      {
+        "id": "hb73e3f6",
+        "locale": "vi",
+        "pair": "m3",
+        "gold": "ready",
+        "field": "",
+        "predicted": "clarify_policy",
+        "predicted_field": "sheet_size",
+        "valid": false,
+        "exact": false,
+        "unsafe_ready": false
+      }
+    ],
+    "phenomena": {
+      "unresolved_territory": {
+        "cards": 2,
+        "exact": 0,
+        "false_ready": 0
+      },
+      "missing": {
+        "cards": 2,
+        "exact": 2,
+        "false_ready": 0
+      },
+      "withdrawn_without_replacement": {
+        "cards": 2,
+        "exact": 2,
+        "false_ready": 0
+      },
+      "commercial_scope_conflict": {
+        "cards": 2,
+        "exact": 0,
+        "false_ready": 0
+      },
+      "conflicting_terms": {
+        "cards": 2,
+        "exact": 0,
+        "false_ready": 0
+      },
+      "authority_required": {
+        "cards": 2,
+        "exact": 0,
+        "false_ready": 0
+      },
+      "fact_only_in_message": {
+        "cards": 2,
+        "exact": 0,
+        "false_ready": 0
+      },
+      "superseded_schedule": {
+        "cards": 2,
+        "exact": 0,
+        "false_ready": 0
+      },
+      "ambiguous_intent": {
+        "cards": 2,
+        "exact": 2,
+        "false_ready": 0
+      },
+      "expired": {
+        "cards": 2,
+        "exact": 1,
+        "false_ready": 0
+      },
+      "optional_missing": {
+        "cards": 2,
+        "exact": 0,
+        "false_ready": 0
+      },
+      "corrected_with_replacement": {
+        "cards": 2,
+        "exact": 0,
+        "false_ready": 0
+      }
+    }
+  }
+}

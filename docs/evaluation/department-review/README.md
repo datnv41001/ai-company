@@ -1,5 +1,7 @@
 # Nghiệm thu liên phòng ban trong sandbox
 
+**Mốc lịch sử của bảng dưới là head `c5c63295`.** Tại mốc này, khách dưới MOQ được ghi nhận nhưng chưa có đường giao hồ sơ đó cho Sales tư vấn. Chỉ số `qualified_quotes` khi ấy đếm hồ sơ đủ điều kiện. Bộ alias pilot công khai là fixture. Xem [vòng sửa tiếp theo của PR #55](REVIEW-55-FOLLOWUP.md) khi nghiệm thu luồng tư vấn, chỉ số phát hành báo giá hoặc chấm bản nháp đầu.
+
 Người phụ trách chiến dịch cần biết đề xuất tối ưu đang dùng số liệu của kế hoạch nào. Sales và Service cần nhận đúng dữ liệu mà nội dung Marketing đã yêu cầu khách cung cấp, theo quyền được giao tại thời điểm xử lý. Người ký QA cần biết khi nào bộ kiểm tra có thể gắn cờ sai và khi nào vẫn phải đọc nguồn. Đây là ba công việc được kiểm định trong vòng này.
 
 | Finding | Quyết định và cách kiểm tra |

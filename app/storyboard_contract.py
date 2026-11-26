@@ -6,16 +6,16 @@ from .knowledge_store import canonical, digest
 
 def release_manifest(version=1):
     contracts = {}
-    for stage, role, version, field in (
+    for stage, role, skill_version, field in (
         ("director", "ai-managing-director", video.DIRECTOR_VERSION, "assignment"),
         ("storyboard", video.ROLE, 1, "board_json"),
     ):
         contracts[stage] = dict(
             skill_id=stage,
-            skill_version=version,
+            skill_version=skill_version,
             role_id=role,
-            contract_version=version,
-            adapter=f"{stage}@{version}",
+            contract_version=skill_version,
+            adapter=f"{stage}@{skill_version}",
             adapter_digest=video.source_digest(),
             qa_policy="wf08-source-and-revision@1",
             model="local",

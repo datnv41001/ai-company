@@ -1,11 +1,12 @@
 {
   "workflow_id": "WF-08/video-storyboard",
-  "workflow_version": 1,
+  "workflow_version": 2,
   "mode": "dynamic-v1",
   "profile": "video-storyboard",
   "knowledge_projection": "amc.marketing-manifest/2",
   "required": [
     "director",
+    "content",
     "storyboard"
   ],
   "required_outputs": [
@@ -14,12 +15,12 @@
   "contracts": {
     "director": {
       "skill_id": "director",
-      "skill_version": 6,
+      "skill_version": 7,
       "role_id": "ai-managing-director",
-      "contract_version": 6,
-      "adapter": "director@6",
-      "adapter_digest": "1cff466d97f960a7ca4c2eb2b5e6507e3d659412318ab50d1b0b7af9ac4a5ac9",
-      "qa_policy": "wf08-source-and-revision@1",
+      "contract_version": 7,
+      "adapter": "director@7",
+      "adapter_digest": "9909b2b2d302e9ba87cb89a6006031cad8fc61183b21a77271ac129cb2a6f73c",
+      "qa_policy": "wf08-brief-fulfillment@2",
       "model": "local",
       "inputs": [
         "brief",
@@ -52,7 +53,7 @@
       "max_attempts": 3,
       "timeout_seconds": 300,
       "owner": "agency creative lead",
-      "objective": "Produce a grounded illustrated storyboard for internal editing",
+      "objective": "Assign the signed brief to Content, then pass its verified handoff to Storyboard.",
       "forbidden_actions": [
         "external_write",
         "publish",
@@ -62,12 +63,12 @@
     },
     "storyboard": {
       "skill_id": "storyboard",
-      "skill_version": 1,
+      "skill_version": 2,
       "role_id": "ai-video-storyboard",
-      "contract_version": 1,
-      "adapter": "storyboard@1",
-      "adapter_digest": "1cff466d97f960a7ca4c2eb2b5e6507e3d659412318ab50d1b0b7af9ac4a5ac9",
-      "qa_policy": "wf08-source-and-revision@1",
+      "contract_version": 2,
+      "adapter": "storyboard@2",
+      "adapter_digest": "9909b2b2d302e9ba87cb89a6006031cad8fc61183b21a77271ac129cb2a6f73c",
+      "qa_policy": "wf08-brief-fulfillment@2",
       "model": "local",
       "inputs": [
         "brief",
@@ -93,6 +94,56 @@
         "pinned scope",
         "deterministic validation"
       ],
+      "predecessors": [
+        "content"
+      ],
+      "tools": [],
+      "approval": "independent_internal_revision_qa",
+      "node_cap": 0,
+      "max_attempts": 3,
+      "timeout_seconds": 300,
+      "owner": "agency creative lead",
+      "objective": "Build the storyboard from the verified Content handoff and record brief coverage.",
+      "forbidden_actions": [
+        "external_write",
+        "publish",
+        "spend"
+      ],
+      "fallback": "agency creative editor"
+    },
+    "content": {
+      "skill_id": "content",
+      "skill_version": 5,
+      "role_id": "ai-copywriter-content-strategist",
+      "contract_version": 5,
+      "adapter": "content@5",
+      "adapter_digest": "9909b2b2d302e9ba87cb89a6006031cad8fc61183b21a77271ac129cb2a6f73c",
+      "qa_policy": "wf08-brief-fulfillment@2",
+      "model": "local",
+      "inputs": [
+        "brief",
+        "brand",
+        "sources"
+      ],
+      "outputs": [
+        "handoff_json"
+      ],
+      "output_schema": {
+        "type": "object",
+        "properties": {
+          "handoff_json": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "handoff_json"
+        ],
+        "additionalProperties": false
+      },
+      "success_criteria": [
+        "pinned scope",
+        "deterministic validation"
+      ],
       "predecessors": [],
       "tools": [],
       "approval": "independent_internal_revision_qa",
@@ -100,7 +151,7 @@
       "max_attempts": 3,
       "timeout_seconds": 300,
       "owner": "agency creative lead",
-      "objective": "Produce a grounded illustrated storyboard for internal editing",
+      "objective": "Prepare a source-bound vertical-social script and production direction.",
       "forbidden_actions": [
         "external_write",
         "publish",

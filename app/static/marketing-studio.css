@@ -2,6 +2,10 @@
 .marketing-studio > div { padding-block: .5rem; }
 .studio-nav { display: flex; flex-wrap: wrap; gap: .5rem; margin-block: .75rem; }
 .studio-nav [aria-pressed=true] { text-decoration: underline; text-underline-offset: .25em; }
+@media (max-width: 600px) {
+  .marketing-studio .studio-nav { flex-wrap: nowrap; overflow-x: auto; max-width: 100%; padding: .25rem; scroll-snap-type: x proximity; }
+  .marketing-studio .studio-nav button { flex: 0 0 auto; min-height: 44px; scroll-snap-align: center; }
+}
 .studio-layout { display: grid; grid-template-columns: minmax(0, 3fr) minmax(14rem, 2fr); gap: clamp(.75rem, 2vw, 2rem); }
 .studio-layout > * { min-width: 0; overflow-wrap: anywhere; }
 .studio-layout aside { align-self: start; padding: 1rem; border: 1px solid var(--border); border-radius: var(--radius); background: var(--layer); }

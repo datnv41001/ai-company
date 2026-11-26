@@ -100,6 +100,7 @@ def require_all_approved(db, doc, run, *, lock_reviewers=True):
 
 def present(db, doc, run):
     from .c3_journey import candidates
+    from .commercial_meaning import assertion, suggestions
 
     workflow = run.knowledge["registry"]["workflow"]
     bundle = doc.content.get("studio")
@@ -117,6 +118,10 @@ def present(db, doc, run):
         .filter_by(tenant_id=doc.tenant_id, subject_id=doc.id, event="studio.saved")
         .order_by(AuditEvent.occurred_at.desc(), AuditEvent.id.desc())
     )
+    references = [{"handle": f["id"], "text": " ".join(c3_order_units.fact_lines(f, projection)),
+                   "assertion": assertion(f, projection)}
+                  for f in projection["facts"]]
+    findings = (doc.qa_evidence or {}).get("content_evidence", {}).get("statements", [])
     return {
         "version": c3_studio.VERSION,
         "workflow": workflow,
@@ -139,10 +144,9 @@ def present(db, doc, run):
         "asset_digests": {g: asset_digest(doc, run, g, v) for g, v in groups.items()},
         "approvals": signoffs(db, doc, run) if bundle else {},
         "quality_issues": hints,
-        "references": [
-            {"handle": f["id"], "text": " ".join(c3_order_units.fact_lines(f, run.knowledge["c3_projection"]))} for f in run.knowledge["c3_projection"]["facts"]
-        ],
-        "findings": (doc.qa_evidence or {}).get("content_evidence", {}).get("statements", []),
+        "references": references,
+        "findings": findings,
+        "segment_suggestions": suggestions(findings, projection, references),
         "preview": {"title": doc.title, "body": doc.content.get("client_preview", "")},
     }
 

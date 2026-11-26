@@ -7,7 +7,7 @@ to independent domain review; a role-level list of citations is never sentence e
 import re
 import unicodedata
 
-from . import c3_marketing
+from . import c3_marketing, commercial_meaning
 from .commercial_scope import TERRITORIES, TERRITORY_BY_LABEL
 from .knowledge_store import canonical, digest
 
@@ -150,6 +150,10 @@ def classify(line, facts, complete, fixed, projection, *, precise=False):
             if fact.get("qualifiers"):
                 return fact["category"], "contradiction", "missing_qualifier", [fact["id"]]
             return fact["category"], "verified", "exact_declaration", [fact["id"]]
+    if precise:
+        conflict = commercial_meaning.contradiction(bare, facts, projection)
+        if conflict:
+            return conflict
     if bare == normalized(projection.get("product", "")) and bare:
         return "product", "verified", "exact_scope", ["PRODUCT"]
     label, sep, value = bare.partition(":")

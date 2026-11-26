@@ -19,13 +19,22 @@
 | Được phép chạy production | Cần quyết định phát hành cho môi trường, quyền và tác động cụ thể, kèm bằng chứng an toàn và vận hành. |
 | Sẵn sàng thương mại | Cần quyết định GA cho toàn bộ V1, gồm bằng chứng giá trị, kinh tế, bảo mật, pháp lý và vận hành. [Điều kiện sản phẩm][prd] · [Sứ mệnh][mission] |
 
-Trong các bảng dưới đây, **Thành phần** có nghĩa phần việc ghi ở dòng đó đã có mã trên main. Liên kết chỉ rõ mã, ca thử hoặc biên nhận hiện có. **Đặc tả** có nghĩa sổ này mới xác nhận được yêu cầu ở phạm vi nêu. Cả hai nhãn đều giữ mở quyết định nghiệp vụ toàn hàng. Thử kỹ thuật và tích hợp được ghi riêng cho đúng phiên bản.
+## Các thay đổi đã vào main sau mốc #48
+
+| Phạm vi | Trạng thái tại main sau #57 | Phần còn trên nhánh #58 |
+| --- | --- | --- |
+| MKT-07/08 và công việc sáng tạo | #51 đã vào main qua #56. Studio có nguồn chỉnh sửa, ba tỷ lệ PNG, video VP8 và landing/form sandbox với revision và receipt. [Hồ sơ #51](https://github.com/datnv41001/ai-company/tree/a5909321ed012c6ea99fcc0fdfadceb3c334c3ca) · [Tree đã tích hợp](evaluation/department-review/MAIN-56.json) | Hai bộ campaign, storyboard có điều kiện giá tham khảo v2 và phụ đề có kiểm thử. [Gói giao](evaluation/campaign-production-review/README.md) |
+| Handoff, CRM, reporting và Role Desk | #49–55 bổ sung KPI theo cohort, người nhận theo campaign, đối soát giao dịch và kiểm điều kiện trên snapshot. #57 sửa đúng đơn vị m², cho rút RFQ trước khi giao và tách treatment exposure của producer. [Biên nhận #56](evaluation/department-review/MAIN-56.json) · [Sửa #57](evaluation/department-review/R57-MATERIAL-UNITS.md) | Nghiên cứu grammar, preflight measurement và phiếu mời practitioner. Chưa có binding mới vào runtime cho model hoặc connector ngoài. |
+
+## Cách đối chiếu các bảng lịch sử
+
+Các bảng 49 module, 37 vai trò và 24 workflow bên dưới ghi **main tại PR #48**. Đọc cùng bảng thay đổi ở trên để xác định trạng thái hiện tại. Trong các bảng lịch sử, **Thành phần** có nghĩa phần việc ghi ở dòng đó đã có mã tại mốc #48. Liên kết chỉ rõ mã, ca thử hoặc biên nhận hiện có. **Đặc tả** có nghĩa sổ này mới xác nhận được yêu cầu ở phạm vi nêu. Cả hai nhãn đều giữ mở quyết định nghiệp vụ toàn hàng. Thử kỹ thuật và tích hợp được ghi riêng cho đúng phiên bản.
 
 ## 49 module
 
 Mỗi ID dưới đây tra được mô tả đầy đủ ở mục 3 của [đặc tả][prd]. Với nhóm ID chung dòng, phạm vi hoặc giới hạn áp dụng cho từng ID theo thứ tự ghi.
 
-| ID | Trạng thái trên main | Phần đã có, phần còn mở và căn cứ |
+| ID | Trạng thái tại main #48 | Phần đã có, phần còn mở và căn cứ |
 |---|---|---|
 | SAA-01 | Thành phần | Đăng ký tài khoản, xác minh qua hộp thư thử, tạo hoặc tham gia workspace. Hành trình mua gói thương mại còn mở. [Onboarding](PR16-ONBOARDING.md) |
 | SAA-02 | Thành phần | Mời và xác minh, quota admission, thu hồi phiên thiết bị, refresh và tái xác thực. MFA, SSO và vận hành email thật còn mở. [Phiên thiết bị](DEVICE-SESSIONS-A1.md) · [Ca tranh chấp phiên](../tests/test_device_sessions.py) |
@@ -42,7 +51,7 @@ Mỗi ID dưới đây tra được mô tả đầy đủ ở mục 3 của [đ�
 | MKT-01, MKT-02 | Thành phần | WF-03 soạn nghiên cứu từ nguồn ghim. Brief lưu ICP và tình huống mua. Cần kiểm tính đại diện thị trường và xác minh phân khúc với khách. [Đối chiếu MKT][mkt] · [Các lần chạy][commission] |
 | MKT-03, MKT-04 | Thành phần | Có guideline, revision, claim và dữ kiện sản phẩm. WF-03 tạo đề xuất định vị. Quyền sử dụng thực, battlecard và kế hoạch ra mắt chưa được nghiệp vụ duyệt. [Tri thức](business-profile/C1-RUNBOOK.md) · [Đối chiếu MKT][mkt] |
 | MKT-05, MKT-06 | Thành phần | Có chiến lược và kế hoạch đo, planner ghim brief, manifest, deadline, ngân sách và giao cho worker. Chuyên viên chưa nghiệm thu lịch và chiến lược đa chiến dịch. [Hành trình][engine] · [Commission][commission] |
-| MKT-07, MKT-08 | Thành phần | Có lịch biên tập, brief ảnh/video, QA trường và snapshot. Đầu ra Creative trên main là brief phục vụ người thiết kế. File ảnh/video dựng được thuộc đề xuất #51 bên dưới. [Hai bộ tài liệu theo kênh][factory] |
+| MKT-07, MKT-08 | Thành phần | Có lịch biên tập, brief ảnh/video, QA trường và snapshot. Ở mốc #48, đầu ra là brief cho người thiết kế. #51 bổ sung file ảnh/video và đã vào main qua #56. [Hai bộ tài liệu theo kênh][factory] |
 | MKT-09, MKT-10 | Thành phần | Copy social, kế hoạch/mẫu quảng cáo, QA và diễn tập đúng nhóm tài sản. Đăng bài, moderation, chi tiền, xác nhận nền tảng thật còn mở. [Studio theo kênh][factory] · [Biên nhận thực thi cục bộ][dispatch] |
 | MKT-11, MKT-12 | Thành phần | WF-13 cho landing copy, CTA và SEO metadata qua Studio. Audit/crawl, CMS, trang production và thử nghiệm CRO thực còn mở. [Bản giao Studio][studio] · [Commission][commission] |
 | MKT-13 | Thành phần | Ghi consent, RFQ đến Sales và lịch hẹn tới hoàn thành/hủy/vắng. CRM bên ngoài, nurture và retention còn mở. [Giao Sales][engine] · [Lịch hẹn][ops] |
@@ -97,7 +106,7 @@ Tất cả **24/24 workflow mẹ** giữ nhãn catalog `specification_only`. Hai
 
 ## Lịch sử bốn đề xuất tại mốc main #48
 
-Ngày 26/11/2026, bốn PR dưới đây đang mở dưới dạng draft, xếp nối nhau. Mỗi dòng là hiện thực và bằng chứng kỹ thuật **trên nhánh đề xuất**. Kiểm lại merge commit, cây và CI trên main trước khi thay đổi trạng thái tương ứng ở trên.
+Khi lập bảng ở mốc #48, bốn PR dưới đây là các draft xếp nối nhau. Bảng giữ nguyên head và bằng chứng ở thời điểm đó. Các thay đổi đã vào main qua #56. [Đối chiếu ancestry, tree và CI](evaluation/department-review/MAIN-56.json)
 
 | PR và base | Head khi đối chiếu | Phần bổ sung đề xuất và hồ sơ |
 |---|---|---|

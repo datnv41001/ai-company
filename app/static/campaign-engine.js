@@ -13,6 +13,10 @@ function createCampaignEngine(api) {
     shared:'Đã giao khách',qa_passed:'Đã qua QA',business_accepted:'Đã được tiếp nhận',fixture_accepted:'Nghiệm thu mô phỏng',incomplete:'Chưa hoàn tất'};
   const origins = {staff_saved_studio_revision:'Bản đã lưu trong Studio',staff_saved_revision:'Bản do tài khoản biên tập lưu',
     workforce_draft:'Bản nháp từ Workforce','deterministic-composition/1':'Soạn theo quy tắc'};
+  const departments = {Strategy:'Chiến lược',Analytics:'Phân tích',Content:'Nội dung',Social:'Mạng xã hội',
+    Media:'Quảng cáo',Design:'Thiết kế','Campaign Manager':'Điều phối chiến dịch'};
+  const department = role => departments[role] || role;
+  const channelName = value => ({web:'Trang web',search:'Tìm kiếm',social:'Mạng xã hội',email:'Email'})[value.toLowerCase()] || value;
   const label = v => states[v] || v || 'Chưa ghi nhận';
   let tenant = '', role = '', actor = '', generation = 0, abort, selected = '', campaigns = [];
   function add(parent, tag, title, cls) {
@@ -76,17 +80,27 @@ function createCampaignEngine(api) {
       const node=add(form,'label'), check=add(node,'input');check.type='checkbox';check.value=item.id;
       check.checked=Object.values(old?.manifests || {}).some(ref=>ref.id===item.id);
       node.append(document.createTextNode(item.workflow.split('/')[0]+' · '+item.product+' · '+item.audience+' · '+item.digest.slice(0,8)));
+      if(item.channel)add(node,'small',channelName(item.channel)+' · '+item.objective+' · '+item.kpi);
+      if(item.limits)add(node,'small','Tối đa '+item.limits.max_duration_days+' ngày · '+money(item.limits.max_media_budget_vnd)+' truyền thông');
       return check;
     });
     const target=field(form,'Kết quả mong muốn','text',old?.target_outcome||'',false);
+    const outcomes=add(form,'datalist');
+    outcomes.id='engine-approved-outcomes';
+    target.setAttribute('list',outcomes.id);
+    for(const value of new Set(planner.choices.flatMap(c=>[c.objective,c.kpi]).filter(Boolean))){
+      add(outcomes,'option').value=value;
+    }
     const days=field(form,'Thời hạn (ngày)','number',old?.duration_days||14);days.min=1;days.max=180;
     const budget=field(form,'Trần chi phí mô phỏng (VND)','number',old?.budget_vnd??0);budget.min=0;
+    const ai=field(form,'Hạn mức sản xuất AI mỗi lượt (µUSD)','number',old?.ai_budget_microusd_per_run??10000);
+    ai.min=0;ai.max=1000000;
     const channels=field(form,'Kênh đề xuất (cách nhau bằng dấu phẩy)','text',(old?.channels||[]).join(', '),false);
     command(form,'Lưu đề xuất',()=>{
       const ids=selections.filter(input=>input.checked).map(input=>input.value);
       if(!ids.length || ids.length>2)throw Error('Chọn một hoặc hai hồ sơ, mỗi workflow một hồ sơ.');
       return {path:'/engine/plans',idField:'key',payload:{manifest_ids:ids,expected_revision:planner.revisions[0]?.revision||0,
-        duration_days:days.valueAsNumber,budget_vnd:budget.valueAsNumber,...(target.value?{target_outcome:target.value}:{}),
+        duration_days:days.valueAsNumber,ai_budget_microusd_per_run:ai.valueAsNumber,budget_vnd:budget.valueAsNumber,...(target.value?{target_outcome:target.value}:{}),
         ...(channels.value?{channels:channels.value.split(',').map(x=>x.trim()).filter(Boolean)}:{})}};
     },{form:true});
   }
@@ -94,6 +108,8 @@ function createCampaignEngine(api) {
     const active=planner.active, proposal=planner.proposed, plan=active||proposal;
     const title=campaigns.find(item=>item.id===selected)?.name;
     caption.textContent=title+(plan?' · '+plan.product+' · '+plan.audience:'');
+    const nav=add(board,'nav',null,'engine-nav');
+    nav.setAttribute('aria-label','Các phần của chiến dịch');
     const kpis=add(board,'div',null,'engine-kpis');
     const report=ops.report;
     for(const [caption,value] of [['Kế hoạch được duyệt',active?'v'+active.revision:'Chưa có'],
@@ -103,8 +119,12 @@ function createCampaignEngine(api) {
     }
     const grid=add(board,'div',null,'engine-grid'), goals=card(grid,'Mục tiêu và phiên bản');
     if(plan){line(goals,plan.objective,plan.target_outcome!==plan.objective?plan.target_outcome:'',label(plan.status));
-      add(goals,'p',plan.measurement_plan.kpi);add(goals,'small','Kênh đề xuất · '+plan.channels.join(', '));
-      add(goals,'small','Ngân sách đề xuất '+money(plan.budget_vnd)+' · '+plan.duration_days+' ngày');
+      add(goals,'p',plan.measurement_plan.kpi);
+      const facts=add(goals,'dl',null,'engine-facts');
+      for(const [term,value] of [['Kênh sản xuất',plan.channels.map(channelName).join(', ')],['Thời hạn',plan.duration_days+' ngày'],
+        ['Ngân sách truyền thông mô phỏng',money(plan.budget_vnd)],['Hạn mức AI mỗi lượt',number.format(plan.ai_budget_microusd_per_run??10000)+' µUSD']]){
+        add(facts,'dt',term);add(facts,'dd',value);
+      }
       if(plan.research_gaps?.length)add(goals,'p','Cần làm rõ: '+plan.research_gaps.join(' · '));}
     if(planner.revisions.length>1){
       const versions=details(goals,'Lịch sử kế hoạch');
@@ -120,14 +140,14 @@ function createCampaignEngine(api) {
       for(const [kind,ref] of Object.entries(proposal.manifests))
         line(proposed,kinds[kind],ref.workflow+' · Brief '+ref.brief_id+' · Manifest '+ref.id+' · SHA-256 '+ref.digest);
       for(const item of proposal.work_packages)
-        line(proposed,kinds[item.kind]||item.kind,item.role+' · '+item.criteria,'Ngày '+item.due_day);
+        line(proposed,kinds[item.kind]||item.kind,department(item.role)+' · '+item.criteria,'Ngày '+item.due_day);
       add(proposed,'small','SHA-256 kế hoạch · '+proposal.digest);
       command(proposed,'Duyệt phiên bản '+proposal.revision,()=>({path:'/engine/plans/'+proposal.id+'/approve',
         idField:'key',payload:{expected_digest:proposal.digest}}));
     }
     planEditor(goals,planner);
     const timeline=card(grid,'Lịch làm việc và phân công');
-    if(plan)for(const item of plan.work_packages)line(timeline,kinds[item.kind]||item.kind,item.role+' · '+item.criteria,'Ngày '+item.due_day);
+    if(plan)for(const item of plan.work_packages)line(timeline,kinds[item.kind]||item.kind,department(item.role)+' · '+item.criteria,'Ngày '+item.due_day);
     else add(timeline,'p','Lịch và vai trò phụ trách xuất hiện sau khi lập kế hoạch.');
     const assets=card(grid,'Sản xuất và hàng chờ QA');
     for(const [kind] of Object.entries(active?.manifests||{})) {
@@ -161,7 +181,12 @@ function createCampaignEngine(api) {
       line(ledger,'Công việc được doanh nghiệp tiếp nhận','',String(ops.business_accepted_units));
       line(ledger,'Chi phí trên bản được tiếp nhận','Gồm chi phí sản xuất của các lần thử',money(ops.cost_per_business_accepted_vnd));
     }
-    if(active)controls(grid,active,production,ops);
+    const destinations=active?controls(grid,active,production,ops):{};
+    const progress=details(assets,'Tiến độ theo bộ phận');
+    for(const u of ops.work_units.filter(u=>u.plan_id===active?.id)){
+      line(progress,department(u.assigned_role),kinds[u.category]||u.category,label(u.status));
+    }
+    if(!active)add(progress,'p','Duyệt kế hoạch để giao việc cho từng bộ phận.');
     const funnel=card(grid,'Từ RFQ đến doanh thu sandbox');
     for(const [key,text] of [['sessions','Phiên'],['rfqs','Yêu cầu báo giá'],['qualified_leads','Đủ điều kiện'],['sales_accepted','Sales tiếp nhận'],
       ['quotations','Báo giá'],['confirmed_orders','Đơn xác nhận'],['cancelled_orders','Đơn hủy']])line(funnel,text,'',String(report[key]));
@@ -169,6 +194,18 @@ function createCampaignEngine(api) {
     line(funnel,'Có nguồn chiến dịch','',money(report.attributed_revenue_vnd));line(funnel,'Thiếu nguồn','',money(report.unattributed_revenue_vnd));
     line(funnel,'Hoàn tiền','',money(report.refunds_vnd));
     const opt=card(grid,'Đề xuất tối ưu');drawOptimization(opt,active,ops);
+    for(const [key,name,section] of [['overview','Tổng quan',kpis],['plan','Kế hoạch',goals],
+      ['production','Sản xuất',assets],['execution','Thực thi',destinations.actions],
+      ['sales','Lead và Sales',destinations.sales],['analytics','Phân tích',funnel]]) {
+      const jump=add(nav,'button',name,'secondary');
+      jump.type='button';
+      if(!section){jump.disabled=true;continue;}
+      section.id='engine-area-'+key;
+      section.tabIndex=-1;
+      section.setAttribute('aria-label',name);
+      jump.setAttribute('aria-controls',section.id);
+      jump.onclick=()=>section.focus();
+    }
     const reload=add(board,'button','Tải lại trạng thái','secondary');reload.type='button';reload.onclick=load;
   }
   function sandbox(plan,payload) {
@@ -246,6 +283,7 @@ function createCampaignEngine(api) {
         occurred_at:observed??=new Date().toISOString(),step:step.value,...(note.value?{reason:note.value}:{}),
         ...(step.value==='assign'?{assignee_id:actor}:{}),...(['confirm','correct','refund'].includes(step.value)?{amount_vnd:amount.valueAsNumber}:{})}),{form:true});
     }
+    return {actions,sales};
   }
   function commercialDetails(form,unit) {
     const config = [

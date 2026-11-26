@@ -17,7 +17,7 @@ from .knowledge_contracts import Amount, Command, Currency, Name, Ref, Target
 from .knowledge_store import Store, aware, canonical, conflict, digest, missing, restrictive, stamp
 from .knowledge_target import describe
 from .workforce_models import WorkforceBrief
-from .c3_tasks import ACTION_VERSION, TASK_VERSION, ActionIntent, TaskIntent
+from .c3_tasks import ACTION_VERSION, COMMISSION_VERSION, INTENT_TYPES, TASK_VERSION
 
 router = APIRouter(prefix=ws.BASE + ws.BRAND + "/marketing", tags=["Knowledge-backed Marketing"])
 VERSION = "amc.marketing-manifest/1"
@@ -128,9 +128,9 @@ def materialize(s, workspace, pins, options, at):
         if not intent_data:
             conflict("Yêu cầu người giao việc gửi brief mới có mục đích, phạm vi, đầu ra và tiêu chí chấp nhận.")
         version = brief.payload.get("task_version", TASK_VERSION)
-        if version not in (TASK_VERSION, ACTION_VERSION):
+        if version not in INTENT_TYPES:
             conflict("Phiên bản yêu cầu công việc chưa được hỗ trợ.")
-        intent = (ActionIntent if version == ACTION_VERSION else TaskIntent).model_validate(intent_data).model_dump(exclude_none=True)
+        intent = INTENT_TYPES[version].model_validate(intent_data).model_dump(exclude_none=True)
         expected_kind = "marketing_strategy" if options["workflow"] == TASK_RESEARCH else "landing_page"
         if intent["deliverable_type"] != expected_kind:
             conflict("Loại bản giao của brief khác quy trình đã chọn. Chọn quy trình đúng hoặc làm rõ yêu cầu.")
@@ -206,7 +206,7 @@ def build(s, workspace, body):
     pins = resolve_brief(workspace, body.workspace_brief_id)
     legacy = body.workflow not in TASK_RELEASES
     target_brief = s.db.get(WorkforceBrief, body.target.brief_id) if legacy else None
-    action_task = target_brief and (target_brief.payload or {}).get("task_version") == ACTION_VERSION
+    action_task = target_brief and (target_brief.payload or {}).get("task_version") in (ACTION_VERSION, COMMISSION_VERSION)
     if legacy and (body.guidelines or target["kind"] == "internal_task" or action_task):
         conflict("Chọn quy trình hiểu yêu cầu công việc để dùng nhiệm vụ nội bộ hoặc hướng dẫn thương hiệu.")
     options = body.model_dump(mode="json", exclude={"key","ttl_seconds"} | ({"guidelines"} if legacy else set()))

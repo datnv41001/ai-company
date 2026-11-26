@@ -75,6 +75,7 @@ def compose_plan(store, campaign_id, selections, body, plan_id):
         "research_gaps": source["gaps"],
         "channels": channels,
         "budget_vnd": body.budget_vnd,
+        "ai_budget_microusd_per_run": body.ai_budget_microusd_per_run,
         "duration_days": body.duration_days,
         "budget_scope": "simulated_media_only",
         "work_packages": packages,

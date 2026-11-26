@@ -127,12 +127,33 @@ def execute_case(lab, case, folder, meta, *, downstream=True):
     save(folder / "journey.json", summary)
     for snap in snaps:
         kind = "strategy" if snap["workflow"] == c3_assets.RESEARCH else "landing"
-        rid = accepted(api.post(path + "/plans/" + plan["id"] + "/runs/" + kind, headers=owner["headers"]))["id"]
-        repeat = accepted(api.post(path + "/plans/" + plan["id"] + "/runs/" + kind, headers=owner["headers"]))
-        assert repeat["id"] == rid
+        queue_path = path + "/plans/" + plan["id"] + "/runs/" + kind
+        rid = accepted(api.post(queue_path, headers=owner["headers"]))["id"]
+        assert accepted(api.post(queue_path, headers=owner["headers"]))["id"] == rid
+        production = accepted(api.get(path + "/plans/" + plan["id"] + "/production", headers=owner["headers"]))
+        queued_run = next(run for run in production["runs"] if run["id"] == rid)
+        assert queued_run["queue_receipt"] and queued_run["commission"]["plan_digest"] == plan["digest"]
         location = folder / kind
         location.mkdir(exist_ok=True)
-        record = run_one(lab, "WF-03" if kind == "strategy" else "WF-13", "improved", location, queued=(rid, snap["workflow"]))
+        requests = {}
+        record = run_one(lab, "WF-03" if kind == "strategy" else "WF-13", "improved", location,
+                         queued=(rid, snap["workflow"]), request_log=requests)
+        receipts = []
+        for attempt in record["attempts"]:
+            body = requests[attempt["attempt_id"]]
+            data = json.loads(body["messages"][-1]["content"])
+            stage = data["stage"]
+            assert data["reference"]["buyer_action"] == plan["buyer_action"]
+            assert data["reference"]["channel"] in plan["channels"]
+            if stage in ("content", "seo"):
+                assert "campaign_requirements" not in data
+            else:
+                assert data["campaign_requirements"] == {"target_outcome": plan["target_outcome"],
+                    "channel": plan["channels"][0], "duration_days": plan["duration_days"],
+                    "simulated_media_budget_vnd": plan["budget_vnd"]}
+            receipts.append({"stage": stage, "attempt_id": attempt["attempt_id"], "request_sha256": attempt["request_sha256"],
+                             "plan_digest": plan["digest"], "manifest_digest": snap["digest"]})
+        save(location / "commission-receipts.json", receipts)
         summary["runs"].append(
             {k: record[k] for k in ("run_id", "state", "last_error", "input_tokens", "output_tokens", "runtime_s", "provider_fee_usd", "attempts")}
         )

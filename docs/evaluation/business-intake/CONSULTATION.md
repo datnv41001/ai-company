@@ -45,6 +45,8 @@ Chi phí thử nghiệm gồm thời gian CPU và công kiểm tra cục bộ, c
 
 ## Kết quả từ bản sửa d95c5cd
 
+Nhóm kiểm tra API/native có 15 ca đạt, Chromium có một ca đạt và kiểm tra riêng cho quyền tư vấn khi thiếu consent hoặc thiếu grant có một ca đạt. [Tên từng ca, thời gian và SHA-256](consultation/runs.json)
+
 Hai lượt chạy độc lập tạo cùng kết quả nghiệp vụ. Hai lần gửi form hợp lệ sinh hai hồ sơ. Hồ sơ đầu đủ điều kiện sau tư vấn, Sales tiếp nhận, phát hành báo giá và ghi đơn. Xác nhận 5.000 VND, hoàn 1.000 VND và hủy đơn lần lượt cho doanh thu hiện hành 5.000, 4.000 rồi 0 VND. Hồ sơ thứ hai từ chối tăng số lượng và dừng ở trạng thái từ chối. Tổng cuối kỳ có một báo giá lịch sử và một đơn lịch sử. [SQLite](consultation/sqlite.json) · [PostgreSQL với role runtime](consultation/postgres.json)
 
 Trong Chromium, người điều phối giao hồ sơ 3 hộp bằng giao diện. Người tư vấn cập nhật 5 hộp và xác nhận bằng bàn phím. Bàn điều hành hiển thị 1 RFQ đủ điều kiện và 0 báo giá. Ba kích thước đã kiểm tra focus và reflow. Lượt cục bộ này mất 297 ms từ thao tác ghi đến khi thấy trạng thái chờ giao Sales. Thời gian chỉ phản ánh máy thử. [Kết quả trình duyệt](consultation/observations.json)

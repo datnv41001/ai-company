@@ -42,7 +42,7 @@ def approved_form(contract, cta, submit):
         if not field["required"]:
             label += " (tùy chọn)" if contract["locale"] == "vi-VN" else " (optional)"
         if field["type"] == "integer":
-            label += f' ({escape(field["unit"])})'
+            label += f' ({escape(field.get("unit_label", field["unit"]))})'
             control = f'<input {attrs} type="number" step="1" min="{field["minimum"]}" max="{field["maximum"]}">'
         else:
             options = "".join(f'<option value="{escape(o["value"])}">{escape(o["label"])}</option>' for o in field["options"])

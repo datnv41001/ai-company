@@ -7,6 +7,7 @@ from typing import Annotated, Literal
 from fastapi import HTTPException
 from pydantic import Field, StrictBool
 
+from . import c3_assets
 from .knowledge_contracts import Input
 from .knowledge_store import canonical, conflict, digest
 
@@ -35,7 +36,13 @@ FIELDS = {
 }
 
 
-def submitted_fields(intent):
+BUYER_REQUEST = re.compile(
+    r"\b(?:đặt lịch|hẹn lịch|yêu cầu báo giá|nhận báo giá|xin báo giá|book(?:ing)?|schedul(?:e|ing)|"
+    r"request (?:a |an )?(?:quote|quotation|appointment)|get a quote)\b"
+)
+
+
+def submitted_fields(intent, *, strict=False):
     lookup = {label: key for key, names in LABELS.items() for label in names}
     result = []
     for item in intent.get("requirements", []):
@@ -45,13 +52,15 @@ def submitted_fields(intent):
             values = re.split(r",\s*| và | and ", match[1])
             if all(value in lookup for value in values):
                 result.extend(lookup[value] for value in values)
+            elif strict and BUYER_REQUEST.search(words[:match.start()]):
+                conflict("The buyer request includes an unsupported intake field. Clarify the brief before approving a plan")
     return list(dict.fromkeys(result))
 
 
 def issue(plan, projection, selection, source):
     action, unit = plan["buyer_action"], plan["selling_unit"]
     vi = plan["locale"] == "vi-VN"
-    brief_fields = submitted_fields(projection["task_intent"])
+    brief_fields = submitted_fields(projection["task_intent"], strict=True)
     defaults = (["box_count" if unit == "box" else "quantity", "destination", "need_date"] if action == "rfq"
                 else ["quantity", "site", "preferred_time"])
     allowed = set(defaults) | ({"quantity"} if action == "rfq" else {"receiving_shift"})
@@ -69,7 +78,10 @@ def issue(plan, projection, selection, source):
         if options:
             field["options"] = [{"value": value, "label": local if vi else en} for value, local, en in options]
         else:
-            field.update(unit=unit, minimum=1, maximum=100)
+            unit_label = c3_assets.lexicon(plan["locale"])["units"].get(unit, unit)
+            if vi and unit in {"service", "visit"}:
+                unit_label = {"service": "dịch vụ", "visit": "lượt"}[unit]
+            field.update(unit=unit, unit_label=unit_label, minimum=1, maximum=100)
         fields.append(field)
     thresholds = {Decimal(str(f["price"]["moq"])) for f in projection["facts"]
                   if f.get("price") and f["price"].get("moq") is not None and f["price"]["unit"] == unit}

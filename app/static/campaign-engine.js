@@ -155,7 +155,7 @@ function createCampaignEngine(api) {
       const intake=proposal.intake_contract;
       if(intake){
         const fields=details(proposed,'Phiếu tiếp nhận cần duyệt');
-        for(const f of intake.fields)line(fields,f.label,f.unit||'',f.required?'Bắt buộc':'Tùy chọn');
+        for(const f of intake.fields)line(fields,f.label,f.unit_label||f.unit||'',f.required?'Bắt buộc':'Tùy chọn');
         add(fields,'p',intake.consent.label);
         add(fields,'p','Phiên bản '+intake.revision+' · '+intake.digest.slice(0,12));
       }

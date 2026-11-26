@@ -68,7 +68,7 @@ function createCampaignRoleDesk(api) {
     if(value.intake){
       for(const f of value.intake.fields){
         const answer=value.intake.answers[f.id];
-        if(answer!==undefined)node(card,'p',f.label+' · '+(f.options?.find(o=>o.value===answer)?.label||answer)+(f.unit?' '+f.unit:''));
+        if(answer!==undefined)node(card,'p',f.label+' · '+(f.options?.find(o=>o.value===answer)?.label||answer)+(f.unit?' '+(f.unit_label||f.unit):''));
       }
       if(value.missing?.includes('commercial_moq'))node(card,'p','Cần đối chiếu số lượng đặt tối thiểu trước khi chuyển Sales.');
     }

@@ -101,7 +101,7 @@ def compose_plan(store, campaign_id, selections, body, plan_id):
         plan["secondary_conversions"] = ["rfq"]
     if action in {"appointment", "rfq"} and plan["selling_unit"]:
         landing = next((p for _, b, p in selections if KINDS[b["options"]["workflow"]] == "landing"), source)
-        lists = {tuple(business_intake.submitted_fields(p["task_intent"])) for _, _, p in selections}
+        lists = {tuple(business_intake.submitted_fields(p["task_intent"], strict=True)) for _, _, p in selections}
         lists.discard(())
         if len(lists) > 1:
             conflict("Reconcile the required buyer fields across the approved briefs")

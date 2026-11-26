@@ -78,8 +78,8 @@ def execute(body):
         if stage == "content":
             return {"handoff_json": legacy.json_text(plan)}, 0, 0
         if body.get("content_digest") != digest(canonical(plan)):
-            raise GatewayError("invalid_storyboard_reply")
-        board = brief.compose(projection, ref)
+            raise GatewayError("storyboard_invalid_checkpoint")
+        board = brief.compose(projection, ref, plan=plan)
         return {"board_json": legacy.json_text(board)}, 0, 0
     except (ValueError, KeyError) as exc:
         raise GatewayError("storyboard_needs_revision") from exc

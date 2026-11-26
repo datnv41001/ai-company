@@ -155,11 +155,12 @@ def assessment(projection, board):
             "manifest": board["source_refs"]["manifest"], "fact_handles": [f["id"] for f in facts]}
 
 
-def compose(projection, ref, variant="direct"):
+def compose(projection, ref, variant="direct", *, plan=None):
     board = legacy.compose(projection, ref)
     if variant not in ("direct", "audience"):
         raise ValueError("Unknown storyboard opening")
-    plan = handoff(projection, ref)
+    if plan is None:
+        plan = handoff(projection, ref)
     revise_layout(board, plan, variant)
     public = c3_assets.normalized(" ".join([board["product"], *(s["voice"] for s in board["shots"])]))
     if any(term in public for term in c3_assets.prohibitions(projection)):

@@ -26,11 +26,11 @@ def run_job(config, body):
         try:
             return execute(body)
         except GatewayError as exc:
-            if str(exc) != "storyboard_needs_revision":
+            if str(exc) not in ("storyboard_needs_revision", "storyboard_invalid_checkpoint"):
                 raise
             # The mailbox has a finite transport-error vocabulary. The dispatcher
             # recomputes a domain refusal from the same pinned envelope.
-            return {"blocked": "storyboard_needs_revision"}, 0, 0
+            return {"blocked": str(exc)}, 0, 0
     return bounded_call(config, body)
 
 

@@ -49,7 +49,7 @@ def test_same_rfq_different_brief_and_tampered_predecessor():
     assert not alternate["brief_fulfillment"]["ready_for_qa"]  # missing commercial authority
     with pytest.raises(ValueError):
         runtime.require_fulfillment(alternate, second)
-    with pytest.raises(legacy.GatewayError, match="invalid_storyboard_reply"):
+    with pytest.raises(legacy.GatewayError, match="storyboard_invalid_checkpoint"):
         runtime.execute(dict(local_adapter=runtime.ADAPTER, stage="storyboard", context=second, manifest=REF,
                              content_digest=first["content_handoff_digest"]))
     second["task_intent"].update(purpose="Tăng doanh thu gấp đôi", requirements=[brief.ILLUSTRATE + " Bao gồm âm thanh.", "Thu âm lời thoại."])

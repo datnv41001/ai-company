@@ -156,6 +156,21 @@ def test_production_browser(api, workforce, monkeypatch, case):  # noqa: F811
                             frame.get_by_role("button").click()
                             expect(frame.get_by_role("status")).to_contain_text("Đã ghi nhận")
                             capture_themes(page, out / "form-390.png")
+                        if case["buyer_action"] == "appointment":
+                            page.goto(origin + "/?workspace=" + owner["tenant"] + "#/campaigns")
+                            engine = page.locator("#campaign-engine")
+                            engine.locator("select").first.select_option(plan["campaign_id"])
+                            metric = engine.locator("[data-primary-kpi]")
+                            expected = "2" if width == 390 else "1"
+                            for label, value in (("Có nguồn trang đích", expected), ("Có nguồn media", "0"),
+                                                 ("Chưa rõ nguồn media", expected), ("Thiếu nguồn", "0")):
+                                row = metric.locator(".engine-row").filter(has=page.get_by_text(label, exact=True))
+                                expect(row.locator(".state-chip")).to_have_text(value)
+                            for theme in ("light", "dark"):
+                                page.emulate_media(color_scheme=theme)
+                                expect(page.locator("html")).to_have_attribute("data-theme", theme)
+                                assert page.evaluate("document.documentElement.scrollWidth <= innerWidth + 1")
+                                metric.screenshot(path=out / f"attribution-{width}-{theme}.png", animations="disabled")
                         observations.append(
                             {
                                 "width": width,

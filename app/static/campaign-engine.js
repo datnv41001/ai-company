@@ -223,7 +223,14 @@ function createCampaignEngine(api) {
         style: 'percent', maximumFractionDigits: 1
       }).format(metric.ratio);
       line(primary, 'Tỷ lệ trong kỳ', metric.numerator + ' / ' + metric.denominator, value);
-      line(primary, 'Thiếu nguồn', 'Trong mẫu số của KPI', String(metric.unattributed));
+      if(metric.attribution){
+        line(primary, 'Có nguồn trang đích', 'Cùng bản trang đã duyệt trên lượt vào và biểu mẫu', String(metric.attribution.landing_asset));
+        line(primary, 'Có nguồn media', 'Lượt vào gắn với tác vụ media đã thực thi', String(metric.attribution.media_action));
+        line(primary, 'Chưa rõ nguồn media', 'Trong mẫu số của KPI', String(metric.attribution.unknown_media_action));
+        line(primary, 'Thiếu nguồn', 'Chưa đối chiếu được trang đích hoặc tác vụ media', String(metric.unattributed));
+      }else{
+        line(primary, 'Chưa rõ nguồn media', 'Báo cáo trước khi có đối chiếu phiên bản trang đích', String(metric.unattributed));
+      }
       line(primary, 'Phiên web', 'Chỉ số phụ trong cùng kỳ', String(metric.secondary_metrics[0].value));
     }
     const quoteReport=isService?report.secondary_rfq_funnel:report;

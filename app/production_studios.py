@@ -316,12 +316,22 @@ def intake(tenant, did, pid, body, user, db):
             conflict("Request ID already used with different selections")
         return prior.result
     at = store.now()
+    landing_source = {
+        **store.scope, "campaign_id": run.campaign_id, "plan_id": plan["id"], "plan_digest": plan["digest"],
+        "document_id": doc.id, "studio_revision": doc.qa_revision, "package_id": pid,
+        "package_version": pkg.result["version"], "package_digest": pkg.result["digest"],
+        "file_digest": pkg.result["files"]["landing.html"]["sha256"],
+    }
     identity = digest(canonical([*scope_key, str(body.request_id)]))
     common = {"plan_id": plan["id"], "request_id": body.request_id.hex, "occurred_at": at}
     if isinstance(body, Submit):
         visit = state["sessions"].get(body.visit_id)
         if not visit or visit["plan_id"] != plan["id"] or visit["visitor"] != visitor:
             conflict("Open this approved synthetic page before submitting the form")
+        if visit.get("landing_package") != pid or visit.get("landing_digest") != pkg.result["digest"]:
+            conflict("Visit and form must use the same approved landing package")
+        if visit.get("landing_source") and visit["landing_source"] != landing_source:
+            conflict("Visit and form must use the same approved landing revision")
         fixture_id = digest(canonical(["landing-form", pid, body.visit_id]))
         inputs = {
             "product_id": plan["product_id"],
@@ -355,7 +365,7 @@ def intake(tenant, did, pid, body, user, db):
         cmd.kind,
         entity,
         ident,
-        {**value, "landing_package": pid, "landing_digest": pkg.result["digest"]},
+        {**value, "landing_package": pid, "landing_digest": pkg.result["digest"], "landing_source": landing_source},
         len(rows) + 1,
         key,
         fp,

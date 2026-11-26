@@ -127,9 +127,12 @@ def execute_case(lab, case, folder, meta, *, downstream=True):
     save(folder / "journey.json", summary)
     for snap in snaps:
         kind = "strategy" if snap["workflow"] == c3_assets.RESEARCH else "landing"
-        rid = accepted(api.post(path + "/plans/" + plan["id"] + "/runs/" + kind, headers=owner["headers"]))["id"]
-        repeat = accepted(api.post(path + "/plans/" + plan["id"] + "/runs/" + kind, headers=owner["headers"]))
-        assert repeat["id"] == rid
+        queue_path = path + "/plans/" + plan["id"] + "/runs/" + kind
+        rid = accepted(api.post(queue_path, headers=owner["headers"]))["id"]
+        assert accepted(api.post(queue_path, headers=owner["headers"]))["id"] == rid
+        production = accepted(api.get(path + "/plans/" + plan["id"] + "/production", headers=owner["headers"]))
+        queued_run = next(run for run in production["runs"] if run["id"] == rid)
+        assert queued_run["queue_receipt"] and queued_run["commission"]["plan_digest"] == plan["digest"]
         location = folder / kind
         location.mkdir(exist_ok=True)
         requests = {}

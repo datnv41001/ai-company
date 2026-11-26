@@ -272,13 +272,14 @@ def queue(
         registry_workflow=ref["workflow"],
         knowledge_manifest={"id": ref["id"], "digest": ref["digest"]},
     )
-    result = workforce.start(tenant_id, ref["brief_id"], args, user, db)
-    # An old direct run can be idempotent at the brief endpoint but belong to no plan.
-    from .campaign_operations import production_bindings
-    receipts = campaign_store(db, user, tenant_id, campaign_id, write=False)
-    if (plan_id, ref["id"]) not in production_bindings(receipts, campaign_id):
-        conflict("Lượt chạy hiện hữu không thuộc kế hoạch. Hãy tạo brief và manifest mới.")
-    return result
+    # Check an idempotent retry while the scoped transaction and locks are still active.
+    # Workforce.start commits a new run and its receipt atomically.
+    existing = db.scalar(select(WorkforceRun.id).filter_by(**s.scope, campaign_id=campaign_id, brief_id=ref["brief_id"]))
+    if existing:
+        from .campaign_operations import production_bindings
+        if (plan_id, ref["id"]) not in production_bindings(s, campaign_id):
+            conflict("Lượt chạy hiện hữu không thuộc kế hoạch. Hãy tạo brief và manifest mới.")
+    return workforce.start(tenant_id, ref["brief_id"], args, user, db)
 
 
 @router.get("/plans/{plan_id}/production")

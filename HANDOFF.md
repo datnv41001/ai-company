@@ -1,5 +1,15 @@
 # Bắt đầu ở đây khi tiếp quản AI Marketing Company
 
+## Từ bản merge #44 đến kế hoạch giao việc
+
+Bản phát triển nội bộ của #44 là `837ec9fc6c67868f5a88e263f06febc7d0ddf6bc`. Core v25, Business v3, C3 v4. Parent main `1b9e3a9643014122d4c6e510efffc3d02b9843cf`, parent PR `c2a409367fecc3d62537ab582ee126107b6ef2b5`. Tree `c9e171dd82bd70c5eebb996ccf047628845b0c84` khớp bản tích hợp `95254dd2cb0d7b61a398bef34bcfd7157cbcdc5d`. Phát hiện tương thích #40/#43 đã đóng trong phạm vi writer và cutover đã thử trên SQLite/PostgreSQL. [CI của main](https://github.com/datnv41001/ai-company/actions/runs/45725774714) · [Bốn lần hợp nhất trước](docs/evaluation/campaign-engine/INTEGRATIONS.md)
+
+Trong nhánh G01, điều phối viên có thể lưu đề xuất khác brief. Để duyệt, chọn mục tiêu, KPI, mục đích hoặc tiêu chí đã ghim và kênh tương thích với từng manifest. Nếu cần đổi, duyệt brief mới và ghi phiên bản đề xuất tiếp theo. Trần sản xuất AI cho từng lượt dùng đơn vị µUSD, mặc định 10.000. Ngân sách truyền thông mô phỏng dùng VND. Khi xếp việc, Workforce lưu digest của kế hoạch cùng phiên bản manifest. Trong màn hình chiến dịch, chọn một trong sáu khu vực để chuyển đến việc cần xử lý. Tiến độ bộ phận lấy từ đơn vị công việc trong kế hoạch đang duyệt.
+
+Chạy `python -m pytest -q tests/test_campaign_commission.py tests/test_campaign_operations.py tests/test_campaign_unit_ownership.py` trong môi trường test của repo. Dùng hướng dẫn Campaign Engine bên dưới để chạy worker thật; mỗi lượt ghi thêm `commission-receipts.json` với attempt ID và hash request theo vai trò. Kiểm các bản giao tổng hợp và trạng thái từng năng lực trước khi lập pilot. [Sổ năng lực](docs/evaluation/campaign-engine/CAPABILITIES.md) · [Nghiên cứu đã áp dụng](docs/research/CAMPAIGN-ENGINE.md)
+
+Không có DDL trong G01. Khi thử bản mới, tách DB phát triển, sao lưu và dùng API, static và worker cùng build, drain hàng đợi trước khi chuyển. Khi rollback, dừng giao việc, giữ bản sao DB và evidence sau thử nghiệm, rồi phục hồi bản sao trước thay đổi cùng image #44 tương ứng. API cũ chưa hiểu ràng buộc giao việc mới. Pool tiền nhiệm và production ngoài phạm vi.
+
 ## Điều hành chiến dịch từ mục tiêu đã duyệt
 
 Bản nền trên main sau bốn lần merge là `1b9e3a9643014122d4c6e510efffc3d02b9843cf`. Bảng đối chiếu ghi cả hai parent, tree, bản tích hợp và CI của từng PR, cùng đường dẫn để kiểm tra trên GitHub. [Bằng chứng hợp nhất #40, #43, #41 và #42](docs/evaluation/campaign-engine/INTEGRATIONS.md)

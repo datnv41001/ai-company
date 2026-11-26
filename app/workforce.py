@@ -191,6 +191,11 @@ def start(tenant_id: str, bid: str, body: Start, user: User = Depends(current_us
         return {"id": prior.id, "state": prior.state}
     if not b.payload:
         raise HTTPException(409, "Waiting for the client's brief")
+    if b.payload.get("task_intent") and body.registry_workflow not in TASK_RELEASES:
+        from .campaign_planner import commissioned_brief
+        _, store = c3_boundaries.context(db, user, b)
+        if commissioned_brief(store, bid):
+            raise HTTPException(409, "Công việc đã được giao. Hãy dùng manifest đã duyệt trong kế hoạch.")
     brand = db.get(Brand, b.brand_id)
     if not backed and not brand.product_truth.strip():
         raise HTTPException(422, "Brand Kit needs verified product facts")
@@ -217,6 +222,10 @@ def start(tenant_id: str, bid: str, body: Start, user: User = Depends(current_us
             if body.registry_workflow in TASK_RELEASES:
                 knowledge.update(objective=public["task_intent"]["purpose"],brand_rules=public["brand_guidelines"]["guidance"],
                                  internal_task=b.origin == "internal")
+                from .campaign_planner import execution_terms
+                commission = execution_terms(store, snap, public, body.budget_microusd)
+                if commission:
+                    knowledge["campaign_commission"] = commission
         binding = pin(db, b, body.registry_workflow)
         manifest = db.scalar(text("select manifest from amc_ops.registry_releases where workflow=:w and digest=:d"),
                              {"w":body.registry_workflow, "d":binding["manifest_digest"]})
@@ -246,7 +255,8 @@ def start(tenant_id: str, bid: str, body: Start, user: User = Depends(current_us
         db.flush()
         if backed:
             c3_boundaries.record(store, snap, "queue", "queue:"+run.id,
-                {"run_id":run.id, "manifest_digest":snap.digest, "release_digest":binding["manifest_digest"]})
+                {"run_id":run.id, "manifest_digest":snap.digest, "release_digest":binding["manifest_digest"],
+                 "campaign_plan_digest":knowledge.get("campaign_commission", {}).get("plan_digest")})
         db.add(
             AuditEvent(
                 tenant_id=tenant_id,

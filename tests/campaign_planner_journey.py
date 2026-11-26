@@ -132,7 +132,25 @@ def execute_case(lab, case, folder, meta, *, downstream=True):
         assert repeat["id"] == rid
         location = folder / kind
         location.mkdir(exist_ok=True)
-        record = run_one(lab, "WF-03" if kind == "strategy" else "WF-13", "improved", location, queued=(rid, snap["workflow"]))
+        requests = {}
+        record = run_one(lab, "WF-03" if kind == "strategy" else "WF-13", "improved", location,
+                         queued=(rid, snap["workflow"]), request_log=requests)
+        receipts = []
+        for attempt in record["attempts"]:
+            body = requests[attempt["attempt_id"]]
+            data = json.loads(body["messages"][-1]["content"])
+            stage = data["stage"]
+            assert data["reference"]["buyer_action"] == plan["buyer_action"]
+            assert data["reference"]["channel"] in plan["channels"]
+            if stage in ("content", "seo"):
+                assert "campaign_requirements" not in data
+            else:
+                assert data["campaign_requirements"] == {"target_outcome": plan["target_outcome"],
+                    "channel": plan["channels"][0], "duration_days": plan["duration_days"],
+                    "simulated_media_budget_vnd": plan["budget_vnd"]}
+            receipts.append({"stage": stage, "attempt_id": attempt["attempt_id"], "request_sha256": attempt["request_sha256"],
+                             "plan_digest": plan["digest"], "manifest_digest": snap["digest"]})
+        save(location / "commission-receipts.json", receipts)
         summary["runs"].append(
             {k: record[k] for k in ("run_id", "state", "last_error", "input_tokens", "output_tokens", "runtime_s", "provider_fee_usd", "attempts")}
         )

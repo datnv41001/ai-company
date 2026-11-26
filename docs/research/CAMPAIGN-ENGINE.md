@@ -1,5 +1,13 @@
 # Từ nguồn nghiên cứu đến hành vi chiến dịch
 
+## Bổ sung ngày 26/11/2026
+
+| Nguồn đã đọc và phạm vi | Độ tin cậy và giới hạn | Áp dụng cho người dùng AMC và ca nghiệm thu |
+|---|---|---|
+| Anthropic Engineering, *Effective context engineering for AI agents*, 29/09/2025, phần cấu hình context và chi phí của context dài. [Bài gốc](https://www.anthropic.com/engineering/effective-context-engineering-for-ai-agents) | Kinh nghiệm kỹ thuật của tác giả; cần kiểm từng model và tác vụ | G01 áp dụng cho điều phối viên. Director và chiến lược nhận kết quả, kênh, thời hạn, trần media từ kế hoạch đã duyệt. Content/SEO nhận phần chỉ dẫn công khai đã ghim. Kiểm request thực ở worker và lưu hash từng lần gọi. |
+| Google Ads Help, *Organize your account with ad groups*, phần cài đặt chiến dịch và nhóm từ khóa cùng chủ đề. [Hướng dẫn](https://support.google.com/google-ads/answer/6372655?hl=en) | Tài liệu chính thức về cấu trúc Google Ads. Hiệu quả một cách nhóm quảng cáo còn phụ thuộc khách và mẫu đo | Áp dụng một phần cho Performance Marketing. Giao media planner một đề xuất chứa mục tiêu campaign, trần media, chủ đề nhóm, ý định tìm kiếm, mẫu copy và giả thuyết thử. Kiểm hai nhóm có chủ đề khác nhau, tổng phân bổ trong trần. |
+| Google Analytics, *Recommended events*, nhóm sự kiện lead và purchase. [Đặc tả](https://developers.google.com/analytics/devguides/collection/ga4/reference/events) | Tài liệu chính thức về tín hiệu Analytics. Tín hiệu gửi form chưa đủ xác nhận doanh thu | Áp dụng một phần cho Sales. Ghi yêu cầu, xác nhận lịch, hoàn tất dịch vụ và nguồn giao dịch thành những mốc riêng. Kiểm lịch bị hủy và khách vắng vẫn có lịch sử, doanh thu chỉ tăng khi có đối soát thích hợp. |
+
 Đối chiếu ngày 25/11/2026. Phạm vi là chiến dịch tổng hợp, dữ liệu đã duyệt và quyết định của nhân viên. Các nguồn dưới đây là bài viết công khai đã đọc. Việc đánh giá hiệu quả với doanh nghiệp cần dữ liệu pilot.
 
 | Nguồn và phần đã đối chiếu | Loại bằng chứng và giới hạn | Quyết định triển khai và cách kiểm |

@@ -6,6 +6,13 @@
 .engine-header label { min-width:min(100%,13rem);color:var(--hero-ink); }
 #engine-status { min-height:1.5em; margin:.6rem 0; color:var(--muted); }
 #engine-dashboard { min-width:0; overflow-wrap:anywhere; }
+.engine-nav { display:flex; flex-wrap:wrap; gap:.4rem; margin-block:.75rem 1rem; }
+.engine-nav button { min-height:44px; margin:0; }
+.engine-facts { display:grid; grid-template-columns:minmax(6rem,1fr) minmax(0,1fr); gap:.45rem .8rem; }
+.engine-facts dt { color:var(--muted); }
+.engine-facts dd { margin:0; font-variant-numeric:tabular-nums; }
+#engine-dashboard [tabindex="-1"] { scroll-margin-block:1rem; }
+#engine-dashboard [tabindex="-1"]:focus-visible { outline:2px solid var(--ink); outline-offset:2px; }
 .engine-grid { display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1rem;align-items:start; }
 .engine-card { border:1px solid var(--border);border-radius:var(--radius);padding:clamp(.9rem,2vw,1.4rem);background:var(--paper);min-width:0; }
 .engine-card h4 { margin:0 0 .75rem;color:var(--ink);font-size:1.1rem; }

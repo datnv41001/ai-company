@@ -1,0 +1,23 @@
+[
+  {
+    "stage": "director",
+    "attempt_id": "e78f340f-42d6-464b-b661-a7ce21312ecb",
+    "request_sha256": "84e779541744c9c502561e3e58b505fe977523ac32df87500e705a333f535520",
+    "plan_digest": "a7617c0c3405dcea0f67b69aec536588b1de1d4f42ca658fec96a8a1bff7afcb",
+    "manifest_digest": "e4ee5f012e0234215a8502828296eb9e8c96a3782131d97fd475e1526b2b4b9b"
+  },
+  {
+    "stage": "research",
+    "attempt_id": "c5652c70-f510-473e-b533-1c2db44b052b",
+    "request_sha256": "e54fe1d2e88974d9ec377327f24ee0abbd03ef07423f7ddb46dc6cb7e8f2fc06",
+    "plan_digest": "a7617c0c3405dcea0f67b69aec536588b1de1d4f42ca658fec96a8a1bff7afcb",
+    "manifest_digest": "e4ee5f012e0234215a8502828296eb9e8c96a3782131d97fd475e1526b2b4b9b"
+  },
+  {
+    "stage": "strategy",
+    "attempt_id": "2c4315a4-bbe9-41a5-88d8-08aade757949",
+    "request_sha256": "b90df3de28070651f5c5e7a136d1e5ed4be6334adb48d31a23c140ff04909bf8",
+    "plan_digest": "a7617c0c3405dcea0f67b69aec536588b1de1d4f42ca658fec96a8a1bff7afcb",
+    "manifest_digest": "e4ee5f012e0234215a8502828296eb9e8c96a3782131d97fd475e1526b2b4b9b"
+  }
+]

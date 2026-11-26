@@ -45,10 +45,15 @@ def test_queue_owner_and_unique_share_group_survive_later_commissions(pool):
         return next(u for u in state()["work_units"] if u["plan_id"] == plans[revision]["id"] and u["package_id"] == slot)
 
     def before_queue(manifest, prep, intent):
-        commission(1,manifest,"Find potential sample buyers")
+        commission(1,manifest,manifest["projection"]["objective"])
         command(1,"labor",package_id="landing",phase="clarification",seconds=15,allocated_cost_vnd=3,observation="Synthetic review of first brief")
         command(1,"close_unit_cost",package_id="landing",nonlabor_vnd=4,basis="Synthetic measured allocation")
-        commission(2,manifest,"Qualify active requests for quotation")
+        commission(2,manifest,manifest["projection"]["kpi"])
+        terms = {"workflow": "dynamic-v1", "max_parallel_nodes": 2, "budget_microusd": 1,
+                 "registry_workflow": manifest["workflow"], "knowledge_manifest": {"id": manifest["id"], "digest": manifest["digest"]}}
+        direct = base + "/workforce/briefs/" + prep["params"]["target"]["brief_id"] + "/run"
+        assert api.post(direct, headers=headers, json=terms).status_code == 409
+        assert api.post(direct, headers=headers, json={}).status_code == 409
         abandoned = unit(1,"landing")
         assert abandoned["status"] == "incomplete" and abandoned["cost_statement"]["total_vnd"] == 7
         assert abandoned["labor"][0]["seconds"] == 15 and not abandoned.get("run_id")
@@ -80,7 +85,7 @@ def test_queue_owner_and_unique_share_group_survive_later_commissions(pool):
     accepted(api.post(base + "/reviews/" + share["id"] + "/events",headers=customer["headers"],
                       json={"kind":"approved","digest":share["digest"],"request_key":uuid4().hex}))
 
-    commission(3,plans["separate_manifest"],"Work on an unrelated follow-up brief")
+    commission(3,plans["separate_manifest"],plans["separate_manifest"]["projection"]["objective"])
     assert unit(3,"landing")["status"] == "requested" and not unit(3,"landing").get("run_id")
     receipt = {"package_id":"landing","review_id":share["id"]}
     command(1,"unit_receipt",status=409,**receipt)

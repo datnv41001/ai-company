@@ -34,9 +34,9 @@ with TestClient(app) as client:
 
 
 @contextmanager
-def previous_api():
+def previous_api(pin=PIN):
     with TemporaryDirectory() as tmp:
-        old = unpack(PIN, Path(tmp))
+        old = unpack(pin, Path(tmp))
         paths = [s for s in os.getenv("PYTHONPATH", "").split(os.pathsep) if s and Path(s).resolve() != Path.cwd()]
         env = {**os.environ, "PYTHONPATH": os.pathsep.join([str(old), *paths])}
         with subprocess.Popen([sys.executable, "-u", "-c", CLIENT], env=env, cwd=old, text=True,

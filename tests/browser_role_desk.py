@@ -14,6 +14,8 @@ from c3_browser_themes import capture_themes
 from knowledge_fixtures import accepted
 from test_campaign_appointments import service_campaign
 from test_claim_desk import reader
+from test_channel_editions import workforce  # noqa: F401
+from test_production_studios import rehearsal
 
 
 @pytest.mark.parametrize("api",["sqlite"],indirect=True)
@@ -73,3 +75,72 @@ def test_service_employee_inbox_and_switch(api,agency):
                 (Path(path)/"browser-observations.json").write_text(json.dumps(timing,indent=2)+"\n",encoding="utf8")
         finally:
             browser.close()
+
+
+@pytest.mark.parametrize("api",["sqlite"],indirect=True)
+def test_assigned_sales_consultation(api,workforce,monkeypatch,tmp_path):  # noqa: F811
+    cases=json.loads((Path(__file__).parent/"evaluation/department/briefs-v1.json").read_text(encoding="utf-8"))["cases"]
+    case=next(c for c in cases if c["id"]=="index-tray")
+    out=Path(os.getenv("AMC_DESK_SCREENSHOTS",tmp_path))/"consultation"
+    out.mkdir(parents=True,exist_ok=True)
+    def inspect(owner,doc,plan,exports):
+        root=doc.split("/deliverables/")[0]+"/campaigns/"+plan["campaign_id"]
+        desk=root+"/business-desk"
+        assigned=reader(api,owner,"viewer")
+        for actor,role in ((owner,"marketing_operator"),(assigned,"sales_recipient")):
+            accepted(api.post(desk+"/grants",headers=owner["headers"],json={"subject":actor["id"],"role":role,
+                     "enabled":True,"expected_revision":0,"key":uuid4().hex}))
+        inquiry=next(x for x in accepted(api.get(root+"/sandbox",headers=owner["headers"]))["leads"] if x.get("intake"))
+        assert inquiry["state"]=="received" and inquiry["missing"]==["commercial_moq"]
+        with local_api() as origin,sync_playwright() as pw:
+            browser=pw.chromium.launch(executable_path=os.getenv("AMC_BROWSER_EXECUTABLE") or None)
+            try:
+                def open_workspace(actor):
+                    page=browser.new_page(viewport={"width":1280,"height":900})
+                    page.goto(origin+"/?workspace="+owner["tenant"]+"#/campaigns")
+                    login=page.locator("#login-form")
+                    login.get_by_label("Email").fill(actor["email"])
+                    login.get_by_label("Mật khẩu").fill(actor["password"])
+                    login.get_by_role("button").click()
+                    panel=page.locator("#campaign-role-desk")
+                    panel.get_by_label("Chiến dịch bàn giao").select_option(plan["campaign_id"])
+                    return page,panel
+                manager,route=open_workspace(owner)
+                card=route.locator("article").filter(has=manager.get_by_role("heading",name="Yêu cầu báo giá · "+inquiry["id"]))
+                card.get_by_label("Thao tác").select_option("refer")
+                card.get_by_label("Mã người nhận").fill(assigned["id"])
+                card.get_by_role("button",name="Ghi nhận").click()
+                expect(card).to_contain_text("Đang tư vấn · Lần cập nhật 2")
+                page,panel=open_workspace(assigned)
+                lead=panel.locator("article")
+                expect(lead).to_have_count(1)
+                lead.get_by_label("Nội dung tư vấn").fill("Khách đã xác nhận bổ sung số lượng.")
+                qty=lead.get_by_label("Số lượng khách bổ sung")
+                qty.fill("5")
+                start=monotonic()
+                for width,height in ((1280,900),(820,1000),(390,844)):
+                    page.set_viewport_size({"width":width,"height":height})
+                    qty.focus()
+                    expect(qty).to_be_focused()
+                    lead.scroll_into_view_if_needed()
+                    for mode in ("light","dark"):
+                        page.emulate_media(color_scheme=mode)
+                        expect(page.locator("html")).to_have_attribute("data-theme",mode)
+                        assert page.evaluate("document.documentElement.scrollWidth<=innerWidth+1")
+                        lead.screenshot(path=out/f"sales-{width}-{mode}.png",animations="disabled")
+                mark=monotonic()
+                lead.get_by_role("button",name="Ghi nhận").press("Enter")
+                expect(lead).to_contain_text("Đủ điều kiện, chờ giao Sales · Lần cập nhật 3")
+                expect(lead).to_contain_text("Hồ sơ hiện tại · 5")
+                expect(lead.get_by_role("button",name="Ghi nhận")).to_have_count(0)
+                elapsed=round((monotonic()-mark)*1000)
+                engine=manager.locator("#campaign-engine")
+                engine.locator("#engine-select").select_option(plan["campaign_id"])
+                block=engine.locator("section").filter(has=manager.get_by_role("heading",name="Yêu cầu từ biểu mẫu đã duyệt")).last
+                expect(block.locator(".engine-row").filter(has_text="RFQ đã đủ điều kiện")).to_contain_text("1")
+                expect(block.locator(".engine-row").filter(has_text="Báo giá đã phát hành")).to_contain_text("0")
+                (out/"observations.json").write_text(json.dumps({"viewports":[390,820,1280],"themes":["light","dark"],
+                    "keyboard_submit":True,"local_decision_to_qualified_ms":elapsed,"capture_seconds":round(monotonic()-start,3)}),encoding="utf-8")
+            finally:
+                browser.close()
+    rehearsal(api,workforce,monkeypatch,case,inspect)

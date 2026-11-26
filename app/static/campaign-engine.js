@@ -8,7 +8,7 @@ function createCampaignEngine(api) {
   const states = {proposed:'Chờ duyệt',approved:'Đã duyệt',superseded:'Đã thay thế',draft:'Nháp',submitted:'Chờ QA',
     queued:'Đã xếp hàng',running:'Đang chạy',awaiting_qa:'Chờ QA',failed:'Thất bại',requested:'Đã giao việc',generated:'Đã tạo',
     scheduled:'Đã lên lịch',authorized:'Được phép chạy',executed:'Đã thực thi mô phỏng',cancelled:'Đã hủy',
-    qualified:'Đủ điều kiện',received:'Đã nhận',assigned:'Đã phân công',accepted:'Sales đã nhận',rejected:'Từ chối',
+    qualified:'Đủ điều kiện',received:'Đã nhận',consulting:'Đang tư vấn',awaiting_assignment:'Đủ điều kiện, chờ giao Sales',assigned:'Đã phân công',accepted:'Sales đã nhận',rejected:'Từ chối',
     quoted:'Đã báo giá',ordered:'Đã đặt hàng',confirmed:'Đã xác nhận',refunded:'Đã hoàn tiền',
     shared:'Đã giao khách',qa_passed:'Đã qua QA',business_accepted:'Đã được tiếp nhận',fixture_accepted:'Nghiệm thu mô phỏng',incomplete:'Chưa hoàn tất'};
   const origins = {staff_saved_studio_revision:'Bản đã lưu trong Studio',staff_saved_revision:'Bản do tài khoản biên tập lưu',
@@ -240,6 +240,18 @@ function createCampaignEngine(api) {
       }
       line(primary, 'Phiên web', 'Chỉ số phụ trong cùng kỳ', String(metric.secondary_metrics[0].value));
     }
+    const intake=ops.intake_measurement;
+    if(intake?.version==='intake-funnel/2' && intake.action==='rfq'){
+      const section=add(funnel,'section');
+      add(section,'h4','Yêu cầu từ biểu mẫu đã duyệt');
+      add(section,'p','Trong vòng đời kế hoạch này. Mỗi hồ sơ được tính một lần ở từng bước đã đạt.');
+      for(const [key,name] of [['valid_submissions','Lượt gửi hợp lệ'],['qualified_rfqs','RFQ đã đủ điều kiện'],
+        ['sales_accepted','Sales đã tiếp nhận'],['quotes_issued','Báo giá đã phát hành'],['orders','Đơn từng ghi nhận']]){
+        line(section,name,'',String(intake[key]));
+      }
+      line(section,'Doanh thu xác nhận hiện tại','Sau hoàn tiền và hủy · sandbox',money(intake.confirmed_revenue_vnd));
+      line(section,'Đang tư vấn','Trạng thái hiện tại',String(intake.current_states.consulting||0));
+    }
     const quoteReport=isService?report.secondary_rfq_funnel:report;
     if (quoteReport) {
       const parent=isService?add(funnel,'section'):funnel;
@@ -417,7 +429,7 @@ function createCampaignEngine(api) {
         command(form,'Lưu thông tin bổ sung',()=>sandbox(originatingPlan,{kind:'complete_rfq',rfq_id:lead.id,expected_revision:lead.revision,
           quantity:qty.value,location:place.value,required_date:when.value,contact_purpose:consent.checked?'quote_request':'none'}),{form:true});
       }
-      const steps=({received:['reject'],qualified:['assign','reject'],assigned:['accept','reject','cancel'],accepted:['quote','reject','cancel'],
+      const steps=({received:['reject'],qualified:['assign','reject'],awaiting_assignment:['assign'],assigned:['accept','reject','cancel'],accepted:['quote','reject','cancel'],
         quoted:['order','reject','cancel'],ordered:['confirm','cancel'],confirmed:['refund','correct','cancel']})[lead.state]||[];
       if(!steps.length)continue;
       const names={assign:'Nhận phụ trách',accept:'Sales tiếp nhận',reject:'Từ chối',quote:'Ghi nhận báo giá',order:'Ghi nhận đơn',

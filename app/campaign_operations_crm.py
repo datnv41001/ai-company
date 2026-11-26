@@ -107,6 +107,7 @@ def observation(cmd, state, plan, store):
 
 
 def reconcile(state):
+    from .campaign_operations_appointments import summary as appointment_summary
     leads, actions, sessions = state["leads"].values(), state["actions"], state["sessions"]
     confirmed = [lead for lead in leads if lead["confirmed"] and lead["state"] != "cancelled"]
     def attribution(lead):
@@ -123,7 +124,8 @@ def reconcile(state):
         if action:
             asset = action["deliverable_id"] + "@" + str(action["asset_revision"])
             breakdown[asset] = breakdown.get(asset, 0) + row["gross_vnd"] - row["refunded_vnd"]
-    return {"synthetic": True, "visitors": len({s["visitor"] for s in sessions.values()}), "sessions": len(sessions),
+    return {"synthetic": True, "appointments":appointment_summary(state) if "appointments" in state else {},
+            "visitors": len({s["visitor"] for s in sessions.values()}), "sessions": len(sessions),
             "rfqs": len(leads), "qualified_leads": sum(not r["missing"] for r in leads),
             "sales_accepted": sum(r["sales_accepted"] for r in leads), "quotations": sum(r["quoted"] for r in leads),
             "orders": sum(r["ordered"] for r in leads), "confirmed_orders": len(confirmed),

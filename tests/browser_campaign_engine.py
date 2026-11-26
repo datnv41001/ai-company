@@ -1,6 +1,7 @@
 """Propose, approve and operate two different customer campaigns through the normal web UI."""
 import os
 from datetime import datetime, timedelta, timezone
+from pathlib import Path
 from uuid import uuid4
 
 from playwright.sync_api import expect, sync_playwright
@@ -11,6 +12,7 @@ from browser_c3_content_gate import client, local_api  # noqa: F401 -- file-back
 from campaign_planner_fixtures import CASES, prepare_inputs
 from knowledge_fixtures import accepted
 from app import c3_assets
+from c3_browser_themes import capture_themes
 
 
 @pytest.mark.parametrize("api", ["sqlite"], indirect=True)
@@ -147,5 +149,52 @@ def test_pending_plan_and_settlement_from_previous_revision(api, agency, tmp_pat
             state = accepted(api.get(root + "/sandbox",headers=owner["headers"]))
             assert state["actions"][0]["state"] == "cancelled" and state["actions"][0]["plan_id"] == first["id"]
             assert state["leads"][0]["refunded_vnd"] == 30000 and state["leads"][0]["plan_id"] == first["id"]
+        finally:
+            browser.close()
+
+
+@pytest.mark.parametrize("api", ["sqlite"], indirect=True)
+def test_service_appointment_from_campaign_dashboard(api,agency,tmp_path):  # noqa: F811
+    from test_campaign_appointments import service_campaign
+    owner,root,plan,_,_=service_campaign(api,agency)
+    now=datetime.now(timezone.utc)
+    when=(now+timedelta(days=2)).strftime("%Y-%m-%dT%H:%M")
+    with local_api() as origin,sync_playwright() as pw:
+        browser=pw.chromium.launch(executable_path=os.getenv("AMC_BROWSER_EXECUTABLE") or None)
+        try:
+            page=browser.new_page(viewport={"width":1280,"height":900})
+            page.goto(origin+"/?workspace="+owner["tenant"]+"#/campaigns")
+            login=page.locator("#login-form")
+            login.get_by_label("Email").fill(owner["email"])
+            login.get_by_label("Mật khẩu").fill(owner["password"])
+            login.get_by_role("button").click()
+            panel=page.locator("#campaign-engine")
+            panel.locator("#engine-select").select_option(plan["campaign_id"])
+            panel.get_by_text("Yêu cầu lịch dịch vụ",exact=True).click()
+            form=panel.locator("form").filter(has=page.get_by_role("button",name="Ghi nhận lịch hẹn"))
+            form.get_by_label("Mã lịch hẹn").fill("BH-102")
+            form.get_by_label("Giờ mong muốn").fill(when)
+            form.get_by_label("Nơi phục vụ").fill("Xưởng mô phỏng miền Trung")
+            form.get_by_label("Nội dung dịch vụ").fill("Kiểm tra rung động máy bơm và bàn giao phiếu kết quả.")
+            consent=form.get_by_role("checkbox")
+            consent.focus()
+            page.keyboard.press("Space")
+            form.get_by_role("button").click()
+            detail=panel.locator("details").filter(has=page.get_by_text("BH-102 · Đã yêu cầu",exact=True))
+            detail.locator(":scope > summary").click()
+            detail.get_by_text("Xác nhận lịch hẹn",exact=True).click()
+            detail.get_by_label("Giờ hẹn đã thống nhất").fill(when)
+            detail.get_by_role("button",name="Lưu xác nhận lịch hẹn").click()
+            accepted_row=panel.get_by_text("BH-102 · Đã xác nhận",exact=True)
+            accepted_row.click()
+            expect(panel.get_by_text("Nhận phụ trách lịch",exact=True)).to_be_visible()
+            state=accepted(api.get(root+"/sandbox",headers=owner["headers"]))
+            assert state["appointment_summary"]["confirmed"]==1 and state["report"]["rfqs"]==0
+            directory=Path(os.getenv("AMC_DEPT_OPS_EVIDENCE",tmp_path))/"ui"
+            directory.mkdir(exist_ok=True,parents=True)
+            for width,height in ((1280,900),(820,1180),(390,844)):
+                page.set_viewport_size({"width":width,"height":height})
+                accepted_row.evaluate("e=>e.scrollIntoView({block:'center'})")
+                capture_themes(page,directory/f"appointment-{width}.png")
         finally:
             browser.close()

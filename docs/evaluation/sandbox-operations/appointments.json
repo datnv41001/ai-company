@@ -1,0 +1,153 @@
+{
+  "conditions": "Synthetic pump service, authenticated agency operator and assigned colleague on PostgreSQL.",
+  "plan": "2b013706-fc3b-4272-a43e-49d755983b1b",
+  "state": [
+    {
+      "id": "pump-001",
+      "unit": "machine",
+      "state": "completed",
+      "history": [
+        {
+          "at": "2026-11-25T00:09:18.327957+00:00",
+          "actor": "342035e8-296a-46f9-94d1-e6a6fa0ee7f0",
+          "event": "requested",
+          "feedback": null
+        },
+        {
+          "at": "2026-11-25T01:09:18.327957+00:00",
+          "actor": "342035e8-296a-46f9-94d1-e6a6fa0ee7f0",
+          "event": "confirmed",
+          "feedback": null
+        },
+        {
+          "at": "2026-11-25T02:09:18.327957+00:00",
+          "actor": "342035e8-296a-46f9-94d1-e6a6fa0ee7f0",
+          "event": "assigned",
+          "feedback": null
+        },
+        {
+          "at": "2026-11-25T04:09:18.327957+00:00",
+          "actor": "0fcaf9de-b4ae-4b14-93d1-295fe88af755",
+          "event": "completed",
+          "feedback": "Đã kiểm tra hai máy và bàn giao phiếu kiểm tra."
+        }
+      ],
+      "plan_id": "2b013706-fc3b-4272-a43e-49d755983b1b",
+      "contract": "service-appointment/1",
+      "location": "Synthetic inspection site",
+      "quantity": "2",
+      "revision": 4,
+      "product_id": "ecba8807-5d0f-44a7-9cd7-cc6f39c58c4d",
+      "session_id": null,
+      "assignee_id": "0fcaf9de-b4ae-4b14-93d1-295fe88af755",
+      "occurred_at": "2026-11-25T00:09:18.327957Z",
+      "confirmed_for": "2026-11-25T03:09:18.327957+00:00",
+      "last_event_at": "2026-11-25T04:09:18.327957+00:00",
+      "requested_for": "2026-11-25T03:09:18.327957Z",
+      "service_scope": "Kiểm tra tiếng ồn của hai máy bơm",
+      "contact_purpose": "appointment_request"
+    },
+    {
+      "id": "pump-002",
+      "unit": "machine",
+      "state": "cancelled",
+      "history": [
+        {
+          "at": "2026-11-25T00:09:18.327957+00:00",
+          "actor": "342035e8-296a-46f9-94d1-e6a6fa0ee7f0",
+          "event": "requested",
+          "feedback": null
+        },
+        {
+          "at": "2026-11-25T01:09:18.327957+00:00",
+          "actor": "342035e8-296a-46f9-94d1-e6a6fa0ee7f0",
+          "event": "cancelled",
+          "feedback": "Người yêu cầu muốn dời lịch."
+        }
+      ],
+      "plan_id": "2b013706-fc3b-4272-a43e-49d755983b1b",
+      "contract": "service-appointment/1",
+      "location": "Synthetic inspection site",
+      "quantity": "2",
+      "revision": 2,
+      "product_id": "ecba8807-5d0f-44a7-9cd7-cc6f39c58c4d",
+      "session_id": null,
+      "assignee_id": null,
+      "occurred_at": "2026-11-25T00:09:18.327957Z",
+      "confirmed_for": null,
+      "last_event_at": "2026-11-25T01:09:18.327957+00:00",
+      "requested_for": "2026-11-25T03:09:18.327957Z",
+      "service_scope": "Kiểm tra tiếng ồn của hai máy bơm",
+      "contact_purpose": "appointment_request"
+    },
+    {
+      "id": "pump-003",
+      "unit": "machine",
+      "state": "no_show",
+      "history": [
+        {
+          "at": "2026-11-25T00:09:18.327957+00:00",
+          "actor": "342035e8-296a-46f9-94d1-e6a6fa0ee7f0",
+          "event": "requested",
+          "feedback": null
+        },
+        {
+          "at": "2026-11-25T01:09:18.327957+00:00",
+          "actor": "342035e8-296a-46f9-94d1-e6a6fa0ee7f0",
+          "event": "confirmed",
+          "feedback": null
+        },
+        {
+          "at": "2026-11-25T04:09:18.327957+00:00",
+          "actor": "342035e8-296a-46f9-94d1-e6a6fa0ee7f0",
+          "event": "no_show",
+          "feedback": "Không có người nhận máy tại lịch hẹn."
+        }
+      ],
+      "plan_id": "2b013706-fc3b-4272-a43e-49d755983b1b",
+      "contract": "service-appointment/1",
+      "location": "Synthetic inspection site",
+      "quantity": "2",
+      "revision": 3,
+      "product_id": "ecba8807-5d0f-44a7-9cd7-cc6f39c58c4d",
+      "session_id": null,
+      "assignee_id": null,
+      "occurred_at": "2026-11-25T00:09:18.327957Z",
+      "confirmed_for": "2026-11-25T03:09:18.327957+00:00",
+      "last_event_at": "2026-11-25T04:09:18.327957+00:00",
+      "requested_for": "2026-11-25T03:09:18.327957Z",
+      "service_scope": "Kiểm tra tiếng ồn của hai máy bơm",
+      "contact_purpose": "appointment_request"
+    }
+  ],
+  "summary": {
+    "requests": 3,
+    "confirmed": 2,
+    "assigned": 0,
+    "completed": 1,
+    "cancelled": 1,
+    "no_show": 1,
+    "attributed": 0,
+    "unattributed": 3
+  },
+  "rfqs": 0,
+  "revenue_vnd": 0,
+  "receipt_ids": [
+    "e66e3aca-029a-40a2-be17-7e270f1a48e1",
+    "780df3d5-3b72-4acc-8600-92fd9928371a",
+    "ab6eb73b-6ee7-4be1-b2d2-e0b9fd3ace60",
+    "12a64bff-10d6-4047-9317-8b4e1946e195",
+    "3d4131a1-f277-4f5d-abd5-ae9fcc1d3108",
+    "8452d871-72d6-4cb1-8c1c-1301ad07721c",
+    "48e1064a-69f3-4d7d-9ce6-45cf272a7ddd",
+    "77111d4f-76ff-4355-9beb-a835222cd613",
+    "629c52e5-01d6-4113-9a65-4914e6c8419d"
+  ],
+  "cost_measurement": {
+    "observed_baseline_seconds": 60,
+    "synthetic_signed_allocation_vnd": 6,
+    "subsequent_cost_state": "Missing fresh evidence",
+    "business_accepted_units": 0,
+    "cost_per_business_accepted_vnd": null
+  }
+}

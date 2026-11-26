@@ -1,5 +1,9 @@
 # Bắt đầu ở đây khi tiếp quản AI Marketing Company
 
+## Lịch dịch vụ và thực thi trong sandbox
+
+Trên nền merge #44 `837ec9fc`, nhân viên có thể tiếp nhận và đối soát lịch dịch vụ riêng, duyệt tác vụ cho đúng nhóm tài sản, chạy bộ điều phối loopback và kiểm tra chứng từ theo từng đầu việc. Mẫu số nghiệm thu thật hiện bằng 0. Hợp đồng tài sản C3 /1 dùng cho bản này; khi nối nhánh Studio /2 cần kiểm tra lại quyền từng nhóm mới. [Cấu hình, kiểm thử, biên nhận, ảnh sáu cấu hình và rollback](docs/evaluation/sandbox-operations/README.md)
+
 ## Điều hành chiến dịch từ mục tiêu đã duyệt
 
 Bản nền trên main sau bốn lần merge là `1b9e3a9643014122d4c6e510efffc3d02b9843cf`. Bảng đối chiếu ghi cả hai parent, tree, bản tích hợp và CI của từng PR, cùng đường dẫn để kiểm tra trên GitHub. [Bằng chứng hợp nhất #40, #43, #41 và #42](docs/evaluation/campaign-engine/INTEGRATIONS.md)

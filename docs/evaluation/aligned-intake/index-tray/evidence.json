@@ -1,0 +1,658 @@
+{
+  "creative": {
+    "id": "05035e8f-5904-4049-8176-5f57241e9586",
+    "created_by": "8e09ea28-d3b7-48ec-b56f-ce0697a3c634",
+    "did": "f7a82e0d-9ca9-42cc-81c9-768ab8c23ce4",
+    "version": 2,
+    "kind": "creative",
+    "studio_revision": 4,
+    "manifest": {
+      "id": "05e43eff-e127-4b84-ab10-728f16402ff5",
+      "digest": "1183d87a12b4a5367e0f8785e0b5e2c58e3cc4e73245c9182ae2d30ed9248ceb"
+    },
+    "plan_id": "c4387225-9f96-4d95-9404-5a461ccf34a0",
+    "plan_digest": "6a7cf04ab1deecd0c42f403b990ce0c6f3d8d2f38eee20da19f39e54757675e1",
+    "groups": {
+      "copy": "e87238239d44ad69986bba492003a1faca3c9b2c190e153365fbf164b53e2bdc",
+      "creative_brief": "4deb3083de2691018a105095c5dc574d66dbba2db850340a4036a0daa06e6c93"
+    },
+    "group_receipts": {
+      "copy": "b2ed2b95-48b4-426d-8969-a1ceb40e3065",
+      "creative_brief": "5980abe8-a759-4366-9bde-4f0cb43d54a2"
+    },
+    "inputs": "0d83eb7196f9e9746b1de338e6770de282c1a760ec8511fb1034af27e4bda29e",
+    "master": {
+      "contract": "amc.creative-master/1",
+      "palette": "forest",
+      "motif": "planes",
+      "layout": "art_first",
+      "colors": [
+        "#123D31",
+        "#E5F39A",
+        "#FCF9ED"
+      ],
+      "headline": "Khay chia linh kiện Khe Gọn",
+      "cta": "Yêu cầu báo giá",
+      "brief": {
+        "concept": "Phác thảo khung hình cho Khay chia linh kiện Khe Gọn có chỗ đặt điều kiện và lời mời hành động.",
+        "brand_direction": "Áp dụng hướng dẫn thương hiệu bản 1. Dành một vùng cho đơn vị báo giá và điều kiện chọn số lượng.",
+        "image_spec": "Giao mẫu dọc và ngang, bản nguồn chỉnh sửa được và ảnh xem trước. Giữ chủ thể, điều kiện và lời mời hành động trong vùng an toàn khi cắt. Duyệt độ đọc ở kích thước điện thoại.",
+        "video_spec": "Giao storyboard có cảnh nhu cầu, cảnh đối chiếu dữ kiện và cảnh chọn bước tiếp theo. Kèm chỉ dẫn cảnh quay, phụ đề, bản chép lời và danh mục nguồn. Duyệt khi tắt âm thanh trước khi xuất bản dựng.",
+        "rights": "Chờ kiểm tra chủ sở hữu, giấy phép, phạm vi và thời hạn trước khi dùng tư liệu.",
+        "provenance": "Bản giao chỉ gồm chỉ dẫn sản xuất. Chưa có tệp hình ảnh hoặc video được cấp phép."
+      },
+      "brand_guideline_digest": "8667f503425c83801d0702e0a96932e171bcc578d401f55e68de2dc1d3e1e675",
+      "variations": {
+        "portrait": [
+          720,
+          900
+        ],
+        "landscape": [
+          960,
+          540
+        ],
+        "square": [
+          720,
+          720
+        ]
+      },
+      "safe_inset_percent": 6.5,
+      "typeface": "Be Vietnam Pro SemiBold",
+      "scenes": [
+        {
+          "from": 0,
+          "to": 2,
+          "caption": "Khay chia linh kiện Khe Gọn"
+        },
+        {
+          "from": 2,
+          "to": 4,
+          "caption": "Đối chiếu quy cách và điều kiện áp dụng của Khay chia linh kiện Khe Gọn trước khi lựa chọn."
+        },
+        {
+          "from": 4,
+          "to": 6,
+          "caption": "Yêu cầu báo giá"
+        }
+      ],
+      "source": {
+        "file": "source.png",
+        "sha256": "b8c0a8704829c527c4ac7d61659413dec61366e4aafdffdb2f989f7fe5a1651e",
+        "type": "AMC original synthetic geometry",
+        "rights": "AMC synthetic source for internal sandbox use. No external media or photography."
+      },
+      "renderer": {
+        "engine": "Pillow",
+        "version": "13.0.0",
+        "freetype": "2.14.3",
+        "webp": "1.6.0"
+      }
+    },
+    "files": {
+      "source.png": {
+        "mime": "image/png",
+        "bytes": 8031,
+        "sha256": "b8c0a8704829c527c4ac7d61659413dec61366e4aafdffdb2f989f7fe5a1651e"
+      },
+      "portrait.png": {
+        "mime": "image/png",
+        "bytes": 118240,
+        "sha256": "faea837cb3d240acbeb6b33935a11471ba1ed5cb0c69c7c224e09e64f8784cc5"
+      },
+      "landscape.png": {
+        "mime": "image/png",
+        "bytes": 90976,
+        "sha256": "1dd3017b92624bc80b5103cc2c704c6370e176662ae4aaf5dec16c8eede18391"
+      },
+      "square.png": {
+        "mime": "image/png",
+        "bytes": 102979,
+        "sha256": "6a5c070f5bed97d4d097f4025cafaf420080157112fc13a199012b04d1a39979"
+      },
+      "preview.webm": {
+        "mime": "video/webm",
+        "bytes": 48308,
+        "sha256": "f82a3eb5e354cc3b50fb87d7c785f8c1720e65d7d0331e669716f0bc40d49234"
+      },
+      "captions.vtt": {
+        "mime": "text/vtt",
+        "bytes": 273,
+        "sha256": "f689667f9f8f9880adb8ae8b34626beb3087ad52cc2974e11b9a065b8ef02a3e"
+      },
+      "master.json": {
+        "mime": "application/json",
+        "bytes": 2470,
+        "sha256": "06d14044b57f7ad43cb4ea8970f66b9b447c9bdc096577a54744200a9499f1d3"
+      }
+    },
+    "digest": "b1dc494edc8b2c04ded4e7894bfd50fb67b3be80b13fe39bd8a9db0e9bc20d7f",
+    "measurement": {
+      "render_ms": 288.77,
+      "bytes": 371277,
+      "external_calls": 0,
+      "full_cost_vnd": null
+    },
+    "production_qa": {
+      "reviewer": "769c365f-8c34-4520-ad12-f30e42e130e4",
+      "receipt": "3a21677b-7518-49ca-9b1d-c4fa37adb5bf",
+      "digest": "b1dc494edc8b2c04ded4e7894bfd50fb67b3be80b13fe39bd8a9db0e9bc20d7f"
+    }
+  },
+  "landing": {
+    "id": "c2a1559a-71ea-40b1-9b8f-c82de430b4b9",
+    "created_by": "8e09ea28-d3b7-48ec-b56f-ce0697a3c634",
+    "did": "f7a82e0d-9ca9-42cc-81c9-768ab8c23ce4",
+    "version": 1,
+    "kind": "landing",
+    "studio_revision": 4,
+    "manifest": {
+      "id": "05e43eff-e127-4b84-ab10-728f16402ff5",
+      "digest": "1183d87a12b4a5367e0f8785e0b5e2c58e3cc4e73245c9182ae2d30ed9248ceb"
+    },
+    "plan_id": "c4387225-9f96-4d95-9404-5a461ccf34a0",
+    "plan_digest": "6a7cf04ab1deecd0c42f403b990ce0c6f3d8d2f38eee20da19f39e54757675e1",
+    "groups": {
+      "copy": "e87238239d44ad69986bba492003a1faca3c9b2c190e153365fbf164b53e2bdc",
+      "seo": "d0d294044c388767c3ebb7853f03590ae684dc3eb930275066ce4cb4f168cd8c"
+    },
+    "group_receipts": {
+      "copy": "b2ed2b95-48b4-426d-8969-a1ceb40e3065",
+      "seo": "c1941a19-b9b0-490e-b106-51e185d11c28"
+    },
+    "inputs": "0168161ab87a52b6ef5351b0a66ac728e6884b95199aea60da422c857dc8439f",
+    "master": {
+      "contract": "amc.sandbox-landing/2",
+      "intake_contract": {
+        "version": "business-intake/1",
+        "revision": 1,
+        "action": "rfq",
+        "locale": "vi-VN",
+        "plan_id": "c4387225-9f96-4d95-9404-5a461ccf34a0",
+        "subject": "f9ea53e5-7254-41b1-9d0c-c50ab1b5911f",
+        "unit": "box",
+        "fields": [
+          {
+            "id": "box_count",
+            "required": true,
+            "label": "số hộp",
+            "maps_to": "quantity",
+            "type": "integer",
+            "unit": "box",
+            "unit_label": "hộp",
+            "minimum": 1,
+            "maximum": 100
+          },
+          {
+            "id": "destination",
+            "required": true,
+            "label": "địa bàn",
+            "maps_to": "location",
+            "type": "enum",
+            "options": [
+              {
+                "value": "north",
+                "label": "Cơ sở thử A"
+              },
+              {
+                "value": "south",
+                "label": "Cơ sở thử B"
+              }
+            ]
+          },
+          {
+            "id": "need_date",
+            "required": true,
+            "label": "thời điểm cần hàng",
+            "maps_to": "required_date",
+            "type": "enum",
+            "options": [
+              {
+                "value": "2",
+                "label": "Sau hai ngày"
+              },
+              {
+                "value": "7",
+                "label": "Sau một tuần"
+              }
+            ]
+          }
+        ],
+        "source": {
+          "id": "05e43eff-e127-4b84-ab10-728f16402ff5",
+          "digest": "1183d87a12b4a5367e0f8785e0b5e2c58e3cc4e73245c9182ae2d30ed9248ceb",
+          "brief_id": "1b874c47-6ba6-4c32-b76d-1bfab0a81fce",
+          "workflow": "WF-13/landing-seo-draft@6"
+        },
+        "selection": "brief",
+        "measurement_digest": null,
+        "consent": {
+          "purpose": "quote_request",
+          "required": true,
+          "label": "Tôi đồng ý gửi yêu cầu thử cho bộ phận phụ trách."
+        },
+        "qualification": {
+          "accept_inquiries": true,
+          "minimum_order_quantities": [
+            "5"
+          ]
+        },
+        "digest": "e4ea06b6d5e1871026db6be38fd2a046daa8a2650a0f999cdc61eb7f5701a8de"
+      },
+      "kind": "rfq",
+      "seo": {
+        "page_title": "Khay chia linh kiện Khe Gọn | HN",
+        "meta_description": "Xem thông tin về Khay chia linh kiện Khe Gọn tại HN. Yêu cầu báo giá",
+        "search_intent": "Tìm hiểu điều kiện lựa chọn Khay chia linh kiện Khe Gọn tại HN."
+      },
+      "sections": {
+        "headline": "Khay chia linh kiện Khe Gọn",
+        "value_proposition": "Đối chiếu quy cách và điều kiện áp dụng của Khay chia linh kiện Khe Gọn trước khi lựa chọn.",
+        "benefit": "Vách ngăn có thể tháo rời Áp dụng cho mẫu tiêu chuẩn.",
+        "commercial_terms": "Giá tham khảo: 380.000 VND / 1 hộp, đã gồm thuế. Đơn tối thiểu: 5 hộp. Áp dụng từ 5 hộp. Số lượng đối chiếu: 5 hộp. Xác nhận số lượng trước khi đặt.\nVách ngăn có thể tháo rời Áp dụng cho mẫu tiêu chuẩn.",
+        "call_to_action": "Yêu cầu báo giá"
+      },
+      "product_id": "f9ea53e5-7254-41b1-9d0c-c50ab1b5911f",
+      "unit": "box",
+      "scope": "synthetic_local",
+      "public_tracking": false
+    },
+    "files": {
+      "landing.html": {
+        "mime": "text/html",
+        "bytes": 4850,
+        "sha256": "674feb3ef768408d16a84dbbacfdefa2614306fec1e0b5456e9e5dbcb5e775ac"
+      }
+    },
+    "digest": "cb75b735a033d966f3c936ea480606d935e14a2e3b6e1e92fa2f0ecf640754cc",
+    "measurement": {
+      "render_ms": 1.26,
+      "bytes": 4850,
+      "external_calls": 0,
+      "full_cost_vnd": null
+    },
+    "production_qa": {
+      "reviewer": "769c365f-8c34-4520-ad12-f30e42e130e4",
+      "receipt": "c1986b1c-d9d7-4791-9ba9-e0567ecce685",
+      "digest": "cb75b735a033d966f3c936ea480606d935e14a2e3b6e1e92fa2f0ecf640754cc"
+    }
+  },
+  "events": [
+    {
+      "id": "ca971627-9759-48a5-8b14-5525b0e3d9c1",
+      "campaign_id": "1b183b16-3855-4318-8cce-07e5f9c68901",
+      "plan_id": "c4387225-9f96-4d95-9404-5a461ccf34a0",
+      "sequence": 15,
+      "kind": "session",
+      "entity": "sessions",
+      "entity_id": "b58cdb828681647a29897434825a0b92769589496496781dc7fbafa9a240f675",
+      "value": {
+        "id": "b58cdb828681647a29897434825a0b92769589496496781dc7fbafa9a240f675",
+        "visitor": "cddabef36d51140ad0dbcdd61b113ae8119914b134577d23e87d318ef8a0288e",
+        "action_id": null,
+        "occurred_at": "2026-11-26T08:41:02.998776+00:00",
+        "plan_id": "c4387225-9f96-4d95-9404-5a461ccf34a0",
+        "landing_package": "c2a1559a-71ea-40b1-9b8f-c82de430b4b9",
+        "landing_digest": "cb75b735a033d966f3c936ea480606d935e14a2e3b6e1e92fa2f0ecf640754cc",
+        "landing_source": {
+          "tenant_id": "52e24c84-597b-4757-a652-990283b3a5e8",
+          "client_id": "8d496325-57bf-4005-9c53-6104c9edde25",
+          "brand_id": "1b2bfb57-eafb-4c00-a941-a9e91ca52320",
+          "campaign_id": "1b183b16-3855-4318-8cce-07e5f9c68901",
+          "plan_id": "c4387225-9f96-4d95-9404-5a461ccf34a0",
+          "plan_digest": "6a7cf04ab1deecd0c42f403b990ce0c6f3d8d2f38eee20da19f39e54757675e1",
+          "document_id": "f7a82e0d-9ca9-42cc-81c9-768ab8c23ce4",
+          "studio_revision": 4,
+          "package_id": "c2a1559a-71ea-40b1-9b8f-c82de430b4b9",
+          "package_version": 1,
+          "package_digest": "cb75b735a033d966f3c936ea480606d935e14a2e3b6e1e92fa2f0ecf640754cc",
+          "file_digest": "674feb3ef768408d16a84dbbacfdefa2614306fec1e0b5456e9e5dbcb5e775ac",
+          "intake_contract_digest": "e4ea06b6d5e1871026db6be38fd2a046daa8a2650a0f999cdc61eb7f5701a8de"
+        }
+      },
+      "actor": "8e09ea28-d3b7-48ec-b56f-ce0697a3c634",
+      "recorded_at": "2026-11-26T08:41:02.998776+00:00",
+      "intake_writer": "business-intake/1",
+      "origin": "landing"
+    },
+    {
+      "id": "42b38c79-66d5-43c1-8148-ebd6b1d1c7cd",
+      "campaign_id": "1b183b16-3855-4318-8cce-07e5f9c68901",
+      "plan_id": "c4387225-9f96-4d95-9404-5a461ccf34a0",
+      "sequence": 16,
+      "kind": "rfq",
+      "entity": "leads",
+      "entity_id": "8101708a6d31dacf7f8f25e0e97b2ecb3dabb4d9594b75c843e6e30d85ee5e2c",
+      "value": {
+        "id": "8101708a6d31dacf7f8f25e0e97b2ecb3dabb4d9594b75c843e6e30d85ee5e2c",
+        "revision": 1,
+        "plan_id": "c4387225-9f96-4d95-9404-5a461ccf34a0",
+        "session_id": "b58cdb828681647a29897434825a0b92769589496496781dc7fbafa9a240f675",
+        "product_id": "f9ea53e5-7254-41b1-9d0c-c50ab1b5911f",
+        "unit": "box",
+        "occurred_at": "2026-11-26T08:41:04.304009+00:00",
+        "last_event_at": "2026-11-26T08:41:04.304009+00:00",
+        "quantity": "3",
+        "location": "Synthetic site A",
+        "required_date": "2026-12-03",
+        "contact_purpose": "quote_request",
+        "assignee_id": null,
+        "gross_vnd": 0,
+        "refunded_vnd": 0,
+        "sales_accepted": false,
+        "quoted": false,
+        "ordered": false,
+        "confirmed": false,
+        "feedback": [],
+        "minimum_order_quantities": [
+          "5"
+        ],
+        "missing": [
+          "commercial_moq"
+        ],
+        "state": "received",
+        "intake": {
+          "contract_digest": "e4ea06b6d5e1871026db6be38fd2a046daa8a2650a0f999cdc61eb7f5701a8de",
+          "revision": 1,
+          "answers": {
+            "box_count": 3,
+            "destination": "north",
+            "need_date": "7"
+          },
+          "fields": [
+            {
+              "id": "box_count",
+              "required": true,
+              "label": "số hộp",
+              "maps_to": "quantity",
+              "type": "integer",
+              "unit": "box",
+              "unit_label": "hộp",
+              "minimum": 1,
+              "maximum": 100
+            },
+            {
+              "id": "destination",
+              "required": true,
+              "label": "địa bàn",
+              "maps_to": "location",
+              "type": "enum",
+              "options": [
+                {
+                  "value": "north",
+                  "label": "Cơ sở thử A"
+                },
+                {
+                  "value": "south",
+                  "label": "Cơ sở thử B"
+                }
+              ]
+            },
+            {
+              "id": "need_date",
+              "required": true,
+              "label": "thời điểm cần hàng",
+              "maps_to": "required_date",
+              "type": "enum",
+              "options": [
+                {
+                  "value": "2",
+                  "label": "Sau hai ngày"
+                },
+                {
+                  "value": "7",
+                  "label": "Sau một tuần"
+                }
+              ]
+            }
+          ],
+          "mapped": {
+            "quantity": 3,
+            "location": "north",
+            "required_date": "7"
+          },
+          "consent": {
+            "purpose": "quote_request",
+            "granted": true
+          }
+        },
+        "landing_package": "c2a1559a-71ea-40b1-9b8f-c82de430b4b9",
+        "landing_digest": "cb75b735a033d966f3c936ea480606d935e14a2e3b6e1e92fa2f0ecf640754cc",
+        "landing_source": {
+          "tenant_id": "52e24c84-597b-4757-a652-990283b3a5e8",
+          "client_id": "8d496325-57bf-4005-9c53-6104c9edde25",
+          "brand_id": "1b2bfb57-eafb-4c00-a941-a9e91ca52320",
+          "campaign_id": "1b183b16-3855-4318-8cce-07e5f9c68901",
+          "plan_id": "c4387225-9f96-4d95-9404-5a461ccf34a0",
+          "plan_digest": "6a7cf04ab1deecd0c42f403b990ce0c6f3d8d2f38eee20da19f39e54757675e1",
+          "document_id": "f7a82e0d-9ca9-42cc-81c9-768ab8c23ce4",
+          "studio_revision": 4,
+          "package_id": "c2a1559a-71ea-40b1-9b8f-c82de430b4b9",
+          "package_version": 1,
+          "package_digest": "cb75b735a033d966f3c936ea480606d935e14a2e3b6e1e92fa2f0ecf640754cc",
+          "file_digest": "674feb3ef768408d16a84dbbacfdefa2614306fec1e0b5456e9e5dbcb5e775ac",
+          "intake_contract_digest": "e4ea06b6d5e1871026db6be38fd2a046daa8a2650a0f999cdc61eb7f5701a8de"
+        }
+      },
+      "actor": "8e09ea28-d3b7-48ec-b56f-ce0697a3c634",
+      "recorded_at": "2026-11-26T08:41:04.304009+00:00",
+      "intake_writer": "business-intake/1",
+      "origin": "landing"
+    }
+  ],
+  "intake": {
+    "synthetic": true,
+    "case": "index-tray",
+    "plan_id": "c4387225-9f96-4d95-9404-5a461ccf34a0",
+    "plan_digest": "6a7cf04ab1deecd0c42f403b990ce0c6f3d8d2f38eee20da19f39e54757675e1",
+    "contract": {
+      "version": "business-intake/1",
+      "revision": 1,
+      "action": "rfq",
+      "locale": "vi-VN",
+      "plan_id": "c4387225-9f96-4d95-9404-5a461ccf34a0",
+      "subject": "f9ea53e5-7254-41b1-9d0c-c50ab1b5911f",
+      "unit": "box",
+      "fields": [
+        {
+          "id": "box_count",
+          "required": true,
+          "label": "số hộp",
+          "maps_to": "quantity",
+          "type": "integer",
+          "unit": "box",
+          "unit_label": "hộp",
+          "minimum": 1,
+          "maximum": 100
+        },
+        {
+          "id": "destination",
+          "required": true,
+          "label": "địa bàn",
+          "maps_to": "location",
+          "type": "enum",
+          "options": [
+            {
+              "value": "north",
+              "label": "Cơ sở thử A"
+            },
+            {
+              "value": "south",
+              "label": "Cơ sở thử B"
+            }
+          ]
+        },
+        {
+          "id": "need_date",
+          "required": true,
+          "label": "thời điểm cần hàng",
+          "maps_to": "required_date",
+          "type": "enum",
+          "options": [
+            {
+              "value": "2",
+              "label": "Sau hai ngày"
+            },
+            {
+              "value": "7",
+              "label": "Sau một tuần"
+            }
+          ]
+        }
+      ],
+      "source": {
+        "id": "05e43eff-e127-4b84-ab10-728f16402ff5",
+        "digest": "1183d87a12b4a5367e0f8785e0b5e2c58e3cc4e73245c9182ae2d30ed9248ceb",
+        "brief_id": "1b874c47-6ba6-4c32-b76d-1bfab0a81fce",
+        "workflow": "WF-13/landing-seo-draft@6"
+      },
+      "selection": "brief",
+      "measurement_digest": null,
+      "consent": {
+        "purpose": "quote_request",
+        "required": true,
+        "label": "Tôi đồng ý gửi yêu cầu thử cho bộ phận phụ trách."
+      },
+      "qualification": {
+        "accept_inquiries": true,
+        "minimum_order_quantities": [
+          "5"
+        ]
+      },
+      "digest": "e4ea06b6d5e1871026db6be38fd2a046daa8a2650a0f999cdc61eb7f5701a8de"
+    },
+    "copy": {
+      "digest": "e4ea06b6d5e1871026db6be38fd2a046daa8a2650a0f999cdc61eb7f5701a8de",
+      "fields": [
+        "box_count",
+        "destination",
+        "need_date"
+      ]
+    },
+    "package_id": "c2a1559a-71ea-40b1-9b8f-c82de430b4b9",
+    "package_digest": "cb75b735a033d966f3c936ea480606d935e14a2e3b6e1e92fa2f0ecf640754cc",
+    "file": {
+      "mime": "text/html",
+      "bytes": 4850,
+      "sha256": "674feb3ef768408d16a84dbbacfdefa2614306fec1e0b5456e9e5dbcb5e775ac"
+    },
+    "group_receipts": {
+      "copy": "b2ed2b95-48b4-426d-8969-a1ceb40e3065",
+      "seo": "c1941a19-b9b0-490e-b106-51e185d11c28"
+    },
+    "file_approval": {
+      "receipt": "c1986b1c-d9d7-4791-9ba9-e0567ecce685",
+      "digest": "cb75b735a033d966f3c936ea480606d935e14a2e3b6e1e92fa2f0ecf640754cc"
+    },
+    "commercial_terms": "Giá tham khảo: 380.000 VND / 1 hộp, đã gồm thuế. Đơn tối thiểu: 5 hộp. Áp dụng từ 5 hộp. Số lượng đối chiếu: 5 hộp. Xác nhận số lượng trước khi đặt.\nVách ngăn có thể tháo rời Áp dụng cho mẫu tiêu chuẩn.",
+    "visit_id": "ca971627-9759-48a5-8b14-5525b0e3d9c1",
+    "submitted_id": "42b38c79-66d5-43c1-8148-ebd6b1d1c7cd",
+    "submit_kind": "rfq",
+    "crm_entity": "leads",
+    "state": "received",
+    "crm_fields": {
+      "contract_digest": "e4ea06b6d5e1871026db6be38fd2a046daa8a2650a0f999cdc61eb7f5701a8de",
+      "revision": 1,
+      "answers": {
+        "box_count": 3,
+        "destination": "north",
+        "need_date": "7"
+      },
+      "fields": [
+        {
+          "id": "box_count",
+          "required": true,
+          "label": "số hộp",
+          "maps_to": "quantity",
+          "type": "integer",
+          "unit": "box",
+          "unit_label": "hộp",
+          "minimum": 1,
+          "maximum": 100
+        },
+        {
+          "id": "destination",
+          "required": true,
+          "label": "địa bàn",
+          "maps_to": "location",
+          "type": "enum",
+          "options": [
+            {
+              "value": "north",
+              "label": "Cơ sở thử A"
+            },
+            {
+              "value": "south",
+              "label": "Cơ sở thử B"
+            }
+          ]
+        },
+        {
+          "id": "need_date",
+          "required": true,
+          "label": "thời điểm cần hàng",
+          "maps_to": "required_date",
+          "type": "enum",
+          "options": [
+            {
+              "value": "2",
+              "label": "Sau hai ngày"
+            },
+            {
+              "value": "7",
+              "label": "Sau một tuần"
+            }
+          ]
+        }
+      ],
+      "mapped": {
+        "quantity": 3,
+        "location": "north",
+        "required_date": "7"
+      },
+      "consent": {
+        "purpose": "quote_request",
+        "granted": true
+      }
+    },
+    "desk_readback_digest": "e4ea06b6d5e1871026db6be38fd2a046daa8a2650a0f999cdc61eb7f5701a8de",
+    "landing_funnel": {
+      "version": "intake-funnel/2",
+      "contract_digest": "e4ea06b6d5e1871026db6be38fd2a046daa8a2650a0f999cdc61eb7f5701a8de",
+      "window": "approved_plan_lifetime",
+      "action": "rfq",
+      "landing_visits": 1,
+      "valid_submissions": 1,
+      "manual_requests": 0,
+      "inquiries": 1,
+      "qualified_rfqs": 0,
+      "sales_accepted": 0,
+      "quotes_issued": 0,
+      "orders": 0,
+      "confirmed_revenue_vnd": 0,
+      "current_states": {
+        "received": 1
+      },
+      "qualified_quotes": 0
+    },
+    "manual_funnel": {
+      "version": "intake-funnel/2",
+      "contract_digest": "e4ea06b6d5e1871026db6be38fd2a046daa8a2650a0f999cdc61eb7f5701a8de",
+      "window": "approved_plan_lifetime",
+      "action": "rfq",
+      "landing_visits": 1,
+      "valid_submissions": 1,
+      "manual_requests": 1,
+      "inquiries": 1,
+      "qualified_rfqs": 0,
+      "sales_accepted": 0,
+      "quotes_issued": 0,
+      "orders": 0,
+      "confirmed_revenue_vnd": 0,
+      "current_states": {
+        "received": 1
+      },
+      "qualified_quotes": 0
+    },
+    "primary_measurement": null
+  }
+}

@@ -1,0 +1,36 @@
+<!doctype html><html lang="vi"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1"><meta name="robots" content="noindex,nofollow,noarchive">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'unsafe-inline'; script-src 'unsafe-inline'; connect-src 'none'; form-action 'none'; base-uri 'none';">
+<title>Buổi khảo sát luồng nhận hàng Luồng Rõ | HN</title><meta name="description" content="Xem thông tin về Buổi khảo sát luồng nhận hàng Luồng Rõ tại HN. Gửi đề nghị khảo sát"><style>
+:root{color-scheme:light;--bg:#f6f6ed;--ink:#152f26;--panel:#fffef7;--line:#b4c3af;--lime:#d8f282}
+*{box-sizing:border-box}body{background:var(--bg);color:var(--ink);font:16px/1.6 system-ui,sans-serif;margin:0}
+main{max-width:76rem;margin:auto;padding:clamp(1rem,5vw,4rem)}.banner{font-size:.83rem;margin:0 0 1.5rem}
+header,section,form{background:var(--panel);border:1px solid var(--line);border-radius:1rem;padding:clamp(1rem,3vw,2rem);overflow-wrap:anywhere}
+header{background:#153d30;color:#fffef7;margin-bottom:1rem}header h1{font-size:clamp(2rem,7vw,4.7rem);max-width:19ch;line-height:1.09;margin:.3em 0}
+h2{font-size:1.28rem;margin:0 0 .5rem}p{margin:.5em 0;white-space:pre-line}.grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+form{margin-top:1rem}label{display:grid;gap:.2rem;margin:.6rem 0;max-width:32rem}input,select,button,a{font:inherit;min-height:44px}
+input,select{padding:.5rem;border:1px solid var(--line);border-radius:.4rem;width:100%;background:var(--panel);color:var(--ink)}
+button,a{display:inline-flex;align-items:center;padding:.5rem 1rem;color:#143221;background:var(--lime);border:1px solid #778455;border-radius:.6rem;font-weight:650}
+button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible{outline:3px solid #629423;outline-offset:2px}
+@media(max-width:660px){.grid{grid-template-columns:1fr}}@media(prefers-color-scheme:dark){:root{color-scheme:dark;--bg:#10251e;--panel:#1b342a;--ink:#f2f5e9;--line:#526958}}
+</style></head><body><main>
+<p class="banner">Trang thử nghiệm nội bộ · Chỉ dùng lựa chọn tổng hợp</p>
+<header><h1>Buổi khảo sát luồng nhận hàng Luồng Rõ</h1><p>Đối chiếu quy cách và điều kiện áp dụng của Buổi khảo sát luồng nhận hàng Luồng Rõ trước khi lựa chọn.</p><a href="#request">Gửi đề nghị khảo sát</a></header>
+<div class="grid"><section><h2>Dịch vụ và quyền lợi</h2><p>Bàn giao sơ đồ luồng nhận hàng Trong phạm vi buổi khảo sát.</p></section><section><h2>Điều kiện áp dụng</h2><p>Giá tham khảo: 760.000 VND / 1 lượt, đã gồm thuế. Đơn tối thiểu: 1 lượt. Áp dụng từ 1 lượt. Số lượng đối chiếu: 1 lượt. Xác nhận số lượng trước khi đặt.
+Bàn giao sơ đồ luồng nhận hàng Trong phạm vi buổi khảo sát.</p></section></div>
+<form id="request" data-contract="6f87e8a11d8254e64daa7f97f297eee7ed82f210debf6ba94072be31c65caeb3"><h2>Gửi đề nghị khảo sát</h2><p>Người phụ trách sẽ đối chiếu đề nghị trước khi xác nhận lịch.</p><label>địa điểm<select name="site" data-answer required><option value=""></option><option value="north">Cơ sở thử A</option><option value="south">Cơ sở thử B</option></select></label><label>ca nhận hàng cần quan sát<select name="receiving_shift" data-answer required><option value=""></option><option value="morning">Ca sáng</option><option value="evening">Ca chiều</option><option value="night">Ca đêm</option></select></label><label><input type="checkbox" name="consent" required>Tôi đồng ý gửi yêu cầu thử cho bộ phận phụ trách.</label><button type="submit">Gửi đề nghị khảo sát</button><p role="status" aria-live="polite"></p></form>
+</main><script>
+const form=document.querySelector('form'), output=document.querySelector('[role=status]');
+let pending=false;
+form.addEventListener('submit', e=>{
+ e.preventDefault(); if(pending||!form.reportValidity())return;
+ if(parent===window){output.textContent='Mở bản này trong Studio để gửi dữ liệu thử.';return}
+ pending=true; form.querySelector('button').disabled=true;
+ parent.postMessage({type:'amc-landing-submit/2',contract_digest:form.dataset.contract,consent:form.consent.checked,
+ answers:Object.fromEntries(Array.from(form.querySelectorAll('[data-answer]')).filter(el=>el.value!=='')
+ .map(el=>[el.name,el.type==='number'?Number(el.value):el.value]))},'*')
+});
+window.addEventListener('message',e=>{if(e.source===parent&&e.data?.type==='amc-landing-result/1'){
+ output.textContent=String(e.data.message);pending=Boolean(e.data.ok);form.querySelector('button').disabled=pending;
+}});
+</script></body></html>

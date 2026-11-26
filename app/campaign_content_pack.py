@@ -46,7 +46,7 @@ def compose(plan, projection):
         ask = tr("Cần chuẩn bị gì trước khi hẹn?", "What should you prepare before requesting a visit?")
         lead = tr("Ghi địa điểm và thời gian thuận tiện. Nhân sự phụ trách sẽ đối chiếu yêu cầu trước khi xác nhận lịch.",
                   "Include the location and preferred time. Staff review the request before confirming the booking.")
-        short = tr("Gửi yêu cầu hẹn", "Request an appointment")
+        short = cta if action == "appointment" and platform_length(cta) <= 30 else tr("Gửi yêu cầu hẹn", "Request an appointment")
     else:
         ask = tr("Điều kiện nào áp dụng?", "Which terms apply?")
         lead = tr("Xem điều kiện cho lựa chọn của bạn trước khi gửi yêu cầu.", "Check the conditions for your selection before submitting.")

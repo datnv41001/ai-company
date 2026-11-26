@@ -1,0 +1,646 @@
+{
+  "creative": {
+    "id": "e341e334-8d2c-433f-8d3b-1a6df67bc6c7",
+    "created_by": "3be4c80e-78fb-43cd-a75a-997c37c7a647",
+    "did": "d9f47453-0883-4370-97f4-5b95ad457e95",
+    "version": 2,
+    "kind": "creative",
+    "studio_revision": 4,
+    "manifest": {
+      "id": "fc4f9fdf-8fc9-40e7-aff7-43e649650b99",
+      "digest": "2488ac23bb9f47460aed4ae6e673a48eb45838a7abcc717663c4b0ebd1bd43a0"
+    },
+    "plan_id": "ca1d8bb0-d005-44e1-809f-4e0545788bbe",
+    "plan_digest": "6bcff6b84bb222ae0a94d1be2aa4351ae6f510e8e121e7a4a01f89fb146eb1cf",
+    "groups": {
+      "copy": "478006780001d25843f3f775accce347ab710bdcf161790b1da5363e58c02098",
+      "creative_brief": "ae28a1c42d62d7676c40c33b1ad22a51364147ee8e26fcd6467458c3cc2cfdef"
+    },
+    "group_receipts": {
+      "copy": "c7698fed-688b-46db-a222-4c92e353ad82",
+      "creative_brief": "d521a2ad-5130-4455-b720-a638c1ba9188"
+    },
+    "inputs": "3f21977c15788a3c803bd8a57e1b192200d5535afbdb27258bc0d1bce3115a62",
+    "master": {
+      "contract": "amc.creative-master/1",
+      "palette": "forest",
+      "motif": "planes",
+      "layout": "art_first",
+      "colors": [
+        "#123D31",
+        "#E5F39A",
+        "#FCF9ED"
+      ],
+      "headline": "Buổi khảo sát luồng nhận hàng Luồng Rõ",
+      "cta": "Gửi đề nghị khảo sát",
+      "brief": {
+        "concept": "Phác thảo khung hình cho Buổi khảo sát luồng nhận hàng Luồng Rõ có chỗ đặt điều kiện và lời mời hành động.",
+        "brand_direction": "Áp dụng hướng dẫn thương hiệu bản 1. Tách phần chuẩn bị của người mua khỏi bước xác nhận lịch của nhân sự.",
+        "image_spec": "Giao mẫu dọc và ngang, bản nguồn chỉnh sửa được và ảnh xem trước. Giữ chủ thể, điều kiện và lời mời hành động trong vùng an toàn khi cắt. Duyệt độ đọc ở kích thước điện thoại.",
+        "video_spec": "Giao storyboard có cảnh nhu cầu, cảnh đối chiếu dữ kiện và cảnh chọn bước tiếp theo. Kèm chỉ dẫn cảnh quay, phụ đề, bản chép lời và danh mục nguồn. Duyệt khi tắt âm thanh trước khi xuất bản dựng.",
+        "rights": "Chờ kiểm tra chủ sở hữu, giấy phép, phạm vi và thời hạn trước khi dùng tư liệu.",
+        "provenance": "Bản giao chỉ gồm chỉ dẫn sản xuất. Chưa có tệp hình ảnh hoặc video được cấp phép."
+      },
+      "brand_guideline_digest": "8667f503425c83801d0702e0a96932e171bcc578d401f55e68de2dc1d3e1e675",
+      "variations": {
+        "portrait": [
+          720,
+          900
+        ],
+        "landscape": [
+          960,
+          540
+        ],
+        "square": [
+          720,
+          720
+        ]
+      },
+      "safe_inset_percent": 6.5,
+      "typeface": "Be Vietnam Pro SemiBold",
+      "scenes": [
+        {
+          "from": 0,
+          "to": 2,
+          "caption": "Buổi khảo sát luồng nhận hàng Luồng Rõ"
+        },
+        {
+          "from": 2,
+          "to": 4,
+          "caption": "Đối chiếu quy cách và điều kiện áp dụng của Buổi khảo sát luồng nhận hàng Luồng Rõ trước khi lựa chọn."
+        },
+        {
+          "from": 4,
+          "to": 6,
+          "caption": "Gửi đề nghị khảo sát"
+        }
+      ],
+      "source": {
+        "file": "source.png",
+        "sha256": "b8c0a8704829c527c4ac7d61659413dec61366e4aafdffdb2f989f7fe5a1651e",
+        "type": "AMC original synthetic geometry",
+        "rights": "AMC synthetic source for internal sandbox use. No external media or photography."
+      },
+      "renderer": {
+        "engine": "Pillow",
+        "version": "13.0.0",
+        "freetype": "2.14.3",
+        "webp": "1.6.0"
+      }
+    },
+    "files": {
+      "source.png": {
+        "mime": "image/png",
+        "bytes": 8031,
+        "sha256": "b8c0a8704829c527c4ac7d61659413dec61366e4aafdffdb2f989f7fe5a1651e"
+      },
+      "portrait.png": {
+        "mime": "image/png",
+        "bytes": 123728,
+        "sha256": "0f6a2ff64ebf141647d519043a0df3df5715273ba360024fe7bd3af6d3feff21"
+      },
+      "landscape.png": {
+        "mime": "image/png",
+        "bytes": 96614,
+        "sha256": "a49b8ee8847b035670de722884accd41214c06e625783bf98fb47cfd16fcd199"
+      },
+      "square.png": {
+        "mime": "image/png",
+        "bytes": 108530,
+        "sha256": "5ff7fb8808fb3cbbd6c4bb9b62f70549820b7d3d9903f24e7e9f989420180679"
+      },
+      "preview.webm": {
+        "mime": "video/webm",
+        "bytes": 52103,
+        "sha256": "babeabee53522e466529a9c97415964b3869d788d99eaf55034739831457d767"
+      },
+      "captions.vtt": {
+        "mime": "text/vtt",
+        "bytes": 323,
+        "sha256": "c58636a19274e032648f72b6d085d5d5bafc27a11957a489f700f5ff4f154fb9"
+      },
+      "master.json": {
+        "mime": "application/json",
+        "bytes": 2583,
+        "sha256": "c8f7562bc6b29073d1c1b65be2858cee8f78e9f1e286c9ab6d885c45124507fa"
+      }
+    },
+    "digest": "ce479a9dc99a22b0489e4c45ea0cdd582e6e4051915e36bb0426c1830cfd00bb",
+    "measurement": {
+      "render_ms": 355.03,
+      "bytes": 391912,
+      "external_calls": 0,
+      "full_cost_vnd": null
+    },
+    "production_qa": {
+      "reviewer": "2cce728a-906f-4fb7-8427-512eccaf7b9e",
+      "receipt": "2105dfeb-7850-4839-a16f-cc9e8a412df3",
+      "digest": "ce479a9dc99a22b0489e4c45ea0cdd582e6e4051915e36bb0426c1830cfd00bb"
+    }
+  },
+  "landing": {
+    "id": "3340b1ca-cc02-4a57-a4a2-615acf039581",
+    "created_by": "3be4c80e-78fb-43cd-a75a-997c37c7a647",
+    "did": "d9f47453-0883-4370-97f4-5b95ad457e95",
+    "version": 1,
+    "kind": "landing",
+    "studio_revision": 4,
+    "manifest": {
+      "id": "fc4f9fdf-8fc9-40e7-aff7-43e649650b99",
+      "digest": "2488ac23bb9f47460aed4ae6e673a48eb45838a7abcc717663c4b0ebd1bd43a0"
+    },
+    "plan_id": "ca1d8bb0-d005-44e1-809f-4e0545788bbe",
+    "plan_digest": "6bcff6b84bb222ae0a94d1be2aa4351ae6f510e8e121e7a4a01f89fb146eb1cf",
+    "groups": {
+      "copy": "478006780001d25843f3f775accce347ab710bdcf161790b1da5363e58c02098",
+      "seo": "20da344d45086c40fcc5d61fc09c5f9077143406fdc773129a7823707b3cbd44"
+    },
+    "group_receipts": {
+      "copy": "c7698fed-688b-46db-a222-4c92e353ad82",
+      "seo": "1110ec36-4b3d-46e6-b7f7-1dbd4e62edef"
+    },
+    "inputs": "f34421e31a30834760bd431c7745beee231e215faa922f3287424c9cf9658748",
+    "master": {
+      "contract": "amc.sandbox-landing/2",
+      "intake_contract": {
+        "version": "business-intake/1",
+        "revision": 1,
+        "action": "appointment",
+        "locale": "vi-VN",
+        "plan_id": "ca1d8bb0-d005-44e1-809f-4e0545788bbe",
+        "subject": "94b0bf30-cdbf-4087-97b6-b7e4f40b5527",
+        "unit": "visit",
+        "fields": [
+          {
+            "id": "site",
+            "required": true,
+            "label": "địa điểm",
+            "maps_to": "location",
+            "type": "enum",
+            "options": [
+              {
+                "value": "north",
+                "label": "Cơ sở thử A"
+              },
+              {
+                "value": "south",
+                "label": "Cơ sở thử B"
+              }
+            ]
+          },
+          {
+            "id": "receiving_shift",
+            "required": true,
+            "label": "ca nhận hàng cần quan sát",
+            "maps_to": "receiving_shift",
+            "type": "enum",
+            "options": [
+              {
+                "value": "morning",
+                "label": "Ca sáng"
+              },
+              {
+                "value": "evening",
+                "label": "Ca chiều"
+              },
+              {
+                "value": "night",
+                "label": "Ca đêm"
+              }
+            ]
+          }
+        ],
+        "source": {
+          "id": "fc4f9fdf-8fc9-40e7-aff7-43e649650b99",
+          "digest": "2488ac23bb9f47460aed4ae6e673a48eb45838a7abcc717663c4b0ebd1bd43a0",
+          "brief_id": "fe487d52-a43c-4d82-beae-57d940a59ae4",
+          "workflow": "WF-13/landing-seo-draft@6"
+        },
+        "selection": "brief",
+        "measurement_digest": "ac6cea62f4d74658ddec24f2b3167d6c8ab9729a950552f518a4086ab42c38d8",
+        "consent": {
+          "purpose": "appointment_request",
+          "required": true,
+          "label": "Tôi đồng ý gửi yêu cầu thử cho bộ phận phụ trách."
+        },
+        "qualification": {
+          "accept_inquiries": true,
+          "minimum_order_quantities": [
+            "1"
+          ]
+        },
+        "digest": "6f87e8a11d8254e64daa7f97f297eee7ed82f210debf6ba94072be31c65caeb3"
+      },
+      "kind": "appointment",
+      "seo": {
+        "page_title": "Buổi khảo sát luồng nhận hàng Luồng Rõ | HN",
+        "meta_description": "Xem thông tin về Buổi khảo sát luồng nhận hàng Luồng Rõ tại HN. Gửi đề nghị khảo sát",
+        "search_intent": "Tìm hiểu điều kiện lựa chọn Buổi khảo sát luồng nhận hàng Luồng Rõ tại HN."
+      },
+      "sections": {
+        "headline": "Buổi khảo sát luồng nhận hàng Luồng Rõ",
+        "value_proposition": "Đối chiếu quy cách và điều kiện áp dụng của Buổi khảo sát luồng nhận hàng Luồng Rõ trước khi lựa chọn.",
+        "benefit": "Bàn giao sơ đồ luồng nhận hàng Trong phạm vi buổi khảo sát.",
+        "commercial_terms": "Giá tham khảo: 760.000 VND / 1 lượt, đã gồm thuế. Đơn tối thiểu: 1 lượt. Áp dụng từ 1 lượt. Số lượng đối chiếu: 1 lượt. Xác nhận số lượng trước khi đặt.\nBàn giao sơ đồ luồng nhận hàng Trong phạm vi buổi khảo sát.",
+        "call_to_action": "Gửi đề nghị khảo sát"
+      },
+      "product_id": "94b0bf30-cdbf-4087-97b6-b7e4f40b5527",
+      "unit": "visit",
+      "scope": "synthetic_local",
+      "public_tracking": false
+    },
+    "files": {
+      "landing.html": {
+        "mime": "text/html",
+        "bytes": 4848,
+        "sha256": "0a4dc2925cac3b821273a80773b7a57006f7b42908b6bfa4030f13168036bf40"
+      }
+    },
+    "digest": "d85faeb40bb57196e993f276ef93033eab1366ff39bfe0bfe22005a91c6f9319",
+    "measurement": {
+      "render_ms": 1.15,
+      "bytes": 4848,
+      "external_calls": 0,
+      "full_cost_vnd": null
+    },
+    "production_qa": {
+      "reviewer": "2cce728a-906f-4fb7-8427-512eccaf7b9e",
+      "receipt": "b84823c0-48d5-4326-9563-4070460e8578",
+      "digest": "d85faeb40bb57196e993f276ef93033eab1366ff39bfe0bfe22005a91c6f9319"
+    }
+  },
+  "events": [
+    {
+      "id": "e5fee226-6978-4080-98bd-f3ee7bb94779",
+      "campaign_id": "1879e4b4-e04c-4ad9-9326-f967fcb341ad",
+      "plan_id": "ca1d8bb0-d005-44e1-809f-4e0545788bbe",
+      "sequence": 15,
+      "kind": "session",
+      "entity": "sessions",
+      "entity_id": "6f6b4d5bc5c8f329c5c22945eb6444db75fec54a3db4c0ff20d90e9b95252c5a",
+      "value": {
+        "id": "6f6b4d5bc5c8f329c5c22945eb6444db75fec54a3db4c0ff20d90e9b95252c5a",
+        "visitor": "9378f01a893cd8467a59fd60249f95e1b674e1a1056162481455cdfbde843874",
+        "action_id": null,
+        "occurred_at": "2026-11-26T08:41:24.386264+00:00",
+        "plan_id": "ca1d8bb0-d005-44e1-809f-4e0545788bbe",
+        "landing_package": "3340b1ca-cc02-4a57-a4a2-615acf039581",
+        "landing_digest": "d85faeb40bb57196e993f276ef93033eab1366ff39bfe0bfe22005a91c6f9319",
+        "landing_source": {
+          "tenant_id": "2819374e-9f5f-4e47-9e85-918992e4123d",
+          "client_id": "0a2b4b29-7ce4-446e-837a-c1f0289dcd30",
+          "brand_id": "0186a968-b17c-45ac-b6ef-caf10592dedb",
+          "campaign_id": "1879e4b4-e04c-4ad9-9326-f967fcb341ad",
+          "plan_id": "ca1d8bb0-d005-44e1-809f-4e0545788bbe",
+          "plan_digest": "6bcff6b84bb222ae0a94d1be2aa4351ae6f510e8e121e7a4a01f89fb146eb1cf",
+          "document_id": "d9f47453-0883-4370-97f4-5b95ad457e95",
+          "studio_revision": 4,
+          "package_id": "3340b1ca-cc02-4a57-a4a2-615acf039581",
+          "package_version": 1,
+          "package_digest": "d85faeb40bb57196e993f276ef93033eab1366ff39bfe0bfe22005a91c6f9319",
+          "file_digest": "0a4dc2925cac3b821273a80773b7a57006f7b42908b6bfa4030f13168036bf40",
+          "intake_contract_digest": "6f87e8a11d8254e64daa7f97f297eee7ed82f210debf6ba94072be31c65caeb3"
+        }
+      },
+      "actor": "3be4c80e-78fb-43cd-a75a-997c37c7a647",
+      "recorded_at": "2026-11-26T08:41:24.386264+00:00",
+      "intake_writer": "business-intake/1",
+      "origin": "landing"
+    },
+    {
+      "id": "67417c90-8494-4b48-a2f1-66a03c17d87c",
+      "campaign_id": "1879e4b4-e04c-4ad9-9326-f967fcb341ad",
+      "plan_id": "ca1d8bb0-d005-44e1-809f-4e0545788bbe",
+      "sequence": 16,
+      "kind": "appointment",
+      "entity": "appointments",
+      "entity_id": "b3fd0bee7f5169242276c7f67268f033e1e8881da2c1765599b100a687879acd",
+      "value": {
+        "id": "b3fd0bee7f5169242276c7f67268f033e1e8881da2c1765599b100a687879acd",
+        "plan_id": "ca1d8bb0-d005-44e1-809f-4e0545788bbe",
+        "revision": 1,
+        "state": "requested",
+        "assignee_id": null,
+        "confirmed_for": null,
+        "history": [
+          {
+            "event": "requested",
+            "actor": "3be4c80e-78fb-43cd-a75a-997c37c7a647",
+            "at": "2026-11-26T08:41:25.873304+00:00",
+            "feedback": null
+          }
+        ],
+        "occurred_at": "2026-11-26T08:41:25.873304Z",
+        "contract": "service-intake/2",
+        "product_id": "94b0bf30-cdbf-4087-97b6-b7e4f40b5527",
+        "unit": "visit",
+        "quantity": null,
+        "requested_for": null,
+        "service_scope": "Buổi khảo sát luồng nhận hàng Luồng Rõ",
+        "location": "Synthetic site A",
+        "contact_purpose": "appointment_request",
+        "session_id": "6f6b4d5bc5c8f329c5c22945eb6444db75fec54a3db4c0ff20d90e9b95252c5a",
+        "last_event_at": "2026-11-26T08:41:25.873304+00:00",
+        "intake": {
+          "contract_digest": "6f87e8a11d8254e64daa7f97f297eee7ed82f210debf6ba94072be31c65caeb3",
+          "revision": 1,
+          "answers": {
+            "site": "north",
+            "receiving_shift": "evening"
+          },
+          "fields": [
+            {
+              "id": "site",
+              "required": true,
+              "label": "địa điểm",
+              "maps_to": "location",
+              "type": "enum",
+              "options": [
+                {
+                  "value": "north",
+                  "label": "Cơ sở thử A"
+                },
+                {
+                  "value": "south",
+                  "label": "Cơ sở thử B"
+                }
+              ]
+            },
+            {
+              "id": "receiving_shift",
+              "required": true,
+              "label": "ca nhận hàng cần quan sát",
+              "maps_to": "receiving_shift",
+              "type": "enum",
+              "options": [
+                {
+                  "value": "morning",
+                  "label": "Ca sáng"
+                },
+                {
+                  "value": "evening",
+                  "label": "Ca chiều"
+                },
+                {
+                  "value": "night",
+                  "label": "Ca đêm"
+                }
+              ]
+            }
+          ],
+          "mapped": {
+            "location": "north",
+            "receiving_shift": "evening"
+          },
+          "consent": {
+            "purpose": "appointment_request",
+            "granted": true
+          }
+        },
+        "landing_package": "3340b1ca-cc02-4a57-a4a2-615acf039581",
+        "landing_digest": "d85faeb40bb57196e993f276ef93033eab1366ff39bfe0bfe22005a91c6f9319",
+        "landing_source": {
+          "tenant_id": "2819374e-9f5f-4e47-9e85-918992e4123d",
+          "client_id": "0a2b4b29-7ce4-446e-837a-c1f0289dcd30",
+          "brand_id": "0186a968-b17c-45ac-b6ef-caf10592dedb",
+          "campaign_id": "1879e4b4-e04c-4ad9-9326-f967fcb341ad",
+          "plan_id": "ca1d8bb0-d005-44e1-809f-4e0545788bbe",
+          "plan_digest": "6bcff6b84bb222ae0a94d1be2aa4351ae6f510e8e121e7a4a01f89fb146eb1cf",
+          "document_id": "d9f47453-0883-4370-97f4-5b95ad457e95",
+          "studio_revision": 4,
+          "package_id": "3340b1ca-cc02-4a57-a4a2-615acf039581",
+          "package_version": 1,
+          "package_digest": "d85faeb40bb57196e993f276ef93033eab1366ff39bfe0bfe22005a91c6f9319",
+          "file_digest": "0a4dc2925cac3b821273a80773b7a57006f7b42908b6bfa4030f13168036bf40",
+          "intake_contract_digest": "6f87e8a11d8254e64daa7f97f297eee7ed82f210debf6ba94072be31c65caeb3"
+        }
+      },
+      "actor": "3be4c80e-78fb-43cd-a75a-997c37c7a647",
+      "recorded_at": "2026-11-26T08:41:25.873893+00:00",
+      "intake_writer": "business-intake/1",
+      "origin": "landing"
+    }
+  ],
+  "intake": {
+    "synthetic": true,
+    "case": "receipt-map",
+    "plan_id": "ca1d8bb0-d005-44e1-809f-4e0545788bbe",
+    "plan_digest": "6bcff6b84bb222ae0a94d1be2aa4351ae6f510e8e121e7a4a01f89fb146eb1cf",
+    "contract": {
+      "version": "business-intake/1",
+      "revision": 1,
+      "action": "appointment",
+      "locale": "vi-VN",
+      "plan_id": "ca1d8bb0-d005-44e1-809f-4e0545788bbe",
+      "subject": "94b0bf30-cdbf-4087-97b6-b7e4f40b5527",
+      "unit": "visit",
+      "fields": [
+        {
+          "id": "site",
+          "required": true,
+          "label": "địa điểm",
+          "maps_to": "location",
+          "type": "enum",
+          "options": [
+            {
+              "value": "north",
+              "label": "Cơ sở thử A"
+            },
+            {
+              "value": "south",
+              "label": "Cơ sở thử B"
+            }
+          ]
+        },
+        {
+          "id": "receiving_shift",
+          "required": true,
+          "label": "ca nhận hàng cần quan sát",
+          "maps_to": "receiving_shift",
+          "type": "enum",
+          "options": [
+            {
+              "value": "morning",
+              "label": "Ca sáng"
+            },
+            {
+              "value": "evening",
+              "label": "Ca chiều"
+            },
+            {
+              "value": "night",
+              "label": "Ca đêm"
+            }
+          ]
+        }
+      ],
+      "source": {
+        "id": "fc4f9fdf-8fc9-40e7-aff7-43e649650b99",
+        "digest": "2488ac23bb9f47460aed4ae6e673a48eb45838a7abcc717663c4b0ebd1bd43a0",
+        "brief_id": "fe487d52-a43c-4d82-beae-57d940a59ae4",
+        "workflow": "WF-13/landing-seo-draft@6"
+      },
+      "selection": "brief",
+      "measurement_digest": "ac6cea62f4d74658ddec24f2b3167d6c8ab9729a950552f518a4086ab42c38d8",
+      "consent": {
+        "purpose": "appointment_request",
+        "required": true,
+        "label": "Tôi đồng ý gửi yêu cầu thử cho bộ phận phụ trách."
+      },
+      "qualification": {
+        "accept_inquiries": true,
+        "minimum_order_quantities": [
+          "1"
+        ]
+      },
+      "digest": "6f87e8a11d8254e64daa7f97f297eee7ed82f210debf6ba94072be31c65caeb3"
+    },
+    "copy": {
+      "digest": "6f87e8a11d8254e64daa7f97f297eee7ed82f210debf6ba94072be31c65caeb3",
+      "fields": [
+        "site",
+        "receiving_shift"
+      ]
+    },
+    "package_id": "3340b1ca-cc02-4a57-a4a2-615acf039581",
+    "package_digest": "d85faeb40bb57196e993f276ef93033eab1366ff39bfe0bfe22005a91c6f9319",
+    "file": {
+      "mime": "text/html",
+      "bytes": 4848,
+      "sha256": "0a4dc2925cac3b821273a80773b7a57006f7b42908b6bfa4030f13168036bf40"
+    },
+    "group_receipts": {
+      "copy": "c7698fed-688b-46db-a222-4c92e353ad82",
+      "seo": "1110ec36-4b3d-46e6-b7f7-1dbd4e62edef"
+    },
+    "file_approval": {
+      "receipt": "b84823c0-48d5-4326-9563-4070460e8578",
+      "digest": "d85faeb40bb57196e993f276ef93033eab1366ff39bfe0bfe22005a91c6f9319"
+    },
+    "commercial_terms": "Giá tham khảo: 760.000 VND / 1 lượt, đã gồm thuế. Đơn tối thiểu: 1 lượt. Áp dụng từ 1 lượt. Số lượng đối chiếu: 1 lượt. Xác nhận số lượng trước khi đặt.\nBàn giao sơ đồ luồng nhận hàng Trong phạm vi buổi khảo sát.",
+    "visit_id": "e5fee226-6978-4080-98bd-f3ee7bb94779",
+    "submitted_id": "67417c90-8494-4b48-a2f1-66a03c17d87c",
+    "submit_kind": "appointment",
+    "crm_entity": "appointments",
+    "state": "requested",
+    "crm_fields": {
+      "contract_digest": "6f87e8a11d8254e64daa7f97f297eee7ed82f210debf6ba94072be31c65caeb3",
+      "revision": 1,
+      "answers": {
+        "site": "north",
+        "receiving_shift": "evening"
+      },
+      "fields": [
+        {
+          "id": "site",
+          "required": true,
+          "label": "địa điểm",
+          "maps_to": "location",
+          "type": "enum",
+          "options": [
+            {
+              "value": "north",
+              "label": "Cơ sở thử A"
+            },
+            {
+              "value": "south",
+              "label": "Cơ sở thử B"
+            }
+          ]
+        },
+        {
+          "id": "receiving_shift",
+          "required": true,
+          "label": "ca nhận hàng cần quan sát",
+          "maps_to": "receiving_shift",
+          "type": "enum",
+          "options": [
+            {
+              "value": "morning",
+              "label": "Ca sáng"
+            },
+            {
+              "value": "evening",
+              "label": "Ca chiều"
+            },
+            {
+              "value": "night",
+              "label": "Ca đêm"
+            }
+          ]
+        }
+      ],
+      "mapped": {
+        "location": "north",
+        "receiving_shift": "evening"
+      },
+      "consent": {
+        "purpose": "appointment_request",
+        "granted": true
+      }
+    },
+    "desk_readback_digest": "6f87e8a11d8254e64daa7f97f297eee7ed82f210debf6ba94072be31c65caeb3",
+    "landing_funnel": {
+      "version": "intake-funnel/2",
+      "contract_digest": "6f87e8a11d8254e64daa7f97f297eee7ed82f210debf6ba94072be31c65caeb3",
+      "window": "approved_plan_lifetime",
+      "action": "appointment",
+      "landing_visits": 1,
+      "valid_submissions": 1,
+      "manual_requests": 0,
+      "confirmed": 0
+    },
+    "manual_funnel": null,
+    "primary_measurement": {
+      "contract": {
+        "version": "appointment-measurement/1",
+        "business_outcome": "appointment.confirmed_per_requested",
+        "window_days": 21,
+        "owner_role": "service_operations",
+        "numerator": {
+          "event": "confirmed",
+          "eligibility": "staff_confirmation_with_scheduled_time"
+        },
+        "denominator": {
+          "event": "requested",
+          "eligibility": "valid_service_request_with_consent"
+        },
+        "window": "rolling_utc_(start,end]_denominator_cohort",
+        "unit": "ratio",
+        "aggregation": "distinct_appointment_id",
+        "cancellations": "retain_prior_eligible_events_report_separately",
+        "refunds": "not_a_monetary_outcome",
+        "missing_attribution": "include_and_report_separately",
+        "reconciliation": "join_authorized_lifecycle_receipts_by_plan_and_appointment_id",
+        "id": "0b2bdb31-1a4f-4961-9767-e6c1e731e02a",
+        "revision": 1,
+        "digest": "ac6cea62f4d74658ddec24f2b3167d6c8ab9729a950552f518a4086ab42c38d8"
+      },
+      "definition": "KPI chính trong 21 ngày: số lịch do nhân sự xác nhận trên số yêu cầu đặt lịch hợp lệ. Vận hành dịch vụ đối soát mỗi mã hẹn một lần. Giữ các sự kiện đủ điều kiện trước khi hủy. Tách hủy, vắng mặt và thiếu nguồn; hoàn tiền không đổi tỷ lệ.",
+      "plan_id": "ca1d8bb0-d005-44e1-809f-4e0545788bbe",
+      "window_start_exclusive": "2026-11-05T08:41:26.608746+00:00",
+      "as_of_inclusive": "2026-11-26T08:41:26.608746+00:00",
+      "numerator": 0,
+      "denominator": 1,
+      "ratio": 0.0,
+      "cancelled": 0,
+      "no_show": 0,
+      "unattributed": 0,
+      "attributed": 1,
+      "attribution": {
+        "landing_asset": 1,
+        "media_action": 0,
+        "unknown_media_action": 1,
+        "neither": 0
+      },
+      "source": "sandbox_appointment_receipts",
+      "secondary_metrics": [
+        {
+          "metric_id": "web.sessions",
+          "unit": "session_count",
+          "value": 1
+        }
+      ]
+    }
+  }
+}

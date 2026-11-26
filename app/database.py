@@ -34,6 +34,7 @@ def identify_sqlite_edition_writer(dbapi_conn, _record):
     # Workers can use their own SQLAlchemy engine against the same local file.
     if isinstance(dbapi_conn, sqlite3.Connection):
         dbapi_conn.create_function("amc_edition_writer_v4", 0, lambda: 4)
+        dbapi_conn.create_function("amc_channel_writer_v5", 0, lambda: 5)
 
 
 class Base(DeclarativeBase):
@@ -95,8 +96,8 @@ def prepare_database(bind, *, verify_identity=True):
                 for table in ("deliverables", "client_reviews", "review_entries", "knowledge_commands"):
                     verbs = ("INSERT",) if table == "knowledge_commands" else ("INSERT", "UPDATE", "DELETE")
                     for verb in verbs:
-                        conn.exec_driver_sql(f"""CREATE TRIGGER IF NOT EXISTS edition_v4_{table}_{verb}
-                            BEFORE {verb} ON {table} BEGIN SELECT amc_edition_writer_v4(); END""")
+                        conn.exec_driver_sql(f"""CREATE TRIGGER IF NOT EXISTS channel_v5_{table}_{verb}
+                            BEFORE {verb} ON {table} BEGIN SELECT amc_channel_writer_v5(); END""")
             from .session_state import install_epoch_trigger
             install_epoch_trigger(conn)
             for index in Base.metadata.tables["workforce_runs"].indexes:

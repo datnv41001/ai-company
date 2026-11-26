@@ -57,12 +57,16 @@ def boundary(db, user, doc, content_digest, stage):
     binding = run.knowledge["registry"]
     if stage == "share" and run.knowledge["c3_projection"].get("task_intent", {}).get("buyer_action"):
         from .c3_customer_assets import PUBLIC, VERSION
-        if binding["workflow"] in PUBLIC and (doc.content.get("studio") or {}).get("delivery_version") != VERSION:
+        from .campaign_channels import VERSION as CHANNEL_VERSION
+        if binding["workflow"] in PUBLIC and (doc.content.get("studio") or {}).get("delivery_version") not in (VERSION, CHANNEL_VERSION):
             conflict("Prepare the customer asset edition in Marketing Studio and review it before sharing")
     ref = run.knowledge["c3_manifest"]
     store, snap, _ = checked(db, user, brief, ref, binding["workflow"], stage)
     if doc.content.get("studio") and not store.approver:
         conflict("Current approval authority is required for this Studio decision")
+    if (doc.content.get("studio") or {}).get("channel_context"):
+        from .campaign_channels import require_current
+        require_current(store, doc, run)
     from .registry import pin
     if pin(db, brief, binding["workflow"]) != binding:
         conflict("The approved campaign registry binding changed")

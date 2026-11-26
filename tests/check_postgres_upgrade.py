@@ -104,7 +104,7 @@ def rehearse_archive(dsn, container, version=16):
         assert snapshot(restored) == before
         if version == 25:
             from migrations.c3_writer_contract import WRITER_FENCE
-            assert restored.execute("SELECT version FROM amc_c3.versions ORDER BY version").fetchall() == [(1,), (2,), (3,), (4,)]
+            assert restored.execute("SELECT version FROM amc_c3.versions ORDER BY version").fetchall() == [(1,), (2,), (3,), (4,), (5,)]
             assert restored.execute(WRITER_FENCE).fetchone() == (True,), "Restored Studio writer triggers must match the current publisher"
         if workspace_tables:
             from migrations.claim_display import CURRENT, SIGNATURE

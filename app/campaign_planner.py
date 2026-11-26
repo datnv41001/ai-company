@@ -9,7 +9,7 @@ from pydantic import Field
 from sqlalchemy import select
 from sqlalchemy.orm import Session
 
-from . import c3_customer_assets, c3_projection, workforce
+from . import c3_customer_assets, c3_projection, campaign_channels, workforce
 from .c3_studio_routes import asset_digest, signoffs
 from .business_workspace import Workspace
 from .database import get_db
@@ -267,10 +267,16 @@ def production(tenant_id: str, campaign_id: str, plan_id: str, user: User = Depe
                     "guideline_digest": plan["brand_guidelines"]["digest"],
                     "registry": run.knowledge["registry"],
                 }
-                if bundle.get("delivery_version") == c3_customer_assets.VERSION:
-                    grouped = c3_customer_assets.project(ref["workflow"], bundle["groups"])
+                if bundle.get("delivery_version") in (c3_customer_assets.VERSION, campaign_channels.VERSION):
+                    ctx = bundle.get("channel_context")
+                    grouped = c3_customer_assets.project(ref["workflow"], bundle["groups"], ctx)
                     receipts = signoffs(db, doc, run)
-                    slots = {"client_strategy": "strategy", "client_measurement": "measurement", "copy": "landing", "seo": "seo"}
+                    slots = {"client_strategy": "strategy", "client_measurement": "measurement", "copy": "landing", "seo": "seo",
+                             **{group: group for group in campaign_channels.FIELDS}}
+                    if ctx:
+                        # The immutable planner proposals remain in plan history. Show
+                        # each commissioned package once in the current production list.
+                        assets[:] = [a for a in assets if a["kind"] not in campaign_channels.FIELDS]
                     for group, fields in grouped.items():
                         slot = slots[group]
                         assets.append(
@@ -283,6 +289,7 @@ def production(tenant_id: str, campaign_id: str, plan_id: str, user: User = Depe
                                 "fields": fields,
                                 "digest": asset_digest(doc, run, group, fields),
                                 "approval_receipt": receipts.get(group, {}).get("receipt"),
+                                **({"plan_digest": ctx["plan_digest"], "queue_receipt": ctx["queue_receipt"]} if ctx else {}),
                                 "provenance": "staff_saved_studio_revision",
                             }
                         )

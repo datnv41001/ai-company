@@ -1,5 +1,9 @@
 # Bắt đầu ở đây khi tiếp quản AI Marketing Company
 
+## Bàn giao sản xuất nội dung theo kênh (ENG-G02)
+
+Trong **Chiến dịch → Điều hành chiến dịch**, duyệt kế hoạch và chạy brief chính. Từ bản làm việc của chiến dịch, mở **Biên tập tài liệu Marketing → Soạn bộ nội dung theo kế hoạch** để biên tập bài Social, lời quảng cáo, brief thiết kế và lịch nội dung. Mỗi nhóm có bằng chứng trường, người duyệt độc lập, phiên bản và biên nhận. Xem cách chạy lại, nâng cấp writer C3 v5, ảnh giao diện và hai ví dụ bàn giao ở [hồ sơ Content Factory](docs/evaluation/content-factory/README.md).
+
 ## Điều hành chiến dịch từ mục tiêu đã duyệt
 
 Bản nền trên main sau bốn lần merge là `1b9e3a9643014122d4c6e510efffc3d02b9843cf`. Bảng đối chiếu ghi cả hai parent, tree, bản tích hợp và CI của từng PR, cùng đường dẫn để kiểm tra trên GitHub. [Bằng chứng hợp nhất #40, #43, #41 và #42](docs/evaluation/campaign-engine/INTEGRATIONS.md)

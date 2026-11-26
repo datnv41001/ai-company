@@ -78,7 +78,8 @@ function createReviewPanel(root, api, notify) {
           const copy=el('div',null,group), proof=el('div',null,group);
           el('h5',outcomes[row.outcome],copy);
           el('blockquote',row.text,copy);
-          const fieldName=row.field.startsWith('studio.')?studioLabels[row.field.split('.')[2]]:(row.field==='title'?'Tiêu đề':'Nội dung');
+          const key=row.field.split('.')[2];
+          const fieldName=row.field.startsWith('studio.')?(studioLabels[key]||report.field_labels?.[key]||key):(row.field==='title'?'Tiêu đề':'Nội dung');
           el('small',fieldName+' · ký tự '+(row.start+1)+'–'+row.end,copy);
           if(reasons[row.reason])el('p',reasons[row.reason],copy);
           el('h5','Bằng chứng đã ghim',proof);

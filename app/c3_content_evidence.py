@@ -238,13 +238,20 @@ def assess_document(doc, run, signature):
         schema = dict(FIELDS[workflow])
         customer = bundle.get("delivery_version")
         if customer:
-            from . import c3_assets, c3_customer_assets
-            if customer != c3_customer_assets.VERSION:
+            from . import c3_assets, c3_customer_assets, campaign_channels
+            ctx = bundle.get("channel_context")
+            if customer not in (c3_customer_assets.VERSION, campaign_channels.VERSION) or bool(ctx) != (customer == campaign_channels.VERSION):
                 conflict("Unsupported customer asset contract")
-            schema.update(c3_customer_assets.PUBLIC[workflow])
+            public_fields = c3_customer_assets.schema(workflow, ctx)
+            schema.update(public_fields)
+            if ctx:
+                baseline.update(campaign_channels.compose(projection, ctx))
             if workflow == c3_assets.RESEARCH:
                 baseline.update(c3_customer_assets.strategy(projection))
-            fixed["client_preview"].update(normalized(s) for s in c3_customer_assets.labels(projection["locale"]).values())
+            names = c3_customer_assets.labels(projection["locale"])
+            fixed["client_preview"].update(normalized(names[k]) for k in c3_customer_assets.LABELS)
+            if ctx:
+                fixed["client_preview"].update(normalized(names[k]) for k in campaign_channels.LABELS)
         for group, fields in schema.items():
             for key in fields:
                 field = f"studio.{group}.{key}"
@@ -259,10 +266,17 @@ def assess_document(doc, run, signature):
                     procedural = not dangerous_slot and key != "target"
                     if key == "target":
                         procedural = not dangerous_slot and proposed == projection["audience"]
+                if customer and group in campaign_channels.FIELDS:
+                    # Only the exact, versioned proposal template is procedural. A
+                    # commercial declaration or user-edited sentence still needs evidence.
+                    procedural = not dangerous_slot and key not in ("approved_terms", "headlines", "channels")
+                    if key == "channels":
+                        procedural = all(normalized(ch) in ("web","website","email","search","social","linkedin","facebook","youtube","organic","paid search")
+                                         for ch in ctx["channel_plan"])
                 fixed[field] = {normalized(proposed)} if proposed and procedural else set()
                 if group == "copy" and key == "value_proposition" and procedural:
                     fixed["client_preview"].add(normalized(proposed))
-                if customer and group in c3_customer_assets.PUBLIC[workflow] and procedural and proposed:
+                if customer and group in public_fields and procedural and proposed:
                     fixed["client_preview"].add(normalized(proposed))
     for field, value in values.items():
         lines = spans(value)

@@ -4,7 +4,7 @@ The portal keeps its immutable title/body wire format. The private QA/share rece
 records the typed fields behind those same bytes, alongside the existing source chain.
 """
 
-from . import c3_assets, c3_studio
+from . import c3_assets, c3_studio, campaign_channels
 from .knowledge_store import canonical, conflict, digest
 
 VERSION = "amc.customer-marketing-assets/1"
@@ -39,7 +39,7 @@ LABELS = {
 
 
 def labels(locale):
-    return {key: pair[0 if locale == "vi-VN" else 1] for key, pair in LABELS.items()}
+    return {key: pair[0 if locale == "vi-VN" else 1] for key, pair in (LABELS | campaign_channels.LABELS).items()}
 
 
 def strategy(projection):
@@ -78,28 +78,32 @@ def strategy(projection):
     }
 
 
-def project(workflow, groups):
-    return {group: {key: groups[group][key] for key in keys} for group, keys in PUBLIC[workflow].items()}
+def schema(workflow, channel_context):
+    return PUBLIC[workflow] | campaign_channels.FIELDS if channel_context else PUBLIC[workflow]
 
 
-def preview(workflow, groups, projection):
+def project(workflow, groups, channel_context=None):
+    return {group: {key: groups[group][key] for key in keys} for group, keys in schema(workflow, channel_context).items()}
+
+
+def preview(workflow, groups, projection, channel_context=None):
     named = labels(projection["locale"])
     blocks = []
-    for group, fields in project(workflow, groups).items():
+    for group, fields in project(workflow, groups, channel_context).items():
         blocks.append(named[group])
         blocks.extend(named[key] + "\n" + value for key, value in fields.items())
     title = groups["copy"]["headline"] if workflow == c3_assets.LANDING else projection["product"]
     return {"title": title, "body": "\n\n".join(blocks)}
 
 
-def issues(workflow, groups, projection):
+def issues(workflow, groups, projection, channel_context=None):
     intent = projection.get("task_intent", {})
     style = projection.get("brand_guidelines", {})
     private = [intent.get("purpose"), projection.get("objective"), projection.get("kpi"), style.get("guidance"),
                *intent.get("requirements", []), *intent.get("exclusions", []), *intent.get("acceptance_criteria", []),
                *projection.get("hypotheses", []), *projection.get("gaps", [])]
-    public = project(workflow, groups)
-    result = []
+    public = project(workflow, groups, channel_context)
+    result = campaign_channels.issues(groups, projection, channel_context) if channel_context else []
     seen = set()
     for group, fields in public.items():
         for field, value in fields.items():
@@ -127,15 +131,18 @@ def manifest(doc, run, approvals):
     workflow = run.knowledge["registry"]["workflow"]
     groups = doc.content["studio"]["groups"]
     projection = run.knowledge["c3_projection"]
-    output = preview(workflow, groups, projection)
-    if (doc.title, doc.content["client_preview"]) != (output["title"], output["body"]) or issues(workflow, groups, projection):
+    ctx = doc.content["studio"].get("channel_context")
+    version = doc.content["studio"]["delivery_version"]
+    output = preview(workflow, groups, projection, ctx)
+    if (doc.title, doc.content["client_preview"]) != (output["title"], output["body"]) or issues(workflow, groups, projection, ctx):
         conflict("Save and review the current customer edition before delivery")
     return {
-        "contract": VERSION,
+        "contract": version,
+        **({"channel_context": ctx} if ctx else {}),
         "scope": {key: getattr(run, key) for key in ("tenant_id", "client_id", "brand_id", "campaign_id")},
         "revision": doc.qa_revision,
         "assets": {
-            group: {"fields": fields, "digest": digest(canonical([VERSION, group, fields])), "approval_receipt": approvals[group]}
-            for group, fields in project(workflow, groups).items()
+            group: {"fields": fields, "digest": digest(canonical([version, group, fields])), "approval_receipt": approvals[group]}
+            for group, fields in project(workflow, groups, ctx).items()
         },
     }

@@ -1,0 +1,53 @@
+{
+  "mode": "real SQLite review and customer lifecycle with a seeded synthetic worker completion; no inference",
+  "plan_id": "36dbe6e3-4b4e-4609-8d6f-fb548b23a60c",
+  "contract": {
+    "version": "appointment-measurement/1",
+    "business_outcome": "appointment.confirmed_per_requested",
+    "window_days": 21,
+    "owner_role": "service_operations",
+    "numerator": {
+      "event": "confirmed",
+      "eligibility": "staff_confirmation_with_scheduled_time"
+    },
+    "denominator": {
+      "event": "requested",
+      "eligibility": "valid_service_request_with_consent"
+    },
+    "window": "rolling_utc_(start,end]_denominator_cohort",
+    "unit": "ratio",
+    "aggregation": "distinct_appointment_id",
+    "cancellations": "retain_prior_eligible_events_report_separately",
+    "refunds": "not_a_monetary_outcome",
+    "missing_attribution": "include_and_report_separately",
+    "reconciliation": "join_authorized_lifecycle_receipts_by_plan_and_appointment_id",
+    "id": "b2f3dda2-bbd6-4414-ab57-df3fd04e5c1b",
+    "revision": 1,
+    "digest": "42de18287b0396b2d03035ae2b5743e823b502c249bb392a34734a173485ee6b"
+  },
+  "doc_id": "b8d57955-e3ea-419f-8abc-bbfbf3d45a94",
+  "rejected_revision": 2,
+  "rejected_fields": [
+    {
+      "group": "measurement",
+      "field": "measurement_method",
+      "reason": "primary_measurement_mismatch"
+    },
+    {
+      "group": "client_measurement",
+      "field": "method",
+      "reason": "primary_measurement_mismatch"
+    },
+    {
+      "group": "ad",
+      "field": "measurement",
+      "reason": "primary_measurement_mismatch"
+    }
+  ],
+  "corrected_revision": 3,
+  "customer_snapshot_id": "81c814d1-7159-4547-b4f0-0447592d657c",
+  "customer_snapshot_digest": "ba6b5ed93417baef4a97f04fce01e785a71c8b3efeaa810d9015de2befd987d6",
+  "decision": "approved",
+  "title": "Buổi khảo sát luồng nhận hàng Luồng Rõ",
+  "preview": "Chiến lược Marketing\n\nĐối tượng\nTrưởng vận hành kho phân phối\n\nLựa chọn chiến lược\nĐề xuất giúp Trưởng vận hành kho phân phối đối chiếu điều kiện của Buổi khảo sát luồng nhận hàng Luồng Rõ khi cân nhắc hành động tiếp theo.\n\nTriển khai trên kênh\nTrên web, thử đặt phần điều kiện trước lời mời hành động rồi so với cách sắp xếp hiện tại.\n\nQuyết định tiếp theo\nNếu hành động tăng, kiểm tra chất lượng kết quả với người tiếp nhận trước khi mở rộng.\n\nKế hoạch đo lường\n\nGiả thuyết cần thử\nThử xem thứ tự trình bày có giúp người mua hoàn tất bước đã chọn.\n\nHành động của người mua\nĐặt lịch\n\nPhương pháp đo\nKPI chính trong 21 ngày: số lịch do nhân sự xác nhận trên số yêu cầu đặt lịch hợp lệ. Vận hành dịch vụ đối soát mỗi mã hẹn một lần. Giữ các sự kiện đủ điều kiện trước khi hủy. Tách hủy, vắng mặt và thiếu nguồn; hoàn tiền không đổi tỷ lệ.\nChỉ số phụ: số phiên web ghi nhận trong cùng kỳ, tính theo mã phiên.\n\nBài mạng xã hội\n\nTrụ cột nội dung\nchuẩn bị lịch hẹn\n\nMở bài\nAnh chị muốn sắp xếp lịch cho Buổi khảo sát luồng nhận hàng Luồng Rõ?\n\nDữ kiện và điều kiện\nBàn giao sơ đồ luồng nhận hàng Trong phạm vi buổi khảo sát.\nGiá tham khảo: 760.000 VND / 1 lượt, đã gồm thuế. Đơn tối thiểu: 1 lượt. Áp dụng từ 1 lượt. Số lượng đối chiếu: 1 lượt. Xác nhận số lượng trước khi đặt.\n\nLời mời hành động\nĐặt lịch\n\nĐề xuất quảng cáo\n\nĐề xuất chiến dịch\nĐề xuất thử thông điệp về Buổi khảo sát luồng nhận hàng Luồng Rõ.\n\nGiả thuyết nhóm người mua\nGiả thuyết cần thử với nhóm Trưởng vận hành kho phân phối.\n\nÝ định và từ khóa đề xuất\nTừ khóa thử nghiệm: Buổi khảo sát luồng nhận hàng Luồng Rõ · chuẩn bị lịch hẹn.\n\nTiêu đề quảng cáo\nBuổi khảo sát luồng nhận hàng Luồng Rõ\n\nLời quảng cáo\nAnh chị muốn sắp xếp lịch cho Buổi khảo sát luồng nhận hàng Luồng Rõ?\n\nLời mời hành động\nĐặt lịch\n\nThử nghiệm sáng tạo\nSo sánh hai cách mở đầu. Giữ nguyên lời mời hành động, vị trí và điều kiện.\n\nPhân bổ đề xuất\nĐề xuất chia đều hạn mức media đã duyệt giữa hai biến thể trong mô phỏng.\n\nPhép đo\nKPI chính trong 21 ngày: số lịch do nhân sự xác nhận trên số yêu cầu đặt lịch hợp lệ. Vận hành dịch vụ đối soát mỗi mã hẹn một lần. Giữ các sự kiện đủ điều kiện trước khi hủy. Tách hủy, vắng mặt và thiếu nguồn; hoàn tiền không đổi tỷ lệ.\n\nBrief thiết kế\n\nÝ tưởng hình ảnh\nPhác thảo khung hình cho Buổi khảo sát luồng nhận hàng Luồng Rõ có chỗ đặt điều kiện và lời mời hành động.\n\nChỉ dẫn thương hiệu\nÁp dụng hướng dẫn thương hiệu bản 1. Tách phần chuẩn bị của người mua khỏi bước xác nhận lịch của nhân sự.\n\nĐặc tả ảnh\nGiao mẫu dọc và ngang, bản nguồn chỉnh sửa được và ảnh xem trước. Giữ chủ thể, điều kiện và lời mời hành động trong vùng an toàn khi cắt. Duyệt độ đọc ở kích thước điện thoại.\n\nKịch bản video\nGiao storyboard có cảnh nhu cầu, cảnh đối chiếu dữ kiện và cảnh chọn bước tiếp theo. Kèm chỉ dẫn cảnh quay, phụ đề, bản chép lời và danh mục nguồn. Duyệt khi tắt âm thanh trước khi xuất bản dựng.\n\nĐiều kiện quyền sử dụng\nChờ kiểm tra chủ sở hữu, giấy phép, phạm vi và thời hạn trước khi dùng tư liệu.\n\nNguồn tài sản\nBản giao chỉ gồm chỉ dẫn sản xuất. Chưa có tệp hình ảnh hoặc video được cấp phép.\n\nLịch nội dung\n\nKênh trong kế hoạch\nweb\n\nMốc đề xuất\nNgày 10: soát brief. Ngày 10: chuẩn bị bài. Ngày 10: duyệt mẫu quảng cáo. Ngày 14: đối soát lịch.\n\nThứ tự nội dung\nMở bằng câu hỏi của người mua, tiếp đến là bài đối chiếu điều kiện, kết thúc bằng lời mời hành động.\n\nBộ phận nhận việc\nSocial soạn bài, Media soạn quảng cáo, Design nhận brief và Campaign Manager đối soát lịch.\n\nĐiểm duyệt\nChỉ đề xuất lịch. Kiểm tra nguồn, quyền sử dụng và bản QA đã duyệt trước khi mô phỏng."
+}

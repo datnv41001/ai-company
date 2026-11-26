@@ -1,6 +1,11 @@
 # Bắt đầu ở đây khi tiếp quản AI Marketing Company
 
 
+## Đối soát KPI lịch hẹn từ brief đến CRM
+
+KPI lịch hẹn có hai cách đo theo nghiệp vụ. Luồng Rõ ghi nhận 2 lịch được nhân sự xác nhận trên 3 yêu cầu trong 21 ngày. Mực Chuẩn ghi nhận 1 buổi hoàn tất trên 3 lịch được xác nhận trong 14 ngày. Các lần lưu và duyệt giữ định nghĩa từ bản tri thức đã phê duyệt đến tài liệu gửi khách. Số phiên web được ghi riêng. Khi chưa có mẫu số, tỷ lệ chưa xác định. Chưa đo hiệu quả với người thực hành Marketing hoặc Sales thật. Commercial GA vẫn NO-GO. [Quy trình tiếp quản và rollback](docs/evaluation/kpi-integrity/HANDOFF.md) · [Bằng chứng API, bản giao và Chromium](docs/evaluation/kpi-integrity/RESULTS.md) · [Gói nghiệm thu nghề nghiệp](docs/evaluation/kpi-integrity/PILOT.md)
+
+
 ## Chuyển journal chiến dịch sang ops/2
 
 Core v26 giữ nguyên Business v3 và C3 v5. Mọi receipt cũ vẫn truy xuất được qua ứng dụng mới. Khi chuyển cần dừng API/dispatcher cũ, tạo backup kiểm chứng được và chỉ mở lại bằng binary tương thích. [Hướng dẫn chuyển, rollback và kiểm chứng hai phiên bản](docs/evaluation/sandbox-operations/CUTOVER.md)

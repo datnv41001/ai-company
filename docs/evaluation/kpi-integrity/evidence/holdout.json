@@ -1,0 +1,111 @@
+{
+  "fixture": "holdout",
+  "source": "synthetic authenticated campaign API; deterministic editions, no model inference",
+  "knowledge_revision": {
+    "version": "appointment-measurement/1",
+    "owner_role": "service_operations",
+    "window_days": 14,
+    "business_outcome": "appointment.completed_per_confirmed",
+    "numerator": {
+      "event": "completed",
+      "eligibility": "service_completion_by_assignee"
+    },
+    "denominator": {
+      "event": "confirmed",
+      "eligibility": "staff_confirmation_with_scheduled_time"
+    },
+    "window": "rolling_utc_(start,end]_denominator_cohort",
+    "unit": "ratio",
+    "aggregation": "distinct_appointment_id",
+    "cancellations": "retain_prior_eligible_events_report_separately",
+    "refunds": "not_a_monetary_outcome",
+    "missing_attribution": "include_and_report_separately",
+    "reconciliation": "join_authorized_lifecycle_receipts_by_plan_and_appointment_id",
+    "id": "8e7c7685-2a2b-4162-acb1-fc9acd140821",
+    "revision": 1,
+    "digest": "2dfbf97b7c60e8d0935ce85b3121689bfebd4e4bc7f7ba3e1306b41a0efeec25"
+  },
+  "brief_pins": {
+    "product": "e7330ffc-05be-4ee2-ade5-10e45f5452bd",
+    "audience": "52aa9c7a-1f16-4f23-82e1-b0858d970e28",
+    "objective": "70a3d36e-e35e-449d-b814-ac81b40acfc1",
+    "kpi": "8e7c7685-2a2b-4162-acb1-fc9acd140821"
+  },
+  "manifests": [
+    {
+      "id": "c8df586d-71e4-4c07-9210-90d16bfdc1ac",
+      "digest": "4d58e43e9f25d8d48ca1a815f0cf676f1a7ebce63ec29a2d476d4548483631c0",
+      "workflow": "WF-03/research-strategy-draft@3"
+    },
+    {
+      "id": "6dc3120e-768f-4c69-adb3-fbac45b7b6f1",
+      "digest": "a2bbbadbe56a09453d9d3745258d76e62478e4b2a4ab4c6cb00dd398457d3869",
+      "workflow": "WF-13/landing-seo-draft@6"
+    }
+  ],
+  "plan": {
+    "id": "4cfc347b-8695-4f0e-9d84-9355108937f6",
+    "digest": "c577fc5f4e8a42631608b8a24b85c346dddf56b6942b84190ce1e74ea6f9bcc0",
+    "revision": 1
+  },
+  "approval": "approved",
+  "strategy_method": "KPI chính trong 14 ngày: số buổi do người được giao xác nhận hoàn tất trên số lịch do nhân sự xác nhận. Vận hành dịch vụ đối soát mỗi mã hẹn một lần. Giữ các sự kiện đủ điều kiện trước khi hủy. Tách hủy, vắng mặt và thiếu nguồn; hoàn tiền không đổi tỷ lệ.",
+  "customer_method": "KPI chính trong 14 ngày: số buổi do người được giao xác nhận hoàn tất trên số lịch do nhân sự xác nhận. Vận hành dịch vụ đối soát mỗi mã hẹn một lần. Giữ các sự kiện đủ điều kiện trước khi hủy. Tách hủy, vắng mặt và thiếu nguồn; hoàn tiền không đổi tỷ lệ.",
+  "ad_method": "KPI chính trong 14 ngày: số buổi do người được giao xác nhận hoàn tất trên số lịch do nhân sự xác nhận. Vận hành dịch vụ đối soát mỗi mã hẹn một lần. Giữ các sự kiện đủ điều kiện trước khi hủy. Tách hủy, vắng mặt và thiếu nguồn; hoàn tiền không đổi tỷ lệ.",
+  "crm_receipts": [
+    "8f97d8da-0706-46ed-9bed-c8de74da4b86",
+    "4231611f-6aa5-425b-a6f5-ee62892b93a7",
+    "841a840c-336d-4d20-aef6-2069c421ab2e",
+    "831415b2-2d23-4942-b1e8-6343c7316f3b",
+    "47e0232b-c66f-4c5b-a0f0-c69e40b5ce8f",
+    "90dd852f-7d67-4aea-8493-b20626ea3989",
+    "72bef047-7b1f-4796-b99c-cd1e9e49ea67",
+    "551eafc8-bbd1-4f18-b4a9-bf4009cdfce7",
+    "13827722-07ac-43e0-a643-df81c171c7c2"
+  ],
+  "actual_analytics": {
+    "contract": {
+      "id": "8e7c7685-2a2b-4162-acb1-fc9acd140821",
+      "unit": "ratio",
+      "digest": "2dfbf97b7c60e8d0935ce85b3121689bfebd4e4bc7f7ba3e1306b41a0efeec25",
+      "window": "rolling_utc_(start,end]_denominator_cohort",
+      "refunds": "not_a_monetary_outcome",
+      "version": "appointment-measurement/1",
+      "revision": 1,
+      "numerator": {
+        "event": "completed",
+        "eligibility": "service_completion_by_assignee"
+      },
+      "owner_role": "service_operations",
+      "aggregation": "distinct_appointment_id",
+      "denominator": {
+        "event": "confirmed",
+        "eligibility": "staff_confirmation_with_scheduled_time"
+      },
+      "window_days": 14,
+      "cancellations": "retain_prior_eligible_events_report_separately",
+      "reconciliation": "join_authorized_lifecycle_receipts_by_plan_and_appointment_id",
+      "business_outcome": "appointment.completed_per_confirmed",
+      "missing_attribution": "include_and_report_separately"
+    },
+    "definition": "KPI chính trong 14 ngày: số buổi do người được giao xác nhận hoàn tất trên số lịch do nhân sự xác nhận. Vận hành dịch vụ đối soát mỗi mã hẹn một lần. Giữ các sự kiện đủ điều kiện trước khi hủy. Tách hủy, vắng mặt và thiếu nguồn; hoàn tiền không đổi tỷ lệ.",
+    "plan_id": "4cfc347b-8695-4f0e-9d84-9355108937f6",
+    "window_start_exclusive": "2026-11-12T02:10:56.859126+00:00",
+    "as_of_inclusive": "2026-11-26T02:10:56.859126+00:00",
+    "numerator": 1,
+    "denominator": 3,
+    "ratio": 0.3333333333333333,
+    "cancelled": 1,
+    "no_show": 0,
+    "unattributed": 3,
+    "attributed": 0,
+    "source": "sandbox_appointment_receipts",
+    "secondary_metrics": [
+      {
+        "metric_id": "web.sessions",
+        "unit": "session_count",
+        "value": 0
+      }
+    ]
+  }
+}

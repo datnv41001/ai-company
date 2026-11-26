@@ -1,6 +1,8 @@
-# AI Marketing Company (AMC) — Engineering Bootstrap
+# AI Marketing Company (AMC)
 
 **[Chạy bằng Docker và tiếp quản trên máy mới → HANDOFF.md](HANDOFF.md)**
+
+Tiếp quản bằng [bản đồ tài liệu và bằng chứng](docs/KNOWLEDGE_MAP.md). Tra một module, vai trò AI hoặc workflow trong [sổ trạng thái V1](docs/IMPLEMENTATION_STATUS.md) trước khi kết luận về mức hoàn thành.
 
 AMC lấy công việc Marketing được doanh nghiệp nghiệm thu làm đơn vị đo. Đọc tôn chỉ để biết đầu ra nào cần bàn giao và phải đo gì trước khi kết luận AMC giúp giảm việc. [Product Mission & Commercial North Star](docs/PRODUCT_MISSION.md)
 
@@ -37,9 +39,9 @@ The completed product must support Agency Mode + In-house Mode, 49 product modul
 - Simple responsive UI at `/` plus interactive API docs at `/docs`.
 - Local SQLite for engineering smoke tests; Docker Compose + Postgres for **development only**.
 
-## What's not implemented yet (must not be represented as production-ready)
+## Phạm vi đang phát triển
 
-All remaining full-scope modules (billing, production email delivery, SSO/MFA, full RLS, distributed execution, LangGraph/Temporal worker runtime, connectors, object storage, data quality, complete 37-agent contracts, 24 end-to-end workflows, brand-level policy, app reviews, queue and disaster recovery) still need development, tests and deployment qualification. See `docs/PRODUCT_SPEC_V1.md` and `docs/SECURITY_AND_GA_BLOCKERS.md`.
+Workforce, registry, QA theo phiên bản và journal chiến dịch có các đường chạy nội bộ được kiểm thử. Những phần còn mở gồm billing thật, adapter Marketing có quyền ghi, phục hồi vận hành production và nghiệm thu bởi người hành nghề. Xem trạng thái theo từng phạm vi trong [sổ V1](docs/IMPLEMENTATION_STATUS.md) và [cổng phát hành](docs/SECURITY_AND_GA_BLOCKERS.md).
 
 ## Run locally (Windows PowerShell)
 
@@ -49,8 +51,7 @@ Install Python 3.12+ and Git. From repository folder:
 py -3.12 -m venv .venv
 .venv\Scripts\Activate.ps1
 python -m pip install -r requirements-dev.txt
-Copy-Item .env.example .env
-# Edit .env: set a unique random JWT_SECRET
+python scripts/init_env.py
 python -m pytest -q
 python -m uvicorn app.main:app --no-proxy-headers --reload --host 127.0.0.1 --port 8000
 ```
@@ -63,15 +64,14 @@ Open http://127.0.0.1:8000 and http://127.0.0.1:8000/docs.
 python3.12 -m venv .venv
 source .venv/bin/activate
 python -m pip install -r requirements-dev.txt
-cp .env.example .env
-# Set a strong JWT_SECRET.
+python scripts/init_env.py
 python -m pytest -q
 python -m uvicorn app.main:app --no-proxy-headers --reload --host 127.0.0.1 --port 8000
 ```
 
 ## Docker + Postgres (development, not production)
 
-Set separate random `POSTGRES_PASSWORD`, `AMC_RUNTIME_PASSWORD` and `JWT_SECRET` values in `.env` (do not commit secrets). Use URL-safe database passwords. The migration service runs before the API, which uses the restricted `amc_runtime` login.
+Run `python scripts/init_env.py` for a fresh checkout or follow the [Docker-only setup](HANDOFF.md#2-chạy-bằng-docker-từ-một-checkout-sạch). For an existing database retain its matching keys and follow the version-specific upgrade instructions. The migration service runs before the API, which uses the restricted `amc_runtime` login.
 
 ```bash
 docker compose up -d --build
@@ -79,7 +79,7 @@ docker compose ps
 docker compose logs --tail 100 api
 ```
 
-Bound to localhost only: http://127.0.0.1:8000. **Development use only.** Hardened rate limits and email verification remain outstanding. For migration, client grants, evidence and rollout of existing viewers, see the [PostgreSQL client isolation report](docs/reviews/POSTGRES_CLIENT_ISOLATION_20261123.md).
+Open http://127.0.0.1:8000 for development. Local email verification uses a synthetic mailbox. Public delivery and public-ingress qualification remain open. [Identity admission](docs/IDENTITY-ADMISSION.md) · [PostgreSQL client isolation report](docs/reviews/POSTGRES_CLIENT_ISOLATION_20261123.md)
 
 ## First interactive workflow
 

@@ -7,7 +7,7 @@ Engineering review tooling remains fixture-only. Production and autonomous real-
 
 **Current status: NO-GO for production.** The bootstrap is intentionally safe for local development and demonstrates scoped API behavior; it is not a commercial service.
 
-Schema 3 enforces PostgreSQL row policies for client delivery and includes populated upgrade tests. See the [handoff](../HANDOFF.md) for current coverage. The checklist below addresses the full product.
+Schema 3 introduced PostgreSQL row policies for client delivery. At the PR #48 baseline the schema is v26, with Business v3, C3 v5 and sandbox ops/2. The unchecked gates below cover the entire product. An internal control can have passing tests while the broader production gate remains open. [Current scope and evidence](IMPLEMENTATION_STATUS.md) · [Handoff](../HANDOFF.md)
 
 ## Stop-ship (P0) before ANY public deployment
 
@@ -28,11 +28,11 @@ Schema 3 enforces PostgreSQL row policies for client delivery and includes popul
 - SQLite for local smoke testing; only application-level tenant checks, not Postgres RLS.
 - SAA-02 verifies addresses through a private synthetic mailbox and requires acceptance for invited members. Production email delivery, abuse protection and account recovery remain open. See the [verified identity handoff](PR15-IDENTITY.md) and [v19 onboarding threat model and backlog](PR16-ONBOARDING.md).
 - The v21 candidate limits registration, login, email verification and invitation delivery. Public ingress quotas, abuse monitoring and NAT threshold tuning still need operational acceptance.
-- JWT bearer token is held only in frontend memory; refresh requires re-login. Production session UX needs redesign.
+- Device sessions support bounded refresh, revocation and reauthentication. Production ingress and recovery qualification remain open. [Device session behavior](DEVICE-SESSIONS-A1.md)
 - No connector credentials are stored by this starter. All actual side effects are disabled.
 - LLM draft has no confirmed external factual evidence; do not present output as research or final recommendations without human review.
-- No stable migration script; production app startup is intentionally refused.
-- Global role catalog declares 37 roles only: none automatically executes.
+- The reviewed migration runner and tested upgrade paths cover the supported development schema. Production backup custody, restore drills in the target environment and operational signoff remain release gates. [Migration runner](../migrations/apply.py) · [Writer cutover](evaluation/sandbox-operations/CUTOVER.md)
+- The global catalog declares 37 logical roles. Named profiles execute a measured subset on authorized jobs. See the [register](IMPLEMENTATION_STATUS.md) for role and workflow evidence.
 - Campaign `plan` creates 7 deterministic placeholder tasks. It is **not** a running multi-agent workflow.
 - Audit events are app-managed, not immutable or cryptographically sealed. No PII retention policy yet.
 - No test that can certify an AI provider's data retention terms or guarantee content rights.

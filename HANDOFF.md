@@ -1,5 +1,11 @@
 # Bắt đầu ở đây khi tiếp quản AI Marketing Company
 
+## Mốc bàn giao sau PR #48 · 26/11/2026
+
+Trên main `380be3eb70a41424c6d45318b0b1890fa950970a`, core v26, Business v3, C3 v5 và sandbox ops/2. CI sau merge ghi 537 test đạt, 2 bỏ qua. Đọc [bản đồ tiếp quản](docs/KNOWLEDGE_MAP.md), [trạng thái V1](docs/IMPLEMENTATION_STATUS.md), [CI của mốc này](https://github.com/datnv41001/ai-company/actions/runs/45744737771) và [hồ sơ chuyển journal](docs/evaluation/sandbox-operations/CUTOVER.md).
+
+**Ưu tiên sản phẩm tại mốc này.** Reviewer đối chiếu lần lượt [#49 KPI](https://github.com/datnv41001/ai-company/pull/49), [#50 bàn giao theo vai trò](https://github.com/datnv41001/ai-company/pull/50), [#51 Creative/Landing](https://github.com/datnv41001/ai-company/pull/51) và [#52 nội dung/Ads](https://github.com/datnv41001/ai-company/pull/52). Đây là chuỗi PR mở khi lập hồ sơ. [Bản chụp register trên head #52](https://github.com/datnv41001/ai-company/blob/95aed621381c782114b18521d2b2d58eb17a7828/docs/evaluation/DEPARTMENT-CAPABILITY-REGISTER.md) có 19 năng lực và 24 workflow. Kiểm lại base/head hiện thời trước khi tích hợp. Marketing tiếp tục biên tập câu lặp ở trang dịch vụ theo từng revision, giữ bản đã duyệt. Khi có người hành nghề, thực hiện [pilot RFQ và dịch vụ](docs/evaluation/department-study/PILOT.md) để đo công sửa, tính hữu ích cho Sales và chi phí. Commercial GA vẫn NO-GO.
+
 
 ## Chuyển journal chiến dịch sang ops/2
 

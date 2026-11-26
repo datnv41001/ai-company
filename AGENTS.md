@@ -3,7 +3,7 @@
 Project: commercial AI Marketing Company V1.0. Single complete product scope; no partial release masquerading as GA.
 
 **Mandatory read order:**
-1. `README.md` and `HANDOFF.md` (current cross-machine runbook, behavior, tests and next task)
+1. `README.md`, the [knowledge map](docs/KNOWLEDGE_MAP.md) and the current entry of `HANDOFF.md` (checkout, evidence and next task)
 2. [Product Mission](docs/PRODUCT_MISSION.md) (customer work and commercial qualification) and `docs/PRODUCT_SPEC_V1.md` (authoritative V1 scope). In each handoff, identify the user, the work AMC takes on, the usable output and the evidence for quality, time or cost. Record unmeasured outcomes and the next test.
 3. `docs/ADR-001-OWN-SaaS-CORE.md` (proposed architecture, challenge allowed)
 4. `docs/GITHUB_RESEARCH_AND_REUSE.md`
@@ -28,3 +28,9 @@ Project: commercial AI Marketing Company V1.0. Single complete product scope; no
 **Before modifying code:** run `python -m pytest -q`; inspect failures; produce a brief plan and risk assessment. On completion give a summary, exact commands, test counts, limitations, and a 'challenge to ChatGPT reviewer' section.
 
 **Frontend acceptance.** Apply [AMC Design System](docs/AMC-DESIGN-SYSTEM.md) to frontend changes. Include real desktop, tablet and mobile screenshots in the PR and report light/dark, keyboard, responsiveness, measured performance, scope and known gaps. Use only authorized records for counts, progress and outcomes. Link CI evidence on the reviewed SHA.
+
+**Project ownership and independent challenge.** The Product Owner owns product priorities, scope changes and business decisions. Keep the V1 charter of 49 modules, 37 logical AI roles and 24 workflows until the owner approves a recorded revision. Codex researches, designs, implements, tests and hands over. ChatGPT Independent Reviewer challenges product value, domain quality, AI, architecture and engineering on a pinned version. AIRC-500 supplies bounded evidence under its own engineering contracts. Attribute each conclusion to its actual author and tested scope. A council vote does not authorize a release, publication or expenditure.
+
+**Living repository.** Put lasting knowledge in the canonical file named in the map. Include affected docs in the same PR as changes to behavior, architecture, schema, permissions, skills, models, workflows or operations. Record rationale, source, revision, evidence and outstanding gates there. Preserve the failed run, input, observed behavior, measured cost or “unknown”, attempted correction and the reason for stopping or retrying. Chat and machine-local files may aid work; commit a portable result or reference from the repository before handoff. Do not commit private inputs. When instructions and behavior diverge, reproduce on the stated checkout, correct the relevant source and record the disposition.
+
+**Decisions and delivery.** For material disagreement, keep the reviewer's objection and Codex's response, each with source or experiment, the alternatives, consequences, decision owner, disposition and remaining dissent. Put product scope decisions in the spec decision log, architectural decisions in the relevant ADR, and experiment outcomes in the evaluation report. Preserve superseded decisions and link their replacement. Use the [PR template](.github/pull_request_template.md) for each work package and the [handover drill](docs/KNOWLEDGE_MAP.md#cold-start) at the end of a product review cycle and when startup, permissions or the writer boundary changes. Qualification levels and the sources that establish them are defined in the map.

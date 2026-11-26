@@ -32,4 +32,3 @@ Gói render giữ nguyên từng byte. Trong gói review, XML chia sẻ giữ t�
 - Một hồ sơ dưới MOQ có thể đủ thông tin cho Sales tư vấn. Tiêu chí nào được ghi trong brief để phân biệt nhu cầu tư vấn, yêu cầu đủ điều kiện báo giá và quyền đặt hàng?
 - Khi một sự kiện đến trễ sau khi khóa đề xuất, hãy thử đọc lại biên nhận cũ, rồi thử duyệt đề xuất chưa ký. Người xem có giải thích được vì sao cần tạo bản mới?
 - Khi kiểm định trên dữ liệu Việt/Anh khác hai brief tổng hợp, mức báo sai và thời gian chuyên gia phải sửa có đủ thấp để đưa AI vào quy trình QA thường ngày?
-

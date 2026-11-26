@@ -1,0 +1,45 @@
+{
+  "case": "receipt-map",
+  "product": "Buổi khảo sát luồng nhận hàng Luồng Rõ",
+  "audience": "Trưởng vận hành kho phân phối tại Hà Nội",
+  "format": "Dọc 9:16, thoại tiếng Việt, mỗi cảnh một thao tác. Chữ phải đọc được trong bản tắt tiếng.",
+  "objective": "Đề nghị có địa điểm và ca, được người phụ trách dịch vụ xác nhận",
+  "approval": "editorial_candidate",
+  "rights": "Dùng sa bàn, phiếu trắng và sơ đồ tự vẽ ghi Minh họa. Không quay phiếu giao nhận, biển số, nhân viên, mặt bằng hoặc thương hiệu khách.",
+  "hooks": {
+    "A": "Ca nhận hàng đang chờ ở đâu?",
+    "B": "Một buổi khảo sát bàn giao gì?"
+  },
+  "shots": [
+    {
+      "start": 0,
+      "end": 3,
+      "picture": "Quay từ trên cùng sa bàn ba điểm tiếp nhận. Một thẻ hàng đứng trước bàn kiểm. Giữ nguyên góc máy, hình và thời lượng giữa hai bản.",
+      "caption": "{hook}"
+    },
+    {
+      "start": 3,
+      "end": 9,
+      "picture": "Đặt mũi tên từ cửa nhận sang bàn kiểm; làm dấu hỏi ở chỗ chờ. Không viết con số tiết kiệm hay nguyên nhân chưa kiểm chứng.",
+      "caption": "Chọn một ca nhận hàng và địa điểm muốn quan sát."
+    },
+    {
+      "start": 9,
+      "end": 15,
+      "picture": "Đổi sang tờ sơ đồ phác thảo ba điểm, gắn nhãn Minh họa. Tay chỉ vào đường đi đang được quan sát.",
+      "caption": "Trong buổi khảo sát, Luồng Rõ bàn giao sơ đồ luồng nhận hàng."
+    },
+    {
+      "start": 15,
+      "end": 21,
+      "picture": "Cận thẻ điều kiện được duyệt ở cạnh form thử. Để rõ đơn vị dịch vụ và phạm vi buổi khảo sát.",
+      "caption": "760.000 đồng một lượt, đã gồm thuế. Tối thiểu một lượt."
+    },
+    {
+      "start": 21,
+      "end": 27,
+      "picture": "Chọn địa điểm và ca nhận trong bản thử. Dừng ở trạng thái gửi đề nghị, không xuất hiện lịch đã xác nhận.",
+      "caption": "Gửi đề nghị khảo sát. Người phụ trách sẽ đối chiếu lịch."
+    }
+  ]
+}

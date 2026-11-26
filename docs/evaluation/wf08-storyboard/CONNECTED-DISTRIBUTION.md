@@ -16,5 +16,9 @@ All paths below are relative to the approved landing package at `/api/tenants/{t
 
 Use the disposable PostgreSQL setup in the repository handoff and run `python -m pytest -q tests/test_storyboard_distribution.py` with `AMC_TEST_PG=1`. Set `AMC_CONNECTED_EVIDENCE` to a new output directory to retain the exact raw worker output, approved edition, rendered preview, captions, poster, landing HTML and joined event receipt. The test checks each output file's SHA-256. Receipt subdirectories `wf08-v1` and `wf08-v2` distinguish the prior workflow from the Content handoff version. The limited Studio landing worker uses controlled provider replies, while the storyboard stages execute the real local deterministic adapter. All tests use synthetic buyer selections.
 
+The Khe Gọn test records the signed plan's ID, digest, approval receipt, landing brief and manifest under `measurement_authority`. It reads the plan's KPI description and any typed primary KPI contract from the approved revision returned by the campaign planner. It then queries the sandbox by the same plan ID. In these fixtures the primary KPI is absent, and qualified RFQ counts come from sandbox receipts over the life of the plan.
+
+Preview rendering is synchronous. The API holds locks on the source documents and scoped knowledge while generating the bounded 9:16 file, so another writer on that scope can wait for the render and commit. The evidence covers short internal rehearsals; concurrent rendering capacity and production latency still require measurement.
+
 The scope of this API is authenticated internal rehearsal. Storyboard, reviewer notes, evidence and distribution controls remain in the agency workspace. Landing content and form fields come only from the separate Studio edition and its independent QA.
 

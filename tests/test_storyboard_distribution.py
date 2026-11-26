@@ -173,7 +173,15 @@ def test_connected_distribution(pool, release):
     inbox = accepted(api.get(desk + "/marketing_operator/inbox", headers=operator["headers"]))
     crm = next(i for i in inbox["items"] if i["value"]["id"] == submission["entity_id"])
     assert crm["value"]["intake"]["answers"] == answers and crm["value"]["landing_source"] == source
-    metric = accepted(api.get(campaign + "/sandbox", headers=owner["headers"]))["intake_measurement"]
+    revisions = accepted(api.get(campaign + "/engine/planner", headers=owner["headers"]))["revisions"]
+    signed_plan = next(p for p in revisions if p["id"] == plan["id"] and p["status"] == "approved")
+    sandbox = accepted(api.get(campaign + "/sandbox", headers=owner["headers"], params={"measurement_plan_id": signed_plan["id"]}))
+    observations = sandbox["optimization"]["evidence"]
+    metric = sandbox["intake_measurement"]
+    primary = signed_plan["measurement_plan"].get("primary")
+    assert signed_plan["digest"] == plan["digest"] == observations["plan_digest"]
+    assert observations["plan_id"] == plan["id"] and observations["source"] == "sandbox_rfq_receipts"
+    assert primary is None and signed_plan.get("measurement_contract") is None and "primary_measurement" not in observations
     assert metric["window"] == "approved_plan_lifetime" and metric["landing_visits"] == metric["valid_submissions"] == 1
     assert metric["manual_requests"] == metric["orders"] == 0
     if release == 2:
@@ -187,7 +195,10 @@ def test_connected_distribution(pool, release):
         withdraw(api, owner, prep)
         reject("withdrawn_source", put(dist + "/visits", visit_req), 409)
     evidence.update(distribution=current_view, visit=visit, submission=submission, crm=crm, measurement=metric,
-                    creative_effectiveness=None, primary_kpi=None, paid_media_spend=0)
+                    measurement_authority={"approved_plan_id": signed_plan["id"], "plan_digest": signed_plan["digest"],
+                                           "plan_approval": signed_plan["approval"], "landing_manifest": signed_plan["manifests"]["landing"],
+                                           "measurement_plan": signed_plan["measurement_plan"], "sandbox_evidence": observations},
+                    creative_effectiveness=None, primary_kpi=primary, paid_media_spend=0)
     if folder := os.environ.get("AMC_CONNECTED_EVIDENCE"):
         dest = Path(folder) / f"wf08-v{release}"
         dest.mkdir(parents=True, exist_ok=False)

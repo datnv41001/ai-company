@@ -1,0 +1,37 @@
+{"timestamp": "2026-11-26T07:09:09.299874+00:00", "sha": "73c1c04e7db6501979696c63b72d948171d957cb", "op": "list", "path": "", "args": [], "size": 301}
+{"timestamp": "2026-11-26T07:09:16.002300+00:00", "sha": "73c1c04e7db6501979696c63b72d948171d957cb", "op": "read", "path": "AGENTS.md", "args": ["1", "150"], "size": 6013}
+{"timestamp": "2026-11-26T07:09:16.431308+00:00", "sha": "73c1c04e7db6501979696c63b72d948171d957cb", "op": "read", "path": "README.md", "args": ["1", "200"], "size": 7700}
+{"timestamp": "2026-11-26T07:09:16.983046+00:00", "sha": "73c1c04e7db6501979696c63b72d948171d957cb", "op": "read", "path": "HANDOFF.md", "args": ["1", "220"], "size": 33762}
+{"timestamp": "2026-11-26T07:09:17.484660+00:00", "sha": "73c1c04e7db6501979696c63b72d948171d957cb", "op": "list", "path": "tests", "args": [], "size": 3883}
+{"timestamp": "2026-11-26T07:09:17.972329+00:00", "sha": "73c1c04e7db6501979696c63b72d948171d957cb", "op": "list", "path": "docs", "args": [], "size": 920}
+{"timestamp": "2026-11-26T07:09:25.492655+00:00", "sha": "73c1c04e7db6501979696c63b72d948171d957cb", "op": "read", "path": "tests/test_market_handoff_evidence.py", "args": ["1", "85"], "size": 3491}
+{"timestamp": "2026-11-26T07:09:25.925449+00:00", "sha": "73c1c04e7db6501979696c63b72d948171d957cb", "op": "read", "path": "tests/test_market_handoff_study.py", "args": ["1", "90"], "size": 1934}
+{"timestamp": "2026-11-26T07:09:26.501145+00:00", "sha": "73c1c04e7db6501979696c63b72d948171d957cb", "op": "read", "path": "docs/KNOWLEDGE_MAP.md", "args": ["1", "70"], "size": 6528}
+{"timestamp": "2026-11-26T07:09:26.866956+00:00", "sha": "73c1c04e7db6501979696c63b72d948171d957cb", "op": "read", "path": "docs/evaluation/department-review/MARKET-HANDOFF.md", "args": ["1", "150"], "size": 7927}
+{"timestamp": "2026-11-26T07:09:32.872118+00:00", "sha": "73c1c04e7db6501979696c63b72d948171d957cb", "op": "read", "path": "docs/evaluation/department-study/PILOT-ABCD/OFFICIAL.md", "args": ["1", "120"], "size": 11424}
+{"timestamp": "2026-11-26T07:09:33.358275+00:00", "sha": "73c1c04e7db6501979696c63b72d948171d957cb", "op": "read", "path": "docs/evaluation/business-intake/CONSULTATION.md", "args": ["1", "120"], "size": 10599}
+{"timestamp": "2026-11-26T07:09:33.931812+00:00", "sha": "73c1c04e7db6501979696c63b72d948171d957cb", "op": "read", "path": "docs/evaluation/department-review/MAIN-56.json", "args": ["1", "110"], "size": 4279}
+{"timestamp": "2026-11-26T07:09:34.424741+00:00", "sha": "73c1c04e7db6501979696c63b72d948171d957cb", "op": "read", "path": "tests/test_production_studios.py", "args": ["1", "150"], "size": 9416}
+{"timestamp": "2026-11-26T07:09:40.660440+00:00", "sha": "73c1c04e7db6501979696c63b72d948171d957cb", "op": "read", "path": "tests/test_department_official_pilot.py", "args": ["1", "28"], "size": 1061}
+{"timestamp": "2026-11-26T07:09:41.124568+00:00", "sha": "73c1c04e7db6501979696c63b72d948171d957cb", "op": "read", "path": "app/main.py", "args": ["1", "180"], "size": 8324}
+{"timestamp": "2026-11-26T07:09:41.615912+00:00", "sha": "73c1c04e7db6501979696c63b72d948171d957cb", "op": "read", "path": "tests/test_production_studios.py", "args": ["245", "355"], "size": 6802}
+{"timestamp": "2026-11-26T07:09:53.081862+00:00", "sha": "73c1c04e7db6501979696c63b72d948171d957cb", "op": "read", "path": "docs/evaluation/department-review/MAIN-56.json", "args": ["106", "155"], "size": 1096}
+{"timestamp": "2026-11-26T07:09:53.662799+00:00", "sha": "73c1c04e7db6501979696c63b72d948171d957cb", "op": "read", "path": "docs/SECURITY_AND_GA_BLOCKERS.md", "args": ["1", "60"], "size": 7480}
+{"timestamp": "2026-11-26T07:09:54.215399+00:00", "sha": "73c1c04e7db6501979696c63b72d948171d957cb", "op": "read", "path": "docs/evaluation/department-study/PILOT-ABCD/OFFICIAL.md", "args": ["40", "55"], "size": 2180}
+{"timestamp": "2026-11-26T07:09:54.775772+00:00", "sha": "73c1c04e7db6501979696c63b72d948171d957cb", "op": "read", "path": "docs/IMPLEMENTATION_STATUS.md", "args": ["1", "50"], "size": 8290}
+{"timestamp": "2026-11-26T07:09:55.381728+00:00", "sha": "73c1c04e7db6501979696c63b72d948171d957cb", "op": "read", "path": "docs/PRODUCT_SPEC_V1.md", "args": ["1", "42"], "size": 4479}
+{"timestamp": "2026-11-26T07:09:55.931826+00:00", "sha": "73c1c04e7db6501979696c63b72d948171d957cb", "op": "read", "path": "docs/PRODUCT_MISSION.md", "args": ["1", "42"], "size": 5996}
+{"timestamp": "2026-11-26T07:10:03.067273+00:00", "sha": "73c1c04e7db6501979696c63b72d948171d957cb", "op": "read", "path": "docs/evaluation/department-study/advisory/PROSPECTIVE-HANDOFF.md", "args": ["1", "98"], "size": 9305}
+{"timestamp": "2026-11-26T07:10:03.698337+00:00", "sha": "73c1c04e7db6501979696c63b72d948171d957cb", "op": "read", "path": "docs/CODEX_LOCAL_HANDOFF.md", "args": ["1", "20"], "size": 981}
+{"timestamp": "2026-11-26T07:10:04.315701+00:00", "sha": "73c1c04e7db6501979696c63b72d948171d957cb", "op": "read", "path": "docs/GITHUB_RESEARCH_AND_REUSE.md", "args": ["1", "20"], "size": 2733}
+{"timestamp": "2026-11-26T07:10:04.878109+00:00", "sha": "73c1c04e7db6501979696c63b72d948171d957cb", "op": "read", "path": "app/main.py", "args": ["130", "148"], "size": 678}
+{"timestamp": "2026-11-26T07:10:05.672638+00:00", "sha": "73c1c04e7db6501979696c63b72d948171d957cb", "op": "read", "path": "docs/evaluation/sandbox-operations/CUTOVER.md", "args": ["1", "38"], "size": 3270}
+{"timestamp": "2026-11-26T07:10:06.598223+00:00", "sha": "73c1c04e7db6501979696c63b72d948171d957cb", "op": "read", "path": "docs/ADR-001-OWN-SaaS-CORE.md", "args": ["1", "26"], "size": 3705}
+{"timestamp": "2026-11-26T07:10:13.781533+00:00", "sha": "73c1c04e7db6501979696c63b72d948171d957cb", "op": "read", "path": "tests/evaluation/department/official_pilot.py", "args": ["1", "140"], "size": 6274}
+{"timestamp": "2026-11-26T07:10:14.306781+00:00", "sha": "73c1c04e7db6501979696c63b72d948171d957cb", "op": "read", "path": "app/campaign_operations_crm.py", "args": ["1", "185"], "size": 12976}
+{"timestamp": "2026-11-26T07:10:15.804932+00:00", "sha": "73c1c04e7db6501979696c63b72d948171d957cb", "op": "read", "path": "app/business_intake.py", "args": ["1", "180"], "size": 9116}
+{"timestamp": "2026-11-26T07:10:23.520215+00:00", "sha": "73c1c04e7db6501979696c63b72d948171d957cb", "op": "read", "path": "tests/evaluation/department/official_pilot.py", "args": ["100", "135"], "size": 2067}
+{"timestamp": "2026-11-26T07:10:24.215978+00:00", "sha": "73c1c04e7db6501979696c63b72d948171d957cb", "op": "read", "path": "app/business_intake.py", "args": ["100", "137"], "size": 2508}
+{"timestamp": "2026-11-26T07:10:25.568021+00:00", "sha": "73c1c04e7db6501979696c63b72d948171d957cb", "op": "read", "path": "app/campaign_operations_crm.py", "args": ["81", "124"], "size": 3331}
+{"timestamp": "2026-11-26T07:10:25.876434+00:00", "sha": "73c1c04e7db6501979696c63b72d948171d957cb", "op": "read", "path": "app/campaign_role_desk.py", "args": ["195", "260"], "size": 3575}
+{"timestamp": "2026-11-26T07:10:26.404560+00:00", "sha": "73c1c04e7db6501979696c63b72d948171d957cb", "op": "read", "path": "tests/consultation_fixtures.py", "args": ["140", "215"], "size": 3612}

@@ -1,0 +1,60 @@
+{
+  "sha": "73c1c04e7db6501979696c63b72d948171d957cb",
+  "archive_sha256": "901f5c984fbad57085260855254f982471159dfbdbb5618b7833c91470a2efed",
+  "environment": "fresh tracked source export, SQLite and localhost, preinstalled development dependencies",
+  "commands": [
+    {
+      "argv": [
+        "python",
+        "scripts/init_env.py"
+      ],
+      "exit": 0
+    },
+    {
+      "argv": [
+        "python",
+        "-m",
+        "pytest",
+        "-q",
+        "-p",
+        "no:cacheprovider",
+        "--basetemp=C:\\Users\\PC\\Documents\\Codex\\2026-11-23\\o\\work\\market-cold-vault-fixtures",
+        "tests/test_market_handoff_evidence.py",
+        "tests/test_department_official_pilot.py"
+      ],
+      "exit": 0
+    },
+    {
+      "argv": [
+        "python",
+        "-m",
+        "pytest",
+        "-q",
+        "-p",
+        "no:cacheprovider",
+        "--basetemp=.cold-sales-tmp",
+        "tests/test_production_studios.py",
+        "-k",
+        "index-tray"
+      ],
+      "exit": 0
+    }
+  ],
+  "health": {
+    "status": 200,
+    "body": {
+      "status": "ok",
+      "stage": "engineering_bootstrap",
+      "environment": "local",
+      "production_ready": false
+    }
+  },
+  "read_http": {
+    "/": 200,
+    "/docs": 200
+  },
+  "pytest_summary": [
+    "11 passed in 2.99s",
+    "1 passed, 6 deselected in 20.34s"
+  ]
+}

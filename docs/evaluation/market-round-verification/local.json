@@ -1,0 +1,24 @@
+{
+  "browser": {
+    "viewports": [
+      390,
+      820,
+      1280
+    ],
+    "themes": [
+      "light",
+      "dark"
+    ],
+    "keyboard_submit": true,
+    "local_decision_to_qualified_ms": 188,
+    "capture_seconds": 4.078
+  },
+  "native_full_suite": {
+    "failure": 0,
+    "error": 0,
+    "skipped": 2,
+    "collected": 612,
+    "sha256": "ca33303f0f4dc18600c2dc628ffbc194aa03f128476ec51be34cc65c764ce48a",
+    "source": "Combined product and frozen evidence at start of run; see exact final-head CI above."
+  }
+}

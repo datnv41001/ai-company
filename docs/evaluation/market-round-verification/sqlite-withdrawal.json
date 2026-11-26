@@ -1,0 +1,213 @@
+{
+  "synthetic": true,
+  "plan_id": "e6fe9cd9-1a34-432a-84d6-940aefc2cc89",
+  "case_id": "b97b99b1ae651c54af4313c18693db8da11179f7fd61790bb5f279f835423181",
+  "form_receipt": "8f3aafd2-95ed-4366-a0b0-61ef84845a29",
+  "events": [
+    {
+      "receipt": "c62bcacc-9248-4afa-ae06-3d3667ecb3cc",
+      "step": "refer",
+      "actor": "10a6e145-a724-43e6-ab4a-5c8864f7a499",
+      "revision": 2,
+      "state": "consulting"
+    },
+    {
+      "receipt": "56b7acf5-9daf-441d-bd68-db4e33d52810",
+      "step": "consultation",
+      "actor": "5d054878-5c74-4a32-a27e-b2bfb8cbdb47",
+      "revision": 3,
+      "state": "consulting"
+    },
+    {
+      "receipt": "b4f36474-1900-4bd6-92b0-070341950ade",
+      "step": "reassign",
+      "actor": "10a6e145-a724-43e6-ab4a-5c8864f7a499",
+      "revision": 4,
+      "state": "consulting"
+    },
+    {
+      "receipt": "7af04526-c369-4d6b-a647-0221567c6371",
+      "step": "consultation",
+      "actor": "8cb83a08-633a-485a-8646-7ede979c19ac",
+      "revision": 5,
+      "state": "consulting"
+    },
+    {
+      "receipt": "d7d2935a-c21f-4e90-83c7-4210a2e9d725",
+      "step": "consultation",
+      "actor": "8cb83a08-633a-485a-8646-7ede979c19ac",
+      "revision": 6,
+      "state": "awaiting_assignment"
+    },
+    {
+      "receipt": "410fd4fa-e673-4645-90ec-646bb19e19ac",
+      "step": "assign",
+      "actor": "10a6e145-a724-43e6-ab4a-5c8864f7a499",
+      "revision": 7,
+      "state": "assigned"
+    },
+    {
+      "receipt": "2ed802ee-4d4b-4115-9486-a7593c5f2bfd",
+      "step": "accept",
+      "actor": "5d054878-5c74-4a32-a27e-b2bfb8cbdb47",
+      "revision": 8,
+      "state": "accepted"
+    },
+    {
+      "receipt": "9b0e4da8-f48a-4aa4-9af4-5d1a6fb20737",
+      "step": "quote",
+      "actor": "5d054878-5c74-4a32-a27e-b2bfb8cbdb47",
+      "revision": 9,
+      "state": "quoted"
+    },
+    {
+      "receipt": "a7cd1589-e9b0-4068-bd85-e4e16ee570ea",
+      "step": "order",
+      "actor": "5d054878-5c74-4a32-a27e-b2bfb8cbdb47",
+      "revision": 10,
+      "state": "ordered"
+    },
+    {
+      "receipt": "b0d38eed-a88a-4d67-9e64-9da4e6141fd4",
+      "step": "cancel",
+      "actor": "10a6e145-a724-43e6-ab4a-5c8864f7a499",
+      "revision": 13,
+      "state": "cancelled"
+    },
+    {
+      "receipt": "1c93f13a-ac41-436f-b252-3da866a0e046",
+      "step": "refer",
+      "actor": "10a6e145-a724-43e6-ab4a-5c8864f7a499",
+      "revision": 2,
+      "state": "consulting"
+    },
+    {
+      "receipt": "04916043-395d-42e0-be71-482a3a3cbbfa",
+      "step": "reject",
+      "actor": "5d054878-5c74-4a32-a27e-b2bfb8cbdb47",
+      "revision": 3,
+      "state": "rejected"
+    },
+    {
+      "receipt": "5bf7f9ea-673a-4c5e-8e8f-23149d1ef12e",
+      "step": "refer",
+      "actor": "10a6e145-a724-43e6-ab4a-5c8864f7a499",
+      "revision": 2,
+      "state": "consulting"
+    },
+    {
+      "receipt": "14fc0f14-90ed-486e-9966-a363c82b8e11",
+      "step": "consultation",
+      "actor": "5d054878-5c74-4a32-a27e-b2bfb8cbdb47",
+      "revision": 3,
+      "state": "awaiting_assignment"
+    },
+    {
+      "receipt": "261db17c-fe42-4ac3-a875-c3fef81e429b",
+      "step": "cancel",
+      "actor": "10a6e145-a724-43e6-ab4a-5c8864f7a499",
+      "revision": 4,
+      "state": "cancelled"
+    }
+  ],
+  "qualified": {
+    "version": "intake-funnel/2",
+    "contract_digest": "ee50248fdde324dd82d4552bfbefdb42e38bf64b76ad5c0e542c76699be18239",
+    "window": "approved_plan_lifetime",
+    "action": "rfq",
+    "landing_visits": 1,
+    "valid_submissions": 1,
+    "manual_requests": 1,
+    "inquiries": 1,
+    "qualified_rfqs": 1,
+    "sales_accepted": 0,
+    "quotes_issued": 0,
+    "orders": 0,
+    "confirmed_revenue_vnd": 0,
+    "current_states": {
+      "awaiting_assignment": 1
+    },
+    "qualified_quotes": 1
+  },
+  "after_confirmation": {
+    "version": "intake-funnel/2",
+    "contract_digest": "ee50248fdde324dd82d4552bfbefdb42e38bf64b76ad5c0e542c76699be18239",
+    "window": "approved_plan_lifetime",
+    "action": "rfq",
+    "landing_visits": 1,
+    "valid_submissions": 1,
+    "manual_requests": 1,
+    "inquiries": 1,
+    "qualified_rfqs": 1,
+    "sales_accepted": 1,
+    "quotes_issued": 1,
+    "orders": 1,
+    "confirmed_revenue_vnd": 5000,
+    "current_states": {
+      "confirmed": 1
+    },
+    "qualified_quotes": 1
+  },
+  "after_cancellation": {
+    "version": "intake-funnel/2",
+    "contract_digest": "ee50248fdde324dd82d4552bfbefdb42e38bf64b76ad5c0e542c76699be18239",
+    "window": "approved_plan_lifetime",
+    "action": "rfq",
+    "landing_visits": 1,
+    "valid_submissions": 1,
+    "manual_requests": 1,
+    "inquiries": 1,
+    "qualified_rfqs": 1,
+    "sales_accepted": 1,
+    "quotes_issued": 1,
+    "orders": 1,
+    "confirmed_revenue_vnd": 0,
+    "current_states": {
+      "cancelled": 1
+    },
+    "qualified_quotes": 1
+  },
+  "after_rejection": {
+    "version": "intake-funnel/2",
+    "contract_digest": "ee50248fdde324dd82d4552bfbefdb42e38bf64b76ad5c0e542c76699be18239",
+    "window": "approved_plan_lifetime",
+    "action": "rfq",
+    "landing_visits": 2,
+    "valid_submissions": 2,
+    "manual_requests": 1,
+    "inquiries": 2,
+    "qualified_rfqs": 1,
+    "sales_accepted": 1,
+    "quotes_issued": 1,
+    "orders": 1,
+    "confirmed_revenue_vnd": 0,
+    "current_states": {
+      "cancelled": 1,
+      "rejected": 1
+    },
+    "qualified_quotes": 1
+  },
+  "after_withdrawal": {
+    "version": "intake-funnel/2",
+    "contract_digest": "ee50248fdde324dd82d4552bfbefdb42e38bf64b76ad5c0e542c76699be18239",
+    "window": "approved_plan_lifetime",
+    "action": "rfq",
+    "landing_visits": 3,
+    "valid_submissions": 3,
+    "manual_requests": 1,
+    "inquiries": 3,
+    "qualified_rfqs": 2,
+    "sales_accepted": 1,
+    "quotes_issued": 1,
+    "orders": 1,
+    "confirmed_revenue_vnd": 0,
+    "current_states": {
+      "cancelled": 2,
+      "rejected": 1
+    },
+    "qualified_quotes": 2
+  },
+  "withdrawal_receipt": "261db17c-fe42-4ac3-a875-c3fef81e429b",
+  "replacement_rfq": "f38b633cd29f9e9353b8c58752bd90ecacda30ef516c1bad3ed8d3fc73d5cefb",
+  "replacement_receipt": "86caa70c-6dc0-4fa2-9c86-282574bbb66b"
+}

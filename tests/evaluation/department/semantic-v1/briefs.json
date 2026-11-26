@@ -1,0 +1,16 @@
+[
+  {
+    "id": "river-label",
+    "lang": "vi",
+    "source": "Dữ liệu tổng hợp. Mác Khô bán hộp 24 vòng kẹp nhãn, 192.000 VND/hộp chưa VAT, tối thiểu 4 hộp cho đơn hàng. Nhận tư vấn dưới MOQ. Dùng ở kho khô quận Đông, không có tuyên bố giảm thất thoát hoặc kết quả bán hàng. Kho muốn biết mã hàng, số hộp và ngày cần. Chưa có dữ liệu doanh thu hay đối thủ đã xác minh.",
+    "objective": "Tăng số RFQ có đủ mã hàng, số hộp và ngày cần, phục vụ người phụ trách mua hàng kho khô. Đề xuất phép đo từ RFQ đủ trường đến Sales chấp nhận, ngân sách đề xuất tối đa 1.200.000 VND; chi tiêu thật bằng 0.",
+    "buyer_action": "rfq"
+  },
+  {
+    "id": "shift-inspection",
+    "lang": "en",
+    "source": "Synthetic data. Shift Trace provides a dock observation visit at 465000 VND per visit including VAT for West district. Staff log arrival, handoff and queue notes, with no guaranteed wait-time reduction. Buyer must give the receiving site and shift; only staff can confirm. No existing customer or measured result is supplied.",
+    "objective": "Help receiving supervisors request a West district observation visit. Measure staff-confirmed appointments / valid requests. No external publication, budget proposal up to 900000 VND, no spend.",
+    "buyer_action": "appointment"
+  }
+]

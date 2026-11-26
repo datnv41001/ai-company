@@ -1,5 +1,11 @@
 # Bàn giao cây ghép PR #53 và PR #55
 
+## Quyết định sau phản biện
+
+Independent Reviewer chấp nhận đóng **R53-01, R53-02, R55-01, R55-02, R55-03, R55-04** trên các head đã ghi trong [biên nhận](MAIN-56.json). Maintainer `datnv41001` đã merge một lần qua #56. Hai parent là main trước tích hợp và head #56. Merge SHA `bbb0b9c41b92e666e133499e9c71f53592828c3d`, tree `46fc7eaffa03c78f738d64a35a1e5dc13a794072`, trùng tree của trial. CI trên main đạt 3/3 job bắt buộc, 602 test đạt, 2 skip, 22 đường nâng cơ sở dữ liệu có dữ liệu và restore đối chiếu 34 bảng. Production và Commercial GA vẫn NO-GO. [Merge](https://github.com/datnv41001/ai-company/pull/56) · [CI](https://github.com/datnv41001/ai-company/actions/runs/45770716137)
+
+### Ghi chép trước quyết định merge
+
 1. **Mục tiêu.** Reviewer cần kiểm tra cùng lúc tài liệu quản trị, hành trình Sales của khách dưới MOQ và tính hợp lệ của quyết định chấm bản đầu. Người tiếp quản cần thấy một đầu việc hiện hành tại [HANDOFF](../../../HANDOFF.md). Quy mô V1 vẫn gồm 49 module, 37 vai trò, 24 workflow.
 2. **Trước thay đổi.** AMC-R53-01 và AMC-R53-02 được chấp nhận. Bằng chứng tiếp quản trước đó thuộc `82d5b246`. Hai nhánh đều thêm ưu tiên hiện hành lên đầu HANDOFF. Hành vi trước sửa của bốn finding sản phẩm được lưu trong [biên bản PR #55](REVIEW-55-FOLLOWUP.md).
 3. **Base.** Main là `380be3eb70a41424c6d45318b0b1890fa950970a`. Head quản trị được kiểm là `56a120cac4bb3f77a4e1fc6fe93298cc838121ea`. Chuỗi sản phẩm #49 → #50 → #51 → #52 → #54 → #55 kết thúc vòng trước ở `c5c6329599a66fd2dc6011428e7ab8eed9208df4`. Core v26, Business v3, C3 v5 và journal ops/2.

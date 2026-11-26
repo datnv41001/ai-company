@@ -1,6 +1,14 @@
 # Bắt đầu ở đây khi tiếp quản AI Marketing Company
 
-## Công việc hiện hành trên cây tích hợp nội bộ
+## Công việc hiện hành sau khi hợp nhất PR #56
+
+Main nội bộ đã hợp nhất cây của #49–56 tại `bbb0b9c41b92e666e133499e9c71f53592828c3d`. Đối chiếu [quyết định và biên nhận trên main](docs/evaluation/department-review/MAIN-56.json) khi tiếp quản. Sáu finding R53-01/02 và R55-01–04 đã đóng. Nhánh tiếp theo bàn giao hai việc cho reviewer sản phẩm: lần theo một yêu cầu khách muốn hủy khi chưa có người nhận và kiểm tra cách ghi nhận việc producer biết phương án đã giao. Người giữ benchmark có thể chấm lại cả ba phương pháp từ kết quả đã lưu. [Báo cáo, đường chạy và câu hỏi phản biện](docs/evaluation/department-review/MARKET-HANDOFF.md) · [Bản đồ tiếp quản](docs/KNOWLEDGE_MAP.md)
+
+Số việc được doanh nghiệp thực tế chấp nhận vẫn là 0. Người phụ trách pilot cần người hành nghề có consent và chứng từ chi phí trước khi ước tính giá trị kinh tế. Quyết định production và Commercial GA vẫn là **NO-GO**.
+
+### Lịch sử trên cây tích hợp
+
+#### Hướng dẫn tại thời điểm review cây tích hợp
 
 Hai nhóm tiếp quản dùng cùng một mốc: reviewer kiểm luồng tư vấn trước MOQ và cách đếm RFQ, người giữ bộ pilot kiểm chuỗi phiên bản và phân công chấm mù. Đối chiếu head đã checkout với biên nhận CI cuối. [Báo cáo review](docs/evaluation/department-review/ROUND-53-55.md) · [Bản đồ tiếp quản](docs/KNOWLEDGE_MAP.md) · [Quy trình rollback](docs/evaluation/sandbox-operations/CUTOVER.md)
 

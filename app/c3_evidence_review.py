@@ -147,8 +147,8 @@ def decision_evidence(store, snap, doc, run, signature):
         "reviewed_statements": {r["id"]: r["resolution_id"] for r in report["statements"] if r.get("resolution_id")},
     }
     if (doc.content.get("studio") or {}).get("delivery_version"):
-        from .c3_customer_assets import PUBLIC
-        public = PUBLIC[run.knowledge["registry"]["workflow"]]
+        from .c3_customer_assets import schema
+        public = schema(run.knowledge["registry"]["workflow"], doc.content["studio"].get("channel_context"))
         decision["customer_field_evidence"] = {
             group: {field: [
                 {k: row[k] for k in ("id", "claim_type", "outcome", "handles")}
@@ -179,6 +179,9 @@ def inspect_gate(tenant_id: str, did: str, user: User = Depends(current_user), d
         return public
     snap, _ = unpack(store, run.knowledge["c3_manifest"]["id"])
     report = current_report(store, snap, doc, run, sig, include_sources=True)
+    if (doc.content.get("studio") or {}).get("channel_context"):
+        from . import c3_customer_assets
+        report["field_labels"] = c3_customer_assets.labels(run.knowledge["c3_projection"]["locale"])
     commands = (
         store.query(KnowledgeCommand)
         .filter_by(snapshot_id=snap.id)

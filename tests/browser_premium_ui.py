@@ -18,6 +18,7 @@ import httpx
 import psycopg
 from playwright.sync_api import expect, sync_playwright
 
+from browser_visual_checks import contrast, no_motion
 from screen_navigation import menu, screen, select_workspace, switch_account
 from browser_knowledge import BASE, PROJECT, authenticate, db_counts, post
 from identity_fixtures import invite_member, start_registration, verify_registration
@@ -25,7 +26,6 @@ from identity_fixtures import invite_member, start_registration, verify_registra
 
 OUT = Path(os.getenv("AMC_PREMIUM_EVIDENCE", "premium-ui-evidence"))
 MATRIX = {"desktop": (1440, 900), "laptop": (1280, 850), "tablet": (820, 1180), "mobile": (390, 844), "compact": (320, 700)}
-AUDIT = Path(__file__).with_name("premium_accessibility.js").read_text("utf8")
 OWNER_NAME = "Mộc Studio"
 EMPTY_NAME = "Studio một thành viên · Trung tâm Thương hiệu và Truyền thông Việt Nam"
 
@@ -264,28 +264,6 @@ def keyboard(page, view, screenshots):
     expect(page.locator("#command-center")).to_be_visible()
     page.evaluate("window.scrollTo({top:0,behavior:'instant'})")
     return "workspace navigation activated by keyboard"
-
-
-def contrast(page, selector, view):
-    result = page.locator(selector).evaluate(AUDIT)
-    assert result["checked"], (view, selector)
-    rows = result["checked"]
-    return {
-        "surface": selector,
-        "view": view,
-        "checked": len(rows),
-        "minimum_ratio": round(min(r["ratio"] for r in rows), 3),
-        "failed": [r for r in rows if not r["pass"]],
-        "unresolved": result["unresolved"],
-    }
-
-
-def no_motion(page):
-    assert page.evaluate("matchMedia('(prefers-reduced-motion: reduce)').matches")
-    # Steady layout and actively loading UI are both sampled by the caller.
-    return page.evaluate("""()=>document.getAnimations().filter(a=>a.playState==='running' && (
-      Number(a.effect?.getComputedTiming().activeDuration)>20 || a.effect?.getComputedTiming().iterations===Infinity)).
-      map(a=>({name:a.animationName||a.transitionProperty||'animation',target:a.effect?.target?.id||a.effect?.target?.tagName}))""")
 
 
 def task_network(page, f):

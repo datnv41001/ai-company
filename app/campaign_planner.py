@@ -98,6 +98,9 @@ def selection(store, cid, mid, *, stage):
 
 def check_requirements(plan, projection):
     intent = projection["task_intent"]
+    limits = intent.get("campaign_limits")
+    if limits and (plan["duration_days"] > limits["max_duration_days"] or plan["budget_vnd"] > limits["max_media_budget_vnd"]):
+        conflict("Thời hạn hoặc trần truyền thông vượt phạm vi đã ghim. Hãy duyệt brief và manifest mới.")
     outcomes = {projection["objective"], projection["kpi"], projection["kpi"].split(" · ")[0],
                 intent["purpose"], *intent["acceptance_criteria"]}
     if plan["target_outcome"] not in outcomes:
@@ -164,6 +167,8 @@ def planner(tenant_id: str, campaign_id: str, user: User = Depends(current_user)
                     "workflow": body["options"]["workflow"],
                     **{k: public[k] for k in ("audience", "product", "objective")},
                     "buyer_action": public["task_intent"]["buyer_action"],
+                    **({"channel": public["channel"], "kpi": public["kpi"].split(" · ")[0],
+                        "limits": public["task_intent"].get("campaign_limits")} if s.approver else {}),
                 }
             )
     rows = history(s, campaign_id)

@@ -80,9 +80,17 @@ function createCampaignEngine(api) {
       const node=add(form,'label'), check=add(node,'input');check.type='checkbox';check.value=item.id;
       check.checked=Object.values(old?.manifests || {}).some(ref=>ref.id===item.id);
       node.append(document.createTextNode(item.workflow.split('/')[0]+' · '+item.product+' · '+item.audience+' · '+item.digest.slice(0,8)));
+      if(item.channel)add(node,'small',channelName(item.channel)+' · '+item.objective+' · '+item.kpi);
+      if(item.limits)add(node,'small','Tối đa '+item.limits.max_duration_days+' ngày · '+money(item.limits.max_media_budget_vnd)+' truyền thông');
       return check;
     });
     const target=field(form,'Kết quả mong muốn','text',old?.target_outcome||'',false);
+    const outcomes=add(form,'datalist');
+    outcomes.id='engine-approved-outcomes';
+    target.setAttribute('list',outcomes.id);
+    for(const value of new Set(planner.choices.flatMap(c=>[c.objective,c.kpi]).filter(Boolean))){
+      add(outcomes,'option').value=value;
+    }
     const days=field(form,'Thời hạn (ngày)','number',old?.duration_days||14);days.min=1;days.max=180;
     const budget=field(form,'Trần chi phí mô phỏng (VND)','number',old?.budget_vnd??0);budget.min=0;
     const ai=field(form,'Hạn mức sản xuất AI mỗi lượt (µUSD)','number',old?.ai_budget_microusd_per_run??10000);

@@ -754,7 +754,7 @@
         "c8c7649ce2ef9d2d9e02e2a8ca83ba3cee22da2e9c90525248a26af693ff385f"
       ]
     },
-    "08e37ba55423afdbf6ce014bdc2b5933ba72a70546d5fab5dc89f6fca88e8787": {
+    "f24ecdb711d2f0f234e58856284175dcc065fed6b80e920664b9b7e2b680e4ff": {
       "python": "cpython-3.12.14",
       "adapters": [
         "c64cf3e0e691a1bad191b954b07d06a28c7cd8675bb5fe8328ee0ae0e620880a",
@@ -770,7 +770,7 @@
         "c8c7649ce2ef9d2d9e02e2a8ca83ba3cee22da2e9c90525248a26af693ff385f"
       ]
     },
-    "32ad392d2a7177b4c464989d65fe54bce61ab50063960fba949882795aee448f": {
+    "8241e0cd82573231609e22339cb30a3706df382114447f0ee65353e3d3e96871": {
       "python": "cpython-3.12.16",
       "adapters": [
         "c64cf3e0e691a1bad191b954b07d06a28c7cd8675bb5fe8328ee0ae0e620880a",

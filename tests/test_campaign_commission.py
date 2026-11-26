@@ -13,11 +13,13 @@ def test_conflicting_commissions_require_new_approved_inputs(api, agency):
     campaigns = accepted(api.get(base + "/campaigns", headers=headers))
     brand = next(c["brand_id"] for c in campaigns if c["id"] == cid)
     snaps, _ = prepare_inputs(api, owner, customer, next(iter(scope["clients"])), brand, cid,
-                              CASES[0], workflows=(c3_assets.LANDING,))
+                              CASES[0] | {"campaign_limits": {"max_duration_days": 19, "max_media_budget_vnd": 987654}},
+                              workflows=(c3_assets.LANDING,))
     snap = snaps[0]
     path = base + "/campaigns/" + cid + "/engine"
     for rev, changes in enumerate(({"target_outcome": "A new objective never commissioned"},
-                                   {"channels": [snap["projection"]["channel"], "unapproved channel"]}, {})):
+                                   {"channels": [snap["projection"]["channel"], "unapproved channel"]},
+                                   {"duration_days": 20}, {"budget_vnd": 987655}, {})):
         proposal = accepted(api.post(path + "/plans", headers=headers, json={
             "key": uuid4().hex, "expected_revision": rev, "manifest_ids": [snap["id"]],
             "budget_vnd": 987654, "ai_budget_microusd_per_run": 7632, "duration_days": 19, **changes}))
@@ -30,5 +32,5 @@ def test_conflicting_commissions_require_new_approved_inputs(api, agency):
         else:
             accepted(result)
     planner = accepted(api.get(path + "/planner", headers=headers))
-    assert len(planner["revisions"]) == 3 and planner["active"]["id"] == proposal["id"]
+    assert len(planner["revisions"]) == 5 and planner["active"]["id"] == proposal["id"]
     assert planner["active"]["budget_vnd"] == 987654 and planner["active"]["ai_budget_microusd_per_run"] == 7632

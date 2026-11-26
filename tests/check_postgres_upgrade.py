@@ -102,10 +102,13 @@ def rehearse_archive(dsn, container, version=16):
     subprocess.run([*command, "pg_restore", "-U", owner, "--single-transaction", "--exit-on-error", "-d", target, archive], check=True)
     with psycopg.connect(make_conninfo(dsn, dbname=target)) as restored:
         assert snapshot(restored) == before
-        if version == 25:
+        if version >= 25:
             from migrations.c3_writer_contract import WRITER_FENCE
             assert restored.execute("SELECT version FROM amc_c3.versions ORDER BY version").fetchall() == [(1,), (2,), (3,), (4,), (5,)]
             assert restored.execute(WRITER_FENCE).fetchone() == (True,), "Restored Studio writer triggers must match the current publisher"
+        if version >= 26:
+            from migrations.sandbox_contract import SANDBOX_FENCE
+            assert restored.execute(SANDBOX_FENCE).fetchone() == (True,)
         if workspace_tables:
             from migrations.claim_display import CURRENT, SIGNATURE
             assert restored.execute(CURRENT).fetchone()==(True,)
@@ -475,7 +478,7 @@ def verify():
     with runtime.connect() as c:
         if from_v14:
             with psycopg.connect(dsn) as owner:
-                assert owner.execute("select version from upgrade_marker_probe order by seq").fetchall() == [(v,) for v in range(16 if from_v15 else 15, 26)]
+                assert owner.execute("select version from upgrade_marker_probe order by seq").fetchall() == [(v,) for v in range(16 if from_v15 else 15, 27)]
                 if from_v16:
                     assert owner.execute("select state,role,client_id,can_comment,can_decide from portal_invitations where id='legacy-invite'").fetchone() == ("pending","client_viewer","a",True,False)
                     assert owner.execute("select brand_name,campaign_name from portal_invitations where id='legacy-invite'").fetchone() == ("Brand","Name")
@@ -498,7 +501,7 @@ def verify():
             owner.execute("UPDATE memberships SET role='client_viewer',client_id='a' WHERE user_id='alice'")
         identify()
         assert set(c.scalars(text("SELECT id FROM clients"))) == {"a"}
-        assert set(c.scalars(text("SELECT version FROM amc_schema_versions"))) == set(range(2,26))
+        assert set(c.scalars(text("SELECT version FROM amc_schema_versions"))) == set(range(2,27))
         if "--from-v2" in sys.argv or from_v3:
             c.rollback()
             c.execute(text("SELECT set_config('amc.user_id','external',true),set_config('amc.tenant_id','agency',true)"))
@@ -540,7 +543,7 @@ def verify():
                 assert owner.execute("SELECT title FROM deliverables WHERE id='doc'").fetchone() == ("Internal",)
     runtime.dispose()
     baseline = "v13" if from_v13 else "v12" if from_v12 else "v11" if from_v11 else "v10" if from_v10 else "v9" if from_v9 else "v8" if from_v8 else "v7" if from_v7 else "v6" if from_v6 else "v5" if from_v5 else "v4" if from_v4 else "v3" if from_v3 else "v2" if "--from-v2" in sys.argv else "v1"
-    print(f"PASS: populated {'v22' if from_v22 else 'v21' if from_v21 else 'v20' if from_v20 else 'v19' if from_v19 else 'v18' if from_v18 else 'v17' if from_v17 else 'v16' if from_v16 else 'v15' if from_v15 else 'v14' if from_v14 else baseline} to v25, repeated migration, privileged API login refused, client isolated")
+    print(f"PASS: populated {'v22' if from_v22 else 'v21' if from_v21 else 'v20' if from_v20 else 'v19' if from_v19 else 'v18' if from_v18 else 'v17' if from_v17 else 'v16' if from_v16 else 'v15' if from_v15 else 'v14' if from_v14 else baseline} to v26, repeated migration, privileged API login refused, client isolated")
 
 
 if __name__ == "__main__":

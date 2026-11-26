@@ -1,5 +1,10 @@
 # Bắt đầu ở đây khi tiếp quản AI Marketing Company
 
+
+## Chuyển journal chiến dịch sang ops/2
+
+Core v26 giữ nguyên Business v3 và C3 v5. Mọi receipt cũ vẫn truy xuất được qua ứng dụng mới. Khi chuyển cần dừng API/dispatcher cũ, tạo backup kiểm chứng được và chỉ mở lại bằng binary tương thích. [Hướng dẫn chuyển, rollback và kiểm chứng hai phiên bản](docs/evaluation/sandbox-operations/CUTOVER.md)
+
 ## Lịch dịch vụ và thực thi trong sandbox
 
 Trên nền merge #44 `837ec9fc`, nhân viên có thể tiếp nhận và đối soát lịch dịch vụ riêng, duyệt tác vụ cho đúng nhóm tài sản, chạy bộ điều phối loopback và kiểm tra chứng từ theo từng đầu việc. Mẫu số nghiệm thu thật hiện bằng 0. Hợp đồng tài sản C3 /1 dùng cho bản này; khi nối nhánh Studio /2 cần kiểm tra lại quyền từng nhóm mới. [Cấu hình, kiểm thử, biên nhận, ảnh sáu cấu hình và rollback](docs/evaluation/sandbox-operations/README.md)

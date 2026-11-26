@@ -76,8 +76,8 @@ def run(old_version):
             prepare_database(runtime)
             assert probe() == "55000,55000,55000"
             assert db.execute("SELECT version FROM amc_c3.versions ORDER BY version").fetchall() == [(1,), (2,), (3,), (4,), (5,)]
-            refuse(STARTUP, old, env, b"delivery writer fence")
-            refuse(PUBLISH, old, env, b"Unsupported C3 task schema version")
+            refuse(STARTUP, old, env, b"schema migrations")
+            refuse(PUBLISH, old, env, b"Unknown schema version")
             witness = fingerprint(db)
             migrate(dsn)
             assert snapshot(db) == before and fingerprint(db) == witness
@@ -93,7 +93,7 @@ def run(old_version):
                 assert current("protocol") == "c3/5"
                 assert current() == "allowed-zero,allowed-zero,allowed-zero"
     runtime.dispose()
-    print(f"PASS Studio core v25 C3 v{old_version} to v5: three c3/{old_version} writer denials, c3/5 accepted,"
+    print(f"PASS Studio core v26 C3 v{old_version} to v5: three c3/{old_version} writer denials, c3/5 accepted,"
           " startup and publisher refused, atomic rollback and replay, rows preserved",
           {t:len(v) for t,v in before.items()})
 

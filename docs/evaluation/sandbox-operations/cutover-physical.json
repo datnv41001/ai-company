@@ -1,0 +1,15 @@
+{
+  "appointment_receipt": "b1ac3e3b-33c0-4ff2-aa94-579cf3003a29",
+  "backup": "physical snapshot",
+  "core_transition": [
+    25,
+    26
+  ],
+  "database_write_refusal": "55000",
+  "historical_receipts": 10,
+  "old_execute_http": 404,
+  "pre_cutover_archive_restore": "same predecessor API response",
+  "predecessor": "d4c3d6492dead146fa25aecebc7c54b0d944cfc8",
+  "restarted_replay": "same receipt",
+  "typed_archive_sample": "dac4a898-a69d-4fcb-9269-8459caad689d"
+}

@@ -35,6 +35,7 @@ def identify_sqlite_edition_writer(dbapi_conn, _record):
     if isinstance(dbapi_conn, sqlite3.Connection):
         dbapi_conn.create_function("amc_edition_writer_v4", 0, lambda: 4)
         dbapi_conn.create_function("amc_channel_writer_v5", 0, lambda: 5)
+        dbapi_conn.create_function("amc_sandbox_writer_v2", 0, lambda: 2)
 
 
 class Base(DeclarativeBase):
@@ -91,6 +92,10 @@ def prepare_database(bind, *, verify_identity=True):
                 conn.exec_driver_sql("DROP TRIGGER IF EXISTS workforce_check_intake")
             Base.metadata.create_all(conn)
             if bind.url.database not in (None, "", ":memory:"):
+                conn.exec_driver_sql("""CREATE TRIGGER IF NOT EXISTS sandbox_v2_commands BEFORE INSERT ON knowledge_commands
+                    WHEN NEW.operation IN ('campaign_sandbox_v1','campaign_sandbox_v2','campaign_plan','campaign_plan_approve')
+                    BEGIN SELECT amc_sandbox_writer_v2();
+                    SELECT CASE WHEN NEW.operation='campaign_sandbox_v1' THEN RAISE(ABORT,'retired campaign sandbox format') END; END""")
                 # A file can outlive the process that opened it. A predecessor lacking
                 # the connection function cannot commit delivery writes after this cutover.
                 for table in ("deliverables", "client_reviews", "review_entries", "knowledge_commands"):
@@ -127,7 +132,7 @@ def prepare_database(bind, *, verify_identity=True):
         versions = set(conn.scalars(text("SELECT version FROM public.amc_schema_versions")))
         if 16 in versions and 15 not in versions:
             raise RuntimeError("Isolated schema v16 is missing migration 015; restore a pre-016 backup before upgrading")
-        if versions != set(range(2, 26)):
+        if versions not in (set(range(2, 26)), set(range(2, 27))):
             raise RuntimeError("Apply the PostgreSQL schema migrations before starting the API")
         from migrations.combined_contract import COMMERCIAL_CURRENT, DESK_CURRENT
         if not conn.scalar(text(COMMERCIAL_CURRENT)):
@@ -139,6 +144,9 @@ def prepare_database(bind, *, verify_identity=True):
         from migrations.c3_writer_contract import WRITER_FENCE
         if not conn.scalar(text(WRITER_FENCE)):
             raise RuntimeError("Apply the compatible C3 delivery writer fence")
+        from migrations.sandbox_contract import SANDBOX_FENCE
+        if 26 not in versions or not conn.scalar(text(SANDBOX_FENCE)):
+            raise RuntimeError("Apply the compatible campaign sandbox journal writer fence")
         if not conn.scalar(text("""
             SELECT EXISTS (SELECT FROM pg_attribute WHERE attrelid='public.workforce_briefs'::regclass
                             AND attname='origin' AND NOT attisdropped)

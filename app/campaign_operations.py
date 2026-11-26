@@ -26,14 +26,14 @@ from .workforce_models import WorkforceRun
 
 
 router = APIRouter(prefix="/api/tenants/{tenant_id}/campaigns/{campaign_id}/sandbox", tags=["Campaign sandbox"])
-OP = "campaign_sandbox_v1"
+OP = "campaign_sandbox_v2"
 BUCKETS = ("actions", "leads", "sessions", "work_units", "proposals", "appointments")
 GROUP = {"strategy": "client_strategy", "measurement": "client_measurement", "landing": "copy", "seo": "seo",
          **{group: group for group in campaign_channels.FIELDS}}
 
 
 def entries(store, cid):
-    return list(store.db.scalars(store.query(KnowledgeCommand).filter_by(operation=OP)
+    return list(store.db.scalars(store.query(KnowledgeCommand).where(KnowledgeCommand.operation.in_(("campaign_sandbox_v1", OP)))
                 .where(KnowledgeCommand.result["campaign_id"].as_string() == cid)))
 
 

@@ -20,9 +20,49 @@ def dump(value):
     return json.dumps(value, indent=2, ensure_ascii=False) + "\n"
 
 
+LABELS = {
+    "company": "Doanh nghiệp",
+    "brand": "Thương hiệu",
+    "product": "Sản phẩm hoặc dịch vụ",
+    "audience": "Người mua",
+    "objective": "Mục tiêu",
+    "kpi": "Chỉ số kết quả",
+    "kpi_method": "Cách đo",
+    "kpi_window": "Kỳ đo",
+    "hypotheses": "Giả thuyết",
+    "exclusions": "Giới hạn tuyên bố",
+    "cta": "Bước người mua cần làm",
+    "buyer_action": "Hành động mục tiêu",
+    "campaign": "Kế hoạch chiến dịch",
+    "strategy": "Chiến lược",
+    "research": "Nghiên cứu",
+    "measurement": "Đo lường",
+    "client_strategy": "Chiến lược giao doanh nghiệp",
+    "client_measurement": "Đo lường giao doanh nghiệp",
+    "landing": "Trang đích và tìm kiếm",
+    "copy": "Nội dung trang",
+    "seo": "SEO",
+    "assets": "Nội dung theo kênh",
+    "headline": "Tiêu đề",
+    "value_proposition": "Giá trị đề xuất",
+    "benefit": "Lợi ích",
+    "commercial_terms": "Điều kiện thương mại",
+    "call_to_action": "Lời mời hành động",
+    "page_title": "Tiêu đề tìm kiếm",
+    "meta_description": "Mô tả tìm kiếm",
+    "search_intent": "Nhu cầu tìm kiếm",
+    "social": "Bài mạng xã hội",
+    "ad": "Nội dung quảng cáo",
+    "creative_brief": "Brief thiết kế",
+    "calendar": "Lịch công việc",
+    "approved_description": "Mô tả được duyệt",
+    "approved_price": "Giá và điều kiện được duyệt",
+}
+
+
 def markdown(data, level=2):
     if isinstance(data, dict):
-        return "\n\n".join("#" * min(level, 6) + " " + key.replace("_", " ") + "\n\n" + markdown(v, level + 1) for key, v in data.items())
+        return "\n\n".join("#" * min(level, 6) + " " + LABELS.get(key, key.replace("_", " ")) + "\n\n" + markdown(v, level + 1) for key, v in data.items())
     if isinstance(data, list):
         return "\n".join("- " + markdown(v, level) for v in data)
     return str(data) if data is not None else "(chưa có)"
@@ -69,6 +109,7 @@ def blank(alias, brief):
         "effort": {k: None for k in EFFORT},
         "allocated_cost_vnd": None,
         "cost_source": None,
+        "overhead": {"compute_vnd": None, "tools_vnd": None, "other_vnd": None, "receipt_refs": [], "includes_failed_attempts": False},
         "rubric": {k: {"score_0_2": None, "evidence": None} for k in RUBRIC},
         "blocking_issue": None,
     }
@@ -91,7 +132,8 @@ def pack(data, out):
             for zipfile in (manual, blind):
                 zipfile.writestr(case + "/brief.md", brief_text(c))
             labels[case + "/manual"] = "manual"
-            manual.writestr(case + "/observation.json", dump(blank("manual", case)))
+            for role in ROLES:
+                manual.writestr(case + "/observation-" + role + ".json", dump(blank("manual", case) | {"role": role}))
             manual.writestr(case + "/deliverable.md", "# Bản bàn giao của người làm Marketing\n\n" + "\n\n".join("## " + k for k in RUBRIC))
             for arm in keys if i % 2 == 0 else reversed(keys):
                 alias = "P-" + secrets.token_hex(4)
@@ -103,7 +145,8 @@ def pack(data, out):
                     # The custodian keeps treatments and provenance outside the packets being scored.
                     visible = {k: v for k, v in values.items() if k != "channel_status"}
                     blind.writestr(prefix + "/" + stage + ".md", markdown(visible))
-                blind.writestr(prefix + "/observation.json", dump(blank(alias, case)))
+                for role in ROLES:
+                    blind.writestr(prefix + "/observation-" + role + ".json", dump(blank(alias, case) | {"role": role}))
         blind.writestr("ORDER.txt", "\n".join(order))
     (out / "custodian.json").write_text(dump(labels), encoding="utf-8")
 
@@ -142,6 +185,13 @@ def check(key, rows):
             raise ValueError("Marketer usability decision required")
         if row["allocated_cost_vnd"] is not None and (type(row["allocated_cost_vnd"]) is not int or row["allocated_cost_vnd"] < 0 or not row["cost_source"]):
             raise ValueError("Cost needs an observed basis")
+        overhead = row["overhead"]
+        for field in ("compute_vnd", "tools_vnd", "other_vnd"):
+            val = overhead[field]
+            if val is not None and (type(val) is not int or val < 0):
+                raise ValueError("Invalid overhead")
+        if any(overhead[k] is not None for k in ("compute_vnd", "tools_vnd", "other_vnd")) and (role != "marketer" or not overhead["receipt_refs"]):
+            raise ValueError("The marketer supplies a single allocation with receipt references")
         by = result.setdefault(name, {"arm": key[name], "observations": {}})
         by["observations"][role] = {
             k: row[k]
@@ -154,6 +204,7 @@ def check(key, rows):
                 "business_accepted",
                 "allocated_cost_vnd",
                 "cost_source",
+                "overhead",
             )
         }
     for name, arm in key.items():
@@ -165,7 +216,28 @@ def check(key, rows):
             if not out["missing_roles"] and obs["sales_or_owner"]["business_accepted"] and all(v["allocated_cost_vnd"] is not None for v in obs.values())
             else None
         )
-        out["all_in_cost_per_business_accepted_vnd"] = None  # Compute, tool and other production costs require separate reconciliation.
+        evidence = obs.get("marketer", {}).get("overhead", {})
+        nonlabor = [evidence.get(k) for k in ("compute_vnd", "tools_vnd", "other_vnd")]
+        labor = [v["allocated_cost_vnd"] for v in obs.values()]
+        observed = (
+            not out["missing_roles"] and evidence.get("receipt_refs") and evidence.get("includes_failed_attempts") is True and None not in labor + nonlabor
+        )
+        out["recorded_total_vnd"] = sum(labor + nonlabor) if observed else None
+        out["all_in_cost_per_business_accepted_vnd"] = out["recorded_total_vnd"] if obs.get("sales_or_owner", {}).get("business_accepted") else None
+    return result
+
+
+def by_arm(packages):
+    result = {}
+    for arm in sorted({p["arm"] for p in packages.values()}):
+        commissioned = [p for p in packages.values() if p["arm"] == arm]
+        accepted = sum(p["observations"].get("sales_or_owner", {}).get("business_accepted") is True for p in commissioned)
+        costs = [p["recorded_total_vnd"] for p in commissioned]
+        result[arm] = {
+            "commissioned": len(commissioned),
+            "business_accepted": accepted,
+            "recorded_cost_per_business_accepted_vnd": sum(costs) / accepted if accepted and None not in costs else None,
+        }
     return result
 
 
@@ -180,4 +252,5 @@ if __name__ == "__main__":
     if args.cmd == "pack":
         pack(args.first, args.second)
     else:
-        print(dump(check(read(args.first), read(args.second))))
+        packages = check(read(args.first), read(args.second))
+        print(dump({"packages": packages, "arms": by_arm(packages)}))

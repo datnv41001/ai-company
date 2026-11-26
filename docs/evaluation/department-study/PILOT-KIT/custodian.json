@@ -1,0 +1,12 @@
+{
+  "index-tray/manual": "manual",
+  "index-tray/P-2553208a": "qwen15",
+  "index-tray/P-0acf187a": "qwen05",
+  "index-tray/P-e9850a32": "qwen7",
+  "index-tray/P-95d15775": "control",
+  "receipt-map/manual": "manual",
+  "receipt-map/P-104d21d1": "control",
+  "receipt-map/P-ea9ff1ea": "qwen7",
+  "receipt-map/P-6a0368af": "qwen05",
+  "receipt-map/P-1bde29a0": "qwen15"
+}

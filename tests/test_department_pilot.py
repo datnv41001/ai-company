@@ -44,3 +44,16 @@ def test_packets_separate_labels_and_refuse_shared_reviewer_identity(tmp_path):
     )
     with pytest.raises(ValueError, match="independent"):
         PILOT.check(key, [form, dict(form, role="independent_reviewer")])
+
+
+def test_cost_includes_rejected_work_and_unknowns_stay_open():
+    rows = {
+        "p1": {"arm": "control", "recorded_total_vnd": 100, "observations": {"sales_or_owner": {"business_accepted": True}}},
+        "p2": {"arm": "control", "recorded_total_vnd": 40, "observations": {"sales_or_owner": {"business_accepted": False}}},
+    }
+    assert PILOT.by_arm(rows)["control"]["recorded_cost_per_business_accepted_vnd"] == 140
+    rows["p2"]["recorded_total_vnd"] = None
+    assert PILOT.by_arm(rows)["control"]["recorded_cost_per_business_accepted_vnd"] is None
+    rows["p2"]["recorded_total_vnd"] = 40
+    rows["p1"]["observations"]["sales_or_owner"]["business_accepted"] = False
+    assert PILOT.by_arm(rows)["control"]["recorded_cost_per_business_accepted_vnd"] is None

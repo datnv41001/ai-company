@@ -30,6 +30,9 @@ jobs:
           else
             echo 'run=true' >> "$GITHUB_OUTPUT"
           fi
+      - name: Verify completed receipts and paired conditions offline
+        if: steps.pending.outputs.run == 'false'
+        run: python3 tests/evaluation/department/verify_archive.py
       - uses: actions/setup-python@v5
         if: steps.pending.outputs.run == 'true'
         with:

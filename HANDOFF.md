@@ -666,3 +666,7 @@ Từ **Điều phối Marketing AI → Quyền workflow của chiến dịch**, 
 Để tiếp quản C2 sau vòng duyệt C1, bắt đầu từ [hồ sơ doanh nghiệp và năm luồng nghiệm thu](docs/business-profile/C2-WORKSPACE.md). Thiết kế dùng scope công ty theo client, giữ override của từng brand và cho Solo tạo brief nháp khi còn thiếu dữ kiện. [C3](docs/business-profile/C3-KNOWLEDGE-PROJECTION.md) mô tả projection và ba ranh giới kiểm tra trước khi kích hoạt adapter mới. Chỉ ghi nhận một luồng C2 đạt khi có lần chạy trình duyệt thật với API PostgreSQL ở đúng commit.
 
 Sau khi đồng bộ schema v20 từ `49cbc070`, C0 có [sáu quyết định, snapshot ví dụ và lệnh kiểm tra](docs/business-profile/README.md), [kế hoạch C1](docs/business-profile/C1-PLAN.md) và [năm tình huống C2/C4](docs/business-profile/C2-C4-ACCEPTANCE.md). Từ thư mục gốc chạy `python -m unittest discover -s docs/business-profile -p test_c0.py -v`. Chờ review độc lập C0 trước PR C1. Kiểm số migration còn trống trên main khi chuẩn bị tích hợp, kể cả nhánh Identity đang đề xuất. Commercial GA vẫn NO-GO.
+
+## Nghiệm thu nghiệp vụ trên bộ công việc Marketing
+
+Hai brief B2B đã được chạy cùng đối chứng, Qwen 0.5B, 1.5B và 7B. [Kết quả và trách nhiệm bàn giao](docs/evaluation/department-study/RESULTS.md) dẫn tới bản đầu, bản sau QA, 42 lần gọi có biên nhận, phần tài nguyên bị gián đoạn, hai gói pilot và công cụ kiểm tra ngoại tuyến. Chưa có quyết định của người làm Marketing, reviewer nghiệp vụ hoặc Sales. Commercial GA vẫn NO-GO.

@@ -103,7 +103,10 @@ def qualify(api, base, doc, owner, buyer, other, plan, action, observe=None, pre
             }
             assert destination(owner, plan["campaign_id"], plan | {"digest": "f" * 64}) is None
             pack_url = doc.split("/deliverables/")[0] + "/campaigns/" + plan["campaign_id"] + "/engine/plans/" + plan["id"] + "/content-pack"
-            advertised = accepted(api.get(pack_url, headers=owner["headers"]))["advertising"]["destination"]
+            copy_pack = accepted(api.get(pack_url, headers=owner["headers"]))
+            assert copy_pack["intake_contract_digest"] == plan["intake_contract"]["digest"]
+            assert copy_pack["buyer_fields"] == [f["id"] for f in plan["intake_contract"]["fields"]]
+            advertised = copy_pack["advertising"]["destination"]
             assert advertised == {"kind":"sandbox_landing","status":"approved", **target}
             assert api.get(pack_url, headers=other["headers"]).status_code in (403,404)
         files = {}
@@ -204,6 +207,21 @@ def qualify(api, base, doc, owner, buyer, other, plan, action, observe=None, pre
                     dest.mkdir(parents=True, exist_ok=True)
                     (dest / "attribution.json").write_text(json.dumps({"visit_receipt": visit["id"], "submission_receipt": submitted["id"],
                         "landing_source": source, "kpi": report}, ensure_ascii=False, indent=2) + "\n", encoding="utf8")
+            if (output := os.getenv("AMC_INTAKE_EVIDENCE")) and (case := os.getenv("AMC_INTAKE_CASE")):
+                folder = Path(output) / case
+                folder.mkdir(parents=True, exist_ok=True)
+                witness = {"synthetic": True, "case": case, "plan_id": plan["id"], "plan_digest": plan["digest"],
+                           "contract": contract, "copy": {"digest":copy_pack["intake_contract_digest"],"fields":copy_pack["buyer_fields"]},
+                           "package_id": item["id"], "package_digest": item["digest"], "file":item["files"]["landing.html"],
+                           "group_receipts":item["group_receipts"], "file_approval":decision_receipt,
+                           "commercial_terms": item["master"]["sections"]["commercial_terms"],
+                           "visit_id": visit["id"], "submitted_id": submitted["id"], "submit_kind": submitted["kind"],
+                           "crm_entity":submitted["entity"], "state":value["state"], "crm_fields":value["intake"],
+                           "desk_readback_digest":value["intake"]["contract_digest"], "landing_funnel":metric,
+                           "manual_funnel":after if action == "rfq" else None,
+                           "primary_measurement":report if plan.get("measurement_contract") else None}
+                (folder/"receipts.json").write_text(json.dumps(witness,indent=2,ensure_ascii=False)+"\n",encoding="utf8")
+                (folder/"landing.html").write_bytes(files["landing.html"])
             assert accepted(post(owner, result + "/submissions", form))["id"] == submitted["id"]
             assert post(owner, result + "/submissions", form | {"request_id": uuid4().hex}).status_code == 409
             location = "site" if action == "appointment" else "destination"
@@ -223,6 +241,8 @@ def qualify(api, base, doc, owner, buyer, other, plan, action, observe=None, pre
 
 
 def rehearsal(api, workforce, monkeypatch, case, observe=None):  # noqa: F811
+    if os.getenv("AMC_INTAKE_EVIDENCE"):
+        monkeypatch.setenv("AMC_INTAKE_CASE", case["id"])
     if case["id"] == "index-tray":
         case = case | {"moq": "5"}
     if case["buyer_action"] == "appointment":

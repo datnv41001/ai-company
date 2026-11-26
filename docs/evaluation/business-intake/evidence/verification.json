@@ -1,0 +1,194 @@
+{
+  "runtime_source_sha": "5097ef607d44a0a573ba48985437c63fba135441",
+  "historical_source_sha": "eff86cda2f99dd10244dc8127451e941bb546a3c",
+  "synthetic": true,
+  "red": {
+    "tests": 2,
+    "failures": 2,
+    "errors": 0,
+    "duration_seconds": 17.621,
+    "cases": [
+      "test_department_pack_for_approved_study_case[sqlite-index-tray]",
+      "test_department_pack_for_approved_study_case[sqlite-receipt-map]"
+    ]
+  },
+  "postgres_and_contract_unit": {
+    "tests": 8,
+    "failures": 0,
+    "errors": 0,
+    "duration_seconds": 98.758,
+    "cases": [
+      "test_optional_fields_change_the_plan_contract_without_weakening_the_approved_brief",
+      "test_explicit_buyer_list_requires_supported_fields[\\u0110\\u1eb7t l\\u1ecbch kh\\u1ea3o s\\xe1t, ghi \\u0111\\u1ecba \\u0111i\\u1ec3m v\\xe0 m\\xe3 d\\xe2y chuy\\u1ec1n.]",
+      "test_explicit_buyer_list_requires_supported_fields[Request a quote and provide number of boxes and cable ID.]",
+      "test_explicit_buyer_list_requires_supported_fields[\\u0110\\u1eb7t l\\u1ecbch kh\\u1ea3o s\\xe1t, ghi m\\xe3 d\\xe2y chuy\\u1ec1n.]",
+      "test_sales_followup_rechecks_moq_before_transition",
+      "test_restricted_production[False]",
+      "test_restricted_production[True]",
+      "test_predecessor_can_still_serve_approved_v1"
+    ]
+  },
+  "browser": {
+    "tests": 3,
+    "failures": 0,
+    "errors": 0,
+    "duration_seconds": 143.533,
+    "cases": [
+      "test_production_browser[pump-service-sqlite]",
+      "test_production_browser[index-tray-sqlite]",
+      "test_production_browser[receipt-map-sqlite]"
+    ]
+  },
+  "sqlite_case_witnesses": {
+    "tests": 3,
+    "failures": 0,
+    "errors": 0,
+    "duration_seconds": 66.001,
+    "cases": [
+      "test_scoped_production[pump-service-sqlite]",
+      "test_scoped_production[index-tray-sqlite]",
+      "test_scoped_production[receipt-map-sqlite]"
+    ]
+  },
+  "receipt_harness_sha256": "54d2dd3e2b4a333b0538e8891f901df784179f90fe8a5ae851af3199b40c50a6",
+  "cases": {
+    "index-tray": {
+      "api_plan_digest": "1f5d9831da4c5475703e66eec0472639124d51327b2993734d24615434005836",
+      "browser_plan_digest": "a2ef908ba7bae465dab57c2fe3a584a36cb17a03cce3fd1e0aada1f2b5800c98",
+      "browser_package_digest": "5e7c1fcfa080669d81e01f3fecb10733516162c288c7df8f99818506561faacc",
+      "screens": [
+        {
+          "viewport": [
+            1280,
+            850
+          ],
+          "browser": "158.0.8127.88",
+          "file": "intake-1280.png",
+          "pixels": [
+            1094,
+            497
+          ],
+          "sha256": "165ebb411e930158cf86fe5c6ec473c50b3a6356b9337e0757f01b6128a2bd12"
+        },
+        {
+          "viewport": [
+            820,
+            1180
+          ],
+          "browser": "158.0.8127.88",
+          "file": "intake-820.png",
+          "pixels": [
+            707,
+            480
+          ],
+          "sha256": "0a1e3f2520c15ae56470242393ca088b0a446fa3214d29a404d555518005462d"
+        },
+        {
+          "viewport": [
+            390,
+            844
+          ],
+          "browser": "158.0.8127.88",
+          "file": "intake-390.png",
+          "pixels": [
+            326,
+            490
+          ],
+          "sha256": "ec7f8ab1f8d33a526f0f8a91984cde99112750ac915f4d120aed4b1cb1c756f7"
+        }
+      ]
+    },
+    "receipt-map": {
+      "api_plan_digest": "83e4c1ae778b72c002068dd726c6cffd331ec5146ed43a3301751f6956d93823",
+      "browser_plan_digest": "bc2f6c40a1a0fffab098b147c459d6d0aecb526b49b796b5bb91deedce823977",
+      "browser_package_digest": "eda01b38d1ae961f94ef128671e6c152e8c40dca2cc9b973ae4c06ec47e790bb",
+      "screens": [
+        {
+          "viewport": [
+            1280,
+            850
+          ],
+          "browser": "158.0.8127.88",
+          "file": "intake-1280.png",
+          "pixels": [
+            1094,
+            415
+          ],
+          "sha256": "b31e3df0523b657b3dbbe7843a677c62b9010ac4db7a9ec33df8cc841beccfd1"
+        },
+        {
+          "viewport": [
+            820,
+            1180
+          ],
+          "browser": "158.0.8127.88",
+          "file": "intake-820.png",
+          "pixels": [
+            707,
+            398
+          ],
+          "sha256": "bd19ad5281f0980fe4f046852002f6f289ee23f036b52f0a4cf2e05c2ce39ce9"
+        },
+        {
+          "viewport": [
+            390,
+            844
+          ],
+          "browser": "158.0.8127.88",
+          "file": "intake-390.png",
+          "pixels": [
+            326,
+            408
+          ],
+          "sha256": "07154da8e7bc04f905ff6614751e7e9a2b0b7b73155b9fe6200e5bd967c39f81"
+        }
+      ]
+    },
+    "pump-service": {
+      "api_plan_digest": "f3a6e256bd0a1b3847ecc1fd6d75fe09397271730e19edeece127adebd90f923",
+      "browser_plan_digest": "98388f8aaab0800f2a6f2fd70ba1775d6105953b27532aba19d3f64852877d05",
+      "browser_package_digest": "f531c51fe1b34c12e9b9378ff4738ee74dbdd5e27450e0abd0cfdaf92471994f",
+      "screens": [
+        {
+          "viewport": [
+            1280,
+            850
+          ],
+          "browser": "158.0.8127.88",
+          "file": "intake-1280.png",
+          "pixels": [
+            1094,
+            497
+          ],
+          "sha256": "e208d4daf1d4e59482d6bea52b3fb5615116919d16c33a970923e700fb027c22"
+        },
+        {
+          "viewport": [
+            820,
+            1180
+          ],
+          "browser": "158.0.8127.88",
+          "file": "intake-820.png",
+          "pixels": [
+            707,
+            480
+          ],
+          "sha256": "f786456c4c43c2aa299bcc69eaf39a9bbadcdc4128b965d1f2ed8e8ef93a7e50"
+        },
+        {
+          "viewport": [
+            390,
+            844
+          ],
+          "browser": "158.0.8127.88",
+          "file": "intake-390.png",
+          "pixels": [
+            326,
+            490
+          ],
+          "sha256": "7d03ed8b6a9039009d8522578dc9881f49ffb2e81931cd4827b8d58d4d4ddbdb"
+        }
+      ]
+    }
+  }
+}

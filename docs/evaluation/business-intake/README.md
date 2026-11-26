@@ -32,11 +32,22 @@ Chạy migration publisher `python migrations/apply.py` với cấu hình phát 
 
 Trigger kiểm tra hợp đồng của gói trang theo proposal cùng scope và kiểm tra giao thức của phiên/lịch/lead thuộc plan có contract. Khi hai phiên bản API cùng chạy, bản cũ vẫn có thể phục vụ plan v1. Một writer cũ tạo gói v1 cho plan đã có contract hoặc ghi sự kiện theo giao thức cũ lên plan đó sẽ bị database từ chối. Cập nhật tiến trình đó và thử lại với gói hiện hành. Các bản duyệt, file giao khách và lịch sử ghi trước nâng cấp tiếp tục đọc từ bản lưu bất biến. Không cần backfill nội dung.
 
+## Bằng chứng cục bộ đã đối chiếu
+
+Source ứng dụng `5097ef607d44a0a573ba48985437c63fba135441`. Test harness ghi thêm witness ở commit bằng chứng. Có 3/3 ca API SQLite xuất file và receipt, 3/3 ca Chromium hoàn tất ở 1280/820/390, cùng 8/8 ca trong lượt PostgreSQL và contract unit (3 tích hợp PG, 5 kiểm tra contract). Hai ca RED trên #54 dừng đúng tại contract còn thiếu. Mỗi ảnh dưới đây là vùng form đã mở trong Studio. API xuất bằng chứng và trình duyệt chạy hai lần dựng fixture độc lập, nên plan digest giữa hai lượt khác nhau. [Danh mục ca, browser, SHA và thời gian](evidence/verification.json)
+
+| Ca | File và biên nhận API | Ảnh form Chromium |
+| --- | --- | --- |
+| Khe Gọn | [Trang](evidence/index-tray/landing.html), [receipt](evidence/index-tray/receipts.json) | [1280](evidence/index-tray/intake-1280.png), [820](evidence/index-tray/intake-820.png), [390](evidence/index-tray/intake-390.png) |
+| Luồng Rõ | [Trang](evidence/receipt-map/landing.html), [receipt](evidence/receipt-map/receipts.json) | [1280](evidence/receipt-map/intake-1280.png), [820](evidence/receipt-map/intake-820.png), [390](evidence/receipt-map/intake-390.png) |
+| Kiểm tra bơm | [Trang](evidence/pump-service/landing.html), [receipt](evidence/pump-service/receipts.json) | [1280](evidence/pump-service/intake-1280.png), [820](evidence/pump-service/intake-820.png), [390](evidence/pump-service/intake-390.png) |
+
 ## Tái chạy nghiệm thu
 
 - `python -m pytest -q tests/test_content_pack_outputs.py tests/test_production_studios.py tests/test_service_landing_edit.py` chạy các ca SQLite và các ca PG khi bật môi trường PostgreSQL của CI.
 - Cấu hình PG theo job API/PostgreSQL trong `.github/workflows/ci.yml` rồi chạy `python -m pytest -q tests/test_production_studios.py -k "restricted_production or predecessor_can"`. Cần lịch sử Git có commit #54 `eff86cda2f99dd10244dc8127451e941bb546a3c`. Harness mở TestClient của source cũ trong tiến trình Python riêng, dùng tài khoản và database test cục bộ của ca. Nó thực hiện API thật của bản trước.
 - `python -m pytest -q tests/browser_production_studios.py -k "index-tray or receipt-map"` nghiệm thu Chromium. Dùng `AMC_PRODUCTION_SCREENS` để chọn thư mục ảnh desktop/tablet/mobile. Dùng `AMC_PRODUCTION_EVIDENCE` để xuất package, HTML và sự kiện tổng hợp. Chạy từng case vào thư mục riêng khi cần giữ các gói cùng loại hành trình.
+- Đặt `AMC_INTAKE_EVIDENCE` rồi chạy `python -m pytest -q tests/test_production_studios.py -k "index-tray or receipt-map or pump-service"` để xuất hợp đồng, phiếu, điều kiện thương mại, trường trong copy, đối soát role desk và số đo cùng một plan cho từng case. Mỗi thư mục có cả HTML thực tế và SHA-256 từ production package.
 - Để đối chiếu RED của hai bộ copy, dùng bản #54 và thêm hai assertion trong `test_department_pack_for_approved_study_case` truy cập `plan["intake_contract"]` và `pack["intake_contract_digest"]`. Hai ca trước thay đổi dừng ở `KeyError: intake_contract`. Kết quả thực thi sau sửa cần gắn với bản checkout hoặc CI SHA cụ thể.
 
 Giới hạn hiện tại gồm các lựa chọn tổng hợp và ô số nguyên trong khoảng được công bố trên form. Không thu dữ liệu liên hệ thật, không tự cấp quyền mở chiến dịch và không phát sinh lệnh thanh toán. Nghiệm thu thương mại vẫn NO-GO.

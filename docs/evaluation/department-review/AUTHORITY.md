@@ -4,6 +4,8 @@ This was a verification request. On the synthetic campaign the same restricted d
 
 ## Which operations can change Sales or Service state?
 
+The integrated rehearsal issues and approves the historical plan with the pinned #49 API, then exercises both writers on that plan. This separates the predecessor's valid authority from the new writer requirement for plans carrying an intake contract. The intake rehearsal separately uses the actual #54 API on the same application schema. Replaying an old receipt and starting a new transaction are tested separately.
+
 | Entry point | Authority and effect | Acceptance evidence |
 |---|---|---|
 | Campaign `/sandbox/commands` | The organizational owner/admin can enter sandbox observations and settle business cases under the existing state machines. The Sales contract explicitly permits a campaign approver to settle a lead. A completed service visit requires the assigned actor. The API checks organizational authority before returning an earlier receipt. A desk role by itself does not grant this route. | [RFQ and Sales steps](../../../tests/test_campaign_operations.py), [service lifecycle](../../../tests/test_campaign_appointments.py), [dual-version test](../../../tests/test_business_authority_paths.py). |

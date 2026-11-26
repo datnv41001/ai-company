@@ -1,5 +1,9 @@
 # Bắt đầu ở đây khi tiếp quản AI Marketing Company
 
+## Kiểm tra kế hoạch, biểu mẫu và bàn giao Sales/Service
+
+Ở nhánh tích hợp sau PR #54, mở [bảng năm finding và bằng chứng](docs/evaluation/department-review/README.md). Bảng có đường dẫn kiểm thử hai phiên bản API, hợp đồng intake, khuyến nghị tối ưu, nghiên cứu Qwen, pilot nghiệp vụ và hai ZIP có thể tải từ máy khác. Khi review, đối chiếu head SHA với CI và biên nhận cold handoff tại cùng trang. PR #53 quản trị tri thức đang chờ người có thẩm quyền review. Commercial GA vẫn **NO-GO**.
+
 ## Sửa điều kiện trên landing đặt lịch dịch vụ
 
 Trong Marketing Studio, giữ nguyên quyền lợi đã ghim và mọi giới hạn của quyền lợi, rồi bỏ câu mô tả bị chép lặp ở **Nội dung trang → Điều kiện thương mại**. Gửi revision mới, mở **Đối chiếu bằng chứng** và xử lý các câu chờ chuyên môn bằng nguồn của đúng dịch vụ. QA ký lại từng nhóm và toàn bản trước khi dựng HTML phiên bản kế tiếp. Ca bơm Lam có hai file, hai lần thử đặt lịch và biên nhận tải lại snapshot cũ. [Bàn giao 15 mục và lệnh tái chạy](docs/evaluation/service-landing-edit/README.md)

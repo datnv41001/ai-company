@@ -12,15 +12,16 @@ from knowledge_fixtures import accepted
 from test_claim_desk import reader
 
 
-def service_campaign(api,agency,*,secondary=False):
+def service_campaign(api,agency,*,secondary=False,plan_post=None):
     owner,base,((customer,scope),(other,other_scope))=agency
     cid=next(iter(scope["campaigns"]))
     brand=next(c["brand_id"] for c in accepted(api.get(base+"/campaigns",headers=owner["headers"])) if c["id"]==cid)
     [snap],_=prepare_inputs(api,owner,customer,next(iter(scope["clients"])),brand,cid,CASES[1],workflows=(c3_assets.LANDING,))
     root=base+"/campaigns/"+cid
-    plan=accepted(api.post(root+"/engine/plans",headers=owner["headers"],json={"key":uuid4().hex,"expected_revision":0,
-        "manifest_ids":[snap["id"]],"duration_days":14,"budget_vnd":50000,"secondary_rfq":secondary}))
-    accepted(api.post(root+"/engine/plans/"+plan["id"]+"/approve",headers=owner["headers"],json={"key":uuid4().hex,"expected_digest":plan["digest"]}))
+    post=plan_post or api.post
+    plan=accepted(post(root+"/engine/plans",headers=owner["headers"],json={"key":uuid4().hex,"expected_revision":0,
+        "manifest_ids":[snap["id"]],"duration_days":14,"budget_vnd":50000,**({"secondary_rfq":True} if secondary else {})}))
+    accepted(post(root+"/engine/plans/"+plan["id"]+"/approve",headers=owner["headers"],json={"key":uuid4().hex,"expected_digest":plan["digest"]}))
     return owner,root,plan,other,base+"/campaigns/"+next(iter(other_scope["campaigns"]))
 
 

@@ -7,6 +7,7 @@ from uuid import uuid4
 
 import psycopg
 import pytest
+from httpx import Response
 from sqlalchemy import text
 
 from agency_fixtures import account
@@ -30,7 +31,15 @@ def test_compatible_business_writers_share_authority_and_revision(api, agency, t
             "amc_runtime", False, False
         )
         assert conn.scalar(text("SELECT relrowsecurity FROM pg_class WHERE oid='public.knowledge_commands'::regclass"))
-    owner, root, plan, second_client, other_root = service_campaign(api, agency, secondary=True)
+    source = unpack(PRE_DESK, tmp_path)
+    with host(source, {**os.environ, "PYTHONPATH": str(source)}) as (_, rpc):
+        def previous_plan(path, *, headers, json):
+            result = rpc({"method": "POST", "url": path, "headers": headers, "json": json})
+            return Response(status_code=result["status"], json=result["data"])
+
+        # On a mixed deployment, the shared positive path is a real plan predating structured intake.
+        owner, root, plan, second_client, other_root = service_campaign(api, agency, plan_post=previous_plan)
+        assert "intake_contract" not in plan
     old_coordinator = reader(api, owner, "admin")
     reviewer = reader(api, owner, "viewer")
     outside = account(api, "IndependentBusiness")
@@ -55,7 +64,6 @@ def test_compatible_business_writers_share_authority_and_revision(api, agency, t
     confirm = {**base, "kind": "appointment_decision", "appointment_id": issue["appointment_id"],
                "step": "confirm", "expected_revision": 1, "occurred_at": (t+timedelta(hours=1)).isoformat(),
                "confirmed_for": issue["requested_for"], "request_id": uuid4().hex}
-    source = unpack(PRE_DESK, tmp_path)
     with host(source, {**os.environ, "PYTHONPATH": str(source)}) as (writer, rpc):
         assert writer == "campaign_sandbox_v2"
 

@@ -59,6 +59,21 @@ def test_campaign_commands_and_scope_switch(api, agency):  # noqa: F811
                 intake.get_by_label("Mục đích liên hệ do khách chọn").select_option("quote_request")
                 intake.get_by_role("button").click()
                 expect(panel.locator("summary").filter(has_text="rfq-" + case["id"])).to_contain_text("Đủ điều kiện")
+                decision=panel.locator("[data-optimization]")
+                expect(decision).to_contain_text("Trọn vòng đời kế hoạch")
+                expect(decision).to_contain_text(case["kpi"])
+                expect(decision).to_contain_text("Biên nhận lịch dịch vụ" if case["buyer_action"]=="appointment" else "Biên nhận RFQ")
+                if directory:=os.getenv("AMC_OPTIMIZATION_SCREENS"):
+                    folder=Path(directory)
+                    folder.mkdir(parents=True,exist_ok=True)
+                    for width,height in ((1280,850),(820,1000),(390,844)):
+                        page.set_viewport_size({"width":width,"height":height})
+                        for mode in ("light","dark"):
+                            page.emulate_media(color_scheme=mode)
+                            expect(page.locator("html")).to_have_attribute("data-theme",mode)
+                            decision.scroll_into_view_if_needed()
+                            assert page.evaluate("document.documentElement.scrollWidth <= innerWidth + 1")
+                            decision.screenshot(path=folder/f"{case['buyer_action']}-{width}-{mode}.png",animations="disabled")
                 if case["buyer_action"]=="appointment":
                     expect(panel.locator(".metric").filter(has_text="Yêu cầu đặt lịch của kế hoạch").locator("strong")).to_have_text("0")
                     secondary=panel.locator("[data-secondary-rfq]")

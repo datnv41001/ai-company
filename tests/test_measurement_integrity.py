@@ -31,11 +31,12 @@ def test_optimization_source_revisions_matter_even_with_identical_totals():
     from app.campaign_operations import measurement_inputs_digest
     from app.campaign_operations_crm import reconcile
 
-    state = {"appointments": {}, "actions": {}, "leads": {}, "sessions": {"s": {"visitor": "visitor-a"}}}
-    corrected = {**state, "sessions": {"s": {"visitor": "visitor-b"}}}
+    plan = {"id": "plan-1", "digest": "first", "buyer_action": "rfq"}
+    state = {"appointments": {}, "actions": {}, "leads": {}, "sessions": {"s": {"plan_id": "plan-1", "visitor": "visitor-a"}}}
+    corrected = {**state, "sessions": {"s": {"plan_id": "plan-1", "visitor": "visitor-b"}}}
     assert reconcile(state) == reconcile(corrected)
-    assert measurement_inputs_digest(state, {"digest": "plan-1"}) != measurement_inputs_digest(corrected, {"digest": "plan-1"})
-    assert measurement_inputs_digest(state, {"digest": "plan-1"}) != measurement_inputs_digest(state, {"digest": "plan-2"})
+    assert measurement_inputs_digest(state, plan) != measurement_inputs_digest(corrected, plan)
+    assert measurement_inputs_digest(state, plan) != measurement_inputs_digest(state, plan | {"digest": "second"})
 
 
 def test_approved_definition_cannot_disagree_with_free_text():

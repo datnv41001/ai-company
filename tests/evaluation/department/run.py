@@ -20,6 +20,7 @@ from campaign_planner_journey import sign_edition
 from channel import invoke
 from commissions import WORKFLOWS, commission
 from knowledge_fixtures import accepted
+from recovery import FIRST_RUN, LabSessions, restore_small
 from run_comparison import MarketingLab, app, lab_client, run_one
 from server import MODELS, serve
 from test_claim_desk import reader
@@ -73,7 +74,13 @@ def run_treatment(lab, actors, plan, snapshots, api_path, folder, pack):
         sub.mkdir(parents=True)
         rid = accepted(lab.api.post(api_path + "/plans/" + plan["id"] + "/runs/" + kind, headers=owner["headers"]))["id"]
         requests = {}
-        record = run_one(lab, "WF-03" if kind == "strategy" else "WF-13", "improved", sub, queued=(rid, workflow), request_log=requests)
+
+        def checkpoint(event, body):
+            save(sub / "attempts" / (event["attempt_id"] + ".json"), {"event": event, "request": body})
+
+        record = run_one(
+            lab, "WF-03" if kind == "strategy" else "WF-13", "improved", sub, queued=(rid, workflow), request_log=requests, attempt_sink=checkpoint
+        )
         save(sub / "requests.json", requests)
         save(sub / "worker.json", record)
         item = {"kind": kind, "run_id": rid, "state": record["state"], "first_attempt_success": record["first_pass_runtime"], "runtime_s": record["runtime_s"]}
@@ -109,6 +116,7 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("out", type=Path)
     parser.add_argument("--control-only", action="store_true")
+    parser.add_argument("--reuse-small", action="store_true")
     args = parser.parse_args()
     if engine.dialect.name != "postgresql" or engine.url.host not in ("127.0.0.1", "localhost", "::1") or not engine.url.database.startswith("amc_test"):
         raise ValueError("Use the isolated loopback amc_test PostgreSQL database")
@@ -124,17 +132,42 @@ def main():
     }
     save(out / "study.json", info)
     cases = json.loads((ROOT / CASE_FILE).read_text(encoding="utf-8"))["cases"]
+    source_inputs = {}
+    arms = list(MODELS)
+    if args.reuse_small:
+        original, source_inputs = restore_small(ROOT / "docs/evaluation/department-study/FIRST-STUDY.zip", out, info["frozen_files"])
+        info["models"]["qwen05"] = original["models"]["qwen05"]
+        info["resume"] = {
+            "reused_run": FIRST_RUN,
+            "interrupted_model": "qwen7",
+            "unknown_prior_usage": True,
+            "prior_resource_receipt": original["models"]["qwen7"],
+            "matched_setup_attempts": {},
+        }
+        arms.remove("qwen05")
     with ExitStack() as resources:
         scenarios = []
         for case in cases:
-            api = resources.enter_context(lab_client(app))
-            lab = MarketingLab(api, os.environ["AMC_MIGRATION_DSN"], case)
-            resources.callback(lab.close)
-            owner = lab.cases[0][1]
+            # New IDs protect the original records. Align every actual projected field,
+            # including F1/F2 handle order, before doing any further inference.
+            expected = {k: s["projection"] for k, s in source_inputs.get(case["id"], {}).items()}
+            for setup_attempt in range(1, 25):
+                api = resources.enter_context(lab_client(app))
+                lab = MarketingLab(api, os.environ["AMC_MIGRATION_DSN"], case)
+                owner, customer = lab.cases[0][1:3]
+                prep, _, plan, snaps = commission(lab, case, ROOT, 0, None)
+                observations = {k: s["projection"] for k, s in snaps.items()}
+                if not expected or observations == expected:
+                    break
+                lab.close()
+            else:
+                raise ValueError("Failed to reproduce original knowledge projection exactly")
             actors = (reader(api, owner, "editor"), reader(api, owner, "admin"))
-            prep, _, plan, snaps = commission(lab, case, ROOT, 0, None)
+            lab.api = LabSessions(api, [lab.x, lab.y, customer, *actors])
+            resources.callback(lab.close)
+            if args.reuse_small:
+                info["resume"]["matched_setup_attempts"][case["id"]] = setup_attempt
             pack = control(plan, snaps)
-            observations = {k: s["projection"] for k, s in snaps.items()}
             folder = out / case["id"] / "control"
             save(folder / "first-package.json", pack)
             save(folder / "reviewed-package.json", pack)
@@ -143,7 +176,7 @@ def main():
             scenarios.append((case, lab, actors, prep, observations))
         if args.control_only:
             return
-        for seq, arm in enumerate(MODELS, 1):
+        for seq, arm in enumerate(arms, 1):
             conditions = {}
             info["models"][arm] = conditions
             try:

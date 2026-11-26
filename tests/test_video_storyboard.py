@@ -250,17 +250,42 @@ def test_showroom_session_does_not_imply_a_lesson():
 
 
 @PG
+def test_worker_refusal_cannot_terminate_valid_storyboard(pool):
+    base, owner, _, _, _, queued = start(pool, THIRD)
+    rid = queued["id"]
+    work(pool, rid, "director", [])
+    worker, job = take_node(pool)
+    assert job["run"] == rid and job["body"]["stage"] == "storyboard"
+    assert report(worker.conn, job, [{"blocked": "storyboard_needs_revision"}, 0, 0])
+    assert pool.consume()
+    path = base + "/workforce/runs/" + rid
+    state = accepted(pool.api.get(path, headers=owner["headers"]))
+    assert state["state"] == "queued" and state["journal"][-1]["outcome"] == "invalid_storyboard_reply"
+    assert state["journal"][-1]["retry_disposition"] == "bounded_output_retry"
+    pool.owner.execute("update workforce_runs set ready_at=now() where id=%s", (rid,))
+    work(pool, rid, "storyboard", [])
+    assert accepted(pool.api.get(path, headers=owner["headers"]))["state"] == "awaiting_qa"
+
+
+@PG
 def test_conflicting_brand_policy_fails_with_receipt(pool):
     conf = THIRD
     base, owner, _, _, _, queued = start(pool, conf, conflicting=True)
     states = []
     work(pool, queued["id"], "director", states)
-    for _ in range(3):
-        pool.owner.execute("update workforce_runs set ready_at=now() where id=%s", (queued["id"],))
-        work(pool, queued["id"], "storyboard", states, expect_error=True)
+    work(pool, queued["id"], "storyboard", states, expect_error=True)
     result = accepted(pool.api.get(base + "/workforce/runs/" + queued["id"], headers=owner["headers"]))
     assert result["state"] == "failed" and result["last_error"] == "storyboard_needs_revision" and result["deliverable_id"] is None
     assert result["journal"][-1]["outcome"] == "storyboard_needs_revision"
+    assert result["journal"][-1]["retry_disposition"] == "terminal_for_pinned_input"
+    assert [entry["skill"] for entry in result["journal"]] == ["director", "storyboard"]
+    assert [entry["skill"] for entry in result["checkpoints"]] == ["director"]
+    # Even after the retry time, recovery cannot issue another offer or debit.
+    pool.owner.execute("update workforce_runs set ready_at=now() where id=%s", (queued["id"],))
+    assert not pool.dispatch() and not pool.consume()
+    token = states[-1]["attempt"]
+    assert pool.owner.execute("select status,outcome from amc_ops.attempts where id=%s", (token,)).fetchone() == ("closed", "storyboard_needs_revision")
+    assert pool.owner.execute("select event,held,spent from amc_ops.ledger where id=%s order by seq", (token,)).fetchall() == [("hold", 0, 0), ("usage", 0, 0)]
     if folder := os.environ.get("AMC_STORYBOARD_EVIDENCE"):
         Path(folder).mkdir(exist_ok=True, parents=True)
         document = {

@@ -246,6 +246,7 @@ def finish(db, scope, config, task, result, error, *, node=None, commit=True):
         return False  # A stale worker must never append a second checkpoint or artifact.
     stage = node.skill if node else run.plan[len(run.checkpoints)]
     metrics = {}
+    needs_changed_input = False
     if result is not None:
         raw, inputs, outputs = result
         try:
@@ -286,13 +287,23 @@ def finish(db, scope, config, task, result, error, *, node=None, commit=True):
                         output = validate_output(raw, stage, run.plan, run.knowledge["sources"], run.knowledge.get('registry'))
         except GatewayError as exc:
             error = str(exc)
+            # Only the dispatcher's own adapter validation can attest that the
+            # pinned input fails deterministically. A mailbox error cannot.
+            needs_changed_input = error == "storyboard_needs_revision" and video_storyboard.is_run(run)
             if isinstance(exc, dynamic_plan.InvalidPlan):
                 metrics["plan_error"] = exc.reason
     run.lease = None
     if error:
+        if needs_changed_input:
+            metrics["retry_disposition"] = "terminal_for_pinned_input"
+            metrics["recovery"] = "revise_source_or_policy_and_queue_new_manifest"
+        elif error in ("timeout", "worker_terminated", "provider_unavailable"):
+            metrics["retry_disposition"] = "bounded_transport_retry"
+        elif error in ("invalid_output", "incomplete_output", "invalid_contract_output", "invalid_source", "invalid_plan", "invalid_storyboard_reply"):
+            metrics["retry_disposition"] = "bounded_output_retry"
         close_attempt(run, outcome=error, **metrics)
         run.last_error = error
-        run.state = "failed" if run.attempts >= MAX_TRIES else "queued"
+        run.state = "failed" if needs_changed_input or run.attempts >= MAX_TRIES else "queued"
         run.ready_at = utcnow() + timedelta(seconds=2**run.attempts)
     else:
         close_attempt(run, outcome="ok", **metrics)

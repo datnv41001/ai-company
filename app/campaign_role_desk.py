@@ -8,7 +8,7 @@ from sqlalchemy.orm import Session
 
 from . import campaign_operations_appointments as appointments, campaign_operations_crm as crm
 from .campaign_operations import OP
-from .campaign_operations_contracts import AppointmentDecision, Command, Id, Note, Positive, Sales
+from .campaign_operations_contracts import AppointmentDecision, Command, Consultation, Id, Note, Positive, Sales
 from .campaign_planner import campaign_store
 from .database import get_db
 from .knowledge_contracts import Input
@@ -40,7 +40,7 @@ class Feedback(Command):
     note: Note
 
 
-Decision = Annotated[Sales | AppointmentDecision | Feedback,Field(discriminator="kind")]
+Decision = Annotated[Sales | Consultation | AppointmentDecision | Feedback,Field(discriminator="kind")]
 
 
 def sqlite_membership_epochs(connection):
@@ -71,6 +71,8 @@ def sqlite_intake_guard(connection):
 def on_journal_create(_table,connection,**_):
     if connection.dialect.name=="sqlite":
         sqlite_intake_guard(connection)
+        from migrations.sandbox_contract import sqlite_business_intake
+        sqlite_business_intake(connection)
 
 
 @event.listens_for(Membership.__table__,"after_create")
@@ -214,9 +216,11 @@ def inbox(tenant_id:str,campaign_id:str,role:Role,user:User=Depends(current_user
 def permitted(role,cmd):
     if isinstance(cmd,Feedback):
         return role in {"reviewer","business_owner"}
+    if isinstance(cmd,Consultation):
+        return role=="sales_recipient"
     if isinstance(cmd,Sales):
         if role in ROUTING:
-            return cmd.step in {"assign","reassign","cancel"}
+            return cmd.step in {"refer","assign","reassign","cancel"}
         return role=="sales_recipient" and cmd.step in {"accept","reject","quote","order"}
     if role in ROUTING:
         return cmd.step in {"assign","confirm","cancel","reschedule","reassign"}
@@ -233,7 +237,7 @@ def decide(tenant_id:str,campaign_id:str,role:Role,body:Decision,user:User=Depen
     state=desk.inspect(key)
     if isinstance(body,Feedback):
         entity,ident=body.entity,body.entity_id
-    elif isinstance(body,Sales):
+    elif isinstance(body,(Sales,Consultation)):
         entity,ident="leads",body.rfq_id
     else:
         entity,ident="appointments",body.appointment_id
@@ -255,11 +259,13 @@ def decide(tenant_id:str,campaign_id:str,role:Role,body:Decision,user:User=Depen
         op=OP
         state_slice={entity:{ident:prior}}
         plan={"id":body.plan_id}
-        if isinstance(body,Sales):
+        if isinstance(body,(Sales,Consultation)):
             _,_,value=crm.observation(body,state_slice,plan,desk.store,recipient=desk.eligible,coordinator=role in ROUTING)
         else:
             _,_,value=appointments.appointment(body,state_slice,plan,desk.store,recipient=desk.eligible)
-        event.update(sequence=state["sequence"],step=body.step,value=value)
+        event.update(sequence=state["sequence"],step=body.kind if isinstance(body,Consultation) else body.step,
+                     value=value, intake_writer="business-intake/1",
+                     origin="landing" if value.get("landing_source") else "manual")
     desk.append(prior["revision"],op,event,key,fingerprint)
     db.commit()
     return event

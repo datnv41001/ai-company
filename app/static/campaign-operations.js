@@ -38,7 +38,8 @@ function campaignOperationForms({plan,production,ops,actions,sales,add,details,f
   const names={requested:'Đã yêu cầu',confirmed:'Đã xác nhận',assigned:'Đã phân công',completed:'Đã phục vụ',cancelled:'Đã hủy',no_show:'Khách vắng mặt'};
   for(const row of ops.appointments){
     const box=details(sales,row.id+' · '+names[row.state]);
-    add(box,'p',row.service_scope+' · '+row.location+' · '+new Date(row.confirmed_for||row.requested_for).toLocaleString('vi-VN'));
+    const slot=row.confirmed_for||row.requested_for;
+    add(box,'p',[row.service_scope,row.location,slot?new Date(slot).toLocaleString('vi-VN'):'Chờ chọn giờ'].filter(Boolean).join(' · '));
     for(const h of row.history) if(h.feedback)add(box,'p',h.feedback);
     const next={requested:['confirm','cancel'],confirmed:['assign','cancel','no_show'],assigned:['complete','cancel','no_show']}[row.state]||[];
     for(const step of next){

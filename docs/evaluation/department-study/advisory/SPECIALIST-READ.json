@@ -1,0 +1,319 @@
+{
+  "blind_cards_sha256": "333bc738a90eef115e647cc32716267572bbd22cd787a74e4ac1e970d573bfc5",
+  "blind_verdicts_sha256": "46a4f5a44ff20a0e74860ea1d94b7ac9ad8dd1f4781ea548774b060653c7bb3d",
+  "archive_sha256": "0d8683f94beee9ea81eaa2f32b50e9eed72389c3f4ee940056032eedfaec065c",
+  "readings": [
+    {
+      "brief": "river-label",
+      "task": "content",
+      "arm": "baseline",
+      "id": "e7c10bc9ca",
+      "marks": [
+        0,
+        1,
+        0
+      ],
+      "evidence": "The price, 24-piece box, VAT exclusion, minimum order and below-minimum consultation are all preserved. The invitation is generic and its instruction asks for location instead of SKU, which appears only as a warehouse preference. The LinkedIn body exposes synthetic-data and competitor caveats.",
+      "needed_edit": "Copy edit required. Ask for SKU, box count and required date in the RFQ CTA. Remove internal notes and retain the commercial terms in the buyer-facing text."
+    },
+    {
+      "brief": "river-label",
+      "task": "content",
+      "arm": "proposed_revision",
+      "id": "4cfe1b564b",
+      "marks": [
+        0,
+        1,
+        0
+      ],
+      "evidence": "The copy gives 24 clips per box, VND 192,000 per box before VAT, a four-box order minimum and below-minimum consultation. The instruction requests location in place of SKU. SKU only appears in a description of what the warehouse wants. Synthetic-data and competitor caveats interrupt the customer copy.",
+      "needed_edit": "Copy edit required. Ask the buyer to send SKU, box count and required date together. Keep the order and consultation terms and remove internal research notes."
+    },
+    {
+      "brief": "shift-inspection",
+      "task": "content",
+      "arm": "baseline",
+      "id": "f2d9d3c9ec",
+      "marks": [
+        1,
+        1,
+        0
+      ],
+      "evidence": "The LinkedIn draft explicitly says the buyer must give receiving site and shift and includes an appointment CTA. It retains per-visit price including VAT, West district and staff-only confirmation. The customer copy also repeats the synthetic-data and absence-of-results notes.",
+      "needed_edit": "Copy edit required. Lead with the actual site/shift instruction, remove internal notes, and change 'Book an appointment' to 'Request a visit' to reflect staff review."
+    },
+    {
+      "brief": "shift-inspection",
+      "task": "content",
+      "arm": "proposed_revision",
+      "id": "84cd8e2891",
+      "marks": [
+        0,
+        0,
+        0
+      ],
+      "evidence": "Price, VAT, per-visit unit, West district and staff review are present. The instruction asks for location and preferred time, leaving the required receiving shift unspecified. The internal conversion metric is presented as a customer benefit.",
+      "needed_edit": "Revise before LinkedIn handoff. Ask the supervisor to submit receiving site and shift, explain what staff record, and describe the next step as a visit request subject to staff confirmation."
+    },
+    {
+      "brief": "river-label",
+      "task": "creative",
+      "arm": "baseline",
+      "id": "84d17dad7f",
+      "marks": [
+        0,
+        1,
+        0
+      ],
+      "evidence": "The subject is the correct label clips and the brief specifies an RFQ caption and CTA. Terms give no visual arrangement. The licensed-source/approval token identifies neither a usable asset nor a concrete QA criterion.",
+      "needed_edit": "Before design, specify a composition, identify the original or licensed visual, and require a proof check of the price, pack size, VAT treatment and order minimum."
+    },
+    {
+      "brief": "river-label",
+      "task": "creative",
+      "arm": "proposed_revision",
+      "id": "66f8678cda",
+      "marks": [
+        0,
+        1,
+        0
+      ],
+      "evidence": "The Mác Khô label clips, buyer, RFQ-preparation caption and quotation CTA are identifiable. No image/text arrangement is described. The rights statement names a licensing requirement but no source or check for the proof.",
+      "needed_edit": "Designer needs an asset source and a layout for the clips, price and RFQ CTA. Add a proof check for 24 clips per box, the before-VAT price and the four-box order minimum."
+    },
+    {
+      "brief": "shift-inspection",
+      "task": "creative",
+      "arm": "baseline",
+      "id": "fa50453f7f",
+      "marks": [
+        0,
+        1,
+        0
+      ],
+      "evidence": "The dock observation, receiving audience, caption and CTA are named. The brief contains visit terms but no directions for arranging an image or text. The rights-gate token gives no traceable source or specific proof check.",
+      "needed_edit": "Designer needs a composition, asset provenance, and a QA check against the visit price, required site/shift and staff-confirmation wording. Align the CTA with the request caption."
+    },
+    {
+      "brief": "shift-inspection",
+      "task": "creative",
+      "arm": "proposed_revision",
+      "id": "31d35c92db",
+      "marks": [
+        0,
+        1,
+        0
+      ],
+      "evidence": "The dock observation subject is clear, and there is a caption and CTA. There are no placement or composition instructions. Licensed source and independent approval are generic gates with no asset identified or specific QA check.",
+      "needed_edit": "Design handoff needs a frame layout, an identified licensed or original source, and an instruction to verify the site/shift request and staff confirmation in the proof. Change 'Book' to 'Request'."
+    },
+    {
+      "brief": "river-label",
+      "task": "media",
+      "arm": "baseline",
+      "id": "1465d232e3",
+      "marks": [
+        1,
+        1,
+        1
+      ],
+      "evidence": "The product and RFQ ad groups receive VND 600,000 each, with zero external spend. The experiment changes needs-versus-terms emphasis with CTA, landing page and audience fixed. The measure follows RFQs with SKU, box count and date through Sales acceptance.",
+      "needed_edit": "Fit for offline media planning. Draft the two actual messages and define Sales acceptance and its recording point before running a test."
+    },
+    {
+      "brief": "river-label",
+      "task": "media",
+      "arm": "proposed_revision",
+      "id": "4163253440",
+      "marks": [
+        1,
+        0,
+        0
+      ],
+      "evidence": "Product-intent and RFQ-intent groups are distinguishable. The two VND 600,000 allocations meet the cap but the draft omits zero external spend. It proposes comparing button CTR while also saying the CTA stays constant. The KPI sentence breaks off before Sales acceptance.",
+      "needed_edit": "Media planner must restore zero external spend, choose one copy variable, and specify how complete RFQs progress to Sales acceptance. Finish the truncated text."
+    },
+    {
+      "brief": "shift-inspection",
+      "task": "media",
+      "arm": "baseline",
+      "id": "b1c05963ee",
+      "marks": [
+        1,
+        1,
+        1
+      ],
+      "evidence": "Product and appointment ad groups each receive VND 450,000, with zero external spend explicitly recorded. The needs-versus-terms copy test fixes CTA, audience and landing page, and the metric is staff-confirmed appointments divided by valid requests.",
+      "needed_edit": "Fit for offline media planning. Before trafficking, supply the actual two copy treatments, use request wording consistently, and define valid requests and staff confirmation in the measurement contract."
+    },
+    {
+      "brief": "shift-inspection",
+      "task": "media",
+      "arm": "proposed_revision",
+      "id": "18da823a99",
+      "marks": [
+        1,
+        0,
+        0
+      ],
+      "evidence": "The two ad groups address product and appointment intent and total VND 900,000. The text omits the explicit no-spend condition. The objective gives the correct confirmation/request ratio, but the experiment ends at 'Compare'.",
+      "needed_edit": "Restore the offline/no-spend condition and finish the comparison, including the changed copy and controls. Verify the stated format limits before trafficking."
+    },
+    {
+      "brief": "river-label",
+      "task": "research",
+      "arm": "baseline",
+      "id": "43226dc6cb",
+      "marks": [
+        0,
+        0,
+        1
+      ],
+      "evidence": "The draft keeps its absence of competitor evidence in a separate status and makes no competitor claim. 'Chưa có dữ liệu đối thủ' identifies a gap but asks no question about the buyer or RFQ handoff. The list of reference links gives no evidence collection step.",
+      "needed_edit": "Researcher should ask which required field is missing when Sales returns a dry-warehouse RFQ and propose reviewing redacted requests and their Sales disposition."
+    },
+    {
+      "brief": "river-label",
+      "task": "research",
+      "arm": "proposed_revision",
+      "id": "2509bbd416",
+      "marks": [
+        0,
+        1,
+        1
+      ],
+      "evidence": "The draft twice proposes sending an RFQ to gather SKU, box count and required date, a concrete if weak collection step. It labels the plan as proposed and acknowledges the lack of verified competitor or revenue data. It never asks what remains uncertain about the purchaser or handoff.",
+      "needed_edit": "Replace the duplicate with one question about a missing field or Sales rejection. Say whose requests will be reviewed and how their field values and disposition answer it."
+    },
+    {
+      "brief": "shift-inspection",
+      "task": "research",
+      "arm": "baseline",
+      "id": "7e4474f49d",
+      "marks": [
+        1,
+        0,
+        1
+      ],
+      "evidence": "The question about who receives the request and what confirms an appointment targets the service handoff. Vendor workflow descriptions are explicitly scoped apart from questions and unverified competitor observations. No step is specified to gather evidence from this service.",
+      "needed_edit": "Before a research handoff, specify which staff member to interview or which request and confirmation records to inspect. Focus the question on the confirmation evidence still unknown."
+    },
+    {
+      "brief": "shift-inspection",
+      "task": "research",
+      "arm": "proposed_revision",
+      "id": "fb4eee3bde",
+      "marks": [
+        1,
+        0,
+        1
+      ],
+      "evidence": "The question about the request recipient and confirmation evidence directly addresses the handoff. The Calendly observation and question are labeled separately and no local or competitor result is claimed. Instructions and a list of links supply no concrete local collection step; the last link is truncated.",
+      "needed_edit": "Research handoff needs a method, such as tracing a request with the receiving contact and staff confirmer. Replace the repeated 'No measured outcome' with a real uncertainty and repair the truncated reference."
+    },
+    {
+      "brief": "river-label",
+      "task": "seo_geo",
+      "arm": "baseline",
+      "id": "c357d892c9",
+      "marks": [
+        1,
+        1,
+        1
+      ],
+      "evidence": "The title, RFQ preparation question and answer are explicit. Box size, price and MOQ are grounded. The later sentence lists SKU, box count and required date, and the next step is to request a quote. No ranking promise appears.",
+      "needed_edit": "Editorial cleanup needed. Put SKU, box count and date together in the direct answer; remove the synthetic-data note, competitor disclaimer and internal rubric link."
+    },
+    {
+      "brief": "river-label",
+      "task": "seo_geo",
+      "arm": "proposed_revision",
+      "id": "fb3258f3c1",
+      "marks": [
+        1,
+        1,
+        1
+      ],
+      "evidence": "The title and answer address how to prepare an RFQ. Pack size, before-VAT price and MOQ are grounded. The answer names the RFQ action and eventually lists SKU, box count and required date, without promising ranking.",
+      "needed_edit": "Revise before publication. Put all three required inputs in the opening instruction, add a direct invitation to submit them, and remove synthetic-data and competitor notes."
+    },
+    {
+      "brief": "shift-inspection",
+      "task": "seo_geo",
+      "arm": "baseline",
+      "id": "660f5109f0",
+      "marks": [
+        1,
+        1,
+        1
+      ],
+      "evidence": "The titled Q&A asks what to prepare, grounds the visit in price, region and logged activities, and explicitly says the buyer must give receiving site and shift and that only staff can confirm. There is an appointment next step and no ranking claim.",
+      "needed_edit": "Editorial cleanup before publication. Lead with the site and shift, remove the synthetic-data note and rubric URL, and make the next step 'Request a visit'."
+    },
+    {
+      "brief": "shift-inspection",
+      "task": "seo_geo",
+      "arm": "proposed_revision",
+      "id": "4137c49a48",
+      "marks": [
+        1,
+        1,
+        1
+      ],
+      "evidence": "The title implies the buyer question of how to request the dock observation, and the answer directs the buyer to provide the receiving site and shift. Staff review is a grounded service detail. No ranking claim is made.",
+      "needed_edit": "Nearly ready for editorial handoff. Replace 'will confirm' with wording that staff review requests and only staff can confirm, avoiding implied approval of every request. Add West district for local relevance."
+    },
+    {
+      "brief": "river-label",
+      "task": "strategy",
+      "arm": "baseline",
+      "id": "86dfa456d5",
+      "marks": [
+        0,
+        1,
+        1
+      ],
+      "evidence": "The buyer is the dry-warehouse purchasing lead, but the pillars are topics without a positioning hypothesis about why one would appeal. The test varies needs versus terms while holding CTA, landing page and buyer fixed. The outcome names complete RFQs through Sales acceptance.",
+      "needed_edit": "Strategy lead should state the proposition to test and why it should prompt this buyer to submit a complete, Sales-acceptable RFQ."
+    },
+    {
+      "brief": "river-label",
+      "task": "strategy",
+      "arm": "proposed_revision",
+      "id": "cced399c78",
+      "marks": [
+        0,
+        0,
+        1
+      ],
+      "evidence": "The named dry-warehouse purchaser and list of required fields describe a buyer need but give no reason to choose a particular proposition. Two message emphases are listed without saying what stays fixed. The draft explicitly identifies complete RFQs and transfer to Sales acceptance, although the opening calls this a sales KPI.",
+      "needed_edit": "Strategy handoff needs a testable buyer-facing proposition, a constant audience, CTA and landing page, and removal of the revenue-oriented KPI wording."
+    },
+    {
+      "brief": "shift-inspection",
+      "task": "strategy",
+      "arm": "baseline",
+      "id": "a684ff0c00",
+      "marks": [
+        0,
+        1,
+        1
+      ],
+      "evidence": "Receiving supervisors are specified; the two pillars name topics without a buyer-facing positioning hypothesis. Needs-led versus terms-led copy is tested with CTA, audience and page fixed. The approved staff-confirmed appointments / valid requests measure is explicit.",
+      "needed_edit": "Strategy lead should state which message is expected to work for receiving supervisors and why, then connect that prediction to the confirmation ratio."
+    },
+    {
+      "brief": "shift-inspection",
+      "task": "strategy",
+      "arm": "proposed_revision",
+      "id": "49bd0d8e09",
+      "marks": [
+        0,
+        1,
+        0
+      ],
+      "evidence": "The text asks the writer to supply a hypothesis for receiving supervisors but gives none. It does specify a needs-versus-terms comparison with CTA, audience and page fixed. 'Staff-confirmed appointments or valid requests' replaces the approved ratio with alternatives.",
+      "needed_edit": "Rewrite as a strategy recommendation, state the buyer proposition, restore confirmed appointments divided by valid requests, and distinguish the allowed budget proposal from prohibited spend/publication."
+    }
+  ]
+}

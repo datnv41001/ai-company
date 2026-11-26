@@ -42,6 +42,9 @@ def test_department_pack_for_approved_study_case(api, agency, case):
     elapsed, cpu = perf_counter() - started, process_time() - cpu_start
     pack = accepted(response)
     assert pack["plan_digest"] == plan["digest"]
+    contract = plan["intake_contract"]
+    assert pack["intake_contract_digest"] == contract["digest"]
+    assert pack["buyer_fields"] == [field["id"] for field in contract["fields"]]
     assert case["wording"] in pack["website"]["commercial_terms"]
     assert case["qualifier"] in pack["organic_search"]["answer"]
     public_cta = buyer_action(snapshots[0]["projection"])

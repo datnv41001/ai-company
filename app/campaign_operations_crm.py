@@ -1,5 +1,7 @@
 """RFQ intake, Sales decisions and reconciled simulated revenue. No external adapter."""
-from .campaign_operations_contracts import CompleteRFQ, RFQ, Sales, SessionEvent
+from decimal import Decimal
+
+from .campaign_operations_contracts import CompleteRFQ, Consultation, RFQ, Sales, SessionEvent
 from .knowledge_store import aware, conflict, parse_time, stamp
 from .models import Membership
 
@@ -11,9 +13,10 @@ DETAIL_UNITS = {
     "seats_v1": {"participant", "subscription_month", "subscription_year"},
 }
 FROM = {
-    "assign": {"qualified"}, "reassign": {"assigned"}, "accept": {"assigned"}, "reject": {"received", "qualified", "assigned", "accepted", "quoted"},
+    "refer": {"received"}, "assign": {"qualified","awaiting_assignment"}, "reassign": {"assigned", "consulting"}, "accept": {"assigned"},
+    "reject": {"received", "qualified", "consulting", "assigned", "accepted", "quoted"},
     "quote": {"accepted"}, "order": {"quoted"}, "confirm": {"ordered"}, "refund": {"confirmed"},
-    "cancel": {"assigned", "accepted", "quoted", "ordered", "confirmed"}, "correct": {"confirmed"},
+    "cancel": {"consulting", "assigned", "accepted", "quoted", "ordered", "confirmed"}, "correct": {"confirmed"},
 }
 STATES = {"assign": "assigned", "reassign":"assigned", "accept": "accepted", "reject": "rejected", "quote": "quoted",
           "order": "ordered", "confirm": "confirmed", "refund": "confirmed", "cancel": "cancelled", "correct": "confirmed"}
@@ -34,11 +37,14 @@ def missing_fields(row):
     fields = [key for key in ("quantity", "location", "required_date") if not row[key]]
     if row["contact_purpose"] != "quote_request":
         fields.append("permission_to_respond")
+    moqs = row.get("minimum_order_quantities", [])
+    if len(moqs) > 1 or (moqs and row["quantity"] and Decimal(row["quantity"]) < Decimal(moqs[0])):
+        fields.append("commercial_moq")
     return fields
 
 
 def observation(cmd, state, plan, store, *, recipient=None, coordinator=None):
-    if isinstance(cmd, (RFQ, Sales, SessionEvent)) and cmd.occurred_at > aware(store.now()):
+    if isinstance(cmd, (RFQ, Sales, SessionEvent, Consultation)) and cmd.occurred_at > aware(store.now()):
         conflict("A received event cannot occur in the future")
     if isinstance(cmd, SessionEvent):
         if cmd.session_id in state["sessions"]:
@@ -63,6 +69,8 @@ def observation(cmd, state, plan, store, *, recipient=None, coordinator=None):
                "last_event_at": stamp(cmd.occurred_at), **quantity_fields(cmd, cmd.unit),
                "assignee_id": None, "gross_vnd": 0, "refunded_vnd": 0, "sales_accepted": False,
                "quoted": False, "ordered": False, "confirmed": False, "feedback": []}
+        if plan.get("intake_contract", {}).get("action") == "rfq":
+            row["minimum_order_quantities"] = plan["intake_contract"]["qualification"]["minimum_order_quantities"]
         row["missing"] = missing_fields(row)
         row["state"] = "received" if row["missing"] else "qualified"
         return "leads", cmd.rfq_id, row
@@ -71,17 +79,36 @@ def observation(cmd, state, plan, store, *, recipient=None, coordinator=None):
     if not row or row["plan_id"] != plan["id"] or cmd.expected_revision != row["revision"]:
         conflict("RFQ is absent from this plan or its revision changed")
     row = {**row, "revision": row["revision"] + 1}
+    if isinstance(cmd, Consultation):
+        if (row["state"] != "consulting" or row["assignee_id"] != store.actor or row["contact_purpose"] != "quote_request"
+                or cmd.occurred_at < parse_time(row["last_event_at"])):
+            conflict("Consultation requires the current assigned and consented inquiry")
+        changed = cmd.model_dump(mode="json", include={"quantity", "location", "required_date"}, exclude_none=True)
+        if cmd.quantity is not None and row["unit"] in DISCRETE_UNITS and cmd.quantity != cmd.quantity.to_integral_value():
+            conflict("This approved selling unit requires a whole quantity")
+        row.update(changed, last_event_at=stamp(cmd.occurred_at))
+        row["feedback"] = [*row["feedback"], {"step":"consultation", "actor":store.actor, "text":cmd.note,
+                                             "at":row["last_event_at"], "updated":changed}]
+        row["missing"] = missing_fields(row)
+        if not row["missing"]:
+            # Qualification returns the case to routing; advice never authorizes a commercial assignment.
+            row["state"] = "awaiting_assignment"
+        return "leads", cmd.rfq_id, row
     if isinstance(cmd, CompleteRFQ):
         if row["state"] != "received":
             conflict("Only an incomplete request can be completed")
-        row.update(quantity_fields(cmd, row["unit"]), missing=[], state="qualified")
+        row.update(quantity_fields(cmd, row["unit"]))
+        row["missing"] = missing_fields(row)
+        row["state"] = "received" if row["missing"] else "qualified"
         return "leads", cmd.rfq_id, row
     if row["state"] not in FROM[cmd.step] or cmd.occurred_at < parse_time(row["last_event_at"]):
         conflict("Invalid or out-of-order Sales transition")
     can_route=store.approver if coordinator is None else coordinator
     if not can_route and row["assignee_id"] != store.actor:
         conflict("Sales decisions require the assigned staff member or a campaign approver")
-    if cmd.step in ("assign","reassign"):
+    if cmd.step in ("refer","assign","reassign"):
+        if (cmd.step=="refer" or row["state"]=="consulting") and (not recipient or row["contact_purpose"]!="quote_request"):
+            conflict("Route a consented consultation through the campaign desk")
         if recipient:
             eligible=cmd.assignee_id and recipient(cmd.assignee_id,"sales_recipient")
         else:
@@ -109,7 +136,8 @@ def observation(cmd, state, plan, store, *, recipient=None, coordinator=None):
         conflict("Amounts are recorded at order confirmation, correction or refund")
     if cmd.step in ("accept", "quote", "order", "confirm"):
         row[{"accept": "sales_accepted", "quote": "quoted", "order": "ordered", "confirm": "confirmed"}[cmd.step]] = True
-    row.update(state=STATES[cmd.step], last_event_at=stamp(cmd.occurred_at))
+    consulting = cmd.step=="refer" or (cmd.step=="reassign" and row["state"]=="consulting")
+    row.update(state="consulting" if consulting else STATES[cmd.step], last_event_at=stamp(cmd.occurred_at))
     return "leads", cmd.rfq_id, row
 
 

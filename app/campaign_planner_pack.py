@@ -1,6 +1,7 @@
 """Compose bounded, internal campaign materials from the same verified C3 task and evidence."""
 
 from . import c3_assets, c3_skill_library
+from . import business_intake
 from .c3_actions import ACTIONS
 from .knowledge_store import canonical, conflict, digest
 from .revision_qa import content_digest
@@ -98,6 +99,18 @@ def compose_plan(store, campaign_id, selections, body, plan_id):
         if action != "appointment":
             conflict("Optional quote intake is available only alongside a service appointment")
         plan["secondary_conversions"] = ["rfq"]
+    if action in {"appointment", "rfq"} and plan["selling_unit"]:
+        landing = next((p for _, b, p in selections if KINDS[b["options"]["workflow"]] == "landing"), source)
+        lists = {tuple(business_intake.submitted_fields(p["task_intent"], strict=True)) for _, _, p in selections}
+        lists.discard(())
+        if len(lists) > 1:
+            conflict("Reconcile the required buyer fields across the approved briefs")
+        intake_source = landing if business_intake.submitted_fields(landing["task_intent"]) else next(
+            (p for _, _, p in selections if business_intake.submitted_fields(p["task_intent"])), landing)
+        source_kind = next(KINDS[b["options"]["workflow"]] for _, b, p in selections if p is intake_source)
+        plan["intake_contract"] = business_intake.issue(plan, intake_source, body.intake_fields, plan["manifests"][source_kind])
+    elif body.intake_fields:
+        conflict("Select a transactional journey with an approved selling unit")
     plan["digest"] = digest(canonical(plan))
     return plan
 

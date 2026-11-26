@@ -1,0 +1,4703 @@
+{
+  "archive_sha256": "0d8683f94beee9ea81eaa2f32b50e9eed72389c3f4ee940056032eedfaec065c",
+  "usage": {
+    "inputs": {
+      "calls": 60,
+      "prompt_tokens": 10791,
+      "completion_tokens": 2502,
+      "wall_seconds": 375.028,
+      "length_stops": 0
+    },
+    "stress-inputs": {
+      "calls": 24,
+      "prompt_tokens": 4469,
+      "completion_tokens": 1143,
+      "wall_seconds": 144.423,
+      "length_stops": 0
+    },
+    "specialists": {
+      "calls": 12,
+      "prompt_tokens": 5427,
+      "completion_tokens": 1668,
+      "wall_seconds": 215.92,
+      "length_stops": 3
+    }
+  },
+  "input_sha256": {
+    "briefs.json": "e9d618f2a1cc47fd3b6049f28b1b6afc85f940773bbc0811474dcc21d530b494",
+    "inputs.json": "bae507300e9522d911ec1cce038be94bce22dbad59e46f88f55fe335304ee7e9",
+    "labels.json": "0aea9f8f997c34f8b702ea11be9da468a0c0654baeb10aad592158fa8aa568e7",
+    "stress-inputs.json": "74e3e68afcd481e5e0a6e68fdcd309ef615f2aa75d2e449e47f7f2defa4ae13f",
+    "stress-labels.json": "ee2c51657d15ce0c90e1cfa768e5991bab47aa1f526d8154ebf76d4170cb57c7"
+  },
+  "measured_host": {
+    "weights": "6a1a2eb6d15622bf3c96857206351ba97e1af16c30d7a74ee38970e434e9407e",
+    "engine_version": "version: 1.0.0-dev (build 12649, commit 1f8baae28)\nbuilt with Clang 22.1.8 for Windows x86_64",
+    "engine_sha256": "add03887ff7081f4bf37b7335c752edfe902520ef6d6d9faaede3a14dffa163e",
+    "startup_seconds": 7.344,
+    "threads": 2,
+    "context": 3072,
+    "gpu_layers": 0,
+    "provider_fees": 0,
+    "human_effort": null,
+    "compute_cost": null,
+    "python": "3.12.14",
+    "runner_sha256": "14dcef9be08ef26a8fd47e8d935d89105ff82e43c515003690b8d7af7a2fb7fa"
+  },
+  "slices": {
+    "inputs": {
+      "all": {
+        "baseline": {
+          "matrix_gold_then_prediction": {
+            "supported": {
+              "supported": 0,
+              "contradicted": 0,
+              "unknown": 24
+            },
+            "contradicted": {
+              "supported": 0,
+              "contradicted": 1,
+              "unknown": 23
+            },
+            "unknown": {
+              "supported": 0,
+              "contradicted": 0,
+              "unknown": 12
+            }
+          },
+          "recall": {
+            "numerator": 1,
+            "denominator": 24,
+            "rate": 0.0417
+          },
+          "false_negative_rate_including_abstentions": {
+            "numerator": 23,
+            "denominator": 24,
+            "rate": 0.9583
+          },
+          "false_positive_rate": {
+            "numerator": 0,
+            "denominator": 36,
+            "rate": 0.0
+          },
+          "false_contradiction_on_supported": {
+            "numerator": 0,
+            "denominator": 24,
+            "rate": 0.0
+          },
+          "precision": {
+            "numerator": 1,
+            "denominator": 1,
+            "rate": 1.0
+          },
+          "abstention": {
+            "numerator": 59,
+            "denominator": 60,
+            "rate": 0.9833
+          },
+          "contradictions_called_supported": 0,
+          "unknowns_called_supported": 0
+        },
+        "combined_advisory": {
+          "matrix_gold_then_prediction": {
+            "supported": {
+              "supported": 10,
+              "contradicted": 6,
+              "unknown": 8
+            },
+            "contradicted": {
+              "supported": 0,
+              "contradicted": 15,
+              "unknown": 9
+            },
+            "unknown": {
+              "supported": 0,
+              "contradicted": 1,
+              "unknown": 11
+            }
+          },
+          "recall": {
+            "numerator": 15,
+            "denominator": 24,
+            "rate": 0.625
+          },
+          "false_negative_rate_including_abstentions": {
+            "numerator": 9,
+            "denominator": 24,
+            "rate": 0.375
+          },
+          "false_positive_rate": {
+            "numerator": 7,
+            "denominator": 36,
+            "rate": 0.1944
+          },
+          "false_contradiction_on_supported": {
+            "numerator": 6,
+            "denominator": 24,
+            "rate": 0.25
+          },
+          "precision": {
+            "numerator": 15,
+            "denominator": 22,
+            "rate": 0.6818
+          },
+          "abstention": {
+            "numerator": 28,
+            "denominator": 60,
+            "rate": 0.4667
+          },
+          "contradictions_called_supported": 0,
+          "unknowns_called_supported": 0
+        },
+        "model_alone": {
+          "matrix_gold_then_prediction": {
+            "supported": {
+              "supported": 10,
+              "contradicted": 6,
+              "unknown": 8
+            },
+            "contradicted": {
+              "supported": 0,
+              "contradicted": 14,
+              "unknown": 10
+            },
+            "unknown": {
+              "supported": 0,
+              "contradicted": 1,
+              "unknown": 11
+            }
+          },
+          "recall": {
+            "numerator": 14,
+            "denominator": 24,
+            "rate": 0.5833
+          },
+          "false_negative_rate_including_abstentions": {
+            "numerator": 10,
+            "denominator": 24,
+            "rate": 0.4167
+          },
+          "false_positive_rate": {
+            "numerator": 7,
+            "denominator": 36,
+            "rate": 0.1944
+          },
+          "false_contradiction_on_supported": {
+            "numerator": 6,
+            "denominator": 24,
+            "rate": 0.25
+          },
+          "precision": {
+            "numerator": 14,
+            "denominator": 21,
+            "rate": 0.6667
+          },
+          "abstention": {
+            "numerator": 29,
+            "denominator": 60,
+            "rate": 0.4833
+          },
+          "contradictions_called_supported": 0,
+          "unknowns_called_supported": 0
+        }
+      },
+      "language/en": {
+        "baseline": {
+          "matrix_gold_then_prediction": {
+            "supported": {
+              "supported": 0,
+              "contradicted": 0,
+              "unknown": 12
+            },
+            "contradicted": {
+              "supported": 0,
+              "contradicted": 0,
+              "unknown": 12
+            },
+            "unknown": {
+              "supported": 0,
+              "contradicted": 0,
+              "unknown": 6
+            }
+          },
+          "recall": {
+            "numerator": 0,
+            "denominator": 12,
+            "rate": 0.0
+          },
+          "false_negative_rate_including_abstentions": {
+            "numerator": 12,
+            "denominator": 12,
+            "rate": 1.0
+          },
+          "false_positive_rate": {
+            "numerator": 0,
+            "denominator": 18,
+            "rate": 0.0
+          },
+          "false_contradiction_on_supported": {
+            "numerator": 0,
+            "denominator": 12,
+            "rate": 0.0
+          },
+          "precision": {
+            "numerator": 0,
+            "denominator": 0,
+            "rate": null
+          },
+          "abstention": {
+            "numerator": 30,
+            "denominator": 30,
+            "rate": 1.0
+          },
+          "contradictions_called_supported": 0,
+          "unknowns_called_supported": 0
+        },
+        "combined_advisory": {
+          "matrix_gold_then_prediction": {
+            "supported": {
+              "supported": 6,
+              "contradicted": 5,
+              "unknown": 1
+            },
+            "contradicted": {
+              "supported": 0,
+              "contradicted": 11,
+              "unknown": 1
+            },
+            "unknown": {
+              "supported": 0,
+              "contradicted": 1,
+              "unknown": 5
+            }
+          },
+          "recall": {
+            "numerator": 11,
+            "denominator": 12,
+            "rate": 0.9167
+          },
+          "false_negative_rate_including_abstentions": {
+            "numerator": 1,
+            "denominator": 12,
+            "rate": 0.0833
+          },
+          "false_positive_rate": {
+            "numerator": 6,
+            "denominator": 18,
+            "rate": 0.3333
+          },
+          "false_contradiction_on_supported": {
+            "numerator": 5,
+            "denominator": 12,
+            "rate": 0.4167
+          },
+          "precision": {
+            "numerator": 11,
+            "denominator": 17,
+            "rate": 0.6471
+          },
+          "abstention": {
+            "numerator": 7,
+            "denominator": 30,
+            "rate": 0.2333
+          },
+          "contradictions_called_supported": 0,
+          "unknowns_called_supported": 0
+        },
+        "model_alone": {
+          "matrix_gold_then_prediction": {
+            "supported": {
+              "supported": 6,
+              "contradicted": 5,
+              "unknown": 1
+            },
+            "contradicted": {
+              "supported": 0,
+              "contradicted": 11,
+              "unknown": 1
+            },
+            "unknown": {
+              "supported": 0,
+              "contradicted": 1,
+              "unknown": 5
+            }
+          },
+          "recall": {
+            "numerator": 11,
+            "denominator": 12,
+            "rate": 0.9167
+          },
+          "false_negative_rate_including_abstentions": {
+            "numerator": 1,
+            "denominator": 12,
+            "rate": 0.0833
+          },
+          "false_positive_rate": {
+            "numerator": 6,
+            "denominator": 18,
+            "rate": 0.3333
+          },
+          "false_contradiction_on_supported": {
+            "numerator": 5,
+            "denominator": 12,
+            "rate": 0.4167
+          },
+          "precision": {
+            "numerator": 11,
+            "denominator": 17,
+            "rate": 0.6471
+          },
+          "abstention": {
+            "numerator": 7,
+            "denominator": 30,
+            "rate": 0.2333
+          },
+          "contradictions_called_supported": 0,
+          "unknowns_called_supported": 0
+        }
+      },
+      "category/warranty": {
+        "baseline": {
+          "matrix_gold_then_prediction": {
+            "supported": {
+              "supported": 0,
+              "contradicted": 0,
+              "unknown": 2
+            },
+            "contradicted": {
+              "supported": 0,
+              "contradicted": 0,
+              "unknown": 2
+            },
+            "unknown": {
+              "supported": 0,
+              "contradicted": 0,
+              "unknown": 1
+            }
+          },
+          "recall": {
+            "numerator": 0,
+            "denominator": 2,
+            "rate": 0.0
+          },
+          "false_negative_rate_including_abstentions": {
+            "numerator": 2,
+            "denominator": 2,
+            "rate": 1.0
+          },
+          "false_positive_rate": {
+            "numerator": 0,
+            "denominator": 3,
+            "rate": 0.0
+          },
+          "false_contradiction_on_supported": {
+            "numerator": 0,
+            "denominator": 2,
+            "rate": 0.0
+          },
+          "precision": {
+            "numerator": 0,
+            "denominator": 0,
+            "rate": null
+          },
+          "abstention": {
+            "numerator": 5,
+            "denominator": 5,
+            "rate": 1.0
+          },
+          "contradictions_called_supported": 0,
+          "unknowns_called_supported": 0
+        },
+        "combined_advisory": {
+          "matrix_gold_then_prediction": {
+            "supported": {
+              "supported": 1,
+              "contradicted": 0,
+              "unknown": 1
+            },
+            "contradicted": {
+              "supported": 0,
+              "contradicted": 0,
+              "unknown": 2
+            },
+            "unknown": {
+              "supported": 0,
+              "contradicted": 0,
+              "unknown": 1
+            }
+          },
+          "recall": {
+            "numerator": 0,
+            "denominator": 2,
+            "rate": 0.0
+          },
+          "false_negative_rate_including_abstentions": {
+            "numerator": 2,
+            "denominator": 2,
+            "rate": 1.0
+          },
+          "false_positive_rate": {
+            "numerator": 0,
+            "denominator": 3,
+            "rate": 0.0
+          },
+          "false_contradiction_on_supported": {
+            "numerator": 0,
+            "denominator": 2,
+            "rate": 0.0
+          },
+          "precision": {
+            "numerator": 0,
+            "denominator": 0,
+            "rate": null
+          },
+          "abstention": {
+            "numerator": 4,
+            "denominator": 5,
+            "rate": 0.8
+          },
+          "contradictions_called_supported": 0,
+          "unknowns_called_supported": 0
+        },
+        "model_alone": {
+          "matrix_gold_then_prediction": {
+            "supported": {
+              "supported": 1,
+              "contradicted": 0,
+              "unknown": 1
+            },
+            "contradicted": {
+              "supported": 0,
+              "contradicted": 0,
+              "unknown": 2
+            },
+            "unknown": {
+              "supported": 0,
+              "contradicted": 0,
+              "unknown": 1
+            }
+          },
+          "recall": {
+            "numerator": 0,
+            "denominator": 2,
+            "rate": 0.0
+          },
+          "false_negative_rate_including_abstentions": {
+            "numerator": 2,
+            "denominator": 2,
+            "rate": 1.0
+          },
+          "false_positive_rate": {
+            "numerator": 0,
+            "denominator": 3,
+            "rate": 0.0
+          },
+          "false_contradiction_on_supported": {
+            "numerator": 0,
+            "denominator": 2,
+            "rate": 0.0
+          },
+          "precision": {
+            "numerator": 0,
+            "denominator": 0,
+            "rate": null
+          },
+          "abstention": {
+            "numerator": 4,
+            "denominator": 5,
+            "rate": 0.8
+          },
+          "contradictions_called_supported": 0,
+          "unknowns_called_supported": 0
+        }
+      },
+      "category/minimum": {
+        "baseline": {
+          "matrix_gold_then_prediction": {
+            "supported": {
+              "supported": 0,
+              "contradicted": 0,
+              "unknown": 2
+            },
+            "contradicted": {
+              "supported": 0,
+              "contradicted": 0,
+              "unknown": 2
+            },
+            "unknown": {
+              "supported": 0,
+              "contradicted": 0,
+              "unknown": 1
+            }
+          },
+          "recall": {
+            "numerator": 0,
+            "denominator": 2,
+            "rate": 0.0
+          },
+          "false_negative_rate_including_abstentions": {
+            "numerator": 2,
+            "denominator": 2,
+            "rate": 1.0
+          },
+          "false_positive_rate": {
+            "numerator": 0,
+            "denominator": 3,
+            "rate": 0.0
+          },
+          "false_contradiction_on_supported": {
+            "numerator": 0,
+            "denominator": 2,
+            "rate": 0.0
+          },
+          "precision": {
+            "numerator": 0,
+            "denominator": 0,
+            "rate": null
+          },
+          "abstention": {
+            "numerator": 5,
+            "denominator": 5,
+            "rate": 1.0
+          },
+          "contradictions_called_supported": 0,
+          "unknowns_called_supported": 0
+        },
+        "combined_advisory": {
+          "matrix_gold_then_prediction": {
+            "supported": {
+              "supported": 1,
+              "contradicted": 0,
+              "unknown": 1
+            },
+            "contradicted": {
+              "supported": 0,
+              "contradicted": 1,
+              "unknown": 1
+            },
+            "unknown": {
+              "supported": 0,
+              "contradicted": 0,
+              "unknown": 1
+            }
+          },
+          "recall": {
+            "numerator": 1,
+            "denominator": 2,
+            "rate": 0.5
+          },
+          "false_negative_rate_including_abstentions": {
+            "numerator": 1,
+            "denominator": 2,
+            "rate": 0.5
+          },
+          "false_positive_rate": {
+            "numerator": 0,
+            "denominator": 3,
+            "rate": 0.0
+          },
+          "false_contradiction_on_supported": {
+            "numerator": 0,
+            "denominator": 2,
+            "rate": 0.0
+          },
+          "precision": {
+            "numerator": 1,
+            "denominator": 1,
+            "rate": 1.0
+          },
+          "abstention": {
+            "numerator": 3,
+            "denominator": 5,
+            "rate": 0.6
+          },
+          "contradictions_called_supported": 0,
+          "unknowns_called_supported": 0
+        },
+        "model_alone": {
+          "matrix_gold_then_prediction": {
+            "supported": {
+              "supported": 1,
+              "contradicted": 0,
+              "unknown": 1
+            },
+            "contradicted": {
+              "supported": 0,
+              "contradicted": 1,
+              "unknown": 1
+            },
+            "unknown": {
+              "supported": 0,
+              "contradicted": 0,
+              "unknown": 1
+            }
+          },
+          "recall": {
+            "numerator": 1,
+            "denominator": 2,
+            "rate": 0.5
+          },
+          "false_negative_rate_including_abstentions": {
+            "numerator": 1,
+            "denominator": 2,
+            "rate": 0.5
+          },
+          "false_positive_rate": {
+            "numerator": 0,
+            "denominator": 3,
+            "rate": 0.0
+          },
+          "false_contradiction_on_supported": {
+            "numerator": 0,
+            "denominator": 2,
+            "rate": 0.0
+          },
+          "precision": {
+            "numerator": 1,
+            "denominator": 1,
+            "rate": 1.0
+          },
+          "abstention": {
+            "numerator": 3,
+            "denominator": 5,
+            "rate": 0.6
+          },
+          "contradictions_called_supported": 0,
+          "unknowns_called_supported": 0
+        }
+      },
+      "category/exception": {
+        "baseline": {
+          "matrix_gold_then_prediction": {
+            "supported": {
+              "supported": 0,
+              "contradicted": 0,
+              "unknown": 2
+            },
+            "contradicted": {
+              "supported": 0,
+              "contradicted": 0,
+              "unknown": 2
+            },
+            "unknown": {
+              "supported": 0,
+              "contradicted": 0,
+              "unknown": 1
+            }
+          },
+          "recall": {
+            "numerator": 0,
+            "denominator": 2,
+            "rate": 0.0
+          },
+          "false_negative_rate_including_abstentions": {
+            "numerator": 2,
+            "denominator": 2,
+            "rate": 1.0
+          },
+          "false_positive_rate": {
+            "numerator": 0,
+            "denominator": 3,
+            "rate": 0.0
+          },
+          "false_contradiction_on_supported": {
+            "numerator": 0,
+            "denominator": 2,
+            "rate": 0.0
+          },
+          "precision": {
+            "numerator": 0,
+            "denominator": 0,
+            "rate": null
+          },
+          "abstention": {
+            "numerator": 5,
+            "denominator": 5,
+            "rate": 1.0
+          },
+          "contradictions_called_supported": 0,
+          "unknowns_called_supported": 0
+        },
+        "combined_advisory": {
+          "matrix_gold_then_prediction": {
+            "supported": {
+              "supported": 0,
+              "contradicted": 1,
+              "unknown": 1
+            },
+            "contradicted": {
+              "supported": 0,
+              "contradicted": 1,
+              "unknown": 1
+            },
+            "unknown": {
+              "supported": 0,
+              "contradicted": 0,
+              "unknown": 1
+            }
+          },
+          "recall": {
+            "numerator": 1,
+            "denominator": 2,
+            "rate": 0.5
+          },
+          "false_negative_rate_including_abstentions": {
+            "numerator": 1,
+            "denominator": 2,
+            "rate": 0.5
+          },
+          "false_positive_rate": {
+            "numerator": 1,
+            "denominator": 3,
+            "rate": 0.3333
+          },
+          "false_contradiction_on_supported": {
+            "numerator": 1,
+            "denominator": 2,
+            "rate": 0.5
+          },
+          "precision": {
+            "numerator": 1,
+            "denominator": 2,
+            "rate": 0.5
+          },
+          "abstention": {
+            "numerator": 3,
+            "denominator": 5,
+            "rate": 0.6
+          },
+          "contradictions_called_supported": 0,
+          "unknowns_called_supported": 0
+        },
+        "model_alone": {
+          "matrix_gold_then_prediction": {
+            "supported": {
+              "supported": 0,
+              "contradicted": 1,
+              "unknown": 1
+            },
+            "contradicted": {
+              "supported": 0,
+              "contradicted": 1,
+              "unknown": 1
+            },
+            "unknown": {
+              "supported": 0,
+              "contradicted": 0,
+              "unknown": 1
+            }
+          },
+          "recall": {
+            "numerator": 1,
+            "denominator": 2,
+            "rate": 0.5
+          },
+          "false_negative_rate_including_abstentions": {
+            "numerator": 1,
+            "denominator": 2,
+            "rate": 0.5
+          },
+          "false_positive_rate": {
+            "numerator": 1,
+            "denominator": 3,
+            "rate": 0.3333
+          },
+          "false_contradiction_on_supported": {
+            "numerator": 1,
+            "denominator": 2,
+            "rate": 0.5
+          },
+          "precision": {
+            "numerator": 1,
+            "denominator": 2,
+            "rate": 0.5
+          },
+          "abstention": {
+            "numerator": 3,
+            "denominator": 5,
+            "rate": 0.6
+          },
+          "contradictions_called_supported": 0,
+          "unknowns_called_supported": 0
+        }
+      },
+      "language/vi": {
+        "baseline": {
+          "matrix_gold_then_prediction": {
+            "supported": {
+              "supported": 0,
+              "contradicted": 0,
+              "unknown": 12
+            },
+            "contradicted": {
+              "supported": 0,
+              "contradicted": 1,
+              "unknown": 11
+            },
+            "unknown": {
+              "supported": 0,
+              "contradicted": 0,
+              "unknown": 6
+            }
+          },
+          "recall": {
+            "numerator": 1,
+            "denominator": 12,
+            "rate": 0.0833
+          },
+          "false_negative_rate_including_abstentions": {
+            "numerator": 11,
+            "denominator": 12,
+            "rate": 0.9167
+          },
+          "false_positive_rate": {
+            "numerator": 0,
+            "denominator": 18,
+            "rate": 0.0
+          },
+          "false_contradiction_on_supported": {
+            "numerator": 0,
+            "denominator": 12,
+            "rate": 0.0
+          },
+          "precision": {
+            "numerator": 1,
+            "denominator": 1,
+            "rate": 1.0
+          },
+          "abstention": {
+            "numerator": 29,
+            "denominator": 30,
+            "rate": 0.9667
+          },
+          "contradictions_called_supported": 0,
+          "unknowns_called_supported": 0
+        },
+        "combined_advisory": {
+          "matrix_gold_then_prediction": {
+            "supported": {
+              "supported": 4,
+              "contradicted": 1,
+              "unknown": 7
+            },
+            "contradicted": {
+              "supported": 0,
+              "contradicted": 4,
+              "unknown": 8
+            },
+            "unknown": {
+              "supported": 0,
+              "contradicted": 0,
+              "unknown": 6
+            }
+          },
+          "recall": {
+            "numerator": 4,
+            "denominator": 12,
+            "rate": 0.3333
+          },
+          "false_negative_rate_including_abstentions": {
+            "numerator": 8,
+            "denominator": 12,
+            "rate": 0.6667
+          },
+          "false_positive_rate": {
+            "numerator": 1,
+            "denominator": 18,
+            "rate": 0.0556
+          },
+          "false_contradiction_on_supported": {
+            "numerator": 1,
+            "denominator": 12,
+            "rate": 0.0833
+          },
+          "precision": {
+            "numerator": 4,
+            "denominator": 5,
+            "rate": 0.8
+          },
+          "abstention": {
+            "numerator": 21,
+            "denominator": 30,
+            "rate": 0.7
+          },
+          "contradictions_called_supported": 0,
+          "unknowns_called_supported": 0
+        },
+        "model_alone": {
+          "matrix_gold_then_prediction": {
+            "supported": {
+              "supported": 4,
+              "contradicted": 1,
+              "unknown": 7
+            },
+            "contradicted": {
+              "supported": 0,
+              "contradicted": 3,
+              "unknown": 9
+            },
+            "unknown": {
+              "supported": 0,
+              "contradicted": 0,
+              "unknown": 6
+            }
+          },
+          "recall": {
+            "numerator": 3,
+            "denominator": 12,
+            "rate": 0.25
+          },
+          "false_negative_rate_including_abstentions": {
+            "numerator": 9,
+            "denominator": 12,
+            "rate": 0.75
+          },
+          "false_positive_rate": {
+            "numerator": 1,
+            "denominator": 18,
+            "rate": 0.0556
+          },
+          "false_contradiction_on_supported": {
+            "numerator": 1,
+            "denominator": 12,
+            "rate": 0.0833
+          },
+          "precision": {
+            "numerator": 3,
+            "denominator": 4,
+            "rate": 0.75
+          },
+          "abstention": {
+            "numerator": 22,
+            "denominator": 30,
+            "rate": 0.7333
+          },
+          "contradictions_called_supported": 0,
+          "unknowns_called_supported": 0
+        }
+      },
+      "category/payment_direction": {
+        "baseline": {
+          "matrix_gold_then_prediction": {
+            "supported": {
+              "supported": 0,
+              "contradicted": 0,
+              "unknown": 2
+            },
+            "contradicted": {
+              "supported": 0,
+              "contradicted": 0,
+              "unknown": 2
+            },
+            "unknown": {
+              "supported": 0,
+              "contradicted": 0,
+              "unknown": 1
+            }
+          },
+          "recall": {
+            "numerator": 0,
+            "denominator": 2,
+            "rate": 0.0
+          },
+          "false_negative_rate_including_abstentions": {
+            "numerator": 2,
+            "denominator": 2,
+            "rate": 1.0
+          },
+          "false_positive_rate": {
+            "numerator": 0,
+            "denominator": 3,
+            "rate": 0.0
+          },
+          "false_contradiction_on_supported": {
+            "numerator": 0,
+            "denominator": 2,
+            "rate": 0.0
+          },
+          "precision": {
+            "numerator": 0,
+            "denominator": 0,
+            "rate": null
+          },
+          "abstention": {
+            "numerator": 5,
+            "denominator": 5,
+            "rate": 1.0
+          },
+          "contradictions_called_supported": 0,
+          "unknowns_called_supported": 0
+        },
+        "combined_advisory": {
+          "matrix_gold_then_prediction": {
+            "supported": {
+              "supported": 0,
+              "contradicted": 2,
+              "unknown": 0
+            },
+            "contradicted": {
+              "supported": 0,
+              "contradicted": 2,
+              "unknown": 0
+            },
+            "unknown": {
+              "supported": 0,
+              "contradicted": 0,
+              "unknown": 1
+            }
+          },
+          "recall": {
+            "numerator": 2,
+            "denominator": 2,
+            "rate": 1.0
+          },
+          "false_negative_rate_including_abstentions": {
+            "numerator": 0,
+            "denominator": 2,
+            "rate": 0.0
+          },
+          "false_positive_rate": {
+            "numerator": 2,
+            "denominator": 3,
+            "rate": 0.6667
+          },
+          "false_contradiction_on_supported": {
+            "numerator": 2,
+            "denominator": 2,
+            "rate": 1.0
+          },
+          "precision": {
+            "numerator": 2,
+            "denominator": 4,
+            "rate": 0.5
+          },
+          "abstention": {
+            "numerator": 1,
+            "denominator": 5,
+            "rate": 0.2
+          },
+          "contradictions_called_supported": 0,
+          "unknowns_called_supported": 0
+        },
+        "model_alone": {
+          "matrix_gold_then_prediction": {
+            "supported": {
+              "supported": 0,
+              "contradicted": 2,
+              "unknown": 0
+            },
+            "contradicted": {
+              "supported": 0,
+              "contradicted": 2,
+              "unknown": 0
+            },
+            "unknown": {
+              "supported": 0,
+              "contradicted": 0,
+              "unknown": 1
+            }
+          },
+          "recall": {
+            "numerator": 2,
+            "denominator": 2,
+            "rate": 1.0
+          },
+          "false_negative_rate_including_abstentions": {
+            "numerator": 0,
+            "denominator": 2,
+            "rate": 0.0
+          },
+          "false_positive_rate": {
+            "numerator": 2,
+            "denominator": 3,
+            "rate": 0.6667
+          },
+          "false_contradiction_on_supported": {
+            "numerator": 2,
+            "denominator": 2,
+            "rate": 1.0
+          },
+          "precision": {
+            "numerator": 2,
+            "denominator": 4,
+            "rate": 0.5
+          },
+          "abstention": {
+            "numerator": 1,
+            "denominator": 5,
+            "rate": 0.2
+          },
+          "contradictions_called_supported": 0,
+          "unknowns_called_supported": 0
+        }
+      },
+      "category/channel_region_time": {
+        "baseline": {
+          "matrix_gold_then_prediction": {
+            "supported": {
+              "supported": 0,
+              "contradicted": 0,
+              "unknown": 2
+            },
+            "contradicted": {
+              "supported": 0,
+              "contradicted": 0,
+              "unknown": 2
+            },
+            "unknown": {
+              "supported": 0,
+              "contradicted": 0,
+              "unknown": 1
+            }
+          },
+          "recall": {
+            "numerator": 0,
+            "denominator": 2,
+            "rate": 0.0
+          },
+          "false_negative_rate_including_abstentions": {
+            "numerator": 2,
+            "denominator": 2,
+            "rate": 1.0
+          },
+          "false_positive_rate": {
+            "numerator": 0,
+            "denominator": 3,
+            "rate": 0.0
+          },
+          "false_contradiction_on_supported": {
+            "numerator": 0,
+            "denominator": 2,
+            "rate": 0.0
+          },
+          "precision": {
+            "numerator": 0,
+            "denominator": 0,
+            "rate": null
+          },
+          "abstention": {
+            "numerator": 5,
+            "denominator": 5,
+            "rate": 1.0
+          },
+          "contradictions_called_supported": 0,
+          "unknowns_called_supported": 0
+        },
+        "combined_advisory": {
+          "matrix_gold_then_prediction": {
+            "supported": {
+              "supported": 0,
+              "contradicted": 1,
+              "unknown": 1
+            },
+            "contradicted": {
+              "supported": 0,
+              "contradicted": 1,
+              "unknown": 1
+            },
+            "unknown": {
+              "supported": 0,
+              "contradicted": 1,
+              "unknown": 0
+            }
+          },
+          "recall": {
+            "numerator": 1,
+            "denominator": 2,
+            "rate": 0.5
+          },
+          "false_negative_rate_including_abstentions": {
+            "numerator": 1,
+            "denominator": 2,
+            "rate": 0.5
+          },
+          "false_positive_rate": {
+            "numerator": 2,
+            "denominator": 3,
+            "rate": 0.6667
+          },
+          "false_contradiction_on_supported": {
+            "numerator": 1,
+            "denominator": 2,
+            "rate": 0.5
+          },
+          "precision": {
+            "numerator": 1,
+            "denominator": 3,
+            "rate": 0.3333
+          },
+          "abstention": {
+            "numerator": 2,
+            "denominator": 5,
+            "rate": 0.4
+          },
+          "contradictions_called_supported": 0,
+          "unknowns_called_supported": 0
+        },
+        "model_alone": {
+          "matrix_gold_then_prediction": {
+            "supported": {
+              "supported": 0,
+              "contradicted": 1,
+              "unknown": 1
+            },
+            "contradicted": {
+              "supported": 0,
+              "contradicted": 1,
+              "unknown": 1
+            },
+            "unknown": {
+              "supported": 0,
+              "contradicted": 1,
+              "unknown": 0
+            }
+          },
+          "recall": {
+            "numerator": 1,
+            "denominator": 2,
+            "rate": 0.5
+          },
+          "false_negative_rate_including_abstentions": {
+            "numerator": 1,
+            "denominator": 2,
+            "rate": 0.5
+          },
+          "false_positive_rate": {
+            "numerator": 2,
+            "denominator": 3,
+            "rate": 0.6667
+          },
+          "false_contradiction_on_supported": {
+            "numerator": 1,
+            "denominator": 2,
+            "rate": 0.5
+          },
+          "precision": {
+            "numerator": 1,
+            "denominator": 3,
+            "rate": 0.3333
+          },
+          "abstention": {
+            "numerator": 2,
+            "denominator": 5,
+            "rate": 0.4
+          },
+          "contradictions_called_supported": 0,
+          "unknowns_called_supported": 0
+        }
+      },
+      "category/hypothesis_observation": {
+        "baseline": {
+          "matrix_gold_then_prediction": {
+            "supported": {
+              "supported": 0,
+              "contradicted": 0,
+              "unknown": 2
+            },
+            "contradicted": {
+              "supported": 0,
+              "contradicted": 0,
+              "unknown": 2
+            },
+            "unknown": {
+              "supported": 0,
+              "contradicted": 0,
+              "unknown": 1
+            }
+          },
+          "recall": {
+            "numerator": 0,
+            "denominator": 2,
+            "rate": 0.0
+          },
+          "false_negative_rate_including_abstentions": {
+            "numerator": 2,
+            "denominator": 2,
+            "rate": 1.0
+          },
+          "false_positive_rate": {
+            "numerator": 0,
+            "denominator": 3,
+            "rate": 0.0
+          },
+          "false_contradiction_on_supported": {
+            "numerator": 0,
+            "denominator": 2,
+            "rate": 0.0
+          },
+          "precision": {
+            "numerator": 0,
+            "denominator": 0,
+            "rate": null
+          },
+          "abstention": {
+            "numerator": 5,
+            "denominator": 5,
+            "rate": 1.0
+          },
+          "contradictions_called_supported": 0,
+          "unknowns_called_supported": 0
+        },
+        "combined_advisory": {
+          "matrix_gold_then_prediction": {
+            "supported": {
+              "supported": 0,
+              "contradicted": 1,
+              "unknown": 1
+            },
+            "contradicted": {
+              "supported": 0,
+              "contradicted": 1,
+              "unknown": 1
+            },
+            "unknown": {
+              "supported": 0,
+              "contradicted": 0,
+              "unknown": 1
+            }
+          },
+          "recall": {
+            "numerator": 1,
+            "denominator": 2,
+            "rate": 0.5
+          },
+          "false_negative_rate_including_abstentions": {
+            "numerator": 1,
+            "denominator": 2,
+            "rate": 0.5
+          },
+          "false_positive_rate": {
+            "numerator": 1,
+            "denominator": 3,
+            "rate": 0.3333
+          },
+          "false_contradiction_on_supported": {
+            "numerator": 1,
+            "denominator": 2,
+            "rate": 0.5
+          },
+          "precision": {
+            "numerator": 1,
+            "denominator": 2,
+            "rate": 0.5
+          },
+          "abstention": {
+            "numerator": 3,
+            "denominator": 5,
+            "rate": 0.6
+          },
+          "contradictions_called_supported": 0,
+          "unknowns_called_supported": 0
+        },
+        "model_alone": {
+          "matrix_gold_then_prediction": {
+            "supported": {
+              "supported": 0,
+              "contradicted": 1,
+              "unknown": 1
+            },
+            "contradicted": {
+              "supported": 0,
+              "contradicted": 1,
+              "unknown": 1
+            },
+            "unknown": {
+              "supported": 0,
+              "contradicted": 0,
+              "unknown": 1
+            }
+          },
+          "recall": {
+            "numerator": 1,
+            "denominator": 2,
+            "rate": 0.5
+          },
+          "false_negative_rate_including_abstentions": {
+            "numerator": 1,
+            "denominator": 2,
+            "rate": 0.5
+          },
+          "false_positive_rate": {
+            "numerator": 1,
+            "denominator": 3,
+            "rate": 0.3333
+          },
+          "false_contradiction_on_supported": {
+            "numerator": 1,
+            "denominator": 2,
+            "rate": 0.5
+          },
+          "precision": {
+            "numerator": 1,
+            "denominator": 2,
+            "rate": 0.5
+          },
+          "abstention": {
+            "numerator": 3,
+            "denominator": 5,
+            "rate": 0.6
+          },
+          "contradictions_called_supported": 0,
+          "unknowns_called_supported": 0
+        }
+      },
+      "category/negation": {
+        "baseline": {
+          "matrix_gold_then_prediction": {
+            "supported": {
+              "supported": 0,
+              "contradicted": 0,
+              "unknown": 2
+            },
+            "contradicted": {
+              "supported": 0,
+              "contradicted": 0,
+              "unknown": 2
+            },
+            "unknown": {
+              "supported": 0,
+              "contradicted": 0,
+              "unknown": 1
+            }
+          },
+          "recall": {
+            "numerator": 0,
+            "denominator": 2,
+            "rate": 0.0
+          },
+          "false_negative_rate_including_abstentions": {
+            "numerator": 2,
+            "denominator": 2,
+            "rate": 1.0
+          },
+          "false_positive_rate": {
+            "numerator": 0,
+            "denominator": 3,
+            "rate": 0.0
+          },
+          "false_contradiction_on_supported": {
+            "numerator": 0,
+            "denominator": 2,
+            "rate": 0.0
+          },
+          "precision": {
+            "numerator": 0,
+            "denominator": 0,
+            "rate": null
+          },
+          "abstention": {
+            "numerator": 5,
+            "denominator": 5,
+            "rate": 1.0
+          },
+          "contradictions_called_supported": 0,
+          "unknowns_called_supported": 0
+        },
+        "combined_advisory": {
+          "matrix_gold_then_prediction": {
+            "supported": {
+              "supported": 1,
+              "contradicted": 0,
+              "unknown": 1
+            },
+            "contradicted": {
+              "supported": 0,
+              "contradicted": 1,
+              "unknown": 1
+            },
+            "unknown": {
+              "supported": 0,
+              "contradicted": 0,
+              "unknown": 1
+            }
+          },
+          "recall": {
+            "numerator": 1,
+            "denominator": 2,
+            "rate": 0.5
+          },
+          "false_negative_rate_including_abstentions": {
+            "numerator": 1,
+            "denominator": 2,
+            "rate": 0.5
+          },
+          "false_positive_rate": {
+            "numerator": 0,
+            "denominator": 3,
+            "rate": 0.0
+          },
+          "false_contradiction_on_supported": {
+            "numerator": 0,
+            "denominator": 2,
+            "rate": 0.0
+          },
+          "precision": {
+            "numerator": 1,
+            "denominator": 1,
+            "rate": 1.0
+          },
+          "abstention": {
+            "numerator": 3,
+            "denominator": 5,
+            "rate": 0.6
+          },
+          "contradictions_called_supported": 0,
+          "unknowns_called_supported": 0
+        },
+        "model_alone": {
+          "matrix_gold_then_prediction": {
+            "supported": {
+              "supported": 1,
+              "contradicted": 0,
+              "unknown": 1
+            },
+            "contradicted": {
+              "supported": 0,
+              "contradicted": 1,
+              "unknown": 1
+            },
+            "unknown": {
+              "supported": 0,
+              "contradicted": 0,
+              "unknown": 1
+            }
+          },
+          "recall": {
+            "numerator": 1,
+            "denominator": 2,
+            "rate": 0.5
+          },
+          "false_negative_rate_including_abstentions": {
+            "numerator": 1,
+            "denominator": 2,
+            "rate": 0.5
+          },
+          "false_positive_rate": {
+            "numerator": 0,
+            "denominator": 3,
+            "rate": 0.0
+          },
+          "false_contradiction_on_supported": {
+            "numerator": 0,
+            "denominator": 2,
+            "rate": 0.0
+          },
+          "precision": {
+            "numerator": 1,
+            "denominator": 1,
+            "rate": 1.0
+          },
+          "abstention": {
+            "numerator": 3,
+            "denominator": 5,
+            "rate": 0.6
+          },
+          "contradictions_called_supported": 0,
+          "unknowns_called_supported": 0
+        }
+      },
+      "category/price_refund": {
+        "baseline": {
+          "matrix_gold_then_prediction": {
+            "supported": {
+              "supported": 0,
+              "contradicted": 0,
+              "unknown": 2
+            },
+            "contradicted": {
+              "supported": 0,
+              "contradicted": 1,
+              "unknown": 1
+            },
+            "unknown": {
+              "supported": 0,
+              "contradicted": 0,
+              "unknown": 1
+            }
+          },
+          "recall": {
+            "numerator": 1,
+            "denominator": 2,
+            "rate": 0.5
+          },
+          "false_negative_rate_including_abstentions": {
+            "numerator": 1,
+            "denominator": 2,
+            "rate": 0.5
+          },
+          "false_positive_rate": {
+            "numerator": 0,
+            "denominator": 3,
+            "rate": 0.0
+          },
+          "false_contradiction_on_supported": {
+            "numerator": 0,
+            "denominator": 2,
+            "rate": 0.0
+          },
+          "precision": {
+            "numerator": 1,
+            "denominator": 1,
+            "rate": 1.0
+          },
+          "abstention": {
+            "numerator": 4,
+            "denominator": 5,
+            "rate": 0.8
+          },
+          "contradictions_called_supported": 0,
+          "unknowns_called_supported": 0
+        },
+        "combined_advisory": {
+          "matrix_gold_then_prediction": {
+            "supported": {
+              "supported": 2,
+              "contradicted": 0,
+              "unknown": 0
+            },
+            "contradicted": {
+              "supported": 0,
+              "contradicted": 2,
+              "unknown": 0
+            },
+            "unknown": {
+              "supported": 0,
+              "contradicted": 0,
+              "unknown": 1
+            }
+          },
+          "recall": {
+            "numerator": 2,
+            "denominator": 2,
+            "rate": 1.0
+          },
+          "false_negative_rate_including_abstentions": {
+            "numerator": 0,
+            "denominator": 2,
+            "rate": 0.0
+          },
+          "false_positive_rate": {
+            "numerator": 0,
+            "denominator": 3,
+            "rate": 0.0
+          },
+          "false_contradiction_on_supported": {
+            "numerator": 0,
+            "denominator": 2,
+            "rate": 0.0
+          },
+          "precision": {
+            "numerator": 2,
+            "denominator": 2,
+            "rate": 1.0
+          },
+          "abstention": {
+            "numerator": 1,
+            "denominator": 5,
+            "rate": 0.2
+          },
+          "contradictions_called_supported": 0,
+          "unknowns_called_supported": 0
+        },
+        "model_alone": {
+          "matrix_gold_then_prediction": {
+            "supported": {
+              "supported": 2,
+              "contradicted": 0,
+              "unknown": 0
+            },
+            "contradicted": {
+              "supported": 0,
+              "contradicted": 1,
+              "unknown": 1
+            },
+            "unknown": {
+              "supported": 0,
+              "contradicted": 0,
+              "unknown": 1
+            }
+          },
+          "recall": {
+            "numerator": 1,
+            "denominator": 2,
+            "rate": 0.5
+          },
+          "false_negative_rate_including_abstentions": {
+            "numerator": 1,
+            "denominator": 2,
+            "rate": 0.5
+          },
+          "false_positive_rate": {
+            "numerator": 0,
+            "denominator": 3,
+            "rate": 0.0
+          },
+          "false_contradiction_on_supported": {
+            "numerator": 0,
+            "denominator": 2,
+            "rate": 0.0
+          },
+          "precision": {
+            "numerator": 1,
+            "denominator": 1,
+            "rate": 1.0
+          },
+          "abstention": {
+            "numerator": 2,
+            "denominator": 5,
+            "rate": 0.4
+          },
+          "contradictions_called_supported": 0,
+          "unknowns_called_supported": 0
+        }
+      },
+      "category/part_scope": {
+        "baseline": {
+          "matrix_gold_then_prediction": {
+            "supported": {
+              "supported": 0,
+              "contradicted": 0,
+              "unknown": 2
+            },
+            "contradicted": {
+              "supported": 0,
+              "contradicted": 0,
+              "unknown": 2
+            },
+            "unknown": {
+              "supported": 0,
+              "contradicted": 0,
+              "unknown": 1
+            }
+          },
+          "recall": {
+            "numerator": 0,
+            "denominator": 2,
+            "rate": 0.0
+          },
+          "false_negative_rate_including_abstentions": {
+            "numerator": 2,
+            "denominator": 2,
+            "rate": 1.0
+          },
+          "false_positive_rate": {
+            "numerator": 0,
+            "denominator": 3,
+            "rate": 0.0
+          },
+          "false_contradiction_on_supported": {
+            "numerator": 0,
+            "denominator": 2,
+            "rate": 0.0
+          },
+          "precision": {
+            "numerator": 0,
+            "denominator": 0,
+            "rate": null
+          },
+          "abstention": {
+            "numerator": 5,
+            "denominator": 5,
+            "rate": 1.0
+          },
+          "contradictions_called_supported": 0,
+          "unknowns_called_supported": 0
+        },
+        "combined_advisory": {
+          "matrix_gold_then_prediction": {
+            "supported": {
+              "supported": 1,
+              "contradicted": 1,
+              "unknown": 0
+            },
+            "contradicted": {
+              "supported": 0,
+              "contradicted": 2,
+              "unknown": 0
+            },
+            "unknown": {
+              "supported": 0,
+              "contradicted": 0,
+              "unknown": 1
+            }
+          },
+          "recall": {
+            "numerator": 2,
+            "denominator": 2,
+            "rate": 1.0
+          },
+          "false_negative_rate_including_abstentions": {
+            "numerator": 0,
+            "denominator": 2,
+            "rate": 0.0
+          },
+          "false_positive_rate": {
+            "numerator": 1,
+            "denominator": 3,
+            "rate": 0.3333
+          },
+          "false_contradiction_on_supported": {
+            "numerator": 1,
+            "denominator": 2,
+            "rate": 0.5
+          },
+          "precision": {
+            "numerator": 2,
+            "denominator": 3,
+            "rate": 0.6667
+          },
+          "abstention": {
+            "numerator": 1,
+            "denominator": 5,
+            "rate": 0.2
+          },
+          "contradictions_called_supported": 0,
+          "unknowns_called_supported": 0
+        },
+        "model_alone": {
+          "matrix_gold_then_prediction": {
+            "supported": {
+              "supported": 1,
+              "contradicted": 1,
+              "unknown": 0
+            },
+            "contradicted": {
+              "supported": 0,
+              "contradicted": 2,
+              "unknown": 0
+            },
+            "unknown": {
+              "supported": 0,
+              "contradicted": 0,
+              "unknown": 1
+            }
+          },
+          "recall": {
+            "numerator": 2,
+            "denominator": 2,
+            "rate": 1.0
+          },
+          "false_negative_rate_including_abstentions": {
+            "numerator": 0,
+            "denominator": 2,
+            "rate": 0.0
+          },
+          "false_positive_rate": {
+            "numerator": 1,
+            "denominator": 3,
+            "rate": 0.3333
+          },
+          "false_contradiction_on_supported": {
+            "numerator": 1,
+            "denominator": 2,
+            "rate": 0.5
+          },
+          "precision": {
+            "numerator": 2,
+            "denominator": 3,
+            "rate": 0.6667
+          },
+          "abstention": {
+            "numerator": 1,
+            "denominator": 5,
+            "rate": 0.2
+          },
+          "contradictions_called_supported": 0,
+          "unknowns_called_supported": 0
+        }
+      },
+      "category/tax_unit": {
+        "baseline": {
+          "matrix_gold_then_prediction": {
+            "supported": {
+              "supported": 0,
+              "contradicted": 0,
+              "unknown": 2
+            },
+            "contradicted": {
+              "supported": 0,
+              "contradicted": 0,
+              "unknown": 2
+            },
+            "unknown": {
+              "supported": 0,
+              "contradicted": 0,
+              "unknown": 1
+            }
+          },
+          "recall": {
+            "numerator": 0,
+            "denominator": 2,
+            "rate": 0.0
+          },
+          "false_negative_rate_including_abstentions": {
+            "numerator": 2,
+            "denominator": 2,
+            "rate": 1.0
+          },
+          "false_positive_rate": {
+            "numerator": 0,
+            "denominator": 3,
+            "rate": 0.0
+          },
+          "false_contradiction_on_supported": {
+            "numerator": 0,
+            "denominator": 2,
+            "rate": 0.0
+          },
+          "precision": {
+            "numerator": 0,
+            "denominator": 0,
+            "rate": null
+          },
+          "abstention": {
+            "numerator": 5,
+            "denominator": 5,
+            "rate": 1.0
+          },
+          "contradictions_called_supported": 0,
+          "unknowns_called_supported": 0
+        },
+        "combined_advisory": {
+          "matrix_gold_then_prediction": {
+            "supported": {
+              "supported": 1,
+              "contradicted": 0,
+              "unknown": 1
+            },
+            "contradicted": {
+              "supported": 0,
+              "contradicted": 1,
+              "unknown": 1
+            },
+            "unknown": {
+              "supported": 0,
+              "contradicted": 0,
+              "unknown": 1
+            }
+          },
+          "recall": {
+            "numerator": 1,
+            "denominator": 2,
+            "rate": 0.5
+          },
+          "false_negative_rate_including_abstentions": {
+            "numerator": 1,
+            "denominator": 2,
+            "rate": 0.5
+          },
+          "false_positive_rate": {
+            "numerator": 0,
+            "denominator": 3,
+            "rate": 0.0
+          },
+          "false_contradiction_on_supported": {
+            "numerator": 0,
+            "denominator": 2,
+            "rate": 0.0
+          },
+          "precision": {
+            "numerator": 1,
+            "denominator": 1,
+            "rate": 1.0
+          },
+          "abstention": {
+            "numerator": 3,
+            "denominator": 5,
+            "rate": 0.6
+          },
+          "contradictions_called_supported": 0,
+          "unknowns_called_supported": 0
+        },
+        "model_alone": {
+          "matrix_gold_then_prediction": {
+            "supported": {
+              "supported": 1,
+              "contradicted": 0,
+              "unknown": 1
+            },
+            "contradicted": {
+              "supported": 0,
+              "contradicted": 1,
+              "unknown": 1
+            },
+            "unknown": {
+              "supported": 0,
+              "contradicted": 0,
+              "unknown": 1
+            }
+          },
+          "recall": {
+            "numerator": 1,
+            "denominator": 2,
+            "rate": 0.5
+          },
+          "false_negative_rate_including_abstentions": {
+            "numerator": 1,
+            "denominator": 2,
+            "rate": 0.5
+          },
+          "false_positive_rate": {
+            "numerator": 0,
+            "denominator": 3,
+            "rate": 0.0
+          },
+          "false_contradiction_on_supported": {
+            "numerator": 0,
+            "denominator": 2,
+            "rate": 0.0
+          },
+          "precision": {
+            "numerator": 1,
+            "denominator": 1,
+            "rate": 1.0
+          },
+          "abstention": {
+            "numerator": 3,
+            "denominator": 5,
+            "rate": 0.6
+          },
+          "contradictions_called_supported": 0,
+          "unknowns_called_supported": 0
+        }
+      },
+      "category/performance": {
+        "baseline": {
+          "matrix_gold_then_prediction": {
+            "supported": {
+              "supported": 0,
+              "contradicted": 0,
+              "unknown": 2
+            },
+            "contradicted": {
+              "supported": 0,
+              "contradicted": 0,
+              "unknown": 2
+            },
+            "unknown": {
+              "supported": 0,
+              "contradicted": 0,
+              "unknown": 1
+            }
+          },
+          "recall": {
+            "numerator": 0,
+            "denominator": 2,
+            "rate": 0.0
+          },
+          "false_negative_rate_including_abstentions": {
+            "numerator": 2,
+            "denominator": 2,
+            "rate": 1.0
+          },
+          "false_positive_rate": {
+            "numerator": 0,
+            "denominator": 3,
+            "rate": 0.0
+          },
+          "false_contradiction_on_supported": {
+            "numerator": 0,
+            "denominator": 2,
+            "rate": 0.0
+          },
+          "precision": {
+            "numerator": 0,
+            "denominator": 0,
+            "rate": null
+          },
+          "abstention": {
+            "numerator": 5,
+            "denominator": 5,
+            "rate": 1.0
+          },
+          "contradictions_called_supported": 0,
+          "unknowns_called_supported": 0
+        },
+        "combined_advisory": {
+          "matrix_gold_then_prediction": {
+            "supported": {
+              "supported": 1,
+              "contradicted": 0,
+              "unknown": 1
+            },
+            "contradicted": {
+              "supported": 0,
+              "contradicted": 1,
+              "unknown": 1
+            },
+            "unknown": {
+              "supported": 0,
+              "contradicted": 0,
+              "unknown": 1
+            }
+          },
+          "recall": {
+            "numerator": 1,
+            "denominator": 2,
+            "rate": 0.5
+          },
+          "false_negative_rate_including_abstentions": {
+            "numerator": 1,
+            "denominator": 2,
+            "rate": 0.5
+          },
+          "false_positive_rate": {
+            "numerator": 0,
+            "denominator": 3,
+            "rate": 0.0
+          },
+          "false_contradiction_on_supported": {
+            "numerator": 0,
+            "denominator": 2,
+            "rate": 0.0
+          },
+          "precision": {
+            "numerator": 1,
+            "denominator": 1,
+            "rate": 1.0
+          },
+          "abstention": {
+            "numerator": 3,
+            "denominator": 5,
+            "rate": 0.6
+          },
+          "contradictions_called_supported": 0,
+          "unknowns_called_supported": 0
+        },
+        "model_alone": {
+          "matrix_gold_then_prediction": {
+            "supported": {
+              "supported": 1,
+              "contradicted": 0,
+              "unknown": 1
+            },
+            "contradicted": {
+              "supported": 0,
+              "contradicted": 1,
+              "unknown": 1
+            },
+            "unknown": {
+              "supported": 0,
+              "contradicted": 0,
+              "unknown": 1
+            }
+          },
+          "recall": {
+            "numerator": 1,
+            "denominator": 2,
+            "rate": 0.5
+          },
+          "false_negative_rate_including_abstentions": {
+            "numerator": 1,
+            "denominator": 2,
+            "rate": 0.5
+          },
+          "false_positive_rate": {
+            "numerator": 0,
+            "denominator": 3,
+            "rate": 0.0
+          },
+          "false_contradiction_on_supported": {
+            "numerator": 0,
+            "denominator": 2,
+            "rate": 0.0
+          },
+          "precision": {
+            "numerator": 1,
+            "denominator": 1,
+            "rate": 1.0
+          },
+          "abstention": {
+            "numerator": 3,
+            "denominator": 5,
+            "rate": 0.6
+          },
+          "contradictions_called_supported": 0,
+          "unknowns_called_supported": 0
+        }
+      },
+      "category/availability": {
+        "baseline": {
+          "matrix_gold_then_prediction": {
+            "supported": {
+              "supported": 0,
+              "contradicted": 0,
+              "unknown": 2
+            },
+            "contradicted": {
+              "supported": 0,
+              "contradicted": 0,
+              "unknown": 2
+            },
+            "unknown": {
+              "supported": 0,
+              "contradicted": 0,
+              "unknown": 1
+            }
+          },
+          "recall": {
+            "numerator": 0,
+            "denominator": 2,
+            "rate": 0.0
+          },
+          "false_negative_rate_including_abstentions": {
+            "numerator": 2,
+            "denominator": 2,
+            "rate": 1.0
+          },
+          "false_positive_rate": {
+            "numerator": 0,
+            "denominator": 3,
+            "rate": 0.0
+          },
+          "false_contradiction_on_supported": {
+            "numerator": 0,
+            "denominator": 2,
+            "rate": 0.0
+          },
+          "precision": {
+            "numerator": 0,
+            "denominator": 0,
+            "rate": null
+          },
+          "abstention": {
+            "numerator": 5,
+            "denominator": 5,
+            "rate": 1.0
+          },
+          "contradictions_called_supported": 0,
+          "unknowns_called_supported": 0
+        },
+        "combined_advisory": {
+          "matrix_gold_then_prediction": {
+            "supported": {
+              "supported": 2,
+              "contradicted": 0,
+              "unknown": 0
+            },
+            "contradicted": {
+              "supported": 0,
+              "contradicted": 2,
+              "unknown": 0
+            },
+            "unknown": {
+              "supported": 0,
+              "contradicted": 0,
+              "unknown": 1
+            }
+          },
+          "recall": {
+            "numerator": 2,
+            "denominator": 2,
+            "rate": 1.0
+          },
+          "false_negative_rate_including_abstentions": {
+            "numerator": 0,
+            "denominator": 2,
+            "rate": 0.0
+          },
+          "false_positive_rate": {
+            "numerator": 0,
+            "denominator": 3,
+            "rate": 0.0
+          },
+          "false_contradiction_on_supported": {
+            "numerator": 0,
+            "denominator": 2,
+            "rate": 0.0
+          },
+          "precision": {
+            "numerator": 2,
+            "denominator": 2,
+            "rate": 1.0
+          },
+          "abstention": {
+            "numerator": 1,
+            "denominator": 5,
+            "rate": 0.2
+          },
+          "contradictions_called_supported": 0,
+          "unknowns_called_supported": 0
+        },
+        "model_alone": {
+          "matrix_gold_then_prediction": {
+            "supported": {
+              "supported": 2,
+              "contradicted": 0,
+              "unknown": 0
+            },
+            "contradicted": {
+              "supported": 0,
+              "contradicted": 2,
+              "unknown": 0
+            },
+            "unknown": {
+              "supported": 0,
+              "contradicted": 0,
+              "unknown": 1
+            }
+          },
+          "recall": {
+            "numerator": 2,
+            "denominator": 2,
+            "rate": 1.0
+          },
+          "false_negative_rate_including_abstentions": {
+            "numerator": 0,
+            "denominator": 2,
+            "rate": 0.0
+          },
+          "false_positive_rate": {
+            "numerator": 0,
+            "denominator": 3,
+            "rate": 0.0
+          },
+          "false_contradiction_on_supported": {
+            "numerator": 0,
+            "denominator": 2,
+            "rate": 0.0
+          },
+          "precision": {
+            "numerator": 2,
+            "denominator": 2,
+            "rate": 1.0
+          },
+          "abstention": {
+            "numerator": 1,
+            "denominator": 5,
+            "rate": 0.2
+          },
+          "contradictions_called_supported": 0,
+          "unknowns_called_supported": 0
+        }
+      }
+    },
+    "stress-inputs": {
+      "all": {
+        "baseline": {
+          "matrix_gold_then_prediction": {
+            "supported": {
+              "supported": 0,
+              "contradicted": 0,
+              "unknown": 6
+            },
+            "contradicted": {
+              "supported": 0,
+              "contradicted": 0,
+              "unknown": 6
+            },
+            "unknown": {
+              "supported": 0,
+              "contradicted": 1,
+              "unknown": 11
+            }
+          },
+          "recall": {
+            "numerator": 0,
+            "denominator": 6,
+            "rate": 0.0
+          },
+          "false_negative_rate_including_abstentions": {
+            "numerator": 6,
+            "denominator": 6,
+            "rate": 1.0
+          },
+          "false_positive_rate": {
+            "numerator": 1,
+            "denominator": 18,
+            "rate": 0.0556
+          },
+          "false_contradiction_on_supported": {
+            "numerator": 0,
+            "denominator": 6,
+            "rate": 0.0
+          },
+          "precision": {
+            "numerator": 0,
+            "denominator": 1,
+            "rate": 0.0
+          },
+          "abstention": {
+            "numerator": 23,
+            "denominator": 24,
+            "rate": 0.9583
+          },
+          "contradictions_called_supported": 0,
+          "unknowns_called_supported": 0
+        },
+        "combined_advisory": {
+          "matrix_gold_then_prediction": {
+            "supported": {
+              "supported": 2,
+              "contradicted": 1,
+              "unknown": 3
+            },
+            "contradicted": {
+              "supported": 0,
+              "contradicted": 6,
+              "unknown": 0
+            },
+            "unknown": {
+              "supported": 0,
+              "contradicted": 7,
+              "unknown": 5
+            }
+          },
+          "recall": {
+            "numerator": 6,
+            "denominator": 6,
+            "rate": 1.0
+          },
+          "false_negative_rate_including_abstentions": {
+            "numerator": 0,
+            "denominator": 6,
+            "rate": 0.0
+          },
+          "false_positive_rate": {
+            "numerator": 8,
+            "denominator": 18,
+            "rate": 0.4444
+          },
+          "false_contradiction_on_supported": {
+            "numerator": 1,
+            "denominator": 6,
+            "rate": 0.1667
+          },
+          "precision": {
+            "numerator": 6,
+            "denominator": 14,
+            "rate": 0.4286
+          },
+          "abstention": {
+            "numerator": 8,
+            "denominator": 24,
+            "rate": 0.3333
+          },
+          "contradictions_called_supported": 0,
+          "unknowns_called_supported": 0
+        },
+        "model_alone": {
+          "matrix_gold_then_prediction": {
+            "supported": {
+              "supported": 2,
+              "contradicted": 1,
+              "unknown": 3
+            },
+            "contradicted": {
+              "supported": 0,
+              "contradicted": 6,
+              "unknown": 0
+            },
+            "unknown": {
+              "supported": 0,
+              "contradicted": 6,
+              "unknown": 6
+            }
+          },
+          "recall": {
+            "numerator": 6,
+            "denominator": 6,
+            "rate": 1.0
+          },
+          "false_negative_rate_including_abstentions": {
+            "numerator": 0,
+            "denominator": 6,
+            "rate": 0.0
+          },
+          "false_positive_rate": {
+            "numerator": 7,
+            "denominator": 18,
+            "rate": 0.3889
+          },
+          "false_contradiction_on_supported": {
+            "numerator": 1,
+            "denominator": 6,
+            "rate": 0.1667
+          },
+          "precision": {
+            "numerator": 6,
+            "denominator": 13,
+            "rate": 0.4615
+          },
+          "abstention": {
+            "numerator": 9,
+            "denominator": 24,
+            "rate": 0.375
+          },
+          "contradictions_called_supported": 0,
+          "unknowns_called_supported": 0
+        }
+      },
+      "language/vi": {
+        "baseline": {
+          "matrix_gold_then_prediction": {
+            "supported": {
+              "supported": 0,
+              "contradicted": 0,
+              "unknown": 6
+            },
+            "contradicted": {
+              "supported": 0,
+              "contradicted": 0,
+              "unknown": 0
+            },
+            "unknown": {
+              "supported": 0,
+              "contradicted": 1,
+              "unknown": 5
+            }
+          },
+          "recall": {
+            "numerator": 0,
+            "denominator": 0,
+            "rate": null
+          },
+          "false_negative_rate_including_abstentions": {
+            "numerator": 0,
+            "denominator": 0,
+            "rate": null
+          },
+          "false_positive_rate": {
+            "numerator": 1,
+            "denominator": 12,
+            "rate": 0.0833
+          },
+          "false_contradiction_on_supported": {
+            "numerator": 0,
+            "denominator": 6,
+            "rate": 0.0
+          },
+          "precision": {
+            "numerator": 0,
+            "denominator": 1,
+            "rate": 0.0
+          },
+          "abstention": {
+            "numerator": 11,
+            "denominator": 12,
+            "rate": 0.9167
+          },
+          "contradictions_called_supported": 0,
+          "unknowns_called_supported": 0
+        },
+        "combined_advisory": {
+          "matrix_gold_then_prediction": {
+            "supported": {
+              "supported": 2,
+              "contradicted": 1,
+              "unknown": 3
+            },
+            "contradicted": {
+              "supported": 0,
+              "contradicted": 0,
+              "unknown": 0
+            },
+            "unknown": {
+              "supported": 0,
+              "contradicted": 4,
+              "unknown": 2
+            }
+          },
+          "recall": {
+            "numerator": 0,
+            "denominator": 0,
+            "rate": null
+          },
+          "false_negative_rate_including_abstentions": {
+            "numerator": 0,
+            "denominator": 0,
+            "rate": null
+          },
+          "false_positive_rate": {
+            "numerator": 5,
+            "denominator": 12,
+            "rate": 0.4167
+          },
+          "false_contradiction_on_supported": {
+            "numerator": 1,
+            "denominator": 6,
+            "rate": 0.1667
+          },
+          "precision": {
+            "numerator": 0,
+            "denominator": 5,
+            "rate": 0.0
+          },
+          "abstention": {
+            "numerator": 5,
+            "denominator": 12,
+            "rate": 0.4167
+          },
+          "contradictions_called_supported": 0,
+          "unknowns_called_supported": 0
+        },
+        "model_alone": {
+          "matrix_gold_then_prediction": {
+            "supported": {
+              "supported": 2,
+              "contradicted": 1,
+              "unknown": 3
+            },
+            "contradicted": {
+              "supported": 0,
+              "contradicted": 0,
+              "unknown": 0
+            },
+            "unknown": {
+              "supported": 0,
+              "contradicted": 3,
+              "unknown": 3
+            }
+          },
+          "recall": {
+            "numerator": 0,
+            "denominator": 0,
+            "rate": null
+          },
+          "false_negative_rate_including_abstentions": {
+            "numerator": 0,
+            "denominator": 0,
+            "rate": null
+          },
+          "false_positive_rate": {
+            "numerator": 4,
+            "denominator": 12,
+            "rate": 0.3333
+          },
+          "false_contradiction_on_supported": {
+            "numerator": 1,
+            "denominator": 6,
+            "rate": 0.1667
+          },
+          "precision": {
+            "numerator": 0,
+            "denominator": 4,
+            "rate": 0.0
+          },
+          "abstention": {
+            "numerator": 6,
+            "denominator": 12,
+            "rate": 0.5
+          },
+          "contradictions_called_supported": 0,
+          "unknowns_called_supported": 0
+        }
+      },
+      "category/tax_unit": {
+        "baseline": {
+          "matrix_gold_then_prediction": {
+            "supported": {
+              "supported": 0,
+              "contradicted": 0,
+              "unknown": 1
+            },
+            "contradicted": {
+              "supported": 0,
+              "contradicted": 0,
+              "unknown": 0
+            },
+            "unknown": {
+              "supported": 0,
+              "contradicted": 0,
+              "unknown": 1
+            }
+          },
+          "recall": {
+            "numerator": 0,
+            "denominator": 0,
+            "rate": null
+          },
+          "false_negative_rate_including_abstentions": {
+            "numerator": 0,
+            "denominator": 0,
+            "rate": null
+          },
+          "false_positive_rate": {
+            "numerator": 0,
+            "denominator": 2,
+            "rate": 0.0
+          },
+          "false_contradiction_on_supported": {
+            "numerator": 0,
+            "denominator": 1,
+            "rate": 0.0
+          },
+          "precision": {
+            "numerator": 0,
+            "denominator": 0,
+            "rate": null
+          },
+          "abstention": {
+            "numerator": 2,
+            "denominator": 2,
+            "rate": 1.0
+          },
+          "contradictions_called_supported": 0,
+          "unknowns_called_supported": 0
+        },
+        "combined_advisory": {
+          "matrix_gold_then_prediction": {
+            "supported": {
+              "supported": 0,
+              "contradicted": 0,
+              "unknown": 1
+            },
+            "contradicted": {
+              "supported": 0,
+              "contradicted": 0,
+              "unknown": 0
+            },
+            "unknown": {
+              "supported": 0,
+              "contradicted": 0,
+              "unknown": 1
+            }
+          },
+          "recall": {
+            "numerator": 0,
+            "denominator": 0,
+            "rate": null
+          },
+          "false_negative_rate_including_abstentions": {
+            "numerator": 0,
+            "denominator": 0,
+            "rate": null
+          },
+          "false_positive_rate": {
+            "numerator": 0,
+            "denominator": 2,
+            "rate": 0.0
+          },
+          "false_contradiction_on_supported": {
+            "numerator": 0,
+            "denominator": 1,
+            "rate": 0.0
+          },
+          "precision": {
+            "numerator": 0,
+            "denominator": 0,
+            "rate": null
+          },
+          "abstention": {
+            "numerator": 2,
+            "denominator": 2,
+            "rate": 1.0
+          },
+          "contradictions_called_supported": 0,
+          "unknowns_called_supported": 0
+        },
+        "model_alone": {
+          "matrix_gold_then_prediction": {
+            "supported": {
+              "supported": 0,
+              "contradicted": 0,
+              "unknown": 1
+            },
+            "contradicted": {
+              "supported": 0,
+              "contradicted": 0,
+              "unknown": 0
+            },
+            "unknown": {
+              "supported": 0,
+              "contradicted": 0,
+              "unknown": 1
+            }
+          },
+          "recall": {
+            "numerator": 0,
+            "denominator": 0,
+            "rate": null
+          },
+          "false_negative_rate_including_abstentions": {
+            "numerator": 0,
+            "denominator": 0,
+            "rate": null
+          },
+          "false_positive_rate": {
+            "numerator": 0,
+            "denominator": 2,
+            "rate": 0.0
+          },
+          "false_contradiction_on_supported": {
+            "numerator": 0,
+            "denominator": 1,
+            "rate": 0.0
+          },
+          "precision": {
+            "numerator": 0,
+            "denominator": 0,
+            "rate": null
+          },
+          "abstention": {
+            "numerator": 2,
+            "denominator": 2,
+            "rate": 1.0
+          },
+          "contradictions_called_supported": 0,
+          "unknowns_called_supported": 0
+        }
+      },
+      "category/price_refund": {
+        "baseline": {
+          "matrix_gold_then_prediction": {
+            "supported": {
+              "supported": 0,
+              "contradicted": 0,
+              "unknown": 0
+            },
+            "contradicted": {
+              "supported": 0,
+              "contradicted": 0,
+              "unknown": 1
+            },
+            "unknown": {
+              "supported": 0,
+              "contradicted": 0,
+              "unknown": 1
+            }
+          },
+          "recall": {
+            "numerator": 0,
+            "denominator": 1,
+            "rate": 0.0
+          },
+          "false_negative_rate_including_abstentions": {
+            "numerator": 1,
+            "denominator": 1,
+            "rate": 1.0
+          },
+          "false_positive_rate": {
+            "numerator": 0,
+            "denominator": 1,
+            "rate": 0.0
+          },
+          "false_contradiction_on_supported": {
+            "numerator": 0,
+            "denominator": 0,
+            "rate": null
+          },
+          "precision": {
+            "numerator": 0,
+            "denominator": 0,
+            "rate": null
+          },
+          "abstention": {
+            "numerator": 2,
+            "denominator": 2,
+            "rate": 1.0
+          },
+          "contradictions_called_supported": 0,
+          "unknowns_called_supported": 0
+        },
+        "combined_advisory": {
+          "matrix_gold_then_prediction": {
+            "supported": {
+              "supported": 0,
+              "contradicted": 0,
+              "unknown": 0
+            },
+            "contradicted": {
+              "supported": 0,
+              "contradicted": 1,
+              "unknown": 0
+            },
+            "unknown": {
+              "supported": 0,
+              "contradicted": 1,
+              "unknown": 0
+            }
+          },
+          "recall": {
+            "numerator": 1,
+            "denominator": 1,
+            "rate": 1.0
+          },
+          "false_negative_rate_including_abstentions": {
+            "numerator": 0,
+            "denominator": 1,
+            "rate": 0.0
+          },
+          "false_positive_rate": {
+            "numerator": 1,
+            "denominator": 1,
+            "rate": 1.0
+          },
+          "false_contradiction_on_supported": {
+            "numerator": 0,
+            "denominator": 0,
+            "rate": null
+          },
+          "precision": {
+            "numerator": 1,
+            "denominator": 2,
+            "rate": 0.5
+          },
+          "abstention": {
+            "numerator": 0,
+            "denominator": 2,
+            "rate": 0.0
+          },
+          "contradictions_called_supported": 0,
+          "unknowns_called_supported": 0
+        },
+        "model_alone": {
+          "matrix_gold_then_prediction": {
+            "supported": {
+              "supported": 0,
+              "contradicted": 0,
+              "unknown": 0
+            },
+            "contradicted": {
+              "supported": 0,
+              "contradicted": 1,
+              "unknown": 0
+            },
+            "unknown": {
+              "supported": 0,
+              "contradicted": 1,
+              "unknown": 0
+            }
+          },
+          "recall": {
+            "numerator": 1,
+            "denominator": 1,
+            "rate": 1.0
+          },
+          "false_negative_rate_including_abstentions": {
+            "numerator": 0,
+            "denominator": 1,
+            "rate": 0.0
+          },
+          "false_positive_rate": {
+            "numerator": 1,
+            "denominator": 1,
+            "rate": 1.0
+          },
+          "false_contradiction_on_supported": {
+            "numerator": 0,
+            "denominator": 0,
+            "rate": null
+          },
+          "precision": {
+            "numerator": 1,
+            "denominator": 2,
+            "rate": 0.5
+          },
+          "abstention": {
+            "numerator": 0,
+            "denominator": 2,
+            "rate": 0.0
+          },
+          "contradictions_called_supported": 0,
+          "unknowns_called_supported": 0
+        }
+      },
+      "category/negation": {
+        "baseline": {
+          "matrix_gold_then_prediction": {
+            "supported": {
+              "supported": 0,
+              "contradicted": 0,
+              "unknown": 0
+            },
+            "contradicted": {
+              "supported": 0,
+              "contradicted": 0,
+              "unknown": 1
+            },
+            "unknown": {
+              "supported": 0,
+              "contradicted": 0,
+              "unknown": 1
+            }
+          },
+          "recall": {
+            "numerator": 0,
+            "denominator": 1,
+            "rate": 0.0
+          },
+          "false_negative_rate_including_abstentions": {
+            "numerator": 1,
+            "denominator": 1,
+            "rate": 1.0
+          },
+          "false_positive_rate": {
+            "numerator": 0,
+            "denominator": 1,
+            "rate": 0.0
+          },
+          "false_contradiction_on_supported": {
+            "numerator": 0,
+            "denominator": 0,
+            "rate": null
+          },
+          "precision": {
+            "numerator": 0,
+            "denominator": 0,
+            "rate": null
+          },
+          "abstention": {
+            "numerator": 2,
+            "denominator": 2,
+            "rate": 1.0
+          },
+          "contradictions_called_supported": 0,
+          "unknowns_called_supported": 0
+        },
+        "combined_advisory": {
+          "matrix_gold_then_prediction": {
+            "supported": {
+              "supported": 0,
+              "contradicted": 0,
+              "unknown": 0
+            },
+            "contradicted": {
+              "supported": 0,
+              "contradicted": 1,
+              "unknown": 0
+            },
+            "unknown": {
+              "supported": 0,
+              "contradicted": 0,
+              "unknown": 1
+            }
+          },
+          "recall": {
+            "numerator": 1,
+            "denominator": 1,
+            "rate": 1.0
+          },
+          "false_negative_rate_including_abstentions": {
+            "numerator": 0,
+            "denominator": 1,
+            "rate": 0.0
+          },
+          "false_positive_rate": {
+            "numerator": 0,
+            "denominator": 1,
+            "rate": 0.0
+          },
+          "false_contradiction_on_supported": {
+            "numerator": 0,
+            "denominator": 0,
+            "rate": null
+          },
+          "precision": {
+            "numerator": 1,
+            "denominator": 1,
+            "rate": 1.0
+          },
+          "abstention": {
+            "numerator": 1,
+            "denominator": 2,
+            "rate": 0.5
+          },
+          "contradictions_called_supported": 0,
+          "unknowns_called_supported": 0
+        },
+        "model_alone": {
+          "matrix_gold_then_prediction": {
+            "supported": {
+              "supported": 0,
+              "contradicted": 0,
+              "unknown": 0
+            },
+            "contradicted": {
+              "supported": 0,
+              "contradicted": 1,
+              "unknown": 0
+            },
+            "unknown": {
+              "supported": 0,
+              "contradicted": 0,
+              "unknown": 1
+            }
+          },
+          "recall": {
+            "numerator": 1,
+            "denominator": 1,
+            "rate": 1.0
+          },
+          "false_negative_rate_including_abstentions": {
+            "numerator": 0,
+            "denominator": 1,
+            "rate": 0.0
+          },
+          "false_positive_rate": {
+            "numerator": 0,
+            "denominator": 1,
+            "rate": 0.0
+          },
+          "false_contradiction_on_supported": {
+            "numerator": 0,
+            "denominator": 0,
+            "rate": null
+          },
+          "precision": {
+            "numerator": 1,
+            "denominator": 1,
+            "rate": 1.0
+          },
+          "abstention": {
+            "numerator": 1,
+            "denominator": 2,
+            "rate": 0.5
+          },
+          "contradictions_called_supported": 0,
+          "unknowns_called_supported": 0
+        }
+      },
+      "language/en": {
+        "baseline": {
+          "matrix_gold_then_prediction": {
+            "supported": {
+              "supported": 0,
+              "contradicted": 0,
+              "unknown": 0
+            },
+            "contradicted": {
+              "supported": 0,
+              "contradicted": 0,
+              "unknown": 6
+            },
+            "unknown": {
+              "supported": 0,
+              "contradicted": 0,
+              "unknown": 6
+            }
+          },
+          "recall": {
+            "numerator": 0,
+            "denominator": 6,
+            "rate": 0.0
+          },
+          "false_negative_rate_including_abstentions": {
+            "numerator": 6,
+            "denominator": 6,
+            "rate": 1.0
+          },
+          "false_positive_rate": {
+            "numerator": 0,
+            "denominator": 6,
+            "rate": 0.0
+          },
+          "false_contradiction_on_supported": {
+            "numerator": 0,
+            "denominator": 0,
+            "rate": null
+          },
+          "precision": {
+            "numerator": 0,
+            "denominator": 0,
+            "rate": null
+          },
+          "abstention": {
+            "numerator": 12,
+            "denominator": 12,
+            "rate": 1.0
+          },
+          "contradictions_called_supported": 0,
+          "unknowns_called_supported": 0
+        },
+        "combined_advisory": {
+          "matrix_gold_then_prediction": {
+            "supported": {
+              "supported": 0,
+              "contradicted": 0,
+              "unknown": 0
+            },
+            "contradicted": {
+              "supported": 0,
+              "contradicted": 6,
+              "unknown": 0
+            },
+            "unknown": {
+              "supported": 0,
+              "contradicted": 3,
+              "unknown": 3
+            }
+          },
+          "recall": {
+            "numerator": 6,
+            "denominator": 6,
+            "rate": 1.0
+          },
+          "false_negative_rate_including_abstentions": {
+            "numerator": 0,
+            "denominator": 6,
+            "rate": 0.0
+          },
+          "false_positive_rate": {
+            "numerator": 3,
+            "denominator": 6,
+            "rate": 0.5
+          },
+          "false_contradiction_on_supported": {
+            "numerator": 0,
+            "denominator": 0,
+            "rate": null
+          },
+          "precision": {
+            "numerator": 6,
+            "denominator": 9,
+            "rate": 0.6667
+          },
+          "abstention": {
+            "numerator": 3,
+            "denominator": 12,
+            "rate": 0.25
+          },
+          "contradictions_called_supported": 0,
+          "unknowns_called_supported": 0
+        },
+        "model_alone": {
+          "matrix_gold_then_prediction": {
+            "supported": {
+              "supported": 0,
+              "contradicted": 0,
+              "unknown": 0
+            },
+            "contradicted": {
+              "supported": 0,
+              "contradicted": 6,
+              "unknown": 0
+            },
+            "unknown": {
+              "supported": 0,
+              "contradicted": 3,
+              "unknown": 3
+            }
+          },
+          "recall": {
+            "numerator": 6,
+            "denominator": 6,
+            "rate": 1.0
+          },
+          "false_negative_rate_including_abstentions": {
+            "numerator": 0,
+            "denominator": 6,
+            "rate": 0.0
+          },
+          "false_positive_rate": {
+            "numerator": 3,
+            "denominator": 6,
+            "rate": 0.5
+          },
+          "false_contradiction_on_supported": {
+            "numerator": 0,
+            "denominator": 0,
+            "rate": null
+          },
+          "precision": {
+            "numerator": 6,
+            "denominator": 9,
+            "rate": 0.6667
+          },
+          "abstention": {
+            "numerator": 3,
+            "denominator": 12,
+            "rate": 0.25
+          },
+          "contradictions_called_supported": 0,
+          "unknowns_called_supported": 0
+        }
+      },
+      "category/availability": {
+        "baseline": {
+          "matrix_gold_then_prediction": {
+            "supported": {
+              "supported": 0,
+              "contradicted": 0,
+              "unknown": 0
+            },
+            "contradicted": {
+              "supported": 0,
+              "contradicted": 0,
+              "unknown": 1
+            },
+            "unknown": {
+              "supported": 0,
+              "contradicted": 0,
+              "unknown": 1
+            }
+          },
+          "recall": {
+            "numerator": 0,
+            "denominator": 1,
+            "rate": 0.0
+          },
+          "false_negative_rate_including_abstentions": {
+            "numerator": 1,
+            "denominator": 1,
+            "rate": 1.0
+          },
+          "false_positive_rate": {
+            "numerator": 0,
+            "denominator": 1,
+            "rate": 0.0
+          },
+          "false_contradiction_on_supported": {
+            "numerator": 0,
+            "denominator": 0,
+            "rate": null
+          },
+          "precision": {
+            "numerator": 0,
+            "denominator": 0,
+            "rate": null
+          },
+          "abstention": {
+            "numerator": 2,
+            "denominator": 2,
+            "rate": 1.0
+          },
+          "contradictions_called_supported": 0,
+          "unknowns_called_supported": 0
+        },
+        "combined_advisory": {
+          "matrix_gold_then_prediction": {
+            "supported": {
+              "supported": 0,
+              "contradicted": 0,
+              "unknown": 0
+            },
+            "contradicted": {
+              "supported": 0,
+              "contradicted": 1,
+              "unknown": 0
+            },
+            "unknown": {
+              "supported": 0,
+              "contradicted": 0,
+              "unknown": 1
+            }
+          },
+          "recall": {
+            "numerator": 1,
+            "denominator": 1,
+            "rate": 1.0
+          },
+          "false_negative_rate_including_abstentions": {
+            "numerator": 0,
+            "denominator": 1,
+            "rate": 0.0
+          },
+          "false_positive_rate": {
+            "numerator": 0,
+            "denominator": 1,
+            "rate": 0.0
+          },
+          "false_contradiction_on_supported": {
+            "numerator": 0,
+            "denominator": 0,
+            "rate": null
+          },
+          "precision": {
+            "numerator": 1,
+            "denominator": 1,
+            "rate": 1.0
+          },
+          "abstention": {
+            "numerator": 1,
+            "denominator": 2,
+            "rate": 0.5
+          },
+          "contradictions_called_supported": 0,
+          "unknowns_called_supported": 0
+        },
+        "model_alone": {
+          "matrix_gold_then_prediction": {
+            "supported": {
+              "supported": 0,
+              "contradicted": 0,
+              "unknown": 0
+            },
+            "contradicted": {
+              "supported": 0,
+              "contradicted": 1,
+              "unknown": 0
+            },
+            "unknown": {
+              "supported": 0,
+              "contradicted": 0,
+              "unknown": 1
+            }
+          },
+          "recall": {
+            "numerator": 1,
+            "denominator": 1,
+            "rate": 1.0
+          },
+          "false_negative_rate_including_abstentions": {
+            "numerator": 0,
+            "denominator": 1,
+            "rate": 0.0
+          },
+          "false_positive_rate": {
+            "numerator": 0,
+            "denominator": 1,
+            "rate": 0.0
+          },
+          "false_contradiction_on_supported": {
+            "numerator": 0,
+            "denominator": 0,
+            "rate": null
+          },
+          "precision": {
+            "numerator": 1,
+            "denominator": 1,
+            "rate": 1.0
+          },
+          "abstention": {
+            "numerator": 1,
+            "denominator": 2,
+            "rate": 0.5
+          },
+          "contradictions_called_supported": 0,
+          "unknowns_called_supported": 0
+        }
+      },
+      "category/hypothesis_observation": {
+        "baseline": {
+          "matrix_gold_then_prediction": {
+            "supported": {
+              "supported": 0,
+              "contradicted": 0,
+              "unknown": 1
+            },
+            "contradicted": {
+              "supported": 0,
+              "contradicted": 0,
+              "unknown": 0
+            },
+            "unknown": {
+              "supported": 0,
+              "contradicted": 0,
+              "unknown": 1
+            }
+          },
+          "recall": {
+            "numerator": 0,
+            "denominator": 0,
+            "rate": null
+          },
+          "false_negative_rate_including_abstentions": {
+            "numerator": 0,
+            "denominator": 0,
+            "rate": null
+          },
+          "false_positive_rate": {
+            "numerator": 0,
+            "denominator": 2,
+            "rate": 0.0
+          },
+          "false_contradiction_on_supported": {
+            "numerator": 0,
+            "denominator": 1,
+            "rate": 0.0
+          },
+          "precision": {
+            "numerator": 0,
+            "denominator": 0,
+            "rate": null
+          },
+          "abstention": {
+            "numerator": 2,
+            "denominator": 2,
+            "rate": 1.0
+          },
+          "contradictions_called_supported": 0,
+          "unknowns_called_supported": 0
+        },
+        "combined_advisory": {
+          "matrix_gold_then_prediction": {
+            "supported": {
+              "supported": 0,
+              "contradicted": 0,
+              "unknown": 1
+            },
+            "contradicted": {
+              "supported": 0,
+              "contradicted": 0,
+              "unknown": 0
+            },
+            "unknown": {
+              "supported": 0,
+              "contradicted": 1,
+              "unknown": 0
+            }
+          },
+          "recall": {
+            "numerator": 0,
+            "denominator": 0,
+            "rate": null
+          },
+          "false_negative_rate_including_abstentions": {
+            "numerator": 0,
+            "denominator": 0,
+            "rate": null
+          },
+          "false_positive_rate": {
+            "numerator": 1,
+            "denominator": 2,
+            "rate": 0.5
+          },
+          "false_contradiction_on_supported": {
+            "numerator": 0,
+            "denominator": 1,
+            "rate": 0.0
+          },
+          "precision": {
+            "numerator": 0,
+            "denominator": 1,
+            "rate": 0.0
+          },
+          "abstention": {
+            "numerator": 1,
+            "denominator": 2,
+            "rate": 0.5
+          },
+          "contradictions_called_supported": 0,
+          "unknowns_called_supported": 0
+        },
+        "model_alone": {
+          "matrix_gold_then_prediction": {
+            "supported": {
+              "supported": 0,
+              "contradicted": 0,
+              "unknown": 1
+            },
+            "contradicted": {
+              "supported": 0,
+              "contradicted": 0,
+              "unknown": 0
+            },
+            "unknown": {
+              "supported": 0,
+              "contradicted": 1,
+              "unknown": 0
+            }
+          },
+          "recall": {
+            "numerator": 0,
+            "denominator": 0,
+            "rate": null
+          },
+          "false_negative_rate_including_abstentions": {
+            "numerator": 0,
+            "denominator": 0,
+            "rate": null
+          },
+          "false_positive_rate": {
+            "numerator": 1,
+            "denominator": 2,
+            "rate": 0.5
+          },
+          "false_contradiction_on_supported": {
+            "numerator": 0,
+            "denominator": 1,
+            "rate": 0.0
+          },
+          "precision": {
+            "numerator": 0,
+            "denominator": 1,
+            "rate": 0.0
+          },
+          "abstention": {
+            "numerator": 1,
+            "denominator": 2,
+            "rate": 0.5
+          },
+          "contradictions_called_supported": 0,
+          "unknowns_called_supported": 0
+        }
+      },
+      "category/warranty": {
+        "baseline": {
+          "matrix_gold_then_prediction": {
+            "supported": {
+              "supported": 0,
+              "contradicted": 0,
+              "unknown": 1
+            },
+            "contradicted": {
+              "supported": 0,
+              "contradicted": 0,
+              "unknown": 0
+            },
+            "unknown": {
+              "supported": 0,
+              "contradicted": 0,
+              "unknown": 1
+            }
+          },
+          "recall": {
+            "numerator": 0,
+            "denominator": 0,
+            "rate": null
+          },
+          "false_negative_rate_including_abstentions": {
+            "numerator": 0,
+            "denominator": 0,
+            "rate": null
+          },
+          "false_positive_rate": {
+            "numerator": 0,
+            "denominator": 2,
+            "rate": 0.0
+          },
+          "false_contradiction_on_supported": {
+            "numerator": 0,
+            "denominator": 1,
+            "rate": 0.0
+          },
+          "precision": {
+            "numerator": 0,
+            "denominator": 0,
+            "rate": null
+          },
+          "abstention": {
+            "numerator": 2,
+            "denominator": 2,
+            "rate": 1.0
+          },
+          "contradictions_called_supported": 0,
+          "unknowns_called_supported": 0
+        },
+        "combined_advisory": {
+          "matrix_gold_then_prediction": {
+            "supported": {
+              "supported": 1,
+              "contradicted": 0,
+              "unknown": 0
+            },
+            "contradicted": {
+              "supported": 0,
+              "contradicted": 0,
+              "unknown": 0
+            },
+            "unknown": {
+              "supported": 0,
+              "contradicted": 0,
+              "unknown": 1
+            }
+          },
+          "recall": {
+            "numerator": 0,
+            "denominator": 0,
+            "rate": null
+          },
+          "false_negative_rate_including_abstentions": {
+            "numerator": 0,
+            "denominator": 0,
+            "rate": null
+          },
+          "false_positive_rate": {
+            "numerator": 0,
+            "denominator": 2,
+            "rate": 0.0
+          },
+          "false_contradiction_on_supported": {
+            "numerator": 0,
+            "denominator": 1,
+            "rate": 0.0
+          },
+          "precision": {
+            "numerator": 0,
+            "denominator": 0,
+            "rate": null
+          },
+          "abstention": {
+            "numerator": 1,
+            "denominator": 2,
+            "rate": 0.5
+          },
+          "contradictions_called_supported": 0,
+          "unknowns_called_supported": 0
+        },
+        "model_alone": {
+          "matrix_gold_then_prediction": {
+            "supported": {
+              "supported": 1,
+              "contradicted": 0,
+              "unknown": 0
+            },
+            "contradicted": {
+              "supported": 0,
+              "contradicted": 0,
+              "unknown": 0
+            },
+            "unknown": {
+              "supported": 0,
+              "contradicted": 0,
+              "unknown": 1
+            }
+          },
+          "recall": {
+            "numerator": 0,
+            "denominator": 0,
+            "rate": null
+          },
+          "false_negative_rate_including_abstentions": {
+            "numerator": 0,
+            "denominator": 0,
+            "rate": null
+          },
+          "false_positive_rate": {
+            "numerator": 0,
+            "denominator": 2,
+            "rate": 0.0
+          },
+          "false_contradiction_on_supported": {
+            "numerator": 0,
+            "denominator": 1,
+            "rate": 0.0
+          },
+          "precision": {
+            "numerator": 0,
+            "denominator": 0,
+            "rate": null
+          },
+          "abstention": {
+            "numerator": 1,
+            "denominator": 2,
+            "rate": 0.5
+          },
+          "contradictions_called_supported": 0,
+          "unknowns_called_supported": 0
+        }
+      },
+      "category/channel_region_time": {
+        "baseline": {
+          "matrix_gold_then_prediction": {
+            "supported": {
+              "supported": 0,
+              "contradicted": 0,
+              "unknown": 0
+            },
+            "contradicted": {
+              "supported": 0,
+              "contradicted": 0,
+              "unknown": 1
+            },
+            "unknown": {
+              "supported": 0,
+              "contradicted": 1,
+              "unknown": 0
+            }
+          },
+          "recall": {
+            "numerator": 0,
+            "denominator": 1,
+            "rate": 0.0
+          },
+          "false_negative_rate_including_abstentions": {
+            "numerator": 1,
+            "denominator": 1,
+            "rate": 1.0
+          },
+          "false_positive_rate": {
+            "numerator": 1,
+            "denominator": 1,
+            "rate": 1.0
+          },
+          "false_contradiction_on_supported": {
+            "numerator": 0,
+            "denominator": 0,
+            "rate": null
+          },
+          "precision": {
+            "numerator": 0,
+            "denominator": 1,
+            "rate": 0.0
+          },
+          "abstention": {
+            "numerator": 1,
+            "denominator": 2,
+            "rate": 0.5
+          },
+          "contradictions_called_supported": 0,
+          "unknowns_called_supported": 0
+        },
+        "combined_advisory": {
+          "matrix_gold_then_prediction": {
+            "supported": {
+              "supported": 0,
+              "contradicted": 0,
+              "unknown": 0
+            },
+            "contradicted": {
+              "supported": 0,
+              "contradicted": 1,
+              "unknown": 0
+            },
+            "unknown": {
+              "supported": 0,
+              "contradicted": 1,
+              "unknown": 0
+            }
+          },
+          "recall": {
+            "numerator": 1,
+            "denominator": 1,
+            "rate": 1.0
+          },
+          "false_negative_rate_including_abstentions": {
+            "numerator": 0,
+            "denominator": 1,
+            "rate": 0.0
+          },
+          "false_positive_rate": {
+            "numerator": 1,
+            "denominator": 1,
+            "rate": 1.0
+          },
+          "false_contradiction_on_supported": {
+            "numerator": 0,
+            "denominator": 0,
+            "rate": null
+          },
+          "precision": {
+            "numerator": 1,
+            "denominator": 2,
+            "rate": 0.5
+          },
+          "abstention": {
+            "numerator": 0,
+            "denominator": 2,
+            "rate": 0.0
+          },
+          "contradictions_called_supported": 0,
+          "unknowns_called_supported": 0
+        },
+        "model_alone": {
+          "matrix_gold_then_prediction": {
+            "supported": {
+              "supported": 0,
+              "contradicted": 0,
+              "unknown": 0
+            },
+            "contradicted": {
+              "supported": 0,
+              "contradicted": 1,
+              "unknown": 0
+            },
+            "unknown": {
+              "supported": 0,
+              "contradicted": 0,
+              "unknown": 1
+            }
+          },
+          "recall": {
+            "numerator": 1,
+            "denominator": 1,
+            "rate": 1.0
+          },
+          "false_negative_rate_including_abstentions": {
+            "numerator": 0,
+            "denominator": 1,
+            "rate": 0.0
+          },
+          "false_positive_rate": {
+            "numerator": 0,
+            "denominator": 1,
+            "rate": 0.0
+          },
+          "false_contradiction_on_supported": {
+            "numerator": 0,
+            "denominator": 0,
+            "rate": null
+          },
+          "precision": {
+            "numerator": 1,
+            "denominator": 1,
+            "rate": 1.0
+          },
+          "abstention": {
+            "numerator": 1,
+            "denominator": 2,
+            "rate": 0.5
+          },
+          "contradictions_called_supported": 0,
+          "unknowns_called_supported": 0
+        }
+      },
+      "category/minimum": {
+        "baseline": {
+          "matrix_gold_then_prediction": {
+            "supported": {
+              "supported": 0,
+              "contradicted": 0,
+              "unknown": 0
+            },
+            "contradicted": {
+              "supported": 0,
+              "contradicted": 0,
+              "unknown": 1
+            },
+            "unknown": {
+              "supported": 0,
+              "contradicted": 0,
+              "unknown": 1
+            }
+          },
+          "recall": {
+            "numerator": 0,
+            "denominator": 1,
+            "rate": 0.0
+          },
+          "false_negative_rate_including_abstentions": {
+            "numerator": 1,
+            "denominator": 1,
+            "rate": 1.0
+          },
+          "false_positive_rate": {
+            "numerator": 0,
+            "denominator": 1,
+            "rate": 0.0
+          },
+          "false_contradiction_on_supported": {
+            "numerator": 0,
+            "denominator": 0,
+            "rate": null
+          },
+          "precision": {
+            "numerator": 0,
+            "denominator": 0,
+            "rate": null
+          },
+          "abstention": {
+            "numerator": 2,
+            "denominator": 2,
+            "rate": 1.0
+          },
+          "contradictions_called_supported": 0,
+          "unknowns_called_supported": 0
+        },
+        "combined_advisory": {
+          "matrix_gold_then_prediction": {
+            "supported": {
+              "supported": 0,
+              "contradicted": 0,
+              "unknown": 0
+            },
+            "contradicted": {
+              "supported": 0,
+              "contradicted": 1,
+              "unknown": 0
+            },
+            "unknown": {
+              "supported": 0,
+              "contradicted": 1,
+              "unknown": 0
+            }
+          },
+          "recall": {
+            "numerator": 1,
+            "denominator": 1,
+            "rate": 1.0
+          },
+          "false_negative_rate_including_abstentions": {
+            "numerator": 0,
+            "denominator": 1,
+            "rate": 0.0
+          },
+          "false_positive_rate": {
+            "numerator": 1,
+            "denominator": 1,
+            "rate": 1.0
+          },
+          "false_contradiction_on_supported": {
+            "numerator": 0,
+            "denominator": 0,
+            "rate": null
+          },
+          "precision": {
+            "numerator": 1,
+            "denominator": 2,
+            "rate": 0.5
+          },
+          "abstention": {
+            "numerator": 0,
+            "denominator": 2,
+            "rate": 0.0
+          },
+          "contradictions_called_supported": 0,
+          "unknowns_called_supported": 0
+        },
+        "model_alone": {
+          "matrix_gold_then_prediction": {
+            "supported": {
+              "supported": 0,
+              "contradicted": 0,
+              "unknown": 0
+            },
+            "contradicted": {
+              "supported": 0,
+              "contradicted": 1,
+              "unknown": 0
+            },
+            "unknown": {
+              "supported": 0,
+              "contradicted": 1,
+              "unknown": 0
+            }
+          },
+          "recall": {
+            "numerator": 1,
+            "denominator": 1,
+            "rate": 1.0
+          },
+          "false_negative_rate_including_abstentions": {
+            "numerator": 0,
+            "denominator": 1,
+            "rate": 0.0
+          },
+          "false_positive_rate": {
+            "numerator": 1,
+            "denominator": 1,
+            "rate": 1.0
+          },
+          "false_contradiction_on_supported": {
+            "numerator": 0,
+            "denominator": 0,
+            "rate": null
+          },
+          "precision": {
+            "numerator": 1,
+            "denominator": 2,
+            "rate": 0.5
+          },
+          "abstention": {
+            "numerator": 0,
+            "denominator": 2,
+            "rate": 0.0
+          },
+          "contradictions_called_supported": 0,
+          "unknowns_called_supported": 0
+        }
+      },
+      "category/exception": {
+        "baseline": {
+          "matrix_gold_then_prediction": {
+            "supported": {
+              "supported": 0,
+              "contradicted": 0,
+              "unknown": 1
+            },
+            "contradicted": {
+              "supported": 0,
+              "contradicted": 0,
+              "unknown": 0
+            },
+            "unknown": {
+              "supported": 0,
+              "contradicted": 0,
+              "unknown": 1
+            }
+          },
+          "recall": {
+            "numerator": 0,
+            "denominator": 0,
+            "rate": null
+          },
+          "false_negative_rate_including_abstentions": {
+            "numerator": 0,
+            "denominator": 0,
+            "rate": null
+          },
+          "false_positive_rate": {
+            "numerator": 0,
+            "denominator": 2,
+            "rate": 0.0
+          },
+          "false_contradiction_on_supported": {
+            "numerator": 0,
+            "denominator": 1,
+            "rate": 0.0
+          },
+          "precision": {
+            "numerator": 0,
+            "denominator": 0,
+            "rate": null
+          },
+          "abstention": {
+            "numerator": 2,
+            "denominator": 2,
+            "rate": 1.0
+          },
+          "contradictions_called_supported": 0,
+          "unknowns_called_supported": 0
+        },
+        "combined_advisory": {
+          "matrix_gold_then_prediction": {
+            "supported": {
+              "supported": 0,
+              "contradicted": 0,
+              "unknown": 1
+            },
+            "contradicted": {
+              "supported": 0,
+              "contradicted": 0,
+              "unknown": 0
+            },
+            "unknown": {
+              "supported": 0,
+              "contradicted": 0,
+              "unknown": 1
+            }
+          },
+          "recall": {
+            "numerator": 0,
+            "denominator": 0,
+            "rate": null
+          },
+          "false_negative_rate_including_abstentions": {
+            "numerator": 0,
+            "denominator": 0,
+            "rate": null
+          },
+          "false_positive_rate": {
+            "numerator": 0,
+            "denominator": 2,
+            "rate": 0.0
+          },
+          "false_contradiction_on_supported": {
+            "numerator": 0,
+            "denominator": 1,
+            "rate": 0.0
+          },
+          "precision": {
+            "numerator": 0,
+            "denominator": 0,
+            "rate": null
+          },
+          "abstention": {
+            "numerator": 2,
+            "denominator": 2,
+            "rate": 1.0
+          },
+          "contradictions_called_supported": 0,
+          "unknowns_called_supported": 0
+        },
+        "model_alone": {
+          "matrix_gold_then_prediction": {
+            "supported": {
+              "supported": 0,
+              "contradicted": 0,
+              "unknown": 1
+            },
+            "contradicted": {
+              "supported": 0,
+              "contradicted": 0,
+              "unknown": 0
+            },
+            "unknown": {
+              "supported": 0,
+              "contradicted": 0,
+              "unknown": 1
+            }
+          },
+          "recall": {
+            "numerator": 0,
+            "denominator": 0,
+            "rate": null
+          },
+          "false_negative_rate_including_abstentions": {
+            "numerator": 0,
+            "denominator": 0,
+            "rate": null
+          },
+          "false_positive_rate": {
+            "numerator": 0,
+            "denominator": 2,
+            "rate": 0.0
+          },
+          "false_contradiction_on_supported": {
+            "numerator": 0,
+            "denominator": 1,
+            "rate": 0.0
+          },
+          "precision": {
+            "numerator": 0,
+            "denominator": 0,
+            "rate": null
+          },
+          "abstention": {
+            "numerator": 2,
+            "denominator": 2,
+            "rate": 1.0
+          },
+          "contradictions_called_supported": 0,
+          "unknowns_called_supported": 0
+        }
+      },
+      "category/payment_direction": {
+        "baseline": {
+          "matrix_gold_then_prediction": {
+            "supported": {
+              "supported": 0,
+              "contradicted": 0,
+              "unknown": 1
+            },
+            "contradicted": {
+              "supported": 0,
+              "contradicted": 0,
+              "unknown": 0
+            },
+            "unknown": {
+              "supported": 0,
+              "contradicted": 0,
+              "unknown": 1
+            }
+          },
+          "recall": {
+            "numerator": 0,
+            "denominator": 0,
+            "rate": null
+          },
+          "false_negative_rate_including_abstentions": {
+            "numerator": 0,
+            "denominator": 0,
+            "rate": null
+          },
+          "false_positive_rate": {
+            "numerator": 0,
+            "denominator": 2,
+            "rate": 0.0
+          },
+          "false_contradiction_on_supported": {
+            "numerator": 0,
+            "denominator": 1,
+            "rate": 0.0
+          },
+          "precision": {
+            "numerator": 0,
+            "denominator": 0,
+            "rate": null
+          },
+          "abstention": {
+            "numerator": 2,
+            "denominator": 2,
+            "rate": 1.0
+          },
+          "contradictions_called_supported": 0,
+          "unknowns_called_supported": 0
+        },
+        "combined_advisory": {
+          "matrix_gold_then_prediction": {
+            "supported": {
+              "supported": 0,
+              "contradicted": 1,
+              "unknown": 0
+            },
+            "contradicted": {
+              "supported": 0,
+              "contradicted": 0,
+              "unknown": 0
+            },
+            "unknown": {
+              "supported": 0,
+              "contradicted": 1,
+              "unknown": 0
+            }
+          },
+          "recall": {
+            "numerator": 0,
+            "denominator": 0,
+            "rate": null
+          },
+          "false_negative_rate_including_abstentions": {
+            "numerator": 0,
+            "denominator": 0,
+            "rate": null
+          },
+          "false_positive_rate": {
+            "numerator": 2,
+            "denominator": 2,
+            "rate": 1.0
+          },
+          "false_contradiction_on_supported": {
+            "numerator": 1,
+            "denominator": 1,
+            "rate": 1.0
+          },
+          "precision": {
+            "numerator": 0,
+            "denominator": 2,
+            "rate": 0.0
+          },
+          "abstention": {
+            "numerator": 0,
+            "denominator": 2,
+            "rate": 0.0
+          },
+          "contradictions_called_supported": 0,
+          "unknowns_called_supported": 0
+        },
+        "model_alone": {
+          "matrix_gold_then_prediction": {
+            "supported": {
+              "supported": 0,
+              "contradicted": 1,
+              "unknown": 0
+            },
+            "contradicted": {
+              "supported": 0,
+              "contradicted": 0,
+              "unknown": 0
+            },
+            "unknown": {
+              "supported": 0,
+              "contradicted": 1,
+              "unknown": 0
+            }
+          },
+          "recall": {
+            "numerator": 0,
+            "denominator": 0,
+            "rate": null
+          },
+          "false_negative_rate_including_abstentions": {
+            "numerator": 0,
+            "denominator": 0,
+            "rate": null
+          },
+          "false_positive_rate": {
+            "numerator": 2,
+            "denominator": 2,
+            "rate": 1.0
+          },
+          "false_contradiction_on_supported": {
+            "numerator": 1,
+            "denominator": 1,
+            "rate": 1.0
+          },
+          "precision": {
+            "numerator": 0,
+            "denominator": 2,
+            "rate": 0.0
+          },
+          "abstention": {
+            "numerator": 0,
+            "denominator": 2,
+            "rate": 0.0
+          },
+          "contradictions_called_supported": 0,
+          "unknowns_called_supported": 0
+        }
+      },
+      "category/performance": {
+        "baseline": {
+          "matrix_gold_then_prediction": {
+            "supported": {
+              "supported": 0,
+              "contradicted": 0,
+              "unknown": 0
+            },
+            "contradicted": {
+              "supported": 0,
+              "contradicted": 0,
+              "unknown": 1
+            },
+            "unknown": {
+              "supported": 0,
+              "contradicted": 0,
+              "unknown": 1
+            }
+          },
+          "recall": {
+            "numerator": 0,
+            "denominator": 1,
+            "rate": 0.0
+          },
+          "false_negative_rate_including_abstentions": {
+            "numerator": 1,
+            "denominator": 1,
+            "rate": 1.0
+          },
+          "false_positive_rate": {
+            "numerator": 0,
+            "denominator": 1,
+            "rate": 0.0
+          },
+          "false_contradiction_on_supported": {
+            "numerator": 0,
+            "denominator": 0,
+            "rate": null
+          },
+          "precision": {
+            "numerator": 0,
+            "denominator": 0,
+            "rate": null
+          },
+          "abstention": {
+            "numerator": 2,
+            "denominator": 2,
+            "rate": 1.0
+          },
+          "contradictions_called_supported": 0,
+          "unknowns_called_supported": 0
+        },
+        "combined_advisory": {
+          "matrix_gold_then_prediction": {
+            "supported": {
+              "supported": 0,
+              "contradicted": 0,
+              "unknown": 0
+            },
+            "contradicted": {
+              "supported": 0,
+              "contradicted": 1,
+              "unknown": 0
+            },
+            "unknown": {
+              "supported": 0,
+              "contradicted": 1,
+              "unknown": 0
+            }
+          },
+          "recall": {
+            "numerator": 1,
+            "denominator": 1,
+            "rate": 1.0
+          },
+          "false_negative_rate_including_abstentions": {
+            "numerator": 0,
+            "denominator": 1,
+            "rate": 0.0
+          },
+          "false_positive_rate": {
+            "numerator": 1,
+            "denominator": 1,
+            "rate": 1.0
+          },
+          "false_contradiction_on_supported": {
+            "numerator": 0,
+            "denominator": 0,
+            "rate": null
+          },
+          "precision": {
+            "numerator": 1,
+            "denominator": 2,
+            "rate": 0.5
+          },
+          "abstention": {
+            "numerator": 0,
+            "denominator": 2,
+            "rate": 0.0
+          },
+          "contradictions_called_supported": 0,
+          "unknowns_called_supported": 0
+        },
+        "model_alone": {
+          "matrix_gold_then_prediction": {
+            "supported": {
+              "supported": 0,
+              "contradicted": 0,
+              "unknown": 0
+            },
+            "contradicted": {
+              "supported": 0,
+              "contradicted": 1,
+              "unknown": 0
+            },
+            "unknown": {
+              "supported": 0,
+              "contradicted": 1,
+              "unknown": 0
+            }
+          },
+          "recall": {
+            "numerator": 1,
+            "denominator": 1,
+            "rate": 1.0
+          },
+          "false_negative_rate_including_abstentions": {
+            "numerator": 0,
+            "denominator": 1,
+            "rate": 0.0
+          },
+          "false_positive_rate": {
+            "numerator": 1,
+            "denominator": 1,
+            "rate": 1.0
+          },
+          "false_contradiction_on_supported": {
+            "numerator": 0,
+            "denominator": 0,
+            "rate": null
+          },
+          "precision": {
+            "numerator": 1,
+            "denominator": 2,
+            "rate": 0.5
+          },
+          "abstention": {
+            "numerator": 0,
+            "denominator": 2,
+            "rate": 0.0
+          },
+          "contradictions_called_supported": 0,
+          "unknowns_called_supported": 0
+        }
+      },
+      "category/part_scope": {
+        "baseline": {
+          "matrix_gold_then_prediction": {
+            "supported": {
+              "supported": 0,
+              "contradicted": 0,
+              "unknown": 1
+            },
+            "contradicted": {
+              "supported": 0,
+              "contradicted": 0,
+              "unknown": 0
+            },
+            "unknown": {
+              "supported": 0,
+              "contradicted": 0,
+              "unknown": 1
+            }
+          },
+          "recall": {
+            "numerator": 0,
+            "denominator": 0,
+            "rate": null
+          },
+          "false_negative_rate_including_abstentions": {
+            "numerator": 0,
+            "denominator": 0,
+            "rate": null
+          },
+          "false_positive_rate": {
+            "numerator": 0,
+            "denominator": 2,
+            "rate": 0.0
+          },
+          "false_contradiction_on_supported": {
+            "numerator": 0,
+            "denominator": 1,
+            "rate": 0.0
+          },
+          "precision": {
+            "numerator": 0,
+            "denominator": 0,
+            "rate": null
+          },
+          "abstention": {
+            "numerator": 2,
+            "denominator": 2,
+            "rate": 1.0
+          },
+          "contradictions_called_supported": 0,
+          "unknowns_called_supported": 0
+        },
+        "combined_advisory": {
+          "matrix_gold_then_prediction": {
+            "supported": {
+              "supported": 1,
+              "contradicted": 0,
+              "unknown": 0
+            },
+            "contradicted": {
+              "supported": 0,
+              "contradicted": 0,
+              "unknown": 0
+            },
+            "unknown": {
+              "supported": 0,
+              "contradicted": 1,
+              "unknown": 0
+            }
+          },
+          "recall": {
+            "numerator": 0,
+            "denominator": 0,
+            "rate": null
+          },
+          "false_negative_rate_including_abstentions": {
+            "numerator": 0,
+            "denominator": 0,
+            "rate": null
+          },
+          "false_positive_rate": {
+            "numerator": 1,
+            "denominator": 2,
+            "rate": 0.5
+          },
+          "false_contradiction_on_supported": {
+            "numerator": 0,
+            "denominator": 1,
+            "rate": 0.0
+          },
+          "precision": {
+            "numerator": 0,
+            "denominator": 1,
+            "rate": 0.0
+          },
+          "abstention": {
+            "numerator": 0,
+            "denominator": 2,
+            "rate": 0.0
+          },
+          "contradictions_called_supported": 0,
+          "unknowns_called_supported": 0
+        },
+        "model_alone": {
+          "matrix_gold_then_prediction": {
+            "supported": {
+              "supported": 1,
+              "contradicted": 0,
+              "unknown": 0
+            },
+            "contradicted": {
+              "supported": 0,
+              "contradicted": 0,
+              "unknown": 0
+            },
+            "unknown": {
+              "supported": 0,
+              "contradicted": 1,
+              "unknown": 0
+            }
+          },
+          "recall": {
+            "numerator": 0,
+            "denominator": 0,
+            "rate": null
+          },
+          "false_negative_rate_including_abstentions": {
+            "numerator": 0,
+            "denominator": 0,
+            "rate": null
+          },
+          "false_positive_rate": {
+            "numerator": 1,
+            "denominator": 2,
+            "rate": 0.5
+          },
+          "false_contradiction_on_supported": {
+            "numerator": 0,
+            "denominator": 1,
+            "rate": 0.0
+          },
+          "precision": {
+            "numerator": 0,
+            "denominator": 1,
+            "rate": 0.0
+          },
+          "abstention": {
+            "numerator": 0,
+            "denominator": 2,
+            "rate": 0.0
+          },
+          "contradictions_called_supported": 0,
+          "unknowns_called_supported": 0
+        }
+      }
+    }
+  }
+}

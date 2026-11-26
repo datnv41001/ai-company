@@ -49,6 +49,9 @@ def append(store, cid, pid, kind, entity, ident, value, sequence, key, fingerpri
     at = store.now()
     event = {"id": receipt, "campaign_id": cid, "plan_id": pid, "sequence": sequence, "kind": kind,
              "entity": entity, "entity_id": ident, "value": value, "actor": store.actor, "recorded_at": stamp(at)}
+    if entity in {"sessions", "appointments", "leads"}:
+        event["intake_writer"] = "business-intake/1"
+        event["origin"] = "landing" if value.get("landing_source") else "manual"
     store.insert(KnowledgeCommand, "restricted", id=receipt, operation=OP, actor=store.actor, key=key,
                  request_digest=fingerprint, result=event, snapshot_id=None, effective_at=at, queued_at=None)
     return event
@@ -299,34 +302,53 @@ def enrich_units(store, cid, units):
             unit["status"] = "incomplete"
 
 
-def optimization(report):
-    service = report.get("appointments") or {}
-    if service.get("requests"):
+def optimization(evidence):
+    if not evidence:
+        return {"basis": "no_approved_plan", "recommendation": "Chọn kế hoạch đã duyệt để đối chiếu kết quả."}
+    if evidence["buyer_action"] == "appointment":
+        service = evidence.get("primary_measurement") or evidence["appointments"]
+        if not service.get("denominator", service.get("requests")):
+            return {"basis": "no_eligible_appointments", "recommendation": "Đối chiếu biên nhận lịch hẹn đủ điều kiện trong phạm vi đo trước khi thay đổi kế hoạch."}
         if service["no_show"] or service["cancelled"]:
             return {"basis":"appointment_exceptions","recommendation":"Đối chiếu lịch hủy và khách vắng mặt với thời điểm xác nhận trước khi đổi quy trình nhắc lịch."}
         return {"basis":"appointment_followup","recommendation":"Đối chiếu lịch đã xác nhận và phản hồi sau dịch vụ trước khi tăng số lịch tiếp nhận."}
-    if not report["rfqs"]:
+    if evidence["buyer_action"] != "rfq":
+        return {"basis": "unmeasured_journey", "recommendation": "Xác nhận biên nhận và định nghĩa KPI cho hành trình đã duyệt."}
+    if not evidence["rfqs"]:
         return {"basis": "no_rfqs", "recommendation": "Kiểm tra biểu mẫu và nguồn lượt vào trước khi tăng ngân sách."}
-    if report["missing_attribution"]:
+    if evidence["missing_attribution"]:
         return {"basis": "missing_attribution", "recommendation": "Đối soát mã phiên và biên nhận thực thi để xác định nguồn yêu cầu báo giá."}
-    if report["rfqs"] > report["qualified_leads"]:
+    if evidence["rfqs"] > evidence["qualified_leads"]:
         return {"basis": "incomplete_requests", "recommendation": "Kiểm tra các trường thương mại còn thiếu trước khi chuyển yêu cầu sang Sales."}
     return {"basis": "sales_followup", "recommendation": "Đối chiếu phản hồi Sales với đơn xác nhận trước khi đề xuất thay đổi kênh."}
 
 
-def measurement_report(state, plan, cutoff, scope):
-    report = reconcile(state)
-    if plan and (contract := plan.get("measurement_contract")):
+def optimization_evidence(state, plan, cutoff, scope):
+    if not plan:
+        return None
+    evidence = {"version": "plan-optimization/2", "campaign_id": plan["campaign_id"], "plan_id": plan["id"],
+                "plan_digest": plan["digest"], "buyer_action": plan["buyer_action"], "period": "plan_lifetime",
+                "as_of_inclusive": stamp(cutoff), "kpi": plan["measurement_plan"]["kpi"], "source": "no_measurement_adapter"}
+    if contract := plan.get("measurement_contract"):
         expected = {**scope, "campaign_id": plan["campaign_id"], "plan_id": plan["id"], "plan_digest": plan["digest"]}
-        report["primary_measurement"] = measurement_integrity.evaluate(contract, plan["id"], state, cutoff, plan["locale"], landing_scope=expected)
-    if secondary := secondary_rfq_funnel(plan, state):
-        report["secondary_rfq_funnel"] = secondary
-    return report
+        primary = measurement_integrity.evaluate(contract, plan["id"], state, cutoff, plan["locale"], landing_scope=expected)
+        evidence.update(period="measurement_window", source=primary["source"], primary_measurement=primary)
+    elif plan["buyer_action"] == "appointment":
+        evidence.update(source="sandbox_appointment_receipts", appointments=appointments.summary(plan_rows(state, plan, ("appointments", "sessions"))))
+    elif plan["buyer_action"] == "rfq":
+        report = reconcile(plan_rows(state, plan, ("leads", "sessions", "actions")))
+        evidence.update(source="sandbox_rfq_receipts", **{k: report[k] for k in ("rfqs", "qualified_leads", "missing_attribution")})
+    return evidence
+
+
+def plan_rows(state, plan, buckets):
+    return {key: {rid: row for rid, row in state[key].items() if row["plan_id"] == plan["id"]} for key in buckets}
 
 
 def measurement_inputs_digest(state, plan):
     # Event revisions matter even when two changes cancel out in the headline totals.
-    inputs = {key: state[key] for key in ("appointments", "leads", "sessions", "actions")}
+    buckets = {"appointment": ("appointments", "sessions"), "rfq": ("leads", "sessions", "actions")}
+    inputs = plan_rows(state, plan, buckets.get(plan["buyer_action"], ()))
     return digest(canonical({"plan_digest": plan["digest"], "inputs": inputs}))
 
 
@@ -335,7 +357,7 @@ def optimize_command(cmd, state, store, plan):
     if cmd.kind == "propose_optimization":
         if cmd.proposal_id in proposals:
             conflict("Proposal ID already exists")
-        report = measurement_report(state, plan, store.now(), store.scope)
+        report = optimization_evidence(state, plan, store.now(), store.scope)
         value = {"id": cmd.proposal_id, "plan_id": plan["id"], "status": "proposed", "author": store.actor,
                  **optimization(report), "evidence": report, "report_digest": digest(canonical(report)),
                  "measurement_inputs_digest": measurement_inputs_digest(state, plan)}
@@ -343,10 +365,12 @@ def optimize_command(cmd, state, store, plan):
         value = proposals.get(cmd.proposal_id)
         if not value or value["plan_id"] != plan["id"] or value["status"] != "proposed" or value["author"] == store.actor:
             conflict("A different approver must review the proposed optimization package")
-        frozen = value["evidence"].get("primary_measurement", {}).get("as_of_inclusive")
-        report = measurement_report(state, plan, parse_time(frozen) if frozen else store.now(), store.scope)
-        inputs = value.get("measurement_inputs_digest")
-        if value["report_digest"] != digest(canonical(report)) or (inputs and inputs != measurement_inputs_digest(state, plan)):
+        # Legacy recommendations were made on campaign-wide data and remain visible
+        # in history. A new scoped decision is required before issuing a work package.
+        if value["evidence"].get("version") != "plan-optimization/2":
+            conflict("Create a new proposal with scoped measurement evidence")
+        report = optimization_evidence(state, plan, parse_time(value["evidence"]["as_of_inclusive"]), store.scope)
+        if value["report_digest"] != digest(canonical(report)) or value.get("measurement_inputs_digest") != measurement_inputs_digest(state, plan):
             conflict("Measurement changed. Create and review a fresh proposal")
         value = {**value, "status": "approved", "approved_by": store.actor,
                  "work_package": {"id": cmd.proposal_id, "role": "marketing_analyst", "outcome": value["recommendation"],
@@ -369,16 +393,24 @@ def view(tenant_id: str, campaign_id: str, user: User = Depends(current_user), d
             missing()
     else:
         selected = next((p for p in plans if p["status"] == "approved"), None)
-    report = measurement_report(state, selected, store.now(), store.scope)
+    evidence = optimization_evidence(state, selected, store.now(), store.scope)
+    report = {"aggregate_scope": "campaign_lifetime", **reconcile(state)}
+    if evidence and "primary_measurement" in evidence:
+        report["primary_measurement"] = evidence["primary_measurement"]
+    if secondary := secondary_rfq_funnel(selected, state):
+        report["secondary_rfq_funnel"] = secondary
     units = list(state["work_units"].values())
     enrich_units(store, campaign_id, units)
     accepted = sum((u["acceptance"] or {}).get("status") == "business_accepted" for u in units)
     allocated = [labor["allocated_cost_vnd"] for u in units for labor in u["labor"]]
     coverage = costs.summarize(units)
+    from .business_intake import funnel
+    intake_funnel = funnel(selected, state)
     return {"synthetic": True, "campaign_id": campaign_id, **{k: list(v.values()) for k, v in state.items()}, "report": report,
-            "optimization": optimization(report), "requested_units": len(units), "business_accepted_units": accepted,
+            "optimization": {**optimization(evidence), "evidence": evidence}, "requested_units": len(units), "business_accepted_units": accepted,
             "recorded_allocated_cost_vnd": sum(v for v in allocated if v is not None) if any(v is not None for v in allocated) else None,
             **coverage,"appointment_summary":appointments.summary(state),
+            **({"intake_measurement": intake_funnel} if intake_funnel else {}),
             "receipts": [{"id": r.id, "kind": r.result["kind"], "actor": r.actor, "at": stamp(r.effective_at),
                           "sequence": r.result["sequence"], "entity_id": r.result["entity_id"]} for r in sorted(rows, key=lambda x: x.result["sequence"])]}
 

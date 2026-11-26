@@ -1,0 +1,422 @@
+[
+  {
+    "id": "case-594cbd",
+    "lang": "en",
+    "category": "warranty",
+    "source": "The written warranty covers the motor for six months. The belt is excluded. Installation labour has no stated warranty term.",
+    "claim": "Motor warranty lasts six months."
+  },
+  {
+    "id": "case-9a1196",
+    "lang": "en",
+    "category": "minimum",
+    "source": "A firm order must contain at least eight sets. A buyer may ask a question or request a consultation about fewer sets.",
+    "claim": "Can two delivery sites combine quantities to meet the threshold?"
+  },
+  {
+    "id": "case-85260e",
+    "lang": "en",
+    "category": "exception",
+    "source": "Pickup is offered on weekdays except Wednesday. No weekend collection; deliveries follow a separate schedule.",
+    "claim": "Collection is available on Thursday."
+  },
+  {
+    "id": "case-9e7d72",
+    "lang": "vi",
+    "category": "warranty",
+    "source": "The written warranty covers the motor for six months. The belt is excluded. Installation labour has no stated warranty term.",
+    "claim": "Công lắp đặt có được bảo hành một tháng không?"
+  },
+  {
+    "id": "case-17d0b5",
+    "lang": "en",
+    "category": "payment_direction",
+    "source": "Porter check costs 315000 VND per inspection, paid by the warehouse to the inspector. No rebate.",
+    "claim": "The inspector charges the warehouse for each visit."
+  },
+  {
+    "id": "case-1c398b",
+    "lang": "en",
+    "category": "channel_region_time",
+    "source": "Training costs 120000 VND per seat for online bookings in East district during January. In-person bookings are excluded; February pricing is undecided.",
+    "claim": "The January online rate is valid in every district."
+  },
+  {
+    "id": "case-14573b",
+    "lang": "vi",
+    "category": "hypothesis_observation",
+    "source": "The team proposes interviewing night-shift receivers. No interviews have taken place. The expected issue is a hypothesis.",
+    "claim": "Đã phỏng vấn ca đêm và xác nhận nguyên nhân."
+  },
+  {
+    "id": "case-616cd9",
+    "lang": "vi",
+    "category": "negation",
+    "source": "The logger records humidity. It does not detect smoke or automatically send alerts.",
+    "claim": "Khi có khói máy sẽ tự báo."
+  },
+  {
+    "id": "case-2b507e",
+    "lang": "vi",
+    "category": "payment_direction",
+    "source": "Porter check costs 315000 VND per inspection, paid by the warehouse to the inspector. No rebate.",
+    "claim": "Phí có cần trả trước ngày kiểm không?"
+  },
+  {
+    "id": "case-c5594f",
+    "lang": "vi",
+    "category": "hypothesis_observation",
+    "source": "The team proposes interviewing night-shift receivers. No interviews have taken place. The expected issue is a hypothesis.",
+    "claim": "Phỏng vấn sẽ diễn ra vào tuần nào?"
+  },
+  {
+    "id": "case-951784",
+    "lang": "en",
+    "category": "payment_direction",
+    "source": "Porter check costs 315000 VND per inspection, paid by the warehouse to the inspector. No rebate.",
+    "claim": "The warehouse is paid the inspection fee."
+  },
+  {
+    "id": "case-cd89af",
+    "lang": "en",
+    "category": "hypothesis_observation",
+    "source": "The team proposes interviewing night-shift receivers. No interviews have taken place. The expected issue is a hypothesis.",
+    "claim": "The interview findings have already confirmed the proposed issue."
+  },
+  {
+    "id": "case-579ebb",
+    "lang": "en",
+    "category": "channel_region_time",
+    "source": "Training costs 120000 VND per seat for online bookings in East district during January. In-person bookings are excluded; February pricing is undecided.",
+    "claim": "In-person bookings do not qualify for the January online rate."
+  },
+  {
+    "id": "case-1df5be",
+    "lang": "en",
+    "category": "price_refund",
+    "source": "The posted price is 84000 VND per sleeve. No refund is included; damage claims are assessed individually.",
+    "claim": "Does an approved damage claim pay for shipping?"
+  },
+  {
+    "id": "case-a215ff",
+    "lang": "vi",
+    "category": "part_scope",
+    "source": "On the R8 rack only its blue clip can be removed. Its upper shelf is permanently fixed. Other racks have no specification on record.",
+    "claim": "Kẹp của dòng R9 tháo được chứ?"
+  },
+  {
+    "id": "case-2e7785",
+    "lang": "vi",
+    "category": "hypothesis_observation",
+    "source": "The team proposes interviewing night-shift receivers. No interviews have taken place. The expected issue is a hypothesis.",
+    "claim": "Khó khăn của ca đêm đang là giả thuyết cần hỏi."
+  },
+  {
+    "id": "case-6d412a",
+    "lang": "en",
+    "category": "part_scope",
+    "source": "On the R8 rack only its blue clip can be removed. Its upper shelf is permanently fixed. Other racks have no specification on record.",
+    "claim": "The upper shelf stays fixed on the R8."
+  },
+  {
+    "id": "case-e22d7d",
+    "lang": "vi",
+    "category": "price_refund",
+    "source": "The posted price is 84000 VND per sleeve. No refund is included; damage claims are assessed individually.",
+    "claim": "84.000 VND là giá bán của mỗi ống bọc."
+  },
+  {
+    "id": "case-f4a775",
+    "lang": "vi",
+    "category": "exception",
+    "source": "Pickup is offered on weekdays except Wednesday. No weekend collection; deliveries follow a separate schedule.",
+    "claim": "Thứ Bảy có giao hàng tận nơi không?"
+  },
+  {
+    "id": "case-91be71",
+    "lang": "en",
+    "category": "warranty",
+    "source": "The written warranty covers the motor for six months. The belt is excluded. Installation labour has no stated warranty term.",
+    "claim": "The motor is covered for twelve months."
+  },
+  {
+    "id": "case-b38fb7",
+    "lang": "en",
+    "category": "tax_unit",
+    "source": "A crate contains twelve coils. The listed 690000 VND is for one crate, before VAT.",
+    "claim": "The twelve-coil crate is 690,000 VND including VAT."
+  },
+  {
+    "id": "case-862c19",
+    "lang": "vi",
+    "category": "performance",
+    "source": "A jig aligns labels to a guide rail. No efficiency or sales outcome is guaranteed. The launch team recommends timing a trial.",
+    "claim": "Nhóm ra mắt đề xuất đo thời gian chạy thử."
+  },
+  {
+    "id": "case-75a3fc",
+    "lang": "vi",
+    "category": "price_refund",
+    "source": "The posted price is 84000 VND per sleeve. No refund is included; damage claims are assessed individually.",
+    "claim": "Mỗi ống bọc được hoàn lại 84.000 VND."
+  },
+  {
+    "id": "case-980001",
+    "lang": "vi",
+    "category": "minimum",
+    "source": "A firm order must contain at least eight sets. A buyer may ask a question or request a consultation about fewer sets.",
+    "claim": "Khách cần ba bộ vẫn có thể hỏi tư vấn."
+  },
+  {
+    "id": "case-3a0d06",
+    "lang": "en",
+    "category": "hypothesis_observation",
+    "source": "The team proposes interviewing night-shift receivers. No interviews have taken place. The expected issue is a hypothesis.",
+    "claim": "Night-shift interviews are planned."
+  },
+  {
+    "id": "case-b5c703",
+    "lang": "en",
+    "category": "availability",
+    "source": "The trial batch is reserved for North district until 20 December. No inventory statement exists for South district; reservations close on the 20th.",
+    "claim": "The trial reservation remains open through December 24."
+  },
+  {
+    "id": "case-1e9ad3",
+    "lang": "en",
+    "category": "performance",
+    "source": "A jig aligns labels to a guide rail. No efficiency or sales outcome is guaranteed. The launch team recommends timing a trial.",
+    "claim": "What was the average setup time during the trial?"
+  },
+  {
+    "id": "case-4ec9d5",
+    "lang": "vi",
+    "category": "payment_direction",
+    "source": "Porter check costs 315000 VND per inspection, paid by the warehouse to the inspector. No rebate.",
+    "claim": "Kho nhận 315.000 VND khi cho kiểm tra."
+  },
+  {
+    "id": "case-a5dc09",
+    "lang": "vi",
+    "category": "channel_region_time",
+    "source": "Training costs 120000 VND per seat for online bookings in East district during January. In-person bookings are excluded; February pricing is undecided.",
+    "claim": "Trong tháng Một, phí 120.000 VND/ghế áp dụng khi đặt online ở quận Đông."
+  },
+  {
+    "id": "case-21fcf7",
+    "lang": "en",
+    "category": "performance",
+    "source": "A jig aligns labels to a guide rail. No efficiency or sales outcome is guaranteed. The launch team recommends timing a trial.",
+    "claim": "The jig aligns the label to a guide rail."
+  },
+  {
+    "id": "case-3baea9",
+    "lang": "en",
+    "category": "price_refund",
+    "source": "The posted price is 84000 VND per sleeve. No refund is included; damage claims are assessed individually.",
+    "claim": "Damage claims require an individual assessment."
+  },
+  {
+    "id": "case-0ec3b5",
+    "lang": "vi",
+    "category": "tax_unit",
+    "source": "A crate contains twelve coils. The listed 690000 VND is for one crate, before VAT.",
+    "claim": "Một cuộn giá 690.000 VND trước thuế."
+  },
+  {
+    "id": "case-a53948",
+    "lang": "vi",
+    "category": "tax_unit",
+    "source": "A crate contains twelve coils. The listed 690000 VND is for one crate, before VAT.",
+    "claim": "Thuế suất của kiện hàng là bao nhiêu?"
+  },
+  {
+    "id": "case-d37a43",
+    "lang": "vi",
+    "category": "warranty",
+    "source": "The written warranty covers the motor for six months. The belt is excluded. Installation labour has no stated warranty term.",
+    "claim": "Dây curoa nằm ngoài phạm vi bảo hành đã công bố."
+  },
+  {
+    "id": "case-fc7fcc",
+    "lang": "vi",
+    "category": "part_scope",
+    "source": "On the R8 rack only its blue clip can be removed. Its upper shelf is permanently fixed. Other racks have no specification on record.",
+    "claim": "Tầng trên của kệ R8 lắp tháo linh hoạt."
+  },
+  {
+    "id": "case-a6fd6b",
+    "lang": "vi",
+    "category": "exception",
+    "source": "Pickup is offered on weekdays except Wednesday. No weekend collection; deliveries follow a separate schedule.",
+    "claim": "Thứ Tư vẫn nhận hàng tại điểm lấy."
+  },
+  {
+    "id": "case-41240b",
+    "lang": "vi",
+    "category": "payment_direction",
+    "source": "Porter check costs 315000 VND per inspection, paid by the warehouse to the inspector. No rebate.",
+    "claim": "Kho thanh toán 315.000 VND cho mỗi lượt kiểm."
+  },
+  {
+    "id": "case-6f3a29",
+    "lang": "en",
+    "category": "performance",
+    "source": "A jig aligns labels to a guide rail. No efficiency or sales outcome is guaranteed. The launch team recommends timing a trial.",
+    "claim": "A guaranteed sales lift comes with the guide rail."
+  },
+  {
+    "id": "case-45d4f0",
+    "lang": "en",
+    "category": "price_refund",
+    "source": "The posted price is 84000 VND per sleeve. No refund is included; damage claims are assessed individually.",
+    "claim": "Every sleeve includes a money-back guarantee."
+  },
+  {
+    "id": "case-42123b",
+    "lang": "vi",
+    "category": "availability",
+    "source": "The trial batch is reserved for North district until 20 December. No inventory statement exists for South district; reservations close on the 20th.",
+    "claim": "Lô thử đã mở giữ chỗ cả cho quận Nam."
+  },
+  {
+    "id": "case-d2c5c8",
+    "lang": "vi",
+    "category": "part_scope",
+    "source": "On the R8 rack only its blue clip can be removed. Its upper shelf is permanently fixed. Other racks have no specification on record.",
+    "claim": "Kẹp xanh của giá R8 tháo được."
+  },
+  {
+    "id": "case-d35907",
+    "lang": "en",
+    "category": "availability",
+    "source": "The trial batch is reserved for North district until 20 December. No inventory statement exists for South district; reservations close on the 20th.",
+    "claim": "The trial reservation ends on December 20."
+  },
+  {
+    "id": "case-4865fe",
+    "lang": "vi",
+    "category": "tax_unit",
+    "source": "A crate contains twelve coils. The listed 690000 VND is for one crate, before VAT.",
+    "claim": "Giá một kiện 12 cuộn là 690.000 VND, chưa có VAT."
+  },
+  {
+    "id": "case-ce3259",
+    "lang": "en",
+    "category": "negation",
+    "source": "The logger records humidity. It does not detect smoke or automatically send alerts.",
+    "claim": "The logger cannot record humidity."
+  },
+  {
+    "id": "case-fef86c",
+    "lang": "vi",
+    "category": "availability",
+    "source": "The trial batch is reserved for North district until 20 December. No inventory statement exists for South district; reservations close on the 20th.",
+    "claim": "Lô thử dành riêng cho quận Bắc đến hết 20/12."
+  },
+  {
+    "id": "case-0724a8",
+    "lang": "en",
+    "category": "part_scope",
+    "source": "On the R8 rack only its blue clip can be removed. Its upper shelf is permanently fixed. Other racks have no specification on record.",
+    "claim": "The entire rack top is detachable because its clip is removable."
+  },
+  {
+    "id": "case-85fed5",
+    "lang": "vi",
+    "category": "exception",
+    "source": "Pickup is offered on weekdays except Wednesday. No weekend collection; deliveries follow a separate schedule.",
+    "claim": "Không nhận tại chỗ vào thứ Tư."
+  },
+  {
+    "id": "case-44e06b",
+    "lang": "vi",
+    "category": "negation",
+    "source": "The logger records humidity. It does not detect smoke or automatically send alerts.",
+    "claim": "Thiết bị ghi độ ẩm, không tự gửi cảnh báo."
+  },
+  {
+    "id": "case-4a33b2",
+    "lang": "vi",
+    "category": "channel_region_time",
+    "source": "Training costs 120000 VND per seat for online bookings in East district during January. In-person bookings are excluded; February pricing is undecided.",
+    "claim": "Đăng ký tại quầy ở quận Đông cũng áp dụng phí ưu đãi tháng Một."
+  },
+  {
+    "id": "case-2c4a61",
+    "lang": "en",
+    "category": "minimum",
+    "source": "A firm order must contain at least eight sets. A buyer may ask a question or request a consultation about fewer sets.",
+    "claim": "Eight sets qualify for the minimum order size."
+  },
+  {
+    "id": "case-41f64d",
+    "lang": "en",
+    "category": "channel_region_time",
+    "source": "Training costs 120000 VND per seat for online bookings in East district during January. In-person bookings are excluded; February pricing is undecided.",
+    "claim": "Will the East district online rate change in February?"
+  },
+  {
+    "id": "case-b6882e",
+    "lang": "en",
+    "category": "negation",
+    "source": "The logger records humidity. It does not detect smoke or automatically send alerts.",
+    "claim": "Smoke detection is excluded."
+  },
+  {
+    "id": "case-b043f0",
+    "lang": "vi",
+    "category": "minimum",
+    "source": "A firm order must contain at least eight sets. A buyer may ask a question or request a consultation about fewer sets.",
+    "claim": "Khách hỏi mua bảy bộ sẽ không được tư vấn."
+  },
+  {
+    "id": "case-f3239f",
+    "lang": "vi",
+    "category": "performance",
+    "source": "A jig aligns labels to a guide rail. No efficiency or sales outcome is guaranteed. The launch team recommends timing a trial.",
+    "claim": "Cam kết tăng tốc dán nhãn tối thiểu 20%."
+  },
+  {
+    "id": "case-72a085",
+    "lang": "en",
+    "category": "tax_unit",
+    "source": "A crate contains twelve coils. The listed 690000 VND is for one crate, before VAT.",
+    "claim": "Tax is added to the listed crate price."
+  },
+  {
+    "id": "case-369c57",
+    "lang": "en",
+    "category": "availability",
+    "source": "The trial batch is reserved for North district until 20 December. No inventory statement exists for South district; reservations close on the 20th.",
+    "claim": "How many units are still in North district?"
+  },
+  {
+    "id": "case-df97b2",
+    "lang": "vi",
+    "category": "warranty",
+    "source": "The written warranty covers the motor for six months. The belt is excluded. Installation labour has no stated warranty term.",
+    "claim": "Bảo hành cả dây curoa trong sáu tháng."
+  },
+  {
+    "id": "case-369450",
+    "lang": "en",
+    "category": "exception",
+    "source": "Pickup is offered on weekdays except Wednesday. No weekend collection; deliveries follow a separate schedule.",
+    "claim": "Saturday pickup is available by default."
+  },
+  {
+    "id": "case-9a28f6",
+    "lang": "en",
+    "category": "negation",
+    "source": "The logger records humidity. It does not detect smoke or automatically send alerts.",
+    "claim": "Does it store readings when disconnected?"
+  },
+  {
+    "id": "case-c76f3b",
+    "lang": "en",
+    "category": "minimum",
+    "source": "A firm order must contain at least eight sets. A buyer may ask a question or request a consultation about fewer sets.",
+    "claim": "A firm order for seven sets meets the minimum."
+  }
+]

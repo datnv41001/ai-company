@@ -8,7 +8,7 @@ function createCampaignEngine(api) {
   const states = {proposed:'Chờ duyệt',approved:'Đã duyệt',superseded:'Đã thay thế',draft:'Nháp',submitted:'Chờ QA',
     queued:'Đã xếp hàng',running:'Đang chạy',awaiting_qa:'Chờ QA',failed:'Thất bại',requested:'Đã giao việc',generated:'Đã tạo',
     scheduled:'Đã lên lịch',authorized:'Được phép chạy',executed:'Đã thực thi mô phỏng',cancelled:'Đã hủy',
-    qualified:'Đủ điều kiện',received:'Đã nhận',assigned:'Đã phân công',accepted:'Sales đã nhận',rejected:'Từ chối',
+    qualified:'Đủ điều kiện',received:'Đã nhận',consulting:'Đang tư vấn',awaiting_assignment:'Đủ điều kiện, chờ giao Sales',assigned:'Đã phân công',accepted:'Sales đã nhận',rejected:'Từ chối',
     quoted:'Đã báo giá',ordered:'Đã đặt hàng',confirmed:'Đã xác nhận',refunded:'Đã hoàn tiền',
     shared:'Đã giao khách',qa_passed:'Đã qua QA',business_accepted:'Đã được tiếp nhận',fixture_accepted:'Nghiệm thu mô phỏng',incomplete:'Chưa hoàn tất'};
   const origins = {staff_saved_studio_revision:'Bản đã lưu trong Studio',staff_saved_revision:'Bản do tài khoản biên tập lưu',
@@ -152,6 +152,13 @@ function createCampaignEngine(api) {
       add(proposed,'p',proposal.duration_days+' ngày · '+money(proposal.budget_vnd)+' · '+proposal.channels.join(', '));
       if(proposal.buyer_action==='appointment')add(proposed,'p',proposal.secondary_conversions?.includes('rfq')?
         'Tiếp nhận lịch hẹn và yêu cầu báo giá riêng biệt.':'Chỉ tiếp nhận lịch hẹn.');
+      const intake=proposal.intake_contract;
+      if(intake){
+        const fields=details(proposed,'Phiếu tiếp nhận cần duyệt');
+        for(const f of intake.fields)line(fields,f.label,f.unit_label||f.unit||'',f.required?'Bắt buộc':'Tùy chọn');
+        add(fields,'p',intake.consent.label);
+        add(fields,'p','Phiên bản '+intake.revision+' · '+intake.digest.slice(0,12));
+      }
       for(const [kind,ref] of Object.entries(proposal.manifests))
         line(proposed,kinds[kind],ref.workflow+' · Brief '+ref.brief_id+' · Manifest '+ref.id+' · SHA-256 '+ref.digest);
       for(const item of proposal.work_packages)
@@ -232,6 +239,18 @@ function createCampaignEngine(api) {
         line(primary, 'Chưa rõ nguồn media', 'Báo cáo trước khi có đối chiếu phiên bản trang đích', String(metric.unattributed));
       }
       line(primary, 'Phiên web', 'Chỉ số phụ trong cùng kỳ', String(metric.secondary_metrics[0].value));
+    }
+    const intake=ops.intake_measurement;
+    if(intake?.version==='intake-funnel/2' && intake.action==='rfq'){
+      const section=add(funnel,'section');
+      add(section,'h4','Yêu cầu từ biểu mẫu đã duyệt');
+      add(section,'p','Trong vòng đời kế hoạch này. Mỗi hồ sơ được tính một lần ở từng bước đã đạt.');
+      for(const [key,name] of [['valid_submissions','Lượt gửi hợp lệ'],['qualified_rfqs','RFQ đã đủ điều kiện'],
+        ['sales_accepted','Sales đã tiếp nhận'],['quotes_issued','Báo giá đã phát hành'],['orders','Đơn từng ghi nhận']]){
+        line(section,name,'',String(intake[key]));
+      }
+      line(section,'Doanh thu xác nhận hiện tại','Sau hoàn tiền và hủy · sandbox',money(intake.confirmed_revenue_vnd));
+      line(section,'Đang tư vấn','Trạng thái hiện tại',String(intake.current_states.consulting||0));
     }
     const quoteReport=isService?report.secondary_rfq_funnel:report;
     if (quoteReport) {
@@ -410,7 +429,7 @@ function createCampaignEngine(api) {
         command(form,'Lưu thông tin bổ sung',()=>sandbox(originatingPlan,{kind:'complete_rfq',rfq_id:lead.id,expected_revision:lead.revision,
           quantity:qty.value,location:place.value,required_date:when.value,contact_purpose:consent.checked?'quote_request':'none'}),{form:true});
       }
-      const steps=({received:['reject'],qualified:['assign','reject'],assigned:['accept','reject','cancel'],accepted:['quote','reject','cancel'],
+      const steps=({received:['reject'],qualified:['assign','reject'],awaiting_assignment:['assign'],assigned:['accept','reject','cancel'],accepted:['quote','reject','cancel'],
         quoted:['order','reject','cancel'],ordered:['confirm','cancel'],confirmed:['refund','correct','cancel']})[lead.state]||[];
       if(!steps.length)continue;
       const names={assign:'Nhận phụ trách',accept:'Sales tiếp nhận',reject:'Từ chối',quote:'Ghi nhận báo giá',order:'Ghi nhận đơn',
@@ -436,15 +455,32 @@ function createCampaignEngine(api) {
     return ()=>value.value.trim()?{schema_id:schema,[key]:value.value.trim(),...(mode?{delivery_mode:mode.value}:{})}:null;
   }
   function drawOptimization(parent,active,ops){
+    parent.dataset.optimization='true';
+    const utc=new Intl.DateTimeFormat('vi-VN',{dateStyle:'short',timeStyle:'medium',timeZone:'UTC'});
     const proposal=ops.optimization;
     if(proposal?.recommendation)add(parent,'p',proposal.recommendation);
     else add(parent,'p','Đối soát kết quả Sales và nguồn doanh thu trước khi giao việc tối ưu.');
+    function showEvidence(target,evidence){
+      if(!evidence)return;
+      const metric=evidence.primary_measurement;
+      const cutoff=utc.format(new Date(evidence.as_of_inclusive))+' UTC';
+      const period=metric ? 'Sau '+utc.format(new Date(metric.window_start_exclusive))+' UTC đến '+cutoff
+        : 'Trọn vòng đời kế hoạch, chốt lúc '+cutoff;
+      const source={sandbox_appointment_receipts:'Biên nhận lịch dịch vụ',sandbox_rfq_receipts:'Biên nhận RFQ'}[evidence.source]||'Chưa có nguồn đo';
+      line(target,source+' · '+period,'KPI: '+evidence.kpi);
+      if(metric)line(target,metric.definition,'Số đạt / số đủ điều kiện: '+metric.numerator+' / '+metric.denominator);
+      add(target,'small','Kế hoạch '+evidence.plan_id);
+    }
+    showEvidence(parent,proposal?.evidence);
     if(!active)return;
     const proposalId=crypto.randomUUID();
     command(parent,'Tạo đề xuất từ báo cáo',()=>sandbox(active,{kind:'propose_optimization',proposal_id:proposalId}));
     for(const item of ops.proposals||[]) {
       const row=line(parent,item.recommendation||item.id,item.work_package?.criteria,label(item.status));
-      if(item.plan_id===active.id && item.status==='proposed' && item.author!==actor)command(row,'Duyệt gói việc tối ưu',()=>sandbox(active,{kind:'approve_optimization',proposal_id:item.id}));
+      if(item.evidence?.version==='plan-optimization/2'){
+        showEvidence(row,item.evidence);
+        if(item.plan_id===active.id && item.status==='proposed' && item.author!==actor)command(row,'Duyệt gói việc tối ưu',()=>sandbox(active,{kind:'approve_optimization',proposal_id:item.id}));
+      }else if(item.status==='proposed')add(row,'small','Đề xuất cũ dùng tổng chiến dịch. Tạo đề xuất mới cho kế hoạch đang duyệt.');
     }
   }
   async function load() {

@@ -154,7 +154,7 @@ def pack(data, out):
     (out / "custodian.json").write_text(dump(labels), encoding="utf-8")
 
 
-def verify_artifact(name, observations, directory):
+def verify_artifact(name, observations, directory, staged=False):
     """Bind three independent submissions to the bytes retained for this blind package."""
     if set(observations) != set(ROLES):
         return {"status": "missing_roles"}
@@ -167,7 +167,7 @@ def verify_artifact(name, observations, directory):
     if directory is None:
         return {"status": "artifact_unavailable"}
     root = directory.resolve()
-    path = (root / name / "delivered.artifact").resolve()
+    path = (root / Path(name).name / "delivered/artifact.md" if staged else root / name / "delivered.artifact").resolve()
     if not path.is_relative_to(root) or not path.is_file():
         return {"status": "artifact_unavailable"}
     with path.open("rb") as artifact:
@@ -176,7 +176,7 @@ def verify_artifact(name, observations, directory):
     return {"status": status, "retained_sha256": digest, "submitted_revision": next(iter(references))}
 
 
-def check(key, rows, artifacts=None):
+def check(key, rows, artifacts=None, *, staged=False):
     result = {}
     observed = set()
     identities = {}
@@ -242,7 +242,7 @@ def check(key, rows, artifacts=None):
         out = result.setdefault(name, {"arm": arm, "observations": {}})
         obs = out["observations"]
         out["missing_roles"] = [r for r in ROLES if r not in obs]
-        out["artifact_verification"] = verify_artifact(name, obs, artifacts)
+        out["artifact_verification"] = verify_artifact(name, obs, artifacts, staged)
         out["verified_business_decision"] = (
             obs["sales_or_owner"]["business_accepted"] if out["artifact_verification"]["status"] == "verified" else None
         )
@@ -292,4 +292,4 @@ if __name__ == "__main__":
         pack(args.first, args.second)
     else:
         packages = check(read(args.first), read(args.second), args.artifacts)
-        print(dump({"packages": packages, "arms": by_arm(packages)}))
+        print(dump({"mode": "fixture_replay", "packages": packages, "arms": by_arm(packages)}))

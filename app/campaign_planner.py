@@ -20,12 +20,14 @@ from .models import Brand, Campaign, Deliverable, User, new_id
 from .revision_qa import content_digest
 from .security import current_user, require_tenant
 from .workforce_models import WorkforceBrief, WorkforceRun
+from .business_intake import Selections
 from .campaign_planner_pack import KINDS, compose_plan
 
 router = APIRouter(prefix="/api/tenants/{tenant_id}/campaigns/{campaign_id}/engine", tags=["Campaign planner"])
 
 
 class Proposal(Input):
+    intake_fields: Selections | None = None
     key: Key
     expected_revision: Annotated[int, Field(ge=0)]
     manifest_ids: Annotated[list[Ref], Field(min_length=1, max_length=2)]
@@ -219,6 +221,8 @@ def propose(tenant_id: str, campaign_id: str, body: Proposal, user: User = Depen
         return compose_plan(s, campaign_id, selected, body, new_id()), "restricted", None
 
     inputs = body.model_dump(mode="json")
+    if inputs["intake_fields"] is None:
+        inputs.pop("intake_fields")
     if not inputs["secondary_rfq"]:
         inputs.pop("secondary_rfq")
     # Existing retries used the implicit 10,000 µUSD ceiling before it was configurable.

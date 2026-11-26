@@ -1,0 +1,170 @@
+[
+  {
+    "id": "case-370748",
+    "lang": "vi",
+    "category": "tax_unit",
+    "source": "Một kiện có 12 cuộn, giá 690.000 VND/kiện chưa VAT. Chưa báo phí vận chuyển.",
+    "claim": "690.000 VND là giá chưa VAT cho cả kiện."
+  },
+  {
+    "id": "case-1fba3e",
+    "lang": "vi",
+    "category": "price_refund",
+    "source": "Giá bán ống bọc là 84.000 VND mỗi ống. Nhà cung cấp xem xét lỗi riêng từng ca, chưa công bố hạn hoàn tiền.",
+    "claim": "Bên bán xử lý mọi khoản hoàn trong 5 ngày."
+  },
+  {
+    "id": "case-61c164",
+    "lang": "vi",
+    "category": "negation",
+    "source": "Thiết bị ghi độ ẩm. Thiết bị không phát hiện khói và không tự gửi cảnh báo. Chưa đo thời gian lưu.",
+    "claim": "Máy lưu số đo đúng ba mươi ngày."
+  },
+  {
+    "id": "case-20f39f",
+    "lang": "en",
+    "category": "price_refund",
+    "source": "Giá bán ống bọc là 84.000 VND mỗi ống. Nhà cung cấp xem xét lỗi riêng từng ca, chưa công bố hạn hoàn tiền.",
+    "claim": "This is an 84,000 VND rebate per sleeve."
+  },
+  {
+    "id": "case-43ee62",
+    "lang": "en",
+    "category": "availability",
+    "source": "Lô thử được giữ riêng cho quận Bắc đến 20/12. Không công bố số lượng theo ngày.",
+    "claim": "The northern reservation is still valid on December 22."
+  },
+  {
+    "id": "case-369f6e",
+    "lang": "vi",
+    "category": "hypothesis_observation",
+    "source": "Nhóm đề xuất phỏng vấn ca đêm và chưa thực hiện phỏng vấn. Không có lịch ấn định.",
+    "claim": "Nhận định về ca đêm vẫn đang chờ kiểm chứng."
+  },
+  {
+    "id": "case-4700c8",
+    "lang": "en",
+    "category": "warranty",
+    "source": "Có bảo hành động cơ sáu tháng. Dây curoa bị loại trừ. Chưa công bố điều kiện đối với công lắp.",
+    "claim": "Installation work is covered for thirty days."
+  },
+  {
+    "id": "case-14c603",
+    "lang": "en",
+    "category": "negation",
+    "source": "Thiết bị ghi độ ẩm. Thiết bị không phát hiện khói và không tự gửi cảnh báo. Chưa đo thời gian lưu.",
+    "claim": "Smoke detection is included, but alerts are manual."
+  },
+  {
+    "id": "case-509398",
+    "lang": "vi",
+    "category": "channel_region_time",
+    "source": "Phí 120.000 VND/ghế chỉ dành cho đặt trực tuyến trong quận Đông vào tháng Một. Giá tháng Hai chưa quyết định.",
+    "claim": "Tháng Hai sẽ giảm còn 100.000 VND mỗi ghế."
+  },
+  {
+    "id": "case-dd262d",
+    "lang": "en",
+    "category": "minimum",
+    "source": "Đơn hàng xác nhận cần ít nhất tám bộ. Khách được tư vấn áp dụng cho cả số lượng thấp hơn; không có quy định gộp đơn nhiều địa chỉ.",
+    "claim": "Consultations are restricted to eight sets or more."
+  },
+  {
+    "id": "case-a7fbe2",
+    "lang": "vi",
+    "category": "availability",
+    "source": "Lô thử được giữ riêng cho quận Bắc đến 20/12. Không công bố số lượng theo ngày.",
+    "claim": "Quận Bắc còn sẵn chính xác 80 bộ."
+  },
+  {
+    "id": "case-9d6ea2",
+    "lang": "en",
+    "category": "tax_unit",
+    "source": "Một kiện có 12 cuộn, giá 690.000 VND/kiện chưa VAT. Chưa báo phí vận chuyển.",
+    "claim": "Shipping is included in the quoted crate price."
+  },
+  {
+    "id": "case-c8996c",
+    "lang": "en",
+    "category": "hypothesis_observation",
+    "source": "Nhóm đề xuất phỏng vấn ca đêm và chưa thực hiện phỏng vấn. Không có lịch ấn định.",
+    "claim": "The first interview is scheduled for Monday."
+  },
+  {
+    "id": "case-84b45c",
+    "lang": "en",
+    "category": "exception",
+    "source": "Nhận hàng tại điểm vào ngày thường trừ thứ Tư. Cuối tuần đóng cửa. Chưa công bố lịch giao tận nơi.",
+    "claim": "Home delivery always pauses on Wednesdays."
+  },
+  {
+    "id": "case-98ca7e",
+    "lang": "vi",
+    "category": "payment_direction",
+    "source": "Đơn vị kho thanh toán 315.000 VND cho bên kiểm tra mỗi lượt. Chưa quy định hạn thanh toán.",
+    "claim": "Khách trả phí cho từng lượt kiểm."
+  },
+  {
+    "id": "case-825557",
+    "lang": "vi",
+    "category": "performance",
+    "source": "Đồ gá canh nhãn theo ray. Không cam kết tăng năng suất. Nhóm đề xuất đo khi chạy thử và chưa cung cấp kết quả.",
+    "claim": "Một lần thử nội bộ ghi nhận tăng 13%."
+  },
+  {
+    "id": "case-f858b1",
+    "lang": "vi",
+    "category": "exception",
+    "source": "Nhận hàng tại điểm vào ngày thường trừ thứ Tư. Cuối tuần đóng cửa. Chưa công bố lịch giao tận nơi.",
+    "claim": "Khách có thể tới nhận thứ Sáu."
+  },
+  {
+    "id": "case-3bac77",
+    "lang": "en",
+    "category": "part_scope",
+    "source": "Kẹp xanh của giá R8 tháo được, tầng trên gắn cố định. Chưa có đặc tả R9.",
+    "claim": "The R9 clip is fixed in place."
+  },
+  {
+    "id": "case-9c50f",
+    "lang": "en",
+    "category": "channel_region_time",
+    "source": "Phí 120.000 VND/ghế chỉ dành cho đặt trực tuyến trong quận Đông vào tháng Một. Giá tháng Hai chưa quyết định.",
+    "claim": "Walk-in registration also receives the January online rate."
+  },
+  {
+    "id": "case-a87ecc",
+    "lang": "vi",
+    "category": "part_scope",
+    "source": "Kẹp xanh của giá R8 tháo được, tầng trên gắn cố định. Chưa có đặc tả R9.",
+    "claim": "Tầng trên R8 gắn cố định."
+  },
+  {
+    "id": "case-746ccf",
+    "lang": "en",
+    "category": "performance",
+    "source": "Đồ gá canh nhãn theo ray. Không cam kết tăng năng suất. Nhóm đề xuất đo khi chạy thử và chưa cung cấp kết quả.",
+    "claim": "The jig guarantees an increase in throughput."
+  },
+  {
+    "id": "case-f419aa",
+    "lang": "en",
+    "category": "payment_direction",
+    "source": "Đơn vị kho thanh toán 315.000 VND cho bên kiểm tra mỗi lượt. Chưa quy định hạn thanh toán.",
+    "claim": "The invoice is payable within seven days."
+  },
+  {
+    "id": "case-ff1f48",
+    "lang": "vi",
+    "category": "minimum",
+    "source": "Đơn hàng xác nhận cần ít nhất tám bộ. Khách được tư vấn áp dụng cho cả số lượng thấp hơn; không có quy định gộp đơn nhiều địa chỉ.",
+    "claim": "Hai điểm giao có thể cộng dồn số lượng tối thiểu."
+  },
+  {
+    "id": "case-c104db",
+    "lang": "vi",
+    "category": "warranty",
+    "source": "Có bảo hành động cơ sáu tháng. Dây curoa bị loại trừ. Chưa công bố điều kiện đối với công lắp.",
+    "claim": "Động cơ được bảo hành nửa năm."
+  }
+]

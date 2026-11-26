@@ -19,9 +19,9 @@ def appointment(cmd, state, plan, store, *, recipient=None):
     if isinstance(cmd, Appointment):
         if plan["buyer_action"] != "appointment" or cmd.product_id != plan["product_id"] or cmd.unit != plan["selling_unit"]:
             conflict("Appointment requires the approved service, unit and buyer action")
-        if cmd.requested_for < occurred or prior:
+        if (cmd.requested_for is not None and cmd.requested_for < occurred) or prior:
             conflict("Invalid appointment time or duplicate appointment ID")
-        if cmd.unit in DISCRETE_UNITS and cmd.quantity != cmd.quantity.to_integral_value():
+        if cmd.quantity is not None and cmd.unit in DISCRETE_UNITS and cmd.quantity != cmd.quantity.to_integral_value():
             conflict("This service uses a whole selling unit")
         row = {"id":cmd.appointment_id, "plan_id":plan["id"], "revision":1, "state":"requested",
                "assignee_id":None, "confirmed_for":None, "history":[], **cmd.model_dump(mode="json",exclude={"kind","request_id","appointment_id"})}

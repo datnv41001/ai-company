@@ -1,0 +1,454 @@
+[
+  {
+    "id": "101cd4ec",
+    "locale": "vi",
+    "journey": "rfq",
+    "brief": "Cho mỗi báo giá cần bề mặt và chiều dài cuộn tính theo mét.",
+    "buyer_message": "Cuộn dài 30 m. Bề mặt thì để tôi hỏi xưởng.",
+    "required_fields": [
+      {
+        "id": "finish",
+        "label": "bề mặt hoàn thiện"
+      },
+      {
+        "id": "roll_length",
+        "label": "chiều dài cuộn"
+      }
+    ],
+    "received_fields": {
+      "roll_length": "30 m",
+      "finish": "chờ xưởng"
+    }
+  },
+  {
+    "id": "1e2883ac",
+    "locale": "vi",
+    "journey": "rfq",
+    "brief": "Hai tài liệu đều còn hiệu lực. Phiếu kho yêu cầu cả màu; phụ lục mới bảo màu tùy chọn. Hai bên chưa xác nhận tài liệu nào chi phối.",
+    "buyer_message": "Đã chọn cấp G6. Màu để sau được không?",
+    "required_fields": [
+      {
+        "id": "grade",
+        "label": "cấp vật liệu"
+      }
+    ],
+    "received_fields": {
+      "grade": "G6"
+    }
+  },
+  {
+    "id": "2e006dcc",
+    "locale": "en",
+    "journey": "appointment",
+    "brief": "Booking requires a station hut code and access window. The duty team can confirm details in its message.",
+    "buyer_message": "Hut B3. The gate will be open from 8 to 9 a.m. for the inspection.",
+    "required_fields": [
+      {
+        "id": "hut",
+        "label": "station hut code"
+      },
+      {
+        "id": "access_slot",
+        "label": "access window"
+      }
+    ],
+    "received_fields": {
+      "hut": "B3"
+    }
+  },
+  {
+    "id": "3ab00e0a",
+    "locale": "en",
+    "journey": "rfq",
+    "brief": "Two active policies express the minimum for this quote in different units. There is no decision on whether boxes or pieces govern.",
+    "buyer_message": "We need 8 pieces. Can you confirm this meets the quoting minimum?",
+    "required_fields": [
+      {
+        "id": "piece_count",
+        "label": "piece count"
+      }
+    ],
+    "received_fields": {
+      "piece_count": "8"
+    }
+  },
+  {
+    "id": "449a6718",
+    "locale": "en",
+    "journey": "rfq",
+    "brief": "Pricing requires pack size and packs per week. The revenue target is internal.",
+    "buyer_message": "We need 18 packs per week, 500 g per pack. The revenue target isn't settled.",
+    "required_fields": [
+      {
+        "id": "pack_size",
+        "label": "pack size"
+      },
+      {
+        "id": "weekly_qty",
+        "label": "packs per week"
+      }
+    ],
+    "received_fields": {
+      "pack_size": "500 g",
+      "weekly_qty": "18"
+    }
+  },
+  {
+    "id": "47cc9c36",
+    "locale": "en",
+    "journey": "appointment",
+    "brief": "Sampling outlet and time slot are required. The vehicle plate is optional.",
+    "buyer_message": "Please sample outlet F6 from 10 to 11. The vehicle hasn't been assigned.",
+    "required_fields": [
+      {
+        "id": "outlet",
+        "label": "sampling outlet"
+      },
+      {
+        "id": "time_slot",
+        "label": "time slot"
+      }
+    ],
+    "received_fields": {
+      "outlet": "F6",
+      "time_slot": "10–11"
+    }
+  },
+  {
+    "id": "485fcab7",
+    "locale": "en",
+    "journey": "appointment",
+    "brief": "To select a technician, supply the line code and operating shift.",
+    "buyer_message": "Night shift. The last visit was to line X; this time the line hasn't been identified.",
+    "required_fields": [
+      {
+        "id": "line_code",
+        "label": "line code"
+      },
+      {
+        "id": "shift",
+        "label": "operating shift"
+      }
+    ],
+    "received_fields": {
+      "shift": "night"
+    }
+  },
+  {
+    "id": "49184988",
+    "locale": "vi",
+    "journey": "rfq",
+    "brief": "Phiếu báo giá yêu cầu mã cửa nhận và số thùng.",
+    "buyer_message": "Lô này 12 thùng. Tôi chưa có mã cửa nhận.",
+    "required_fields": [
+      {
+        "id": "dock_code",
+        "label": "mã cửa nhận"
+      },
+      {
+        "id": "crate_count",
+        "label": "số thùng"
+      }
+    ],
+    "received_fields": {
+      "crate_count": "12"
+    }
+  },
+  {
+    "id": "4a23c20d",
+    "locale": "vi",
+    "journey": "rfq",
+    "brief": "Báo giá cần số bộ và kho giao. Số điện thoại là tùy chọn.",
+    "buyer_message": "Tôi sửa kho T2 thành T5. Vẫn lấy sáu bộ.",
+    "required_fields": [
+      {
+        "id": "unit_count",
+        "label": "số bộ"
+      },
+      {
+        "id": "depot",
+        "label": "kho giao"
+      }
+    ],
+    "received_fields": {
+      "unit_count": "6",
+      "depot": "T2"
+    }
+  },
+  {
+    "id": "51d3687c",
+    "locale": "vi",
+    "journey": "appointment",
+    "brief": "Để xếp lịch cần ngày khảo sát và số đồng hồ tại điểm kiểm tra.",
+    "buyer_message": "Ngày 14 tháng 12 còn đúng. Số đồng hồ trước đây ghi là bốn, nhưng tôi đã rút con số đó; sẽ kiểm lại.",
+    "required_fields": [
+      {
+        "id": "visit_day",
+        "label": "ngày khảo sát"
+      },
+      {
+        "id": "meter_count",
+        "label": "số đồng hồ"
+      }
+    ],
+    "received_fields": {
+      "visit_day": "14/12",
+      "meter_count": "4"
+    }
+  },
+  {
+    "id": "54deda37",
+    "locale": "en",
+    "journey": "rfq",
+    "brief": "Each quote needs the surface finish and roll length in meters.",
+    "buyer_message": "The roll is 30 m. I still need to ask the workshop about the finish.",
+    "required_fields": [
+      {
+        "id": "finish",
+        "label": "surface finish"
+      },
+      {
+        "id": "roll_length",
+        "label": "roll length"
+      }
+    ],
+    "received_fields": {
+      "roll_length": "30 m",
+      "finish": "pending workshop confirmation"
+    }
+  },
+  {
+    "id": "5983a535",
+    "locale": "en",
+    "journey": "rfq",
+    "brief": "The quote intake requires the receiving bay code and crate count.",
+    "buyer_message": "This shipment has 12 crates. I don't have the receiving bay code yet.",
+    "required_fields": [
+      {
+        "id": "dock_code",
+        "label": "loading bay code"
+      },
+      {
+        "id": "crate_count",
+        "label": "crate count"
+      }
+    ],
+    "received_fields": {
+      "crate_count": "12"
+    }
+  },
+  {
+    "id": "67b87700",
+    "locale": "vi",
+    "journey": "appointment",
+    "brief": "Hợp đồng thử nghiệm chỉ bao gồm dịch vụ kiểm tra ở cơ sở. Yêu cầu kiểm tra từ xa chưa có quy trình hoặc bộ trường được duyệt.",
+    "buyer_message": "Bên tôi chỉ muốn kiểm tra từ xa, cần cung cấp những gì?",
+    "required_fields": [],
+    "received_fields": {}
+  },
+  {
+    "id": "6ffb689",
+    "locale": "en",
+    "journey": "appointment",
+    "brief": "Record the room to measure and an approved entrance. The entrance cannot be inferred from the room.",
+    "buyer_message": "Measure room E-14. There are east and west doors, but I don't know which one we're allowed to use.",
+    "required_fields": [
+      {
+        "id": "room",
+        "label": "room to measure"
+      },
+      {
+        "id": "entry_point",
+        "label": "approved entrance"
+      }
+    ],
+    "received_fields": {
+      "room": "E-14"
+    }
+  },
+  {
+    "id": "71990981",
+    "locale": "en",
+    "journey": "rfq",
+    "brief": "A quote requires the kit count and delivery depot. Phone number is optional.",
+    "buyer_message": "Please change the depot from T2 to T5. We still want six kits.",
+    "required_fields": [
+      {
+        "id": "unit_count",
+        "label": "number of kits"
+      },
+      {
+        "id": "depot",
+        "label": "delivery depot"
+      }
+    ],
+    "received_fields": {
+      "unit_count": "6",
+      "depot": "T2"
+    }
+  },
+  {
+    "id": "72c87c68",
+    "locale": "vi",
+    "journey": "appointment",
+    "brief": "Cần mã dây chuyền và ca vận hành để chọn kỹ thuật viên.",
+    "buyer_message": "Ca đêm. Đợt trước là dây X; lần này chưa xác định dây.",
+    "required_fields": [
+      {
+        "id": "line_code",
+        "label": "mã dây chuyền"
+      },
+      {
+        "id": "shift",
+        "label": "ca vận hành"
+      }
+    ],
+    "received_fields": {
+      "shift": "đêm"
+    }
+  },
+  {
+    "id": "74e67bd7",
+    "locale": "vi",
+    "journey": "appointment",
+    "brief": "Điểm lấy mẫu và khung giờ là bắt buộc. Biển số xe là tùy chọn.",
+    "buyer_message": "Lấy mẫu tại vòi F6 lúc 10–11 giờ. Xe nào đi thì chưa rõ.",
+    "required_fields": [
+      {
+        "id": "outlet",
+        "label": "điểm lấy mẫu"
+      },
+      {
+        "id": "time_slot",
+        "label": "khung giờ"
+      }
+    ],
+    "received_fields": {
+      "outlet": "F6",
+      "time_slot": "10–11"
+    }
+  },
+  {
+    "id": "75dca0ab",
+    "locale": "en",
+    "journey": "rfq",
+    "brief": "Two documents are marked active. The warehouse form requires color; the newer annex says color is optional. The governing document is unresolved.",
+    "buyer_message": "We've chosen grade G6. Can we supply the color later?",
+    "required_fields": [
+      {
+        "id": "grade",
+        "label": "material grade"
+      }
+    ],
+    "received_fields": {
+      "grade": "G6"
+    }
+  },
+  {
+    "id": "763f2e6a",
+    "locale": "vi",
+    "journey": "appointment",
+    "brief": "Đặt lịch cần mã nhà trạm và khung giờ vào trạm. Bên trực có thể xác nhận thông tin ngay trong tin nhắn.",
+    "buyer_message": "Trạm B3; cổng mở từ 8 đến 9 giờ sáng để kiểm tra.",
+    "required_fields": [
+      {
+        "id": "hut",
+        "label": "mã nhà trạm"
+      },
+      {
+        "id": "access_slot",
+        "label": "khung giờ vào trạm"
+      }
+    ],
+    "received_fields": {
+      "hut": "B3"
+    }
+  },
+  {
+    "id": "7742ae09",
+    "locale": "vi",
+    "journey": "rfq",
+    "brief": "Hai hướng dẫn đang có hiệu lực áp dụng hai đơn vị khác nhau cho ngưỡng tối thiểu. Chưa có quyết định dùng thùng hay chiếc.",
+    "buyer_message": "Chúng tôi cần 8 chiếc. Xin xác nhận có đạt ngưỡng báo giá không.",
+    "required_fields": [
+      {
+        "id": "piece_count",
+        "label": "số chiếc"
+      }
+    ],
+    "received_fields": {
+      "piece_count": "8"
+    }
+  },
+  {
+    "id": "7c69d09f",
+    "locale": "vi",
+    "journey": "appointment",
+    "brief": "Phải ghi phòng cần đo và lối vào được duyệt. Không suy ra lối vào từ phòng.",
+    "buyer_message": "Đo phòng E-14. Tôi biết có cửa đông và tây nhưng chưa biết được phép dùng cửa nào.",
+    "required_fields": [
+      {
+        "id": "room",
+        "label": "phòng cần đo"
+      },
+      {
+        "id": "entry_point",
+        "label": "lối vào được duyệt"
+      }
+    ],
+    "received_fields": {
+      "room": "E-14"
+    }
+  },
+  {
+    "id": "7f8cd632",
+    "locale": "en",
+    "journey": "appointment",
+    "brief": "The trial covers on-site inspections only. No process or required fields have been approved for remote inspection.",
+    "buyer_message": "We want a remote inspection only. What should we provide?",
+    "required_fields": [],
+    "received_fields": {}
+  },
+  {
+    "id": "8f5d980",
+    "locale": "vi",
+    "journey": "rfq",
+    "brief": "Báo giá phụ thuộc quy cách gói và số gói mỗi tuần. Mục tiêu doanh số chỉ dùng nội bộ.",
+    "buyer_message": "Cần 18 gói mỗi tuần, quy cách 500 g mỗi gói. Mục tiêu doanh số chưa chốt.",
+    "required_fields": [
+      {
+        "id": "pack_size",
+        "label": "quy cách gói"
+      },
+      {
+        "id": "weekly_qty",
+        "label": "số gói mỗi tuần"
+      }
+    ],
+    "received_fields": {
+      "pack_size": "500 g",
+      "weekly_qty": "18"
+    }
+  },
+  {
+    "id": "e70cedc",
+    "locale": "en",
+    "journey": "appointment",
+    "brief": "Scheduling requires the survey day and the number of meters at the inspection site.",
+    "buyer_message": "December 14 is still correct. I withdraw my earlier count of four meters and will recount.",
+    "required_fields": [
+      {
+        "id": "visit_day",
+        "label": "survey day"
+      },
+      {
+        "id": "meter_count",
+        "label": "meter count"
+      }
+    ],
+    "received_fields": {
+      "visit_day": "December 14",
+      "meter_count": "4"
+    }
+  }
+]

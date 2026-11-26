@@ -1,5 +1,7 @@
 # Pilot thực hành cho hai brief Marketing
 
+Để cấp pilot cho người thực hành, dùng [quy trình cấp bộ mới và chấm theo phiên bản](PILOT-ABCD/OFFICIAL.md). Các bộ có khóa trong repository công khai dùng cho diễn tập.
+
 Gói pilot dành cho một người làm Marketing, một reviewer độc lập và một người nhận bàn giao ở Sales hoặc chủ doanh nghiệp. Người điều phối xác nhận có sự đồng ý của ba người và họ có vai trò phù hợp. Dùng mã người tham gia tự chọn. Không ghi thông tin liên hệ hoặc đưa hồ sơ khách thật vào phiếu.
 
 1. Tạo một thư mục mới bằng `python tests/evaluation/department/pilot.py pack <thư-mục-kết-quả> <thư-mục-pilot>`. Giữ riêng `custodian.json` để sau khi khóa kết quả mới đối chiếu nhãn. Chuyển trực tiếp riêng từng gói cho người chấm. Repository công khai cũng có kết quả kỹ thuật; ghi vào biên bản nếu người chấm đã xem chúng trước khi khóa phiếu. Chuyển `01-manual.zip` trước. Người làm Marketing hoàn thành hai brief vào mẫu trống, lưu sản phẩm, thời gian làm, thời gian hỏi lại và nguồn chi phí. Hai người còn lại chưa xem các nhánh ứng viên.
@@ -18,3 +20,7 @@ Người điều phối lưu đúng tệp của bản cuối đã chuyển cho c
 Mỗi người tự lấy SHA-256 từ bản mình nhận bằng `Get-FileHash -Algorithm SHA256 -LiteralPath tên-tệp` hoặc `sha256sum tên-tệp`. Ghi mã vào `delivered_artifact_sha256`, ghi cùng tham chiếu bản giao vào `reference_to_delivered_revision` và nộp phiếu trước khi trao đổi. Reviewer vẫn chấm mức đạt lần đầu ở trường riêng với bản đầu. Mã băm chỉ nhận diện tệp, người điều phối xác nhận danh tính, vai trò và sự đồng ý của người tham gia.
 
 Kết quả chỉ tính quyết định Sales vào số bản nghiệm thu khi ba vai độc lập khai cùng tham chiếu và SHA-256, và tệp được lưu đúng gói có cùng SHA-256. Phiếu cũ vẫn giữ ý kiến gốc với trạng thái thiếu mã băm. Tệp thiếu, thay đổi, phiếu thiếu và bất đồng về phiên bản được ghi riêng. Chi phí trên bản được chấp thuận ở cấp nhánh chỉ tính khi có chi phí và quyết định đã đối chiếu cho toàn bộ gói được giao. Chưa có phiếu thực hành thực tế.
+
+## So sánh A/B/C/D
+
+[Gói bốn nhánh đã chuẩn bị](PILOT-ABCD/README.md) dùng lại hai brief, rubric và ba vai trò nhận xét của pilot này. Bản C và D có cùng điểm xuất phát. Nhánh D bổ sung người QA độc lập trước khi giao. Bộ thu kết quả giữ riêng thời gian, chi phí của lượt QA đó và xác minh hai phiên bản thực tế. Số người làm nghề tham gia tại thời điểm chuẩn bị là 0.

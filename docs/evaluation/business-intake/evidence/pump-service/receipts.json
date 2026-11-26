@@ -1,0 +1,238 @@
+{
+  "synthetic": true,
+  "case": "pump-service",
+  "plan_id": "6b92cbf7-ca10-4d92-bd3b-d760016adb26",
+  "plan_digest": "f3a6e256bd0a1b3847ecc1fd6d75fe09397271730e19edeece127adebd90f923",
+  "contract": {
+    "version": "business-intake/1",
+    "revision": 1,
+    "action": "appointment",
+    "locale": "vi-VN",
+    "plan_id": "6b92cbf7-ca10-4d92-bd3b-d760016adb26",
+    "subject": "baa73a2e-b70f-4cd1-a75d-fc9392778722",
+    "unit": "machine",
+    "fields": [
+      {
+        "id": "quantity",
+        "required": true,
+        "label": "số lượng",
+        "maps_to": "quantity",
+        "type": "integer",
+        "unit": "machine",
+        "unit_label": "máy",
+        "minimum": 1,
+        "maximum": 100
+      },
+      {
+        "id": "site",
+        "required": true,
+        "label": "địa điểm",
+        "maps_to": "location",
+        "type": "enum",
+        "options": [
+          {
+            "value": "north",
+            "label": "Cơ sở thử A"
+          },
+          {
+            "value": "south",
+            "label": "Cơ sở thử B"
+          }
+        ]
+      },
+      {
+        "id": "preferred_time",
+        "required": true,
+        "label": "khung giờ mong muốn",
+        "maps_to": "requested_for",
+        "type": "enum",
+        "options": [
+          {
+            "value": "2",
+            "label": "Sau hai ngày"
+          },
+          {
+            "value": "7",
+            "label": "Sau một tuần"
+          }
+        ]
+      }
+    ],
+    "source": {
+      "id": "359da285-162a-4f1c-b682-e128e42bd28b",
+      "digest": "817059083f097e22c0071f5ce4dfdfad48e76b12a68e6db989a15cc666d02dd3",
+      "brief_id": "3484deb0-2cf2-499e-a7ad-36396d868d56",
+      "workflow": "WF-13/landing-seo-draft@6"
+    },
+    "selection": "journey_defaults",
+    "measurement_digest": "6c8ee31905de5d78b8b1d404cca57694dd91e8d58d6b001752484cbcc124ca42",
+    "consent": {
+      "purpose": "appointment_request",
+      "required": true,
+      "label": "Tôi đồng ý gửi yêu cầu thử cho bộ phận phụ trách."
+    },
+    "qualification": {
+      "accept_inquiries": true,
+      "minimum_order_quantities": [
+        "1"
+      ]
+    },
+    "digest": "0837d32eecc2ba90de4ee389c957e7f130a8ee57bc37c03f3c783818f64f51fb"
+  },
+  "copy": {
+    "digest": "0837d32eecc2ba90de4ee389c957e7f130a8ee57bc37c03f3c783818f64f51fb",
+    "fields": [
+      "quantity",
+      "site",
+      "preferred_time"
+    ]
+  },
+  "package_id": "c0bd43c6-98f9-4769-ab7f-e1450195f6d6",
+  "package_digest": "1b563bf121e2d64c8432290a611acbe34e6ddd6245c090156aca1406a60ed1c2",
+  "file": {
+    "mime": "text/html",
+    "bytes": 4685,
+    "sha256": "a2c587dcd27396b27f4c4299c31fa3ab676e8935ca0a8de962276316f9e1c7ff"
+  },
+  "group_receipts": {
+    "copy": "11335502-d3da-462c-ba73-8ea0cbefb785",
+    "seo": "8a436e05-46cb-4816-b3ea-12df68adaef7"
+  },
+  "file_approval": {
+    "receipt": "ce806924-a11c-429e-9483-9ed0e8407ec9",
+    "digest": "1b563bf121e2d64c8432290a611acbe34e6ddd6245c090156aca1406a60ed1c2"
+  },
+  "commercial_terms": "Giá tham khảo: 270.000 VND / 1 máy, đã gồm thuế. Đơn tối thiểu: 1 máy. Áp dụng từ 1 máy. Số lượng đối chiếu: 1 máy. Xác nhận số lượng trước khi đặt.\nPhiếu kiểm tra ghi tình trạng máy. Áp dụng cho máy tại xưởng.",
+  "visit_id": "54ce6929-436f-42fb-afbc-d1b9e888fe70",
+  "submitted_id": "3058bc99-9de8-4a25-a2ce-c40705e5ca6d",
+  "submit_kind": "appointment",
+  "crm_entity": "appointments",
+  "state": "requested",
+  "crm_fields": {
+    "contract_digest": "0837d32eecc2ba90de4ee389c957e7f130a8ee57bc37c03f3c783818f64f51fb",
+    "revision": 1,
+    "answers": {
+      "quantity": 3,
+      "site": "north",
+      "preferred_time": "7"
+    },
+    "fields": [
+      {
+        "id": "quantity",
+        "required": true,
+        "label": "số lượng",
+        "maps_to": "quantity",
+        "type": "integer",
+        "unit": "machine",
+        "unit_label": "máy",
+        "minimum": 1,
+        "maximum": 100
+      },
+      {
+        "id": "site",
+        "required": true,
+        "label": "địa điểm",
+        "maps_to": "location",
+        "type": "enum",
+        "options": [
+          {
+            "value": "north",
+            "label": "Cơ sở thử A"
+          },
+          {
+            "value": "south",
+            "label": "Cơ sở thử B"
+          }
+        ]
+      },
+      {
+        "id": "preferred_time",
+        "required": true,
+        "label": "khung giờ mong muốn",
+        "maps_to": "requested_for",
+        "type": "enum",
+        "options": [
+          {
+            "value": "2",
+            "label": "Sau hai ngày"
+          },
+          {
+            "value": "7",
+            "label": "Sau một tuần"
+          }
+        ]
+      }
+    ],
+    "mapped": {
+      "quantity": 3,
+      "location": "north",
+      "requested_for": "7"
+    },
+    "consent": {
+      "purpose": "appointment_request",
+      "granted": true
+    }
+  },
+  "desk_readback_digest": "0837d32eecc2ba90de4ee389c957e7f130a8ee57bc37c03f3c783818f64f51fb",
+  "landing_funnel": {
+    "contract_digest": "0837d32eecc2ba90de4ee389c957e7f130a8ee57bc37c03f3c783818f64f51fb",
+    "window": "approved_plan_lifetime",
+    "action": "appointment",
+    "landing_visits": 1,
+    "valid_submissions": 1,
+    "manual_requests": 0,
+    "confirmed": 0
+  },
+  "manual_funnel": null,
+  "primary_measurement": {
+    "contract": {
+      "version": "appointment-measurement/1",
+      "business_outcome": "appointment.confirmed_per_requested",
+      "window_days": 21,
+      "owner_role": "service_operations",
+      "numerator": {
+        "event": "confirmed",
+        "eligibility": "staff_confirmation_with_scheduled_time"
+      },
+      "denominator": {
+        "event": "requested",
+        "eligibility": "valid_service_request_with_consent"
+      },
+      "window": "rolling_utc_(start,end]_denominator_cohort",
+      "unit": "ratio",
+      "aggregation": "distinct_appointment_id",
+      "cancellations": "retain_prior_eligible_events_report_separately",
+      "refunds": "not_a_monetary_outcome",
+      "missing_attribution": "include_and_report_separately",
+      "reconciliation": "join_authorized_lifecycle_receipts_by_plan_and_appointment_id",
+      "id": "6787283d-c601-46ec-a748-4c98c9afed31",
+      "revision": 1,
+      "digest": "6c8ee31905de5d78b8b1d404cca57694dd91e8d58d6b001752484cbcc124ca42"
+    },
+    "definition": "KPI chính trong 21 ngày: số lịch do nhân sự xác nhận trên số yêu cầu đặt lịch hợp lệ. Vận hành dịch vụ đối soát mỗi mã hẹn một lần. Giữ các sự kiện đủ điều kiện trước khi hủy. Tách hủy, vắng mặt và thiếu nguồn; hoàn tiền không đổi tỷ lệ.",
+    "plan_id": "6b92cbf7-ca10-4d92-bd3b-d760016adb26",
+    "window_start_exclusive": "2026-11-05T05:11:40.157273+00:00",
+    "as_of_inclusive": "2026-11-26T05:11:40.157273+00:00",
+    "numerator": 0,
+    "denominator": 1,
+    "ratio": 0.0,
+    "cancelled": 0,
+    "no_show": 0,
+    "unattributed": 0,
+    "attributed": 1,
+    "attribution": {
+      "landing_asset": 1,
+      "media_action": 0,
+      "unknown_media_action": 1,
+      "neither": 0
+    },
+    "source": "sandbox_appointment_receipts",
+    "secondary_metrics": [
+      {
+        "metric_id": "web.sessions",
+        "unit": "session_count",
+        "value": 1
+      }
+    ]
+  }
+}

@@ -32,6 +32,19 @@ def test_optional_fields_change_the_plan_contract_without_weakening_the_approved
         assert changed.value.status_code == 409
 
 
+@pytest.mark.parametrize("cta", ["Đặt lịch khảo sát, ghi địa điểm và mã dây chuyền.",
+                                 "Request a quote and provide number of boxes and cable ID.",
+                                 "Đặt lịch khảo sát, ghi mã dây chuyền."])
+def test_explicit_buyer_list_requires_supported_fields(cta):
+    intent = {"requirements": [cta]}
+    with pytest.raises(HTTPException, match="unsupported intake field") as denied:
+        intake.submitted_fields(intent, strict=True)
+    assert denied.value.status_code == 409
+    assert intake.submitted_fields(intent) == []  # Archived content packs retain their historical read path.
+    internal = {"requirements":["Đối chiếu ghi chú của biên tập, ghi địa điểm và người phê duyệt."]}
+    assert intake.submitted_fields(internal, strict=True) == []
+
+
 def test_sales_followup_rechecks_moq_before_transition():
     lead = {"id":"lead", "unit":"box", "plan_id":"plan", "revision":1, "state":"received", "minimum_order_quantities":["5"],
             "quantity":"3","location":"Synthetic A","required_date":"2030-01-01","contact_purpose":"quote_request"}

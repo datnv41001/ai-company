@@ -24,6 +24,8 @@ Hai brief nghiên cứu tổng hợp nằm trong `tests/evaluation/department/br
 
 Đọc chỉ số theo nguồn và cửa sổ. Một liên hệ thủ công hợp quyền vẫn xuất hiện ở báo cáo CRM và có thể đóng góp vào cohort lịch hẹn theo định nghĩa KPI đã duyệt. Liên hệ đó không tăng lượt gửi form trong `intake_measurement`. Trường tùy chọn bỏ trống vẫn có thể tạo yêu cầu hợp lệ nhưng chuyển Sales và giao dịch còn phụ thuộc đủ thông tin cùng điều kiện thương mại. Nếu có nhiều mức MOQ chưa xác định được điều kiện áp dụng, hồ sơ chờ đối chiếu và chưa được chuyển bước. KPI theo tháng hoặc theo một cửa sổ khác cần có định nghĩa và dữ liệu phù hợp riêng. Hai bộ nhãn và từ vựng được hỗ trợ là tiếng Việt và tiếng Anh. Một field nghiệp vụ ngoài danh mục hoặc ngôn ngữ khác cần bổ sung hợp đồng cùng ca nghiệm thu trước khi tiếp nhận.
 
+Bộ đọc danh sách chỉ nhận cú pháp CTA đã nêu trong test. Chẳng hạn, “Đặt lịch khảo sát, ghi địa điểm và mã dây chuyền” yêu cầu một field ngoài danh mục. Publisher của kế hoạch báo lỗi để cập nhật brief. Nội dung ghi chú chung cho biên tập vẫn dùng được và không tự tạo trường nhập liệu. Với cách diễn đạt tự do chưa được nhận diện, người phụ trách cần kiểm tra rõ danh mục hiển thị trước bước duyệt. Các bản copy đã duyệt từ phiên bản cũ dùng lại quy tắc đọc lịch sử.
+
 ## Chuyển phiên bản giữa các máy
 
 Chạy migration publisher `python migrations/apply.py` với cấu hình phát triển của repository trước khi chạy API mới. Core vẫn ở v26. Publisher kiểm tra và cài trigger `business_intake_writer` theo cùng quy trình additive của campaign desk. Khởi động cụm API với `docker compose up --build` theo hướng dẫn README của repository. Với SQLite file, khởi động ứng dụng mới trên file hiện hữu để cài trigger. Giữ bản sao dữ liệu theo quy trình restore đã có.

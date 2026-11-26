@@ -1,5 +1,9 @@
 # Bắt đầu ở đây khi tiếp quản AI Marketing Company
 
+## Sửa điều kiện trên landing đặt lịch dịch vụ
+
+Trong Marketing Studio, giữ nguyên quyền lợi đã ghim và mọi giới hạn của quyền lợi, rồi bỏ câu mô tả bị chép lặp ở **Nội dung trang → Điều kiện thương mại**. Gửi revision mới, mở **Đối chiếu bằng chứng** và xử lý các câu chờ chuyên môn bằng nguồn của đúng dịch vụ. QA ký lại từng nhóm và toàn bản trước khi dựng HTML phiên bản kế tiếp. Ca bơm Lam có hai file, hai lần thử đặt lịch và biên nhận tải lại snapshot cũ. [Bàn giao 15 mục và lệnh tái chạy](docs/evaluation/service-landing-edit/README.md)
+
 
 ## Biên tập từng câu và bộ nội dung theo kế hoạch
 

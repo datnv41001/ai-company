@@ -6,6 +6,7 @@ import sys
 from zipfile import ZipFile
 
 import pytest
+from PIL import Image
 
 sys.path.insert(0, str(Path(__file__).parent / "evaluation/department"))
 from production_edits import FOLDER, check_bundle, check_price_and_readability, read, sha, tracks  # noqa: E402
@@ -14,6 +15,10 @@ from production_edits import FOLDER, check_bundle, check_price_and_readability, 
 def test_archived_production_edits_match_approved_files():
     check_bundle(FOLDER)
     for case in ("index-tray", "receipt-map"):
+        source = (FOLDER / case / "edit.json").read_bytes().replace(b"\r\n", b"\n")
+        with Image.open(FOLDER / case / "storyboard.png") as sheet:
+            assert sheet.info["edit_sha256"] == sha(source)
+            sheet.verify()
         variants = tracks(read(FOLDER / case / "edit.json"))
         a, b = (s.splitlines() for s in variants.values())
         assert [idx for idx, lines in enumerate(zip(a, b, strict=True)) if lines[0] != lines[1]] == [3]

@@ -43,3 +43,7 @@ python tests/evaluation/department/production_edits.py captions docs/evaluation/
 Để kiểm giao dịch mới, đặt `AMC_PRODUCTION_EVIDENCE` và `AMC_INTAKE_EVIDENCE` vào hai thư mục trống ở máy dev, rồi chạy `python -m pytest -q tests/test_production_studios.py -k "index-tray or receipt-map"`. Trên PowerShell gán bằng `$env:AMC_PRODUCTION_EVIDENCE` và `$env:AMC_INTAKE_EVIDENCE`. [JUnit theo SHA của lượt chạy](journeys.xml) giữ thời gian và case. ID kế hoạch, digest theo revision và định danh tổng hợp có thể khác ở lần chạy mới. Quyết định doanh nghiệp, chi phí nhân sự và hiệu quả media chưa đo.
 
 [So sánh chất lượng trước/sau](QUALITY.md) · [Bộ tiêu chí theo từng bộ phận](SKILLS.md)
+
+### Tờ cảnh cho người dựng
+
+Mở [storyboard Khe Gọn, 25 giây](index-tray/storyboard.png) hoặc [storyboard Luồng Rõ, 27 giây](receipt-map/storyboard.png). Cả hai tờ dùng lời và thời lượng của bản v2 đã khôi phục giá tham khảo. Sơ đồ minh họa cách bố trí đạo cụ; ảnh sản phẩm thật và địa điểm quay cần quyền của chủ sở hữu. Trên máy khác, chạy `python tests/evaluation/department/production_storyboard.py` từ thư mục gốc để kết xuất lại bằng font đã có trong Studio.

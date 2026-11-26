@@ -66,6 +66,7 @@ def install(arm, cache):
 @contextmanager
 def serve(arm, cache, receipt):
     before = monotonic()
+    cache.mkdir(parents=True, exist_ok=True)
     receipt.update(
         arm=arm,
         free_disk_bytes=shutil.disk_usage(cache.parent).free,

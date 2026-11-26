@@ -1,0 +1,11 @@
+# Pilot thực hành cho hai brief Marketing
+
+Gói pilot dành cho một người làm Marketing, một reviewer độc lập và một người nhận bàn giao ở Sales hoặc chủ doanh nghiệp. Người điều phối xác nhận có sự đồng ý của ba người và họ có vai trò phù hợp. Dùng mã người tham gia tự chọn. Không ghi thông tin liên hệ hoặc đưa hồ sơ khách thật vào phiếu.
+
+1. Tạo một thư mục mới bằng `python tests/evaluation/department/pilot.py pack <thư-mục-kết-quả> <thư-mục-pilot>`. Giữ riêng `custodian.json` để sau khi khóa kết quả mới đối chiếu nhãn. Chuyển `01-manual.zip` trước. Người làm Marketing hoàn thành hai brief vào mẫu trống, lưu sản phẩm, thời gian làm, thời gian hỏi lại và nguồn chi phí. Hai người còn lại chưa xem các nhánh ứng viên.
+2. Người điều phối xóa dấu hiệu nhận dạng tác giả, giữ bản gốc và chuyển bản thủ công cùng rubric cho reviewer và Sales. Mỗi người ghi quyết định của mình trước khi trao đổi. Ghi thời lượng QA, giá trị kinh doanh, lý do chấp nhận hoặc cần sửa và trích trường trong bản giao.
+3. Mở `02-candidates.zip`. Theo thứ tự `ORDER.txt`, reviewer chấm bản đầu trước khi xem bản sau biên tập của từng gói. Người làm Marketing ghi thời gian gỡ điểm vướng và chỉnh đến mức có thể giao. Sales hoặc chủ doanh nghiệp xác nhận mức dùng được hoặc lý do từ chối. Cả ba dùng mẫu JSON giống nhau; có thể lưu bản sửa tài liệu bên cạnh. Người chấm giữ độc lập, sau đó mới họp xử lý bất đồng. Chi phí lao động và máy của từng ca cần căn cứ thực, ghi null khi thiếu.
+4. Tạo file JSON chứa danh sách phiếu, mỗi phiếu là một object đã điền từ mẫu. Chạy `python tests/evaluation/department/pilot.py check <thư-mục-pilot>/custodian.json <file-phiếu.json>`. Lệnh kiểm tra đủ vai trò khác nhau, ghi nhận mức chấp thuận lần đầu, đầu ra dùng được, thời gian, nguồn chi phí trên bản được chấp thuận và các phiếu còn thiếu. So sánh cặp cùng brief, ghi riêng cơ sở thu thập và ngoại lệ. Lưu phiếu gốc trước khi mở khóa nhãn.
+
+Bản thủ công và đối chứng xác định là hai nhánh riêng. Một đề xuất SEO có thể qua gate nhưng vẫn cần biên tập vì chưa đủ cụ thể. Một gói social/ad nghiên cứu cần người có thẩm quyền đánh giá nội dung và chứng cứ trước khi sử dụng. Quyết định của Sales trong pilot là kết quả trên ca tổng hợp. Mở thương mại còn phụ thuộc release gates của sản phẩm.
+

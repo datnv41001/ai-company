@@ -202,6 +202,11 @@ def rights(tenant_id: str, uid: str, body: Rights, user: User = Depends(current_
 def edit_draft(tenant_id: str, did: str, body: Edit, user: User = Depends(current_user), db: Session = Depends(get_db)):
     require_tenant(db, user, tenant_id, "editor")
     doc = working_copy(db, tenant_id, did)
+    from . import storyboard_runtime
+    from .workforce_models import WorkforceRun
+    producer = db.scalar(select(WorkforceRun).filter_by(tenant_id=tenant_id, deliverable_id=did))
+    if storyboard_runtime.is_run(producer):
+        raise HTTPException(409, "Edit this storyboard through its scoped Workforce edition")
     studio = doc.content.get("studio") or {}
     if studio.get("delivery_version") or studio.get("groups", {}).get("copy"):
         raise HTTPException(409, "Edit the buyer-facing copy in Marketing Studio to keep its version and preview together")

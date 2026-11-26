@@ -13,6 +13,7 @@ from .database import get_db
 from .delivery import lock_document
 from .delivery_models import ClientReview, PortalGrant, ReviewEntry
 from .models import AuditEvent, Brand, Campaign, Deliverable, User
+from .storyboard_editions import StoryboardEdit
 from .security import current_user, require_tenant
 from .workforce_gateway import CORE, EXTRA, PROMPT_VERSION
 from . import workforce_authority  # noqa: F401 - install SQLite triggers on fresh schema
@@ -289,38 +290,62 @@ def display_state(run, graph):
     return run.state
 
 
-class StoryboardEdit(Input):
-    expected_qa_revision: int = Field(ge=1, strict=True)
-    expected_content_digest: str = Field(pattern=r"^[0-9a-f]{64}$")
-    hook_variant: Literal["direct", "audience"]
-
-
 @router.post("/runs/{rid}/storyboard-edition")
 def edit_storyboard(tenant_id: str, rid: str, body: StoryboardEdit, user: User = Depends(current_user), db: Session = Depends(get_db)):
-    from . import c3_boundaries, video_storyboard as video
+    from . import c3_boundaries, storyboard_editions as editions, storyboard_runtime as runtime
     from .delivery import working_copy, save_working_revision
     from .revision_qa import content_digest
     from .registry import pin
+    from .video_storyboard import json_text
 
     require_tenant(db, user, tenant_id, "editor")
     run = db.scalar(select(WorkforceRun).filter_by(tenant_id=tenant_id, id=rid))
-    if not video.is_run(run) or not run.deliverable_id:
+    if not runtime.is_run(run) or not run.deliverable_id:
         raise HTTPException(404, "Storyboard unavailable")
+    connected = None
+    if body.distribution:
+        from .storyboard_distribution import resolve
+        connected = resolve(db, user, tenant_id, **body.distribution.model_dump(), write=True)
+        if (connected["storyboard"]["run_id"], connected["storyboard"]["document_id"]) != (rid, run.deliverable_id):
+            raise HTTPException(404, "Distribution unavailable for this storyboard")
     doc = working_copy(db, tenant_id, run.deliverable_id)
-    if (doc.qa_revision,content_digest(doc.title,doc.content["client_preview"])) != (body.expected_qa_revision,body.expected_content_digest):
-        raise HTTPException(412,"Reload the current storyboard revision")
-    brief = db.get(WorkforceBrief,run.brief_id)
+    if (doc.qa_revision, content_digest(doc.title, doc.content["client_preview"])) != (body.expected_qa_revision, body.expected_content_digest):
+        raise HTTPException(412, "Reload the current storyboard revision")
+    brief = db.get(WorkforceBrief, run.brief_id)
     ref = run.knowledge["c3_manifest"]
-    _, _, projection = c3_boundaries.checked(db,user,brief,ref,video.RELEASE,"edit")
-    if pin(db,brief,video.RELEASE) != run.knowledge["registry"]:
-        raise HTTPException(409,"The storyboard binding is no longer current")
+    release = run.knowledge["registry"]["workflow"]
+    store, snap, projection = c3_boundaries.checked(db, user, brief, ref, release, "edit")
+    if pin(db, brief, release) != run.knowledge["registry"]:
+        raise HTTPException(409, "The storyboard binding is no longer current")
+    landing = {"kind": "offline_no_landing"}
+    distribution = {"kind": "offline_no_delivery", "channel": projection["channel"], "audience": projection["audience"]}
+    if connected:
+        source = connected["storyboard"]
+        if (source["run_id"], source["document_id"], source["revision"], source["content_digest"]) != (
+            rid, doc.id, doc.qa_revision, body.expected_content_digest
+        ):
+            raise HTTPException(412, "Distribution does not cite the baseline revision under review")
+        landing = {"kind": "approved_at_baseline", **connected["landing"]}
+        distribution = {"kind": connected["distribution_mode"], "id": body.distribution.distribution_id, "digest": connected["distribution_digest"]}
     try:
-        board = video.compose(projection,ref,body.hook_variant)
-    except ValueError as exc:
-        raise HTTPException(409,str(exc)) from exc
-    save_working_revision(db,doc,user.id,run.knowledge["title"],video.json_text(board))
+        before, _ = editions.checked_board(store, doc, run, projection, ref, runtime, for_qa=False)
+        board = editions.apply_edits(before, body, projection, lambda variant: runtime.compose(projection, ref, variant, release=release))
+        if release == runtime.RELEASE:
+            from .storyboard_brief import assessment
+            board["brief_fulfillment"] = assessment(projection, board)
+        comparison = editions.comparison(before, board, body.mode, landing, distribution)
+    except (ValueError, TypeError, KeyError) as exc:
+        raise HTTPException(409, str(exc)) from exc
+    save_working_revision(db, doc, user.id, run.knowledge["title"], json_text(board))
+    receipt = {
+        "run_id": rid, "document_id": doc.id, "revision": doc.qa_revision, "content_digest": doc.qa_evidence["content_digest"],
+        "baseline_revision": body.expected_qa_revision, "baseline_content_digest": body.expected_content_digest,
+        "baseline_board_digest": editions.fingerprint(before), "board_digest": editions.fingerprint(board),
+        "edits": body.model_dump(exclude_none=True), "comparison": comparison,
+    }
+    c3_boundaries.record(store, snap, "storyboard_edit", f"board:{doc.id}:{doc.qa_revision}", receipt)
     db.commit()
-    return {"document_id":doc.id,"revision":doc.qa_revision,"content_digest":doc.qa_evidence["content_digest"],"storyboard":board}
+    return {"document_id": doc.id, "revision": doc.qa_revision, "content_digest": doc.qa_evidence["content_digest"], "storyboard": board, "receipt": receipt}
 
 
 def display_plan(run, graph):

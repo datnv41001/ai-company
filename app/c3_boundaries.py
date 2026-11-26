@@ -33,7 +33,7 @@ def record(store, snap, operation, key, result):
 
 def run_for(db, doc):
     run = db.scalar(select(WorkforceRun).filter_by(tenant_id=doc.tenant_id, deliverable_id=doc.id))
-    from .video_storyboard import is_run
+    from .storyboard_runtime import is_run
     if c3_content_evidence.marketing_run(run) or is_run(run):
         return run
     return None
@@ -73,22 +73,31 @@ def boundary(db, user, doc, content_digest, stage, *, inspect_only=False):
     from .registry import pin
     if pin(db, brief, binding["workflow"]) != binding:
         conflict("The approved campaign registry binding changed")
-    from . import video_storyboard as video
+    from . import storyboard_editions as editions, storyboard_runtime as video
     if video.is_run(run):
         if stage == "share" or not store.approver:
             conflict("The storyboard requires independent internal QA and is restricted to preproduction")
-        from .knowledge_store import digest,canonical
-        import json
         try:
-            current = json.loads(doc.content["client_preview"])
-            expected = video.compose(run.knowledge["c3_projection"],ref,current["hook_variant"])
-            if video.json_text(current) != video.json_text(expected) or doc.title != run.knowledge["title"]:
-                raise ValueError("Changed material outside the approved storyboard revision")
+            current, edition = editions.checked_board(store, doc, run, run.knowledge["c3_projection"], ref, video)
         except (ValueError, KeyError, TypeError):
             conflict("Correct the storyboard, offer, source references or layout against the pinned manifest")
-        return store,snap,{"run_id":run.id,"document_id":doc.id,"qa_revision":doc.qa_revision,
-                           "content_digest":content_digest,"manifest_digest":snap.digest,"release_digest":binding["manifest_digest"],
-                           "storyboard_digest":digest(canonical(current)),"hook_variant":current["hook_variant"]}
+        values = {"run_id":run.id,"document_id":doc.id,"qa_revision":doc.qa_revision,
+                  "content_digest":content_digest,"manifest_digest":snap.digest,"release_digest":binding["manifest_digest"],
+                  "storyboard_digest":digest(canonical(current)),"hook_variant":current["hook_variant"]}
+        if edition:
+            values["edition_receipt"] = edition.id
+            values["edition_receipt_digest"] = edition.request_digest
+        if stage == "replay_qa":
+            from .c3_reviewer import active_approver
+            if not active_approver(db, doc.tenant_id, doc.reviewed_by, lock=not inspect_only):
+                conflict("The storyboard reviewer no longer has approval authority")
+            key = decision_key(run.id, doc.qa_revision, content_digest)
+            query = store.query(KnowledgeCommand).filter_by(snapshot_id=snap.id, operation="c3_qa", actor=doc.reviewed_by)
+            approval = db.scalar(query.where((KnowledgeCommand.key == key) | KnowledgeCommand.key.startswith(key + ":"))
+                                 .order_by(KnowledgeCommand.effective_at.desc()).limit(1))
+            if approval is None or approval.result != values:
+                conflict("The scoped storyboard QA decision no longer matches this revision")
+        return store, snap, values
     values = {"run_id":run.id, "document_id":doc.id, "qa_revision":doc.qa_revision, "content_digest":content_digest,
               "manifest_digest":snap.digest, "release_digest":binding["manifest_digest"]}
     from .c3_evidence_review import decision_evidence

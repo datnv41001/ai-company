@@ -84,6 +84,9 @@ function mountMarketingStudio(host,api,path,role,afterSave) {
       add(edit,'small','Dùng quy trình chung. Xác nhận ngành, loại sản phẩm, kênh và đơn vị bán trước khi chọn playbook chuyên ngành.');
     }
     if(edition)add(edit,'p',Object.hasOwn(spec.fields,group)?'Thuộc bộ tài liệu giao khách.':'Chỉ dành cho đội ngũ nội bộ.');
+    if(['admin','owner'].includes(role) && ['copy','creative_brief'].includes(group) && view.channel_edition?.plan){
+      mountProductionStudio(edit,api,path,view,group==='copy'?'landing':'creative',()=>dirty);
+    }
     const state=add(edit,'p',view.approvals[group]?'Đã duyệt phần này':'Chờ duyệt độc lập');
     state.className='studio-decision';state.dataset.signed=String(Boolean(view.approvals[group]));
     let refreshSample=()=>{};

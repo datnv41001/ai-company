@@ -1,0 +1,62 @@
+{
+  "id": "14f74002-a785-4539-9df2-4e843d676884",
+  "created_by": "f77afeac-8b6d-42ef-b096-f0918c0e3895",
+  "did": "224316f1-c800-4fb1-b2e9-b70e3471819f",
+  "version": 1,
+  "kind": "landing",
+  "studio_revision": 4,
+  "manifest": {
+    "id": "1d878308-559e-4813-8dca-8151bda32947",
+    "digest": "0b6df79d5e5503e8721c95c1606f8ffc817336126baf5ecef7df3933b3b4bc0e"
+  },
+  "plan_id": "dc4238ad-0a77-44bd-8e9c-302680dcfd28",
+  "plan_digest": "c6e939d13801949cf2aa92aee8e7e57839ff02092b4fd824497eef5318a70437",
+  "groups": {
+    "copy": "043abfa1a387996fe0391d6f64b9746d3379b6069c61f6982fd75ba074486e53",
+    "seo": "76fec67e2c05b73f3b560bf8b26c2950975ff56d0c4967d02bc1a292573a39df"
+  },
+  "group_receipts": {
+    "copy": "84ea6b7c-05ce-4ab9-964b-44e74971d3c7",
+    "seo": "b870ddb3-6f50-46a8-8d91-996f455125af"
+  },
+  "inputs": "7aa6379dc0b7d1be56240c3953283ef5e532ba991ed0c63efe1b37001b75ebb6",
+  "master": {
+    "contract": "amc.sandbox-landing/1",
+    "kind": "rfq",
+    "seo": {
+      "page_title": "Tấm gỗ tiêu âm Mộc | HN",
+      "meta_description": "Xem thông tin về Tấm gỗ tiêu âm Mộc tại HN. Yêu cầu báo giá",
+      "search_intent": "Tìm hiểu điều kiện lựa chọn Tấm gỗ tiêu âm Mộc tại HN."
+    },
+    "sections": {
+      "headline": "Tấm gỗ tiêu âm Mộc",
+      "value_proposition": "Đối chiếu quy cách và điều kiện áp dụng của Tấm gỗ tiêu âm Mộc trước khi lựa chọn.",
+      "benefit": "Lớp mặt phủ veneer. Dùng trong nhà.",
+      "commercial_terms": "Lớp mặt phủ veneer. Dùng trong nhà.\nGiá tham khảo: 430.000 VND / 1 hộp, đã gồm thuế. Đơn tối thiểu: 1 hộp. Áp dụng từ 1 hộp. Số lượng đối chiếu: 1 hộp. Xác nhận số lượng trước khi đặt.",
+      "call_to_action": "Yêu cầu báo giá"
+    },
+    "product_id": "6daa61d0-13e3-4619-815d-8d3a0fdaa9d5",
+    "unit": "box",
+    "scope": "synthetic_local",
+    "public_tracking": false
+  },
+  "files": {
+    "landing.html": {
+      "mime": "text/html",
+      "bytes": 4155,
+      "sha256": "c179025a2e89c1b476df8b4fb128926192350124778b6150b761f554baecc423"
+    }
+  },
+  "digest": "c434d3df3a23978b3b0c04903dffaa8f3a54fcc6cc407407afa254a9f78572a9",
+  "measurement": {
+    "render_ms": 7.56,
+    "bytes": 4155,
+    "external_calls": 0,
+    "full_cost_vnd": null
+  },
+  "production_qa": {
+    "reviewer": "804f98e1-7517-45eb-ada4-4adb2dc047ee",
+    "receipt": "fbb69b18-a6bb-4901-8e3a-63f647dd6f41",
+    "digest": "c434d3df3a23978b3b0c04903dffaa8f3a54fcc6cc407407afa254a9f78572a9"
+  }
+}

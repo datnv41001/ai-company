@@ -1,0 +1,37 @@
+{
+  "synthetic": true,
+  "plan_digest": "c6e939d13801949cf2aa92aee8e7e57839ff02092b4fd824497eef5318a70437",
+  "package_digests": {
+    "creative": "333ade0df72d605e4778fa116290474b0c9c1373a170bdfacb5103451d531cf6",
+    "landing": "c434d3df3a23978b3b0c04903dffaa8f3a54fcc6cc407407afa254a9f78572a9"
+  },
+  "sessions": [
+    {
+      "width": 1280,
+      "height": 850,
+      "video_seconds": 6,
+      "decoder": "VP8",
+      "browser": "157.0.8103.52",
+      "viewport_scroll_width": 1280,
+      "landing_viewport": 1234
+    },
+    {
+      "width": 820,
+      "height": 1180,
+      "video_seconds": 6,
+      "decoder": "VP8",
+      "browser": "157.0.8103.52",
+      "viewport_scroll_width": 820,
+      "landing_viewport": 784
+    },
+    {
+      "width": 390,
+      "height": 844,
+      "video_seconds": 6,
+      "decoder": "VP8",
+      "browser": "157.0.8103.52",
+      "viewport_scroll_width": 390,
+      "landing_viewport": 362
+    }
+  ]
+}

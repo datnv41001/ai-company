@@ -51,12 +51,12 @@ def context(store, run):
             "due_days": {p["id"]: p["due_day"] for p in active["work_packages"] if p["id"] in FIELDS}}
 
 
-def require_current(store, doc, run):
+def require_current(store, doc, run, *, lock_targets=True):
     expected = doc.content["studio"].get("channel_context")
     if not expected or expected != context(store, run):
         conflict("The channel edition needs its original active plan, approval, manifest and queue receipt")
     from .campaign_planner import active_plan
-    active_plan(store, run.campaign_id)  # revalidate every dependency before a new approval or share
+    active_plan(store, run.campaign_id,lock_targets=lock_targets)  # revalidate every dependency before a new approval or share
 
 
 def compose(projection, ctx):

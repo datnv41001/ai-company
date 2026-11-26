@@ -1,0 +1,59 @@
+[
+  {
+    "id": "6eec2fec-6472-41d9-9149-35c82b9a2bc3",
+    "campaign_id": "c59ad387-f2ad-4a53-beba-f2809d25c9fb",
+    "plan_id": "dc4238ad-0a77-44bd-8e9c-302680dcfd28",
+    "sequence": 15,
+    "kind": "session",
+    "entity": "sessions",
+    "entity_id": "462bde0f8fae4a8972279f321d2fb195fb61bc7eb568be758bf0baab1aa2b14c",
+    "value": {
+      "id": "462bde0f8fae4a8972279f321d2fb195fb61bc7eb568be758bf0baab1aa2b14c",
+      "visitor": "804d0f23db6cbeafbcad97e08003dcfad76777cb6e23d844092aff2b5b925f06",
+      "action_id": null,
+      "occurred_at": "2026-11-26T02:02:00.112734+00:00",
+      "plan_id": "dc4238ad-0a77-44bd-8e9c-302680dcfd28",
+      "landing_package": "14f74002-a785-4539-9df2-4e843d676884",
+      "landing_digest": "c434d3df3a23978b3b0c04903dffaa8f3a54fcc6cc407407afa254a9f78572a9"
+    },
+    "actor": "f77afeac-8b6d-42ef-b096-f0918c0e3895",
+    "recorded_at": "2026-11-26T02:02:00.113733+00:00"
+  },
+  {
+    "id": "634f247d-651c-4b01-b73d-8f2c8f1717f8",
+    "campaign_id": "c59ad387-f2ad-4a53-beba-f2809d25c9fb",
+    "plan_id": "dc4238ad-0a77-44bd-8e9c-302680dcfd28",
+    "sequence": 16,
+    "kind": "rfq",
+    "entity": "leads",
+    "entity_id": "9886ca2cedd9c40380122759bac4535ed8a348eb883e745d978a19d5e4c266b6",
+    "value": {
+      "id": "9886ca2cedd9c40380122759bac4535ed8a348eb883e745d978a19d5e4c266b6",
+      "revision": 1,
+      "plan_id": "dc4238ad-0a77-44bd-8e9c-302680dcfd28",
+      "session_id": "462bde0f8fae4a8972279f321d2fb195fb61bc7eb568be758bf0baab1aa2b14c",
+      "product_id": "6daa61d0-13e3-4619-815d-8d3a0fdaa9d5",
+      "unit": "box",
+      "occurred_at": "2026-11-26T02:02:01.786315+00:00",
+      "last_event_at": "2026-11-26T02:02:01.786315+00:00",
+      "quantity": "3",
+      "location": "Synthetic site A",
+      "required_date": "2026-12-03",
+      "contact_purpose": "quote_request",
+      "assignee_id": null,
+      "gross_vnd": 0,
+      "refunded_vnd": 0,
+      "sales_accepted": false,
+      "quoted": false,
+      "ordered": false,
+      "confirmed": false,
+      "feedback": [],
+      "missing": [],
+      "state": "qualified",
+      "landing_package": "14f74002-a785-4539-9df2-4e843d676884",
+      "landing_digest": "c434d3df3a23978b3b0c04903dffaa8f3a54fcc6cc407407afa254a9f78572a9"
+    },
+    "actor": "f77afeac-8b6d-42ef-b096-f0918c0e3895",
+    "recorded_at": "2026-11-26T02:02:01.787689+00:00"
+  }
+]

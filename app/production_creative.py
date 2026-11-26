@@ -155,24 +155,36 @@ def render(master):
     """Rebuild the same byte formats from an editable master without database access."""
     from re import fullmatch
 
-    if master.get("contract") != "amc.creative-master/1" or master.get("motif") not in ("arches","planes") or master.get("layout") not in ("art_first","text_first"):
+    if (
+        master.get("contract") != "amc.creative-master/1"
+        or master.get("motif") not in ("arches", "planes")
+        or master.get("layout") not in ("art_first", "text_first")
+    ):
         raise ValueError("Unsupported master, source illustration or layout")
-    selected = master.get("colors",[])
-    if len(selected)!=3 or not all(isinstance(c,str) and fullmatch(r"#[a-fA-F0-9]{6}",c) for c in selected):
+    selected = master.get("colors", [])
+    if len(selected) != 3 or not all(isinstance(c, str) and fullmatch(r"#[a-fA-F0-9]{6}", c) for c in selected):
         raise ValueError("Supply three RGB design colours")
     colors(master)  # The offline renderer enforces the same contrast requirement as Studio.
     scenes = master["scenes"]
-    if len(scenes)!=3 or any(s.get("from")!=2*i or s.get("to")!=2*i+2 for i,s in enumerate(scenes)):
+    if len(scenes) != 3 or any(s.get("from") != 2 * i or s.get("to") != 2 * i + 2 for i, s in enumerate(scenes)):
         raise ValueError("This renderer supports three consecutive two-second scenes")
     captions = [s["caption"] for s in scenes]
-    if not all(isinstance(s,str) and 0<len(s.strip())<=5000 for s in [*captions,master["cta"],master["headline"]]):
+    if not all(isinstance(s, str) and 0 < len(s.strip()) <= 5000 for s in [*captions, master["cta"], master["headline"]]):
         raise ValueError("Provide bounded, nonempty copy for each scene")
     art = illustration(selected, master["motif"])
     source = encoded(art, "PNG", compress_level=6)
-    master.update(variations=VARIANTS,safe_inset_percent=6.5,typeface="Be Vietnam Pro SemiBold",
-                  source={"file":"source.png","sha256":sha256(source).hexdigest(),"type":"AMC original synthetic geometry",
-                          "rights":"AMC synthetic source for internal sandbox use. No external media or photography."},
-                  renderer={"engine": "Pillow", "version": __version__, "freetype": features.version("freetype2"), "webp": features.version("webp")})
+    master.update(
+        variations=VARIANTS,
+        safe_inset_percent=6.5,
+        typeface="Be Vietnam Pro SemiBold",
+        source={
+            "file": "source.png",
+            "sha256": sha256(source).hexdigest(),
+            "type": "AMC original synthetic geometry",
+            "rights": "AMC synthetic source for internal sandbox use. No external media or photography.",
+        },
+        renderer={"engine": "Pillow", "version": __version__, "freetype": features.version("freetype2"), "webp": features.version("webp")},
+    )
     files = {"source.png": ("image/png", source)}
     for variant, size in VARIANTS.items():
         files[variant + ".png"] = ("image/png", encoded(canvas(size, art, master), "PNG", compress_level=6))
@@ -187,13 +199,13 @@ def render(master):
 if __name__ == "__main__":
     import argparse
 
-    cli=argparse.ArgumentParser(description="Render an editable AMC sandbox master into a new directory.")
-    cli.add_argument("master",type=Path)
-    cli.add_argument("destination",type=Path)
-    args=cli.parse_args()
+    cli = argparse.ArgumentParser(description="Render an editable AMC sandbox master into a new directory.")
+    cli.add_argument("master", type=Path)
+    cli.add_argument("destination", type=Path)
+    args = cli.parse_args()
     if args.master.stat().st_size > 160000:
         cli.error("Master exceeds the local editing limit")
-    files=render(json.loads(args.master.read_text(encoding="utf8")))
-    args.destination.mkdir(parents=True,exist_ok=False)
-    for name,(_,data) in files.items():
-        (args.destination/name).write_bytes(data)
+    files = render(json.loads(args.master.read_text(encoding="utf8")))
+    args.destination.mkdir(parents=True, exist_ok=False)
+    for name, (_, data) in files.items():
+        (args.destination / name).write_bytes(data)

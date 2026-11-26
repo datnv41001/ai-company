@@ -8,7 +8,7 @@ from .models import Membership
 
 DISCRETE_UNITS = {"piece", "box", "machine", "visit", "participant", "subscription_month", "subscription_year", "service"}
 DETAIL_UNITS = {
-    "materials_v1": {"piece", "box", "mÂ²", "tonne", "kg"},
+    "materials_v1": {"piece", "box", "m²", "tonne", "kg"},
     "service_v1": {"machine", "visit", "service"},
     "seats_v1": {"participant", "subscription_month", "subscription_year"},
 }

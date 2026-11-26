@@ -2,6 +2,8 @@
 
 ## Công việc hiện hành sau khi hợp nhất PR #56
 
+Phản biện PR #57 phát hiện hai lệnh tạo và bổ sung RFQ theo mét vuông trả HTTP 409 trên head `73c1c04e`. Bản sửa khôi phục `m²` trong hợp đồng `materials_v1`. Khi tiếp quản, dùng [biên nhận RED/GREEN, các đơn vị đối chứng và hướng dẫn chạy](docs/evaluation/department-review/R57-MATERIAL-UNITS.md). Giá trị số lượng thập phân, nguồn phê duyệt và chi tiết giao hàng phải đọc lại được trên cùng RFQ.
+
 Main nội bộ đã hợp nhất cây của #49–56 tại `bbb0b9c41b92e666e133499e9c71f53592828c3d`. Đối chiếu [quyết định và biên nhận trên main](docs/evaluation/department-review/MAIN-56.json) khi tiếp quản. Sáu finding R53-01/02 và R55-01–04 đã đóng. Nhánh tiếp theo bàn giao hai việc cho reviewer sản phẩm: lần theo một yêu cầu khách muốn hủy khi chưa có người nhận và kiểm tra cách ghi nhận việc producer biết phương án đã giao. Người giữ benchmark có thể chấm lại cả ba phương pháp từ kết quả đã lưu. [Báo cáo, đường chạy và câu hỏi phản biện](docs/evaluation/department-review/MARKET-HANDOFF.md) · [Bản đồ tiếp quản](docs/KNOWLEDGE_MAP.md)
 
 Số việc được doanh nghiệp thực tế chấp nhận vẫn là 0. Người phụ trách pilot cần người hành nghề có consent và chứng từ chi phí trước khi ước tính giá trị kinh tế. Quyết định production và Commercial GA vẫn là **NO-GO**.

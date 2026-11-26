@@ -1,0 +1,43 @@
+{
+  "sha": "be8e251a079637232db285ce838e798728354a98",
+  "archive_sha256": "07a95b8ed54152938fd5d84c7f2857eee7eec9bca0ba02f1638073dbe96e3b0f",
+  "environment": "fresh tracked source export, SQLite and localhost, preinstalled development dependencies",
+  "commands": [
+    {
+      "argv": [
+        "python",
+        "scripts/init_env.py"
+      ],
+      "exit": 0
+    },
+    {
+      "argv": [
+        "python",
+        "-m",
+        "pytest",
+        "-q",
+        "-p",
+        "no:cacheprovider",
+        "--basetemp=C:\\Users\\PC\\Documents\\Codex\\2026-11-23\\o\\work\\round58-cold-studio-fixtures",
+        "tests/test_production_studios.py",
+        "-k",
+        "index-tray or receipt-map"
+      ],
+      "exit": 0
+    }
+  ],
+  "health": {
+    "status": 200,
+    "body": {
+      "status": "ok",
+      "stage": "engineering_bootstrap",
+      "environment": "local",
+      "production_ready": false
+    }
+  },
+  "read_http": {
+    "/": 200,
+    "/docs": 200
+  },
+  "pytest_summary": "2 passed, 5 deselected in 51.32s"
+}

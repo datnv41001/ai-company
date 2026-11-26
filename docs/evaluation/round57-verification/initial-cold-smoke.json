@@ -1,0 +1,61 @@
+{
+  "sha": "9f9d05c0a05f1001074d5ef75d15544f1750bfa2",
+  "archive_sha256": "5dfd1647e2c65c19a8991d0f93d9595aab3fd3d76a8d0ce3e45a5a89b18eeb80",
+  "environment": "fresh tracked source export, SQLite and localhost, preinstalled development dependencies",
+  "commands": [
+    {
+      "argv": [
+        "python",
+        "scripts/init_env.py"
+      ],
+      "exit": 0
+    },
+    {
+      "argv": [
+        "python",
+        "-m",
+        "pytest",
+        "-q",
+        "-p",
+        "no:cacheprovider",
+        "--basetemp=C:\\Users\\PC\\Documents\\Codex\\2026-11-23\\o\\work\\round58-cold-vault-fixtures",
+        "tests/test_production_edits.py",
+        "tests/test_rfq_material_units.py",
+        "tests/test_department_advisory_archive.py"
+      ],
+      "exit": 0
+    },
+    {
+      "argv": [
+        "python",
+        "-m",
+        "pytest",
+        "-q",
+        "-p",
+        "no:cacheprovider",
+        "--basetemp=C:\\Users\\PC\\Documents\\Codex\\2026-11-23\\o\\work\\round58-cold-studio-fixtures",
+        "tests/test_production_studios.py",
+        "-k",
+        "index-tray or receipt-map"
+      ],
+      "exit": 0
+    }
+  ],
+  "health": {
+    "status": 200,
+    "body": {
+      "status": "ok",
+      "stage": "engineering_bootstrap",
+      "environment": "local",
+      "production_ready": false
+    }
+  },
+  "read_http": {
+    "/": 200,
+    "/docs": 200
+  },
+  "pytest_summary": [
+    "12 passed, 5 skipped in 38.26s",
+    "2 passed, 5 deselected in 27.54s"
+  ]
+}

@@ -1,5 +1,7 @@
 # Sổ năng lực phòng Marketing
 
+**Vòng R59.** Content cần bàn giao ICP, mục đích, rào cản, kênh và dữ kiện để Video dựng được cảnh. Creative và QA cần xác nhận đúng edition và điều kiện sử dụng trước khi nối sandbox intake. Phân cấp bằng chứng và giới hạn cho từng role trong [hồ sơ liên phòng ban](connected-workforce/README.md). Giữ nguyên 37 vai trò.
+
 **Sau #58, trên nhánh WF-08.** Creative lead có thể giao lát cắt Video/Storyboard cho Workforce với một adapter cục bộ tất định. Giới hạn qua thử nghiệm gồm brief tiếng Việt, tư liệu minh họa tổng hợp, giá/điều kiện theo nguồn, QA theo revision. Làm phim từ footage thật, năng lực mô hình suy rộng, nghiệm thu bởi người dựng và thực thi media còn mở. [Hợp đồng, đầu ra trước/sau QA và receipt](workforce-video/README.md)
 
 **Sau review #57.** Hai brief Khe Gọn và Luồng Rõ có đường Studio → QA → landing → tiếp nhận sandbox kiểm lại trên đúng dữ kiện. Bản dựng creative, lời thoại hai hook và phụ đề là đầu ra biên tập bổ sung. Phần đối chiếu nguồn và policy O-09 ở lab, chưa là một worker sản xuất. Năng lực chuyên môn được phân loại theo đầu ra tạo được, ai làm và ai có quyền chấp thuận. Chủ doanh nghiệp chưa chấp nhận đơn vị công việc nào. [Hai gói và nguồn gốc](campaign-production-review/README.md) · [Mapping vai trò](campaign-production-review/SKILLS.md) · [Routing chín nhóm việc](department-study/advisory/TASK-ROUTING.md)

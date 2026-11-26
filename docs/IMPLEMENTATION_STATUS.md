@@ -1,5 +1,9 @@
 # Trạng thái hiện thực và nghiệm thu V1
 
+## Vòng sau #59 · bàn giao giữa Content, Video, Creative và Sales
+
+Scope V1 là 49 module, 37 vai trò, 24 workflow mẹ. Main đã nhận WF-08 @1. Nhánh thử nội bộ phát triển tiếp trên schema v26. Bảng nghiệm thu theo từng finding và artefact ở [Connected Marketing Workforce](evaluation/connected-workforce/README.md). Năng lực đạt ở từng ca tổng hợp; đánh giá kinh tế cần người nhận công việc thực tế.
+
 **Vòng WF-08 sau #58.** Main đã tích hợp bộ campaign cũ ở `1c40ad31`. Nhánh kế tiếp tập trung một nhiệm vụ director → storyboard qua queue nội bộ, trên manifest của từng khách, với biên nhận và QA. [Trạng thái theo bản](evaluation/workforce-video/README.md) · [KPI và ranh giới bằng chứng](evaluation/workforce-video/MEASUREMENT.md). Các mốc dưới đây mô tả khả năng ở phiên bản ghi trên từng dòng.
 
 **Mốc sau PR #57.** Main nội bộ `26578088519d99f4aed5be9c516ac247f3d4735e` giữ core v26, Business v3, C3 v5 và journal ops/2. Tạo và bổ sung RFQ theo m² đã được sửa. Bước rút hồ sơ trước phân công và pilot v2 có nghiệm thu kỹ thuật. Trên head sửa và trial, cả ba JUnit ghi 622 đạt, 2 skip. [CI trước merge](https://github.com/datnv41001/ai-company/actions/runs/45777424779) · [CI trên main](https://github.com/datnv41001/ai-company/actions/runs/45780019694). Nhánh kế tiếp có hai gói sản xuất, preflight grammar và bộ mời practitioner. Chưa có người hành nghề tham gia. Số Business-accepted Marketing Work Units vẫn là 0. [Bằng chứng theo luồng](evaluation/department-review/ROUND-57-PRODUCTION.md)

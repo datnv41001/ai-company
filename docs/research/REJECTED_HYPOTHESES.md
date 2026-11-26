@@ -1,5 +1,7 @@
 # Giả thuyết đã bác bỏ hoặc hoãn
 
+**R59.** Hoãn giả thuyết đổi renderer sẽ cải thiện hiệu quả Marketing. Giấy phép, chi phí SaaS, footage, audio và mức độ người nhận chấp nhận là các câu hỏi riêng. Không suy ra causal lift từ hai file khác hook hay một chuỗi sandbox. [Phạm vi và nguồn đã đọc](CONNECTED-CREATIVE.md)
+
 | ID | Giả thuyết | Quyết định và căn cứ | Điều kiện xem lại |
 | --- | --- | --- | --- |
 | R-01 | Có thể áp mô hình vault cá nhân làm kho chung cho mọi khách của agency. | **Bác bỏ cho kiến trúc AMC.** Bài Wecommit mô tả kho của một người. C1 kiểm quyền tới client/brand và mức nhạy cảm. Kho chung có thể đưa ghi chú và nguồn riêng vào câu trả lời ngoài phạm vi. [K-01](KNOWLEDGE_CARDS.md#k-01) | Chỉ xem xét bản thiết kế giữ nguyên quyền theo tenant/client/brand ở từng lần lấy dữ liệu. |

@@ -1,5 +1,7 @@
 # Cơ hội sản phẩm từ nghiên cứu
 
+**Cơ hội cho người dựng và Marketing lead.** Đo số phút từ khi nhận tờ dựng đến khi người dựng đủ dữ kiện làm tiếp, số vòng trả lại và lỗi brand/offer còn sót. Phụ thuộc source đủ quyền, revision, reviewer độc lập và người nhận thật. Nghiệm thu kỹ thuật theo đúng brief và digest; giá trị kinh tế được nghiệm thu riêng qua [nhiệm vụ pilot](../evaluation/connected-workforce/PRACTITIONER.md).
+
 C2 là luồng đang cho người dùng thử. C3 là luồng áp dụng tiếp theo. Danh sách này cung cấp đầu vào cho quyết định roadmap; chỉ PR triển khai cùng bằng chứng mới thay đổi trạng thái sản phẩm. Trạng thái hiện tại của từng phương pháp được ghi trong [ma trận](APPLICABILITY_MATRIX.md).
 
 <a id="o-01"></a>

@@ -16,7 +16,36 @@ function createWorkforce(root, api, notify, onActivity=()=>{}) {
     b.type='button';
     b.onclick=async()=>{ b.disabled=true; try {await run();} catch(e){notify(e.message,true);} finally{b.disabled=false;} };
   }
-  const labels={director:'Director',research:'Research',strategy:'Strategy',content:'Content',seo:'SEO',creative:'Creative',ads:'Ads',analytics:'Analytics'};
+  const labels={director:'Director',research:'Research',strategy:'Strategy',content:'Content',storyboard:'Storyboard',seo:'SEO',creative:'Creative',ads:'Ads',analytics:'Analytics'};
+  function showContentHandoff(host, output) {
+    let handoff;
+    try {handoff=JSON.parse(output.sections.content_handoff);} catch {return false;}
+    if(handoff?.version!=='amc.content-storyboard-handoff/1')return false;
+    const panel=node(host,'section');panel.className='content-handoff';panel.setAttribute('aria-label','Bàn giao nội dung cho storyboard');
+    node(panel,'h5','Bàn giao nội dung cho storyboard');
+    const scope=node(panel,'dl');scope.className='handoff-scope';
+    for(const [label,value] of [['Đối tượng',handoff.audience],['Mục đích',handoff.purpose],['Kênh và định dạng',handoff.channel==='vertical-social'?'Mạng xã hội · khung dọc 9:16':handoff.channel]]){
+      const group=node(scope,'div');node(group,'dt',label);node(group,'dd',value);
+    }
+    const script=node(panel,'div');script.className='handoff-script';
+    node(script,'h6','Câu mở');node(script,'p',handoff.channel_copy.opening);
+    node(script,'h6','Nội dung theo nguồn');
+    for(const fact of handoff.channel_copy.declarations){
+      const group=node(script,'div');group.className='handoff-declaration';
+      node(group,'strong',fact.source_id);
+      const lines=node(group,'ul');for(const line of fact.lines)node(lines,'li',line);
+    }
+    node(script,'h6','Lời mời hành động');node(script,'p',handoff.channel_copy.action);
+    const detail=node(panel,'details');node(detail,'summary','Chỉ dẫn dựng và căn cứ');
+    node(detail,'p',handoff.production_direction);
+    node(detail,'h6','Câu hỏi cần kiểm chứng');node(detail,'p',handoff.question_to_validate);
+    if(handoff.audience_hypotheses.length){
+      node(detail,'h6','Giả thuyết về người mua');const list=node(detail,'ul');
+      for(const item of handoff.audience_hypotheses)node(list,'li',item);
+    }
+    node(detail,'h6','SHA-256 của bản bàn giao');node(detail,'code',output.handoff_digest);
+    return true;
+  }
   const qaRules={cta_action:'Kiểm tra lời kêu gọi hành động',brief_alignment:'Đối chiếu mục tiêu brief',
     brand_alignment:'Đối chiếu thông tin sản phẩm trong Brand Kit',audience_alignment:'Đối chiếu đối tượng',
     offer_alignment:'Đối chiếu sản phẩm và đề nghị',brand_instruction:'Đối chiếu từ ngữ Brand Kit yêu cầu tránh',
@@ -257,7 +286,13 @@ function createWorkforce(root, api, notify, onActivity=()=>{}) {
               showMarketingAssets(info,v.marketing_artifacts);
               checkpointHost=node(info,'details');node(checkpointHost,'summary','Nhật ký đầu ra từng vai trò');
             }
-            v.checkpoints.forEach(p=>{const info=checkpointHost;node(info,'h4',labels[p.skill]);node(info,'p',p.output.text);
+            const wf=v.graph?.registry?.workflow;
+            if(['WF-08/video-storyboard@1','WF-08/video-storyboard@2'].includes(wf) && v.deliverable_id && ['owner','admin','editor'].includes(role))
+              window.storyboardEditor?.mount(info,{run:v,tenantId:tenant,api,onSaved:reload});
+            v.checkpoints.forEach(p=>{const info=checkpointHost;node(info,'h4',labels[p.skill]||p.skill);
+            if(p.skill==='storyboard'){
+              const raw=node(info,'details');node(raw,'summary','Dữ liệu storyboard gốc');node(raw,'pre',p.output.text).className='storyboard-raw';
+            }else if(!(p.skill==='content' && showContentHandoff(info,p.output)))node(info,'p',p.output.text);
             node(info,'p','Nguồn: '+p.output.source_ids.map(k=>v.source_registry?.[k]?.label||k).join(', '));
             const qa=p.quality?.role_qa;
             if(qa?.scope==='node_checkpoint'){

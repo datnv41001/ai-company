@@ -130,7 +130,8 @@ def test_content_checkpoint_handoff_and_current_qa(pool, case, prepare, blocked)
     assert plan["role"] == "ai-copywriter-content-strategist" and plan["audience"] == case["audience"]
     assert content["text"] == board["content_handoff_digest"] == digest(canonical(plan))
     assert plan["channel_copy"]["opening"] == board["hook"] and plan["channel_copy"]["action"] == board["cta"]
-    assert plan["channel_copy"]["declarations"][0]["lines"][0] == case["wording"]
+    message = next(f for f in plan["channel_copy"]["declarations"] if f["source_id"] == plan["message_source_id"])
+    assert message["lines"][0] == case["wording"]
     assert plan["angle"] == ("quote_conditions" if prepare else "show_evidence")
     assert board["brief_fulfillment"]["ready_for_qa"] is not blocked
     qa = reader(pool.api, owner, "admin")

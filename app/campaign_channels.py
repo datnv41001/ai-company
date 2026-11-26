@@ -1,6 +1,6 @@
 """Customer-facing, editorial campaign assets commissioned on a real Studio run."""
 
-from . import c3_studio
+from . import c3_studio, measurement_integrity
 from .knowledge_store import conflict
 
 VERSION = "amc.customer-marketing-assets/2"
@@ -46,6 +46,7 @@ def context(store, run):
         return None
     return {"plan_id": active["id"], "plan_revision": active["revision"], "plan_digest": active["digest"],
             "plan_receipt": active["approval"]["receipt"], "manifest": primary, "queue_receipt": binding[1],
+            **({"measurement_contract": active["measurement_contract"]} if active.get("measurement_contract") else {}),
             "channel_plan": active["channels"], "guideline_digest": active["brand_guidelines"]["digest"],
             "due_days": {p["id"]: p["due_day"] for p in active["work_packages"] if p["id"] in FIELDS}}
 
@@ -79,6 +80,7 @@ def compose(projection, ctx):
         key = tr("đối chiếu điều kiện trước khi chọn", "checking terms before choosing")
         open_copy = tr(f"Anh chị đang cân nhắc {product}?", f"Considering {product}?")
         measure = tr("Đối soát hành động hoàn tất theo mã duy nhất và ghi riêng kết quả chưa xác minh.", "Reconcile completed actions by unique ID and separate unverified results.")
+    measure = measurement_integrity.expected_statement(projection) or measure
     terms = "\n".join(" ".join(c3_order_units.fact_lines(f, projection)) for f in projection["facts"])
     brand = projection.get("brand_guidelines") or {}
     brand_revision = brand.get("revision")

@@ -196,15 +196,34 @@ function createCampaignEngine(api) {
       line(progress,department(u.assigned_role),kinds[u.category]||u.category,label(u.status));
     }
     if(!active)add(progress,'p','Duyệt kế hoạch để giao việc cho từng bộ phận.');
-    const funnel=card(grid,'Từ RFQ đến doanh thu sandbox');
-    for(const [key,text] of [['sessions','Phiên'],['rfqs','Yêu cầu báo giá'],['qualified_leads','Đủ điều kiện'],['sales_accepted','Sales tiếp nhận'],
+    const isService = plan?.buyer_action === 'appointment';
+    const funnel=card(grid,isService ? 'Lịch hẹn dịch vụ trong sandbox' : 'Từ RFQ đến doanh thu sandbox');
+    if (report.primary_measurement) {
+      const metric = report.primary_measurement;
+      const primary = add(funnel, 'section');
+      primary.setAttribute('data-primary-kpi', String(metric.contract.revision));
+      add(primary, 'h4', 'KPI chính của kế hoạch');
+      add(primary, 'p', metric.definition);
+      const value = metric.ratio === null ? 'Chưa có mẫu số' : new Intl.NumberFormat('vi-VN', {
+        style: 'percent', maximumFractionDigits: 1
+      }).format(metric.ratio);
+      line(primary, 'Tỷ lệ trong kỳ', metric.numerator + ' / ' + metric.denominator, value);
+      line(primary, 'Thiếu nguồn', 'Trong mẫu số của KPI', String(metric.unattributed));
+      line(primary, 'Phiên web', 'Chỉ số phụ trong cùng kỳ', String(metric.secondary_metrics[0].value));
+    }
+    if (!isService) {
+      for(const [key,text] of [['sessions','Phiên'],['rfqs','Yêu cầu báo giá'],['qualified_leads','Đủ điều kiện'],['sales_accepted','Sales tiếp nhận'],
       ['quotations','Báo giá'],['confirmed_orders','Đơn xác nhận'],['cancelled_orders','Đơn hủy']])line(funnel,text,'',String(report[key]));
     line(funnel,'Doanh thu sau điều chỉnh','Số liệu sandbox',money(report.confirmed_revenue_vnd));
     line(funnel,'Có nguồn chiến dịch','',money(report.attributed_revenue_vnd));line(funnel,'Thiếu nguồn','',money(report.unattributed_revenue_vnd));
-    line(funnel,'Hoàn tiền','',money(report.refunds_vnd));
+      line(funnel,'Hoàn tiền','',money(report.refunds_vnd));
+    }
     if(ops.appointment_summary.requests || plan?.buyer_action==='appointment'){
       const a=ops.appointment_summary;
-      line(funnel,'Lịch dịch vụ · yêu cầu / hoàn thành','Hủy: '+a.cancelled+' · Vắng mặt: '+a.no_show,a.requests+' / '+a.completed);
+      for (const [key, label] of [['requests','Yêu cầu đặt lịch'],['confirmed','Lịch từng được xác nhận'],
+        ['completed','Buổi đã hoàn tất'],['cancelled','Đã hủy'],['no_show','Vắng mặt']]) {
+        line(funnel, label, 'Toàn chiến dịch', String(a[key]));
+      }
     }
     const opt=card(grid,'Đề xuất tối ưu');drawOptimization(opt,active,ops);
     for(const [key,name,section] of [['overview','Tổng quan',kpis],['plan','Kế hoạch',goals],

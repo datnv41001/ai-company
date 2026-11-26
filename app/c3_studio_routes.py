@@ -89,6 +89,9 @@ def signoffs(db, doc, run, *, lock_reviewers=False):
 
 def require_all_approved(db, doc, run):
     if bundle := doc.content.get("studio"):
+        from .measurement_integrity import quality_issues
+        if quality_issues(bundle["groups"], run.knowledge["c3_projection"]):
+            conflict("The saved measurement no longer matches the approved KPI revision")
         signed = signoffs(db, doc, run, lock_reviewers=True)
         if set(signed) != set(bundle["groups"]):
             conflict("Independent Marketing Studio signoff is required for every asset of this revision")

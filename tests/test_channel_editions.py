@@ -36,10 +36,10 @@ def commission(api, base, owner, campaign, snapshot, revision=0):
     return plan
 
 
-def sqlite_channel(api, workforce, monkeypatch, case):
+def sqlite_channel(api, workforce, monkeypatch, case, wf=c3_assets.LANDING):
     owner, buyer, other, base, _, scope, engine, _ = workforce
-    wf = c3_assets.LANDING
-    (snap, next_snap), _ = prepare_inputs(api, owner, buyer, scope.client, scope.brand, scope.campaign, case, workflows=(wf, c3_assets.RESEARCH))
+    other_workflow = c3_assets.RESEARCH if wf == c3_assets.LANDING else c3_assets.LANDING
+    (snap, next_snap), _ = prepare_inputs(api, owner, buyer, scope.client, scope.brand, scope.campaign, case, workflows=(wf, other_workflow))
     plan = commission(api, base, owner, scope.campaign, snap)
     editor = reader(api, owner, "editor")
     binding = {"workflow": wf, "manifest_digest": "e" * 64}

@@ -7,7 +7,7 @@ from fastapi import APIRouter, Depends, Query, Request
 from sqlalchemy import select
 from sqlalchemy.orm import Session
 
-from . import c3_boundaries, campaign_channels
+from . import c3_boundaries, campaign_channels, measurement_integrity
 from .c3_reviewer import active_approver
 from .campaign_operations_contracts import Appointment, AppointmentDecision, ActionTarget, CompleteRFQ, CostClose, DecideAction, Execute, Labor, Optimization, ReconcileCost, RFQ, Sales, SandboxCommand, Schedule, SessionEvent
 from . import campaign_operations_appointments as appointments, campaign_operations_capabilities as capabilities, campaign_operations_cost as costs
@@ -320,6 +320,8 @@ def optimize_command(cmd, state, store, plan):
         if cmd.proposal_id in proposals:
             conflict("Proposal ID already exists")
         report = reconcile(state)
+        if contract := plan.get("measurement_contract"):
+            report["primary_measurement"] = measurement_integrity.evaluate(contract, plan["id"], state, store.now(), plan["locale"])
         value = {"id": cmd.proposal_id, "plan_id": plan["id"], "status": "proposed", "author": store.actor,
                  **optimization(report), "evidence": report, "report_digest": digest(canonical(report))}
     else:
@@ -335,13 +337,23 @@ def optimize_command(cmd, state, store, plan):
 
 
 @router.get("")
-def view(tenant_id: str, campaign_id: str, user: User = Depends(current_user), db: Session = Depends(get_db)):
+def view(tenant_id: str, campaign_id: str, user: User = Depends(current_user), db: Session = Depends(get_db),
+         measurement_plan_id: str | None = Query(default=None, max_length=64)):
     store = campaign_store(db, user, tenant_id, campaign_id, write=False)
     if not store.approver:
         missing()
     rows = entries(store, campaign_id)
     state = state_of(rows)
     report = reconcile(state)
+    plans = history(store, campaign_id)
+    if measurement_plan_id:
+        selected = next((p for p in plans if p["id"] == measurement_plan_id and p["approval"]), None)
+        if not selected:
+            missing()
+    else:
+        selected = next((p for p in plans if p["status"] == "approved"), None)
+    if selected and (contract := selected.get("measurement_contract")):
+        report["primary_measurement"] = measurement_integrity.evaluate(contract, selected["id"], state, store.now(), selected["locale"])
     units = list(state["work_units"].values())
     enrich_units(store, campaign_id, units)
     accepted = sum((u["acceptance"] or {}).get("status") == "business_accepted" for u in units)

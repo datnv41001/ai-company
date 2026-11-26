@@ -2,7 +2,7 @@
 
 import re
 
-from . import c3_assets, c3_order_units
+from . import c3_assets, c3_order_units, measurement_integrity
 from .c3_actions import ACTIONS, BUYER_INPUTS
 
 VERSION = "amc.marketing-studio/1"
@@ -144,14 +144,14 @@ def compose(workflow, projection, checkpoints=None):
                 "Compare placing facts before versus after the call to action in the same audience.",
             ),
             "measurable_action": action or measurement.get("measurable_action", ""),
-            "measurement_method": measurement.get("measurement_method") or method,
+            "measurement_method": measurement_integrity.editorial_method(projection, measurement.get("measurement_method") or method),
         },
     }
 
 
 def quality_issues(workflow, groups, projection):
     """Conservative structural signals; professional relevance still requires an independent review."""
-    result, seen = [], {}
+    result, seen = measurement_integrity.quality_issues({name: groups[name] for name in FIELDS[workflow]}, projection), {}
     norm = c3_assets.normalized
     intent = projection.get("task_intent") or {}
     entities = {norm(str(source.get(key) or "")) for source in (intent, projection) for key in ("audience", "region", "channel", "product", "sku")}

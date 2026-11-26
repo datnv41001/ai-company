@@ -4,7 +4,7 @@ The portal keeps its immutable title/body wire format. The private QA/share rece
 records the typed fields behind those same bytes, alongside the existing source chain.
 """
 
-from . import c3_assets, c3_studio, campaign_channels
+from . import c3_assets, c3_studio, campaign_channels, measurement_integrity
 from .knowledge_store import canonical, conflict, digest
 
 VERSION = "amc.customer-marketing-assets/1"
@@ -74,7 +74,7 @@ def strategy(projection):
     i = 0 if vi else 1
     return {
         "client_strategy": {"target": buyer, "decision": position[i], "activation": activate[i], "next_decision": decision[i]},
-        "client_measurement": {"hypothesis": hypothesis[i], "conversion": action, "method": method[i]},
+        "client_measurement": {"hypothesis": hypothesis[i], "conversion": action, "method": measurement_integrity.expected_statement(projection) or method[i]},
     }
 
 
@@ -103,7 +103,9 @@ def issues(workflow, groups, projection, channel_context=None):
                *intent.get("requirements", []), *intent.get("exclusions", []), *intent.get("acceptance_criteria", []),
                *projection.get("hypotheses", []), *projection.get("gaps", [])]
     public = project(workflow, groups, channel_context)
-    result = campaign_channels.issues(groups, projection, channel_context) if channel_context else []
+    result = measurement_integrity.quality_issues(public, projection)
+    if channel_context:
+        result.extend(campaign_channels.issues(groups, projection, channel_context))
     seen = set()
     for group, fields in public.items():
         for field, value in fields.items():
@@ -138,6 +140,7 @@ def manifest(doc, run, approvals):
         conflict("Save and review the current customer edition before delivery")
     return {
         "contract": version,
+        **({"measurement_contract": projection["measurement_contract"]} if projection.get("measurement_contract") else {}),
         **({"channel_context": ctx} if ctx else {}),
         "scope": {key: getattr(run, key) for key in ("tenant_id", "client_id", "brand_id", "campaign_id")},
         "revision": doc.qa_revision,

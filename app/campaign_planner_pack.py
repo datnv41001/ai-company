@@ -82,8 +82,10 @@ def compose_plan(store, campaign_id, selections, body, plan_id):
         "brand_guidelines": source["brand_guidelines"],
         "commercial_facts": source["facts"],
         "sku": source.get("sku"),
+        **({"measurement_contract": source["measurement_contract"]} if source.get("measurement_contract") else {}),
         "measurement_plan": {
             "kpi": source["kpi"],
+            **({"primary": source["measurement_contract"]} if source.get("measurement_contract") else {}),
             "buyer_action": action,
             "hypothesis": f"Thử một CTA cho {source['audience']} rồi đối soát với kết quả Sales.",
             "attribution": "Theo mã yêu cầu và biên nhận, ghi riêng kết quả thiếu nguồn.",
@@ -152,6 +154,7 @@ def compose_assets(plan):
             "product_id": plan["product_id"],
             "guideline_digest": plan["brand_guidelines"]["digest"],
             "referenced_workflow_skills": method_versions,
+            **({"measurement_contract": plan["measurement_contract"]} if plan.get("measurement_contract") else {}),
             "requires_channel_evidence": True,
         }
         for kind, (title, text) in copy.items()

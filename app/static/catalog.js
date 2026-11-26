@@ -539,6 +539,54 @@ function createCatalogPane(root, api) {
       obj.prohibited_claims = obj.prohibited_claims.split('\n').map(value => value.trim()).filter(Boolean);
     return obj;
   }
+  function measurementEditor(form, controls, previous) {
+    const block = el('fieldset');
+    block.className = 'catalog-kpi-definition';
+    block.append(el('legend', 'Định nghĩa phép đo'));
+    const metric = el('select');
+    metric.name = 'measurement_outcome';
+    metric.add(new Option('KPI mô tả', ''));
+    metric.add(new Option('Lịch xác nhận / yêu cầu', 'appointment.confirmed_per_requested'));
+    metric.add(new Option('Buổi hoàn tất / lịch xác nhận', 'appointment.completed_per_confirmed'));
+    const days = el('input');
+    days.type = 'number';
+    days.name = 'measurement_days';
+    days.min = '1';
+    days.max = '365';
+    days.value = previous?.window_days || 21;
+    const owner = el('select');
+    owner.name = 'measurement_owner';
+    owner.add(new Option('Vận hành dịch vụ', 'service_operations'));
+    owner.add(new Option('Sales', 'sales_operations'));
+    owner.value = previous?.owner_role || 'service_operations';
+    metric.value = previous?.business_outcome || '';
+    const row = (name, input) => {
+      const label = el('label', name);
+      label.append(input);
+      block.append(label);
+      return label;
+    };
+    row('KPI chính', metric);
+    const period = row('Số ngày đối soát', days);
+    const responsible = row('Bộ phận đối soát', owner);
+    const rules = el('p', 'Mỗi mã hẹn được tính một lần. Giữ sự kiện hợp lệ trước khi hủy, ghi riêng ca hủy, vắng mặt và thiếu nguồn.');
+    block.append(rules);
+    form.prepend(block);
+    function adjust() {
+      const typed = Boolean(metric.value);
+      days.required = typed;
+      period.hidden = responsible.hidden = rules.hidden = !typed;
+      for (const key of ['method', 'unit', 'owner', 'window']) {
+        controls[key].disabled = typed;
+        controls[key].closest('label').parentElement.hidden = typed;
+      }
+    }
+    metric.addEventListener('change', adjust);
+    adjust();
+    return () => metric.value ? {version: 'appointment-measurement/1', business_outcome: metric.value,
+      window_days: Number(days.value), owner_role: owner.value} : null;
+  }
+
   async function edit(record = null) {
     const life = epoch;
     kind = record?.kind || kindSelect.value;
@@ -634,6 +682,7 @@ function createCatalogPane(root, api) {
       controls.level.addEventListener('change', adjust);
       adjust();
     }
+    const selectedMeasurement = kind === 'kpi' ? measurementEditor(form, controls, record?.data.measurement) : () => null;
     const submit = el('button', 'Lưu bản nháp');
     submit.type = 'submit';
     form.append(submit);
@@ -642,6 +691,7 @@ function createCatalogPane(root, api) {
       guard(async () => {
         const raw = {};
         for (const [key, input] of Object.entries(controls)) {
+          if (input.disabled) continue;
           let value = input.multiple ? [...input.selectedOptions].map((o) => o.value) : input.value.trim();
           if (value && input.type === 'datetime-local')
             value = value === input.dataset.initialDisplay ? v[key] : new Date(value).toISOString();
@@ -651,6 +701,8 @@ function createCatalogPane(root, api) {
           return note('Chọn đúng một mục tiêu cha cho thương hiệu.');
         if (kind === 'objective' && raw.level === 'campaign' && (!raw.campaign_id || !raw.parent))
           return note('Chọn chiến dịch và mục tiêu cha cấp thương hiệu.');
+        const metric = selectedMeasurement();
+        if (metric) raw.measurement = metric;
         if (kind === 'kpi' && Boolean(raw.objective) === Boolean(raw.company_objective))
           return note('Chọn đúng một mục tiêu để đo KPI.');
         const body = {

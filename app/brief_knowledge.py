@@ -8,8 +8,8 @@ from sqlalchemy import func
 from .knowledge_models import KnowledgeRevision
 from .knowledge_store import Store
 
-Slot = Literal["product", "audience", "objective"]
-KINDS = {"product": ("product", "service", "variant"), "audience": ("icp", "segment"), "objective": ("objective",)}
+Slot = Literal["product", "audience", "objective", "kpi"]
+KINDS = {"product": ("product", "service", "variant"), "audience": ("icp", "segment"), "objective": ("objective",), "kpi": ("kpi",)}
 
 
 def scoped(workspace, *, write=False):

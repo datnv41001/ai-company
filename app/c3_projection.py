@@ -9,6 +9,7 @@ from pydantic import Field
 from sqlalchemy import select
 
 from . import business_workspace as ws, c3_clarification, c3_marketing as marketing, knowledge_models as m
+from . import measurement_integrity
 from .business_knowledge import resolved
 from .commercial_scope import same_placement
 from .company_objectives import check_company_reference
@@ -69,7 +70,7 @@ def check_delivery_capacity(workflow, public):
 def materialize(s, workspace, pins, options, at):
     company, brand = corporate_profiles(workspace, pins)
     selections = pins.get("selections", {})
-    if set(selections) != {"product", "audience", "objective"}:
+    if not {"product", "audience", "objective"} <= set(selections) or set(selections) - {"product", "audience", "objective", "kpi"}:
         conflict("Select a product or variant, audience and campaign objective in the internal brief")
     deps, claims = resolved(s, options["claims"], at)
     if len(set(options["claims"])) != len(options["claims"]):
@@ -89,6 +90,10 @@ def materialize(s, workspace, pins, options, at):
     product = select_row(item.data["product"], ("product", "service")) if item.kind == "variant" else item
     market = select_row(options["market"], ("market",))
     kpi = select_row(options["kpi"], ("kpi",))
+    if "kpi" in selected and selected["kpi"].id != kpi.id:
+        conflict("Selected KPI differs from the immutable measurement revision in the internal brief")
+    if kpi.data.get("measurement") and ("kpi" not in selected or options["workflow"] not in TASK_RELEASES):
+        conflict("Pin this KPI in a new internal brief and select a task-aware Marketing workflow")
     if options["locale"] not in market.data["locales"] or audience.data.get("market") not in (None, market.id):
         conflict("Locale and audience must match the selected market")
     if objective.data.get("level") != "campaign" or objective.data.get("campaign_id") != options["target"]["campaign_id"] or kpi.data.get("objective") != objective.id:
@@ -141,6 +146,11 @@ def materialize(s, workspace, pins, options, at):
         if disagreements:
             conflict("Brief và tri thức đã duyệt khác nhau về " + ", ".join(disagreements) +
                      ". Đối chiếu với người giao việc rồi chọn đúng dữ liệu hoặc gửi brief mới.")
+        measurement = measurement_integrity.bind(kpi)
+        if measurement:
+            if intent.get("buyer_action") != "appointment":
+                conflict("This measurement contract requires an approved appointment brief")
+            public["measurement_contract"] = measurement
         public["task_intent"] = intent
         public["brand_guidelines"] = {"revision":rule.revision,"digest":rule.digest,
                                       "guidance":rule.data["guidance"],"tone":rule.data.get("tone"),

@@ -290,18 +290,51 @@ def display_state(run, graph):
     return run.state
 
 
+def storyboard_run(db, user, tenant_id, rid):
+    from . import storyboard_runtime
+    require_tenant(db, user, tenant_id, "editor")
+    run = db.scalar(select(WorkforceRun).filter_by(tenant_id=tenant_id, id=rid))
+    if not storyboard_runtime.is_run(run) or not run.deliverable_id:
+        raise HTTPException(404, "Storyboard unavailable")
+    return run
+
+
+def storyboard_authority(db, user, run, *, write):
+    from . import c3_boundaries
+    from .registry import pin
+    brief = db.get(WorkforceBrief, run.brief_id)
+    release = run.knowledge["registry"]["workflow"]
+    scope = c3_boundaries.checked(db, user, brief, run.knowledge["c3_manifest"], release, "edit", write=write)
+    if pin(db, brief, release) != run.knowledge["registry"]:
+        raise HTTPException(409, "The storyboard binding is no longer current")
+    return scope
+
+
+@router.get("/runs/{rid}/storyboard-edition")
+def current_storyboard(tenant_id: str, rid: str, user: User = Depends(current_user), db: Session = Depends(get_db)):
+    from . import storyboard_editions as editions, storyboard_runtime
+    from .revision_qa import content_digest
+    run = storyboard_run(db, user, tenant_id, rid)
+    store, _, projection = storyboard_authority(db, user, run, write=False)
+    doc = db.scalar(select(Deliverable).filter_by(id=run.deliverable_id, tenant_id=tenant_id, campaign_id=run.campaign_id))
+    if not doc:
+        raise HTTPException(404, "Storyboard unavailable")
+    try:
+        board, _ = editions.checked_board(store, doc, run, projection, run.knowledge["c3_manifest"], storyboard_runtime, for_qa=False)
+    except (ValueError, KeyError, TypeError) as exc:
+        raise HTTPException(409, "Reload and check the current storyboard evidence") from exc
+    return {"storyboard": board, "revision": doc.qa_revision, "document_id": doc.id,
+            "content_digest": content_digest(doc.title, doc.content["client_preview"]), "status": doc.status}
+
+
 @router.post("/runs/{rid}/storyboard-edition")
 def edit_storyboard(tenant_id: str, rid: str, body: StoryboardEdit, user: User = Depends(current_user), db: Session = Depends(get_db)):
     from . import c3_boundaries, storyboard_editions as editions, storyboard_runtime as runtime
     from .delivery import working_copy, save_working_revision
     from .revision_qa import content_digest
-    from .registry import pin
     from .video_storyboard import json_text
 
-    require_tenant(db, user, tenant_id, "editor")
-    run = db.scalar(select(WorkforceRun).filter_by(tenant_id=tenant_id, id=rid))
-    if not runtime.is_run(run) or not run.deliverable_id:
-        raise HTTPException(404, "Storyboard unavailable")
+    run = storyboard_run(db, user, tenant_id, rid)
     connected = None
     if body.distribution:
         from .storyboard_distribution import resolve
@@ -311,12 +344,9 @@ def edit_storyboard(tenant_id: str, rid: str, body: StoryboardEdit, user: User =
     doc = working_copy(db, tenant_id, run.deliverable_id)
     if (doc.qa_revision, content_digest(doc.title, doc.content["client_preview"])) != (body.expected_qa_revision, body.expected_content_digest):
         raise HTTPException(412, "Reload the current storyboard revision")
-    brief = db.get(WorkforceBrief, run.brief_id)
     ref = run.knowledge["c3_manifest"]
     release = run.knowledge["registry"]["workflow"]
-    store, snap, projection = c3_boundaries.checked(db, user, brief, ref, release, "edit")
-    if pin(db, brief, release) != run.knowledge["registry"]:
-        raise HTTPException(409, "The storyboard binding is no longer current")
+    store, snap, projection = storyboard_authority(db, user, run, write=True)
     landing = {"kind": "offline_no_landing"}
     distribution = {"kind": "offline_no_delivery", "channel": projection["channel"], "audience": projection["audience"]}
     if connected:

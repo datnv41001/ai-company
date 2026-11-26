@@ -12,7 +12,7 @@ from .knowledge_store import canonical, digest
 
 Index = Annotated[int, Field(strict=True, ge=1, le=32)]
 Identifier = Annotated[str, StringConstraints(pattern=r"^[a-f0-9-]{36}$")]
-Note = Annotated[str, StringConstraints(strip_whitespace=True, min_length=1, max_length=300)]
+Note = Annotated[str, StringConstraints(strip_whitespace=True, max_length=300)]
 
 
 class Strict(BaseModel):
@@ -89,8 +89,9 @@ def apply_edits(before, body, projection, compose_variant):
     shots = board["shots"]
     old_lengths = [s["end_s"] - s["start_s"] for s in shots]
     if body.hook_variant:
-        if shots[0]["purpose"] != "hook" or shots[1]["purpose"] == "hook":
-            raise ValueError("This edit requires a single opening card")
+        opening_count = next((i for i, shot in enumerate(shots) if shot["purpose"] != "hook"), len(shots))
+        if not opening_count:
+            raise ValueError("The storyboard requires an opening card")
         if body.hook_variant in ("direct", "audience"):
             opening = compose_variant(body.hook_variant)["hook"]
         elif body.hook_variant == "style_alternate":
@@ -104,7 +105,16 @@ def apply_edits(before, body, projection, compose_variant):
         else:
             opening = "Bạn thấy chi tiết nào?"
         board.update(hook=opening, hook_variant=body.hook_variant)
-        shots[0].update(voice=opening, caption=cue(opening))
+        lines = cue(opening).splitlines()
+        cards = ["\n".join(lines[i:i + 2]) for i in range(0, len(lines), 2)]
+        if body.mode == "controlled_hook" and (opening_count != 1 or len(cards) != 1):
+            raise ValueError("The fixed single opening card cannot accommodate this treatment")
+        if len(cards) != opening_count and (body.shot_edits or body.shot_order is not None or body.durations is not None):
+            raise ValueError("Save the changed opening first, then edit the newly numbered shots")
+        # Archived WF-08/1 can wrap a long approved audience across several cards.
+        # An ordinary edit may resize just the opening; all subsequent work survives.
+        opening_shots = [dict(shots[min(i, opening_count - 1)], voice=card.replace("\n", " "), caption=card) for i, card in enumerate(cards)]
+        shots[:opening_count] = opening_shots
 
     seen = set()
     for edit in body.shot_edits:
@@ -159,7 +169,10 @@ def apply_edits(before, body, projection, compose_variant):
         shots = board["shots"] = ordered
         old_lengths = [old_lengths[i - 1] for i in body.shot_order]
     if body.editor_note is not None:
-        board["editorial"]["editor_note"] = body.editor_note
+        if body.editor_note:
+            board["editorial"]["editor_note"] = body.editor_note
+        else:
+            board["editorial"].pop("editor_note", None)
 
     if body.mode == "controlled_hook":
         if not body.hook_variant or seen or any(x is not None for x in (body.shot_order, body.durations, body.editor_note)):

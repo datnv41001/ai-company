@@ -47,7 +47,10 @@ def test_offline_hook_experiment_and_editor_handoff(pool):
     assert api.patch(doc + "/draft", headers=owner["headers"], json={
         "title": "Storyboard", "client_preview": video.json_text(raw | {"rights": "third_party_licensed"}),
     }).status_code == 409
+    initial = accepted(api.get(edition_url, headers=owner["headers"]))
+    assert initial["storyboard"] == raw and inputs(initial) == baseline
     for unscoped in (buyer, lab.cases[1][2], lab.y, staff):
+        assert api.get(edition_url, headers=unscoped["headers"]).status_code in (403, 404)
         assert edit(baseline | {"hook_variant": "audience"}, unscoped).status_code in (403, 404)
     for forged in ({"rights": "real_photography"}, {"offer": "free"}, {"shot_edits": [{"shot": 2, "caption": "Bảo đảm kết quả."}]},
                    {"mode": "controlled_hook", "hook_variant": "audience", "durations": [6, 8, 4]},
@@ -134,6 +137,15 @@ def test_equivalence_checks_cover_additional_fields_and_split_declaration_order(
     def edit(order):
         request = editions.StoryboardEdit(expected_qa_revision=1, expected_content_digest="0" * 64, shot_order=order)
         return editions.apply_edits(original, request, projection, None)
+    request = editions.StoryboardEdit(expected_qa_revision=1, expected_content_digest="0" * 64, hook_variant="audience")
+    long_hook = " ".join(["Người đang học nhịp"] * 5) + " cần biết gì?"
+    expanded = editions.apply_edits(original, request, projection, lambda _: {"hook": long_hook})
+    assert [s["purpose"] for s in expanded["shots"]].count("hook") == 2
+    restored = editions.apply_edits(expanded, request, projection, lambda _: {"hook": raw["hook"]})
+    assert [s["caption"] for s in restored["shots"]] == [s["caption"] for s in original["shots"]]
+    request.mode = "controlled_hook"
+    with pytest.raises(ValueError, match="single opening card"):
+        editions.apply_edits(original, request, projection, lambda _: {"hook": long_hook})
     lead = editions.StoryboardEdit(expected_qa_revision=1, expected_content_digest="0" * 64, shot_edits=[{"shot": 4, "proof_lead": "read"}])
     captioned = editions.apply_edits(original, lead, projection, None)
     assert captioned["shots"][3]["voice"] == captioned["shots"][3]["caption"] == "Đọc thẻ. Hai."

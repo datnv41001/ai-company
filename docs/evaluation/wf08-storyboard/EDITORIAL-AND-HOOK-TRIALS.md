@@ -2,6 +2,10 @@
 
 Người làm Marketing dùng `POST /api/tenants/{tenant_id}/workforce/runs/{run_id}/storyboard-edition` trên bản WF-08 đang có. Lấy `expected_qa_revision` và `expected_content_digest` từ tài liệu đã tải. Mỗi lần lưu thành công tạo revision mới. Khi gặp HTTP 412, tải lại bản hiện hành trước khi chỉnh. Endpoint sửa nháp tổng quát hướng người dùng về trình sửa này để các quyết định, dữ kiện và phạm vi thương hiệu được kiểm tra cùng nhau.
 
+Trong giao diện, mở **Điều phối Marketing AI**, chọn lần chạy, rồi mở **Biên tập storyboard**. Chọn một cảnh để xem câu đã duyệt, thay chỉ dẫn hình hoặc chỉnh caption. Sau khi lưu, gửi bản mới để người QA đối chiếu trong màn hình phê duyệt hiện hữu. Khi có người sửa đồng thời, giao diện tải lại bản hiện hành và yêu cầu đối chiếu. Quyền biên tập cần vai trò phù hợp và quyền xem manifest cùng chứng cứ. Run riêng tư có thể chỉ mở được bởi owner/admin. Khách hàng và người chỉ có quyền xem sẽ không nhận dữ liệu trình sửa.
+
+Chỉ dẫn cỡ khung và ghi chú bàn giao cho người dựng được lưu trên storyboard. Animatic dùng bộ minh họa đã hỗ trợ. Cần người dựng kiểm tra các chỉ dẫn nghệ thuật trên bản dựng tiếp theo.
+
 ## Sửa bản giao người dựng
 
 Đường sửa mặc định dùng `mode: "editorial"`. Client cũ tiếp tục gửi riêng `hook_variant`. Có thể chọn câu mở trực tiếp, theo người xem, câu hỏi gắn tên sản phẩm, hoặc câu hỏi quan sát. Với WF-08/2, `style_alternate` chọn một câu khác trong chính phong cách đã ký. Hệ thống đối chiếu phong cách và tiêu chí của brief lúc QA.

@@ -1,9 +1,9 @@
 {
   "case": "receipt-map",
-  "plan_digest": "1d57d3f1eefc2a2cffe55b6e027a151fbec9b69849511cb207c8dc58887641f8",
-  "wall_seconds": 0.226,
-  "api_process_cpu_seconds": 0.2188,
-  "response_bytes": 7544,
+  "plan_digest": "bdb80d2eb78daeb55ad40c643950eeaa125f01b0f5fcd98d7e45e3434c701e4f",
+  "wall_seconds": 0.277,
+  "api_process_cpu_seconds": 0.1562,
+  "response_bytes": 7266,
   "model_invocations": 0,
   "provider_fees": 0,
   "human_labor_cost": null,

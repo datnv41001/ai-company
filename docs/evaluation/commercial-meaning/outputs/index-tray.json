@@ -1,21 +1,21 @@
 {
   "version": "department-content-pack/1",
   "status": "internal_draft",
-  "plan_digest": "de8a1e04cfcf19cac6e42798aa0840dc00e1bb79e3b8efd7d0de6fc949b786a6",
-  "plan_id": "019a8a33-bc73-421d-a53e-8bff193c8e30",
+  "plan_digest": "892546cf95741b1431a7403b0b7db2d239a9e6f70fa70914764cd7de97aa87a2",
+  "plan_id": "a6d00590-c6fd-411c-ba12-da545e544931",
   "plan_revision": 1,
   "manifests": {
-    "strategy": {
-      "id": "0d4916f1-db83-4dec-85e8-ab3d5333b00e",
-      "digest": "684074ed6125a42973d9d3d84f1405858637edb127641d3f6d13bb4dcbe5d7df",
-      "brief_id": "4427780f-0f29-4d4b-b140-c672b726c949",
-      "workflow": "WF-03/research-strategy-draft@3"
-    },
     "landing": {
-      "id": "c16cdbc4-f939-4417-a694-c3a73e8c5813",
-      "digest": "e1ad9bd0b6fbbafaa425ac32a3a8dbfba4c24a056d934055977c7ca1452fb0b9",
-      "brief_id": "6fc9cc30-ab8b-493b-bd03-c5895348673e",
+      "id": "5d605f9a-2495-4f3c-81a3-a99f60288b27",
+      "digest": "654a532e9235fe16ebae2c117a3a9e37c26eb1e02e98afed29293effe35be454",
+      "brief_id": "c579b8ce-f4b5-4b5e-b932-b766e154e112",
       "workflow": "WF-13/landing-seo-draft@6"
+    },
+    "strategy": {
+      "id": "d37c57df-6ab5-4e21-869a-a61e03b3478f",
+      "digest": "f397f67e7b0e5496dd57a0c672562e056315e4872bb49bcf8ad22d1ff6afd3cc",
+      "brief_id": "3a40dbd4-c521-4aa1-bf63-937a66116d68",
+      "workflow": "WF-03/research-strategy-draft@3"
     }
   },
   "objective": "Nhận yêu cầu báo giá khay chia linh kiện theo hộp cho bàn lắp ráp",
@@ -143,14 +143,14 @@
     "experiment": "So sánh lời nhấn vào nhu cầu với lời nhấn vào điều kiện. Giữ nguyên CTA, trang đích và nhóm người mua.",
     "measurement": {
       "status": "requires_measurement_contract",
-      "approved_label": "Yêu cầu có số hộp, địa bàn và thời điểm cần hàng · requests · 21 ngày · Đếm yêu cầu báo giá đủ ba thông tin trên số phiên vào trang rồi đối soát mã yêu cầu với Sales."
+      "approved_label": "Yêu cầu có số hộp, địa bàn và thời điểm cần hàng"
     },
     "destination": {
       "kind": "sandbox_landing",
       "manifest": {
-        "id": "c16cdbc4-f939-4417-a694-c3a73e8c5813",
-        "digest": "e1ad9bd0b6fbbafaa425ac32a3a8dbfba4c24a056d934055977c7ca1452fb0b9",
-        "brief_id": "6fc9cc30-ab8b-493b-bd03-c5895348673e",
+        "id": "5d605f9a-2495-4f3c-81a3-a99f60288b27",
+        "digest": "654a532e9235fe16ebae2c117a3a9e37c26eb1e02e98afed29293effe35be454",
+        "brief_id": "c579b8ce-f4b5-4b5e-b932-b766e154e112",
         "workflow": "WF-13/landing-seo-draft@6"
       },
       "requirement": "select_approved_package_for_current_revision"

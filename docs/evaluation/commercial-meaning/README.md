@@ -14,3 +14,12 @@ Studio gắn nhận định với đúng đoạn ký tự và nguồn đã ghim.
 Chưa có người hành nghề chấm hai bộ nháp. Công sửa, thời gian tiết kiệm, chi phí trên bản được chấp nhận và hiệu quả quảng cáo chưa đo. Việc tạo các bộ nháp và các đối chiếu này dùng bộ soạn deterministic cục bộ. Mẫu tham khảo thị trường có nguồn công khai; tên đối thủ cụ thể của khách cần căn cứ theo brief. [Gói pilot đã chuẩn bị](../department-study/PILOT.md)
 
 Reviewer có thể thử một lời hứa thương mại mới trong cùng đoạn với câu có căn cứ, chỉnh phần đứng trước câu bị đánh dấu, thay thế kế hoạch và đăng nhập bằng khách khác trong cùng agency. Đối chiếu văn bản còn lại, actor, revision, kết quả sign/share và receipt trên chính commit đưa ra review.
+
+
+### Đối chiếu sau khi ghép các phòng ban
+
+Hai brief tổng hợp tạo bộ nội dung qua API trên cả SQLite và PostgreSQL. Bản dịch vụ yêu cầu địa điểm và ca nhận hàng cần quan sát; mẫu RFQ yêu cầu số hộp, địa bàn và thời điểm cần hàng. Hai mẫu Ads trong bộ nghiệm thu đều qua kiểm tra số biến thể và độ dài. Một bản xem trước dịch vụ ban đầu có mô tả 101/90 ký tự. Ảnh lần đầu được giữ để so với bản đã biên tập. [Ca lỗi cũ](approved-destination/first-service-description-101.png) · [Ảnh RFQ sau sửa](approved-destination/rfq) · [Ảnh dịch vụ sau sửa](approved-destination/appointment)
+
+Ở một kế hoạch có trang được duyệt, Advertising Studio đối chiếu package, revision, digest của file và quyền người QA trước khi mở iframe sandbox. Hai file thực được đọc qua API nội bộ. Mở bản xem quảng cáo tạo 0 sự kiện gửi form. Ảnh và số đo ghi nhận trên cây rehearsal a0777651, với ca nguồn landing và nguồn media ở [sổ quy nguồn](../real-production/landing-attribution/README.md). [9 ca API/trình duyệt](production-browser.xml) · [19 ca Studio và QA trên checkout cố định](postgres-studio-regressions.xml) · [Hồi quy biên tập bổ sung](editorial-regressions.xml)
+
+Thời gian tường, CPU process API và kích thước phản hồi ở các file resources dùng cho một lần đọc bộ nội dung; chi phí điện và nhân công chưa có nguồn. Phí provider và lượt model của riêng bước soạn deterministic bằng 0. Gói pilot yêu cầu người chấm lưu file cuối và xác minh SHA-256 giữa ba vai trò. [Đối chiếu luồng phân công](service-cohort-and-secondary-rfq.json) · [Khôi phục qua boundary v25/v26](cutover-final-local.json)

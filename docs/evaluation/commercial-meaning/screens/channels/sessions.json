@@ -1,7 +1,7 @@
 {
   "source": "Signed synthetic HTTP/SQLite edition. No new inference.",
-  "plan_digest": "44b1d6a6d8547cadfeddf6f028223e780cdae617bf88a52631a654b29db3ca65",
-  "snapshot_digest": "ed19b6cffc8e91d939f2f28b9a62ad2cc6943024a07bb6ffa9e6c4d71f12ab7e",
+  "plan_digest": "38dd7c3048a72bc3ef1e493d7ed0c398c54660e2561118aa4b7cd9b8f025bb20",
+  "snapshot_digest": "3fa513d605a547a460cf380ae67cb62be13a0b97875deeade6dc6fa8acadf4ee",
   "sessions": [
     {
       "width": 1280,
@@ -11,7 +11,7 @@
         "dark"
       ],
       "browser": "157.0.8103.52",
-      "four_group_keyboard_ms": 438,
+      "four_group_keyboard_ms": 188,
       "scroll_width": 1280
     },
     {
@@ -22,7 +22,7 @@
         "dark"
       ],
       "browser": "157.0.8103.52",
-      "four_group_keyboard_ms": 453,
+      "four_group_keyboard_ms": 188,
       "scroll_width": 820
     },
     {
@@ -33,7 +33,7 @@
         "dark"
       ],
       "browser": "157.0.8103.52",
-      "four_group_keyboard_ms": 390,
+      "four_group_keyboard_ms": 140,
       "scroll_width": 390
     }
   ]

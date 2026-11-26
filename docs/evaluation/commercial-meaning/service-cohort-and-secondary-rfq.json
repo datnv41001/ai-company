@@ -1,0 +1,55 @@
+{
+  "baseline": "044a91452fd013b0d728c8573d6bff93ab9173c9",
+  "head": "d30dec2623577db8ee64c8f580dbb03c2f727a84",
+  "head_tree": "a8199d4d0b0f49d41f0332861be7baea02b9e30f",
+  "verified_utc": "2026-11-26T02:36:54.175267+00:00",
+  "results": {
+    "red_unit": {
+      "total": 2,
+      "failures": 2,
+      "errors": 0,
+      "skipped": 0,
+      "seconds": 47.432,
+      "failed_cases": [
+        "test_rescheduling_cannot_reenter_a_prior_confirmation_cohort",
+        "test_secondary_quotes_count_only_the_explicit_plan_and_settlements"
+      ]
+    },
+    "red_chromium": {
+      "total": 1,
+      "failures": 1,
+      "errors": 0,
+      "skipped": 0,
+      "seconds": 90.176,
+      "failed_cases": [
+        "test_campaign_commands_and_scope_switch[sqlite]"
+      ]
+    },
+    "green_unit": {
+      "total": 2,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "seconds": 0.826,
+      "failed_cases": []
+    },
+    "green_chromium": {
+      "total": 1,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "seconds": 13.432,
+      "failed_cases": []
+    },
+    "green_postgres_sqlite": {
+      "total": 11,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "seconds": 72.492,
+      "failed_cases": []
+    }
+  },
+  "screenshots": "docs/evaluation/campaign-role-desk/ui/secondary-rfq-*.png",
+  "synthetic": true
+}

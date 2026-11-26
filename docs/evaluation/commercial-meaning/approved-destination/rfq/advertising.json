@@ -1,0 +1,62 @@
+{
+  "source_sha": "a0777651da38a76afb0bd66dab4a6e195d313fa2",
+  "test_sha256": "ec69ead9e65a027c5cda7e47f7597dcccae5dfb8bca41121bd492a4bd22c84c3",
+  "synthetic": true,
+  "browser": "157.0.8103.52",
+  "sessions": [
+    {
+      "width": 1280,
+      "plan_digest": "ccb9bc7d00bad3b16792aa4e77558d80248e04023b7b321035e0b532fca604ce",
+      "destination": {
+        "kind": "sandbox_landing",
+        "status": "approved",
+        "deliverable_id": "59b1fddc-1e7e-4cff-a585-774480137045",
+        "package_id": "45488834-f235-405d-bd70-82d4e378c0de",
+        "package_digest": "a4ee0e113c7d0fefd4e89d618acc279124f91a1be144bffc6567fc60ea9a41f6",
+        "studio_revision": 4,
+        "file_digest": "c179025a2e89c1b476df8b4fb128926192350124778b6150b761f554baecc423",
+        "download_url": "/api/tenants/8536b134-adef-4626-8c3f-7f053b4fab7c/deliverables/59b1fddc-1e7e-4cff-a585-774480137045/studio/production/45488834-f235-405d-bd70-82d4e378c0de/files/landing.html"
+      },
+      "file_bytes": 4155,
+      "iframe_html_sha256": "c179025a2e89c1b476df8b4fb128926192350124778b6150b761f554baecc423",
+      "headline": "Tấm gỗ tiêu âm Mộc",
+      "sandbox_event_writes": 0
+    },
+    {
+      "width": 820,
+      "plan_digest": "ccb9bc7d00bad3b16792aa4e77558d80248e04023b7b321035e0b532fca604ce",
+      "destination": {
+        "kind": "sandbox_landing",
+        "status": "approved",
+        "deliverable_id": "59b1fddc-1e7e-4cff-a585-774480137045",
+        "package_id": "45488834-f235-405d-bd70-82d4e378c0de",
+        "package_digest": "a4ee0e113c7d0fefd4e89d618acc279124f91a1be144bffc6567fc60ea9a41f6",
+        "studio_revision": 4,
+        "file_digest": "c179025a2e89c1b476df8b4fb128926192350124778b6150b761f554baecc423",
+        "download_url": "/api/tenants/8536b134-adef-4626-8c3f-7f053b4fab7c/deliverables/59b1fddc-1e7e-4cff-a585-774480137045/studio/production/45488834-f235-405d-bd70-82d4e378c0de/files/landing.html"
+      },
+      "file_bytes": 4155,
+      "iframe_html_sha256": "c179025a2e89c1b476df8b4fb128926192350124778b6150b761f554baecc423",
+      "headline": "Tấm gỗ tiêu âm Mộc",
+      "sandbox_event_writes": 0
+    },
+    {
+      "width": 390,
+      "plan_digest": "ccb9bc7d00bad3b16792aa4e77558d80248e04023b7b321035e0b532fca604ce",
+      "destination": {
+        "kind": "sandbox_landing",
+        "status": "approved",
+        "deliverable_id": "59b1fddc-1e7e-4cff-a585-774480137045",
+        "package_id": "45488834-f235-405d-bd70-82d4e378c0de",
+        "package_digest": "a4ee0e113c7d0fefd4e89d618acc279124f91a1be144bffc6567fc60ea9a41f6",
+        "studio_revision": 4,
+        "file_digest": "c179025a2e89c1b476df8b4fb128926192350124778b6150b761f554baecc423",
+        "download_url": "/api/tenants/8536b134-adef-4626-8c3f-7f053b4fab7c/deliverables/59b1fddc-1e7e-4cff-a585-774480137045/studio/production/45488834-f235-405d-bd70-82d4e378c0de/files/landing.html"
+      },
+      "file_bytes": 4155,
+      "iframe_html_sha256": "c179025a2e89c1b476df8b4fb128926192350124778b6150b761f554baecc423",
+      "headline": "Tấm gỗ tiêu âm Mộc",
+      "sandbox_event_writes": 0
+    }
+  ]
+}

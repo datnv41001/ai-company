@@ -436,15 +436,30 @@ function createCampaignEngine(api) {
     return ()=>value.value.trim()?{schema_id:schema,[key]:value.value.trim(),...(mode?{delivery_mode:mode.value}:{})}:null;
   }
   function drawOptimization(parent,active,ops){
+    parent.dataset.optimization='true';
     const proposal=ops.optimization;
     if(proposal?.recommendation)add(parent,'p',proposal.recommendation);
     else add(parent,'p','Đối soát kết quả Sales và nguồn doanh thu trước khi giao việc tối ưu.');
+    function showEvidence(target,evidence){
+      if(!evidence)return;
+      const metric=evidence.primary_measurement;
+      const period=metric ? 'Sau '+metric.window_start_exclusive+' đến '+evidence.as_of_inclusive
+        : 'Trọn vòng đời kế hoạch, chốt lúc '+evidence.as_of_inclusive;
+      const source={sandbox_appointment_receipts:'Biên nhận lịch dịch vụ',sandbox_rfq_receipts:'Biên nhận RFQ'}[evidence.source]||'Chưa có nguồn đo';
+      line(target,source+' · '+period,'KPI: '+evidence.kpi);
+      if(metric)line(target,metric.definition,'Số đạt / số đủ điều kiện: '+metric.numerator+' / '+metric.denominator);
+      add(target,'small','Kế hoạch '+evidence.plan_id);
+    }
+    showEvidence(parent,proposal?.evidence);
     if(!active)return;
     const proposalId=crypto.randomUUID();
     command(parent,'Tạo đề xuất từ báo cáo',()=>sandbox(active,{kind:'propose_optimization',proposal_id:proposalId}));
     for(const item of ops.proposals||[]) {
       const row=line(parent,item.recommendation||item.id,item.work_package?.criteria,label(item.status));
-      if(item.plan_id===active.id && item.status==='proposed' && item.author!==actor)command(row,'Duyệt gói việc tối ưu',()=>sandbox(active,{kind:'approve_optimization',proposal_id:item.id}));
+      if(item.evidence?.version==='plan-optimization/2'){
+        showEvidence(row,item.evidence);
+        if(item.plan_id===active.id && item.status==='proposed' && item.author!==actor)command(row,'Duyệt gói việc tối ưu',()=>sandbox(active,{kind:'approve_optimization',proposal_id:item.id}));
+      }else if(item.status==='proposed')add(row,'small','Đề xuất cũ dùng tổng chiến dịch. Tạo đề xuất mới cho kế hoạch đang duyệt.');
     }
   }
   async function load() {

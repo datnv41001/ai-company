@@ -143,4 +143,4 @@ def settle_inquiry(api, owner, buyer, other, operator, desk, sandbox, original, 
         directory.mkdir(parents=True,exist_ok=True)
         result={"synthetic":True,"plan_id":plan,"case_id":ident,"form_receipt":original["id"],"events":records,
                 "qualified":metrics,"after_confirmation":settled,"after_cancellation":final,"after_rejection":after_rejection}
-        (directory/("postgres.json" if pg else "sqlite.json")).write_text(json.dumps(result,indent=2)+"\n",encoding="utf-8")
+        (directory/("postgres.json" if pg else "sqlite.json")).write_text(json.dumps(result,indent=2)+"\n",encoding="utf-8",newline="\n")

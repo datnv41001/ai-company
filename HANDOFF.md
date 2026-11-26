@@ -1,6 +1,12 @@
 # Bắt đầu ở đây khi tiếp quản AI Marketing Company
 
-## Công việc hiện hành sau khi hợp nhất PR #56
+## Công việc hiện hành sau review #57
+
+Main nội bộ đã merge bản sửa đơn vị tại `26578088519d99f4aed5be9c516ac247f3d4735e`, cùng tree `744f35a73ddf069e7de2c0c34cc7d9de4226ee0f` với bản ghép được kiểm. [CI trên merge commit](https://github.com/datnv41001/ai-company/actions/runs/45780019694) · [Biên nhận lỗi và test hồi quy](docs/evaluation/department-review/R57-MATERIAL-UNITS.md). Trên nhánh sản xuất tiếp theo, điểm bắt đầu cho người phản biện là [hai bộ campaign](docs/evaluation/campaign-production-review/README.md). Mở storyboard và landing của cùng một brief, kiểm giá tham khảo, đơn vị, điều kiện, CTA, rồi theo receipt tới đúng người nhận.
+
+Người điều phối có [thư mời trống](docs/evaluation/department-study/PILOT-ABCD/INVITATION.md). Trước khi tuyển, xác nhận quyền sử dụng, thời gian và thù lao riêng rồi làm theo [runbook v2](docs/evaluation/department-study/PILOT-ABCD/OFFICIAL.md). Người phụ trách O-09 có thể thử [grammar và luồng nguồn–policy offline](docs/evaluation/department-study/advisory/TASK-HANDOFF.md). Bước tiếp theo của cả nhóm là phản biện đầu ra sẵn dùng, giữ riêng quyết định của người hành nghề và quyết định merge PR tiếp theo. [Báo cáo 10 mục](docs/evaluation/department-review/ROUND-57-PRODUCTION.md)
+
+## Công việc ở mốc lịch sử sau khi hợp nhất PR #56
 
 Phản biện PR #57 phát hiện hai lệnh tạo và bổ sung RFQ theo mét vuông trả HTTP 409 trên head `73c1c04e`. Bản sửa khôi phục `m²` trong hợp đồng `materials_v1`. Khi tiếp quản, dùng [biên nhận RED/GREEN, các đơn vị đối chứng và hướng dẫn chạy](docs/evaluation/department-review/R57-MATERIAL-UNITS.md). Giá trị số lượng thập phân, nguồn phê duyệt và chi tiết giao hàng phải đọc lại được trên cùng RFQ.
 

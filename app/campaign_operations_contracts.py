@@ -82,6 +82,15 @@ class Appointment(Observation):
     session_id: Id | None = None
 
 
+class IntakeAppointment(Appointment):
+    """Internal request whose approved brief can ask for a shift before booking a time."""
+
+    contract: Literal["service-intake/2"]
+    quantity: Amount | None
+    requested_for: AwareDatetime | None
+    location: Note | None
+
+
 class AppointmentDecision(Observation):
     kind: Literal["appointment_decision"]
     appointment_id: Id

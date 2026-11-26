@@ -1,4 +1,6 @@
 """RFQ intake, Sales decisions and reconciled simulated revenue. No external adapter."""
+from decimal import Decimal
+
 from .campaign_operations_contracts import CompleteRFQ, RFQ, Sales, SessionEvent
 from .knowledge_store import aware, conflict, parse_time, stamp
 from .models import Membership
@@ -34,6 +36,9 @@ def missing_fields(row):
     fields = [key for key in ("quantity", "location", "required_date") if not row[key]]
     if row["contact_purpose"] != "quote_request":
         fields.append("permission_to_respond")
+    moqs = row.get("minimum_order_quantities", [])
+    if len(moqs) > 1 or (moqs and row["quantity"] and Decimal(row["quantity"]) < Decimal(moqs[0])):
+        fields.append("commercial_moq")
     return fields
 
 
@@ -63,6 +68,8 @@ def observation(cmd, state, plan, store, *, recipient=None, coordinator=None):
                "last_event_at": stamp(cmd.occurred_at), **quantity_fields(cmd, cmd.unit),
                "assignee_id": None, "gross_vnd": 0, "refunded_vnd": 0, "sales_accepted": False,
                "quoted": False, "ordered": False, "confirmed": False, "feedback": []}
+        if plan.get("intake_contract", {}).get("action") == "rfq":
+            row["minimum_order_quantities"] = plan["intake_contract"]["qualification"]["minimum_order_quantities"]
         row["missing"] = missing_fields(row)
         row["state"] = "received" if row["missing"] else "qualified"
         return "leads", cmd.rfq_id, row
@@ -74,7 +81,9 @@ def observation(cmd, state, plan, store, *, recipient=None, coordinator=None):
     if isinstance(cmd, CompleteRFQ):
         if row["state"] != "received":
             conflict("Only an incomplete request can be completed")
-        row.update(quantity_fields(cmd, row["unit"]), missing=[], state="qualified")
+        row.update(quantity_fields(cmd, row["unit"]))
+        row["missing"] = missing_fields(row)
+        row["state"] = "received" if row["missing"] else "qualified"
         return "leads", cmd.rfq_id, row
     if row["state"] not in FROM[cmd.step] or cmd.occurred_at < parse_time(row["last_event_at"]):
         conflict("Invalid or out-of-order Sales transition")

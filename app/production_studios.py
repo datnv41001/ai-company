@@ -8,7 +8,7 @@ from typing import Annotated, Literal
 from uuid import UUID
 
 from fastapi import APIRouter, Depends, HTTPException
-from pydantic import Field
+from pydantic import Field, StrictBool, StrictInt, StrictStr
 from sqlalchemy import JSON, cast, func, select, type_coerce
 from sqlalchemy.dialects.postgresql import JSONB
 from sqlalchemy.orm import Session
@@ -16,7 +16,8 @@ from sqlalchemy.orm import Session
 from . import c3_boundaries, c3_reviewer, c3_studio_routes, campaign_operations as operations
 from . import campaign_operations_appointments as appointments
 from . import campaign_operations_crm as crm, production_creative, production_landing
-from .campaign_operations_contracts import Appointment, RFQ, SessionEvent
+from .business_intake import validate_answers
+from .campaign_operations_contracts import Appointment, IntakeAppointment, RFQ, SessionEvent
 from .campaign_planner import active_plan, campaign_store
 from .database import get_db
 from .knowledge_contracts import Input
@@ -62,6 +63,13 @@ class Submit(Visit):
     days: Literal[2, 7]
 
 
+class ContractSubmit(Visit):
+    visit_id: Hash
+    contract_digest: Hash
+    consent: StrictBool
+    answers: Annotated[dict[str, StrictInt | StrictStr], Field(max_length=7)]
+
+
 def scope(db, user, tenant, did, write):
     doc, run = c3_studio_routes.scoped(db, user, tenant, did, "admin")
     store = campaign_store(db, user, tenant, run.campaign_id, write=write)
@@ -77,7 +85,8 @@ def packages(store, doc, kind=None):
     slim = cast(col, JSONB).op("-")("payloads") if store.postgres else type_coerce(func.json_remove(col, "$.payloads"), JSON)
     query = (
         select(KnowledgeCommand.id, KnowledgeCommand.actor, slim.label("result"))
-        .filter_by(**store.scope, operation="studio_production")
+        .filter_by(**store.scope)
+        .where(KnowledgeCommand.operation.in_(("studio_production", "studio_landing_v2")))
         .where(col["did"].as_string() == doc.id)
     )
     if kind is not None:
@@ -87,7 +96,7 @@ def packages(store, doc, kind=None):
 
 def get_package(store, doc, pid):
     row = store.get(KnowledgeCommand, pid)
-    if row.operation != "studio_production" or row.result["did"] != doc.id:
+    if row.operation not in {"studio_production", "studio_landing_v2"} or row.result["did"] != doc.id:
         missing()
     return row
 
@@ -263,7 +272,8 @@ def prepare(tenant_id: str, did: str, body: Prepare, user: Actor, db: DB):
         "full_cost_vnd": None,
     }
     value["payloads"] = {name: b64encode(data).decode("ascii") for name, (_, data) in files.items()}
-    row = append_document(store, run, "studio_production", "prod:" + digest(canonical([did, body.kind, version + 1])), value)
+    operation = "studio_landing_v2" if master.get("intake_contract") else "studio_production"
+    row = append_document(store, run, operation, "prod:" + digest(canonical([did, body.kind, version + 1])), value)
     db.commit()
     return public(row)
 
@@ -304,6 +314,15 @@ def intake(tenant, did, pid, body, user, db):
     plan = verify_current(store, user, doc, run, pkg)
     if not approval(store, pkg, lock=True):
         conflict("Independently review the produced landing page before recording a sandbox event")
+    contract = pkg.result["master"].get("intake_contract")
+    if contract != plan.get("intake_contract"):
+        conflict("Review the landing package issued for the current intake contract")
+    mapped = {}
+    if isinstance(body, (Submit, ContractSubmit)):
+        if bool(contract) != isinstance(body, ContractSubmit):
+            raise HTTPException(422, "Use the form issued with this approved page")
+        if contract:
+            mapped = validate_answers(contract, body.contract_digest, body.answers, body.consent)
     rows = operations.entries(store, run.campaign_id)
     state = operations.state_of(rows)
     scope_key = [pid, user.id]
@@ -324,7 +343,9 @@ def intake(tenant, did, pid, body, user, db):
     }
     identity = digest(canonical([*scope_key, str(body.request_id)]))
     common = {"plan_id": plan["id"], "request_id": body.request_id.hex, "occurred_at": at}
-    if isinstance(body, Submit):
+    if contract:
+        landing_source["intake_contract_digest"] = contract["digest"]
+    if isinstance(body, (Submit, ContractSubmit)):
         visit = state["sessions"].get(body.visit_id)
         if not visit or visit["plan_id"] != plan["id"] or visit["visitor"] != visitor:
             conflict("Open this approved synthetic page before submitting the form")
@@ -333,28 +354,38 @@ def intake(tenant, did, pid, body, user, db):
         if visit.get("landing_source") and visit["landing_source"] != landing_source:
             conflict("Visit and form must use the same approved landing revision")
         fixture_id = digest(canonical(["landing-form", pid, body.visit_id]))
+        if not contract:
+            mapped = {"quantity": body.quantity, "location": body.place,
+                      "requested_for" if plan["buyer_action"] == "appointment" else "required_date": body.days}
+        location = {"north": "Synthetic site A", "south": "Synthetic site B"}.get(mapped.get("location"))
         inputs = {
             "product_id": plan["product_id"],
             "unit": plan["selling_unit"],
-            "quantity": str(body.quantity),
-            "location": {"north": "Synthetic site A", "south": "Synthetic site B"}[body.place],
+            "quantity": mapped.get("quantity"),
+            "location": location,
             "session_id": body.visit_id,
         }
         if plan["buyer_action"] == "appointment":
-            cmd = Appointment(
+            command = IntakeAppointment if contract else Appointment
+            cmd = command(
                 **common,
                 **inputs,
                 kind="appointment",
                 appointment_id=fixture_id,
-                contract="service-appointment/1",
+                contract="service-intake/2" if contract else "service-appointment/1",
                 contact_purpose="appointment_request",
-                service_scope="Synthetic service assessment",
-                requested_for=at + timedelta(days=body.days),
+                service_scope=plan["product"] if contract else "Synthetic service assessment",
+                requested_for=at + timedelta(days=int(mapped["requested_for"])) if "requested_for" in mapped else None,
             )
             entity, ident, value = appointments.appointment(cmd, state, plan, store)
         else:
-            cmd = RFQ(**common, **inputs, kind="rfq", rfq_id=fixture_id, contact_purpose="quote_request", required_date=(at + timedelta(days=body.days)).date())
+            required_date = (at + timedelta(days=int(mapped["required_date"]))).date() if "required_date" in mapped else None
+            cmd = RFQ(**common, **inputs, kind="rfq", rfq_id=fixture_id, contact_purpose="quote_request", required_date=required_date)
             entity, ident, value = crm.observation(cmd, state, plan, store)
+        if contract:
+            value["intake"] = {"contract_digest": contract["digest"], "revision": contract["revision"],
+                               "answers": body.answers, "fields": contract["fields"], "mapped": mapped,
+                               "consent": {"purpose": contract["consent"]["purpose"], "granted": body.consent}}
     else:
         cmd = SessionEvent(**common, kind="session", session_id=identity, actor_key=visitor)
         entity, ident, value = crm.observation(cmd, state, plan, store)
@@ -380,5 +411,5 @@ def visit(tenant_id: str, did: str, pid: str, body: Visit, user: Actor, db: DB):
 
 
 @router.post("/{pid}/submissions")
-def submit(tenant_id: str, did: str, pid: str, body: Submit, user: Actor, db: DB):
+def submit(tenant_id: str, did: str, pid: str, body: ContractSubmit | Submit, user: Actor, db: DB):
     return intake(tenant_id, did, pid, body, user, db)

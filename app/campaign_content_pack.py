@@ -1,6 +1,6 @@
 """Read-only departmental drafts pinned to one active plan and its approved facts."""
 from datetime import datetime, timedelta, timezone
-import re
+from .business_intake import LABELS as BUYER_FIELDS, submitted_fields
 import unicodedata
 
 from . import c3_order_units, c3_studio
@@ -9,29 +9,6 @@ from . import c3_order_units, c3_studio
 ADS_SOURCE = "https://support.google.com/google-ads/answer/7684791"
 SEARCH_SOURCE = "https://developers.google.com/search/docs/fundamentals/creating-helpful-content"
 HANDOFF_SOURCE = "https://www.wecommit.com.vn/bai-viet/tam-ban-do-tong-the-cho-doi-ai-agent"
-
-BUYER_FIELDS = {
-    "box_count": ("số hộp", "number of boxes"), "quantity": ("số lượng", "quantity"),
-    "destination": ("địa bàn", "delivery area"), "need_date": ("thời điểm cần hàng", "required delivery date"),
-    "site": ("địa điểm", "location"), "receiving_shift": ("ca nhận hàng cần quan sát", "receiving shift to observe"),
-    "preferred_time": ("khung giờ mong muốn", "preferred time"),
-}
-
-
-def submitted_fields(intent):
-    """Read complete field lists in the pinned brief. Never copy free-form staff instructions into public copy."""
-    lookup = {label: key for key, names in BUYER_FIELDS.items() for label in names}
-    result = []
-    for item in intent.get("requirements", []):
-        words = unicodedata.normalize("NFC", item).casefold().strip().rstrip(".")
-        match = re.search(r"(?:^|, | và | and )(?:ghi|cung cấp|gửi kèm|include|provide) (.+)$", words)
-        if not match:
-            continue
-        values = re.split(r",\s*| và | and ", match[1])
-        if all(value in lookup for value in values):
-            result += [lookup[value] for value in values]
-    return list(dict.fromkeys(result))
-
 
 def platform_length(s):
     return sum(2 if unicodedata.east_asian_width(c) in ("W", "F") else 1
@@ -74,9 +51,12 @@ def compose(plan, projection):
         ask = tr("Điều kiện nào áp dụng?", "Which terms apply?")
         lead = tr("Xem điều kiện cho lựa chọn của bạn trước khi gửi yêu cầu.", "Check the conditions for your selection before submitting.")
         short = tr("Xem điều kiện", "Check the terms")
-    fields = submitted_fields(projection["task_intent"])
+    contract = plan.get("intake_contract")
+    fields = [f["id"] for f in contract["fields"]] if contract else submitted_fields(projection["task_intent"])
     if fields:
         labels = [BUYER_FIELDS[k][0 if vi else 1] for k in fields]
+        if contract:
+            labels = [f["label"] + ("" if f["required"] else tr(" (tùy chọn)", " (optional)")) for f in contract["fields"]]
         inputs = (", ".join(labels[:-1]) + tr(" và ", " and ") if len(labels) > 1 else "") + labels[-1]
         lead = tr(f"Gửi kèm {inputs}.", f"Include the {inputs}.")
     title = tr(f"{product} dành cho {buyer}", f"{product} for {buyer}")
@@ -100,6 +80,7 @@ def compose(plan, projection):
         "version": "department-content-pack/1", "status": "internal_draft", "plan_digest": plan["digest"],
         "plan_id": plan["id"], "plan_revision": plan["revision"], "manifests": plan["manifests"],
         "objective": plan["objective"], "audience": buyer, "pillars": pillars, "buyer_fields": fields,
+        **({"intake_contract_digest": contract["digest"]} if contract else {}),
         "social": [
             {"platform": "LinkedIn", "stage": "consideration", "pillar": pillars[0],
              "copy": f"{title}\n\n{ask} {lead}\n\n{terms}\n\n{cta}"},

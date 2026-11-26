@@ -1,6 +1,6 @@
 const productionFrames = new WeakMap();
 window.addEventListener('message', e=>{
-  if(e.origin==='null' && e.source && e.data?.type==='amc-landing-submit/1'){
+  if(e.origin==='null' && e.source && ['amc-landing-submit/1','amc-landing-submit/2'].includes(e.data?.type)){
     productionFrames.get(e.source)?.(e.data);
   }
 });
@@ -57,7 +57,10 @@ function mountProductionStudio(host,api,path,view,kind,isDirty){
       const wire=f=>productionFrames.set(f.contentWindow,async data=>{
         try{if(!result.isConnected || item.id!==current.id)return;
           if(!visit)throw new Error('Bắt đầu phiên thử trong Landing Studio trước khi gửi.');
-          const receipt=await api(base+'/'+item.id+'/submissions','POST',{request_id:visit.submit,visit_id:visit.id,quantity:data.quantity,place:data.place,days:data.days});
+          const answers=data.type==='amc-landing-submit/2'
+            ? {contract_digest:data.contract_digest,consent:data.consent,answers:data.answers}
+            : {quantity:data.quantity,place:data.place,days:data.days};
+          const receipt=await api(base+'/'+item.id+'/submissions','POST',{request_id:visit.submit,visit_id:visit.id,...answers});
           const message='Đã ghi nhận '+(receipt.kind==='appointment'?'lịch hẹn thử':'yêu cầu báo giá thử')+' · '+receipt.id;
           tell.textContent=message;f.contentWindow.postMessage({type:'amc-landing-result/1',ok:true,message},'*');
         }catch(e){f.contentWindow.postMessage({type:'amc-landing-result/1',ok:false,message:e.message},'*');}

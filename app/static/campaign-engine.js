@@ -152,6 +152,13 @@ function createCampaignEngine(api) {
       add(proposed,'p',proposal.duration_days+' ngày · '+money(proposal.budget_vnd)+' · '+proposal.channels.join(', '));
       if(proposal.buyer_action==='appointment')add(proposed,'p',proposal.secondary_conversions?.includes('rfq')?
         'Tiếp nhận lịch hẹn và yêu cầu báo giá riêng biệt.':'Chỉ tiếp nhận lịch hẹn.');
+      const intake=proposal.intake_contract;
+      if(intake){
+        const fields=details(proposed,'Phiếu tiếp nhận cần duyệt');
+        for(const f of intake.fields)line(fields,f.label,f.unit||'',f.required?'Bắt buộc':'Tùy chọn');
+        add(fields,'p',intake.consent.label);
+        add(fields,'p','Phiên bản '+intake.revision+' · '+intake.digest.slice(0,12));
+      }
       for(const [kind,ref] of Object.entries(proposal.manifests))
         line(proposed,kinds[kind],ref.workflow+' · Brief '+ref.brief_id+' · Manifest '+ref.id+' · SHA-256 '+ref.digest);
       for(const item of proposal.work_packages)

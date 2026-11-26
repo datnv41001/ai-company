@@ -1,0 +1,440 @@
+{
+  "frozen_commit": "06c4da2b5508e1607bf44c0db698b2993fe3cfe5",
+  "fixture_files_sha256": {
+    "tests/evaluation/department/briefs-v1.json": "504a9cf853702495c6bba4113343a89fe406af07eb9890c116e47eafae06fe5c",
+    "docs/evaluation/department-study/PROTOCOL.md": "8ef086b21ceae616cd46f4ec26c25f4054961f8aab3a8fce34dd38611e319ed1"
+  },
+  "run_checkout": "3730343a917d64c255bb14228d9e2b38512d9dc5",
+  "frozen_application_runtime": "1b6a876c0f25ac334687e74f73c2134248452aab19e1a83dba096d4fdded62a6",
+  "first_infrastructure_run": 45726782238,
+  "partial_source_run": 45727062233,
+  "completed_model_run": 45728814303,
+  "archive_file_sha256": "d7b96f93ef7529eddc9fb3feb84a7aa23e9e0626f1bb1b7c67d64cff5e26f39e",
+  "archive_file_count": 126,
+  "per_file_sha256": {
+    "control-rebuild.json": "4cbcfa43162d0241849615799c78e324fb229130603c3302589519f929d6845d",
+    "index-tray/control/approved-inputs.json": "c69c1b7efb0425b6fcee3ed57227d8c8d31a28a925a278c59981e3ad286b475e",
+    "index-tray/control/commission.json": "ea97b0927bde0d42902068a1a868fd647ae87cf057481db431bea6630b7757aa",
+    "index-tray/control/first-package.json": "13eca284b6c981b67cd80a95a00d57404b9ad77841609e97b0870a5dd8913fc4",
+    "index-tray/control/reviewed-package.json": "13eca284b6c981b67cd80a95a00d57404b9ad77841609e97b0870a5dd8913fc4",
+    "index-tray/qwen05/channel-attempt.json": "7c5426bfd2e1ec5e0e886951c93ea10aef0da79b06e2e4ac0df37c2b9829fd54",
+    "index-tray/qwen05/commission.json": "60cce94a3f2578c191ff2f9a961df96b498a4358807ae554a489b18f77c14203",
+    "index-tray/qwen05/first-package.json": "bb3ab62182c6e1dd2fa4dd748bc04927fc9e361cdb579f8ebfb9aaf438a5e86f",
+    "index-tray/qwen05/landing/deliverable.md": "51913bc069fa48caa5d7033bb6e12a2f0467cf5f68c3853374cd6a4369522424",
+    "index-tray/qwen05/landing/editor-review.json": "080230d0647c7fef8a2d0acbe62f6d03fda7d7c0c736658f824ccab935d4046b",
+    "index-tray/qwen05/landing/requests.json": "c80bac85184c6c1cca6186d142ab888bf2f88b73457ba3d751b2a1fe980afd9b",
+    "index-tray/qwen05/landing/signed-synthetic-edition.json": "a428ce77ec05ce6f762591a7e0cfb7c2f3f1022dd9f473a090eade5e2c836776",
+    "index-tray/qwen05/landing/worker.json": "0135878374d7561c7d5a731dec6f595d20e162a2693fd162d4df452d7da11732",
+    "index-tray/qwen05/reviewed-package.json": "c9afa165bccf00dd92bccd06ddd2a06b7495f58f2828ab997749267c9c249254",
+    "index-tray/qwen05/strategy/deliverable.md": "c2bfcfd4c20e44a4b5fe9596f9c1fd24eb491eac546da3241c0a044692e26e8b",
+    "index-tray/qwen05/strategy/editor-review.json": "5b7a0f142a9ecc83a4d89b38be60bddc31f896af49c528805f231352f80ded40",
+    "index-tray/qwen05/strategy/requests.json": "5955a6d81b2b9fd342ad6afee18c1e444e32f4711e8143fa6c5281a53c212e6b",
+    "index-tray/qwen05/strategy/signed-synthetic-edition.json": "d112fc736320edac4becf1cf66c62b847f1172de29acef671380c52e44ea0621",
+    "index-tray/qwen05/strategy/worker.json": "dd3a86605fc121dab96789861a8e1d12a640db676a09df0aae40ae3f3db15cc5",
+    "index-tray/qwen05/workflow-evidence.json": "36ef746793e9295f4b009a2fab16cfb37fa76e1a1c6670b869d6c1383b103c26",
+    "index-tray/qwen15/channel-attempt.json": "12fe9a88f59cde6fffca017133b0c1b78e636cfbeae8a3da33494ffc1ffff0d6",
+    "index-tray/qwen15/commission.json": "156751660db311df4b10481ce4fc64a996b67df0f6d5a99d1c6871d3e6626ea5",
+    "index-tray/qwen15/first-package.json": "8d8ff57908a5f758ea6b42285f1c6c1f15650350a2cc17b472e4ae2079d557cc",
+    "index-tray/qwen15/landing/attempts/24b979ba-0475-4a62-ad17-37858b3c12a9.json": "e35b21a0195f665b5db6d24bb61d6da5e66397ff4d3830686803f4df1c5b9c23",
+    "index-tray/qwen15/landing/attempts/de410b02-7ef3-4ecc-b804-f9247ca60926.json": "0d5b51a51dc8736198c3fbc2ed117374671f445a64daa5fab935de5ae424e023",
+    "index-tray/qwen15/landing/attempts/fa8243aa-8dfc-46ab-b5dd-3e6a4eb08fee.json": "cc98926e43a68001750369050417bfd9c238be3b45981ce4438bbafcf3c36434",
+    "index-tray/qwen15/landing/deliverable.md": "89c73ea29b80c48fd3351b5102cd7af4905b01c8ff12f87767c049084f436ac4",
+    "index-tray/qwen15/landing/editor-review.json": "46066fa9eb73bb6da3e7cdacc10e7f64c2079fbbacad96c6cc913e94d94494a9",
+    "index-tray/qwen15/landing/requests.json": "f461f5ad1a9ad676ad594bd0f6014d71e8d179afb5d9c4017582c11116f21a6a",
+    "index-tray/qwen15/landing/signed-synthetic-edition.json": "67d180361e1afcea505877eb73bb6e022397db04416d73e7e81eb1edf66a0d91",
+    "index-tray/qwen15/landing/worker.json": "eb03b2b2e628508819a8713450a3e833563cd9a53d1e10ec9dcb90aece913251",
+    "index-tray/qwen15/reviewed-package.json": "7c51ae6757fe5d738cc3af6aa391392f495e4e97ba78b2ce4f370445d049bcca",
+    "index-tray/qwen15/strategy/attempts/9c792c05-2cd4-421d-aff8-b6d3f732974a.json": "293e8b67e788dfa51567af3584feef8a15ab853457951d25cfadaf036ba43ba4",
+    "index-tray/qwen15/strategy/attempts/b2f93759-5fe7-4b96-9e28-e38f4bf4d180.json": "270a9a48bab0255e40e49a2089431e05a6ff89efea6d589e34d6a9ea299f070e",
+    "index-tray/qwen15/strategy/attempts/d6583d5d-5bb1-4415-97cd-d9ac2c71970e.json": "b750b83c4b300d1c5460aaf4ecbed7767af3eb5495f7e30e511f067a02e887ab",
+    "index-tray/qwen15/strategy/deliverable.md": "c2bfcfd4c20e44a4b5fe9596f9c1fd24eb491eac546da3241c0a044692e26e8b",
+    "index-tray/qwen15/strategy/editor-review.json": "d53eab329424bb32fede39a3accca486e18e258567d296579081ede3ec1c7e12",
+    "index-tray/qwen15/strategy/requests.json": "e1372e7d4a364dcdea803484af30e43f41509455f1034eb708763f03b202cc91",
+    "index-tray/qwen15/strategy/signed-synthetic-edition.json": "c3d87421c1efe35cdb8ec2c9bd1b7cb35c4fe1a00bdad7444b28d3bdbf4a352c",
+    "index-tray/qwen15/strategy/worker.json": "c55e45cc21e0302d3a4f4ed236f93a8bbf36c4ec88587507680c41e383d2fb48",
+    "index-tray/qwen15/workflow-evidence.json": "ac6b886fc197455f2854ee03aa3be35e3f9249a8ef424c2817cc345eb4cad0bd",
+    "index-tray/qwen7/channel-attempt.json": "0ae5f559f531fb05d81006444bd1fa5d3f123a963aac76e3c97f36b251d416ec",
+    "index-tray/qwen7/commission.json": "16bd3cb33a2e028e51f3d9d5bbba3ef852a1b70c5e81357d3129f4040e03e5d1",
+    "index-tray/qwen7/first-package.json": "343d0edb344231ddd9d606449a87d4df58025f312ff429c8077842c91eb862e0",
+    "index-tray/qwen7/landing/attempts/403502a5-2352-4c8a-b325-687325ccee64.json": "dcf1358edc340bd3092e3a966b019b8285901dbbaec45955c046a81d78a26198",
+    "index-tray/qwen7/landing/attempts/7daa26eb-ba69-468f-978d-b303ead47f06.json": "4f06190bdc2ecc4233bebe2ef4137a52645a5daed3d17286d7417ca580d1c557",
+    "index-tray/qwen7/landing/attempts/aba23030-0d91-4593-995c-3d43dff9c2b8.json": "a5bc15cf5a6871745ccfab1020cba0e2a1fee357dbb6ab85c96aa836109c2953",
+    "index-tray/qwen7/landing/deliverable.md": "aeceb03119ecfa92a5fc3ad6e578dadf765e284300acfbd1a7ca43318835137c",
+    "index-tray/qwen7/landing/editor-review.json": "7e77221e7e6f5cc31612ee1c45f948dbab5f79ce04377517a2487726efda46ab",
+    "index-tray/qwen7/landing/requests.json": "20927eb6ed1fd33a9f4f9bac08b5f2a107e55953e15b115c2f83d4bc1600cbbc",
+    "index-tray/qwen7/landing/signed-synthetic-edition.json": "5604e9bb922583c3cc97a4021591debef4ac3a48960e331ada5c26b934e5e7ad",
+    "index-tray/qwen7/landing/worker.json": "97c8568ac6c4ceb2e275fee55e199ac3d337180b1db628036ab0d558b36c2ae2",
+    "index-tray/qwen7/reviewed-package.json": "55fd70786ac84047992f13aa001b2af9c939273fa51d30264911d29d43fd49ae",
+    "index-tray/qwen7/strategy/attempts/2c6aad27-8400-473e-963e-0f8e31772871.json": "520405f3ad9654a80d6dfa44ec6781365e85125ab7a37ec9e012b4cb18189a1e",
+    "index-tray/qwen7/strategy/attempts/2d2b342c-9f83-4159-8510-de3a6792e551.json": "4d0d5a6009d195a7159c748f566d390d0f1ef24d27c0f693afaf26c3df385cbf",
+    "index-tray/qwen7/strategy/attempts/7f89c20f-d9c9-4301-92c8-5b423b785012.json": "5e4199c80008d262366f82e51b51f761a46791269a9220e61f083092eae229cb",
+    "index-tray/qwen7/strategy/deliverable.md": "c2bfcfd4c20e44a4b5fe9596f9c1fd24eb491eac546da3241c0a044692e26e8b",
+    "index-tray/qwen7/strategy/editor-review.json": "505bb2c6556479d78fa7c640329271c6d7c5f6546fc0bd55431535c2b819f92c",
+    "index-tray/qwen7/strategy/requests.json": "2931b780104fb0d2934f612e149c305fc43141627ef2528748e941392731883f",
+    "index-tray/qwen7/strategy/signed-synthetic-edition.json": "012f7adc6026e45849a76baad00e2bf58b90783f4e846ca43c34d410c6373cb1",
+    "index-tray/qwen7/strategy/worker.json": "7eae3db2b3f801438ce4823d8f1e527b8bd72064269e250ee8a3bfa5f2fe9ec0",
+    "index-tray/qwen7/workflow-evidence.json": "3cb48ab529b3e8e010350d677db878903fc1e03d8c1fa1933328a563f659e595",
+    "matching.json": "2bf1332de063d6572d3080e7cc7e5e99d7402d0d8997a02234c2cc530d0104b0",
+    "receipt-map/control/approved-inputs.json": "7f36cf3aa9a6b3c55d3a0512fee3cc0449b029c4b0991b453cbbc9257cb9bbd6",
+    "receipt-map/control/commission.json": "a55ab9020cede6b049ce187f29aa221a086dd40b5af8e171ac268a5b11b297db",
+    "receipt-map/control/first-package.json": "624853446520e6cb39bf9f5460f8cbd204ce3ae8b99e74480748cbafd7cf329e",
+    "receipt-map/control/reviewed-package.json": "624853446520e6cb39bf9f5460f8cbd204ce3ae8b99e74480748cbafd7cf329e",
+    "receipt-map/qwen05/channel-attempt.json": "f28a4c10c561c435620fae043b26d6745157cbf9ec09464951dbfc432194b21a",
+    "receipt-map/qwen05/commission.json": "4b915601d9192ad755bbf0df93261a75c726b3ad2857583f91479a64bc00f8a6",
+    "receipt-map/qwen05/first-package.json": "89d31a5ce7f3ec52f4dbf50f76c2e0a253a4930df4894ab6fa4df06f7efd162a",
+    "receipt-map/qwen05/landing/deliverable.md": "cd2cab18d7a4dc963965e851d7edf5721f18aa6effe70e6b2f18dcfc20d06e79",
+    "receipt-map/qwen05/landing/editor-review.json": "af0f4b2dfdd690cb16b04cb902138e9c388581b1d4d070158c11e68f49edbbaa",
+    "receipt-map/qwen05/landing/requests.json": "4164ab55f097c677d3fb7fdd719021cda2473debc46a4d8baf090a0bc7460ea1",
+    "receipt-map/qwen05/landing/signed-synthetic-edition.json": "372177bf6a9b48a7cc35f9c53bcb4c5e27f3993971da942289282a0a95b05a5d",
+    "receipt-map/qwen05/landing/worker.json": "175fc717bec07021263d423d251df8221d8202b4a6c8b4be595c41376e710dd5",
+    "receipt-map/qwen05/reviewed-package.json": "aaca28b175ed1c5a9711bab7db04686b3423b3aa89daffe9b75ffd5818f004ed",
+    "receipt-map/qwen05/strategy/deliverable.md": "e70be29147c76955ba8b9d547cb420c67a7c1e17e2777b20e31654942cd6d855",
+    "receipt-map/qwen05/strategy/editor-review.json": "eda57c4044b0fcf07ffcea96542ed14747cbc9648dea80d69d932b2dae63bff1",
+    "receipt-map/qwen05/strategy/requests.json": "e0e87a30c76f2638fe739836b0377959575d987d383d59e5ee53fc437c169081",
+    "receipt-map/qwen05/strategy/signed-synthetic-edition.json": "8b15d2e0863a6169dddc4641e314bfcb22663890c169806daf2004417dcffd5b",
+    "receipt-map/qwen05/strategy/worker.json": "14c4e880629457e7cec8c41e0e8655d04cf340b27b04a6cefd7e1eb0bee9ec2b",
+    "receipt-map/qwen05/workflow-evidence.json": "b559a6454c46201a41c0e65f92dbe3337b8a756b2423428807df399cc0425470",
+    "receipt-map/qwen15/channel-attempt.json": "6057b3241d8ffcaaf5c413fa356c11057c6408db5f0749ce6266c3d647d766be",
+    "receipt-map/qwen15/commission.json": "98133666a2289096a796d1c6a24ae1ee414283904f5819006996d83c9fd5091e",
+    "receipt-map/qwen15/first-package.json": "cc2db389058a939d2a5d6799d5f4fd1b3bf630635b3c4e0725e06dd4ae10be5a",
+    "receipt-map/qwen15/landing/attempts/4b1729c0-849e-4aa7-bf93-aad6b2845b65.json": "067bfef278890ac6a2760e7b9276bd9f1ba0089c3ec2af0de2e107c8676ce885",
+    "receipt-map/qwen15/landing/attempts/d457c716-bf3c-49c1-a335-49cba161ac99.json": "281889ce030030503bf0d5a897b53c9fa6d9bc701efb710c86af7671276b9d97",
+    "receipt-map/qwen15/landing/attempts/ee98391d-b939-43d5-bab7-d416ce05ad4b.json": "0116bde1049299e2f62259626536b253c598f4abd5e143ca7dec6eaac2f19733",
+    "receipt-map/qwen15/landing/deliverable.md": "cc3a93ce45a79de80b0504a7915616cc0995bbfe68c65e13be9246ba7d325974",
+    "receipt-map/qwen15/landing/editor-review.json": "6464bd0e7195eee1d256963ef027745d208a653cdf57977a8ce141356639ce38",
+    "receipt-map/qwen15/landing/requests.json": "41a488166a02bdcb516e671e9460bbd5ee3249d1ca9be07ce3e37fcb60d45801",
+    "receipt-map/qwen15/landing/signed-synthetic-edition.json": "b87811d3650ba30db24b4620137d36531b21a1080b5f30ce5a9c9397bb8c38f5",
+    "receipt-map/qwen15/landing/worker.json": "e10b46b312e4e8f0720a2b7da33c00d77aa2fb3197101c493daa342a50e3f509",
+    "receipt-map/qwen15/reviewed-package.json": "1f8eef2d8822f378d111bd9fa2c42605a9d6d44b59525b5842a0bc85e686dce4",
+    "receipt-map/qwen15/strategy/attempts/16624b20-4b04-4cfd-8075-7353610ca911.json": "28b616a51ffd045b1af0db4782cb8b59cd7a162ac53046cb9d22d7a32e207206",
+    "receipt-map/qwen15/strategy/attempts/556b9e37-e2b4-4792-9d63-43069f6ad41a.json": "ed7fe9a6b646de7300617742d7ad9e198f568a9f357393603c487f4640a26d18",
+    "receipt-map/qwen15/strategy/attempts/a48bf991-5b17-4216-9e26-34afac85c4c2.json": "f97552fdf7cd54e27944fc6516249c339ba9320b1ff503f43b7b17409bef8bd1",
+    "receipt-map/qwen15/strategy/deliverable.md": "e70be29147c76955ba8b9d547cb420c67a7c1e17e2777b20e31654942cd6d855",
+    "receipt-map/qwen15/strategy/editor-review.json": "585c7bfa154df37c0776d93eaa3ca838e8e77e122c9c09e41bd2937539c26fad",
+    "receipt-map/qwen15/strategy/requests.json": "937231f8d96c4433d8bfd07d3b9975eb2628830d54a103d31eb279efbdda049e",
+    "receipt-map/qwen15/strategy/signed-synthetic-edition.json": "1fbc71e4f534e5c726b5512e98c11f8e978878d58943b0c4b87dff4bb404170b",
+    "receipt-map/qwen15/strategy/worker.json": "08cafc3030f1eed18d5c2a6bdc19c2d794307c20a5ef66d7754bb1989f63fd5d",
+    "receipt-map/qwen15/workflow-evidence.json": "98a0f2a97690addcf4d366aa6698cae0c20df6b6d55d24aa1ef217726f29231e",
+    "receipt-map/qwen7/channel-attempt.json": "2f2de7bafa577510a17741bccf1027d91e771093b2286cc9e760562ef2a97096",
+    "receipt-map/qwen7/commission.json": "8a878cb91d900efa11f2cc98b5f258468576ce488e0a669d38bae76f82c0b9f8",
+    "receipt-map/qwen7/first-package.json": "4fe050e6807507b32141bdb522d7fc3bbdd6504967b3e0227dd7b57bd31824c5",
+    "receipt-map/qwen7/landing/attempts/064eb28d-5646-4c48-b8a5-a71dba114ab9.json": "4da5b454e05d4d728a80ab9343e12a78b61697d28ed4eaec695f1065d9bf292a",
+    "receipt-map/qwen7/landing/attempts/271f737a-6317-46a4-9a00-afab32796f93.json": "b6fca1e51bbc2632091a9f8ef4c50b60c4dfaf1cab87e8bd229645a0f3fa9af4",
+    "receipt-map/qwen7/landing/attempts/9350e631-745f-4718-8336-1d595b0b12a3.json": "098ba052f05e6bd8e9b0778534304513dfbaf6b0d9c857f262be84e21ba26b1c",
+    "receipt-map/qwen7/landing/deliverable.md": "857127bbff7f79ed9261402aba6d08c30bcc2444cd99ee6f27b1564579094561",
+    "receipt-map/qwen7/landing/editor-review.json": "b76d8f2f7e20d7305ecae59ba6fa2f98c70e66b862c08ba944735aff2133fe3a",
+    "receipt-map/qwen7/landing/requests.json": "0925f1c1df0911a5ff163a6c82951e4171e656c028e5bdb16e903ee571cc007e",
+    "receipt-map/qwen7/landing/signed-synthetic-edition.json": "cba0be0bbefc7188d9cda49594c47a858a9cc56ea775c007133b7e84af193822",
+    "receipt-map/qwen7/landing/worker.json": "e5409c1a621255d66e7c5690151cf9f28ea5f4dc033f4138117f15981de316e7",
+    "receipt-map/qwen7/reviewed-package.json": "e873cad4c2880bb17f186ee0568f9123a076c8e4d0a6e2e6889042ba58fdd41e",
+    "receipt-map/qwen7/strategy/attempts/2d8f6c68-57b9-46c7-b66d-47b9ffd36ef9.json": "ca4a23c4c811f3d03b66f303c3c4409671bdf64e41c06a10c386063eec3b2abb",
+    "receipt-map/qwen7/strategy/attempts/5d47a934-c17f-4e19-8a7e-d51ccffd287b.json": "bbac2de20975c69f41101949ce30d7c31e6448481e6ab104898716f4a0fd7797",
+    "receipt-map/qwen7/strategy/attempts/c6cdd30a-2589-4aa1-8ae7-ec706eea702b.json": "b0c9ff1b61affeac0d8967e1deb3b3ae19db60b36e7486cf4847d79f83dd98e5",
+    "receipt-map/qwen7/strategy/deliverable.md": "e70be29147c76955ba8b9d547cb420c67a7c1e17e2777b20e31654942cd6d855",
+    "receipt-map/qwen7/strategy/editor-review.json": "842c2c918e231c2b1732f70643b0f6b0198eefb5c8d4a43f687203f87d02e949",
+    "receipt-map/qwen7/strategy/requests.json": "59d3e510cb83f0457c48e4ffc3217c65ba7b722727da492b245b0015f5aa96e1",
+    "receipt-map/qwen7/strategy/signed-synthetic-edition.json": "ba1b965f539bde0ee65bd1fd60af98221e078a936cf837a9c986eeb699f87f45",
+    "receipt-map/qwen7/strategy/worker.json": "6e7317971a75bfde1db76ff1bded361b8d19689acb6a3bda2e2651a2fd927a8a",
+    "receipt-map/qwen7/workflow-evidence.json": "41b80cdb810a897d836ca2b52d030d18b3e286afbf6fb532e0293d0e22a1d221",
+    "study.json": "ddefb2ad4faa31a2c3e708759b32195649257d31b520e8dc998ed6f97f2ea697",
+    "summary.json": "c486e80872e5051764d7bae9a32e06074648f14ec5ee21afd3be3861f3048a94"
+  },
+  "conditions_comparison": {
+    "role_rows": 14,
+    "same_system": 14,
+    "same_schema": 14,
+    "same_settings": 14,
+    "same_initial_request": 6,
+    "same_registry_and_runtime": true
+  },
+  "current_arms": {
+    "index-tray/control": {
+      "first_complete": true,
+      "final_complete": true,
+      "attempts": 0,
+      "input_tokens": 0,
+      "output_tokens": 0,
+      "unmetered_attempts": 0,
+      "signed_editions": 0,
+      "failed_attempts": 0,
+      "fields": {},
+      "provider_fee_usd": 0,
+      "hardware_cost_usd": null,
+      "human_cost": null,
+      "cost_per_business_accepted_unit": null
+    },
+    "index-tray/qwen05": {
+      "first_complete": true,
+      "final_complete": true,
+      "attempts": 7,
+      "input_tokens": 4830,
+      "output_tokens": 965,
+      "unmetered_attempts": 0,
+      "signed_editions": 2,
+      "failed_attempts": 0,
+      "fields": {
+        "retained_control": 15,
+        "grounded_composer": 7,
+        "coincides_with_control": 3,
+        "retained_model_verbatim": 1
+      },
+      "provider_fee_usd": 0,
+      "hardware_cost_usd": null,
+      "human_cost": null,
+      "cost_per_business_accepted_unit": null,
+      "first_workflow_passes": 2,
+      "channel_release_status": "research_candidate_unreviewed"
+    },
+    "index-tray/qwen7": {
+      "first_complete": true,
+      "final_complete": true,
+      "attempts": 7,
+      "input_tokens": 4895,
+      "output_tokens": 963,
+      "unmetered_attempts": 0,
+      "signed_editions": 2,
+      "failed_attempts": 0,
+      "fields": {
+        "retained_control": 16,
+        "grounded_composer": 7,
+        "coincides_with_control": 3
+      },
+      "provider_fee_usd": 0,
+      "hardware_cost_usd": null,
+      "human_cost": null,
+      "cost_per_business_accepted_unit": null,
+      "first_workflow_passes": 2,
+      "channel_release_status": "research_candidate_unreviewed"
+    },
+    "index-tray/qwen15": {
+      "first_complete": true,
+      "final_complete": true,
+      "attempts": 7,
+      "input_tokens": 4914,
+      "output_tokens": 992,
+      "unmetered_attempts": 0,
+      "signed_editions": 2,
+      "failed_attempts": 0,
+      "fields": {
+        "retained_control": 17,
+        "grounded_composer": 7,
+        "coincides_with_control": 2
+      },
+      "provider_fee_usd": 0,
+      "hardware_cost_usd": null,
+      "human_cost": null,
+      "cost_per_business_accepted_unit": null,
+      "first_workflow_passes": 2,
+      "channel_release_status": "research_candidate_unreviewed"
+    },
+    "receipt-map/control": {
+      "first_complete": true,
+      "final_complete": true,
+      "attempts": 0,
+      "input_tokens": 0,
+      "output_tokens": 0,
+      "unmetered_attempts": 0,
+      "signed_editions": 0,
+      "failed_attempts": 0,
+      "fields": {},
+      "provider_fee_usd": 0,
+      "hardware_cost_usd": null,
+      "human_cost": null,
+      "cost_per_business_accepted_unit": null
+    },
+    "receipt-map/qwen05": {
+      "first_complete": true,
+      "final_complete": true,
+      "attempts": 7,
+      "input_tokens": 4837,
+      "output_tokens": 818,
+      "unmetered_attempts": 0,
+      "signed_editions": 2,
+      "failed_attempts": 0,
+      "fields": {
+        "retained_control": 17,
+        "grounded_composer": 7,
+        "coincides_with_control": 2
+      },
+      "provider_fee_usd": 0,
+      "hardware_cost_usd": null,
+      "human_cost": null,
+      "cost_per_business_accepted_unit": null,
+      "first_workflow_passes": 2,
+      "channel_release_status": "research_candidate_unreviewed"
+    },
+    "receipt-map/qwen7": {
+      "first_complete": true,
+      "final_complete": true,
+      "attempts": 7,
+      "input_tokens": 4712,
+      "output_tokens": 952,
+      "unmetered_attempts": 0,
+      "signed_editions": 2,
+      "failed_attempts": 0,
+      "fields": {
+        "retained_control": 17,
+        "grounded_composer": 7,
+        "coincides_with_control": 2
+      },
+      "provider_fee_usd": 0,
+      "hardware_cost_usd": null,
+      "human_cost": null,
+      "cost_per_business_accepted_unit": null,
+      "first_workflow_passes": 2,
+      "channel_release_status": "research_candidate_unreviewed"
+    },
+    "receipt-map/qwen15": {
+      "first_complete": true,
+      "final_complete": true,
+      "attempts": 7,
+      "input_tokens": 4748,
+      "output_tokens": 661,
+      "unmetered_attempts": 0,
+      "signed_editions": 2,
+      "failed_attempts": 0,
+      "fields": {
+        "retained_control": 17,
+        "grounded_composer": 7,
+        "coincides_with_control": 2
+      },
+      "provider_fee_usd": 0,
+      "hardware_cost_usd": null,
+      "human_cost": null,
+      "cost_per_business_accepted_unit": null,
+      "first_workflow_passes": 2,
+      "channel_release_status": "research_candidate_unreviewed"
+    }
+  },
+  "resources": {
+    "qwen05": {
+      "arm": "qwen05",
+      "free_disk_bytes": 92394176512,
+      "image": "ghcr.io/ggml-org/llama.cpp:server@sha256:20db01dc9a92bff54a5b9fe4078caa52be6a0c1fa73859c6449e25b9cb67f998",
+      "context": 8192,
+      "compute": "4 CPU threads, 9 GiB container memory, no GPU",
+      "seed": 42,
+      "temperature": 0,
+      "currencies": {
+        "provider_fee_usd": 0,
+        "compute_cost_usd": null
+      },
+      "weights": {
+        "qwen2.5-0.5b-instruct-q4_k_m.gguf": {
+          "sha256": "74a4da8c9fdbcd15bd1f6d01d621410d31c6fc00986f5eb687824e7b93d7a9db",
+          "bytes": 491400032,
+          "origin": "https://huggingface.co/Qwen/Qwen2.5-0.5B-Instruct-GGUF/resolve/9217f5db79a29953eb74d5343926648285ec7e67/qwen2.5-0.5b-instruct-q4_k_m.gguf"
+        }
+      },
+      "server_build": "b12648-44d50873b",
+      "setup_wall_seconds": 17.096,
+      "case_wall_seconds": {
+        "index-tray": 59.943,
+        "receipt-map": 56.576
+      },
+      "peak_container_memory_bytes": 390668288,
+      "container_cpu_microseconds": 399405585
+    },
+    "qwen7": {
+      "arm": "qwen7",
+      "free_disk_bytes": 92829753344,
+      "image": "ghcr.io/ggml-org/llama.cpp:server@sha256:20db01dc9a92bff54a5b9fe4078caa52be6a0c1fa73859c6449e25b9cb67f998",
+      "context": 8192,
+      "compute": "4 CPU threads, 9 GiB container memory, no GPU",
+      "seed": 42,
+      "temperature": 0,
+      "currencies": {
+        "provider_fee_usd": 0,
+        "compute_cost_usd": null
+      },
+      "weights": {
+        "qwen2.5-7b-instruct-q4_k_m-00001-of-00002.gguf": {
+          "sha256": "dfce12e3862a5283ccfb88221b48480e58745165de856439950d0f22590580db",
+          "bytes": 3993201344,
+          "origin": "https://huggingface.co/Qwen/Qwen2.5-7B-Instruct-GGUF/resolve/bb5d59e06d9551d752d08b292a50eb208b07ab1f/qwen2.5-7b-instruct-q4_k_m-00001-of-00002.gguf"
+        },
+        "qwen2.5-7b-instruct-q4_k_m-00002-of-00002.gguf": {
+          "sha256": "539cf93f78e887edea1c04e2d7d8cdaca9d01dae9c9025bcb8accbe29df3d72a",
+          "bytes": 689872288,
+          "origin": "https://huggingface.co/Qwen/Qwen2.5-7B-Instruct-GGUF/resolve/bb5d59e06d9551d752d08b292a50eb208b07ab1f/qwen2.5-7b-instruct-q4_k_m-00002-of-00002.gguf"
+        }
+      },
+      "server_build": "b12648-44d50873b",
+      "setup_wall_seconds": 38.338,
+      "case_wall_seconds": {
+        "index-tray": 341.907,
+        "receipt-map": 333.824
+      },
+      "peak_container_memory_bytes": 4452683776,
+      "container_cpu_microseconds": 2547618349
+    },
+    "qwen15": {
+      "arm": "qwen15",
+      "free_disk_bytes": 86977888256,
+      "image": "ghcr.io/ggml-org/llama.cpp:server@sha256:20db01dc9a92bff54a5b9fe4078caa52be6a0c1fa73859c6449e25b9cb67f998",
+      "context": 8192,
+      "compute": "4 CPU threads, 9 GiB container memory, no GPU",
+      "seed": 42,
+      "temperature": 0,
+      "currencies": {
+        "provider_fee_usd": 0,
+        "compute_cost_usd": null
+      },
+      "weights": {
+        "qwen2.5-1.5b-instruct-q4_k_m.gguf": {
+          "sha256": "6a1a2eb6d15622bf3c96857206351ba97e1af16c30d7a74ee38970e434e9407e",
+          "bytes": 1117320736,
+          "origin": "https://huggingface.co/Qwen/Qwen2.5-1.5B-Instruct-GGUF/resolve/91cad51170dc346986eccefdc2dd33a9da36ead9/qwen2.5-1.5b-instruct-q4_k_m.gguf"
+        }
+      },
+      "server_build": "b12648-44d50873b",
+      "setup_wall_seconds": 10.804,
+      "case_wall_seconds": {
+        "index-tray": 81.235,
+        "receipt-map": 68.213
+      },
+      "peak_container_memory_bytes": 1326833664,
+      "container_cpu_microseconds": 546584317
+    }
+  },
+  "interrupted_attempt": {
+    "reused_run": 45727062233,
+    "interrupted_model": "qwen7",
+    "unknown_prior_usage": true,
+    "prior_resource_receipt": {
+      "arm": "qwen7",
+      "free_disk_bytes": 90740350976,
+      "image": "ghcr.io/ggml-org/llama.cpp:server@sha256:20db01dc9a92bff54a5b9fe4078caa52be6a0c1fa73859c6449e25b9cb67f998",
+      "context": 8192,
+      "compute": "4 CPU threads, 9 GiB container memory, no GPU",
+      "seed": 42,
+      "temperature": 0,
+      "currencies": {
+        "provider_fee_usd": 0,
+        "compute_cost_usd": null
+      },
+      "weights": {
+        "qwen2.5-7b-instruct-q4_k_m-00001-of-00002.gguf": {
+          "sha256": "dfce12e3862a5283ccfb88221b48480e58745165de856439950d0f22590580db",
+          "bytes": 3993201344,
+          "origin": "https://huggingface.co/Qwen/Qwen2.5-7B-Instruct-GGUF/resolve/bb5d59e06d9551d752d08b292a50eb208b07ab1f/qwen2.5-7b-instruct-q4_k_m-00001-of-00002.gguf"
+        },
+        "qwen2.5-7b-instruct-q4_k_m-00002-of-00002.gguf": {
+          "sha256": "539cf93f78e887edea1c04e2d7d8cdaca9d01dae9c9025bcb8accbe29df3d72a",
+          "bytes": 689872288,
+          "origin": "https://huggingface.co/Qwen/Qwen2.5-7B-Instruct-GGUF/resolve/bb5d59e06d9551d752d08b292a50eb208b07ab1f/qwen2.5-7b-instruct-q4_k_m-00002-of-00002.gguf"
+        }
+      },
+      "server_build": "b12648-44d50873b",
+      "setup_wall_seconds": 26.414,
+      "peak_container_memory_bytes": 3941756928,
+      "container_cpu_microseconds": 928877825
+    },
+    "matched_setup_attempts": {
+      "index-tray": 2,
+      "receipt-map": 1
+    }
+  },
+  "measured_human_pilot": false,
+  "professional_release_status": "unqualified"
+}

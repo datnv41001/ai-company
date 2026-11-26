@@ -37,6 +37,12 @@ def capture_campaign(origin, email, password, tenant, campaign, directory):
                     expect(engine).not_to_contain_text("undefined")
                     for asset in production["assets"]:
                         expect(engine.locator("summary").filter(has_text=asset["title"]).first).to_be_attached()
+                    nav = engine.get_by_role("navigation", name="Các phần của chiến dịch")
+                    for button in nav.get_by_role("button").all():
+                        button.focus()
+                        button.press("Enter")
+                        expect(page.locator("#" + button.get_attribute("aria-controls"))).to_be_focused()
+                    assert page.evaluate("document.documentElement.scrollWidth <= innerWidth")
                     engine.evaluate("e => e.scrollIntoView({block:'start'})")
                     capture_themes(page, directory / f"workspace-{width}.png")
                     funnel = engine.get_by_role("heading", name="Từ RFQ đến doanh thu sandbox")

@@ -93,6 +93,10 @@ def specialist_request(run, model, *, node, **kwargs):
         message = body["messages"][-1]
         context = json.loads(message["content"])
         context["reference"] = role_view(binding["workflow"], node.skill, projection)
+        commission = run.knowledge.get("campaign_commission")
+        if commission and node.skill not in ("content", "seo"):
+            context["campaign_requirements"] = {key: commission[key] for key in
+                ("target_outcome", "channel", "duration_days", "simulated_media_budget_vnd")}
         message["content"] = json.dumps(context, ensure_ascii=False)
         if node.skill == "director":
             constrain_director_assignments(body, binding["workflow"])

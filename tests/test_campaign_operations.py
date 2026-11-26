@@ -67,7 +67,7 @@ def test_scoped_rfq_pipeline_idempotency_and_commission_identity(api, agency):
                           json={"key": uuid4().hex, "expected_digest": draft["digest"]}))
         return draft
 
-    first = plan(0, "Qualify service requests by machine count")
+    first = plan(0, case["kpi"])
     def send(kind, *, code=200, actor=owner, key=None, target=None, **fields):
         data = {"kind":kind, "request_id":key or uuid4().hex, "plan_id":first["id"], **fields}
         answer = api.post((target or path) + "/commands", headers=actor["headers"], json=data)
@@ -122,10 +122,10 @@ def test_scoped_rfq_pipeline_idempotency_and_commission_identity(api, agency):
     send("labor", package_id="seo", phase="editing", seconds=60, allocated_cost_vnd=10, observation="Synthetic time allocation")
     send("close_unit_cost", package_id="seo", nonlabor_vnd=20, basis="Synthetic compute bill")
     assert view()["cost_per_business_accepted_vnd"] is None
-    follow = plan(1, "Qualify service requests by machine count")
+    follow = plan(1, case["kpi"])
     assert ids == {u["id"] for u in view()["work_units"]}
     assert all(u["plan_id"] == follow["id"] for u in view()["work_units"])
-    plan(2, "Measure buyer readiness for a different service outcome")
+    plan(2, snaps[0]["projection"]["objective"])
     assert len(view()["work_units"]) == 2 * len(ids)
     # An old plan cannot schedule new production, but cancelling an existing confirmed order still reconciles.
     send("rfq", **{**lead,"rfq_id":"obsolete"}, code=409)

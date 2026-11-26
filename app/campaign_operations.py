@@ -69,6 +69,10 @@ def production_bindings(store, cid):
         owner = next((p for start, p in approved if start <= at), None)
         if not owner:
             continue
+        # Pre-commission receipts retain their historical attribution. New receipts must
+        # prove the plan reached this run even when an editor independently queues a brief.
+        if "campaign_plan_digest" in receipt.result and receipt.result["campaign_plan_digest"] != owner["digest"]:
+            continue
         manifest = {"id": receipt.snapshot_id, "digest": receipt.result["manifest_digest"]}
         if manifest != run.knowledge.get("c3_manifest"):
             continue

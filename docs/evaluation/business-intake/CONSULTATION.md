@@ -64,3 +64,7 @@ Trong Chromium, người điều phối giao hồ sơ 3 hộp bằng giao diện
 Khi khách đổi ý sau tư vấn và RFQ đang ở “Đủ điều kiện, chờ giao Sales”, điều phối Marketing hoặc người phụ trách kinh doanh mở hồ sơ của chiến dịch, chọn **Hủy**, nhập lý do khách cung cấp và ghi nhận. Hồ sơ hiển thị “Đã hủy” cùng lý do, sổ giao dịch lưu người ghi và revision. Phiếu khách đã gửi giữ nguyên. Nếu khách muốn đặt yêu cầu khác, tiếp nhận một biểu mẫu mới theo nhu cầu và sự đồng ý mới.
 
 RFQ đã đủ điều kiện vẫn được tính trong số từng đạt điều kiện. Việc rút trước phân công không phát sinh lượt Sales nhận, báo giá, đơn hàng hoặc doanh thu. Một tab đang mở ở revision cũ phải tải lại nếu đồng thời có người giao Sales hoặc hủy. Nhân viên vừa tư vấn và khách xem dữ liệu không có quyền ghi việc hủy ở giai đoạn này.
+
+Trong Campaign Engine, người phê duyệt chiến dịch có thể giao Sales theo cơ chế đã nghiệm thu. Hủy trước phân công yêu cầu quyền điều phối ở **bàn giao theo chiến dịch**, kể cả khi cùng tài khoản có quyền phê duyệt. Ca hồi quy gửi lại phiếu mới cho sáu hộp sau khi rút RFQ cũ. Phiếu mới có mã và consent riêng.
+
+Ảnh Chromium chụp hồ sơ tổng hợp sau khi rút yêu cầu ở revision 4. [Điện thoại sáng](withdrawal/withdrawal-390-light.png) · [Điện thoại tối](withdrawal/withdrawal-390-dark.png) · [Máy tính bảng sáng](withdrawal/withdrawal-820-light.png) · [Máy tính bảng tối](withdrawal/withdrawal-820-dark.png) · [Desktop sáng](withdrawal/withdrawal-1280-light.png) · [Desktop tối](withdrawal/withdrawal-1280-dark.png)

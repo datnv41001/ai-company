@@ -161,11 +161,22 @@ def settle_inquiry(api, owner, buyer, other, operator, desk, sandbox, original, 
     assert after_withdrawal["qualified_rfqs"]==2 and after_withdrawal["inquiries"]==3
     for metric in ("quotes_issued","sales_accepted","orders","confirmed_revenue_vnd"):
         assert after_withdrawal[metric]==after_rejection[metric]
+    new_answers_key=next(k for k in ("box_count","quantity") if k in third["value"]["intake"]["answers"])
+    replacement=additional_inquiry(**{new_answers_key:6})
+    assert replacement["entity_id"]!=third_id and replacement["value"]["state"]=="qualified"
+    assert replacement["value"]["intake"]["answers"][new_answers_key]==6
+    final_inbox=accepted(api.get(desk+"/"+routing+"/inbox",headers=operator["headers"]))["items"]
+    previous=next(item["value"] for item in final_inbox if item["value"]["id"]==third_id)
+    assert previous["state"]=="cancelled" and previous["intake"]==third["value"]["intake"]
+    # A fresh request is a separate intake and carries no prior commercial decision.
+    for metric in ("quotes_issued","sales_accepted","orders","confirmed_revenue_vnd"):
+        assert measure()[metric]==after_withdrawal[metric]
     journal=accepted(api.get(sandbox,headers=owner["headers"]))["receipts"]
     assert {r["receipt"] for r in records} <= {r["id"] for r in journal}
     if out:=os.getenv("AMC_CONSULTATION_EVIDENCE"):
         directory=Path(out)
         directory.mkdir(parents=True,exist_ok=True)
         result={"synthetic":True,"plan_id":plan,"case_id":ident,"form_receipt":original["id"],"events":records,
-                "qualified":metrics,"after_confirmation":settled,"after_cancellation":final,"after_rejection":after_rejection,"after_withdrawal":after_withdrawal,"withdrawal_receipt":withdrawn["id"]}
+                "qualified":metrics,"after_confirmation":settled,"after_cancellation":final,"after_rejection":after_rejection,"after_withdrawal":after_withdrawal,"withdrawal_receipt":withdrawn["id"],
+                "replacement_rfq":replacement["entity_id"],"replacement_receipt":replacement["id"]}
         (directory/("postgres.json" if pg else "sqlite.json")).write_text(json.dumps(result,indent=2)+"\n",encoding="utf-8",newline="\n")

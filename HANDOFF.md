@@ -1,5 +1,9 @@
 # Bắt đầu ở đây khi tiếp quản AI Marketing Company
 
+## Bàn giao sản xuất nội dung theo kênh (ENG-G02)
+
+Trong **Chiến dịch → Điều hành chiến dịch**, duyệt kế hoạch và chạy brief chính. Từ bản làm việc của chiến dịch, mở **Biên tập tài liệu Marketing → Soạn bộ nội dung theo kế hoạch** để biên tập bài Social, lời quảng cáo, brief thiết kế và lịch nội dung. Mỗi nhóm có bằng chứng trường, người duyệt độc lập, phiên bản và biên nhận. Xem cách chạy lại, nâng cấp writer C3 v5, ảnh giao diện và hai ví dụ bàn giao ở [hồ sơ Content Factory](docs/evaluation/content-factory/README.md).
+
 ## Từ bản merge #44 đến kế hoạch giao việc
 
 Bản phát triển nội bộ của #44 là `837ec9fc6c67868f5a88e263f06febc7d0ddf6bc`. Core v25, Business v3, C3 v4. Parent main `1b9e3a9643014122d4c6e510efffc3d02b9843cf`, parent PR `c2a409367fecc3d62537ab582ee126107b6ef2b5`. Tree `c9e171dd82bd70c5eebb996ccf047628845b0c84` khớp bản tích hợp `95254dd2cb0d7b61a398bef34bcfd7157cbcdc5d`. Phát hiện tương thích #40/#43 đã đóng trong phạm vi writer và cutover đã thử trên SQLite/PostgreSQL. CI trên đúng SHA merge đạt 3 job bắt buộc, 524 test đạt và 2 bỏ qua, 22 đường nâng có dữ liệu, restore 34 bảng, C3 v1/v2/v3 lên v4. [Biên bản SHA, job và kiểm thử](docs/evaluation/campaign-engine/merge-44.json) · [CI của main](https://github.com/datnv41001/ai-company/actions/runs/45725774714) · [Bốn lần hợp nhất trước](docs/evaluation/campaign-engine/INTEGRATIONS.md)

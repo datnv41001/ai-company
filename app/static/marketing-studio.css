@@ -20,6 +20,9 @@
 .studio-edition-preview dt { color: var(--muted); font-size: .84rem; margin-block: .6rem .15rem; }
 .studio-edition-preview dd { margin: 0; white-space: pre-line; }
 .studio-layout p { white-space: pre-line; }
+.studio-channel-sample { display: grid; gap: .6rem; border: 1px solid var(--border); border-radius: var(--radius); background: var(--layer); padding: 1rem; }
+.studio-channel-sample h5, .studio-channel-sample p { margin: 0; }
+.studio-channel-sample small { font-weight: 650; }
 @media(max-width: 740px) {
   .studio-layout { grid-template-columns: minmax(0, 1fr); }
   .studio-layout aside { padding: .8rem; }

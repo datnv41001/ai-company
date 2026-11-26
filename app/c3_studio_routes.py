@@ -8,6 +8,7 @@ from sqlalchemy import select
 from sqlalchemy.orm import Session
 
 from . import c3_assets, c3_boundaries, c3_customer_assets, c3_evidence_review, c3_order_units, c3_studio
+from . import campaign_channels
 from .database import get_db
 from .delivery import save_working_revision, working_copy
 from .knowledge_contracts import Input
@@ -26,7 +27,8 @@ Text = Annotated[str, Field(max_length=30000)]
 class StudioEdit(Input):
     expected_revision: Annotated[int, Field(ge=1, strict=True)]
     groups: dict[str, dict[str, Text]]
-    delivery_version: Literal["amc.customer-marketing-assets/1"] | None = None
+    delivery_version: Literal["amc.customer-marketing-assets/1", "amc.customer-marketing-assets/2"] | None = None
+    expected_plan_digest: Annotated[str, Field(pattern=r"^[0-9a-f]{64}$")] | None = None
 
 
 class StudioApproval(Input):
@@ -61,7 +63,10 @@ def proposals(run):
 
 def asset_digest(doc, run, group, fields):
     contract = (doc.content.get("studio") or {}).get("delivery_version", c3_studio.VERSION)
-    return digest(canonical([contract, doc.id, doc.qa_revision, run.knowledge["c3_manifest"]["digest"], group, fields]))
+    parts = [contract, doc.id, doc.qa_revision, run.knowledge["c3_manifest"]["digest"], group, fields]
+    if contract == campaign_channels.VERSION:
+        parts.append(doc.content["studio"]["channel_context"]["plan_digest"])
+    return digest(canonical(parts))
 
 
 def signoffs(db, doc, run, *, lock_reviewers=False):
@@ -100,9 +105,10 @@ def present(db, doc, run):
     edition = (bundle or {}).get("delivery_version")
     controls = c3_studio.compose(workflow, projection)
     customer = c3_customer_assets.strategy(projection) if workflow == c3_assets.RESEARCH else {}
+    ctx = (bundle or {}).get("channel_context")
     hints = c3_studio.quality_issues(workflow, groups, projection)
     if edition:
-        hints.extend(c3_customer_assets.issues(workflow, groups, projection))
+        hints.extend(c3_customer_assets.issues(workflow, groups, projection, ctx))
     history = db.scalars(
         select(AuditEvent)
         .filter_by(tenant_id=doc.tenant_id, subject_id=doc.id, event="studio.saved")
@@ -123,7 +129,8 @@ def present(db, doc, run):
             "labels": c3_customer_assets.labels(projection["locale"]),
             "title": projection["product"],
         },
-        "suggestions": {**controls, **customer},
+        "channel_edition": channel_spec(workflow, projection, ctx, customer) if ctx else None,
+        "suggestions": {**controls, **customer, **(campaign_channels.compose(projection, ctx) if ctx else {})},
         "buyer_journeys": candidates(projection),
         "history": [dict(revision=row.details["revision"], at=row.occurred_at, groups=row.details["groups"]) for row in history],
         "asset_digests": {g: asset_digest(doc, run, g, v) for g, v in groups.items()},
@@ -137,11 +144,19 @@ def present(db, doc, run):
     }
 
 
+def channel_spec(workflow, projection, ctx, customer):
+    return {"version": campaign_channels.VERSION, "plan": ctx, "title": projection["product"],
+            "fields": c3_customer_assets.schema(workflow, ctx), "labels": c3_customer_assets.labels(projection["locale"]),
+            "groups": {**customer, **campaign_channels.compose(projection, ctx)}}
+
+
 @router.get("")
 def view(tenant_id: str, did: str, user: User = Depends(current_user), db: Session = Depends(get_db)):
     doc, run = scoped(db, user, tenant_id, did, "editor")
     result = present(db, doc, run)
     store = Store(db, user, run.tenant_id, run.client_id, run.brand_id, write=False)
+    if not result["channel_edition"] and (ctx := campaign_channels.context(store, run)):
+        result["channel_edition"] = channel_spec(result["workflow"], run.knowledge["c3_projection"], ctx, result["customer_edition"]["groups"])
     if store.approver and result["mode"] == "saved":
         snapshot_id = run.knowledge["c3_manifest"]["id"]
         resolved = store.query(KnowledgeCommand).filter_by(operation="c3_resolve", snapshot_id=snapshot_id)
@@ -161,22 +176,34 @@ def save(tenant_id: str, did: str, body: StudioEdit, user: User = Depends(curren
         raise HTTPException(412, "The Marketing asset changed. Reload this revision.")
     workflow = run.knowledge["registry"]["workflow"]
     edition = body.delivery_version
-    if (doc.content.get("studio") or {}).get("delivery_version") and not edition:
+    previous = doc.content.get("studio") or {}
+    ctx = previous.get("channel_context")
+    if previous.get("delivery_version") and (not edition or (ctx and edition != campaign_channels.VERSION)):
         conflict("Include the current customer edition when editing this revision")
-    schema = {**c3_studio.FIELDS[workflow], **(c3_customer_assets.PUBLIC[workflow] if edition else {})}
+    if edition == campaign_channels.VERSION:
+        if not ctx:
+            store = Store(db, user, run.tenant_id, run.client_id, run.brand_id, write=True)
+            ctx = campaign_channels.context(store, run)
+        if not ctx or body.expected_plan_digest != ctx["plan_digest"]:
+            conflict("Prepare the channel edition from the approved plan and reload its digest")
+    elif body.expected_plan_digest:
+        conflict("A plan digest requires a channel edition")
+    schema = {**c3_studio.FIELDS[workflow], **(c3_customer_assets.schema(workflow, ctx) if edition else {})}
     groups = body.groups
     if set(groups) != set(schema) or any(set(groups[g]) != set(schema[g]) for g in schema):
         raise HTTPException(422, "Submit all fields of the current Marketing asset contract")
     if any(len(text) > 5000 for fields in groups.values() for key, text in fields.items() if key not in ("commercial_terms", "evidence")):
         raise HTTPException(422, "Keep editorial fields within 5000 characters")
     original = {"title": doc.title, "body": doc.content.get("client_preview", "")}
-    preview = c3_customer_assets.preview(workflow, groups, run.knowledge["c3_projection"]) if edition else c3_studio.preview(workflow, groups, original)
+    preview = c3_customer_assets.preview(workflow, groups, run.knowledge["c3_projection"], ctx) if edition else c3_studio.preview(workflow, groups, original)
     if not preview["title"].strip() or len(preview["title"]) > 160 or len(preview["body"]) > 30000:
         raise HTTPException(422, "Provide a headline up to 160 characters and preview up to 30000 characters")
     origin = (doc.content.get("studio") or {}).get("origin", "editor")
     bundle = {"version": c3_studio.VERSION, "origin": origin, "groups": groups}
     if edition:
         bundle["delivery_version"] = edition
+    if ctx:
+        bundle["channel_context"] = ctx
     doc.content = {**doc.content, "studio": bundle}
     save_working_revision(db, doc, user.id, preview["title"], preview["body"])
     db.add(
@@ -185,7 +212,8 @@ def save(tenant_id: str, did: str, body: StudioEdit, user: User = Depends(curren
             user_id=user.id,
             subject_id=did,
             event="studio.saved",
-            details={"revision": doc.qa_revision, "groups": groups, "version": c3_studio.VERSION, "delivery_version": edition},
+            details={"revision": doc.qa_revision, "groups": groups, "version": c3_studio.VERSION, "delivery_version": edition,
+                     **({"channel_context": ctx} if ctx else {})},
         )
     )
     db.flush()
@@ -218,12 +246,14 @@ def review_asset(tenant_id: str, did: str, body: StudioApproval, user: User = De
     projection = run.knowledge["c3_projection"]
     issues = c3_studio.quality_issues(workflow, groups, projection)
     if doc.content["studio"].get("delivery_version"):
-        issues.extend(c3_customer_assets.issues(workflow, groups, projection))
+        issues.extend(c3_customer_assets.issues(workflow, groups, projection, doc.content["studio"].get("channel_context")))
     if any(row["group"] == body.group for row in issues):
         conflict("Correct missing, duplicated or mismatched fields before signing")
     store, snap, _ = c3_boundaries.checked(db, user, brief, run.knowledge["c3_manifest"], workflow, "qa")
     if not store.approver:
         missing()
+    if doc.content["studio"].get("channel_context"):
+        campaign_channels.require_current(store, doc, run)
     report = c3_evidence_review.current_report(store, snap, doc, run, content_digest(doc.title, doc.content.get("client_preview", "")), lock_reviewers=True)
     rows = [s for s in report["statements"] if s["field"].startswith(f"studio.{body.group}.")]
     if {s["field"].split(".")[-1] for s in rows} != set(groups[body.group]) or any(s["outcome"] not in ("verified", "editorial", "reviewed") for s in rows):

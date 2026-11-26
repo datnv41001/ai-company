@@ -16,7 +16,7 @@ function mountMarketingStudio(host,api,path,role,afterSave) {
   add(panel,'summary','Biên tập tài liệu Marketing');
   const body=add(panel,'div');
   const states={missing:'Thiếu nội dung',repetition:'Nội dung bị lặp, cần biên tập lại',entity_only:'Cần diễn giải ý nghĩa, hiện chỉ có tên hoặc đối tượng trong brief',placeholder:'Cần thay nội dung hướng dẫn',
-    buyer_action:'Chưa khớp hành động đã giao',private_context:'Cần bỏ nội dung chỉ dùng nội bộ khỏi bản giao khách',missing_declaration:'Thiếu công bố hoặc điều kiện đã duyệt',relevance:'Cần liên hệ rõ hơn với sản phẩm được giao',
+    buyer_action:'Chưa khớp hành động đã giao',channel_contract:'Đối chiếu với kênh, mốc, hành động, điều kiện và quyền đã ghim',private_context:'Cần bỏ nội dung chỉ dùng nội bộ khỏi bản giao khách',missing_declaration:'Thiếu công bố hoặc điều kiện đã duyệt',relevance:'Cần liên hệ rõ hơn với sản phẩm được giao',
     contradiction:'Mâu thuẫn cần sửa',unresolved:'Cần xác minh',needs_correction:'Cần đối chiếu cách viết',reviewed:'Đã xác minh',verified:'Khớp nguồn',editorial:'Nội dung biên tập',
     missing_qualifier:'Thiếu điều kiện áp dụng',unsupported_format:'Cách trình bày chưa đối chiếu được',unsupported_assertion:'Chưa có căn cứ cho nhận định này',
     known_contradiction:'Mâu thuẫn với nguồn hoặc quy tắc đã duyệt',semantic_interpretation:'Cần người có chuyên môn xác minh ý nghĩa'};
@@ -37,7 +37,7 @@ function mountMarketingStudio(host,api,path,role,afterSave) {
   function install(value){
     if(view?.revision!==value.revision){journeyIndex='';dismissed.clear();}
     view=value;draft=structuredClone(view.groups);setDirty(false);
-    edition=Boolean(view.delivery_version);
+    edition=view.delivery_version;
     if(!draft[group])group=Object.keys(draft)[0];
     draw();
   }
@@ -45,16 +45,24 @@ function mountMarketingStudio(host,api,path,role,afterSave) {
     body.replaceChildren();
     const status=add(body,'p',view.mode==='proposal'?'Bản đề xuất · chờ biên tập và lưu':('Bản làm việc · lần lưu '+view.revision));
     status.setAttribute('role','status');
-    const spec=view.customer_edition;
+    const spec=edition && edition===view.channel_edition?.version?view.channel_edition:view.customer_edition;
     const name=k=>studioLabels[k]||spec.labels[k]||k;
     const count=Object.keys(view.approvals).length;
     add(body,'p',count+'/'+Object.keys(draft).length+' phần đã được duyệt ở lần lưu '+view.revision+'.');
     if(!edition){
       button(body,'Soạn bộ tài liệu giao khách',()=>{
-        Object.assign(draft,structuredClone(spec.groups));edition=true;setDirty(true);
+        Object.assign(draft,structuredClone(spec.groups));edition=spec.version;setDirty(true);
         group=Object.keys(spec.fields)[0];draw();
       });
     }
+    const channels=view.channel_edition;
+    if(channels && edition!==channels.version){
+      button(body,'Soạn bộ nội dung theo kế hoạch',()=>{
+        for(const [key,fields] of Object.entries(channels.groups))if(!draft[key])draft[key]=structuredClone(fields);
+        edition=channels.version;group='social';setDirty(true);draw();
+      });
+    }
+    if(spec.plan)add(body,'p','Kế hoạch v'+spec.plan.plan_revision+' · '+spec.plan.channel_plan.join(' · ')+' · '+spec.plan.plan_digest.slice(0,12));
     const nav=add(body,'div');nav.className='studio-nav';nav.setAttribute('aria-label','Phần tài liệu');
     for(const id of Object.keys(draft)){
       const b=button(nav,name(id),()=>{group=id;draw();});
@@ -64,7 +72,7 @@ function mountMarketingStudio(host,api,path,role,afterSave) {
     const layout=add(body,'div');layout.className='studio-layout';
     const edit=add(layout,'section');edit.setAttribute('aria-label',name(group));
     add(edit,'h4',name(group));
-    const journeys=view.buyer_journeys;
+    const journeys=['social','ad','creative_brief','calendar'].includes(group)?null:view.buyer_journeys;
     if(journeys?.eligible.length){
       const selector=add(edit,'label','Ngành và loại sản phẩm áp dụng cho đề xuất');
       const choose=add(selector,'select');choose.add(new Option('Chọn sau khi đối chiếu brief',''));
@@ -78,12 +86,26 @@ function mountMarketingStudio(host,api,path,role,afterSave) {
     if(edition)add(edit,'p',Object.hasOwn(spec.fields,group)?'Thuộc bộ tài liệu giao khách.':'Chỉ dành cho đội ngũ nội bộ.');
     const state=add(edit,'p',view.approvals[group]?'Đã duyệt phần này':'Chờ duyệt độc lập');
     state.className='studio-decision';state.dataset.signed=String(Boolean(view.approvals[group]));
+    let refreshSample=()=>{};
+    if(['ad','creative_brief'].includes(group)){
+      const sample=add(edit,'section');sample.className='studio-channel-sample';
+      const creative=group==='creative_brief';
+      add(sample,'h5',creative?'Bản phác thảo sản xuất':'Bản xem thử lời quảng cáo');
+      const fields=creative?['concept','image_spec','video_spec','provenance']:['headlines','description','buyer_action'];
+      const lines=fields.map(key=>{
+        const item=add(sample,'div');
+        if(creative)add(item,'small',name(key));
+        return [key,add(item,key==='headlines'?'strong':'p')];
+      });
+      refreshSample=()=>{for(const [key,line] of lines)line.textContent=draft[group][key];};
+      refreshSample();
+    }
     for(const [key,value] of Object.entries(draft[group])){
       const label=add(edit,'label',name(key));
       const input=add(label,'textarea');input.value=value;input.rows=key==='commercial_terms'||key==='evidence'?4:2;
       input.maxLength=['commercial_terms','evidence'].includes(key)?30000:5000;
       input.dataset.field=key;
-      input.oninput=()=>{draft[group][key]=input.value;setDirty(true);note('Có thay đổi chưa lưu · QA áp dụng cho bản đã lưu.');};
+      input.oninput=()=>{draft[group][key]=input.value;refreshSample();setDirty(true);note('Có thay đổi chưa lưu · QA áp dụng cho bản đã lưu.');};
       const issues=view.quality_issues.filter(i=>i.group===group && i.field===key).map(i=>states[i.reason]);
       const evidence=view.findings.filter(i=>i.field==='studio.'+group+'.'+key);
       const ids=[];
@@ -156,7 +178,8 @@ function mountMarketingStudio(host,api,path,role,afterSave) {
       }}
     const trace=add(side,'details');add(trace,'summary','Thông tin kiểm toán');add(trace,'p',view.version);add(trace,'code',view.asset_digests[group]);
     button(edit,'Lưu bản biên tập',async()=>{
-      const v=await api(path,'PATCH',{expected_revision:view.revision,groups:draft,...(edition?{delivery_version:spec.version}:{})});
+      const v=await api(path,'PATCH',{expected_revision:view.revision,groups:draft,...(edition?{delivery_version:spec.version}:{}),
+        ...(spec.plan?{expected_plan_digest:spec.plan.plan_digest}:{})});
       if(use()){install(v);if(afterSave)afterSave(v);}
     });
     if(['admin','owner'].includes(role) && view.status==='submitted' && !view.approvals[group]){

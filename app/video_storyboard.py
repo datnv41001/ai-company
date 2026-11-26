@@ -85,8 +85,6 @@ def compose(projection, ref, variant="direct"):
         conditions = list(dict.fromkeys([*price["conditions"], *f["qualifiers"]]))
         if conditions:
             frames.append(("conditions", "document", " ".join(conditions), "Giữ nguyên điều kiện trên thẻ chữ.", [f["id"]]))
-    else:
-        frames.append(("scope", "document", "Chưa có giá được duyệt.", "Để trống ô giá và chỉ dẫn nơi hỏi thêm.", []))
     frames.append(("action", "request", cta, "Hiện nút gửi yêu cầu; không vẽ dấu đã xác nhận.", []))
     duration = intent["duration_seconds"]
     shots, start = [], 0
@@ -117,8 +115,27 @@ def compose(projection, ref, variant="direct"):
         hook=opening,
         hook_variant=variant,
         cta=cta,
+        buyer_action=intent["buyer_action"],
         rights=RIGHTS,
-        source_refs={"manifest": ref, "guidelines": projection["brand_guidelines"]["digest"], "facts": [f["id"] for f in facts]},
+        editorial={
+            "price_status": "approved" if offers else "unavailable",
+            "note": "Đối chiếu giá theo nguồn đã ghim." if offers else "Chưa có giá được duyệt. Giữ thông tin này trong tờ giao người dựng.",
+            "price_source_ids": [f["id"] for f in offers],
+        },
+        source_refs={
+            "manifest": ref,
+            "guidelines": projection["brand_guidelines"]["digest"],
+            "facts": [f["id"] for f in facts],
+            "declarations": {
+                f["id"]: {
+                    "wording": f["wording"],
+                    "category": f["category"],
+                    "qualifiers": f["qualifiers"],
+                    "conditions": (f.get("price") or {}).get("conditions", []),
+                }
+                for f in facts
+            },
+        },
         brand_direction=projection["brand_guidelines"]["guidance"],
         method_ref={
             "path": GUIDE,

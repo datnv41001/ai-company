@@ -82,7 +82,7 @@ def boundary(db, user, doc, content_digest, stage, *, inspect_only=False):
         try:
             current = json.loads(doc.content["client_preview"])
             expected = video.compose(run.knowledge["c3_projection"],ref,current["hook_variant"])
-            if current != expected or doc.title != run.knowledge["title"]:
+            if video.json_text(current) != video.json_text(expected) or doc.title != run.knowledge["title"]:
                 raise ValueError("Changed material outside the approved storyboard revision")
         except (ValueError, KeyError, TypeError):
             conflict("Correct the storyboard, offer, source references or layout against the pinned manifest")

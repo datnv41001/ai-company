@@ -18,7 +18,7 @@
       "role_id": "ai-managing-director",
       "contract_version": 6,
       "adapter": "director@6",
-      "adapter_digest": "c9cdd01c346015f4572c0f28ff36633848f57bd7aacd9240b4f1d94ac2be3dbc",
+      "adapter_digest": "1cff466d97f960a7ca4c2eb2b5e6507e3d659412318ab50d1b0b7af9ac4a5ac9",
       "qa_policy": "wf08-source-and-revision@1",
       "model": "local",
       "inputs": [
@@ -66,7 +66,7 @@
       "role_id": "ai-video-storyboard",
       "contract_version": 1,
       "adapter": "storyboard@1",
-      "adapter_digest": "c9cdd01c346015f4572c0f28ff36633848f57bd7aacd9240b4f1d94ac2be3dbc",
+      "adapter_digest": "1cff466d97f960a7ca4c2eb2b5e6507e3d659412318ab50d1b0b7af9ac4a5ac9",
       "qa_policy": "wf08-source-and-revision@1",
       "model": "local",
       "inputs": [

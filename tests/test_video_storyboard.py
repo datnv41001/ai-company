@@ -63,7 +63,7 @@ def start(lab, case, *, conflicting=False):
             purpose=case["objective"],
             channel="vertical-social",
             deliverable_type="video_storyboard",
-            duration_seconds=32,
+            duration_seconds=18 if case["id"] == "rhythm-class" else 32,
             rights=video.RIGHTS,
             aspect_ratio="9:16",
             editorial_style="plain",
@@ -146,7 +146,13 @@ def test_queued_storyboard_and_revised_qa(pool, case):
     for actor in (buyer, lab.cases[1][2], lab.y):
         assert api.get(url, headers=actor["headers"]).status_code == 404
     raw = json.loads(trace["checkpoints"][-1]["output"]["text"])
-    assert raw["brand"] == case["brand"] and raw["product"] == case["product"] and raw["shots"][-1]["end_s"] == 32
+    assert (
+        raw["brand"] == case["brand"]
+        and raw["product"] == case["product"]
+        and raw["shots"][-1]["end_s"] == snap["projection"]["task_intent"]["duration_seconds"]
+    )
+    assert raw["buyer_action"] == snap["projection"]["task_intent"]["buyer_action"]
+    assert all(raw["source_refs"]["declarations"][f["id"]]["wording"] == f["wording"] for f in snap["projection"]["facts"])
     assert raw["rights"] == video.RIGHTS and all(j["model"] == video.ADAPTER and j["provider"] == "deterministic" for j in trace["journal"])
     assert trace["reserved_microusd"] == 0 and all(j["input_tokens"] == j["output_tokens"] == 0 for j in trace["journal"])
     assert raw["vtt"] == video.captions(raw["shots"])
@@ -155,7 +161,10 @@ def test_queued_storyboard_and_revised_qa(pool, case):
     if "amount" in case:
         assert "Giá tham khảo" in copy and str(case["amount"])[:3] in copy and "thuế" in copy and "tối thiểu" in copy
     else:
-        assert "Chưa có giá được duyệt." in copy and "VND" not in copy
+        assert raw["editorial"]["price_status"] == "unavailable" and raw["editorial"]["price_source_ids"] == []
+        assert "Chưa có giá được duyệt." in raw["editorial"]["note"]
+        assert "giá" not in copy.casefold() and "giá" not in raw["vtt"].casefold() and "VND" not in copy
+        assert not any(s["purpose"] in ("scope", "terms") for s in raw["shots"])
     doc, old = doc_and_decision(lab, base, owner, rid)
     inputs = {k: v for k, v in old.items() if k.startswith("expected_")}
     assert api.post(url + "/storyboard-edition", headers=staff["headers"], json=inputs | {"hook_variant": "audience"}).status_code == 404
@@ -184,7 +193,7 @@ def test_queued_storyboard_and_revised_qa(pool, case):
         case=case["id"],
         scope=dict(
             tenant=owner["tenant"],
-            campaign=snap["projection"]["task_intent"]["purpose"],
+            campaign_objective=snap["projection"]["task_intent"]["purpose"],
             campaign_id=prep["params"]["target"]["campaign_id"],
             brief_id=prep["params"]["target"]["brief_id"],
         ),

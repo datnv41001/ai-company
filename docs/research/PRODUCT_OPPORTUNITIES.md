@@ -99,3 +99,17 @@ C2 là luồng đang cho người dùng thử. C3 là luồng áp dụng tiếp 
 **Nghiệm thu.** Thêm ví dụ đã duyệt và counterexample, ghim revision thẻ vào run. Đánh giá có/không có thẻ trên cùng model, task và ngân sách. Báo kết quả đúng đồng thời kết luận, nguồn, lý do, đề xuất sửa; ghi false positives, unresolved và cost/finding. Không lấy fixture đã dùng viết thẻ làm holdout; lượt thiếu receipt không tính tham gia.
 
 Khi lấy một mục vào sprint, chủ module ghi rõ base SHA, tiêu chí bắt buộc, bộ dữ liệu được phép, cách rollback và số đo trước/sau trong PR. Nếu đối chiếu thấy chức năng đã có, thêm fixture hoặc dẫn chứng vào ma trận và đóng đề xuất trùng. [Những giả thuyết đã loại hoặc hoãn](REJECTED_HYPOTHESES.md)
+
+<a id="o-09"></a>
+
+## O-09 · Làm rõ yêu cầu ngay trước khi bàn giao Sales hoặc Service
+
+**Quyết định.** Ưu tiên đúng một câu hỏi nghiên cứu cho WF-14/WF-20. Khi nào hồ sơ đủ chuyển tiếp và khi nào tư vấn viên phải hỏi lại hoặc xin người có thẩm quyền? Chủ lợi ích là người nhận công việc và khách đang chờ được tư vấn. Người duyệt pilot là chủ quy trình Sales/Service. Tần suất lỗi, mức sẵn lòng trả, công lao động và giá trị mỗi lead trong doanh nghiệp vẫn chưa đo. [Nguồn và tình huống](KNOWLEDGE_CARDS.md#k-12) · [Ma trận vai trò](APPLICABILITY_MATRIX.md#nine-jobs)
+
+**Điều kiện đầu vào.** Tận dụng AGY-01, AGY-06, MKT-13 và AIO-09. Brief được phép, điều khoản theo scope/revision, dữ liệu consent và rubric khóa trước. Trong lab chỉ dùng trường hợp tổng hợp. So baseline hiện hữu, quy tắc cải thiện và AI advisory trên cùng cohort mới. Đóng băng dữ liệu, nhãn, rubric và ngân sách trước inference, chỉ chạy model khi đủ quyền theo protocol. Mỗi đầu ra trả về quyết định, bằng chứng vì sao và một câu hỏi hoặc người có quyền cần xử lý. Không cấp công cụ thay đổi CRM, báo giá hoặc lịch. [Benchmark trước](../evaluation/department-study/advisory/HANDOFF-BENCHMARK.md) · [K-14](KNOWLEDGE_CARDS.md#k-14)
+
+**Nghiệm thu nghiên cứu.** Cohort chứa ca thiếu, đính chính, hết hiệu lực, chưa rõ ý, mâu thuẫn thương mại, cần hỏi, cần người có thẩm quyền và đủ tiếp tục. Dùng control cùng ca để xác định lỗi nào giảm hoặc tăng. Báo riêng số hồ sơ bị báo đủ sai trong tất cả ca thực sự chưa đủ, hồ sơ đủ bị hỏi lại, trích dẫn sai, output thiếu và mẫu số mỗi nhóm. Kiểm thủ công ca rút điều kiện, trường còn giá trị cũ, cam kết có điều kiện và nhầm contact với người được duyệt. Chỉ xem xét đưa vào luồng tư vấn sau khi người nhận đánh giá mù, kiểm an toàn và lập quyết định riêng.
+
+**Kinh tế.** Giai đoạn practitioner ghi theo từng việc được giao gồm phút sản xuất, biên tập, QA và đối soát, thời gian chờ tới lúc chấp thuận đầu ra, chi phí model/hạ tầng và quyết định chấp nhận hay trả lại. Chi phí trên việc được chấp nhận bằng tổng chi phí đầy đủ của *mọi* việc trong nhánh chia số việc thực sự được chấp nhận. Nếu mẫu số bằng 0 hoặc thiếu timesheet/đơn giá thì ghi “chưa xác định”. Đối chứng về luồng clarify có thể cải thiện chất lượng kỹ thuật ngay cả khi chưa xác định giá trị kinh tế. [Quy trình pilot hiện hữu](../../tests/evaluation/department/official_pilot.py)
+
+**Các cơ hội còn lại.** Xếp sau O-09 là giảm công tìm bằng chứng cho thông điệp/creative và đối soát mẫu số trong báo cáo. Chỉ mở đầu việc nếu người chịu trách nhiệm nêu được quyết định thật, nguồn có quyền, lỗi lặp lại, thời gian đối soát ban đầu và tiêu chí nghiệm thu. Khi đó đánh giá tiếp trong O-05/O-06 hoặc luồng report đã có. Chín nhóm việc là bản đồ khảo sát, chưa phải chín hạng mục triển khai. [Năng lực hiện có](../evaluation/DEPARTMENT-CAPABILITY-REGISTER.md)

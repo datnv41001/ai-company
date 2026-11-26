@@ -10,6 +10,7 @@ import pytest
 from playwright.sync_api import expect,sync_playwright
 
 from browser_c3_content_gate import client,local_api  # noqa: F401
+from browser_visual_checks import contrast, no_motion
 from c3_browser_themes import capture_themes
 from knowledge_fixtures import accepted
 from test_campaign_appointments import service_campaign
@@ -139,6 +140,47 @@ def test_assigned_sales_consultation(api,workforce,monkeypatch,tmp_path):  # noq
                 block=engine.locator("section").filter(has=manager.get_by_role("heading",name="Yêu cầu từ biểu mẫu đã duyệt")).last
                 expect(block.locator(".engine-row").filter(has_text="RFQ đã đủ điều kiện")).to_contain_text("1")
                 expect(block.locator(".engine-row").filter(has_text="Báo giá đã phát hành")).to_contain_text("0")
+                chooser=route.locator("#desk-campaign")
+                chooser.select_option("")
+                chooser.select_option(plan["campaign_id"])
+                select=card.locator("form select").first
+                select.select_option("cancel")
+                reason=card.locator("form input[required]")
+                expect(reason).to_have_count(1)
+                reason.fill("Buyer withdrew the synthetic request after their requirements changed.")
+                readings=[]
+                selector=f'#desk-cases article:has(h4:has-text("{inquiry["id"]}"))'
+                def audit_withdrawal(stage):
+                    for width,height in ((1280,900),(820,1000),(390,844)):
+                        manager.set_viewport_size({"width":width,"height":height})
+                        for mode in ("light","dark"):
+                            manager.emulate_media(color_scheme=mode,reduced_motion="reduce")
+                            expect(manager.locator("html")).to_have_attribute("data-theme",mode)
+                            card.scroll_into_view_if_needed()
+                            assert manager.evaluate("document.documentElement.scrollWidth<=innerWidth+1")
+                            assert card.evaluate("el => el.scrollWidth <= el.clientWidth+1")
+                            audit=contrast(manager,selector,f"{width}-{mode}-{stage}")
+                            assert not audit["failed"] and not audit["unresolved"], audit
+                            assert not no_motion(manager)
+                            readings.append({"stage":stage,"viewport":[width,height],"theme":mode,
+                                             "text_samples":audit["checked"],"minimum_ratio":audit["minimum_ratio"],
+                                             "contrast_failures":0,"unresolved":0,"running_motion":0,"reflow":True})
+                            if stage=="withdrawn":
+                                card.screenshot(path=out/f"withdrawal-{width}-{mode}.png",animations="disabled")
+                audit_withdrawal("before_submit")
+                reason.focus()
+                reason.press("Tab")
+                expect(card.locator("form button")).to_be_focused()
+                started=monotonic()
+                manager.keyboard.press("Enter")
+                expect(card).to_contain_text("Buyer withdrew the synthetic request")
+                expect(card.locator("form")).to_have_count(0)
+                withdrawn_ms=round((monotonic()-started)*1000)
+                audit_withdrawal("withdrawn")
+                (out/"withdrawal-observations.json").write_text(json.dumps({
+                    "synthetic":True,"browser":browser.version,"scope":"Rendered RFQ card before and after coordinator withdrawal",
+                    "keyboard":"Tab from required reason to submit; Enter to withdraw",
+                    "submit_to_withdrawn_ms":withdrawn_ms,"readings":readings},indent=2)+"\n",encoding="utf-8",newline="\n")
                 (out/"observations.json").write_text(json.dumps({"viewports":[390,820,1280],"themes":["light","dark"],
                     "keyboard_submit":True,"local_decision_to_qualified_ms":elapsed,"capture_seconds":round(monotonic()-start,3)}),encoding="utf-8")
             finally:

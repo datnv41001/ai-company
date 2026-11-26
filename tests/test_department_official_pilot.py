@@ -57,6 +57,7 @@ def exercise(vault, lock, alias, order):
     path.write_text("Synthetic CTA with delivery area.", encoding="utf-8")
     edited = study.capture(vault, lock, alias, "edited", path)
     final = study.capture(vault, lock, alias, "delivered", path)
+    version = study.load(vault, lock)["version"]
     forms = []
     for role in ROLES:
         form = blank("", "") | {
@@ -74,6 +75,9 @@ def exercise(vault, lock, alias, order):
             "rubric": marks(),
         }
         if role == "marketer":
+            if version == study.SCHEMA:
+                del form["unblinded"]
+                form["treatment_exposure"] = "within_assignment"
             form["overhead"].update(compute_vnd=1, model_vnd=0, tools_vnd=1, other_vnd=0, includes_failed_attempts=True, receipt_refs=["test-record"])
         forms.append(form)
     out = {
@@ -92,6 +96,7 @@ def exercise(vault, lock, alias, order):
             "qa_seconds": 10,
             "labor_vnd": 5,
             "cost_ref": "test basis",
+            **({"treatment_exposure": "within_assignment"} if version == study.SCHEMA else {}),
         }
     return out
 
@@ -226,3 +231,55 @@ def test_d_requires_distinct_bound_edited_and_delivered_qa(tmp_path):
     overlap["orders"][alias]["roles"]["production_qa"] = order["roles"]["marketer"]
     with pytest.raises(ValueError, match="remain independent"):
         study.validate_design(overlap)
+
+
+@pytest.mark.parametrize("role", (*ROLES, "production_qa"))
+def test_exposure_follows_commissioned_role(tmp_path, role):
+    v, lock, orders = issue(tmp_path)
+    alias = next(k for k, o in orders.items() if o["arm"] == study.ARMS[-1])
+    order = orders[alias]
+    outcomes = dispositions(orders)
+    outcomes[alias] = exercise(v, lock, alias, order)
+    key = order["brief"] + "/" + alias
+    assert study.report(v, lock, outcomes)["packages"][key]["verified_business_decision"] is True
+    ref = study.retained(v / alias, order, "delivered")[1]
+    destination = tmp_path / (ref["card"] + ".zip")
+    study.packet(v, lock, alias, "delivered", destination, role)
+    with ZipFile(destination) as archive:
+        card = json.loads(archive.read("scorecard.json"))
+    producer = role in ("marketer", "production_qa")
+    assert ("treatment_exposure" in card) is producer and ("unblinded" in card) is not producer
+    assert card["exposure_instructions"]
+    form = outcomes[alias]["production_qa"] if role == "production_qa" else next(f for f in outcomes[alias]["observations"] if f["role"] == role)
+    field = "treatment_exposure" if producer else "unblinded"
+    del form[field]
+    with pytest.raises(ValueError, match="exposure"):
+        study.report(v, lock, outcomes)
+    form[field] = "outside_assignment" if producer else True
+    report = study.report(v, lock, outcomes)
+    assert report["packages"][key]["status"] == "unblinded"
+    assert report["packages"][key]["verified_business_decision"] is None
+    assert report["packages"][key]["first_pass_accepted"] is None
+    assert report["arms"][order["arm"]]["recorded_cost_per_business_accepted_vnd"] is None
+
+
+def test_previous_design_interprets_original_producer_declaration(tmp_path):
+    v, _, _ = issue(tmp_path)
+    # Reconstruct the exact v1 serialization before commissioning any synthetic work.
+    design = study.read(v / "design.json")
+    design["version"] = study.LEGACY_SCHEMA
+    raw = study.dump(design).encode()
+    (v / "design.json").write_bytes(raw)
+    lock = study.sha(raw)
+    orders = study.load(v, lock)["orders"]
+    alias = next(k for k, o in orders.items() if o["arm"] == study.ARMS[-1])
+    order = orders[alias]
+    outcomes = dispositions(orders)
+    outcomes[alias] = exercise(v, lock, alias, order)
+    def result():
+        return study.report(v, lock, outcomes)["packages"][order["brief"] + "/" + alias]
+    assert result()["status"] == "completed"
+    form = next(f for f in outcomes[alias]["observations"] if f["role"] == "marketer")
+    assert "treatment_exposure" not in form
+    form["unblinded"] = True
+    assert result()["status"] == "unblinded"

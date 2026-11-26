@@ -1,6 +1,6 @@
 # Sổ năng lực phòng Marketing
 
-Ở cây tích hợp sau review #55, WF-14 và WF-20 có phép thử điều kiện của hồ sơ và phân quyền tư vấn. WF-18 có đối soát theo giai đoạn trong sandbox. Kết quả chấm mù hai brief và quy trình pilot bốn nhánh là bằng chứng nghiên cứu. Giá trị doanh thu thật, công lao động và chi phí trên một đầu việc được doanh nghiệp tiếp nhận còn chưa đo. [Trạng thái của toàn V1](../IMPLEMENTATION_STATUS.md) · [Biên bản vòng này](department-review/ROUND-53-55.md)
+Sau khi merge #56, WF-14 và WF-20 có bằng chứng sandbox về điều kiện hồ sơ và quyền tư vấn, WF-18 có đối soát theo giai đoạn. Handoff khi khách đổi ý, pilot theo vai trò và ba phương pháp làm rõ yêu cầu được kiểm tra trên nhánh tiếp theo. Chỉ nâng mức cho từng workflow khi có đầu ra và quyết định tương ứng của người dùng. [Biên nhận main](department-review/MAIN-56.json) · [Phép thử trên cohort mới và giới hạn](department-review/MARKET-HANDOFF.md)
 
 Phạm vi tham chiếu là [19 năng lực trong Product Mission](../PRODUCT_MISSION.md), [24 workflow của V1](../PRODUCT_SPEC_V1.md) và [bằng chứng kỹ thuật trước vòng này](campaign-engine/CAPABILITIES.md). Mỗi dòng nêu phần công việc và mức cao nhất có bằng chứng cho phần đó. “Đặc tả” nghĩa là có mô tả workflow; phần đầu ra nghiệp vụ bên cạnh còn phải triển khai hoặc kiểm định. “Hợp đồng” là hành vi có cấu trúc dữ liệu hoặc quy tắc thực thi. “Kiểm thử” là có nghiệm thu kỹ thuật cho phạm vi ghi trong dòng. “Đầu ra” là đã tạo tài liệu hoặc tệp thực. “Sandbox” là đã thực hiện một giao dịch có thể truy nguyên trong môi trường tổng hợp.
 

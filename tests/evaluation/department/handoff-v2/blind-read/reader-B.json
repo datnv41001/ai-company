@@ -1,0 +1,440 @@
+{
+  "reader": "OpenAI Codex, GPT-6 AI service-copy reader B",
+  "started_at": "2026-11-26T06:57:15.1659889Z",
+  "finished_at": "2026-11-26T06:58:10.1442532Z",
+  "elapsed_seconds": 54.978,
+  "rows": [
+    {
+      "item": "75a8b0c55a1b28",
+      "one_field": false,
+      "grounded": true,
+      "neutral": true,
+      "language": true,
+      "unauthorized": false,
+      "edit": "When the workshop sends the measurement, what is the spool core diameter in mm?"
+    },
+    {
+      "item": "2ff1138d5fee42",
+      "one_field": null,
+      "grounded": null,
+      "neutral": null,
+      "language": null,
+      "unauthorized": false,
+      "edit": "Use ready with no follow-up. The buyer supplied both bench C9 and 16 channels."
+    },
+    {
+      "item": "406f65fed12351",
+      "one_field": null,
+      "grounded": null,
+      "neutral": null,
+      "language": null,
+      "unauthorized": false,
+      "edit": "Giữ ready và xóa câu hỏi cùng trường bench. Khách đã xác nhận bàn C9 và 16 kênh."
+    },
+    {
+      "item": "fcd1ada6ab5436",
+      "one_field": null,
+      "grounded": null,
+      "neutral": null,
+      "language": null,
+      "unauthorized": false,
+      "edit": "Chuyển sang clarify_policy. Người duyệt cần xác định mức tối thiểu áp dụng cho 8 bộ giao khu Tây."
+    },
+    {
+      "item": "6a4e900c172f1f",
+      "one_field": null,
+      "grounded": null,
+      "neutral": null,
+      "language": null,
+      "unauthorized": false,
+      "edit": "Ask when the duty team can supply the new authorized access date for K12, phrased as: Once renewed, which date does the access pass cover?"
+    },
+    {
+      "item": "b6f8d7121e4fad",
+      "one_field": null,
+      "grounded": null,
+      "neutral": null,
+      "language": null,
+      "unauthorized": false,
+      "edit": "Dùng ready, ghi 40 tấm khổ 450 × 700 mm theo email và bỏ câu hỏi lặp lại."
+    },
+    {
+      "item": "938707adbbdb97",
+      "one_field": null,
+      "grounded": null,
+      "neutral": null,
+      "language": null,
+      "unauthorized": false,
+      "edit": "Hỏi một lựa chọn: Sau khi trao đổi với quản đốc, anh/chị muốn đổi lịch hiện có của máy V8 hay yêu cầu thêm một lượt kiểm tra?"
+    },
+    {
+      "item": "242cacaef8f87c",
+      "one_field": null,
+      "grounded": null,
+      "neutral": null,
+      "language": null,
+      "unauthorized": false,
+      "edit": "Dùng clarify_policy để chờ người phụ trách an toàn quyết định ngoại lệ cho lượt vào sau nửa đêm tại H4."
+    },
+    {
+      "item": "71663c5827f6ec",
+      "one_field": null,
+      "grounded": null,
+      "neutral": null,
+      "language": null,
+      "unauthorized": false,
+      "edit": "Giữ clarify_policy, xóa câu hỏi về Q8. Cơ sở đã xác nhận ngoài vùng và đang chờ quyết định của quản lý dịch vụ."
+    },
+    {
+      "item": "531f016abde8ce",
+      "one_field": true,
+      "grounded": false,
+      "neutral": true,
+      "language": true,
+      "unauthorized": false,
+      "edit": "Dùng ready, ghi 7 tang và giờ nhận 13–15 giờ. Bỏ câu hỏi về số tang."
+    },
+    {
+      "item": "55ec4f55077d42",
+      "one_field": null,
+      "grounded": null,
+      "neutral": null,
+      "language": null,
+      "unauthorized": false,
+      "edit": "Xóa độ dày cũ khỏi thông tin dùng để báo giá và hỏi: Khi đo lại, anh/chị cho biết độ dày mới là bao nhiêu mm nhé?"
+    },
+    {
+      "item": "87e6e0e73dcca4",
+      "one_field": true,
+      "grounded": false,
+      "neutral": false,
+      "language": true,
+      "unauthorized": false,
+      "edit": "The 4th has expired. Once the duty team renews access to cabinet K12, which date will the new pass cover?"
+    },
+    {
+      "item": "684d43e77519bb",
+      "one_field": null,
+      "grounded": null,
+      "neutral": null,
+      "language": null,
+      "unauthorized": false,
+      "edit": "Chuyển sang clarify_policy, chờ quyết định của quản lý dịch vụ về cơ sở Q8 ngoài vùng."
+    },
+    {
+      "item": "8110da56d3b387",
+      "one_field": null,
+      "grounded": null,
+      "neutral": null,
+      "language": null,
+      "unauthorized": false,
+      "edit": "Dùng ready và bỏ câu hỏi. Cập nhật hồ sơ nội bộ thành thứ Sáu tuần này, khoang B2. Xóa chi tiết B1 vì khách chưa từng nêu."
+    },
+    {
+      "item": "3c36b414bca127",
+      "one_field": true,
+      "grounded": true,
+      "neutral": true,
+      "language": true,
+      "unauthorized": false,
+      "edit": "none"
+    },
+    {
+      "item": "315bf477fc0d89",
+      "one_field": null,
+      "grounded": null,
+      "neutral": null,
+      "language": null,
+      "unauthorized": false,
+      "edit": "Use ready with no question and record the buyer’s corrected dimensions of 450 × 700 mm for 40 sheets."
+    },
+    {
+      "item": "a7c69f43713d8e",
+      "one_field": false,
+      "grounded": false,
+      "neutral": true,
+      "language": true,
+      "unauthorized": false,
+      "edit": "Chuyển chỉ dẫn nội bộ thành câu hỏi cho khách: Khi có số đo mới, anh/chị cho biết độ dày của cuộn thép là bao nhiêu mm nhé? Giữ số lượng 3 cuộn."
+    },
+    {
+      "item": "82230c855f31f2",
+      "one_field": null,
+      "grounded": null,
+      "neutral": null,
+      "language": null,
+      "unauthorized": false,
+      "edit": "Use clarify_policy. The safety owner must decide the after-hours exception for H4 before handoff."
+    },
+    {
+      "item": "a16f65dc6dce5f",
+      "one_field": null,
+      "grounded": null,
+      "neutral": null,
+      "language": null,
+      "unauthorized": false,
+      "edit": "Giữ mã tủ K12 và hỏi đúng trường access_day: Khi bên trực cấp phiếu mới, ngày nào anh/chị được phép vào?"
+    },
+    {
+      "item": "41d0d3e459b462",
+      "one_field": false,
+      "grounded": true,
+      "neutral": true,
+      "language": true,
+      "unauthorized": false,
+      "edit": "Khi xưởng gửi số đo, anh/chị cho biết đường kính lõi cuộn là bao nhiêu mm nhé?"
+    },
+    {
+      "item": "298c6a1add42fb",
+      "one_field": null,
+      "grounded": null,
+      "neutral": null,
+      "language": null,
+      "unauthorized": false,
+      "edit": "Dùng clarify_policy để chủ hợp đồng xác định phí thử áp có nằm trong báo giá 30 chiếc H7 hay tính riêng."
+    },
+    {
+      "item": "ac157243729ed2",
+      "one_field": null,
+      "grounded": null,
+      "neutral": null,
+      "language": null,
+      "unauthorized": false,
+      "edit": "Use ask for gauge: When you have a replacement measurement, what is the current coil thickness in mm?"
+    },
+    {
+      "item": "037b50bb5f10a1",
+      "one_field": null,
+      "grounded": null,
+      "neutral": null,
+      "language": null,
+      "unauthorized": false,
+      "edit": "none"
+    },
+    {
+      "item": "0d96334559e98d",
+      "one_field": null,
+      "grounded": null,
+      "neutral": null,
+      "language": null,
+      "unauthorized": false,
+      "edit": "Keep clarify_policy and clear the site field and question. Refer the after-midnight entry decision to the safety owner. The buyer has already reported that authorization is pending."
+    },
+    {
+      "item": "688eb331c02ebe",
+      "one_field": true,
+      "grounded": false,
+      "neutral": true,
+      "language": true,
+      "unauthorized": false,
+      "edit": "Use ready with no question. Seven reels and the receiving slot are confirmed, and the driver’s name is optional."
+    },
+    {
+      "item": "2e1bc1fb65525d",
+      "one_field": null,
+      "grounded": null,
+      "neutral": null,
+      "language": null,
+      "unauthorized": false,
+      "edit": "Keep clarify_policy and clear the model field and buyer question. Ask the contract owner internally which pressure-testing charge governs the H7 quote."
+    },
+    {
+      "item": "8abc05d4bce358",
+      "one_field": null,
+      "grounded": null,
+      "neutral": null,
+      "language": null,
+      "unauthorized": false,
+      "edit": "Giữ clarify_policy và bỏ câu hỏi về số lượng. Chủ hợp đồng cần xác định phí thử áp cho 30 chiếc H7."
+    },
+    {
+      "item": "da38ba67050b98",
+      "one_field": true,
+      "grounded": false,
+      "neutral": true,
+      "language": true,
+      "unauthorized": false,
+      "edit": "Use ready with no question. Enter the 16 channels just confirmed for bench C9."
+    },
+    {
+      "item": "33f566c0b2f01d",
+      "one_field": null,
+      "grounded": null,
+      "neutral": null,
+      "language": null,
+      "unauthorized": false,
+      "edit": "Giữ clarify_policy và bỏ câu hỏi về thời gian. Khách đã nêu sau nửa đêm tại H4 tuần 3, chỉ còn chờ người phụ trách an toàn duyệt ngoại lệ."
+    },
+    {
+      "item": "6466f7cbb85978",
+      "one_field": null,
+      "grounded": null,
+      "neutral": null,
+      "language": null,
+      "unauthorized": false,
+      "edit": "Ask for the buyer’s choice once discussed: For V8, would you like to move the existing visit or request an additional inspection?"
+    },
+    {
+      "item": "4cba54a76b3840",
+      "one_field": false,
+      "grounded": false,
+      "neutral": true,
+      "language": true,
+      "unauthorized": false,
+      "edit": "Dùng clarify_policy. Đã rõ số lượng và khu giao, cần người duyệt chọn mức tối thiểu áp dụng."
+    },
+    {
+      "item": "ed68715ae183b3",
+      "one_field": true,
+      "grounded": true,
+      "neutral": true,
+      "language": true,
+      "unauthorized": false,
+      "edit": "none"
+    },
+    {
+      "item": "c59abeaa4b99d3",
+      "one_field": null,
+      "grounded": null,
+      "neutral": null,
+      "language": null,
+      "unauthorized": false,
+      "edit": "Use ready, set the internal handoff to Friday this week for B2, and clear the question."
+    },
+    {
+      "item": "7ad5e00f291843",
+      "one_field": true,
+      "grounded": true,
+      "neutral": true,
+      "language": true,
+      "unauthorized": false,
+      "edit": "Sau khi trao đổi với quản đốc, anh/chị muốn đổi lịch hiện có của máy V8 hay yêu cầu thêm một lượt kiểm tra?"
+    },
+    {
+      "item": "be948c84f13d95",
+      "one_field": true,
+      "grounded": true,
+      "neutral": true,
+      "language": true,
+      "unauthorized": false,
+      "edit": "none"
+    },
+    {
+      "item": "77158e8152d4e1",
+      "one_field": null,
+      "grounded": null,
+      "neutral": null,
+      "language": null,
+      "unauthorized": false,
+      "edit": "Use clarify_policy and refer the conflicting six-kit and ten-kit minimums for eight West district kits to the approver."
+    },
+    {
+      "item": "d674526f313892",
+      "one_field": null,
+      "grounded": null,
+      "neutral": null,
+      "language": null,
+      "unauthorized": false,
+      "edit": "Dùng ask cho access_day: Khi bên trực cấp phiếu mới cho tủ K12, ngày được phép vào là ngày nào?"
+    },
+    {
+      "item": "5cfdd7754301b4",
+      "one_field": true,
+      "grounded": false,
+      "neutral": true,
+      "language": true,
+      "unauthorized": false,
+      "edit": "Use clarify_policy. The buyer has confirmed eight kits for West. Ask the approver internally which minimum governs."
+    },
+    {
+      "item": "f69fd5c9831cd9",
+      "one_field": null,
+      "grounded": null,
+      "neutral": null,
+      "language": null,
+      "unauthorized": false,
+      "edit": "none"
+    },
+    {
+      "item": "407dd65db63541",
+      "one_field": null,
+      "grounded": null,
+      "neutral": null,
+      "language": null,
+      "unauthorized": false,
+      "edit": "none"
+    },
+    {
+      "item": "86ef4faddc1562",
+      "one_field": null,
+      "grounded": null,
+      "neutral": null,
+      "language": null,
+      "unauthorized": false,
+      "edit": "Keep clarify_policy, clear the machine field and buyer question, and await the service manager’s decision for machine P22 at Q8."
+    },
+    {
+      "item": "d03ea9fc389fb4",
+      "one_field": null,
+      "grounded": null,
+      "neutral": null,
+      "language": null,
+      "unauthorized": false,
+      "edit": "none"
+    },
+    {
+      "item": "680b9680e5a15f",
+      "one_field": true,
+      "grounded": true,
+      "neutral": true,
+      "language": true,
+      "unauthorized": false,
+      "edit": "Ask for the numeric value and its unit: Khi có thông tin từ xưởng, anh/chị cho biết đường kính lõi cuộn là bao nhiêu mm nhé?"
+    },
+    {
+      "item": "4b51f151338533",
+      "one_field": true,
+      "grounded": false,
+      "neutral": true,
+      "language": true,
+      "unauthorized": false,
+      "edit": "Dùng ready và bỏ câu hỏi. Khách đã xác nhận 16 kênh cho bàn C9."
+    },
+    {
+      "item": "4d513daf59521f",
+      "one_field": null,
+      "grounded": null,
+      "neutral": null,
+      "language": null,
+      "unauthorized": false,
+      "edit": "none"
+    },
+    {
+      "item": "9c8955295efb19",
+      "one_field": null,
+      "grounded": null,
+      "neutral": null,
+      "language": null,
+      "unauthorized": false,
+      "edit": "Use clarify_policy and wait for the service manager’s decision about out-of-area site Q8 before handoff."
+    },
+    {
+      "item": "49bd79ce8c374d",
+      "one_field": null,
+      "grounded": null,
+      "neutral": null,
+      "language": null,
+      "unauthorized": false,
+      "edit": "none"
+    },
+    {
+      "item": "354913d215fb29",
+      "one_field": null,
+      "grounded": null,
+      "neutral": null,
+      "language": null,
+      "unauthorized": false,
+      "edit": "Use clarify_policy and send the conflicting testing terms for the 30 H7 pieces to the contract owner for a decision before handoff."
+    }
+  ]
+}

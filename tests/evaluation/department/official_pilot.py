@@ -19,7 +19,8 @@ from pilot import ROLES, ROOT, RUBRIC, blank, by_arm, dump, read
 JOURNEYS = ("rfq", "appointment")
 STAGES = ("initial", "edited", "delivered")
 REVISION = dict(initial=1, edited=2, delivered=3)
-SCHEMA = "official-department-pilot/1"
+LEGACY_SCHEMA = "official-department-pilot/1"
+SCHEMA = "official-department-pilot/2"
 COSTS = ("labor_vnd", "model_vnd", "compute_vnd", "tools_vnd", "other_vnd")
 
 
@@ -87,7 +88,7 @@ def roles_for(arm):
 
 def validate_design(design):
     orders = design["orders"]
-    require(design["version"] == SCHEMA and len(orders) == 8, "Official design requires eight commissioned work orders")
+    require(design["version"] in (LEGACY_SCHEMA, SCHEMA) and len(orders) == 8, "Official design requires eight commissioned work orders")
     require(
         Counter((o["brief"], o["arm"]) for o in orders.values()) == Counter((brief, arm) for brief in JOURNEYS for arm in ARMS), "Need each arm once per brief"
     )
@@ -186,7 +187,13 @@ def retained(folder, order, stage):
     return raw, ref
 
 
-def blank_grade(ref, stage, role):
+def production_exposure(form):
+    declaration = form.get("treatment_exposure")
+    require("unblinded" not in form and declaration in ("within_assignment", "outside_assignment"), "Declare treatment exposure within or outside the production assignment")
+    return declaration == "outside_assignment"
+
+
+def blank_grade(ref, stage, role, version=SCHEMA):
     if stage == "initial":
         require(role == "independent_reviewer", "The independent reviewer grades first pass")
         return {
@@ -211,6 +218,7 @@ def blank_grade(ref, stage, role):
                 "qa_seconds": None,
                 "labor_vnd": None,
                 "cost_ref": None,
+                **({"treatment_exposure": None} if version == SCHEMA else {}),
             }
         return {"reference": ref, "actor_code": None, "decision": None, "reason": None}
     if role == "production_qa":
@@ -224,12 +232,14 @@ def blank_grade(ref, stage, role):
             "qa_seconds": None,
             "labor_vnd": None,
             "cost_ref": None,
+            **({"treatment_exposure": None} if version == SCHEMA else {}),
         }
     require(role in ROLES, "Choose the recipient of this delivery scorecard")
     form = blank("", "")
     for k in ("brief", "package", "first_pass_accepted", "reference_to_delivered_revision", "delivered_artifact_sha256"):
         del form[k]
-    form.update(role=role, reference=ref, unblinded=None)
+    form.update(role=role, reference=ref)
+    form["treatment_exposure" if role == "marketer" and version == SCHEMA else "unblinded"] = None
     if role == "marketer":
         form["overhead"]["model_vnd"] = None
     return form
@@ -267,11 +277,20 @@ def capture(vault, lock, alias, stage, source):
 
 
 def packet(vault, lock, alias, stage, destination, role="independent_reviewer"):
-    order = load(vault, lock)["orders"][alias]
+    design = load(vault, lock)
+    order = design["orders"][alias]
     require(stage in STAGES, "Unknown stage")
     require(role in order["roles"], "Role was not commissioned for this work order")
     raw, ref = retained(vault / alias, order, stage)
-    form = blank_grade(ref, stage, role)
+    form = blank_grade(ref, stage, role, design["version"])
+    if design["version"] == SCHEMA:
+        if "treatment_exposure" in form:
+            form["exposure_instructions"] = (
+                "Mark within_assignment for your own assigned work, including knowing how you produced or checked it. "
+                "Mark outside_assignment for exposure to another assignment or the allocation key, or disclosure to a blinded recipient."
+            )
+        elif "unblinded" in form:
+            form["exposure_instructions"] = "Report true if treatment identity or the allocation key was disclosed to you."
     dest = private_path(destination)
     require(dest.name == ref["card"] + ".zip" and not dest.is_relative_to(vault.resolve()), "Use only the assigned blind card filename outside custody")
     with ZipFile(dest, "x") as z:
@@ -368,8 +387,11 @@ def report(vault, lock, outcomes):
                 form["actor_code"] == order["roles"][role] and form["reference"] == delivered,
                 "Delivered observation must match the commissioned actor, blind card, revision and digest",
             )
-            require(type(form["unblinded"]) is bool, "Missing exposure declaration")
-            incident |= form["unblinded"]
+            if role == "marketer" and design["version"] == SCHEMA:
+                incident |= production_exposure(form)
+            else:
+                require(type(form.get("unblinded")) is bool and "treatment_exposure" not in form, "Missing blinded exposure declaration")
+                incident |= form["unblinded"]
             if role == "independent_reviewer":
                 require(form.get("first_pass_accepted") is None or form["first_pass_accepted"] is grade["accepted"], "Conflicting first-pass decision")
             rows.append(
@@ -382,7 +404,6 @@ def report(vault, lock, outcomes):
                     "first_pass_accepted": grade["accepted"] if role == "independent_reviewer" else None,
                 }
             )
-        stages[name]["unblinded"] = incident
         if order["arm"] == ARMS[-1]:
             qa = outcome.get("production_qa") or {}
             require(
@@ -393,9 +414,12 @@ def report(vault, lock, outcomes):
                 and qa.get("findings_or_no_change_reason"),
                 "Missing independent production QA on edited and delivered revisions",
             )
+            if design["version"] == SCHEMA:
+                incident |= production_exposure(qa)
             reviews.append(qa | {"name": name, "first_sha256": edited["sha256"], "final_sha256": delivered["sha256"]})
         else:
             require(not outcome.get("production_qa"), "Unexpected production QA outside D")
+        stages[name]["unblinded"] = incident
     packages = score(treatments, rows, reviews, vault, staged=True)["packages"]
     for name, row in packages.items():
         record = stages[name]

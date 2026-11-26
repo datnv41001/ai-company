@@ -58,3 +58,15 @@ Trong Chromium, người điều phối giao hồ sơ 3 hộp bằng giao diện
 | 390 px | [Ảnh](consultation/sales-390-light.png) | [Ảnh](consultation/sales-390-dark.png) |
 | 820 px | [Ảnh](consultation/sales-820-light.png) | [Ảnh](consultation/sales-820-dark.png) |
 | 1280 px | [Ảnh](consultation/sales-1280-light.png) | [Ảnh](consultation/sales-1280-dark.png) |
+
+## Khách rút yêu cầu trong lúc chờ giao Sales
+
+Khi khách đổi ý sau tư vấn và RFQ đang ở “Đủ điều kiện, chờ giao Sales”, điều phối Marketing hoặc người phụ trách kinh doanh mở hồ sơ của chiến dịch, chọn **Hủy**, nhập lý do khách cung cấp và ghi nhận. Hồ sơ hiển thị “Đã hủy” cùng lý do, sổ giao dịch lưu người ghi và revision. Phiếu khách đã gửi giữ nguyên. Nếu khách muốn đặt yêu cầu khác, tiếp nhận một biểu mẫu mới theo nhu cầu và sự đồng ý mới.
+
+RFQ đã đủ điều kiện vẫn được tính trong số từng đạt điều kiện. Việc rút trước phân công không phát sinh lượt Sales nhận, báo giá, đơn hàng hoặc doanh thu. Một tab đang mở ở revision cũ phải tải lại nếu đồng thời có người giao Sales hoặc hủy. Nhân viên vừa tư vấn và khách xem dữ liệu không có quyền ghi việc hủy ở giai đoạn này.
+
+Trong Campaign Engine, người phê duyệt chiến dịch có thể giao Sales theo cơ chế đã nghiệm thu. Hủy trước phân công yêu cầu quyền điều phối ở **bàn giao theo chiến dịch**, kể cả khi cùng tài khoản có quyền phê duyệt. Ca hồi quy gửi lại phiếu mới cho sáu hộp sau khi rút RFQ cũ. Phiếu mới có mã và consent riêng.
+
+Ảnh Chromium chụp hồ sơ tổng hợp sau khi rút yêu cầu ở revision 4. [Điện thoại sáng](withdrawal/withdrawal-390-light.png) · [Điện thoại tối](withdrawal/withdrawal-390-dark.png) · [Máy tính bảng sáng](withdrawal/withdrawal-820-light.png) · [Máy tính bảng tối](withdrawal/withdrawal-820-dark.png) · [Desktop sáng](withdrawal/withdrawal-1280-light.png) · [Desktop tối](withdrawal/withdrawal-1280-dark.png)
+
+Chromium 158.0.8127.88 kiểm tra thẻ RFQ trước khi gửi và sau khi hủy ở 390, 820 và 1280 px, với giao diện sáng và tối. Cả 12 tổ hợp đều vừa chiều ngang. Kiểm tra 66 mẫu kiểu chữ và nền hiển thị cho kết quả tương phản thấp nhất 6,78:1. Mọi mẫu đều phân giải được màu và đạt ngưỡng tương ứng. Khi bật chế độ giảm chuyển động, cả 12 lần lấy mẫu đều ghi nhận 0 chuyển động kéo dài. Phím Tab đưa focus từ ô lý do tới nút ghi nhận, phím Enter gửi yêu cầu. Trong lượt chạy cục bộ này, lý do hủy xuất hiện và biểu mẫu đóng sau 500 ms. [Số đo theo từng kích thước, giao diện và trạng thái](withdrawal/withdrawal-observations.json)

@@ -37,3 +37,5 @@ python -m pytest -q tests/test_department_handoff_benchmark.py
 ```
 
 No release, runtime promotion or model selection decision follows from this control. Before any prospective inference, replace the now-public cohort with newly sealed equivalent pairs and independently validate the labels. Keep the ordered stage commitments and byte hashes with the result.
+
+The [prospective three-arm comparison](PROSPECTIVE-HANDOFF.md) uses a separately sealed cohort. Its results and first-run archive can be replayed independently.

@@ -115,3 +115,45 @@ Linear giảm cạnh tranh thị giác giữa navigation và vùng nội dung. G
 Đợt áp dụng tiếp theo bổ sung transcript YC, ca SEO của Rakuten và phương pháp so sánh bản giao cho K-06 đến K-10. [Xem nguồn, quyết định, tiêu chí và phương án bác bỏ](C3-QUALITY-AND-REVIEWER-CAPACITY.md).
 
 Đợt Campaign Operating Engine áp dụng ghim nguồn theo chiến dịch, truy nguyên đầu ra, hợp đồng retry và đối soát Sales. Bảng quyết định ghi tác giả, mức bằng chứng, giới hạn và ca kiểm tương ứng. [Nguồn và nghiệm thu trong engine](CAMPAIGN-ENGINE.md)
+
+<a id="k-12"></a>
+
+## K-12 · Người nào nhận việc tiếp theo, và việc nào thực sự đã xảy ra?
+
+Người điều phối có thể thấy owner và ngày hẹn trên CRM trong khi Sales chưa xử lý yêu cầu. Bài thực hành HubSpot phân biệt stage với sub-status. Trong r/SalesOps, người tham gia xem cả hoạt động của người nhận khi xác định việc bàn giao. Người dùng Frappe mô tả phải tra task, note hoặc trường tự thêm để tìm lần liên hệ tiếp theo. Hai đánh giá công khai trên G2 cũng nêu công hỏi lại từng rep hoặc đối chiếu dữ liệu nằm rải rác. [G2CRM](SOURCE_REGISTRY.md#src-g2crm)
+
+Dữ liệu cộng đồng có giá trị phát hiện tình huống. Tần suất bỏ sót, phút đối soát và tỷ lệ mất đơn ở AMC đều chưa biết. [HSTAGE](SOURCE_REGISTRY.md#src-hstage) · [RSALES](SOURCE_REGISTRY.md#src-rsales) · [FRAPPE](SOURCE_REGISTRY.md#src-frappe)
+
+**Thử với điều phối Marketing và bên nhận Sales/Service.** Đối chiếu riêng nhu cầu hiện hành, consent, giao việc, nhận việc và chứng cứ tiếp xúc. Hồ sơ thiếu chứng cứ cho bước nào thì giữ bước đó chưa xác nhận. Kiểm ca yêu cầu đổi hoặc hủy trong lúc đợi phân công, cùng ca đã có owner nhưng chưa nhận việc. Giả thuyết là giảm bàn giao nhầm và thời gian tìm người chịu trách nhiệm. Khi có practitioner, ghi phút xử lý, số lần chuyển sai và số hồ sơ bên nhận chấp thuận ngay. [WF-14/WF-20](APPLICABILITY_MATRIX.md#nine-jobs) · [Nghiệm thu nội bộ hiện hữu](../evaluation/business-intake/CONSULTATION.md)
+
+<a id="k-13"></a>
+
+## K-13 · Hỏi một câu có thể thay đổi quyết định
+
+Với khách mua B2B hoặc đặt dịch vụ, người trao đổi, người dùng và người phê giá có thể khác nhau. Vai trò thay đổi theo deal. Trong bài đối thoại mẫu, người mua bổ sung yêu cầu sau lời nhắc lại của Sales. Hướng dẫn qualification khuyến khích hỏi theo nhu cầu và người ra quyết định. Đây là lời khuyên và tình huống dàn dựng. Chưa đo tỷ lệ gặp ngoài thị trường hoặc chi phí làm lại báo giá. [HQUAL](SOURCE_REGISTRY.md#src-hqual) · [CLOUD](SOURCE_REGISTRY.md#src-cloud) · [FRAPPE](SOURCE_REGISTRY.md#src-frappe)
+
+**Thử với tư vấn viên.** Đối chiếu yêu cầu sau cùng với note, điều khoản có hiệu lực và người có thẩm quyền. Còn thiếu thông tin ảnh hưởng tới phạm vi thì hỏi đúng một câu ngắn, nêu đối tượng và đơn vị. Nếu khách đã sửa hoặc rút giá trị thì đánh dấu giá trị bị thay. Ý định mơ hồ cần hỏi lại, còn hai điều khoản đang có hiệu lực mâu thuẫn cần chủ chính sách phân xử. Dữ liệu đủ cho bước tư vấn chỉ cho phép chuẩn bị bàn giao. Giả thuyết là giảm cả bàn giao sớm lẫn số câu hỏi lặp. Đối chiếu từng quyết định với nhãn và trích dẫn tổng hợp, rồi để người có quyền đánh giá câu hỏi có thể trả lời hay không. [O-09](PRODUCT_OPPORTUNITIES.md#o-09)
+
+<a id="k-14"></a>
+
+## K-14 · Kiểm chứng từng quyết định trên cùng đầu vào
+
+README Promptfoo mô tả phép so sánh cấu hình trên các ca thử. Repo AMC đã có control, rubric và dấu vết nghiên cứu. Trong phép thử handoff trước, hệ tất định đúng 14/24 quyết định và có 8 lần báo đủ sai. Ở bài chuyên môn khác, control đạt 24/36 nghĩa vụ và Qwen rewrite đạt 17/36. Hai phép thử đo các nhiệm vụ khác nhau. [PFOO](SOURCE_REGISTRY.md#src-pfoo) · [Handoff benchmark](../evaluation/department-study/advisory/HANDOFF-BENCHMARK.md) · [Obligations](../evaluation/department-study/advisory/OBLIGATIONS.md)
+
+**Thử với phụ trách QA.** Chọn trước cohort tổng hợp mới, đối chứng có cùng đầu vào, rubric, điều kiện tài nguyên, tiêu chí dừng và cách chấm trường hợp thiếu output. Ghi model/revision và receipt nếu thực chạy. Báo false-ready, yêu cầu hỏi thừa, sửa đổi bị bỏ sót và bất đồng theo đúng mẫu số. Chi phí soát lại hoặc chi phí cho mỗi hồ sơ đạt chỉ tính được khi có đủ công lao động và quyết định người nhận. [O-09](PRODUCT_OPPORTUNITIES.md#o-09)
+
+<a id="k-15"></a>
+
+## K-15 · Dùng tín hiệu công khai để chọn câu hỏi nghiên cứu
+
+Chủ thương hiệu cần hiểu một phân khúc trước khi duyệt thông điệp. SBA chỉ ra chi phí và lợi ích của điều tra trực tiếp so với nguồn có sẵn. TikTok chỉ cách lọc những quảng cáo đã được nền tảng chọn, còn YouTube hướng dẫn xem chỗ giữ hoặc mất người xem theo từng video. Google mô tả điều kiện để trang đủ tư cách xuất hiện trong kết quả có tính năng AI. Các nguồn có độ tin cậy cao về phương pháp hoặc cơ chế của chính nền tảng. Chúng chưa cho thấy người mua của một doanh nghiệp cụ thể cần gì hoặc trả bao nhiêu. [SBA](SOURCE_REGISTRY.md#src-sba) · [TKADS](SOURCE_REGISTRY.md#src-tkads) · [YTRET](SOURCE_REGISTRY.md#src-ytret) · [GAI](SOURCE_REGISTRY.md#src-gai)
+
+**Thử với nhóm chiến lược, creative và search.** Mỗi quan sát phải xác định ngữ cảnh, selection bias, quyền sử dụng và người đủ thẩm quyền duyệt. Kiểm bằng một nguồn thứ hai, một counterexample và một brief cụ thể được phép sử dụng. Giả thuyết là giảm thời gian xác minh claim và chỉnh sửa brief. Dùng phân nhóm ngành hàng video commerce Việt Nam để chọn câu hỏi phỏng vấn. Tách impression, click và đơn SKU theo định nghĩa, thị trường của nền tảng khi xin đối soát với bên bán. Chưa có dữ liệu cửa hàng AMC. [VNMARKET](SOURCE_REGISTRY.md#src-vnmarket) · [TKSHOP](SOURCE_REGISTRY.md#src-tkshop) [Chín nhóm công việc](APPLICABILITY_MATRIX.md#nine-jobs)
+
+<a id="k-16"></a>
+
+## K-16 · Chọn mẫu số trước khi kết luận hiệu quả
+
+Media buyer phân bổ traffic/budget giữa các nhánh thử. Nhóm CRO đặt câu hỏi về một bước trong funnel. Analyst giải thích sự khác biệt cho người duyệt ngân sách. Tài liệu Google nêu các điều kiện chia nhánh. Baymard mô tả tổng hợp nhiều mẫu checkout riêng biệt. Lewis và Rao chỉ ra mức bất định lớn trong một tập thí nghiệm quảng cáo. Các kết quả đó không cung cấp uplift, doanh thu hay mức giá cho AMC. [GEXP](SOURCE_REGISTRY.md#src-gexp) · [BAY](SOURCE_REGISTRY.md#src-bay) · [RAO](SOURCE_REGISTRY.md#src-rao)
+
+**Thử với người phụ trách đo lường.** Ghim sự kiện, mẫu số, thời gian, đơn vị phân bổ, chi phí và biến thay đổi trước khi thử. Đối soát đầu ra với người nhận. Cho phép kết luận “chưa đủ dữ liệu” nếu thiếu hóa đơn, bị lệch nhóm hoặc lượng mẫu nhỏ. Cần thực nghiệm độc lập mới biết quy trình có giảm giờ dựng báo cáo hoặc đổi quyết định đúng hơn. [WF-12, WF-13, WF-18, WF-19](APPLICABILITY_MATRIX.md#nine-jobs)

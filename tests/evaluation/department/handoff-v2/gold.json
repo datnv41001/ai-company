@@ -1,0 +1,194 @@
+[
+  {
+    "id": "h15d22b51",
+    "pair": "m12",
+    "expected": "clarify_policy",
+    "field": "",
+    "acceptable_question": "Xin quản lý dịch vụ xác nhận nhận ca ngoài vùng.",
+    "phenomenon": "unresolved_territory"
+  },
+  {
+    "id": "h16a100e6",
+    "pair": "m1",
+    "expected": "ask",
+    "field": "roll_core",
+    "acceptable_question": "Lõi cuộn có đường kính bao nhiêu mm?",
+    "phenomenon": "missing"
+  },
+  {
+    "id": "h1919de08",
+    "pair": "m12",
+    "expected": "clarify_policy",
+    "field": "",
+    "acceptable_question": "Ask the service manager to decide whether the out-of-area visit can be taken.",
+    "phenomenon": "unresolved_territory"
+  },
+  {
+    "id": "h1f4a432c",
+    "pair": "m9",
+    "expected": "ask",
+    "field": "gauge",
+    "acceptable_question": "What gauge in mm should the quote use now?",
+    "phenomenon": "withdrawn_without_replacement"
+  },
+  {
+    "id": "h21cafda4",
+    "pair": "m11",
+    "expected": "clarify_policy",
+    "field": "",
+    "acceptable_question": "Ask the contract owner to settle how pressure testing is billed.",
+    "phenomenon": "commercial_scope_conflict"
+  },
+  {
+    "id": "h244207a5",
+    "pair": "m1",
+    "expected": "ask",
+    "field": "roll_core",
+    "acceptable_question": "What is the core diameter in mm?",
+    "phenomenon": "missing"
+  },
+  {
+    "id": "h28fea0cf",
+    "pair": "m5",
+    "expected": "clarify_policy",
+    "field": "",
+    "acceptable_question": "Ask the authorized owner to resolve the applicable minimum.",
+    "phenomenon": "conflicting_terms"
+  },
+  {
+    "id": "h2a92b98e",
+    "pair": "m6",
+    "expected": "clarify_policy",
+    "field": "",
+    "acceptable_question": "Ask the safety owner to authorize the after-hours exception.",
+    "phenomenon": "authority_required"
+  },
+  {
+    "id": "h2fb7d3cb",
+    "pair": "m8",
+    "expected": "ready",
+    "field": "",
+    "acceptable_question": "",
+    "phenomenon": "fact_only_in_message"
+  },
+  {
+    "id": "h3306db62",
+    "pair": "m10",
+    "expected": "ready",
+    "field": "",
+    "acceptable_question": "",
+    "phenomenon": "superseded_schedule"
+  },
+  {
+    "id": "h3de1a49e",
+    "pair": "m5",
+    "expected": "clarify_policy",
+    "field": "",
+    "acceptable_question": "Xin người phụ trách xác định MOQ áp dụng.",
+    "phenomenon": "conflicting_terms"
+  },
+  {
+    "id": "h44800dc0",
+    "pair": "m10",
+    "expected": "ready",
+    "field": "",
+    "acceptable_question": "",
+    "phenomenon": "superseded_schedule"
+  },
+  {
+    "id": "h4db1cce6",
+    "pair": "m8",
+    "expected": "ready",
+    "field": "",
+    "acceptable_question": "",
+    "phenomenon": "fact_only_in_message"
+  },
+  {
+    "id": "h4fe6dda5",
+    "pair": "m4",
+    "expected": "ask",
+    "field": "service_intent",
+    "acceptable_question": "Do you want to move the existing V8 appointment or request another visit?",
+    "phenomenon": "ambiguous_intent"
+  },
+  {
+    "id": "h50978460",
+    "pair": "m2",
+    "expected": "ask",
+    "field": "access_day",
+    "acceptable_question": "Which new access day has the duty team authorized?",
+    "phenomenon": "expired"
+  },
+  {
+    "id": "h540337e3",
+    "pair": "m9",
+    "expected": "ask",
+    "field": "gauge",
+    "acceptable_question": "Độ dày mới cần báo giá là bao nhiêu mm?",
+    "phenomenon": "withdrawn_without_replacement"
+  },
+  {
+    "id": "h547872c8",
+    "pair": "m7",
+    "expected": "ready",
+    "field": "",
+    "acceptable_question": "",
+    "phenomenon": "optional_missing"
+  },
+  {
+    "id": "h64ef8b0f",
+    "pair": "m6",
+    "expected": "clarify_policy",
+    "field": "",
+    "acceptable_question": "Xin người duyệt an toàn xác nhận ngoại lệ ngoài giờ.",
+    "phenomenon": "authority_required"
+  },
+  {
+    "id": "h657b3159",
+    "pair": "m3",
+    "expected": "ready",
+    "field": "",
+    "acceptable_question": "",
+    "phenomenon": "corrected_with_replacement"
+  },
+  {
+    "id": "h6b03f43b",
+    "pair": "m2",
+    "expected": "ask",
+    "field": "access_day",
+    "acceptable_question": "Bên trực đã cấp ngày mới nào để vào kiểm tra?",
+    "phenomenon": "expired"
+  },
+  {
+    "id": "h6d42f78",
+    "pair": "m7",
+    "expected": "ready",
+    "field": "",
+    "acceptable_question": "",
+    "phenomenon": "optional_missing"
+  },
+  {
+    "id": "h72d191a",
+    "pair": "m11",
+    "expected": "clarify_policy",
+    "field": "",
+    "acceptable_question": "Xin chủ hợp đồng xác nhận quy tắc tính phí thử áp.",
+    "phenomenon": "commercial_scope_conflict"
+  },
+  {
+    "id": "h7ae4fe1b",
+    "pair": "m4",
+    "expected": "ask",
+    "field": "service_intent",
+    "acceptable_question": "Anh chị muốn đổi lịch hiện tại hay yêu cầu thêm lượt cho máy V8?",
+    "phenomenon": "ambiguous_intent"
+  },
+  {
+    "id": "hb73e3f6",
+    "pair": "m3",
+    "expected": "ready",
+    "field": "",
+    "acceptable_question": "",
+    "phenomenon": "corrected_with_replacement"
+  }
+]

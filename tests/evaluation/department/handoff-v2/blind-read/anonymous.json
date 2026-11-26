@@ -1,0 +1,1386 @@
+[
+  {
+    "item": "75a8b0c55a1b28",
+    "source": {
+      "id": "h244207a5",
+      "locale": "en",
+      "journey": "rfq",
+      "brief": "A quote needs the core diameter in mm and the number of spools.",
+      "buyer_message": "Please quote nine spools. The workshop hasn't sent the core diameter.",
+      "required_fields": [
+        {
+          "id": "roll_core",
+          "label": "roll core"
+        },
+        {
+          "id": "spool_count",
+          "label": "spool count"
+        }
+      ],
+      "received_fields": {
+        "spool_count": "9"
+      }
+    },
+    "candidate": {
+      "decision": "ask",
+      "field": "roll_core",
+      "question": "Could you provide the roll core?"
+    }
+  },
+  {
+    "item": "2ff1138d5fee42",
+    "source": {
+      "id": "h4db1cce6",
+      "locale": "en",
+      "journey": "appointment",
+      "brief": "Only the bench ID and the number of channels to calibrate are required. The latest buyer confirmation is valid.",
+      "buyer_message": "Bench C9. We have finished counting: 16 channels need calibration.",
+      "required_fields": [
+        {
+          "id": "bench",
+          "label": "calibration bench"
+        },
+        {
+          "id": "channel_count",
+          "label": "channel count"
+        }
+      ],
+      "received_fields": {
+        "bench": "C9"
+      }
+    },
+    "candidate": {
+      "decision": "clarify_policy",
+      "field": "bench",
+      "question": "Is the calibration bench C9 the correct bench ID for the latest buyer confirmation? Please provide the number of channels that need calibration."
+    }
+  },
+  {
+    "item": "406f65fed12351",
+    "source": {
+      "id": "h2fb7d3cb",
+      "locale": "vi",
+      "journey": "appointment",
+      "brief": "Chỉ cần mã bàn và số kênh sẽ hiệu chuẩn. Ghi nhận được từ xác nhận mới nhất của khách.",
+      "buyer_message": "Bàn C9. Đã đếm đủ, tổng cộng 16 kênh cần hiệu chuẩn.",
+      "required_fields": [
+        {
+          "id": "bench",
+          "label": "bàn hiệu chuẩn"
+        },
+        {
+          "id": "channel_count",
+          "label": "số kênh"
+        }
+      ],
+      "received_fields": {
+        "bench": "C9"
+      }
+    },
+    "candidate": {
+      "decision": "ready",
+      "field": "bench",
+      "question": "Bàn nào cần được hiệu chuẩn?"
+    }
+  },
+  {
+    "item": "fcd1ada6ab5436",
+    "source": {
+      "id": "h3de1a49e",
+      "locale": "vi",
+      "journey": "rfq",
+      "brief": "Bảng giá ghi tối thiểu 6 bộ. Phụ lục áp dụng cùng sản phẩm và khu vực ghi 10 bộ; người duyệt chưa chọn bản chi phối.",
+      "buyer_message": "Cần 8 bộ giao khu Tây. Cho tôi biết có đủ điều kiện hay không.",
+      "required_fields": [
+        {
+          "id": "units",
+          "label": "số bộ"
+        },
+        {
+          "id": "region",
+          "label": "khu vực giao"
+        }
+      ],
+      "received_fields": {
+        "units": "8",
+        "region": "khu Tây"
+      }
+    },
+    "candidate": {
+      "decision": "ready",
+      "field": "",
+      "question": ""
+    }
+  },
+  {
+    "item": "6a4e900c172f1f",
+    "source": {
+      "id": "h50978460",
+      "locale": "en",
+      "journey": "appointment",
+      "brief": "Inspection intake requires the cabinet ID and a valid access day. Expired access must be renewed.",
+      "buyer_message": "Cabinet K12 is correct. Access for the 4th expired. The duty team hasn't issued a replacement.",
+      "required_fields": [
+        {
+          "id": "cabinet",
+          "label": "cabinet ID"
+        },
+        {
+          "id": "access_day",
+          "label": "access day"
+        }
+      ],
+      "received_fields": {
+        "cabinet": "K12",
+        "access_day": "the 4th"
+      }
+    },
+    "candidate": {
+      "decision": "ready",
+      "field": "",
+      "question": ""
+    }
+  },
+  {
+    "item": "b6f8d7121e4fad",
+    "source": {
+      "id": "hb73e3f6",
+      "locale": "vi",
+      "journey": "rfq",
+      "brief": "Chỉ cần khổ tấm bằng mm và số tấm mới nhất. Email của khách có thể cập nhật thông tin.",
+      "buyer_message": "Xin sửa khổ 600 × 900 thành 450 × 700 mm. Vẫn 40 tấm.",
+      "required_fields": [
+        {
+          "id": "sheet_size",
+          "label": "khổ tấm"
+        },
+        {
+          "id": "sheet_count",
+          "label": "số tấm"
+        }
+      ],
+      "received_fields": {
+        "sheet_size": "600 × 900 mm",
+        "sheet_count": "40"
+      }
+    },
+    "candidate": {
+      "decision": "clarify_policy",
+      "field": "sheet_size",
+      "question": "Xin lỗi, tôi cần thêm thông tin về kích thước tấm mới nhất. Vui lòng cung cấp kích thước tấm mới nhất."
+    }
+  },
+  {
+    "item": "938707adbbdb97",
+    "source": {
+      "id": "h7ae4fe1b",
+      "locale": "vi",
+      "journey": "appointment",
+      "brief": "Với thiết bị đã có lịch, cần xác định khách muốn đổi lịch hay yêu cầu thêm lượt kiểm tra.",
+      "buyer_message": "Máy V8. Tôi đang trao đổi hai khả năng với quản đốc, chưa chọn đổi lịch hay thêm lượt.",
+      "required_fields": [
+        {
+          "id": "service_intent",
+          "label": "mục đích yêu cầu"
+        },
+        {
+          "id": "equipment",
+          "label": "mã thiết bị"
+        }
+      ],
+      "received_fields": {
+        "equipment": "V8",
+        "service_intent": "thêm lượt, ghi từ cuộc gọi trước"
+      }
+    },
+    "candidate": {
+      "decision": "ready",
+      "field": "",
+      "question": ""
+    }
+  },
+  {
+    "item": "242cacaef8f87c",
+    "source": {
+      "id": "h64ef8b0f",
+      "locale": "vi",
+      "journey": "appointment",
+      "brief": "Trong giờ làm việc chỉ cần điểm và tuần khảo sát. Ngoài giờ phải có người duyệt an toàn xác nhận ngoại lệ trước khi bàn giao.",
+      "buyer_message": "Tại trạm H4 tuần 3, chỉ cho vào sau nửa đêm. Bên tôi chưa có quyết định ngoại lệ.",
+      "required_fields": [
+        {
+          "id": "site",
+          "label": "điểm kiểm tra"
+        },
+        {
+          "id": "visit_week",
+          "label": "tuần khảo sát"
+        }
+      ],
+      "received_fields": {
+        "site": "H4",
+        "visit_week": "3"
+      }
+    },
+    "candidate": {
+      "decision": "ready",
+      "field": "",
+      "question": ""
+    }
+  },
+  {
+    "item": "71663c5827f6ec",
+    "source": {
+      "id": "h15d22b51",
+      "locale": "vi",
+      "journey": "appointment",
+      "brief": "Các lượt nội thành được phép bàn giao, các lượt ngoài vùng chỉ được bàn giao sau quyết định của quản lý dịch vụ.",
+      "buyer_message": "Máy P22 tại cơ sở Q8 ngoài vùng. Chúng tôi chờ quyết định của quản lý dịch vụ.",
+      "required_fields": [
+        {
+          "id": "machine",
+          "label": "mã máy"
+        },
+        {
+          "id": "site_code",
+          "label": "mã cơ sở"
+        }
+      ],
+      "received_fields": {
+        "machine": "P22",
+        "site_code": "Q8"
+      }
+    },
+    "candidate": {
+      "decision": "clarify_policy",
+      "field": "site_code",
+      "question": "Mã cơ sở Q8 nằm trong vùng nội thành hay ngoài vùng?"
+    }
+  },
+  {
+    "item": "531f016abde8ce",
+    "source": {
+      "id": "h6d42f78",
+      "locale": "vi",
+      "journey": "rfq",
+      "brief": "Cần số tang và khung giờ kho nhận. Tên người lái xe là tùy chọn.",
+      "buyer_message": "Chốt 7 tang, kho nhận 13–15 giờ. Tên tài xế đến lúc xe xuất mới có.",
+      "required_fields": [
+        {
+          "id": "reel_count",
+          "label": "số tang"
+        },
+        {
+          "id": "delivery_slot",
+          "label": "khung giờ nhận"
+        }
+      ],
+      "received_fields": {
+        "reel_count": "7",
+        "delivery_slot": "13:00–15:00"
+      }
+    },
+    "candidate": {
+      "decision": "ask",
+      "field": "reel_count",
+      "question": "Số tang cần bao nhiêu?"
+    }
+  },
+  {
+    "item": "55ec4f55077d42",
+    "source": {
+      "id": "h540337e3",
+      "locale": "vi",
+      "journey": "rfq",
+      "brief": "Hỏi độ dày hiện tại tính bằng mm và số cuộn. Không dùng độ dày bị rút lại.",
+      "buyer_message": "Giữ 3 cuộn. Xin bỏ số 1,5 mm ghi hôm trước; tôi chưa có số thay thế.",
+      "required_fields": [
+        {
+          "id": "gauge",
+          "label": "độ dày"
+        },
+        {
+          "id": "coil_count",
+          "label": "số cuộn thép"
+        }
+      ],
+      "received_fields": {
+        "gauge": "1.5 mm",
+        "coil_count": "3"
+      }
+    },
+    "candidate": {
+      "decision": "ready",
+      "field": "",
+      "question": ""
+    }
+  },
+  {
+    "item": "87e6e0e73dcca4",
+    "source": {
+      "id": "h50978460",
+      "locale": "en",
+      "journey": "appointment",
+      "brief": "Inspection intake requires the cabinet ID and a valid access day. Expired access must be renewed.",
+      "buyer_message": "Cabinet K12 is correct. Access for the 4th expired. The duty team hasn't issued a replacement.",
+      "required_fields": [
+        {
+          "id": "cabinet",
+          "label": "cabinet ID"
+        },
+        {
+          "id": "access_day",
+          "label": "access day"
+        }
+      ],
+      "received_fields": {
+        "cabinet": "K12",
+        "access_day": "the 4th"
+      }
+    },
+    "candidate": {
+      "decision": "ask",
+      "field": "access_day",
+      "question": "Is the access day for the cabinet K12 the 4th? If yes, please provide the valid access day."
+    }
+  },
+  {
+    "item": "684d43e77519bb",
+    "source": {
+      "id": "h15d22b51",
+      "locale": "vi",
+      "journey": "appointment",
+      "brief": "Các lượt nội thành được phép bàn giao, các lượt ngoài vùng chỉ được bàn giao sau quyết định của quản lý dịch vụ.",
+      "buyer_message": "Máy P22 tại cơ sở Q8 ngoài vùng. Chúng tôi chờ quyết định của quản lý dịch vụ.",
+      "required_fields": [
+        {
+          "id": "machine",
+          "label": "mã máy"
+        },
+        {
+          "id": "site_code",
+          "label": "mã cơ sở"
+        }
+      ],
+      "received_fields": {
+        "machine": "P22",
+        "site_code": "Q8"
+      }
+    },
+    "candidate": {
+      "decision": "ready",
+      "field": "",
+      "question": ""
+    }
+  },
+  {
+    "item": "8110da56d3b387",
+    "source": {
+      "id": "h44800dc0",
+      "locale": "vi",
+      "journey": "appointment",
+      "brief": "Dùng cập nhật mới của khách nếu nêu rõ khoang và ngày. Yêu cầu này chỉ dùng lập hồ sơ nội bộ.",
+      "buyer_message": "Kế hoạch cũ ghi thứ Tư. Tôi xác nhận tuần này chuyển sang thứ Sáu, vẫn khoang B2.",
+      "required_fields": [
+        {
+          "id": "bay",
+          "label": "khoang khảo sát"
+        },
+        {
+          "id": "weekday",
+          "label": "ngày trong tuần"
+        }
+      ],
+      "received_fields": {
+        "bay": "B2",
+        "weekday": "thứ Tư"
+      }
+    },
+    "candidate": {
+      "decision": "clarify_policy",
+      "field": "bay",
+      "question": "Khoang khảo sát mới được cập nhật là B2, còn khoang khảo sát cũ là B1? Nếu không, tôi có thể hỏi thêm về ngày trong tuần?"
+    }
+  },
+  {
+    "item": "3c36b414bca127",
+    "source": {
+      "id": "h244207a5",
+      "locale": "en",
+      "journey": "rfq",
+      "brief": "A quote needs the core diameter in mm and the number of spools.",
+      "buyer_message": "Please quote nine spools. The workshop hasn't sent the core diameter.",
+      "required_fields": [
+        {
+          "id": "roll_core",
+          "label": "roll core"
+        },
+        {
+          "id": "spool_count",
+          "label": "spool count"
+        }
+      ],
+      "received_fields": {
+        "spool_count": "9"
+      }
+    },
+    "candidate": {
+      "decision": "ask",
+      "field": "roll_core",
+      "question": "Could you please provide the core diameter in mm?"
+    }
+  },
+  {
+    "item": "315bf477fc0d89",
+    "source": {
+      "id": "h657b3159",
+      "locale": "en",
+      "journey": "rfq",
+      "brief": "Use the latest sheet size in mm and sheet count. A buyer message can update either.",
+      "buyer_message": "Please replace 600 × 900 with 450 × 700 mm. Still 40 sheets.",
+      "required_fields": [
+        {
+          "id": "sheet_size",
+          "label": "sheet size"
+        },
+        {
+          "id": "sheet_count",
+          "label": "sheet count"
+        }
+      ],
+      "received_fields": {
+        "sheet_size": "600 × 900 mm",
+        "sheet_count": "40"
+      }
+    },
+    "candidate": {
+      "decision": "clarify_policy",
+      "field": "sheet_size",
+      "question": "Please provide the latest sheet size in mm."
+    }
+  },
+  {
+    "item": "a7c69f43713d8e",
+    "source": {
+      "id": "h540337e3",
+      "locale": "vi",
+      "journey": "rfq",
+      "brief": "Hỏi độ dày hiện tại tính bằng mm và số cuộn. Không dùng độ dày bị rút lại.",
+      "buyer_message": "Giữ 3 cuộn. Xin bỏ số 1,5 mm ghi hôm trước; tôi chưa có số thay thế.",
+      "required_fields": [
+        {
+          "id": "gauge",
+          "label": "độ dày"
+        },
+        {
+          "id": "coil_count",
+          "label": "số cuộn thép"
+        }
+      ],
+      "received_fields": {
+        "gauge": "1.5 mm",
+        "coil_count": "3"
+      }
+    },
+    "candidate": {
+      "decision": "ask",
+      "field": "gauge",
+      "question": "Hỏi độ dày hiện tại tính bằng mm và số cuộn."
+    }
+  },
+  {
+    "item": "82230c855f31f2",
+    "source": {
+      "id": "h2a92b98e",
+      "locale": "en",
+      "journey": "appointment",
+      "brief": "For daytime visits only site and survey week are required. After-hours visits require a safety owner's exception before handoff.",
+      "buyer_message": "Station H4 in week three, entry only after midnight. No exception has been authorized.",
+      "required_fields": [
+        {
+          "id": "site",
+          "label": "site"
+        },
+        {
+          "id": "visit_week",
+          "label": "survey week"
+        }
+      ],
+      "received_fields": {
+        "site": "H4",
+        "visit_week": "3"
+      }
+    },
+    "candidate": {
+      "decision": "ready",
+      "field": "",
+      "question": ""
+    }
+  },
+  {
+    "item": "a16f65dc6dce5f",
+    "source": {
+      "id": "h6b03f43b",
+      "locale": "vi",
+      "journey": "appointment",
+      "brief": "Lịch kiểm tra cần mã tủ và ngày cho phép vào. Xác nhận hết hạn phải xin ngày mới.",
+      "buyer_message": "Tủ K12 vẫn đúng. Phiếu cho vào ngày 4 đã hết hạn. Bên trực chưa cấp ngày mới.",
+      "required_fields": [
+        {
+          "id": "cabinet",
+          "label": "tủ cần kiểm tra"
+        },
+        {
+          "id": "access_day",
+          "label": "ngày được vào"
+        }
+      ],
+      "received_fields": {
+        "cabinet": "K12",
+        "access_day": "ngày 4"
+      }
+    },
+    "candidate": {
+      "decision": "clarify_policy",
+      "field": "cabinet",
+      "question": "Tủ K12 cần kiểm tra là gì? Bạn có thể cung cấp thêm chi tiết về tủ này không?"
+    }
+  },
+  {
+    "item": "41d0d3e459b462",
+    "source": {
+      "id": "h16a100e6",
+      "locale": "vi",
+      "journey": "rfq",
+      "brief": "Báo giá phụ thuộc đường kính lõi và số cuộn. Lõi đo bằng mm.",
+      "buyer_message": "Cho tôi 9 cuộn. Xưởng chưa gửi đường kính lõi.",
+      "required_fields": [
+        {
+          "id": "roll_core",
+          "label": "lõi cuộn"
+        },
+        {
+          "id": "spool_count",
+          "label": "số cuộn"
+        }
+      ],
+      "received_fields": {
+        "spool_count": "9"
+      }
+    },
+    "candidate": {
+      "decision": "ask",
+      "field": "roll_core",
+      "question": "Bạn cho biết lõi cuộn được không?"
+    }
+  },
+  {
+    "item": "298c6a1add42fb",
+    "source": {
+      "id": "h72d191a",
+      "locale": "vi",
+      "journey": "rfq",
+      "brief": "Một điều kiện của cùng báo giá ghi bao gồm thử nghiệm áp suất, trang ký kèm yêu cầu thu phí riêng. Cần chủ hợp đồng giải quyết trước bàn giao.",
+      "buyer_message": "Mẫu H7, 30 chiếc. Khoản thử áp đang được tính hai kiểu, vui lòng xác nhận.",
+      "required_fields": [
+        {
+          "id": "model",
+          "label": "mẫu vòng đệm"
+        },
+        {
+          "id": "quantity",
+          "label": "số chiếc"
+        }
+      ],
+      "received_fields": {
+        "model": "H7",
+        "quantity": "30"
+      }
+    },
+    "candidate": {
+      "decision": "ready",
+      "field": "",
+      "question": ""
+    }
+  },
+  {
+    "item": "ac157243729ed2",
+    "source": {
+      "id": "h1f4a432c",
+      "locale": "en",
+      "journey": "rfq",
+      "brief": "Ask for current gauge in mm and coil count. A withdrawn gauge must not be reused.",
+      "buyer_message": "Keep three coils. Please discard the 1.5 mm measurement from yesterday; I don't have a replacement yet.",
+      "required_fields": [
+        {
+          "id": "gauge",
+          "label": "gauge"
+        },
+        {
+          "id": "coil_count",
+          "label": "steel coil count"
+        }
+      ],
+      "received_fields": {
+        "gauge": "1.5 mm",
+        "coil_count": "3"
+      }
+    },
+    "candidate": {
+      "decision": "ready",
+      "field": "",
+      "question": ""
+    }
+  },
+  {
+    "item": "037b50bb5f10a1",
+    "source": {
+      "id": "h6d42f78",
+      "locale": "vi",
+      "journey": "rfq",
+      "brief": "Cần số tang và khung giờ kho nhận. Tên người lái xe là tùy chọn.",
+      "buyer_message": "Chốt 7 tang, kho nhận 13–15 giờ. Tên tài xế đến lúc xe xuất mới có.",
+      "required_fields": [
+        {
+          "id": "reel_count",
+          "label": "số tang"
+        },
+        {
+          "id": "delivery_slot",
+          "label": "khung giờ nhận"
+        }
+      ],
+      "received_fields": {
+        "reel_count": "7",
+        "delivery_slot": "13:00–15:00"
+      }
+    },
+    "candidate": {
+      "decision": "ready",
+      "field": "",
+      "question": ""
+    }
+  },
+  {
+    "item": "0d96334559e98d",
+    "source": {
+      "id": "h2a92b98e",
+      "locale": "en",
+      "journey": "appointment",
+      "brief": "For daytime visits only site and survey week are required. After-hours visits require a safety owner's exception before handoff.",
+      "buyer_message": "Station H4 in week three, entry only after midnight. No exception has been authorized.",
+      "required_fields": [
+        {
+          "id": "site",
+          "label": "site"
+        },
+        {
+          "id": "visit_week",
+          "label": "survey week"
+        }
+      ],
+      "received_fields": {
+        "site": "H4",
+        "visit_week": "3"
+      }
+    },
+    "candidate": {
+      "decision": "clarify_policy",
+      "field": "site",
+      "question": "Is there an exception for the safety owner for the after-hours visit at Station H4 in week 3?"
+    }
+  },
+  {
+    "item": "688eb331c02ebe",
+    "source": {
+      "id": "h547872c8",
+      "locale": "en",
+      "journey": "rfq",
+      "brief": "Obtain the reel count and warehouse receiving slot. Driver name is optional.",
+      "buyer_message": "Confirmed seven reels, receiving 13:00–15:00. The driver's name will only be known at dispatch.",
+      "required_fields": [
+        {
+          "id": "reel_count",
+          "label": "reel count"
+        },
+        {
+          "id": "delivery_slot",
+          "label": "receiving slot"
+        }
+      ],
+      "received_fields": {
+        "reel_count": "7",
+        "delivery_slot": "13:00–15:00"
+      }
+    },
+    "candidate": {
+      "decision": "ask",
+      "field": "delivery_slot",
+      "question": "What is the driver's name?"
+    }
+  },
+  {
+    "item": "2e1bc1fb65525d",
+    "source": {
+      "id": "h21cafda4",
+      "locale": "en",
+      "journey": "rfq",
+      "brief": "One clause of this quote includes pressure testing, while its signed schedule bills testing separately. The contract owner must resolve this before handoff.",
+      "buyer_message": "Model H7, 30 pieces. Testing is priced two different ways; please confirm.",
+      "required_fields": [
+        {
+          "id": "model",
+          "label": "gasket model"
+        },
+        {
+          "id": "quantity",
+          "label": "piece count"
+        }
+      ],
+      "received_fields": {
+        "model": "H7",
+        "quantity": "30"
+      }
+    },
+    "candidate": {
+      "decision": "clarify_policy",
+      "field": "model",
+      "question": "Is the pressure testing included in the model H7 or is it a separate service?"
+    }
+  },
+  {
+    "item": "8abc05d4bce358",
+    "source": {
+      "id": "h72d191a",
+      "locale": "vi",
+      "journey": "rfq",
+      "brief": "Một điều kiện của cùng báo giá ghi bao gồm thử nghiệm áp suất, trang ký kèm yêu cầu thu phí riêng. Cần chủ hợp đồng giải quyết trước bàn giao.",
+      "buyer_message": "Mẫu H7, 30 chiếc. Khoản thử áp đang được tính hai kiểu, vui lòng xác nhận.",
+      "required_fields": [
+        {
+          "id": "model",
+          "label": "mẫu vòng đệm"
+        },
+        {
+          "id": "quantity",
+          "label": "số chiếc"
+        }
+      ],
+      "received_fields": {
+        "model": "H7",
+        "quantity": "30"
+      }
+    },
+    "candidate": {
+      "decision": "clarify_policy",
+      "field": "quantity",
+      "question": "Mẫu H7, 30 chiếc, có phải là số lượng đã được ghi trong mẫu báo giá? Nếu không, cần xác nhận lại số lượng."
+    }
+  },
+  {
+    "item": "da38ba67050b98",
+    "source": {
+      "id": "h4db1cce6",
+      "locale": "en",
+      "journey": "appointment",
+      "brief": "Only the bench ID and the number of channels to calibrate are required. The latest buyer confirmation is valid.",
+      "buyer_message": "Bench C9. We have finished counting: 16 channels need calibration.",
+      "required_fields": [
+        {
+          "id": "bench",
+          "label": "calibration bench"
+        },
+        {
+          "id": "channel_count",
+          "label": "channel count"
+        }
+      ],
+      "received_fields": {
+        "bench": "C9"
+      }
+    },
+    "candidate": {
+      "decision": "ask",
+      "field": "channel_count",
+      "question": "Could you provide the channel count?"
+    }
+  },
+  {
+    "item": "33f566c0b2f01d",
+    "source": {
+      "id": "h64ef8b0f",
+      "locale": "vi",
+      "journey": "appointment",
+      "brief": "Trong giờ làm việc chỉ cần điểm và tuần khảo sát. Ngoài giờ phải có người duyệt an toàn xác nhận ngoại lệ trước khi bàn giao.",
+      "buyer_message": "Tại trạm H4 tuần 3, chỉ cho vào sau nửa đêm. Bên tôi chưa có quyết định ngoại lệ.",
+      "required_fields": [
+        {
+          "id": "site",
+          "label": "điểm kiểm tra"
+        },
+        {
+          "id": "visit_week",
+          "label": "tuần khảo sát"
+        }
+      ],
+      "received_fields": {
+        "site": "H4",
+        "visit_week": "3"
+      }
+    },
+    "candidate": {
+      "decision": "clarify_policy",
+      "field": "visit_week",
+      "question": "Trong giờ làm việc chỉ cần điểm và tuần khảo sát. Ngoài giờ phải có người duyệt an toàn xác nhận ngoại lệ trước khi bàn giao. Bạn có thể cung cấp thêm chi tiết về thời gian ngoại lệ không?"
+    }
+  },
+  {
+    "item": "6466f7cbb85978",
+    "source": {
+      "id": "h4fe6dda5",
+      "locale": "en",
+      "journey": "appointment",
+      "brief": "For equipment with an existing appointment, establish whether the buyer wants to move it or request an additional inspection.",
+      "buyer_message": "Unit V8. I'm discussing both options with the supervisor; we haven't chosen between moving the visit and adding one.",
+      "required_fields": [
+        {
+          "id": "service_intent",
+          "label": "service intent"
+        },
+        {
+          "id": "equipment",
+          "label": "equipment ID"
+        }
+      ],
+      "received_fields": {
+        "equipment": "V8",
+        "service_intent": "extra visit, from previous call"
+      }
+    },
+    "candidate": {
+      "decision": "ready",
+      "field": "",
+      "question": ""
+    }
+  },
+  {
+    "item": "4cba54a76b3840",
+    "source": {
+      "id": "h3de1a49e",
+      "locale": "vi",
+      "journey": "rfq",
+      "brief": "Bảng giá ghi tối thiểu 6 bộ. Phụ lục áp dụng cùng sản phẩm và khu vực ghi 10 bộ; người duyệt chưa chọn bản chi phối.",
+      "buyer_message": "Cần 8 bộ giao khu Tây. Cho tôi biết có đủ điều kiện hay không.",
+      "required_fields": [
+        {
+          "id": "units",
+          "label": "số bộ"
+        },
+        {
+          "id": "region",
+          "label": "khu vực giao"
+        }
+      ],
+      "received_fields": {
+        "units": "8",
+        "region": "khu Tây"
+      }
+    },
+    "candidate": {
+      "decision": "ask",
+      "field": "units",
+      "question": "Bạn cần 8 bộ giao khu Tây, đúng không?"
+    }
+  },
+  {
+    "item": "ed68715ae183b3",
+    "source": {
+      "id": "h1f4a432c",
+      "locale": "en",
+      "journey": "rfq",
+      "brief": "Ask for current gauge in mm and coil count. A withdrawn gauge must not be reused.",
+      "buyer_message": "Keep three coils. Please discard the 1.5 mm measurement from yesterday; I don't have a replacement yet.",
+      "required_fields": [
+        {
+          "id": "gauge",
+          "label": "gauge"
+        },
+        {
+          "id": "coil_count",
+          "label": "steel coil count"
+        }
+      ],
+      "received_fields": {
+        "gauge": "1.5 mm",
+        "coil_count": "3"
+      }
+    },
+    "candidate": {
+      "decision": "ask",
+      "field": "gauge",
+      "question": "What is the current gauge in millimeters?"
+    }
+  },
+  {
+    "item": "c59abeaa4b99d3",
+    "source": {
+      "id": "h3306db62",
+      "locale": "en",
+      "journey": "appointment",
+      "brief": "Use the latest buyer update when bay and weekday are explicit. The handoff is internal only.",
+      "buyer_message": "The old plan said Wednesday. I confirm Friday this week instead, still bay B2.",
+      "required_fields": [
+        {
+          "id": "bay",
+          "label": "survey bay"
+        },
+        {
+          "id": "weekday",
+          "label": "weekday"
+        }
+      ],
+      "received_fields": {
+        "bay": "B2",
+        "weekday": "Wednesday"
+      }
+    },
+    "candidate": {
+      "decision": "clarify_policy",
+      "field": "weekday",
+      "question": "Is Friday this week the new weekday for bay B2?"
+    }
+  },
+  {
+    "item": "7ad5e00f291843",
+    "source": {
+      "id": "h7ae4fe1b",
+      "locale": "vi",
+      "journey": "appointment",
+      "brief": "Với thiết bị đã có lịch, cần xác định khách muốn đổi lịch hay yêu cầu thêm lượt kiểm tra.",
+      "buyer_message": "Máy V8. Tôi đang trao đổi hai khả năng với quản đốc, chưa chọn đổi lịch hay thêm lượt.",
+      "required_fields": [
+        {
+          "id": "service_intent",
+          "label": "mục đích yêu cầu"
+        },
+        {
+          "id": "equipment",
+          "label": "mã thiết bị"
+        }
+      ],
+      "received_fields": {
+        "equipment": "V8",
+        "service_intent": "thêm lượt, ghi từ cuộc gọi trước"
+      }
+    },
+    "candidate": {
+      "decision": "ask",
+      "field": "service_intent",
+      "question": "Bạn muốn đổi lịch hoặc thêm lượt kiểm tra?"
+    }
+  },
+  {
+    "item": "be948c84f13d95",
+    "source": {
+      "id": "h4fe6dda5",
+      "locale": "en",
+      "journey": "appointment",
+      "brief": "For equipment with an existing appointment, establish whether the buyer wants to move it or request an additional inspection.",
+      "buyer_message": "Unit V8. I'm discussing both options with the supervisor; we haven't chosen between moving the visit and adding one.",
+      "required_fields": [
+        {
+          "id": "service_intent",
+          "label": "service intent"
+        },
+        {
+          "id": "equipment",
+          "label": "equipment ID"
+        }
+      ],
+      "received_fields": {
+        "equipment": "V8",
+        "service_intent": "extra visit, from previous call"
+      }
+    },
+    "candidate": {
+      "decision": "ask",
+      "field": "service_intent",
+      "question": "Do you want to move the visit or request an additional inspection?"
+    }
+  },
+  {
+    "item": "77158e8152d4e1",
+    "source": {
+      "id": "h28fea0cf",
+      "locale": "en",
+      "journey": "rfq",
+      "brief": "The rate card says six kits minimum. An active annex for the same product and region says ten; the approver has not resolved precedence.",
+      "buyer_message": "Eight kits for the West district. Please tell us whether that qualifies.",
+      "required_fields": [
+        {
+          "id": "units",
+          "label": "kit quantity"
+        },
+        {
+          "id": "region",
+          "label": "delivery region"
+        }
+      ],
+      "received_fields": {
+        "units": "8",
+        "region": "West district"
+      }
+    },
+    "candidate": {
+      "decision": "ready",
+      "field": "",
+      "question": ""
+    }
+  },
+  {
+    "item": "d674526f313892",
+    "source": {
+      "id": "h6b03f43b",
+      "locale": "vi",
+      "journey": "appointment",
+      "brief": "Lịch kiểm tra cần mã tủ và ngày cho phép vào. Xác nhận hết hạn phải xin ngày mới.",
+      "buyer_message": "Tủ K12 vẫn đúng. Phiếu cho vào ngày 4 đã hết hạn. Bên trực chưa cấp ngày mới.",
+      "required_fields": [
+        {
+          "id": "cabinet",
+          "label": "tủ cần kiểm tra"
+        },
+        {
+          "id": "access_day",
+          "label": "ngày được vào"
+        }
+      ],
+      "received_fields": {
+        "cabinet": "K12",
+        "access_day": "ngày 4"
+      }
+    },
+    "candidate": {
+      "decision": "ready",
+      "field": "",
+      "question": ""
+    }
+  },
+  {
+    "item": "5cfdd7754301b4",
+    "source": {
+      "id": "h28fea0cf",
+      "locale": "en",
+      "journey": "rfq",
+      "brief": "The rate card says six kits minimum. An active annex for the same product and region says ten; the approver has not resolved precedence.",
+      "buyer_message": "Eight kits for the West district. Please tell us whether that qualifies.",
+      "required_fields": [
+        {
+          "id": "units",
+          "label": "kit quantity"
+        },
+        {
+          "id": "region",
+          "label": "delivery region"
+        }
+      ],
+      "received_fields": {
+        "units": "8",
+        "region": "West district"
+      }
+    },
+    "candidate": {
+      "decision": "ask",
+      "field": "units",
+      "question": "Is the kit quantity eight for the West district?"
+    }
+  },
+  {
+    "item": "f69fd5c9831cd9",
+    "source": {
+      "id": "h547872c8",
+      "locale": "en",
+      "journey": "rfq",
+      "brief": "Obtain the reel count and warehouse receiving slot. Driver name is optional.",
+      "buyer_message": "Confirmed seven reels, receiving 13:00–15:00. The driver's name will only be known at dispatch.",
+      "required_fields": [
+        {
+          "id": "reel_count",
+          "label": "reel count"
+        },
+        {
+          "id": "delivery_slot",
+          "label": "receiving slot"
+        }
+      ],
+      "received_fields": {
+        "reel_count": "7",
+        "delivery_slot": "13:00–15:00"
+      }
+    },
+    "candidate": {
+      "decision": "ready",
+      "field": "",
+      "question": ""
+    }
+  },
+  {
+    "item": "407dd65db63541",
+    "source": {
+      "id": "hb73e3f6",
+      "locale": "vi",
+      "journey": "rfq",
+      "brief": "Chỉ cần khổ tấm bằng mm và số tấm mới nhất. Email của khách có thể cập nhật thông tin.",
+      "buyer_message": "Xin sửa khổ 600 × 900 thành 450 × 700 mm. Vẫn 40 tấm.",
+      "required_fields": [
+        {
+          "id": "sheet_size",
+          "label": "khổ tấm"
+        },
+        {
+          "id": "sheet_count",
+          "label": "số tấm"
+        }
+      ],
+      "received_fields": {
+        "sheet_size": "600 × 900 mm",
+        "sheet_count": "40"
+      }
+    },
+    "candidate": {
+      "decision": "ready",
+      "field": "",
+      "question": ""
+    }
+  },
+  {
+    "item": "86ef4faddc1562",
+    "source": {
+      "id": "h1919de08",
+      "locale": "en",
+      "journey": "appointment",
+      "brief": "Local visits may be handed off. An out-of-area visit requires a service manager's decision before handoff.",
+      "buyer_message": "Machine P22 at out-of-area site Q8. We're waiting for the service manager's decision.",
+      "required_fields": [
+        {
+          "id": "machine",
+          "label": "machine ID"
+        },
+        {
+          "id": "site_code",
+          "label": "site code"
+        }
+      ],
+      "received_fields": {
+        "machine": "P22",
+        "site_code": "Q8"
+      }
+    },
+    "candidate": {
+      "decision": "clarify_policy",
+      "field": "machine",
+      "question": "What is the machine ID for the out-of-area site Q8?"
+    }
+  },
+  {
+    "item": "d03ea9fc389fb4",
+    "source": {
+      "id": "h657b3159",
+      "locale": "en",
+      "journey": "rfq",
+      "brief": "Use the latest sheet size in mm and sheet count. A buyer message can update either.",
+      "buyer_message": "Please replace 600 × 900 with 450 × 700 mm. Still 40 sheets.",
+      "required_fields": [
+        {
+          "id": "sheet_size",
+          "label": "sheet size"
+        },
+        {
+          "id": "sheet_count",
+          "label": "sheet count"
+        }
+      ],
+      "received_fields": {
+        "sheet_size": "600 × 900 mm",
+        "sheet_count": "40"
+      }
+    },
+    "candidate": {
+      "decision": "ready",
+      "field": "",
+      "question": ""
+    }
+  },
+  {
+    "item": "680b9680e5a15f",
+    "source": {
+      "id": "h16a100e6",
+      "locale": "vi",
+      "journey": "rfq",
+      "brief": "Báo giá phụ thuộc đường kính lõi và số cuộn. Lõi đo bằng mm.",
+      "buyer_message": "Cho tôi 9 cuộn. Xưởng chưa gửi đường kính lõi.",
+      "required_fields": [
+        {
+          "id": "roll_core",
+          "label": "lõi cuộn"
+        },
+        {
+          "id": "spool_count",
+          "label": "số cuộn"
+        }
+      ],
+      "received_fields": {
+        "spool_count": "9"
+      }
+    },
+    "candidate": {
+      "decision": "ask",
+      "field": "roll_core",
+      "question": "Lõi cuộn của bạn có đường kính cụ thể không?"
+    }
+  },
+  {
+    "item": "4b51f151338533",
+    "source": {
+      "id": "h2fb7d3cb",
+      "locale": "vi",
+      "journey": "appointment",
+      "brief": "Chỉ cần mã bàn và số kênh sẽ hiệu chuẩn. Ghi nhận được từ xác nhận mới nhất của khách.",
+      "buyer_message": "Bàn C9. Đã đếm đủ, tổng cộng 16 kênh cần hiệu chuẩn.",
+      "required_fields": [
+        {
+          "id": "bench",
+          "label": "bàn hiệu chuẩn"
+        },
+        {
+          "id": "channel_count",
+          "label": "số kênh"
+        }
+      ],
+      "received_fields": {
+        "bench": "C9"
+      }
+    },
+    "candidate": {
+      "decision": "ask",
+      "field": "channel_count",
+      "question": "Bạn cho biết số kênh được không?"
+    }
+  },
+  {
+    "item": "4d513daf59521f",
+    "source": {
+      "id": "h44800dc0",
+      "locale": "vi",
+      "journey": "appointment",
+      "brief": "Dùng cập nhật mới của khách nếu nêu rõ khoang và ngày. Yêu cầu này chỉ dùng lập hồ sơ nội bộ.",
+      "buyer_message": "Kế hoạch cũ ghi thứ Tư. Tôi xác nhận tuần này chuyển sang thứ Sáu, vẫn khoang B2.",
+      "required_fields": [
+        {
+          "id": "bay",
+          "label": "khoang khảo sát"
+        },
+        {
+          "id": "weekday",
+          "label": "ngày trong tuần"
+        }
+      ],
+      "received_fields": {
+        "bay": "B2",
+        "weekday": "thứ Tư"
+      }
+    },
+    "candidate": {
+      "decision": "ready",
+      "field": "",
+      "question": ""
+    }
+  },
+  {
+    "item": "9c8955295efb19",
+    "source": {
+      "id": "h1919de08",
+      "locale": "en",
+      "journey": "appointment",
+      "brief": "Local visits may be handed off. An out-of-area visit requires a service manager's decision before handoff.",
+      "buyer_message": "Machine P22 at out-of-area site Q8. We're waiting for the service manager's decision.",
+      "required_fields": [
+        {
+          "id": "machine",
+          "label": "machine ID"
+        },
+        {
+          "id": "site_code",
+          "label": "site code"
+        }
+      ],
+      "received_fields": {
+        "machine": "P22",
+        "site_code": "Q8"
+      }
+    },
+    "candidate": {
+      "decision": "ready",
+      "field": "",
+      "question": ""
+    }
+  },
+  {
+    "item": "49bd79ce8c374d",
+    "source": {
+      "id": "h3306db62",
+      "locale": "en",
+      "journey": "appointment",
+      "brief": "Use the latest buyer update when bay and weekday are explicit. The handoff is internal only.",
+      "buyer_message": "The old plan said Wednesday. I confirm Friday this week instead, still bay B2.",
+      "required_fields": [
+        {
+          "id": "bay",
+          "label": "survey bay"
+        },
+        {
+          "id": "weekday",
+          "label": "weekday"
+        }
+      ],
+      "received_fields": {
+        "bay": "B2",
+        "weekday": "Wednesday"
+      }
+    },
+    "candidate": {
+      "decision": "ready",
+      "field": "",
+      "question": ""
+    }
+  },
+  {
+    "item": "354913d215fb29",
+    "source": {
+      "id": "h21cafda4",
+      "locale": "en",
+      "journey": "rfq",
+      "brief": "One clause of this quote includes pressure testing, while its signed schedule bills testing separately. The contract owner must resolve this before handoff.",
+      "buyer_message": "Model H7, 30 pieces. Testing is priced two different ways; please confirm.",
+      "required_fields": [
+        {
+          "id": "model",
+          "label": "gasket model"
+        },
+        {
+          "id": "quantity",
+          "label": "piece count"
+        }
+      ],
+      "received_fields": {
+        "model": "H7",
+        "quantity": "30"
+      }
+    },
+    "candidate": {
+      "decision": "ready",
+      "field": "",
+      "question": ""
+    }
+  }
+]

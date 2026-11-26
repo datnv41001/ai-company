@@ -228,9 +228,9 @@ def qualify(api, base, doc, owner, buyer, other, plan, action, observe=None, pre
             assert post(owner, result + "/submissions", form | {"answers": answers | {location: "south"}}).status_code == 409
             if consult:
                 from consultation_fixtures import settle_inquiry
-                def additional_inquiry():
+                def additional_inquiry(**new_answers):
                     other_visit=accepted(post(owner,result+"/visits",{"request_id":uuid4().hex}))
-                    return accepted(post(owner,result+"/submissions",form | {"visit_id":other_visit["entity_id"],"request_id":uuid4().hex}))
+                    return accepted(post(owner,result+"/submissions",form | {"answers":answers | new_answers,"visit_id":other_visit["entity_id"],"request_id":uuid4().hex}))
                 settle_inquiry(api, owner, buyer, other, operator, desk, sandbox, submitted, additional_inquiry, pg=predecessor is not None)
         exports[kind] = item
         if directory := os.getenv("AMC_PRODUCTION_EVIDENCE"):

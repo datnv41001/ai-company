@@ -1,10 +1,22 @@
 # Bắt đầu ở đây khi tiếp quản AI Marketing Company
 
-## Công việc hiện hành trên cây tích hợp nội bộ
+## Công việc hiện hành sau khi hợp nhất PR #56
+
+Phản biện PR #57 phát hiện hai lệnh tạo và bổ sung RFQ theo mét vuông trả HTTP 409 trên head `73c1c04e`. Bản sửa khôi phục `m²` trong hợp đồng `materials_v1`. Khi tiếp quản, dùng [biên nhận RED/GREEN, các đơn vị đối chứng và hướng dẫn chạy](docs/evaluation/department-review/R57-MATERIAL-UNITS.md). Giá trị số lượng thập phân, nguồn phê duyệt và chi tiết giao hàng phải đọc lại được trên cùng RFQ.
+
+Main nội bộ đã hợp nhất cây của #49–56 tại `bbb0b9c41b92e666e133499e9c71f53592828c3d`. Đối chiếu [quyết định và biên nhận trên main](docs/evaluation/department-review/MAIN-56.json) khi tiếp quản. Sáu finding R53-01/02 và R55-01–04 đã đóng. Nhánh tiếp theo bàn giao hai việc cho reviewer sản phẩm: lần theo một yêu cầu khách muốn hủy khi chưa có người nhận và kiểm tra cách ghi nhận việc producer biết phương án đã giao. Người giữ benchmark có thể chấm lại cả ba phương pháp từ kết quả đã lưu. [Báo cáo, đường chạy và câu hỏi phản biện](docs/evaluation/department-review/MARKET-HANDOFF.md) · [Bản đồ tiếp quản](docs/KNOWLEDGE_MAP.md)
+
+Số việc được doanh nghiệp thực tế chấp nhận vẫn là 0. Người phụ trách pilot cần người hành nghề có consent và chứng từ chi phí trước khi ước tính giá trị kinh tế. Quyết định production và Commercial GA vẫn là **NO-GO**.
+
+### Lịch sử trên cây tích hợp
+
+#### Hướng dẫn tại thời điểm review cây tích hợp
 
 Hai nhóm tiếp quản dùng cùng một mốc: reviewer kiểm luồng tư vấn trước MOQ và cách đếm RFQ, người giữ bộ pilot kiểm chuỗi phiên bản và phân công chấm mù. Đối chiếu head đã checkout với biên nhận CI cuối. [Báo cáo review](docs/evaluation/department-review/ROUND-53-55.md) · [Bản đồ tiếp quản](docs/KNOWLEDGE_MAP.md) · [Quy trình rollback](docs/evaluation/sandbox-operations/CUTOVER.md)
 
 Các mục từ đây trở xuống ghi lại hành vi và ưu tiên ở từng mốc lịch sử.
+
+Để tiếp quản bước chuẩn bị pilot, dùng [hướng dẫn khai báo tiếp xúc theo vai trò](docs/evaluation/department-study/PILOT-ABCD/OFFICIAL.md) và [hành trình khách rút RFQ trước phân công](docs/evaluation/business-intake/CONSULTATION.md). Kiểm thử tự động nằm trong `tests/test_department_official_pilot.py`, hai lượt SQLite/PostgreSQL của `tests/test_production_studios.py` và kịch bản Chromium `test_assigned_sales_consultation` trong `tests/browser_role_desk.py`. CI tải ảnh `consultation/withdrawal-*` lên artifact của các hành trình giao diện.
 ## Kiểm tra kế hoạch, biểu mẫu và bàn giao Sales/Service
 
 Ở nhánh tích hợp sau PR #54, mở [bảng năm finding và bằng chứng](docs/evaluation/department-review/README.md). Bảng có đường dẫn kiểm thử hai phiên bản API, hợp đồng intake, khuyến nghị tối ưu, nghiên cứu Qwen, pilot nghiệp vụ và hai ZIP có thể tải từ máy khác. Khi review, đối chiếu head SHA với CI và biên nhận cold handoff tại cùng trang. PR #53 quản trị tri thức đang chờ người có thẩm quyền review. Commercial GA vẫn **NO-GO**.

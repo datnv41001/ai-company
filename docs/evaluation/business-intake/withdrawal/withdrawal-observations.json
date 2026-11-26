@@ -1,0 +1,177 @@
+{
+  "synthetic": true,
+  "browser": "158.0.8127.88",
+  "scope": "Rendered RFQ card before and after coordinator withdrawal",
+  "keyboard": "Tab from required reason to submit; Enter to withdraw",
+  "submit_to_withdrawn_ms": 500,
+  "readings": [
+    {
+      "stage": "before_submit",
+      "viewport": [
+        1280,
+        900
+      ],
+      "theme": "light",
+      "text_samples": 8,
+      "minimum_ratio": 6.782,
+      "contrast_failures": 0,
+      "unresolved": 0,
+      "running_motion": 0,
+      "reflow": true
+    },
+    {
+      "stage": "before_submit",
+      "viewport": [
+        1280,
+        900
+      ],
+      "theme": "dark",
+      "text_samples": 8,
+      "minimum_ratio": 8.842,
+      "contrast_failures": 0,
+      "unresolved": 0,
+      "running_motion": 0,
+      "reflow": true
+    },
+    {
+      "stage": "before_submit",
+      "viewport": [
+        820,
+        1000
+      ],
+      "theme": "light",
+      "text_samples": 8,
+      "minimum_ratio": 6.782,
+      "contrast_failures": 0,
+      "unresolved": 0,
+      "running_motion": 0,
+      "reflow": true
+    },
+    {
+      "stage": "before_submit",
+      "viewport": [
+        820,
+        1000
+      ],
+      "theme": "dark",
+      "text_samples": 8,
+      "minimum_ratio": 8.842,
+      "contrast_failures": 0,
+      "unresolved": 0,
+      "running_motion": 0,
+      "reflow": true
+    },
+    {
+      "stage": "before_submit",
+      "viewport": [
+        390,
+        844
+      ],
+      "theme": "light",
+      "text_samples": 8,
+      "minimum_ratio": 6.782,
+      "contrast_failures": 0,
+      "unresolved": 0,
+      "running_motion": 0,
+      "reflow": true
+    },
+    {
+      "stage": "before_submit",
+      "viewport": [
+        390,
+        844
+      ],
+      "theme": "dark",
+      "text_samples": 8,
+      "minimum_ratio": 8.842,
+      "contrast_failures": 0,
+      "unresolved": 0,
+      "running_motion": 0,
+      "reflow": true
+    },
+    {
+      "stage": "withdrawn",
+      "viewport": [
+        1280,
+        900
+      ],
+      "theme": "light",
+      "text_samples": 3,
+      "minimum_ratio": 6.782,
+      "contrast_failures": 0,
+      "unresolved": 0,
+      "running_motion": 0,
+      "reflow": true
+    },
+    {
+      "stage": "withdrawn",
+      "viewport": [
+        1280,
+        900
+      ],
+      "theme": "dark",
+      "text_samples": 3,
+      "minimum_ratio": 8.842,
+      "contrast_failures": 0,
+      "unresolved": 0,
+      "running_motion": 0,
+      "reflow": true
+    },
+    {
+      "stage": "withdrawn",
+      "viewport": [
+        820,
+        1000
+      ],
+      "theme": "light",
+      "text_samples": 3,
+      "minimum_ratio": 6.782,
+      "contrast_failures": 0,
+      "unresolved": 0,
+      "running_motion": 0,
+      "reflow": true
+    },
+    {
+      "stage": "withdrawn",
+      "viewport": [
+        820,
+        1000
+      ],
+      "theme": "dark",
+      "text_samples": 3,
+      "minimum_ratio": 8.842,
+      "contrast_failures": 0,
+      "unresolved": 0,
+      "running_motion": 0,
+      "reflow": true
+    },
+    {
+      "stage": "withdrawn",
+      "viewport": [
+        390,
+        844
+      ],
+      "theme": "light",
+      "text_samples": 3,
+      "minimum_ratio": 6.782,
+      "contrast_failures": 0,
+      "unresolved": 0,
+      "running_motion": 0,
+      "reflow": true
+    },
+    {
+      "stage": "withdrawn",
+      "viewport": [
+        390,
+        844
+      ],
+      "theme": "dark",
+      "text_samples": 3,
+      "minimum_ratio": 8.842,
+      "contrast_failures": 0,
+      "unresolved": 0,
+      "running_motion": 0,
+      "reflow": true
+    }
+  ]
+}

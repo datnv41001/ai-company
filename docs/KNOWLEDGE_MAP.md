@@ -1,6 +1,6 @@
 # Tiếp quản AMC từ một checkout
 
-Trên cây ghép quản trị và sản phẩm, [mục đầu của HANDOFF](../HANDOFF.md) quyết định việc đang bàn giao. [Register tại checkout](evaluation/DEPARTMENT-CAPABILITY-REGISTER.md) mô tả năng lực có bằng chứng, [kết quả cold handoff #53](evaluation/knowledge-handoff/FINAL-53.md) ghi nhận trạng thái trên SHA lịch sử. Khi lần theo một quyết định kiến trúc, dùng tiêu đề và đường dẫn ADR đã phát hành trong bảng dưới. Số ADR trong danh sách dự kiến của đặc tả phản ánh kế hoạch ban đầu.
+Ở mỗi vòng phát triển, người phụ trách chọn một việc người dùng cần làm, ghi nhận khó khăn từ nguồn công khai có thể đọc và lần tới workflow hiện hữu. Ghi URL, ngày, phần đã đọc, quyền dùng lại, giới hạn và giả thuyết có thể bác bỏ trong [sổ nguồn](research/SOURCE_REGISTRY.md) và [ma trận áp dụng](research/APPLICABILITY_MATRIX.md). Video chỉ có mô tả thì ghi mức mô tả. Kết thúc vòng bằng đầu ra người nhận có thể dùng, kết quả thử và phép đo kinh tế còn thiếu. [Đầu việc theo checkout](../HANDOFF.md) · [Biên nhận main #56](evaluation/department-review/MAIN-56.json) · [Cold handoff lịch sử #53](evaluation/knowledge-handoff/FINAL-53.md)
 
 Đọc theo thứ tự dưới đây. Trước khi báo cáo trạng thái, ghi kết quả của `git rev-parse HEAD`, `git status --short --branch` và nhánh đích. Khi làm việc ngoại tuyến, ghi mốc đồng bộ gần nhất. Mỗi kết quả nghiệm thu chỉ áp dụng cho phiên bản và hành trình đã thử.
 

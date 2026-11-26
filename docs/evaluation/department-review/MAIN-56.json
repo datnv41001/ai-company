@@ -1,0 +1,148 @@
+{
+  "main_before": "380be3eb70a41424c6d45318b0b1890fa950970a",
+  "heads": {
+    "49": "0498949e64f4d030cc9ba2f0f961ab4dfc2e2ab0",
+    "50": "104af78ba2475973404c1043706042595b3b97bf",
+    "51": "a5909321ed012c6ea99fcc0fdfadceb3c334c3ca",
+    "52": "95aed621381c782114b18521d2b2d58eb17a7828",
+    "53": "56a120cac4bb3f77a4e1fc6fe93298cc838121ea",
+    "54": "eff86cda2f99dd10244dc8127451e941bb546a3c",
+    "55": "1202b4321ecd452d3b4bb2373a65b780c63e24f9",
+    "56": "5b5e3ae625dddecf98fddfd063b0cb3855eb6fb2"
+  },
+  "head": "5b5e3ae625dddecf98fddfd063b0cb3855eb6fb2",
+  "trial": "017dc485c1e9660d2d7b33289d839ae0c4da6281",
+  "tree": "46fc7eaffa03c78f738d64a35a1e5dc13a794072",
+  "check_urls": [
+    {
+      "name": "full-workflow",
+      "result": "SKIPPED",
+      "link": "https://github.com/datnv41001/ai-company/actions/runs/45767455102/job/139731703249"
+    },
+    {
+      "name": "api-tests (head)",
+      "result": "SUCCESS",
+      "link": "https://github.com/datnv41001/ai-company/actions/runs/45767455106/job/139731703777"
+    },
+    {
+      "name": "api-tests (head)",
+      "result": "SUCCESS",
+      "link": "https://github.com/datnv41001/ai-company/actions/runs/45767448748/job/139731679123"
+    },
+    {
+      "name": "api-tests (integration)",
+      "result": "SUCCESS",
+      "link": "https://github.com/datnv41001/ai-company/actions/runs/45767455106/job/139731703956"
+    },
+    {
+      "name": "compose-browser (head)",
+      "result": "SUCCESS",
+      "link": "https://github.com/datnv41001/ai-company/actions/runs/45767455106/job/139731703550"
+    },
+    {
+      "name": "compose-browser (head)",
+      "result": "SUCCESS",
+      "link": "https://github.com/datnv41001/ai-company/actions/runs/45767448748/job/139731679803"
+    },
+    {
+      "name": "compose-browser (integration)",
+      "result": "SUCCESS",
+      "link": "https://github.com/datnv41001/ai-company/actions/runs/45767455106/job/139731703933"
+    },
+    {
+      "name": "workforce-model (head)",
+      "result": "SUCCESS",
+      "link": "https://github.com/datnv41001/ai-company/actions/runs/45767455106/job/139731703728"
+    },
+    {
+      "name": "workforce-model (head)",
+      "result": "SUCCESS",
+      "link": "https://github.com/datnv41001/ai-company/actions/runs/45767448748/job/139731679523"
+    },
+    {
+      "name": "workforce-model (integration)",
+      "result": "SUCCESS",
+      "link": "https://github.com/datnv41001/ai-company/actions/runs/45767455106/job/139731703781"
+    },
+    {
+      "name": "matched-model",
+      "result": "SKIPPED",
+      "link": "https://github.com/datnv41001/ai-company/actions/runs/45767455106/job/139734599764"
+    },
+    {
+      "name": "matched-model",
+      "result": "SKIPPED",
+      "link": "https://github.com/datnv41001/ai-company/actions/runs/45767448748/job/139735184627"
+    }
+  ],
+  "maintainer": "datnv41001",
+  "merge": "bbb0b9c41b92e666e133499e9c71f53592828c3d",
+  "parents": [
+    "380be3eb70a41424c6d45318b0b1890fa950970a",
+    "5b5e3ae625dddecf98fddfd063b0cb3855eb6fb2"
+  ],
+  "merged_at": "2026-11-26T06:48:02Z",
+  "main_ci": {
+    "url": "https://github.com/datnv41001/ai-company/actions/runs/45770716137",
+    "jobs": [
+      {
+        "name": "compose-browser (head)",
+        "result": "success",
+        "url": "https://github.com/datnv41001/ai-company/actions/runs/45770716137/job/139742417905"
+      },
+      {
+        "name": "workforce-model (head)",
+        "result": "success",
+        "url": "https://github.com/datnv41001/ai-company/actions/runs/45770716137/job/139742418286"
+      },
+      {
+        "name": "api-tests (head)",
+        "result": "success",
+        "url": "https://github.com/datnv41001/ai-company/actions/runs/45770716137/job/139742418294"
+      },
+      {
+        "name": "matched-model",
+        "result": "skipped",
+        "url": "https://github.com/datnv41001/ai-company/actions/runs/45770716137/job/139745888529"
+      }
+    ],
+    "passed": 602,
+    "skipped": [
+      {
+        "case": "test_wrong_tab_leaves_postgres_family_and_history_unchanged[sqlite]",
+        "reason": "PostgreSQL storage assertions"
+      },
+      {
+        "case": "test_two_workers_commit_orders_and_credential_change[sqlite]",
+        "reason": "real HTTP and PostgreSQL case"
+      }
+    ],
+    "junit_sha256": "b85790d07e913f97b450d1326cbf7f0011b8f15205df762ff642a7f487cf0177",
+    "junit_url": "https://github.com/datnv41001/ai-company/actions/runs/45770716137/artifacts/15095220222",
+    "upgrade_from": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17,
+      18,
+      19,
+      20,
+      21,
+      22
+    ],
+    "restored_tables": 34
+  }
+}

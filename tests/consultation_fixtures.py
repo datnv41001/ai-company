@@ -136,11 +136,47 @@ def settle_inquiry(api, owner, buyer, other, operator, desk, sandbox, original, 
     assert after_rejection["inquiries"]==after_rejection["valid_submissions"]==2
     assert after_rejection["current_states"]=={"cancelled":1,"rejected":1}
     assert after_rejection["qualified_rfqs"]==after_rejection["quotes_issued"]==after_rejection["orders"]==1
+    third=additional_inquiry()
+    third_id=third["entity_id"]
+    def third_action(step, revision, **fields):
+        return payload(step,revision,rfq_id=third_id,**fields)
+    record(operator,routing,third_action("refer",1,assignee_id=sales["id"]))
+    qualified=record(sales,role,third_action("consultation",2,quantity="5",note="Buyer confirmed MOQ."))
+    assert qualified["value"]["state"]=="awaiting_assignment"
+    request=third_action("cancel",3,reason="Buyer changed the requirement and withdrew this request.")
+    assert api.post(sandbox+"/commands",headers=owner["headers"],json=request).status_code==409
+    for actor, profile in ((sales,role),(buyer,routing),(other,routing)):
+        assert decision(actor,profile,request).status_code in (403,404)
+    assert decision(operator,routing,request | {"reason":None}).status_code==409
+    withdrawn=record(operator,routing,request)
+    assert accepted(decision(operator,routing,request))==withdrawn
+    assert decision(operator,routing,request | {"reason":"Changed testimony."}).status_code==409
+    assert withdrawn["value"]["feedback"][-1]=={"step":"cancel","actor":operator["id"],"text":request["reason"]}
+    assert withdrawn["value"]["state"]=="cancelled" and withdrawn["value"]["revision"]==4
+    assert withdrawn["value"]["intake"]==third["value"]["intake"]
+    for rev in (3,4):
+        assert decision(operator,routing,third_action("assign",rev,assignee_id=sales["id"])).status_code==409
+    after_withdrawal=measure()
+    assert after_withdrawal["current_states"]=={"cancelled":2,"rejected":1}
+    assert after_withdrawal["qualified_rfqs"]==2 and after_withdrawal["inquiries"]==3
+    for metric in ("quotes_issued","sales_accepted","orders","confirmed_revenue_vnd"):
+        assert after_withdrawal[metric]==after_rejection[metric]
+    new_answers_key=next(k for k in ("box_count","quantity") if k in third["value"]["intake"]["answers"])
+    replacement=additional_inquiry(**{new_answers_key:6})
+    assert replacement["entity_id"]!=third_id and replacement["value"]["state"]=="qualified"
+    assert replacement["value"]["intake"]["answers"][new_answers_key]==6
+    final_inbox=accepted(api.get(desk+"/"+routing+"/inbox",headers=operator["headers"]))["items"]
+    previous=next(item["value"] for item in final_inbox if item["value"]["id"]==third_id)
+    assert previous["state"]=="cancelled" and previous["intake"]==third["value"]["intake"]
+    # A fresh request is a separate intake and carries no prior commercial decision.
+    for metric in ("quotes_issued","sales_accepted","orders","confirmed_revenue_vnd"):
+        assert measure()[metric]==after_withdrawal[metric]
     journal=accepted(api.get(sandbox,headers=owner["headers"]))["receipts"]
     assert {r["receipt"] for r in records} <= {r["id"] for r in journal}
     if out:=os.getenv("AMC_CONSULTATION_EVIDENCE"):
         directory=Path(out)
         directory.mkdir(parents=True,exist_ok=True)
         result={"synthetic":True,"plan_id":plan,"case_id":ident,"form_receipt":original["id"],"events":records,
-                "qualified":metrics,"after_confirmation":settled,"after_cancellation":final,"after_rejection":after_rejection}
+                "qualified":metrics,"after_confirmation":settled,"after_cancellation":final,"after_rejection":after_rejection,"after_withdrawal":after_withdrawal,"withdrawal_receipt":withdrawn["id"],
+                "replacement_rfq":replacement["entity_id"],"replacement_receipt":replacement["id"]}
         (directory/("postgres.json" if pg else "sqlite.json")).write_text(json.dumps(result,indent=2)+"\n",encoding="utf-8",newline="\n")

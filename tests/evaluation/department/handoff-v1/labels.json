@@ -1,0 +1,170 @@
+[
+  {
+    "id": "101cd4ec",
+    "pair": "p3",
+    "expected": "ask",
+    "field": "finish",
+    "acceptable_question": "Xưởng chọn bề mặt hoàn thiện nào?"
+  },
+  {
+    "id": "1e2883ac",
+    "pair": "p9",
+    "expected": "clarify_policy",
+    "field": "",
+    "acceptable_question": "Đối chiếu với người duyệt tài liệu về điều kiện màu trước khi hỏi thêm bên mua."
+  },
+  {
+    "id": "2e006dcc",
+    "pair": "p8",
+    "expected": "ready",
+    "field": "",
+    "acceptable_question": ""
+  },
+  {
+    "id": "3ab00e0a",
+    "pair": "p11",
+    "expected": "clarify_policy",
+    "field": "",
+    "acceptable_question": "Ask the policy owner which unit governs the quoting threshold."
+  },
+  {
+    "id": "449a6718",
+    "pair": "p5",
+    "expected": "ready",
+    "field": "",
+    "acceptable_question": ""
+  },
+  {
+    "id": "47cc9c36",
+    "pair": "p6",
+    "expected": "ready",
+    "field": "",
+    "acceptable_question": ""
+  },
+  {
+    "id": "485fcab7",
+    "pair": "p4",
+    "expected": "ask",
+    "field": "line_code",
+    "acceptable_question": "Which line code is this inspection for?"
+  },
+  {
+    "id": "49184988",
+    "pair": "p1",
+    "expected": "ask",
+    "field": "dock_code",
+    "acceptable_question": "Xin mã cửa nhận cho lô hàng này."
+  },
+  {
+    "id": "4a23c20d",
+    "pair": "p7",
+    "expected": "ready",
+    "field": "",
+    "acceptable_question": ""
+  },
+  {
+    "id": "51d3687c",
+    "pair": "p2",
+    "expected": "ask",
+    "field": "meter_count",
+    "acceptable_question": "Sau khi kiểm lại, có bao nhiêu đồng hồ cần khảo sát?"
+  },
+  {
+    "id": "54deda37",
+    "pair": "p3",
+    "expected": "ask",
+    "field": "finish",
+    "acceptable_question": "Which surface finish did the workshop choose?"
+  },
+  {
+    "id": "5983a535",
+    "pair": "p1",
+    "expected": "ask",
+    "field": "dock_code",
+    "acceptable_question": "Which receiving bay code should we use for this shipment?"
+  },
+  {
+    "id": "67b87700",
+    "pair": "p10",
+    "expected": "clarify_policy",
+    "field": "",
+    "acceptable_question": "Xác nhận với người phụ trách liệu kiểm tra từ xa có được tiếp nhận."
+  },
+  {
+    "id": "6ffb689",
+    "pair": "p12",
+    "expected": "ask",
+    "field": "entry_point",
+    "acceptable_question": "Which entrance is approved for this visit?"
+  },
+  {
+    "id": "71990981",
+    "pair": "p7",
+    "expected": "ready",
+    "field": "",
+    "acceptable_question": ""
+  },
+  {
+    "id": "72c87c68",
+    "pair": "p4",
+    "expected": "ask",
+    "field": "line_code",
+    "acceptable_question": "Mã dây chuyền của lần kiểm tra này là gì?"
+  },
+  {
+    "id": "74e67bd7",
+    "pair": "p6",
+    "expected": "ready",
+    "field": "",
+    "acceptable_question": ""
+  },
+  {
+    "id": "75dca0ab",
+    "pair": "p9",
+    "expected": "clarify_policy",
+    "field": "",
+    "acceptable_question": "Ask the policy owner which color rule applies before requesting more buyer data."
+  },
+  {
+    "id": "763f2e6a",
+    "pair": "p8",
+    "expected": "ready",
+    "field": "",
+    "acceptable_question": ""
+  },
+  {
+    "id": "7742ae09",
+    "pair": "p11",
+    "expected": "clarify_policy",
+    "field": "",
+    "acceptable_question": "Đề nghị người giữ chính sách xác định đơn vị của ngưỡng báo giá."
+  },
+  {
+    "id": "7c69d09f",
+    "pair": "p12",
+    "expected": "ask",
+    "field": "entry_point",
+    "acceptable_question": "Lối vào nào được duyệt cho lần đo này?"
+  },
+  {
+    "id": "7f8cd632",
+    "pair": "p10",
+    "expected": "clarify_policy",
+    "field": "",
+    "acceptable_question": "Ask the service owner if remote inspections are in scope."
+  },
+  {
+    "id": "8f5d980",
+    "pair": "p5",
+    "expected": "ready",
+    "field": "",
+    "acceptable_question": ""
+  },
+  {
+    "id": "e70cedc",
+    "pair": "p2",
+    "expected": "ask",
+    "field": "meter_count",
+    "acceptable_question": "How many meters need surveying after the recount?"
+  }
+]

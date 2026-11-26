@@ -41,7 +41,7 @@ jobs:
           export DATABASE_URL="postgresql+psycopg://amc_runtime:$AMC_RUNTIME_PASSWORD@127.0.0.1:$port/amc_test_ci"
           export AMC_TEST_PG=1 PYTHONPATH=.
           python migrations/apply.py
-          AMC_INTAKE_EVIDENCE="$RUNNER_TEMP/business-intake" AMC_WF03_HOLD_EVIDENCE="$RUNNER_TEMP/wf03-holds" python -m pytest -q -rs --junitxml="$RUNNER_TEMP/api-regression.xml"
+          AMC_CONSULTATION_EVIDENCE="$RUNNER_TEMP/business-intake/consultation" AMC_INTAKE_EVIDENCE="$RUNNER_TEMP/business-intake" AMC_WF03_HOLD_EVIDENCE="$RUNNER_TEMP/wf03-holds" python -m pytest -q -rs --junitxml="$RUNNER_TEMP/api-regression.xml"
           python tests/check_sandbox_journal.py --container amc-test-pg
           python -c 'import os, sys; sys.path.insert(0, "tests"); from check_postgres_upgrade import rehearse_archive; rehearse_archive(os.environ["AMC_MIGRATION_DSN"], "amc-test-pg", 26)'
           docker exec amc-test-pg createdb -U postgres amc_test_upgrade
@@ -239,7 +239,7 @@ jobs:
           AMC_STUDIO_EVIDENCE="$RUNNER_TEMP/knowledge-center-journeys/marketing-studio-replay" AMC_PRODUCTION_SCREENS="$RUNNER_TEMP/knowledge-center-journeys/production-studios" AMC_DEV_MAILBOX_DIR="$RUNNER_TEMP/c3-studio-mail" python -m pytest -q tests/browser_marketing_studio.py tests/browser_customer_assets.py tests/browser_channel_edition.py tests/browser_production_studios.py --basetemp="$RUNNER_TEMP/c3-studio-db"
           AMC_SERVICE_EDIT_SCREENS="$RUNNER_TEMP/knowledge-center-journeys/service-landing-edit" python -m pytest -q tests/browser_service_landing_edit.py
           AMC_LAB_EVIDENCE="$RUNNER_TEMP/knowledge-center-journeys/campaign-lab" AMC_DEV_MAILBOX_DIR="$RUNNER_TEMP/lab-mail" python -m pytest -q tests/browser_campaign_lab.py --basetemp="$RUNNER_TEMP/lab-db"
-          AMC_OPTIMIZATION_SCREENS="$RUNNER_TEMP/knowledge-center-journeys/optimization-scope" AMC_DEV_MAILBOX_DIR="$RUNNER_TEMP/engine-browser-mail" python -m pytest -q tests/browser_campaign_engine.py tests/browser_role_desk.py --basetemp="$RUNNER_TEMP/engine-browser-db"
+          AMC_DESK_SCREENSHOTS="$RUNNER_TEMP/knowledge-center-journeys/business-desk" AMC_OPTIMIZATION_SCREENS="$RUNNER_TEMP/knowledge-center-journeys/optimization-scope" AMC_DEV_MAILBOX_DIR="$RUNNER_TEMP/engine-browser-mail" python -m pytest -q tests/browser_campaign_engine.py tests/browser_role_desk.py --basetemp="$RUNNER_TEMP/engine-browser-db"
           AMC_PREMIUM_EVIDENCE="$RUNNER_TEMP/premium-ui" AMC_BROWSER_MAILBOX_PROJECT=amc-acceptance AMC_BROWSER_TEST_URL=http://127.0.0.1:8000 python tests/browser_premium_ui.py
       - uses: actions/upload-artifact@v4
         if: always()

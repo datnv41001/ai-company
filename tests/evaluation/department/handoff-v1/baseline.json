@@ -1,0 +1,146 @@
+[
+  {
+    "id": "101cd4ec",
+    "decision": "ready",
+    "field": "",
+    "question": ""
+  },
+  {
+    "id": "1e2883ac",
+    "decision": "ready",
+    "field": "",
+    "question": ""
+  },
+  {
+    "id": "2e006dcc",
+    "decision": "ask",
+    "field": "access_slot",
+    "question": "Could you provide the access window?"
+  },
+  {
+    "id": "3ab00e0a",
+    "decision": "ready",
+    "field": "",
+    "question": ""
+  },
+  {
+    "id": "449a6718",
+    "decision": "ready",
+    "field": "",
+    "question": ""
+  },
+  {
+    "id": "47cc9c36",
+    "decision": "ready",
+    "field": "",
+    "question": ""
+  },
+  {
+    "id": "485fcab7",
+    "decision": "ask",
+    "field": "line_code",
+    "question": "Could you provide the line code?"
+  },
+  {
+    "id": "49184988",
+    "decision": "ask",
+    "field": "dock_code",
+    "question": "Bạn cho biết mã cửa nhận được không?"
+  },
+  {
+    "id": "4a23c20d",
+    "decision": "ready",
+    "field": "",
+    "question": ""
+  },
+  {
+    "id": "51d3687c",
+    "decision": "ready",
+    "field": "",
+    "question": ""
+  },
+  {
+    "id": "54deda37",
+    "decision": "ready",
+    "field": "",
+    "question": ""
+  },
+  {
+    "id": "5983a535",
+    "decision": "ask",
+    "field": "dock_code",
+    "question": "Could you provide the loading bay code?"
+  },
+  {
+    "id": "67b87700",
+    "decision": "clarify_policy",
+    "field": "",
+    "question": ""
+  },
+  {
+    "id": "6ffb689",
+    "decision": "ask",
+    "field": "entry_point",
+    "question": "Could you provide the approved entrance?"
+  },
+  {
+    "id": "71990981",
+    "decision": "ready",
+    "field": "",
+    "question": ""
+  },
+  {
+    "id": "72c87c68",
+    "decision": "ask",
+    "field": "line_code",
+    "question": "Bạn cho biết mã dây chuyền được không?"
+  },
+  {
+    "id": "74e67bd7",
+    "decision": "ready",
+    "field": "",
+    "question": ""
+  },
+  {
+    "id": "75dca0ab",
+    "decision": "ready",
+    "field": "",
+    "question": ""
+  },
+  {
+    "id": "763f2e6a",
+    "decision": "ask",
+    "field": "access_slot",
+    "question": "Bạn cho biết khung giờ vào trạm được không?"
+  },
+  {
+    "id": "7742ae09",
+    "decision": "ready",
+    "field": "",
+    "question": ""
+  },
+  {
+    "id": "7c69d09f",
+    "decision": "ask",
+    "field": "entry_point",
+    "question": "Bạn cho biết lối vào được duyệt được không?"
+  },
+  {
+    "id": "7f8cd632",
+    "decision": "clarify_policy",
+    "field": "",
+    "question": ""
+  },
+  {
+    "id": "8f5d980",
+    "decision": "ready",
+    "field": "",
+    "question": ""
+  },
+  {
+    "id": "e70cedc",
+    "decision": "ready",
+    "field": "",
+    "question": ""
+  }
+]

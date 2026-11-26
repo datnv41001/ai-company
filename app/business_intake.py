@@ -110,11 +110,24 @@ def funnel(plan, state):
     entries = [r for r in state[bucket].values() if r["plan_id"] == plan["id"]]
     matched = [r for r in entries if r.get("session_id") in visits and r.get("intake", {}).get("contract_digest") == contract["digest"]
                and r.get("landing_source") == visits[r["session_id"]]["landing_source"]]
-    return {"contract_digest": contract["digest"], "window": "approved_plan_lifetime", "action": contract["action"],
+    if bucket == "leads":
+        qualified = sum(not row["missing"] for row in matched)
+        stages = {}
+        for row in matched:
+            stages[row["state"]] = stages.get(row["state"], 0) + 1
+        metrics = {"inquiries": len(matched), "qualified_rfqs": qualified,
+                   "sales_accepted": sum(r["sales_accepted"] for r in matched),
+                   "quotes_issued": sum(r["quoted"] for r in matched), "orders": sum(r["ordered"] for r in matched),
+                   "confirmed_revenue_vnd": sum(r["gross_vnd"] - r["refunded_vnd"] for r in matched
+                                                 if r["confirmed"] and r["state"] != "cancelled"),
+                   "current_states": stages,
+                   "qualified_quotes": qualified}  # Deprecated v1 spelling for qualified RFQs.
+    else:
+        metrics = {"confirmed": sum(any(e["event"] == "confirmed" for e in r["history"]) for r in matched)}
+    return {"version": "intake-funnel/2", "contract_digest": contract["digest"], "window": "approved_plan_lifetime", "action": contract["action"],
             "landing_visits": len(visits), "valid_submissions": len(matched),
             "manual_requests": sum(not r.get("landing_source") for r in entries),
-            **({"qualified_quotes": sum(not r["missing"] for r in matched), "orders": sum(r["ordered"] for r in matched)}
-               if bucket == "leads" else {"confirmed": sum(any(e["event"] == "confirmed" for e in r["history"]) for r in matched)})}
+            **metrics}
 
 
 def validate_answers(contract, expected, answers, consent):

@@ -150,10 +150,22 @@ class Sales(Observation):
     kind: Literal["sales"]
     rfq_id: Id
     expected_revision: Positive
-    step: Literal["assign", "reassign", "accept", "reject", "quote", "order", "confirm", "refund", "cancel", "correct"]
+    step: Literal["refer", "assign", "reassign", "accept", "reject", "quote", "order", "confirm", "refund", "cancel", "correct"]
     assignee_id: Id | None = None
     amount_vnd: Money | None = None
     reason: Note | None = None
+
+
+class Consultation(Observation):
+    """Only the named, currently granted Sales recipient can record this follow-up."""
+
+    kind: Literal["consultation"]
+    rfq_id: Id
+    expected_revision: Positive
+    note: Note
+    quantity: Amount | None = None
+    location: Note | None = None
+    required_date: date | None = None
 
 
 class Labor(Command):

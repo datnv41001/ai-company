@@ -1,5 +1,7 @@
 # Pilot thực hành cho hai brief Marketing
 
+Để cấp pilot cho người thực hành, dùng [quy trình cấp bộ mới và chấm theo phiên bản](PILOT-ABCD/OFFICIAL.md). Các bộ có khóa trong repository công khai dùng cho diễn tập.
+
 Gói pilot dành cho một người làm Marketing, một reviewer độc lập và một người nhận bàn giao ở Sales hoặc chủ doanh nghiệp. Người điều phối xác nhận có sự đồng ý của ba người và họ có vai trò phù hợp. Dùng mã người tham gia tự chọn. Không ghi thông tin liên hệ hoặc đưa hồ sơ khách thật vào phiếu.
 
 1. Tạo một thư mục mới bằng `python tests/evaluation/department/pilot.py pack <thư-mục-kết-quả> <thư-mục-pilot>`. Giữ riêng `custodian.json` để sau khi khóa kết quả mới đối chiếu nhãn. Chuyển trực tiếp riêng từng gói cho người chấm. Repository công khai cũng có kết quả kỹ thuật; ghi vào biên bản nếu người chấm đã xem chúng trước khi khóa phiếu. Chuyển `01-manual.zip` trước. Người làm Marketing hoàn thành hai brief vào mẫu trống, lưu sản phẩm, thời gian làm, thời gian hỏi lại và nguồn chi phí. Hai người còn lại chưa xem các nhánh ứng viên.

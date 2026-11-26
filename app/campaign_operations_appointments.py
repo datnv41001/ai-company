@@ -30,6 +30,8 @@ def appointment(cmd, state, plan, store):
         allowed, next_state = TRANSITIONS[cmd.step]
         if prior["state"] not in allowed or occurred < parse_time(prior["last_event_at"]):
             conflict("Invalid appointment transition or time")
+        if cmd.step == "complete" and prior["assignee_id"] != store.actor:
+            conflict("Only the assigned staff member may confirm the service they performed")
         if bool(cmd.assignee_id) != (cmd.step == "assign") or bool(cmd.confirmed_for) != (cmd.step == "confirm"):
             conflict("Use assignment and confirmed time only on their corresponding steps")
         row = {**prior,"state":next_state,"revision":prior["revision"]+1}

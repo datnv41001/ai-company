@@ -1,41 +1,41 @@
 {
   "conditions": "Synthetic agency, independent QA, restricted PostgreSQL and separate loopback dispatcher process.",
-  "schedule": "7ef7a8ff-5f5f-48d3-a78e-7e07abcbb638",
-  "authorization": "83c19e07-00ce-4838-8478-c3ce327e585d",
+  "schedule": "eddeff06-40be-4dc2-98cc-5a535d4e59ba",
+  "authorization": "007a294b-e542-4b9f-aa49-0c856567fbef",
   "execution": {
     "tick": 0,
     "action": "service-preview",
     "http": 200,
-    "receipt": "4e96cda1-9178-440b-91db-170038617ea6"
+    "receipt": "0d4c7072-f5fb-4b19-a380-3505421c57d4"
   },
   "restart_dispatches": 0,
   "action": {
     "id": "service-preview",
     "state": "executed",
-    "due_at": "2026-11-26T00:10:19.295223+00:00",
+    "due_at": "2026-11-26T00:39:49.604164+00:00",
     "target": {
       "mode": "scheduled",
       "group": "copy",
-      "run_id": "5b382e63-470d-416c-833e-9fab58683eaa",
+      "run_id": "4b7ac6e5-f4bc-49d0-b0df-ec9eb750402b",
       "channel": "website",
       "contract": "sandbox-capability/1",
       "action_type": "render_preview",
       "destination": "sandbox_page",
-      "group_digest": "6653d184880232b3ac5dce1f14b976e218d07070acd78283d5dc69cd19eba418",
-      "approval_receipt": "ef534363-fd45-4aec-90fc-8828b6b6dcda",
-      "capability_digest": "31c7f01a675db4f7f0dc072311cc7f39885c8562395b18c3b31b1ac2ff444324"
+      "group_digest": "c28e64f3ac1b50e21c03e3047c851f8822228e7cec793e968b9e7cef4ef8e3ee",
+      "approval_receipt": "08877b22-cbb1-480c-9161-ed406a092443",
+      "capability_digest": "229e449ce407c112359b087b4db5b5b7466a70ef815819c49f3d8aaf1748955d"
     },
-    "plan_id": "9eef5139-6b24-4631-aa90-cf652c962ea0",
+    "plan_id": "d399971b-ed5e-44e2-a7f6-beca15062d28",
     "attempts": 1,
     "cost_vnd": 100,
-    "executed_at": "2026-11-26T00:10:25.954705+00:00",
-    "plan_digest": "1eec14c65284fb3a3599d030cff79dd000bb65c89f1c7aa142cee35f077acb10",
+    "executed_at": "2026-11-26T00:39:56.570415+00:00",
+    "plan_digest": "1b7f262094e830548b1f5da0ccc3c8d54374b46c6e736a3e82a273865094b6d4",
     "asset_digest": "98c76127b9fa12f854d13986871c525ae247325f136c5ca5c7f336913e0c23d2",
     "executed_via": "local_dispatcher",
-    "scheduled_by": "2c0c7288-32ad-4629-86eb-73d699050b75",
-    "authorized_by": "94335535-1b70-47bb-bd23-737ee1be4321",
+    "scheduled_by": "ca211928-3d79-40b8-8dc0-d29377b9fe11",
+    "authorized_by": "b5499fb6-4e20-4314-bd42-b45415ee67af",
     "asset_revision": 2,
-    "deliverable_id": "9487fc59-c940-4106-b2b2-6c0752876d0b",
+    "deliverable_id": "12230f17-8e0f-47ec-8fb4-5fb25b3aecbd",
     "execution_mode": "scheduled",
     "sandbox_output": {
       "type": "render_preview",
@@ -48,11 +48,11 @@
         "value_proposition": "Đối chiếu quy cách và điều kiện áp dụng của Bộ mẫu vải trước khi lựa chọn."
       },
       "destination": "sandbox_page",
-      "group_digest": "6653d184880232b3ac5dce1f14b976e218d07070acd78283d5dc69cd19eba418",
+      "group_digest": "c28e64f3ac1b50e21c03e3047c851f8822228e7cec793e968b9e7cef4ef8e3ee",
       "content_sha256": "e434b2c8db89acd92a86d7527673d7d5ba494904cbb88a7b2e964414e33ea81f",
       "external_writes": 0
     },
-    "execution_receipt": "e9f7e4ec-434f-46d4-9c38-42005eb9b49c"
+    "execution_receipt": "817d37df-09e3-4be9-879c-f81121080b02"
   },
   "observed_attempts": 3,
   "observed_input_tokens": 300,

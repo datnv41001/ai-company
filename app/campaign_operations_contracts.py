@@ -21,9 +21,9 @@ class Command(Input):
 class ActionTarget(Input):
     contract: Literal["sandbox-capability/1"]
     action_type: Literal["render_preview", "rehearse_placement"]
-    channel: Literal["website", "organic_search", "paid_media", "internal"]
-    destination: Literal["sandbox_page", "sandbox_search", "sandbox_ad_slot", "sandbox_review"]
-    group: Literal["copy", "seo", "client_strategy", "client_measurement"]
+    channel: Literal["website", "organic_search", "organic_social", "paid_media", "internal"]
+    destination: Literal["sandbox_page", "sandbox_search", "sandbox_social", "sandbox_ad_slot", "sandbox_review"]
+    group: Literal["copy", "seo", "client_strategy", "client_measurement", "social", "ad", "creative_brief", "calendar"]
     group_digest: Annotated[str, Field(pattern=r"^[a-f0-9]{64}$")]
     mode: Literal["manual", "scheduled"]
 

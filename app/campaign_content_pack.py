@@ -33,19 +33,20 @@ def submitted_fields(intent):
     return list(dict.fromkeys(result))
 
 
-def search_ad_checks(headlines, descriptions):
-    def length(s):
-        return sum(2 if unicodedata.east_asian_width(c) in ("W", "F") else 1
-                   for c in unicodedata.normalize("NFC", s))
+def platform_length(s):
+    return sum(2 if unicodedata.east_asian_width(c) in ("W", "F") else 1
+               for c in unicodedata.normalize("NFC", s))
 
+
+def search_ad_checks(headlines, descriptions):
     problems = []
     for items, name, minimum, maximum, limit in (
         (headlines, "headline", 3, 15, 30), (descriptions, "description", 2, 4, 90)
     ):
         if len(set(items)) != len(items) or not minimum <= len(items) <= maximum:
             problems.append({"field": name, "reason": "count_or_duplicates"})
-        problems.extend({"field": name, "variant": i + 1, "reason": "length", "length": length(value), "limit": limit}
-                        for i, value in enumerate(items) if not value.strip() or length(value) > limit)
+        problems.extend({"field": name, "variant": i + 1, "reason": "length", "length": platform_length(value), "limit": limit}
+                        for i, value in enumerate(items) if not value.strip() or platform_length(value) > limit)
     return problems
 
 
@@ -79,8 +80,18 @@ def compose(plan, projection):
         inputs = (", ".join(labels[:-1]) + tr(" và ", " and ") if len(labels) > 1 else "") + labels[-1]
         lead = tr(f"Gửi kèm {inputs}.", f"Include the {inputs}.")
     title = tr(f"{product} dành cho {buyer}", f"{product} for {buyer}")
-    headlines = [product, short, tr("Xem phạm vi áp dụng", "Check applicable terms")]
-    descriptions = [lead, cta]
+    brand = projection.get("brand") or ""
+    first_headline = brand if platform_length(product) > 30 and 0 < platform_length(brand) <= 30 else product
+    headlines = [first_headline, short, tr("Xem phạm vi áp dụng", "Check applicable terms")]
+    if action == "rfq":
+        ad_copy = tr("Xem điều kiện bán và gửi yêu cầu báo giá cho số lượng bạn cần.",
+                     "Check the selling terms and request a quote for the quantity you need.")
+    elif action in ("appointment", "choose_session", "request_assessment"):
+        ad_copy = tr("Xem phạm vi dịch vụ và đề nghị khung giờ để nhân sự phụ trách xác nhận.",
+                     "Review the service scope and request a time for staff to confirm.")
+    else:
+        ad_copy = tr("Đối chiếu điều kiện áp dụng trước khi lựa chọn.", "Check the applicable terms before you choose.")
+    descriptions = [lead if fields and platform_length(lead) <= 90 else ad_copy, cta]
     pillars = [tr("Chuẩn bị nhu cầu", "Prepare your requirements"), tr("Điều kiện áp dụng", "Understand the terms")]
     group_a = plan["budget_vnd"] // 2
     approved_at = datetime.fromisoformat(plan["approval"]["at"])
@@ -111,7 +122,7 @@ def compose(plan, projection):
             "experiment": tr("So sánh lời nhấn vào nhu cầu với lời nhấn vào điều kiện. Giữ nguyên CTA, trang đích và nhóm người mua.",
                              "Compare needs-led and terms-led copy with the same CTA, audience and landing page."),
             "measurement": projection.get("measurement_contract") or {
-                "status": "requires_measurement_contract", "approved_label": projection["kpi"]},
+                "status": "requires_measurement_contract", "approved_label": projection["kpi"].split(" · ", 1)[0]},
             "destination": {"kind": "sandbox_landing", "manifest": plan["manifests"].get("landing"),
                             "requirement": "select_approved_package_for_current_revision"},
             "external_spend_vnd": 0, "external_spend_scope": "this_offline_draft_only", "publication_receipt": None,

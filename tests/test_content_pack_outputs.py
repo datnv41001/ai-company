@@ -55,6 +55,9 @@ def test_department_pack_for_approved_study_case(api, agency, case):
         assert "receiving_shift" not in pack["buyer_fields"]
     assert [g["budget_vnd"] for g in pack["advertising"]["ad_groups"]] == [150000, 150001]
     assert pack["advertising"]["publication_receipt"] is None
+    assert not pack["advertising"]["format_issues"]
+    if pack["advertising"]["measurement"].get("status") == "requires_measurement_contract":
+        assert " · " not in pack["advertising"]["measurement"]["approved_label"]
     if destination := os.getenv("AMC_CONTENT_PACK_EVIDENCE"):
         out = Path(destination)
         out.mkdir(parents=True, exist_ok=True)

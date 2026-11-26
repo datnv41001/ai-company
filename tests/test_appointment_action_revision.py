@@ -30,8 +30,10 @@ def test_archived_aligned_artifacts_match_source_and_exact_file_qa(case):
     folder = base / "aligned-intake" / case
     proof = json.loads((folder / "evidence.json").read_text(encoding="utf8"))
     channels = json.loads((folder / "channel.json").read_text(encoding="utf8"))
+    browser = json.loads((folder / "screens/sessions.json").read_text(encoding="utf8"))
     for kind, filename in (("creative", "portrait.png"), ("landing", "landing.html")):
         item = proof[kind]
+        assert browser["plan_digest"] == item["plan_digest"] and browser["package_digests"][kind] == item["digest"]
         assert item["plan_digest"] == channels["plan"]["plan_digest"] and item["studio_revision"] == channels["revision"]
         assert item["group_receipts"]["copy"] == channels["group_approvals"]["copy"]["receipt"]
         assert item["production_qa"]["digest"] == item["digest"] and item["production_qa"]["reviewer"] != item["created_by"]

@@ -180,6 +180,9 @@ def test_production_browser(api, workforce, monkeypatch, case):  # noqa: F811
                                 expect(frame.get_by_role("status")).to_contain_text("Người phụ trách sẽ đối chiếu trước khi xác nhận lịch.")
                             elif case["id"] == "index-tray":
                                 expect(frame.get_by_role("status")).to_contain_text("Đã ghi nhận nhu cầu tư vấn.")
+                            if case["id"] in ("index-tray", "receipt-map"):
+                                assert frame.get_by_role("status").evaluate(
+                                    "el=>{const box=el.getBoundingClientRect();return box.top>=0 && box.bottom<=innerHeight+1}")
                             capture_themes(page, out / "form-390.png")
                         if case["buyer_action"] == "appointment":
                             page.goto(origin + "/?workspace=" + owner["tenant"] + "#/campaigns")

@@ -2,24 +2,24 @@
   "source": "synthetic same-document API replay of the previous CTA",
   "previous": {
     "creative": {
-      "id": "909a6f80-ad7b-4607-bfad-786b99509c1c",
-      "did": "9862081a-51d4-48ff-a9da-203485b8bc91",
+      "id": "f6b1867a-eb6c-4b06-a55c-f4b592f772d8",
+      "did": "ea95201e-9616-4d47-9c7f-6c2334ce2610",
       "kind": "creative",
       "version": 1,
       "studio_revision": 2,
-      "plan_digest": "995fcb3da98e4f296ed86afcbc75aa7e459039ede6a548f06c912581c4dfbf0d",
+      "plan_digest": "ef7ae4f25b0f8f4a0071e0834e1416439b93a6dac11f927be2459338b6339496",
       "manifest": {
-        "id": "b6ff04d5-9898-43a3-ac85-447b8bb064bb",
-        "digest": "50fddf95b86a2f9a71120aac9591de4776c85bb8ca119556f6ffeb9d74095e42"
+        "id": "8378d822-8204-4364-a812-8da8cb50d923",
+        "digest": "09bae9a448393f37eaddbd683d8392b704bee52e4ff57ced1d7a33f410e6bebb"
       },
-      "digest": "cdd417f7e002b141751991f525fdb18d5226e0b26ad9ef318209c1f4bafa6266",
+      "digest": "0ae12cec79cb86eda5befe51ac1fd6f4c4aa6d9c2c30d2da4e2d7938a272be4b",
       "group_receipts": {
-        "copy": "761c8c4c-29f9-496a-a59f-ea8bd062354a",
-        "creative_brief": "8312b736-cb04-4ff1-9d7d-59eaedb75581"
+        "copy": "cfa30c0c-a893-40e6-a6bd-ba6bb0fe3734",
+        "creative_brief": "5d9b460c-22e5-431c-b161-36a8b26103f2"
       },
       "production_qa": {
-        "receipt": "5cf4f1e8-0a94-4724-b9b6-be1eba123ad8",
-        "digest": "cdd417f7e002b141751991f525fdb18d5226e0b26ad9ef318209c1f4bafa6266"
+        "receipt": "7f80571b-df49-48f4-9c11-467e36fecd8e",
+        "digest": "0ae12cec79cb86eda5befe51ac1fd6f4c4aa6d9c2c30d2da4e2d7938a272be4b"
       },
       "files": {
         "source.png": {
@@ -60,54 +60,54 @@
       }
     },
     "landing": {
-      "id": "52227b06-972d-4c45-9b5a-a81130fbdfec",
-      "did": "9862081a-51d4-48ff-a9da-203485b8bc91",
+      "id": "1b4387e4-6aa1-4084-84e4-7b8e88a13c62",
+      "did": "ea95201e-9616-4d47-9c7f-6c2334ce2610",
       "kind": "landing",
       "version": 1,
       "studio_revision": 2,
-      "plan_digest": "995fcb3da98e4f296ed86afcbc75aa7e459039ede6a548f06c912581c4dfbf0d",
+      "plan_digest": "ef7ae4f25b0f8f4a0071e0834e1416439b93a6dac11f927be2459338b6339496",
       "manifest": {
-        "id": "b6ff04d5-9898-43a3-ac85-447b8bb064bb",
-        "digest": "50fddf95b86a2f9a71120aac9591de4776c85bb8ca119556f6ffeb9d74095e42"
+        "id": "8378d822-8204-4364-a812-8da8cb50d923",
+        "digest": "09bae9a448393f37eaddbd683d8392b704bee52e4ff57ced1d7a33f410e6bebb"
       },
-      "digest": "1ef246c9509636f36ef822765e6a407ec5d40650121d491694ec54f3cae724a6",
+      "digest": "097e0744020aa0f5a64e7b6027e350a68c585d10a6a57100719ba1c33f313ed1",
       "group_receipts": {
-        "copy": "761c8c4c-29f9-496a-a59f-ea8bd062354a",
-        "seo": "3fa90a99-d259-45f7-b5ea-9fb4f709fe63"
+        "copy": "cfa30c0c-a893-40e6-a6bd-ba6bb0fe3734",
+        "seo": "efb89698-2f87-406a-9e65-47c5747d5e4b"
       },
       "production_qa": {
-        "receipt": "7bfbabf6-7f7e-41c5-8513-53890d40911c",
-        "digest": "1ef246c9509636f36ef822765e6a407ec5d40650121d491694ec54f3cae724a6"
+        "receipt": "f8781f69-01f2-4ea8-bec2-4ad31055ddf7",
+        "digest": "097e0744020aa0f5a64e7b6027e350a68c585d10a6a57100719ba1c33f313ed1"
       },
       "files": {
         "landing.html": {
           "mime": "text/html",
-          "bytes": 4780,
-          "sha256": "38cb8c2196811500d364f153cc0786f6abdf9a285e6a53e292874a5bcbe22435"
+          "bytes": 4936,
+          "sha256": "05f2f68b2fee1eaa1d3060cc22dd2df3e85e03bbd54916fd8551010fc782c984"
         }
       }
     }
   },
   "revised": {
     "creative": {
-      "id": "eaedcc40-11c7-4484-b3c9-f84b0c8b9026",
-      "did": "9862081a-51d4-48ff-a9da-203485b8bc91",
+      "id": "7c931765-c545-443e-9e58-49a4dad44fe2",
+      "did": "ea95201e-9616-4d47-9c7f-6c2334ce2610",
       "kind": "creative",
       "version": 2,
       "studio_revision": 3,
-      "plan_digest": "995fcb3da98e4f296ed86afcbc75aa7e459039ede6a548f06c912581c4dfbf0d",
+      "plan_digest": "ef7ae4f25b0f8f4a0071e0834e1416439b93a6dac11f927be2459338b6339496",
       "manifest": {
-        "id": "b6ff04d5-9898-43a3-ac85-447b8bb064bb",
-        "digest": "50fddf95b86a2f9a71120aac9591de4776c85bb8ca119556f6ffeb9d74095e42"
+        "id": "8378d822-8204-4364-a812-8da8cb50d923",
+        "digest": "09bae9a448393f37eaddbd683d8392b704bee52e4ff57ced1d7a33f410e6bebb"
       },
-      "digest": "5e7d61c4e45eddc0246c14a0519e41bb95bacfd02482ff48508ff467eb1c93c1",
+      "digest": "0276d570e16ef371b10b589d9171fad50cd1e1416bfa62c2f184c66aef7fc5bd",
       "group_receipts": {
-        "copy": "7960cf33-0e10-4ade-bc62-324dd537bbbb",
-        "creative_brief": "58ba76ef-6d07-420e-ad2f-486adbf7f5d4"
+        "copy": "ddc8caed-cd5c-4c25-ab7e-fed70c468338",
+        "creative_brief": "15655424-8a57-4b13-b91e-22a73b6b2d99"
       },
       "production_qa": {
-        "receipt": "4ca13b58-a59c-4bfa-848c-02bf71656502",
-        "digest": "5e7d61c4e45eddc0246c14a0519e41bb95bacfd02482ff48508ff467eb1c93c1"
+        "receipt": "6a60ff62-ad97-4059-8f9e-3231f151e33b",
+        "digest": "0276d570e16ef371b10b589d9171fad50cd1e1416bfa62c2f184c66aef7fc5bd"
       },
       "files": {
         "source.png": {
@@ -148,30 +148,30 @@
       }
     },
     "landing": {
-      "id": "9058d626-f85e-4d6b-af35-9908974d0a10",
-      "did": "9862081a-51d4-48ff-a9da-203485b8bc91",
+      "id": "255f2995-8eb9-4532-a28f-4bef0d895fcc",
+      "did": "ea95201e-9616-4d47-9c7f-6c2334ce2610",
       "kind": "landing",
       "version": 2,
       "studio_revision": 3,
-      "plan_digest": "995fcb3da98e4f296ed86afcbc75aa7e459039ede6a548f06c912581c4dfbf0d",
+      "plan_digest": "ef7ae4f25b0f8f4a0071e0834e1416439b93a6dac11f927be2459338b6339496",
       "manifest": {
-        "id": "b6ff04d5-9898-43a3-ac85-447b8bb064bb",
-        "digest": "50fddf95b86a2f9a71120aac9591de4776c85bb8ca119556f6ffeb9d74095e42"
+        "id": "8378d822-8204-4364-a812-8da8cb50d923",
+        "digest": "09bae9a448393f37eaddbd683d8392b704bee52e4ff57ced1d7a33f410e6bebb"
       },
-      "digest": "18ca045dffa93538c58926dcd2bc591b5b927bddf6a954ee1c6e007bfe6642f8",
+      "digest": "70e2bb6bcb04400beb5013abc1817f982d5863f69457b6306fdb3142814c0dcd",
       "group_receipts": {
-        "copy": "7960cf33-0e10-4ade-bc62-324dd537bbbb",
-        "seo": "3afd7ced-003f-4f16-9a1e-6ec38773ce91"
+        "copy": "ddc8caed-cd5c-4c25-ab7e-fed70c468338",
+        "seo": "fe7185f2-0402-4ae3-90ad-63ada0e92bca"
       },
       "production_qa": {
-        "receipt": "8a45a809-2339-469e-b258-0f44d9a42e44",
-        "digest": "18ca045dffa93538c58926dcd2bc591b5b927bddf6a954ee1c6e007bfe6642f8"
+        "receipt": "a9002355-0d76-4948-9619-74cd355f1baf",
+        "digest": "70e2bb6bcb04400beb5013abc1817f982d5863f69457b6306fdb3142814c0dcd"
       },
       "files": {
         "landing.html": {
           "mime": "text/html",
-          "bytes": 4848,
-          "sha256": "db3e66315bd97d9506907eb03c47fe2d77559a7d57b34457834f99e657b5da4d"
+          "bytes": 5004,
+          "sha256": "092459a140371fb1886a3e6813e0422f4c3a9bcebd40b04bb7c7d9b831b2ec4c"
         }
       }
     }
@@ -179,18 +179,18 @@
   "original_snapshot": "57c49549631e11fd31102cc36abb01ded01ae8cf82c49845917fdcd02a2d5e17",
   "revised_snapshot": "988430fe2e2fc8cbf752564ec3d6b4e77064fc3a88960432ca4b2d24d5bc60e6",
   "old_decision_http": 412,
-  "visit": "2c15ea35-d63e-452d-9271-2dfcc80ae05d",
+  "visit": "5f5d7840-d25e-472c-bfe3-3a45e816668f",
   "submission": {
-    "id": "fc670ca7-a752-4ba5-8fd4-6c920b9d7e30",
-    "campaign_id": "7c5e4195-4c01-4919-9c63-3633b5d6c17a",
-    "plan_id": "027884cf-d6a0-4fa6-843b-dce894b5bdda",
+    "id": "bcf0c963-02a0-4749-a662-f27e18147d6d",
+    "campaign_id": "752d266f-7742-4fd1-afa0-ae05cac5da0c",
+    "plan_id": "abba97f3-cde3-4d41-aeec-c4625d356e7f",
     "sequence": 12,
     "kind": "appointment",
     "entity": "appointments",
-    "entity_id": "8c05e7da6af0dda797f5524b07730a74d54471eb8425abb837ef553a9a522e1e",
+    "entity_id": "59cf94bc6c8ebf60364951824d16c4db041b3fff24ada36a9ea1b013e26add15",
     "value": {
-      "id": "8c05e7da6af0dda797f5524b07730a74d54471eb8425abb837ef553a9a522e1e",
-      "plan_id": "027884cf-d6a0-4fa6-843b-dce894b5bdda",
+      "id": "59cf94bc6c8ebf60364951824d16c4db041b3fff24ada36a9ea1b013e26add15",
+      "plan_id": "abba97f3-cde3-4d41-aeec-c4625d356e7f",
       "revision": 1,
       "state": "requested",
       "assignee_id": null,
@@ -198,24 +198,24 @@
       "history": [
         {
           "event": "requested",
-          "actor": "7e55babf-1fbf-4289-8ee6-032a489f1051",
-          "at": "2026-11-26T08:44:50.627035+00:00",
+          "actor": "ff16a54d-7a17-4ab9-8ef3-fc848b6061fb",
+          "at": "2026-11-26T08:52:00.227888+00:00",
           "feedback": null
         }
       ],
-      "occurred_at": "2026-11-26T08:44:50.627035Z",
+      "occurred_at": "2026-11-26T08:52:00.227888Z",
       "contract": "service-intake/2",
-      "product_id": "d7718498-5378-4b74-b3ef-dfc8227115c8",
+      "product_id": "a77b4d24-1572-486d-8173-599ed492ce63",
       "unit": "visit",
       "quantity": null,
       "requested_for": null,
       "service_scope": "Buổi khảo sát luồng nhận hàng Luồng Rõ",
       "location": "Synthetic site A",
       "contact_purpose": "appointment_request",
-      "session_id": "c1d76ab33142c7fcdec6fcd4e331d559d7551117eb98412b409b0c8972752d07",
-      "last_event_at": "2026-11-26T08:44:50.627035+00:00",
+      "session_id": "c84dae09c923f2b1e14213d877941eeeeee1aa04fad080465034e7d85e29fc85",
+      "last_event_at": "2026-11-26T08:52:00.227888+00:00",
       "intake": {
-        "contract_digest": "950861c4505530e5160ad36376fb110f16bba29c723fbeb66a31b1b0d728fe57",
+        "contract_digest": "af0314a50f85cbd1efc68eea51f6b7b7964d821ce5f09463fcb145213b77b0a0",
         "revision": 1,
         "answers": {
           "site": "north",
@@ -270,26 +270,26 @@
           "granted": true
         }
       },
-      "landing_package": "9058d626-f85e-4d6b-af35-9908974d0a10",
-      "landing_digest": "18ca045dffa93538c58926dcd2bc591b5b927bddf6a954ee1c6e007bfe6642f8",
+      "landing_package": "255f2995-8eb9-4532-a28f-4bef0d895fcc",
+      "landing_digest": "70e2bb6bcb04400beb5013abc1817f982d5863f69457b6306fdb3142814c0dcd",
       "landing_source": {
-        "tenant_id": "c5689e4d-bbbb-4f36-ac0f-5a2e998121f7",
-        "client_id": "ae1650d9-d039-4424-b84f-ae56b2f479a1",
-        "brand_id": "776268b1-6aaf-4874-90ec-4b6f70bb9e3c",
-        "campaign_id": "7c5e4195-4c01-4919-9c63-3633b5d6c17a",
-        "plan_id": "027884cf-d6a0-4fa6-843b-dce894b5bdda",
-        "plan_digest": "995fcb3da98e4f296ed86afcbc75aa7e459039ede6a548f06c912581c4dfbf0d",
-        "document_id": "9862081a-51d4-48ff-a9da-203485b8bc91",
+        "tenant_id": "96f31564-5868-48fa-9826-3a57298d2580",
+        "client_id": "f15c77ad-987e-4833-b851-9493e0a2d87a",
+        "brand_id": "5f194d81-c80a-44ab-be08-1c7bbc7c3318",
+        "campaign_id": "752d266f-7742-4fd1-afa0-ae05cac5da0c",
+        "plan_id": "abba97f3-cde3-4d41-aeec-c4625d356e7f",
+        "plan_digest": "ef7ae4f25b0f8f4a0071e0834e1416439b93a6dac11f927be2459338b6339496",
+        "document_id": "ea95201e-9616-4d47-9c7f-6c2334ce2610",
         "studio_revision": 3,
-        "package_id": "9058d626-f85e-4d6b-af35-9908974d0a10",
+        "package_id": "255f2995-8eb9-4532-a28f-4bef0d895fcc",
         "package_version": 2,
-        "package_digest": "18ca045dffa93538c58926dcd2bc591b5b927bddf6a954ee1c6e007bfe6642f8",
-        "file_digest": "db3e66315bd97d9506907eb03c47fe2d77559a7d57b34457834f99e657b5da4d",
-        "intake_contract_digest": "950861c4505530e5160ad36376fb110f16bba29c723fbeb66a31b1b0d728fe57"
+        "package_digest": "70e2bb6bcb04400beb5013abc1817f982d5863f69457b6306fdb3142814c0dcd",
+        "file_digest": "092459a140371fb1886a3e6813e0422f4c3a9bcebd40b04bb7c7d9b831b2ec4c",
+        "intake_contract_digest": "af0314a50f85cbd1efc68eea51f6b7b7964d821ce5f09463fcb145213b77b0a0"
       }
     },
-    "actor": "7e55babf-1fbf-4289-8ee6-032a489f1051",
-    "recorded_at": "2026-11-26T08:44:50.627035+00:00",
+    "actor": "ff16a54d-7a17-4ab9-8ef3-fc848b6061fb",
+    "recorded_at": "2026-11-26T08:52:00.228679+00:00",
     "intake_writer": "business-intake/1",
     "origin": "landing"
   }

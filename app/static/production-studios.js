@@ -61,7 +61,7 @@ function mountProductionStudio(host,api,path,view,kind,isDirty){
             ? {contract_digest:data.contract_digest,consent:data.consent,answers:data.answers}
             : {quantity:data.quantity,place:data.place,days:data.days};
           const receipt=await api(base+'/'+item.id+'/submissions','POST',{request_id:visit.submit,visit_id:visit.id,...answers});
-          const en=item.master.intake_contract?.locale==='en-US';
+          const en=data.lang==='en';
           let status=en?'Your test quote request was recorded.':'Đã ghi nhận yêu cầu báo giá thử.';
           if(receipt.kind==='appointment')status=en?'Your request was recorded. Staff will review it before confirming an appointment.':
             'Đã ghi nhận đề nghị. Người phụ trách sẽ đối chiếu trước khi xác nhận lịch.';

@@ -16,9 +16,9 @@ button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible{ou
 </style></head><body><main>
 <p class="banner">Trang thử nghiệm nội bộ · Chỉ dùng lựa chọn tổng hợp</p>
 <header><h1>Buổi khảo sát luồng nhận hàng Luồng Rõ</h1><p>Đối chiếu quy cách và điều kiện áp dụng của Buổi khảo sát luồng nhận hàng Luồng Rõ trước khi lựa chọn.</p><a href="#request">Gửi đề nghị khảo sát</a></header>
-<div class="grid"><section><h2>Dịch vụ và quyền lợi</h2><p>Bàn giao sơ đồ luồng nhận hàng Trong phạm vi buổi khảo sát.</p></section><section><h2>Điều kiện áp dụng</h2><p>Giá tham khảo: 760.000 VND / 1 lượt, đã gồm thuế. Đơn tối thiểu: 1 lượt. Áp dụng từ 1 lượt. Số lượng đối chiếu: 1 lượt. Xác nhận số lượng trước khi đặt.
-Bàn giao sơ đồ luồng nhận hàng Trong phạm vi buổi khảo sát.</p></section></div>
-<form id="request" data-contract="6f87e8a11d8254e64daa7f97f297eee7ed82f210debf6ba94072be31c65caeb3"><h2>Gửi đề nghị khảo sát</h2><p>Người phụ trách sẽ đối chiếu đề nghị trước khi xác nhận lịch.</p><label>địa điểm<select name="site" data-answer required><option value=""></option><option value="north">Cơ sở thử A</option><option value="south">Cơ sở thử B</option></select></label><label>ca nhận hàng cần quan sát<select name="receiving_shift" data-answer required><option value=""></option><option value="morning">Ca sáng</option><option value="evening">Ca chiều</option><option value="night">Ca đêm</option></select></label><label><input type="checkbox" name="consent" required>Tôi đồng ý gửi yêu cầu thử cho bộ phận phụ trách.</label><button type="submit">Gửi đề nghị khảo sát</button><p role="status" aria-live="polite"></p></form>
+<div class="grid"><section><h2>Dịch vụ và quyền lợi</h2><p>Bàn giao sơ đồ luồng nhận hàng Trong phạm vi buổi khảo sát.</p></section><section><h2>Điều kiện áp dụng</h2><p>Bàn giao sơ đồ luồng nhận hàng Trong phạm vi buổi khảo sát.
+Giá tham khảo: 760.000 VND / 1 lượt, đã gồm thuế. Đơn tối thiểu: 1 lượt. Áp dụng từ 1 lượt. Số lượng đối chiếu: 1 lượt. Xác nhận số lượng trước khi đặt.</p></section></div>
+<form id="request" data-contract="24284d37e47948f384ec544ea136d37bf5a27847bc9e9a1a7bdcc4db78b3f472"><h2>Gửi đề nghị khảo sát</h2><p>Người phụ trách sẽ đối chiếu đề nghị trước khi xác nhận lịch.</p><label>địa điểm<select name="site" data-answer required><option value=""></option><option value="north">Cơ sở thử A</option><option value="south">Cơ sở thử B</option></select></label><label>ca nhận hàng cần quan sát<select name="receiving_shift" data-answer required><option value=""></option><option value="morning">Ca sáng</option><option value="evening">Ca chiều</option><option value="night">Ca đêm</option></select></label><label><input type="checkbox" name="consent" required>Tôi đồng ý gửi yêu cầu thử cho bộ phận phụ trách.</label><button type="submit">Gửi đề nghị khảo sát</button><p role="status" aria-live="polite"></p></form>
 </main><script>
 const form=document.querySelector('form'), output=document.querySelector('[role=status]');
 let pending=false;
@@ -26,11 +26,14 @@ form.addEventListener('submit', e=>{
  e.preventDefault(); if(pending||!form.reportValidity())return;
  if(parent===window){output.textContent='Mở bản này trong Studio để gửi dữ liệu thử.';return}
  pending=true; form.querySelector('button').disabled=true;
- parent.postMessage({type:'amc-landing-submit/2',contract_digest:form.dataset.contract,consent:form.consent.checked,
+ parent.postMessage({type:'amc-landing-submit/2',lang:document.documentElement.lang,contract_digest:form.dataset.contract,consent:form.consent.checked,
  answers:Object.fromEntries(Array.from(form.querySelectorAll('[data-answer]')).filter(el=>el.value!=='')
  .map(el=>[el.name,el.type==='number'?Number(el.value):el.value]))},'*')
 });
 window.addEventListener('message',e=>{if(e.source===parent&&e.data?.type==='amc-landing-result/1'){
  output.textContent=String(e.data.message);pending=Boolean(e.data.ok);form.querySelector('button').disabled=pending;
 }});
+
+new MutationObserver(()=>output.scrollIntoView({block:'nearest',inline:'nearest'}))
+ .observe(output,{childList:true});
 </script></body></html>

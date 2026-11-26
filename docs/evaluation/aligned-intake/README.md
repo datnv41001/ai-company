@@ -11,11 +11,13 @@ Người biên tập, Sales và Service có thể đọc cùng một bước ti�
 
 Phép thử riêng tái hiện CTA “Đặt lịch” của phiên bản trước trên cùng một tài liệu, qua API Studio. Editor sửa từ revision 2 sang 3. API từ chối lượt duyệt cũ bằng HTTP 412. Người duyệt độc lập trong sandbox ký lại các nhóm và từng package. Ảnh và HTML mới mang version 2 và digest mới. Kiểm tra lại file cũ và snapshot khách cũ vẫn khớp từng byte và digest. Form cũ bị chặn dùng tiếp, form hiện hành ghi nhận một đề nghị khảo sát. [Hai revision với ID và quyết định QA](revision.json)
 
-Hai bộ asset ở bảng trên được xuất từ một lượt diễn tập khác, sử dụng cùng brief. Bằng chứng trình duyệt cũng có plan và package digest của lượt dựng riêng. Trên checkout khác, xác minh từng liên kết bằng ID và digest trong cùng lượt. [Bản đối chứng #58 được giữ nguyên](../campaign-production-review/README.md)
+Hai bộ asset ở bảng trên được xuất khi chạy trình duyệt trên cùng brief. Mỗi bộ có chung plan digest và hai package digest giữa file tải qua API, QA, giao dịch form và ảnh kiểm giao diện. Trên checkout khác, xác minh từng liên kết bằng ID và digest trong cùng lượt. [Bản đối chứng #58 được giữ nguyên](../campaign-production-review/README.md)
 
 ## Nghiệm thu trong Chromium
 
-Ở 1280, 820 và 390 px, kiểm tiêu đề form, metadata, liên kết CTA, nút gửi, trường bắt buộc, consent, điều hướng bằng bàn phím và chiều rộng trang. Ở 390 px, gửi form trong iframe Studio và kiểm thông báo của biên nhận. File HTML mở riêng chỉ xem được. Chromium 158.0.8127.88 chạy trên Windows local. Thời gian 193,47 giây gồm khởi tạo hai hành trình, phần API, trình duyệt và thu bằng chứng. Thời gian người hành nghề làm việc và hiệu quả quảng cáo chưa đo.
+Ở 1280, 820 và 390 px, kiểm tiêu đề form, metadata, liên kết CTA, nút gửi, trường bắt buộc, consent, điều hướng bằng bàn phím và chiều rộng trang. Ở 390 px, gửi form trong iframe Studio và kiểm toàn bộ thông báo của biên nhận nằm trong vùng nhìn thấy. File HTML mở riêng chỉ xem được. Chromium 158.0.8127.88 chạy trên Windows local. Thời gian 53,92 giây gồm khởi tạo hai hành trình, phần API, trình duyệt và thu bằng chứng. Thời gian người hành nghề làm việc và hiệu quả quảng cáo chưa đo.
+
+Lần kiểm đầu cho thấy iframe ngắn che phần cuối thông báo sau khi gửi. Một lần sửa trung gian dùng dữ liệu ngôn ngữ từ master chưa được tải ở màn hình tóm tắt nên cả hai ca báo lỗi trên giao diện dù API đã tiếp nhận. Form hiện gửi mã ngôn ngữ để chọn câu hiển thị. Phần gửi tới API vẫn được giới hạn theo contract. Trạng thái mới tự cuộn vào vùng xem, và lần chạy cuối đã xác minh cả hai kết quả trên điện thoại.
 
 | | Desktop | Tablet | Mobile | Trạng thái sau gửi trên mobile |
 | --- | --- | --- | --- | --- |

@@ -84,7 +84,7 @@ def produce(groups, plan, projection):
     contract = plan.get("intake_contract")
     if contract:
         form = approved_form(contract, cta)
-        message = """{type:'amc-landing-submit/2',contract_digest:form.dataset.contract,consent:form.consent.checked,
+        message = """{type:'amc-landing-submit/2',lang:document.documentElement.lang,contract_digest:form.dataset.contract,consent:form.consent.checked,
  answers:Object.fromEntries(Array.from(form.querySelectorAll('[data-answer]')).filter(el=>el.value!=='')
  .map(el=>[el.name,el.type==='number'?Number(el.value):el.value]))}"""
     else:
@@ -94,6 +94,12 @@ def produce(groups, plan, projection):
 <label>{t("Lịch dịch vụ dự kiến" if action == "appointment" else "Ngày cần hàng", "Requested service slot" if action == "appointment" else "Required delivery date")}<select name="days"><option value="2">{t("Sau hai ngày", "In two days")}</option><option value="7">{t("Sau một tuần", "In one week")}</option></select></label>
 <button type="submit">{t("Gửi yêu cầu tổng hợp", "Submit test request")}</button><p role="status" aria-live="polite"></p></form>"""
     bridge = BRIDGE.replace("__AMC_SELECTIONS__", message)
+    if contract:
+        # In the small Studio frame, adding a receipt expands the form below the submit button.
+        bridge += """
+new MutationObserver(()=>output.scrollIntoView({block:'nearest',inline:'nearest'}))
+ .observe(output,{childList:true});
+"""
     html = f"""<!doctype html><html lang="{"vi" if vi else "en"}"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1"><meta name="robots" content="noindex,nofollow,noarchive">
 <meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'unsafe-inline'; script-src 'unsafe-inline'; connect-src 'none'; form-action 'none'; base-uri 'none';">

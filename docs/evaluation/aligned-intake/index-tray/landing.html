@@ -16,9 +16,9 @@ button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible{ou
 </style></head><body><main>
 <p class="banner">Trang thử nghiệm nội bộ · Chỉ dùng lựa chọn tổng hợp</p>
 <header><h1>Khay chia linh kiện Khe Gọn</h1><p>Đối chiếu quy cách và điều kiện áp dụng của Khay chia linh kiện Khe Gọn trước khi lựa chọn.</p><a href="#request">Yêu cầu báo giá</a></header>
-<div class="grid"><section><h2>Sản phẩm và ứng dụng</h2><p>Vách ngăn có thể tháo rời Áp dụng cho mẫu tiêu chuẩn.</p></section><section><h2>Điều kiện áp dụng</h2><p>Giá tham khảo: 380.000 VND / 1 hộp, đã gồm thuế. Đơn tối thiểu: 5 hộp. Áp dụng từ 5 hộp. Số lượng đối chiếu: 5 hộp. Xác nhận số lượng trước khi đặt.
-Vách ngăn có thể tháo rời Áp dụng cho mẫu tiêu chuẩn.</p></section></div>
-<form id="request" data-contract="e4ea06b6d5e1871026db6be38fd2a046daa8a2650a0f999cdc61eb7f5701a8de"><h2>Yêu cầu báo giá</h2><p>Nếu cần ít hơn mức tối thiểu, bạn vẫn có thể gửi nhu cầu để được tư vấn. Yêu cầu này chưa đủ điều kiện báo giá.</p><label>số hộp (hộp)<input name="box_count" data-answer required type="number" step="1" min="1" max="100"></label><label>địa bàn<select name="destination" data-answer required><option value=""></option><option value="north">Cơ sở thử A</option><option value="south">Cơ sở thử B</option></select></label><label>thời điểm cần hàng<select name="need_date" data-answer required><option value=""></option><option value="2">Sau hai ngày</option><option value="7">Sau một tuần</option></select></label><label><input type="checkbox" name="consent" required>Tôi đồng ý gửi yêu cầu thử cho bộ phận phụ trách.</label><button type="submit">Yêu cầu báo giá</button><p role="status" aria-live="polite"></p></form>
+<div class="grid"><section><h2>Sản phẩm và ứng dụng</h2><p>Vách ngăn có thể tháo rời Áp dụng cho mẫu tiêu chuẩn.</p></section><section><h2>Điều kiện áp dụng</h2><p>Vách ngăn có thể tháo rời Áp dụng cho mẫu tiêu chuẩn.
+Giá tham khảo: 380.000 VND / 1 hộp, đã gồm thuế. Đơn tối thiểu: 5 hộp. Áp dụng từ 5 hộp. Số lượng đối chiếu: 5 hộp. Xác nhận số lượng trước khi đặt.</p></section></div>
+<form id="request" data-contract="ea79bfdfdfc340c46894a1b18eaf28eae96b11db4bc781e7ee6a31130cfd0889"><h2>Yêu cầu báo giá</h2><p>Nếu cần ít hơn mức tối thiểu, bạn vẫn có thể gửi nhu cầu để được tư vấn. Yêu cầu này chưa đủ điều kiện báo giá.</p><label>số hộp (hộp)<input name="box_count" data-answer required type="number" step="1" min="1" max="100"></label><label>địa bàn<select name="destination" data-answer required><option value=""></option><option value="north">Cơ sở thử A</option><option value="south">Cơ sở thử B</option></select></label><label>thời điểm cần hàng<select name="need_date" data-answer required><option value=""></option><option value="2">Sau hai ngày</option><option value="7">Sau một tuần</option></select></label><label><input type="checkbox" name="consent" required>Tôi đồng ý gửi yêu cầu thử cho bộ phận phụ trách.</label><button type="submit">Yêu cầu báo giá</button><p role="status" aria-live="polite"></p></form>
 </main><script>
 const form=document.querySelector('form'), output=document.querySelector('[role=status]');
 let pending=false;
@@ -26,11 +26,14 @@ form.addEventListener('submit', e=>{
  e.preventDefault(); if(pending||!form.reportValidity())return;
  if(parent===window){output.textContent='Mở bản này trong Studio để gửi dữ liệu thử.';return}
  pending=true; form.querySelector('button').disabled=true;
- parent.postMessage({type:'amc-landing-submit/2',contract_digest:form.dataset.contract,consent:form.consent.checked,
+ parent.postMessage({type:'amc-landing-submit/2',lang:document.documentElement.lang,contract_digest:form.dataset.contract,consent:form.consent.checked,
  answers:Object.fromEntries(Array.from(form.querySelectorAll('[data-answer]')).filter(el=>el.value!=='')
  .map(el=>[el.name,el.type==='number'?Number(el.value):el.value]))},'*')
 });
 window.addEventListener('message',e=>{if(e.source===parent&&e.data?.type==='amc-landing-result/1'){
  output.textContent=String(e.data.message);pending=Boolean(e.data.ok);form.querySelector('button').disabled=pending;
 }});
+
+new MutationObserver(()=>output.scrollIntoView({block:'nearest',inline:'nearest'}))
+ .observe(output,{childList:true});
 </script></body></html>

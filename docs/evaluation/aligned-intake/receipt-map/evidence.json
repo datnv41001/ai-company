@@ -1,26 +1,26 @@
 {
   "creative": {
-    "id": "e341e334-8d2c-433f-8d3b-1a6df67bc6c7",
-    "created_by": "3be4c80e-78fb-43cd-a75a-997c37c7a647",
-    "did": "d9f47453-0883-4370-97f4-5b95ad457e95",
+    "id": "d68acf71-d976-44a4-ad3b-83049ff34a7d",
+    "created_by": "0aa41b35-7d63-47e6-9754-f956a087b1b7",
+    "did": "0283df43-6097-4f97-9b73-678a272d0643",
     "version": 2,
     "kind": "creative",
     "studio_revision": 4,
     "manifest": {
-      "id": "fc4f9fdf-8fc9-40e7-aff7-43e649650b99",
-      "digest": "2488ac23bb9f47460aed4ae6e673a48eb45838a7abcc717663c4b0ebd1bd43a0"
+      "id": "ba4089c3-fa6c-49dd-970a-f57c1db392d9",
+      "digest": "4036d7345feb3eea7426d1366ca715886438df899ba81b271de604c0889b86e5"
     },
-    "plan_id": "ca1d8bb0-d005-44e1-809f-4e0545788bbe",
-    "plan_digest": "6bcff6b84bb222ae0a94d1be2aa4351ae6f510e8e121e7a4a01f89fb146eb1cf",
+    "plan_id": "addfb22a-0e3f-4d64-81bc-f2d46bb08a8a",
+    "plan_digest": "d477d7c52fe3d5072a010ba6801f19bcbbab4f6f5f337d1ab79b7125ff2cb030",
     "groups": {
-      "copy": "478006780001d25843f3f775accce347ab710bdcf161790b1da5363e58c02098",
-      "creative_brief": "ae28a1c42d62d7676c40c33b1ad22a51364147ee8e26fcd6467458c3cc2cfdef"
+      "copy": "7cdc73c9becfe065cd08eb5a439f98b01c15d9fcf9f5a14842442b3066f45c54",
+      "creative_brief": "e121ccaf8ecbc676bb62d965ca58bb8a63549d2118a00d1695fab580164d447d"
     },
     "group_receipts": {
-      "copy": "c7698fed-688b-46db-a222-4c92e353ad82",
-      "creative_brief": "d521a2ad-5130-4455-b720-a638c1ba9188"
+      "copy": "0bc34a96-ea3b-4121-afbc-8b25b07e7b92",
+      "creative_brief": "bb3aa466-dbda-4016-8171-2002ea86e0c5"
     },
-    "inputs": "3f21977c15788a3c803bd8a57e1b192200d5535afbdb27258bc0d1bce3115a62",
+    "inputs": "62d2b25b7614a9d60b49f81463f0ed2578765045181529f1eb99ef4349bd515d",
     "master": {
       "contract": "amc.creative-master/1",
       "palette": "forest",
@@ -125,41 +125,41 @@
         "sha256": "c8f7562bc6b29073d1c1b65be2858cee8f78e9f1e286c9ab6d885c45124507fa"
       }
     },
-    "digest": "ce479a9dc99a22b0489e4c45ea0cdd582e6e4051915e36bb0426c1830cfd00bb",
+    "digest": "bba935b1d69dd533a2115e7e3b610723d42bc10834fae0177fe12f89deef6c28",
     "measurement": {
-      "render_ms": 355.03,
+      "render_ms": 395.57,
       "bytes": 391912,
       "external_calls": 0,
       "full_cost_vnd": null
     },
     "production_qa": {
-      "reviewer": "2cce728a-906f-4fb7-8427-512eccaf7b9e",
-      "receipt": "2105dfeb-7850-4839-a16f-cc9e8a412df3",
-      "digest": "ce479a9dc99a22b0489e4c45ea0cdd582e6e4051915e36bb0426c1830cfd00bb"
+      "reviewer": "915db86f-83b5-48b3-a0b6-817ff9c5dabb",
+      "receipt": "c8fedbdc-037d-470d-b8b3-ca2f23915cad",
+      "digest": "bba935b1d69dd533a2115e7e3b610723d42bc10834fae0177fe12f89deef6c28"
     }
   },
   "landing": {
-    "id": "3340b1ca-cc02-4a57-a4a2-615acf039581",
-    "created_by": "3be4c80e-78fb-43cd-a75a-997c37c7a647",
-    "did": "d9f47453-0883-4370-97f4-5b95ad457e95",
+    "id": "c94dc99e-9b29-42ec-bca5-9f693e3eac2f",
+    "created_by": "0aa41b35-7d63-47e6-9754-f956a087b1b7",
+    "did": "0283df43-6097-4f97-9b73-678a272d0643",
     "version": 1,
     "kind": "landing",
     "studio_revision": 4,
     "manifest": {
-      "id": "fc4f9fdf-8fc9-40e7-aff7-43e649650b99",
-      "digest": "2488ac23bb9f47460aed4ae6e673a48eb45838a7abcc717663c4b0ebd1bd43a0"
+      "id": "ba4089c3-fa6c-49dd-970a-f57c1db392d9",
+      "digest": "4036d7345feb3eea7426d1366ca715886438df899ba81b271de604c0889b86e5"
     },
-    "plan_id": "ca1d8bb0-d005-44e1-809f-4e0545788bbe",
-    "plan_digest": "6bcff6b84bb222ae0a94d1be2aa4351ae6f510e8e121e7a4a01f89fb146eb1cf",
+    "plan_id": "addfb22a-0e3f-4d64-81bc-f2d46bb08a8a",
+    "plan_digest": "d477d7c52fe3d5072a010ba6801f19bcbbab4f6f5f337d1ab79b7125ff2cb030",
     "groups": {
-      "copy": "478006780001d25843f3f775accce347ab710bdcf161790b1da5363e58c02098",
-      "seo": "20da344d45086c40fcc5d61fc09c5f9077143406fdc773129a7823707b3cbd44"
+      "copy": "7cdc73c9becfe065cd08eb5a439f98b01c15d9fcf9f5a14842442b3066f45c54",
+      "seo": "ae749f5fcfd9ef36b1bc252ee8a48960b9243238fe8d85fb7ff066339d24bc88"
     },
     "group_receipts": {
-      "copy": "c7698fed-688b-46db-a222-4c92e353ad82",
-      "seo": "1110ec36-4b3d-46e6-b7f7-1dbd4e62edef"
+      "copy": "0bc34a96-ea3b-4121-afbc-8b25b07e7b92",
+      "seo": "3ccb7326-ae7b-4fd0-8d98-d81c11040494"
     },
-    "inputs": "f34421e31a30834760bd431c7745beee231e215faa922f3287424c9cf9658748",
+    "inputs": "362f0862d51dcd23352fdba52da811322f880845ce9c153adff66803f02230f5",
     "master": {
       "contract": "amc.sandbox-landing/2",
       "intake_contract": {
@@ -167,8 +167,8 @@
         "revision": 1,
         "action": "appointment",
         "locale": "vi-VN",
-        "plan_id": "ca1d8bb0-d005-44e1-809f-4e0545788bbe",
-        "subject": "94b0bf30-cdbf-4087-97b6-b7e4f40b5527",
+        "plan_id": "addfb22a-0e3f-4d64-81bc-f2d46bb08a8a",
+        "subject": "cca68b7c-13e5-4713-a34a-b201eda4d3c9",
         "unit": "visit",
         "fields": [
           {
@@ -211,13 +211,13 @@
           }
         ],
         "source": {
-          "id": "fc4f9fdf-8fc9-40e7-aff7-43e649650b99",
-          "digest": "2488ac23bb9f47460aed4ae6e673a48eb45838a7abcc717663c4b0ebd1bd43a0",
-          "brief_id": "fe487d52-a43c-4d82-beae-57d940a59ae4",
+          "id": "ba4089c3-fa6c-49dd-970a-f57c1db392d9",
+          "digest": "4036d7345feb3eea7426d1366ca715886438df899ba81b271de604c0889b86e5",
+          "brief_id": "7df3be35-aad7-4620-8f77-881a23b885a0",
           "workflow": "WF-13/landing-seo-draft@6"
         },
         "selection": "brief",
-        "measurement_digest": "ac6cea62f4d74658ddec24f2b3167d6c8ab9729a950552f518a4086ab42c38d8",
+        "measurement_digest": "7d85efd3d3d1822e6117e2e7389387e9270de0b01415f6d102fd9bc6064b6d4c",
         "consent": {
           "purpose": "appointment_request",
           "required": true,
@@ -229,7 +229,7 @@
             "1"
           ]
         },
-        "digest": "6f87e8a11d8254e64daa7f97f297eee7ed82f210debf6ba94072be31c65caeb3"
+        "digest": "24284d37e47948f384ec544ea136d37bf5a27847bc9e9a1a7bdcc4db78b3f472"
       },
       "kind": "appointment",
       "seo": {
@@ -241,10 +241,10 @@
         "headline": "Buổi khảo sát luồng nhận hàng Luồng Rõ",
         "value_proposition": "Đối chiếu quy cách và điều kiện áp dụng của Buổi khảo sát luồng nhận hàng Luồng Rõ trước khi lựa chọn.",
         "benefit": "Bàn giao sơ đồ luồng nhận hàng Trong phạm vi buổi khảo sát.",
-        "commercial_terms": "Giá tham khảo: 760.000 VND / 1 lượt, đã gồm thuế. Đơn tối thiểu: 1 lượt. Áp dụng từ 1 lượt. Số lượng đối chiếu: 1 lượt. Xác nhận số lượng trước khi đặt.\nBàn giao sơ đồ luồng nhận hàng Trong phạm vi buổi khảo sát.",
+        "commercial_terms": "Bàn giao sơ đồ luồng nhận hàng Trong phạm vi buổi khảo sát.\nGiá tham khảo: 760.000 VND / 1 lượt, đã gồm thuế. Đơn tối thiểu: 1 lượt. Áp dụng từ 1 lượt. Số lượng đối chiếu: 1 lượt. Xác nhận số lượng trước khi đặt.",
         "call_to_action": "Gửi đề nghị khảo sát"
       },
-      "product_id": "94b0bf30-cdbf-4087-97b6-b7e4f40b5527",
+      "product_id": "cca68b7c-13e5-4713-a34a-b201eda4d3c9",
       "unit": "visit",
       "scope": "synthetic_local",
       "public_tracking": false
@@ -252,72 +252,72 @@
     "files": {
       "landing.html": {
         "mime": "text/html",
-        "bytes": 4848,
-        "sha256": "0a4dc2925cac3b821273a80773b7a57006f7b42908b6bfa4030f13168036bf40"
+        "bytes": 5004,
+        "sha256": "5d3c8ed1c230884c8bb927ca4ee38ae63027ce7198a47c48978411690faa87f6"
       }
     },
-    "digest": "d85faeb40bb57196e993f276ef93033eab1366ff39bfe0bfe22005a91c6f9319",
+    "digest": "ae96765b98cf88f545ac7e15c1abfe00f7064c101eb791c96455b53089ccd73f",
     "measurement": {
-      "render_ms": 1.15,
-      "bytes": 4848,
+      "render_ms": 0.16,
+      "bytes": 5004,
       "external_calls": 0,
       "full_cost_vnd": null
     },
     "production_qa": {
-      "reviewer": "2cce728a-906f-4fb7-8427-512eccaf7b9e",
-      "receipt": "b84823c0-48d5-4326-9563-4070460e8578",
-      "digest": "d85faeb40bb57196e993f276ef93033eab1366ff39bfe0bfe22005a91c6f9319"
+      "reviewer": "915db86f-83b5-48b3-a0b6-817ff9c5dabb",
+      "receipt": "be013194-a615-49e3-91e0-bc70570728e2",
+      "digest": "ae96765b98cf88f545ac7e15c1abfe00f7064c101eb791c96455b53089ccd73f"
     }
   },
   "events": [
     {
-      "id": "e5fee226-6978-4080-98bd-f3ee7bb94779",
-      "campaign_id": "1879e4b4-e04c-4ad9-9326-f967fcb341ad",
-      "plan_id": "ca1d8bb0-d005-44e1-809f-4e0545788bbe",
+      "id": "b16a5157-a61d-45ca-af5b-2c1103cd8c35",
+      "campaign_id": "b9f31b70-4473-4d27-a112-35422eb2a5a8",
+      "plan_id": "addfb22a-0e3f-4d64-81bc-f2d46bb08a8a",
       "sequence": 15,
       "kind": "session",
       "entity": "sessions",
-      "entity_id": "6f6b4d5bc5c8f329c5c22945eb6444db75fec54a3db4c0ff20d90e9b95252c5a",
+      "entity_id": "51ec94ede096736c7550867cb77e3ce7493debb331c2f71229ffcd5b17faf7dc",
       "value": {
-        "id": "6f6b4d5bc5c8f329c5c22945eb6444db75fec54a3db4c0ff20d90e9b95252c5a",
-        "visitor": "9378f01a893cd8467a59fd60249f95e1b674e1a1056162481455cdfbde843874",
+        "id": "51ec94ede096736c7550867cb77e3ce7493debb331c2f71229ffcd5b17faf7dc",
+        "visitor": "c152eb29df375138ab5bf380d399a6895c45e0445d48d045242b7556678fedc8",
         "action_id": null,
-        "occurred_at": "2026-11-26T08:41:24.386264+00:00",
-        "plan_id": "ca1d8bb0-d005-44e1-809f-4e0545788bbe",
-        "landing_package": "3340b1ca-cc02-4a57-a4a2-615acf039581",
-        "landing_digest": "d85faeb40bb57196e993f276ef93033eab1366ff39bfe0bfe22005a91c6f9319",
+        "occurred_at": "2026-11-26T08:52:27.247314+00:00",
+        "plan_id": "addfb22a-0e3f-4d64-81bc-f2d46bb08a8a",
+        "landing_package": "c94dc99e-9b29-42ec-bca5-9f693e3eac2f",
+        "landing_digest": "ae96765b98cf88f545ac7e15c1abfe00f7064c101eb791c96455b53089ccd73f",
         "landing_source": {
-          "tenant_id": "2819374e-9f5f-4e47-9e85-918992e4123d",
-          "client_id": "0a2b4b29-7ce4-446e-837a-c1f0289dcd30",
-          "brand_id": "0186a968-b17c-45ac-b6ef-caf10592dedb",
-          "campaign_id": "1879e4b4-e04c-4ad9-9326-f967fcb341ad",
-          "plan_id": "ca1d8bb0-d005-44e1-809f-4e0545788bbe",
-          "plan_digest": "6bcff6b84bb222ae0a94d1be2aa4351ae6f510e8e121e7a4a01f89fb146eb1cf",
-          "document_id": "d9f47453-0883-4370-97f4-5b95ad457e95",
+          "tenant_id": "69bfa856-b004-47c0-885b-d42e236d1510",
+          "client_id": "b9978d5f-5602-48ea-a789-4f5b5277db19",
+          "brand_id": "a76bcabb-5077-4d86-9478-349c6a507e40",
+          "campaign_id": "b9f31b70-4473-4d27-a112-35422eb2a5a8",
+          "plan_id": "addfb22a-0e3f-4d64-81bc-f2d46bb08a8a",
+          "plan_digest": "d477d7c52fe3d5072a010ba6801f19bcbbab4f6f5f337d1ab79b7125ff2cb030",
+          "document_id": "0283df43-6097-4f97-9b73-678a272d0643",
           "studio_revision": 4,
-          "package_id": "3340b1ca-cc02-4a57-a4a2-615acf039581",
+          "package_id": "c94dc99e-9b29-42ec-bca5-9f693e3eac2f",
           "package_version": 1,
-          "package_digest": "d85faeb40bb57196e993f276ef93033eab1366ff39bfe0bfe22005a91c6f9319",
-          "file_digest": "0a4dc2925cac3b821273a80773b7a57006f7b42908b6bfa4030f13168036bf40",
-          "intake_contract_digest": "6f87e8a11d8254e64daa7f97f297eee7ed82f210debf6ba94072be31c65caeb3"
+          "package_digest": "ae96765b98cf88f545ac7e15c1abfe00f7064c101eb791c96455b53089ccd73f",
+          "file_digest": "5d3c8ed1c230884c8bb927ca4ee38ae63027ce7198a47c48978411690faa87f6",
+          "intake_contract_digest": "24284d37e47948f384ec544ea136d37bf5a27847bc9e9a1a7bdcc4db78b3f472"
         }
       },
-      "actor": "3be4c80e-78fb-43cd-a75a-997c37c7a647",
-      "recorded_at": "2026-11-26T08:41:24.386264+00:00",
+      "actor": "0aa41b35-7d63-47e6-9754-f956a087b1b7",
+      "recorded_at": "2026-11-26T08:52:27.248573+00:00",
       "intake_writer": "business-intake/1",
       "origin": "landing"
     },
     {
-      "id": "67417c90-8494-4b48-a2f1-66a03c17d87c",
-      "campaign_id": "1879e4b4-e04c-4ad9-9326-f967fcb341ad",
-      "plan_id": "ca1d8bb0-d005-44e1-809f-4e0545788bbe",
+      "id": "0116d7d6-72c6-4ca6-9b05-c8c1debce72d",
+      "campaign_id": "b9f31b70-4473-4d27-a112-35422eb2a5a8",
+      "plan_id": "addfb22a-0e3f-4d64-81bc-f2d46bb08a8a",
       "sequence": 16,
       "kind": "appointment",
       "entity": "appointments",
-      "entity_id": "b3fd0bee7f5169242276c7f67268f033e1e8881da2c1765599b100a687879acd",
+      "entity_id": "9ab25fcf389090aaf867d2a022a8c734fcdf101335d30a49409085071c671521",
       "value": {
-        "id": "b3fd0bee7f5169242276c7f67268f033e1e8881da2c1765599b100a687879acd",
-        "plan_id": "ca1d8bb0-d005-44e1-809f-4e0545788bbe",
+        "id": "9ab25fcf389090aaf867d2a022a8c734fcdf101335d30a49409085071c671521",
+        "plan_id": "addfb22a-0e3f-4d64-81bc-f2d46bb08a8a",
         "revision": 1,
         "state": "requested",
         "assignee_id": null,
@@ -325,24 +325,24 @@
         "history": [
           {
             "event": "requested",
-            "actor": "3be4c80e-78fb-43cd-a75a-997c37c7a647",
-            "at": "2026-11-26T08:41:25.873304+00:00",
+            "actor": "0aa41b35-7d63-47e6-9754-f956a087b1b7",
+            "at": "2026-11-26T08:52:27.959196+00:00",
             "feedback": null
           }
         ],
-        "occurred_at": "2026-11-26T08:41:25.873304Z",
+        "occurred_at": "2026-11-26T08:52:27.959196Z",
         "contract": "service-intake/2",
-        "product_id": "94b0bf30-cdbf-4087-97b6-b7e4f40b5527",
+        "product_id": "cca68b7c-13e5-4713-a34a-b201eda4d3c9",
         "unit": "visit",
         "quantity": null,
         "requested_for": null,
         "service_scope": "Buổi khảo sát luồng nhận hàng Luồng Rõ",
         "location": "Synthetic site A",
         "contact_purpose": "appointment_request",
-        "session_id": "6f6b4d5bc5c8f329c5c22945eb6444db75fec54a3db4c0ff20d90e9b95252c5a",
-        "last_event_at": "2026-11-26T08:41:25.873304+00:00",
+        "session_id": "51ec94ede096736c7550867cb77e3ce7493debb331c2f71229ffcd5b17faf7dc",
+        "last_event_at": "2026-11-26T08:52:27.959196+00:00",
         "intake": {
-          "contract_digest": "6f87e8a11d8254e64daa7f97f297eee7ed82f210debf6ba94072be31c65caeb3",
+          "contract_digest": "24284d37e47948f384ec544ea136d37bf5a27847bc9e9a1a7bdcc4db78b3f472",
           "revision": 1,
           "answers": {
             "site": "north",
@@ -397,26 +397,26 @@
             "granted": true
           }
         },
-        "landing_package": "3340b1ca-cc02-4a57-a4a2-615acf039581",
-        "landing_digest": "d85faeb40bb57196e993f276ef93033eab1366ff39bfe0bfe22005a91c6f9319",
+        "landing_package": "c94dc99e-9b29-42ec-bca5-9f693e3eac2f",
+        "landing_digest": "ae96765b98cf88f545ac7e15c1abfe00f7064c101eb791c96455b53089ccd73f",
         "landing_source": {
-          "tenant_id": "2819374e-9f5f-4e47-9e85-918992e4123d",
-          "client_id": "0a2b4b29-7ce4-446e-837a-c1f0289dcd30",
-          "brand_id": "0186a968-b17c-45ac-b6ef-caf10592dedb",
-          "campaign_id": "1879e4b4-e04c-4ad9-9326-f967fcb341ad",
-          "plan_id": "ca1d8bb0-d005-44e1-809f-4e0545788bbe",
-          "plan_digest": "6bcff6b84bb222ae0a94d1be2aa4351ae6f510e8e121e7a4a01f89fb146eb1cf",
-          "document_id": "d9f47453-0883-4370-97f4-5b95ad457e95",
+          "tenant_id": "69bfa856-b004-47c0-885b-d42e236d1510",
+          "client_id": "b9978d5f-5602-48ea-a789-4f5b5277db19",
+          "brand_id": "a76bcabb-5077-4d86-9478-349c6a507e40",
+          "campaign_id": "b9f31b70-4473-4d27-a112-35422eb2a5a8",
+          "plan_id": "addfb22a-0e3f-4d64-81bc-f2d46bb08a8a",
+          "plan_digest": "d477d7c52fe3d5072a010ba6801f19bcbbab4f6f5f337d1ab79b7125ff2cb030",
+          "document_id": "0283df43-6097-4f97-9b73-678a272d0643",
           "studio_revision": 4,
-          "package_id": "3340b1ca-cc02-4a57-a4a2-615acf039581",
+          "package_id": "c94dc99e-9b29-42ec-bca5-9f693e3eac2f",
           "package_version": 1,
-          "package_digest": "d85faeb40bb57196e993f276ef93033eab1366ff39bfe0bfe22005a91c6f9319",
-          "file_digest": "0a4dc2925cac3b821273a80773b7a57006f7b42908b6bfa4030f13168036bf40",
-          "intake_contract_digest": "6f87e8a11d8254e64daa7f97f297eee7ed82f210debf6ba94072be31c65caeb3"
+          "package_digest": "ae96765b98cf88f545ac7e15c1abfe00f7064c101eb791c96455b53089ccd73f",
+          "file_digest": "5d3c8ed1c230884c8bb927ca4ee38ae63027ce7198a47c48978411690faa87f6",
+          "intake_contract_digest": "24284d37e47948f384ec544ea136d37bf5a27847bc9e9a1a7bdcc4db78b3f472"
         }
       },
-      "actor": "3be4c80e-78fb-43cd-a75a-997c37c7a647",
-      "recorded_at": "2026-11-26T08:41:25.873893+00:00",
+      "actor": "0aa41b35-7d63-47e6-9754-f956a087b1b7",
+      "recorded_at": "2026-11-26T08:52:27.959196+00:00",
       "intake_writer": "business-intake/1",
       "origin": "landing"
     }
@@ -424,15 +424,15 @@
   "intake": {
     "synthetic": true,
     "case": "receipt-map",
-    "plan_id": "ca1d8bb0-d005-44e1-809f-4e0545788bbe",
-    "plan_digest": "6bcff6b84bb222ae0a94d1be2aa4351ae6f510e8e121e7a4a01f89fb146eb1cf",
+    "plan_id": "addfb22a-0e3f-4d64-81bc-f2d46bb08a8a",
+    "plan_digest": "d477d7c52fe3d5072a010ba6801f19bcbbab4f6f5f337d1ab79b7125ff2cb030",
     "contract": {
       "version": "business-intake/1",
       "revision": 1,
       "action": "appointment",
       "locale": "vi-VN",
-      "plan_id": "ca1d8bb0-d005-44e1-809f-4e0545788bbe",
-      "subject": "94b0bf30-cdbf-4087-97b6-b7e4f40b5527",
+      "plan_id": "addfb22a-0e3f-4d64-81bc-f2d46bb08a8a",
+      "subject": "cca68b7c-13e5-4713-a34a-b201eda4d3c9",
       "unit": "visit",
       "fields": [
         {
@@ -475,13 +475,13 @@
         }
       ],
       "source": {
-        "id": "fc4f9fdf-8fc9-40e7-aff7-43e649650b99",
-        "digest": "2488ac23bb9f47460aed4ae6e673a48eb45838a7abcc717663c4b0ebd1bd43a0",
-        "brief_id": "fe487d52-a43c-4d82-beae-57d940a59ae4",
+        "id": "ba4089c3-fa6c-49dd-970a-f57c1db392d9",
+        "digest": "4036d7345feb3eea7426d1366ca715886438df899ba81b271de604c0889b86e5",
+        "brief_id": "7df3be35-aad7-4620-8f77-881a23b885a0",
         "workflow": "WF-13/landing-seo-draft@6"
       },
       "selection": "brief",
-      "measurement_digest": "ac6cea62f4d74658ddec24f2b3167d6c8ab9729a950552f518a4086ab42c38d8",
+      "measurement_digest": "7d85efd3d3d1822e6117e2e7389387e9270de0b01415f6d102fd9bc6064b6d4c",
       "consent": {
         "purpose": "appointment_request",
         "required": true,
@@ -493,38 +493,38 @@
           "1"
         ]
       },
-      "digest": "6f87e8a11d8254e64daa7f97f297eee7ed82f210debf6ba94072be31c65caeb3"
+      "digest": "24284d37e47948f384ec544ea136d37bf5a27847bc9e9a1a7bdcc4db78b3f472"
     },
     "copy": {
-      "digest": "6f87e8a11d8254e64daa7f97f297eee7ed82f210debf6ba94072be31c65caeb3",
+      "digest": "24284d37e47948f384ec544ea136d37bf5a27847bc9e9a1a7bdcc4db78b3f472",
       "fields": [
         "site",
         "receiving_shift"
       ]
     },
-    "package_id": "3340b1ca-cc02-4a57-a4a2-615acf039581",
-    "package_digest": "d85faeb40bb57196e993f276ef93033eab1366ff39bfe0bfe22005a91c6f9319",
+    "package_id": "c94dc99e-9b29-42ec-bca5-9f693e3eac2f",
+    "package_digest": "ae96765b98cf88f545ac7e15c1abfe00f7064c101eb791c96455b53089ccd73f",
     "file": {
       "mime": "text/html",
-      "bytes": 4848,
-      "sha256": "0a4dc2925cac3b821273a80773b7a57006f7b42908b6bfa4030f13168036bf40"
+      "bytes": 5004,
+      "sha256": "5d3c8ed1c230884c8bb927ca4ee38ae63027ce7198a47c48978411690faa87f6"
     },
     "group_receipts": {
-      "copy": "c7698fed-688b-46db-a222-4c92e353ad82",
-      "seo": "1110ec36-4b3d-46e6-b7f7-1dbd4e62edef"
+      "copy": "0bc34a96-ea3b-4121-afbc-8b25b07e7b92",
+      "seo": "3ccb7326-ae7b-4fd0-8d98-d81c11040494"
     },
     "file_approval": {
-      "receipt": "b84823c0-48d5-4326-9563-4070460e8578",
-      "digest": "d85faeb40bb57196e993f276ef93033eab1366ff39bfe0bfe22005a91c6f9319"
+      "receipt": "be013194-a615-49e3-91e0-bc70570728e2",
+      "digest": "ae96765b98cf88f545ac7e15c1abfe00f7064c101eb791c96455b53089ccd73f"
     },
-    "commercial_terms": "Giá tham khảo: 760.000 VND / 1 lượt, đã gồm thuế. Đơn tối thiểu: 1 lượt. Áp dụng từ 1 lượt. Số lượng đối chiếu: 1 lượt. Xác nhận số lượng trước khi đặt.\nBàn giao sơ đồ luồng nhận hàng Trong phạm vi buổi khảo sát.",
-    "visit_id": "e5fee226-6978-4080-98bd-f3ee7bb94779",
-    "submitted_id": "67417c90-8494-4b48-a2f1-66a03c17d87c",
+    "commercial_terms": "Bàn giao sơ đồ luồng nhận hàng Trong phạm vi buổi khảo sát.\nGiá tham khảo: 760.000 VND / 1 lượt, đã gồm thuế. Đơn tối thiểu: 1 lượt. Áp dụng từ 1 lượt. Số lượng đối chiếu: 1 lượt. Xác nhận số lượng trước khi đặt.",
+    "visit_id": "b16a5157-a61d-45ca-af5b-2c1103cd8c35",
+    "submitted_id": "0116d7d6-72c6-4ca6-9b05-c8c1debce72d",
     "submit_kind": "appointment",
     "crm_entity": "appointments",
     "state": "requested",
     "crm_fields": {
-      "contract_digest": "6f87e8a11d8254e64daa7f97f297eee7ed82f210debf6ba94072be31c65caeb3",
+      "contract_digest": "24284d37e47948f384ec544ea136d37bf5a27847bc9e9a1a7bdcc4db78b3f472",
       "revision": 1,
       "answers": {
         "site": "north",
@@ -579,10 +579,10 @@
         "granted": true
       }
     },
-    "desk_readback_digest": "6f87e8a11d8254e64daa7f97f297eee7ed82f210debf6ba94072be31c65caeb3",
+    "desk_readback_digest": "24284d37e47948f384ec544ea136d37bf5a27847bc9e9a1a7bdcc4db78b3f472",
     "landing_funnel": {
       "version": "intake-funnel/2",
-      "contract_digest": "6f87e8a11d8254e64daa7f97f297eee7ed82f210debf6ba94072be31c65caeb3",
+      "contract_digest": "24284d37e47948f384ec544ea136d37bf5a27847bc9e9a1a7bdcc4db78b3f472",
       "window": "approved_plan_lifetime",
       "action": "appointment",
       "landing_visits": 1,
@@ -612,14 +612,14 @@
         "refunds": "not_a_monetary_outcome",
         "missing_attribution": "include_and_report_separately",
         "reconciliation": "join_authorized_lifecycle_receipts_by_plan_and_appointment_id",
-        "id": "0b2bdb31-1a4f-4961-9767-e6c1e731e02a",
+        "id": "c54b932f-371c-4b08-930d-7f632a5111e7",
         "revision": 1,
-        "digest": "ac6cea62f4d74658ddec24f2b3167d6c8ab9729a950552f518a4086ab42c38d8"
+        "digest": "7d85efd3d3d1822e6117e2e7389387e9270de0b01415f6d102fd9bc6064b6d4c"
       },
       "definition": "KPI chính trong 21 ngày: số lịch do nhân sự xác nhận trên số yêu cầu đặt lịch hợp lệ. Vận hành dịch vụ đối soát mỗi mã hẹn một lần. Giữ các sự kiện đủ điều kiện trước khi hủy. Tách hủy, vắng mặt và thiếu nguồn; hoàn tiền không đổi tỷ lệ.",
-      "plan_id": "ca1d8bb0-d005-44e1-809f-4e0545788bbe",
-      "window_start_exclusive": "2026-11-05T08:41:26.608746+00:00",
-      "as_of_inclusive": "2026-11-26T08:41:26.608746+00:00",
+      "plan_id": "addfb22a-0e3f-4d64-81bc-f2d46bb08a8a",
+      "window_start_exclusive": "2026-11-05T08:52:28.411412+00:00",
+      "as_of_inclusive": "2026-11-26T08:52:28.411412+00:00",
       "numerator": 0,
       "denominator": 1,
       "ratio": 0.0,

@@ -1,0 +1,11 @@
+{
+  "checkout": "d79f76373af99585b6b8b720b2a60a93f882c48b",
+  "initial_full_suite": "local-exact.xml",
+  "case": "test_restricted_production[False]",
+  "location": "tests/consultation_fixtures.py:133",
+  "operation": "Refer second synthetic inquiry to assigned Sales staff",
+  "observed": "Invalid or out-of-order Sales transition",
+  "focused_repeat": "restricted-recheck.xml",
+  "fresh_full_repeat": "local-exact-recheck.xml",
+  "interpretation": "The response is observed. Its cause has not been established. No Sales code or test was changed in this round."
+}

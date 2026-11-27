@@ -1,0 +1,30 @@
+{
+  "workspace": "Synthetic agency",
+  "campaign_name": "Tray pilot",
+  "checks": [
+    {
+      "client": "bf6aceb4-d7c4-4136-89fb-74798901a8d9",
+      "requested_client": "bf6aceb4-d7c4-4136-89fb-74798901a8d9",
+      "campaign": "0439727f-26d5-48a4-960b-06bc897272a8",
+      "status": 404
+    },
+    {
+      "client": "bf6aceb4-d7c4-4136-89fb-74798901a8d9",
+      "requested_client": "00b5a73d-6b98-4d97-bce0-29e0180decaa",
+      "campaign": "323a7940-598d-4db5-ac9b-65eb08a5292f",
+      "status": 404
+    },
+    {
+      "client": "00b5a73d-6b98-4d97-bce0-29e0180decaa",
+      "requested_client": "bf6aceb4-d7c4-4136-89fb-74798901a8d9",
+      "campaign": "0439727f-26d5-48a4-960b-06bc897272a8",
+      "status": 404
+    },
+    {
+      "client": "00b5a73d-6b98-4d97-bce0-29e0180decaa",
+      "requested_client": "00b5a73d-6b98-4d97-bce0-29e0180decaa",
+      "campaign": "323a7940-598d-4db5-ac9b-65eb08a5292f",
+      "status": 404
+    }
+  ]
+}

@@ -1,0 +1,2242 @@
+[
+  {
+    "event": "push",
+    "branch": "main",
+    "checkout_variant": "head",
+    "workflow_head": "053410d161b15285a1ef264f853d4920a3d559e1",
+    "job": "https://github.com/datnv41001/ai-company/actions/runs/45949512674/job/140341848432",
+    "attempt": 1,
+    "artifact": "https://github.com/datnv41001/ai-company/actions/runs/45949512674/artifacts/15175229791",
+    "whole_job_wall_seconds": 434,
+    "standard_pool_smoke_only": {
+      "input_tokens": 2517,
+      "output_tokens": 813,
+      "attempts": 9,
+      "unconfirmed": 1
+    },
+    "released_v3_materials": {
+      "checkout": "053410d161b15285a1ef264f853d4920a3d559e1",
+      "state": "awaiting_qa",
+      "journal": [
+        {
+          "skill": "director",
+          "attempt": 1,
+          "outcome": "ok",
+          "input_tokens": 575,
+          "output_tokens": 64
+        },
+        {
+          "skill": "research",
+          "attempt": 1,
+          "outcome": "ok",
+          "input_tokens": 873,
+          "output_tokens": 101
+        },
+        {
+          "skill": "strategy",
+          "attempt": 1,
+          "outcome": "ok",
+          "input_tokens": 1033,
+          "output_tokens": 175
+        }
+      ],
+      "first_pass": true,
+      "model_sha256": "74a4da8c9fdbcd15bd1f6d01d621410d31c6fc00986f5eb687824e7b93d7a9db"
+    },
+    "legacy_v1_research_strategy_smoke": {
+      "first_pass": 2,
+      "first_attempts": 3,
+      "outcomes": {
+        "ok": 3,
+        "invalid_source": 1
+      },
+      "stage_attempts": [
+        {
+          "skill": "director",
+          "outcome": "ok",
+          "attempt": 1,
+          "input_tokens": 216,
+          "output_tokens": 56
+        },
+        {
+          "skill": "research",
+          "outcome": "ok",
+          "attempt": 1,
+          "input_tokens": 288,
+          "output_tokens": 77
+        },
+        {
+          "skill": "strategy",
+          "outcome": "invalid_source",
+          "attempt": 1,
+          "input_tokens": 415,
+          "output_tokens": 139
+        },
+        {
+          "skill": "strategy",
+          "outcome": "ok",
+          "attempt": 2,
+          "input_tokens": 431,
+          "output_tokens": 153
+        }
+      ]
+    },
+    "measured_reports": {
+      "diamond-measurements.json": [
+        {
+          "state": "failed",
+          "first_pass": 0,
+          "attempts": 1,
+          "outcomes": {
+            "recipient_revoked": 1
+          },
+          "input_tokens": 0,
+          "output_tokens": 0,
+          "unconfirmed_usage": 1,
+          "stage_attempts": [
+            {
+              "skill": "director",
+              "outcome": "recipient_revoked",
+              "attempt": 1,
+              "input_tokens": null,
+              "output_tokens": null
+            }
+          ]
+        },
+        {
+          "state": "awaiting_qa",
+          "first_pass": 5,
+          "attempts": 5,
+          "outcomes": {
+            "ok": 5
+          },
+          "input_tokens": 1352,
+          "output_tokens": 494,
+          "unconfirmed_usage": 0,
+          "stage_attempts": [
+            {
+              "skill": "director",
+              "outcome": "ok",
+              "attempt": 1,
+              "input_tokens": 231,
+              "output_tokens": 96
+            },
+            {
+              "skill": "research",
+              "outcome": "ok",
+              "attempt": 1,
+              "input_tokens": 237,
+              "output_tokens": 59
+            },
+            {
+              "skill": "strategy",
+              "outcome": "ok",
+              "attempt": 1,
+              "input_tokens": 276,
+              "output_tokens": 108
+            },
+            {
+              "skill": "content",
+              "outcome": "ok",
+              "attempt": 1,
+              "input_tokens": 305,
+              "output_tokens": 100
+            },
+            {
+              "skill": "seo",
+              "outcome": "ok",
+              "attempt": 1,
+              "input_tokens": 303,
+              "output_tokens": 131
+            }
+          ]
+        },
+        {
+          "state": "awaiting_qa",
+          "first_pass": 5,
+          "attempts": 5,
+          "outcomes": {
+            "ok": 5
+          },
+          "input_tokens": 1339,
+          "output_tokens": 442,
+          "unconfirmed_usage": 0,
+          "stage_attempts": [
+            {
+              "skill": "director",
+              "outcome": "ok",
+              "attempt": 1,
+              "input_tokens": 231,
+              "output_tokens": 92
+            },
+            {
+              "skill": "research",
+              "outcome": "ok",
+              "attempt": 1,
+              "input_tokens": 245,
+              "output_tokens": 73
+            },
+            {
+              "skill": "strategy",
+              "outcome": "ok",
+              "attempt": 1,
+              "input_tokens": 273,
+              "output_tokens": 78
+            },
+            {
+              "skill": "content",
+              "outcome": "ok",
+              "attempt": 1,
+              "input_tokens": 296,
+              "output_tokens": 109
+            },
+            {
+              "skill": "seo",
+              "outcome": "ok",
+              "attempt": 1,
+              "input_tokens": 294,
+              "output_tokens": 90
+            }
+          ]
+        }
+      ],
+      "dynamic-measurements.json": [
+        {
+          "state": "failed",
+          "first_pass": 0,
+          "attempts": 1,
+          "outcomes": {
+            "recipient_revoked": 1
+          },
+          "input_tokens": 0,
+          "output_tokens": 0,
+          "unconfirmed_usage": 1,
+          "stage_attempts": [
+            {
+              "skill": "director",
+              "outcome": "recipient_revoked",
+              "attempt": 1,
+              "input_tokens": null,
+              "output_tokens": null
+            }
+          ]
+        },
+        {
+          "state": "awaiting_qa",
+          "first_pass": 2,
+          "attempts": 2,
+          "outcomes": {
+            "ok": 2
+          },
+          "input_tokens": 595,
+          "output_tokens": 149,
+          "unconfirmed_usage": 0,
+          "stage_attempts": [
+            {
+              "skill": "director",
+              "outcome": "ok",
+              "attempt": 1,
+              "input_tokens": 343,
+              "output_tokens": 53
+            },
+            {
+              "skill": "content",
+              "outcome": "ok",
+              "attempt": 1,
+              "input_tokens": 252,
+              "output_tokens": 96
+            }
+          ]
+        },
+        {
+          "state": "awaiting_qa",
+          "first_pass": 3,
+          "attempts": 3,
+          "outcomes": {
+            "ok": 3
+          },
+          "input_tokens": 957,
+          "output_tokens": 297,
+          "unconfirmed_usage": 0,
+          "stage_attempts": [
+            {
+              "skill": "director",
+              "outcome": "ok",
+              "attempt": 1,
+              "input_tokens": 353,
+              "output_tokens": 104
+            },
+            {
+              "skill": "content",
+              "outcome": "ok",
+              "attempt": 1,
+              "input_tokens": 268,
+              "output_tokens": 93
+            },
+            {
+              "skill": "seo",
+              "outcome": "ok",
+              "attempt": 1,
+              "input_tokens": 336,
+              "output_tokens": 100
+            }
+          ]
+        }
+      ],
+      "parallel-measurements.json": {
+        "real_specialist_calls": 2,
+        "input_tokens": 518,
+        "output_tokens": 200,
+        "two_slot_span_ms": 5675.190701,
+        "estimated_microusd": 0
+      },
+      "pool-measurements.json": [
+        {
+          "state": "failed",
+          "first_pass": 0,
+          "attempts": 1,
+          "outcomes": {
+            "recipient_revoked": 1
+          },
+          "input_tokens": 0,
+          "output_tokens": 0,
+          "unconfirmed_usage": 1,
+          "stage_attempts": [
+            {
+              "skill": "director",
+              "outcome": "recipient_revoked",
+              "attempt": 1,
+              "input_tokens": null,
+              "output_tokens": null
+            }
+          ]
+        },
+        {
+          "state": "awaiting_qa",
+          "first_pass": 4,
+          "attempts": 4,
+          "outcomes": {
+            "ok": 4
+          },
+          "input_tokens": 1280,
+          "output_tokens": 411,
+          "unconfirmed_usage": 0,
+          "stage_attempts": [
+            {
+              "skill": "director",
+              "outcome": "ok",
+              "attempt": 1,
+              "input_tokens": 216,
+              "output_tokens": 105
+            },
+            {
+              "skill": "research",
+              "outcome": "ok",
+              "attempt": 1,
+              "input_tokens": 260,
+              "output_tokens": 124
+            },
+            {
+              "skill": "strategy",
+              "outcome": "ok",
+              "attempt": 1,
+              "input_tokens": 368,
+              "output_tokens": 86
+            },
+            {
+              "skill": "content",
+              "outcome": "ok",
+              "attempt": 1,
+              "input_tokens": 436,
+              "output_tokens": 96
+            }
+          ]
+        },
+        {
+          "state": "awaiting_qa",
+          "first_pass": 4,
+          "attempts": 4,
+          "outcomes": {
+            "ok": 4
+          },
+          "input_tokens": 1237,
+          "output_tokens": 402,
+          "unconfirmed_usage": 0,
+          "stage_attempts": [
+            {
+              "skill": "director",
+              "outcome": "ok",
+              "attempt": 1,
+              "input_tokens": 216,
+              "output_tokens": 85
+            },
+            {
+              "skill": "research",
+              "outcome": "ok",
+              "attempt": 1,
+              "input_tokens": 259,
+              "output_tokens": 108
+            },
+            {
+              "skill": "strategy",
+              "outcome": "ok",
+              "attempt": 1,
+              "input_tokens": 347,
+              "output_tokens": 109
+            },
+            {
+              "skill": "content",
+              "outcome": "ok",
+              "attempt": 1,
+              "input_tokens": 415,
+              "output_tokens": 100
+            }
+          ]
+        }
+      ],
+      "registry-measurements.json": [
+        {
+          "state": "awaiting_qa",
+          "first_pass": 3,
+          "attempts": 3,
+          "outcomes": {
+            "ok": 3
+          },
+          "input_tokens": 991,
+          "output_tokens": 256,
+          "unconfirmed_usage": 0,
+          "stage_attempts": [
+            {
+              "skill": "director",
+              "outcome": "ok",
+              "attempt": 1,
+              "input_tokens": 386,
+              "output_tokens": 97
+            },
+            {
+              "skill": "content",
+              "outcome": "ok",
+              "attempt": 1,
+              "input_tokens": 275,
+              "output_tokens": 78
+            },
+            {
+              "skill": "seo",
+              "outcome": "ok",
+              "attempt": 1,
+              "input_tokens": 330,
+              "output_tokens": 81
+            }
+          ]
+        }
+      ],
+      "research-strategy-measurements.json": {
+        "state": "awaiting_qa",
+        "first_pass": 2,
+        "attempts": 4,
+        "outcomes": {
+          "ok": 3,
+          "invalid_source": 1
+        },
+        "input_tokens": 1350,
+        "output_tokens": 425,
+        "unconfirmed_usage": 0,
+        "stage_attempts": [
+          {
+            "skill": "director",
+            "outcome": "ok",
+            "attempt": 1,
+            "input_tokens": 216,
+            "output_tokens": 56
+          },
+          {
+            "skill": "research",
+            "outcome": "ok",
+            "attempt": 1,
+            "input_tokens": 288,
+            "output_tokens": 77
+          },
+          {
+            "skill": "strategy",
+            "outcome": "invalid_source",
+            "attempt": 1,
+            "input_tokens": 415,
+            "output_tokens": 139
+          },
+          {
+            "skill": "strategy",
+            "outcome": "ok",
+            "attempt": 2,
+            "input_tokens": 431,
+            "output_tokens": 153
+          }
+        ]
+      },
+      "role-qa-measurements.json": {
+        "state": "awaiting_qa",
+        "first_pass": 3,
+        "attempts": 3,
+        "outcomes": {
+          "ok": 3
+        },
+        "input_tokens": 1012,
+        "output_tokens": 272,
+        "unconfirmed_usage": 0,
+        "stage_attempts": [
+          {
+            "skill": "director",
+            "outcome": "ok",
+            "attempt": 1,
+            "input_tokens": 386,
+            "output_tokens": 100
+          },
+          {
+            "skill": "content",
+            "outcome": "ok",
+            "attempt": 1,
+            "input_tokens": 273,
+            "output_tokens": 83
+          },
+          {
+            "skill": "seo",
+            "outcome": "ok",
+            "attempt": 1,
+            "input_tokens": 353,
+            "output_tokens": 89
+          }
+        ]
+      },
+      "c3-internal-receipts/materials/result.json": {
+        "run_id": "b1b0c163-ac0c-4a02-ad6b-6471434c0b45",
+        "checkout": "053410d161b15285a1ef264f853d4920a3d559e1",
+        "workflow": "WF-03/research-strategy-draft@3",
+        "input_tokens": 2481,
+        "output_tokens": 340,
+        "runtime_s": 19.142,
+        "provider_fee_usd": 0,
+        "unmetered_attempts": 0,
+        "last_error": null,
+        "recorded_calls": 3
+      },
+      "c3-internal-receipts/seller/result.json": {
+        "run_id": "fed2d67e-23e4-45ec-b33d-985569e98b4b",
+        "checkout": "053410d161b15285a1ef264f853d4920a3d559e1",
+        "workflow": "WF-13/landing-seo-draft@6",
+        "input_tokens": 1620,
+        "output_tokens": 312,
+        "runtime_s": 14.32,
+        "provider_fee_usd": 0,
+        "unmetered_attempts": 0,
+        "last_error": null,
+        "recorded_calls": 3
+      },
+      "c3-model-receipts/projected/materials/result.json": {
+        "run_id": "f7f76406-2b50-4438-95b1-a33602f8b829",
+        "checkout": "053410d161b15285a1ef264f853d4920a3d559e1",
+        "workflow": "WF-03/research-strategy-draft@2",
+        "input_tokens": 1610,
+        "output_tokens": 367,
+        "runtime_s": 14.484,
+        "provider_fee_usd": 0,
+        "unmetered_attempts": 0,
+        "last_error": null,
+        "recorded_calls": 3
+      },
+      "c3-model-receipts/projected/service/result.json": {
+        "run_id": "3f6f8f00-fbff-4af6-9bbc-935a320973db",
+        "checkout": "053410d161b15285a1ef264f853d4920a3d559e1",
+        "workflow": "WF-13/landing-seo-draft@5",
+        "input_tokens": 1422,
+        "output_tokens": 330,
+        "runtime_s": 12.48,
+        "provider_fee_usd": 0,
+        "unmetered_attempts": 0,
+        "last_error": null,
+        "recorded_calls": 3
+      }
+    },
+    "coverage": "Overlapping fixture reports. Missing telemetry and runner billing preclude a reliable all-job token or cost total.",
+    "model_service": "loopback model on the Actions runner",
+    "actions_billed_cost": null
+  },
+  {
+    "event": "push",
+    "branch": "feature/runtime-strategy-content-handoff",
+    "checkout_variant": "head",
+    "workflow_head": "d79f76373af99585b6b8b720b2a60a93f882c48b",
+    "job": "https://github.com/datnv41001/ai-company/actions/runs/45952305938/job/140350731782",
+    "attempt": 1,
+    "artifact": "https://github.com/datnv41001/ai-company/actions/runs/45952305938/artifacts/15178125332",
+    "whole_job_wall_seconds": 585,
+    "standard_pool_smoke_only": {
+      "input_tokens": 2517,
+      "output_tokens": 813,
+      "attempts": 9,
+      "unconfirmed": 1
+    },
+    "released_v3_materials": {
+      "checkout": "d79f76373af99585b6b8b720b2a60a93f882c48b",
+      "state": "awaiting_qa",
+      "journal": [
+        {
+          "skill": "director",
+          "attempt": 1,
+          "outcome": "ok",
+          "input_tokens": 575,
+          "output_tokens": 64
+        },
+        {
+          "skill": "research",
+          "attempt": 1,
+          "outcome": "ok",
+          "input_tokens": 873,
+          "output_tokens": 106
+        },
+        {
+          "skill": "strategy",
+          "attempt": 1,
+          "outcome": "ok",
+          "input_tokens": 1040,
+          "output_tokens": 169
+        }
+      ],
+      "first_pass": true,
+      "model_sha256": "74a4da8c9fdbcd15bd1f6d01d621410d31c6fc00986f5eb687824e7b93d7a9db"
+    },
+    "legacy_v1_research_strategy_smoke": {
+      "first_pass": 2,
+      "first_attempts": 3,
+      "outcomes": {
+        "ok": 3,
+        "invalid_source": 1
+      },
+      "stage_attempts": [
+        {
+          "skill": "director",
+          "outcome": "ok",
+          "attempt": 1,
+          "input_tokens": 216,
+          "output_tokens": 56
+        },
+        {
+          "skill": "research",
+          "outcome": "ok",
+          "attempt": 1,
+          "input_tokens": 288,
+          "output_tokens": 77
+        },
+        {
+          "skill": "strategy",
+          "outcome": "invalid_source",
+          "attempt": 1,
+          "input_tokens": 415,
+          "output_tokens": 139
+        },
+        {
+          "skill": "strategy",
+          "outcome": "ok",
+          "attempt": 2,
+          "input_tokens": 431,
+          "output_tokens": 153
+        }
+      ]
+    },
+    "measured_reports": {
+      "diamond-measurements.json": [
+        {
+          "state": "failed",
+          "first_pass": 0,
+          "attempts": 1,
+          "outcomes": {
+            "recipient_revoked": 1
+          },
+          "input_tokens": 0,
+          "output_tokens": 0,
+          "unconfirmed_usage": 1,
+          "stage_attempts": [
+            {
+              "skill": "director",
+              "outcome": "recipient_revoked",
+              "attempt": 1,
+              "input_tokens": null,
+              "output_tokens": null
+            }
+          ]
+        },
+        {
+          "state": "awaiting_qa",
+          "first_pass": 5,
+          "attempts": 5,
+          "outcomes": {
+            "ok": 5
+          },
+          "input_tokens": 1352,
+          "output_tokens": 494,
+          "unconfirmed_usage": 0,
+          "stage_attempts": [
+            {
+              "skill": "director",
+              "outcome": "ok",
+              "attempt": 1,
+              "input_tokens": 231,
+              "output_tokens": 96
+            },
+            {
+              "skill": "research",
+              "outcome": "ok",
+              "attempt": 1,
+              "input_tokens": 237,
+              "output_tokens": 59
+            },
+            {
+              "skill": "strategy",
+              "outcome": "ok",
+              "attempt": 1,
+              "input_tokens": 276,
+              "output_tokens": 108
+            },
+            {
+              "skill": "content",
+              "outcome": "ok",
+              "attempt": 1,
+              "input_tokens": 305,
+              "output_tokens": 100
+            },
+            {
+              "skill": "seo",
+              "outcome": "ok",
+              "attempt": 1,
+              "input_tokens": 303,
+              "output_tokens": 131
+            }
+          ]
+        },
+        {
+          "state": "awaiting_qa",
+          "first_pass": 5,
+          "attempts": 5,
+          "outcomes": {
+            "ok": 5
+          },
+          "input_tokens": 1339,
+          "output_tokens": 442,
+          "unconfirmed_usage": 0,
+          "stage_attempts": [
+            {
+              "skill": "director",
+              "outcome": "ok",
+              "attempt": 1,
+              "input_tokens": 231,
+              "output_tokens": 92
+            },
+            {
+              "skill": "research",
+              "outcome": "ok",
+              "attempt": 1,
+              "input_tokens": 245,
+              "output_tokens": 73
+            },
+            {
+              "skill": "strategy",
+              "outcome": "ok",
+              "attempt": 1,
+              "input_tokens": 273,
+              "output_tokens": 78
+            },
+            {
+              "skill": "content",
+              "outcome": "ok",
+              "attempt": 1,
+              "input_tokens": 296,
+              "output_tokens": 109
+            },
+            {
+              "skill": "seo",
+              "outcome": "ok",
+              "attempt": 1,
+              "input_tokens": 294,
+              "output_tokens": 90
+            }
+          ]
+        }
+      ],
+      "dynamic-measurements.json": [
+        {
+          "state": "failed",
+          "first_pass": 0,
+          "attempts": 1,
+          "outcomes": {
+            "recipient_revoked": 1
+          },
+          "input_tokens": 0,
+          "output_tokens": 0,
+          "unconfirmed_usage": 1,
+          "stage_attempts": [
+            {
+              "skill": "director",
+              "outcome": "recipient_revoked",
+              "attempt": 1,
+              "input_tokens": null,
+              "output_tokens": null
+            }
+          ]
+        },
+        {
+          "state": "awaiting_qa",
+          "first_pass": 2,
+          "attempts": 2,
+          "outcomes": {
+            "ok": 2
+          },
+          "input_tokens": 595,
+          "output_tokens": 149,
+          "unconfirmed_usage": 0,
+          "stage_attempts": [
+            {
+              "skill": "director",
+              "outcome": "ok",
+              "attempt": 1,
+              "input_tokens": 343,
+              "output_tokens": 53
+            },
+            {
+              "skill": "content",
+              "outcome": "ok",
+              "attempt": 1,
+              "input_tokens": 252,
+              "output_tokens": 96
+            }
+          ]
+        },
+        {
+          "state": "awaiting_qa",
+          "first_pass": 3,
+          "attempts": 3,
+          "outcomes": {
+            "ok": 3
+          },
+          "input_tokens": 957,
+          "output_tokens": 297,
+          "unconfirmed_usage": 0,
+          "stage_attempts": [
+            {
+              "skill": "director",
+              "outcome": "ok",
+              "attempt": 1,
+              "input_tokens": 353,
+              "output_tokens": 104
+            },
+            {
+              "skill": "content",
+              "outcome": "ok",
+              "attempt": 1,
+              "input_tokens": 268,
+              "output_tokens": 93
+            },
+            {
+              "skill": "seo",
+              "outcome": "ok",
+              "attempt": 1,
+              "input_tokens": 336,
+              "output_tokens": 100
+            }
+          ]
+        }
+      ],
+      "parallel-measurements.json": {
+        "real_specialist_calls": 2,
+        "input_tokens": 518,
+        "output_tokens": 200,
+        "two_slot_span_ms": 7932.15679,
+        "estimated_microusd": 0
+      },
+      "pool-measurements.json": [
+        {
+          "state": "failed",
+          "first_pass": 0,
+          "attempts": 1,
+          "outcomes": {
+            "recipient_revoked": 1
+          },
+          "input_tokens": 0,
+          "output_tokens": 0,
+          "unconfirmed_usage": 1,
+          "stage_attempts": [
+            {
+              "skill": "director",
+              "outcome": "recipient_revoked",
+              "attempt": 1,
+              "input_tokens": null,
+              "output_tokens": null
+            }
+          ]
+        },
+        {
+          "state": "awaiting_qa",
+          "first_pass": 4,
+          "attempts": 4,
+          "outcomes": {
+            "ok": 4
+          },
+          "input_tokens": 1280,
+          "output_tokens": 411,
+          "unconfirmed_usage": 0,
+          "stage_attempts": [
+            {
+              "skill": "director",
+              "outcome": "ok",
+              "attempt": 1,
+              "input_tokens": 216,
+              "output_tokens": 105
+            },
+            {
+              "skill": "research",
+              "outcome": "ok",
+              "attempt": 1,
+              "input_tokens": 260,
+              "output_tokens": 124
+            },
+            {
+              "skill": "strategy",
+              "outcome": "ok",
+              "attempt": 1,
+              "input_tokens": 368,
+              "output_tokens": 86
+            },
+            {
+              "skill": "content",
+              "outcome": "ok",
+              "attempt": 1,
+              "input_tokens": 436,
+              "output_tokens": 96
+            }
+          ]
+        },
+        {
+          "state": "awaiting_qa",
+          "first_pass": 4,
+          "attempts": 4,
+          "outcomes": {
+            "ok": 4
+          },
+          "input_tokens": 1237,
+          "output_tokens": 402,
+          "unconfirmed_usage": 0,
+          "stage_attempts": [
+            {
+              "skill": "director",
+              "outcome": "ok",
+              "attempt": 1,
+              "input_tokens": 216,
+              "output_tokens": 85
+            },
+            {
+              "skill": "research",
+              "outcome": "ok",
+              "attempt": 1,
+              "input_tokens": 259,
+              "output_tokens": 108
+            },
+            {
+              "skill": "strategy",
+              "outcome": "ok",
+              "attempt": 1,
+              "input_tokens": 347,
+              "output_tokens": 109
+            },
+            {
+              "skill": "content",
+              "outcome": "ok",
+              "attempt": 1,
+              "input_tokens": 415,
+              "output_tokens": 100
+            }
+          ]
+        }
+      ],
+      "registry-measurements.json": [
+        {
+          "state": "awaiting_qa",
+          "first_pass": 3,
+          "attempts": 3,
+          "outcomes": {
+            "ok": 3
+          },
+          "input_tokens": 991,
+          "output_tokens": 256,
+          "unconfirmed_usage": 0,
+          "stage_attempts": [
+            {
+              "skill": "director",
+              "outcome": "ok",
+              "attempt": 1,
+              "input_tokens": 386,
+              "output_tokens": 97
+            },
+            {
+              "skill": "content",
+              "outcome": "ok",
+              "attempt": 1,
+              "input_tokens": 275,
+              "output_tokens": 78
+            },
+            {
+              "skill": "seo",
+              "outcome": "ok",
+              "attempt": 1,
+              "input_tokens": 330,
+              "output_tokens": 81
+            }
+          ]
+        }
+      ],
+      "research-strategy-measurements.json": {
+        "state": "awaiting_qa",
+        "first_pass": 2,
+        "attempts": 4,
+        "outcomes": {
+          "ok": 3,
+          "invalid_source": 1
+        },
+        "input_tokens": 1350,
+        "output_tokens": 425,
+        "unconfirmed_usage": 0,
+        "stage_attempts": [
+          {
+            "skill": "director",
+            "outcome": "ok",
+            "attempt": 1,
+            "input_tokens": 216,
+            "output_tokens": 56
+          },
+          {
+            "skill": "research",
+            "outcome": "ok",
+            "attempt": 1,
+            "input_tokens": 288,
+            "output_tokens": 77
+          },
+          {
+            "skill": "strategy",
+            "outcome": "invalid_source",
+            "attempt": 1,
+            "input_tokens": 415,
+            "output_tokens": 139
+          },
+          {
+            "skill": "strategy",
+            "outcome": "ok",
+            "attempt": 2,
+            "input_tokens": 431,
+            "output_tokens": 153
+          }
+        ]
+      },
+      "role-qa-measurements.json": {
+        "state": "awaiting_qa",
+        "first_pass": 3,
+        "attempts": 3,
+        "outcomes": {
+          "ok": 3
+        },
+        "input_tokens": 1012,
+        "output_tokens": 272,
+        "unconfirmed_usage": 0,
+        "stage_attempts": [
+          {
+            "skill": "director",
+            "outcome": "ok",
+            "attempt": 1,
+            "input_tokens": 386,
+            "output_tokens": 100
+          },
+          {
+            "skill": "content",
+            "outcome": "ok",
+            "attempt": 1,
+            "input_tokens": 273,
+            "output_tokens": 83
+          },
+          {
+            "skill": "seo",
+            "outcome": "ok",
+            "attempt": 1,
+            "input_tokens": 353,
+            "output_tokens": 89
+          }
+        ]
+      },
+      "c3-internal-receipts/materials/result.json": {
+        "run_id": "d7ab72ef-7232-4447-87cb-52611b34d711",
+        "checkout": "d79f76373af99585b6b8b720b2a60a93f882c48b",
+        "workflow": "WF-03/research-strategy-draft@3",
+        "input_tokens": 2488,
+        "output_tokens": 339,
+        "runtime_s": 29.015,
+        "provider_fee_usd": 0,
+        "unmetered_attempts": 0,
+        "last_error": null,
+        "recorded_calls": 3
+      },
+      "c3-internal-receipts/seller/result.json": {
+        "run_id": "99953655-f2ea-4832-a4d4-819027c4531e",
+        "checkout": "d79f76373af99585b6b8b720b2a60a93f882c48b",
+        "workflow": "WF-13/landing-seo-draft@6",
+        "input_tokens": 1627,
+        "output_tokens": 318,
+        "runtime_s": 22.345,
+        "provider_fee_usd": 0,
+        "unmetered_attempts": 0,
+        "last_error": null,
+        "recorded_calls": 3
+      },
+      "c3-model-receipts/projected/materials/result.json": {
+        "run_id": "f434ea8d-50e5-4fbb-8821-f051192f370f",
+        "checkout": "d79f76373af99585b6b8b720b2a60a93f882c48b",
+        "workflow": "WF-03/research-strategy-draft@2",
+        "input_tokens": 1601,
+        "output_tokens": 391,
+        "runtime_s": 24.744,
+        "provider_fee_usd": 0,
+        "unmetered_attempts": 0,
+        "last_error": null,
+        "recorded_calls": 3
+      },
+      "c3-model-receipts/projected/service/result.json": {
+        "run_id": "2660b62e-b8cd-45c1-a8ee-17401e3a8baa",
+        "checkout": "d79f76373af99585b6b8b720b2a60a93f882c48b",
+        "workflow": "WF-13/landing-seo-draft@5",
+        "input_tokens": 1422,
+        "output_tokens": 330,
+        "runtime_s": 20.119,
+        "provider_fee_usd": 0,
+        "unmetered_attempts": 0,
+        "last_error": null,
+        "recorded_calls": 3
+      }
+    },
+    "coverage": "Overlapping fixture reports. Missing telemetry and runner billing preclude a reliable all-job token or cost total.",
+    "model_service": "loopback model on the Actions runner",
+    "actions_billed_cost": null
+  },
+  {
+    "event": "pull_request",
+    "branch": "feature/runtime-strategy-content-handoff",
+    "checkout_variant": "head",
+    "workflow_head": "d79f76373af99585b6b8b720b2a60a93f882c48b",
+    "job": "https://github.com/datnv41001/ai-company/actions/runs/45952316322/job/140350763583",
+    "attempt": 1,
+    "artifact": "https://github.com/datnv41001/ai-company/actions/runs/45952316322/artifacts/15178001486",
+    "whole_job_wall_seconds": 531,
+    "standard_pool_smoke_only": {
+      "input_tokens": 2453,
+      "output_tokens": 768,
+      "attempts": 9,
+      "unconfirmed": 1
+    },
+    "released_v3_materials": {
+      "checkout": "d79f76373af99585b6b8b720b2a60a93f882c48b",
+      "state": "awaiting_qa",
+      "journal": [
+        {
+          "skill": "director",
+          "attempt": 1,
+          "outcome": "ok",
+          "input_tokens": 575,
+          "output_tokens": 64
+        },
+        {
+          "skill": "research",
+          "attempt": 1,
+          "outcome": "ok",
+          "input_tokens": 873,
+          "output_tokens": 106
+        },
+        {
+          "skill": "strategy",
+          "attempt": 1,
+          "outcome": "ok",
+          "input_tokens": 1040,
+          "output_tokens": 221
+        }
+      ],
+      "first_pass": true,
+      "model_sha256": "74a4da8c9fdbcd15bd1f6d01d621410d31c6fc00986f5eb687824e7b93d7a9db"
+    },
+    "legacy_v1_research_strategy_smoke": {
+      "first_pass": 2,
+      "first_attempts": 3,
+      "outcomes": {
+        "ok": 3,
+        "invalid_source": 1
+      },
+      "stage_attempts": [
+        {
+          "skill": "director",
+          "outcome": "ok",
+          "attempt": 1,
+          "input_tokens": 216,
+          "output_tokens": 56
+        },
+        {
+          "skill": "research",
+          "outcome": "ok",
+          "attempt": 1,
+          "input_tokens": 288,
+          "output_tokens": 80
+        },
+        {
+          "skill": "strategy",
+          "outcome": "invalid_source",
+          "attempt": 1,
+          "input_tokens": 418,
+          "output_tokens": 202
+        },
+        {
+          "skill": "strategy",
+          "outcome": "ok",
+          "attempt": 2,
+          "input_tokens": 434,
+          "output_tokens": 207
+        }
+      ]
+    },
+    "measured_reports": {
+      "diamond-measurements.json": [
+        {
+          "state": "failed",
+          "first_pass": 0,
+          "attempts": 1,
+          "outcomes": {
+            "recipient_revoked": 1
+          },
+          "input_tokens": 0,
+          "output_tokens": 0,
+          "unconfirmed_usage": 1,
+          "stage_attempts": [
+            {
+              "skill": "director",
+              "outcome": "recipient_revoked",
+              "attempt": 1,
+              "input_tokens": null,
+              "output_tokens": null
+            }
+          ]
+        },
+        {
+          "state": "awaiting_qa",
+          "first_pass": 5,
+          "attempts": 5,
+          "outcomes": {
+            "ok": 5
+          },
+          "input_tokens": 1365,
+          "output_tokens": 511,
+          "unconfirmed_usage": 0,
+          "stage_attempts": [
+            {
+              "skill": "director",
+              "outcome": "ok",
+              "attempt": 1,
+              "input_tokens": 231,
+              "output_tokens": 131
+            },
+            {
+              "skill": "research",
+              "outcome": "ok",
+              "attempt": 1,
+              "input_tokens": 236,
+              "output_tokens": 59
+            },
+            {
+              "skill": "strategy",
+              "outcome": "ok",
+              "attempt": 1,
+              "input_tokens": 276,
+              "output_tokens": 98
+            },
+            {
+              "skill": "content",
+              "outcome": "ok",
+              "attempt": 1,
+              "input_tokens": 312,
+              "output_tokens": 98
+            },
+            {
+              "skill": "seo",
+              "outcome": "ok",
+              "attempt": 1,
+              "input_tokens": 310,
+              "output_tokens": 125
+            }
+          ]
+        },
+        {
+          "state": "awaiting_qa",
+          "first_pass": 5,
+          "attempts": 5,
+          "outcomes": {
+            "ok": 5
+          },
+          "input_tokens": 1391,
+          "output_tokens": 479,
+          "unconfirmed_usage": 0,
+          "stage_attempts": [
+            {
+              "skill": "director",
+              "outcome": "ok",
+              "attempt": 1,
+              "input_tokens": 231,
+              "output_tokens": 96
+            },
+            {
+              "skill": "research",
+              "outcome": "ok",
+              "attempt": 1,
+              "input_tokens": 245,
+              "output_tokens": 117
+            },
+            {
+              "skill": "strategy",
+              "outcome": "ok",
+              "attempt": 1,
+              "input_tokens": 339,
+              "output_tokens": 68
+            },
+            {
+              "skill": "content",
+              "outcome": "ok",
+              "attempt": 1,
+              "input_tokens": 286,
+              "output_tokens": 101
+            },
+            {
+              "skill": "seo",
+              "outcome": "ok",
+              "attempt": 1,
+              "input_tokens": 290,
+              "output_tokens": 97
+            }
+          ]
+        }
+      ],
+      "dynamic-measurements.json": [
+        {
+          "state": "failed",
+          "first_pass": 0,
+          "attempts": 1,
+          "outcomes": {
+            "recipient_revoked": 1
+          },
+          "input_tokens": 0,
+          "output_tokens": 0,
+          "unconfirmed_usage": 1,
+          "stage_attempts": [
+            {
+              "skill": "director",
+              "outcome": "recipient_revoked",
+              "attempt": 1,
+              "input_tokens": null,
+              "output_tokens": null
+            }
+          ]
+        },
+        {
+          "state": "awaiting_qa",
+          "first_pass": 2,
+          "attempts": 2,
+          "outcomes": {
+            "ok": 2
+          },
+          "input_tokens": 595,
+          "output_tokens": 158,
+          "unconfirmed_usage": 0,
+          "stage_attempts": [
+            {
+              "skill": "director",
+              "outcome": "ok",
+              "attempt": 1,
+              "input_tokens": 343,
+              "output_tokens": 53
+            },
+            {
+              "skill": "content",
+              "outcome": "ok",
+              "attempt": 1,
+              "input_tokens": 252,
+              "output_tokens": 105
+            }
+          ]
+        },
+        {
+          "state": "awaiting_qa",
+          "first_pass": 3,
+          "attempts": 3,
+          "outcomes": {
+            "ok": 3
+          },
+          "input_tokens": 949,
+          "output_tokens": 294,
+          "unconfirmed_usage": 0,
+          "stage_attempts": [
+            {
+              "skill": "director",
+              "outcome": "ok",
+              "attempt": 1,
+              "input_tokens": 353,
+              "output_tokens": 96
+            },
+            {
+              "skill": "content",
+              "outcome": "ok",
+              "attempt": 1,
+              "input_tokens": 264,
+              "output_tokens": 98
+            },
+            {
+              "skill": "seo",
+              "outcome": "ok",
+              "attempt": 1,
+              "input_tokens": 332,
+              "output_tokens": 100
+            }
+          ]
+        }
+      ],
+      "parallel-measurements.json": {
+        "real_specialist_calls": 2,
+        "input_tokens": 518,
+        "output_tokens": 181,
+        "two_slot_span_ms": 7374.207038,
+        "estimated_microusd": 0
+      },
+      "pool-measurements.json": [
+        {
+          "state": "failed",
+          "first_pass": 0,
+          "attempts": 1,
+          "outcomes": {
+            "recipient_revoked": 1
+          },
+          "input_tokens": 0,
+          "output_tokens": 0,
+          "unconfirmed_usage": 1,
+          "stage_attempts": [
+            {
+              "skill": "director",
+              "outcome": "recipient_revoked",
+              "attempt": 1,
+              "input_tokens": null,
+              "output_tokens": null
+            }
+          ]
+        },
+        {
+          "state": "awaiting_qa",
+          "first_pass": 4,
+          "attempts": 4,
+          "outcomes": {
+            "ok": 4
+          },
+          "input_tokens": 1305,
+          "output_tokens": 424,
+          "unconfirmed_usage": 0,
+          "stage_attempts": [
+            {
+              "skill": "director",
+              "outcome": "ok",
+              "attempt": 1,
+              "input_tokens": 216,
+              "output_tokens": 127
+            },
+            {
+              "skill": "research",
+              "outcome": "ok",
+              "attempt": 1,
+              "input_tokens": 274,
+              "output_tokens": 121
+            },
+            {
+              "skill": "strategy",
+              "outcome": "ok",
+              "attempt": 1,
+              "input_tokens": 377,
+              "output_tokens": 77
+            },
+            {
+              "skill": "content",
+              "outcome": "ok",
+              "attempt": 1,
+              "input_tokens": 438,
+              "output_tokens": 99
+            }
+          ]
+        },
+        {
+          "state": "awaiting_qa",
+          "first_pass": 4,
+          "attempts": 4,
+          "outcomes": {
+            "ok": 4
+          },
+          "input_tokens": 1148,
+          "output_tokens": 344,
+          "unconfirmed_usage": 0,
+          "stage_attempts": [
+            {
+              "skill": "director",
+              "outcome": "ok",
+              "attempt": 1,
+              "input_tokens": 216,
+              "output_tokens": 102
+            },
+            {
+              "skill": "research",
+              "outcome": "ok",
+              "attempt": 1,
+              "input_tokens": 270,
+              "output_tokens": 70
+            },
+            {
+              "skill": "strategy",
+              "outcome": "ok",
+              "attempt": 1,
+              "input_tokens": 304,
+              "output_tokens": 73
+            },
+            {
+              "skill": "content",
+              "outcome": "ok",
+              "attempt": 1,
+              "input_tokens": 358,
+              "output_tokens": 99
+            }
+          ]
+        }
+      ],
+      "registry-measurements.json": [
+        {
+          "state": "awaiting_qa",
+          "first_pass": 3,
+          "attempts": 3,
+          "outcomes": {
+            "ok": 3
+          },
+          "input_tokens": 994,
+          "output_tokens": 264,
+          "unconfirmed_usage": 0,
+          "stage_attempts": [
+            {
+              "skill": "director",
+              "outcome": "ok",
+              "attempt": 1,
+              "input_tokens": 386,
+              "output_tokens": 99
+            },
+            {
+              "skill": "content",
+              "outcome": "ok",
+              "attempt": 1,
+              "input_tokens": 275,
+              "output_tokens": 82
+            },
+            {
+              "skill": "seo",
+              "outcome": "ok",
+              "attempt": 1,
+              "input_tokens": 333,
+              "output_tokens": 83
+            }
+          ]
+        }
+      ],
+      "research-strategy-measurements.json": {
+        "state": "awaiting_qa",
+        "first_pass": 2,
+        "attempts": 4,
+        "outcomes": {
+          "ok": 3,
+          "invalid_source": 1
+        },
+        "input_tokens": 1356,
+        "output_tokens": 545,
+        "unconfirmed_usage": 0,
+        "stage_attempts": [
+          {
+            "skill": "director",
+            "outcome": "ok",
+            "attempt": 1,
+            "input_tokens": 216,
+            "output_tokens": 56
+          },
+          {
+            "skill": "research",
+            "outcome": "ok",
+            "attempt": 1,
+            "input_tokens": 288,
+            "output_tokens": 80
+          },
+          {
+            "skill": "strategy",
+            "outcome": "invalid_source",
+            "attempt": 1,
+            "input_tokens": 418,
+            "output_tokens": 202
+          },
+          {
+            "skill": "strategy",
+            "outcome": "ok",
+            "attempt": 2,
+            "input_tokens": 434,
+            "output_tokens": 207
+          }
+        ]
+      },
+      "role-qa-measurements.json": {
+        "state": "awaiting_qa",
+        "first_pass": 3,
+        "attempts": 3,
+        "outcomes": {
+          "ok": 3
+        },
+        "input_tokens": 1007,
+        "output_tokens": 261,
+        "unconfirmed_usage": 0,
+        "stage_attempts": [
+          {
+            "skill": "director",
+            "outcome": "ok",
+            "attempt": 1,
+            "input_tokens": 386,
+            "output_tokens": 99
+          },
+          {
+            "skill": "content",
+            "outcome": "ok",
+            "attempt": 1,
+            "input_tokens": 275,
+            "output_tokens": 80
+          },
+          {
+            "skill": "seo",
+            "outcome": "ok",
+            "attempt": 1,
+            "input_tokens": 346,
+            "output_tokens": 82
+          }
+        ]
+      },
+      "c3-internal-receipts/materials/result.json": {
+        "run_id": "c3ec3c93-943f-49a7-8bda-5626f62dc634",
+        "checkout": "d79f76373af99585b6b8b720b2a60a93f882c48b",
+        "workflow": "WF-03/research-strategy-draft@3",
+        "input_tokens": 2488,
+        "output_tokens": 391,
+        "runtime_s": 30.393,
+        "provider_fee_usd": 0,
+        "unmetered_attempts": 0,
+        "last_error": null,
+        "recorded_calls": 3
+      },
+      "c3-internal-receipts/seller/result.json": {
+        "run_id": "d5b8e1e1-fae9-4d2d-8e78-e9960042691a",
+        "checkout": "d79f76373af99585b6b8b720b2a60a93f882c48b",
+        "workflow": "WF-13/landing-seo-draft@6",
+        "input_tokens": 1620,
+        "output_tokens": 282,
+        "runtime_s": 19.769,
+        "provider_fee_usd": 0,
+        "unmetered_attempts": 0,
+        "last_error": null,
+        "recorded_calls": 3
+      },
+      "c3-model-receipts/projected/materials/result.json": {
+        "run_id": "d7bface9-24e2-48f8-9d46-ed6d907fa9c7",
+        "checkout": "d79f76373af99585b6b8b720b2a60a93f882c48b",
+        "workflow": "WF-03/research-strategy-draft@2",
+        "input_tokens": 1588,
+        "output_tokens": 309,
+        "runtime_s": 18.866,
+        "provider_fee_usd": 0,
+        "unmetered_attempts": 0,
+        "last_error": null,
+        "recorded_calls": 3
+      },
+      "c3-model-receipts/projected/service/result.json": {
+        "run_id": "06c9550d-a96f-4efc-8cba-d26fbee87dd8",
+        "checkout": "d79f76373af99585b6b8b720b2a60a93f882c48b",
+        "workflow": "WF-13/landing-seo-draft@5",
+        "input_tokens": 1372,
+        "output_tokens": 271,
+        "runtime_s": 15.443,
+        "provider_fee_usd": 0,
+        "unmetered_attempts": 0,
+        "last_error": null,
+        "recorded_calls": 3
+      }
+    },
+    "coverage": "Overlapping fixture reports. Missing telemetry and runner billing preclude a reliable all-job token or cost total.",
+    "model_service": "loopback model on the Actions runner",
+    "actions_billed_cost": null
+  },
+  {
+    "event": "pull_request",
+    "branch": "feature/runtime-strategy-content-handoff",
+    "checkout_variant": "integration",
+    "workflow_head": "d79f76373af99585b6b8b720b2a60a93f882c48b",
+    "job": "https://github.com/datnv41001/ai-company/actions/runs/45952316322/job/140350763604",
+    "attempt": 1,
+    "artifact": "https://github.com/datnv41001/ai-company/actions/runs/45952316322/artifacts/15178035984",
+    "whole_job_wall_seconds": 400,
+    "standard_pool_smoke_only": {
+      "input_tokens": 2517,
+      "output_tokens": 813,
+      "attempts": 9,
+      "unconfirmed": 1
+    },
+    "released_v3_materials": {
+      "checkout": "3d37b1b2d34a69cc80e8def2083bccbd37ebb3c8",
+      "state": "awaiting_qa",
+      "journal": [
+        {
+          "skill": "director",
+          "attempt": 1,
+          "outcome": "ok",
+          "input_tokens": 575,
+          "output_tokens": 64
+        },
+        {
+          "skill": "research",
+          "attempt": 1,
+          "outcome": "ok",
+          "input_tokens": 873,
+          "output_tokens": 106
+        },
+        {
+          "skill": "strategy",
+          "attempt": 1,
+          "outcome": "ok",
+          "input_tokens": 1040,
+          "output_tokens": 169
+        }
+      ],
+      "first_pass": true,
+      "model_sha256": "74a4da8c9fdbcd15bd1f6d01d621410d31c6fc00986f5eb687824e7b93d7a9db"
+    },
+    "legacy_v1_research_strategy_smoke": {
+      "first_pass": 2,
+      "first_attempts": 3,
+      "outcomes": {
+        "ok": 3,
+        "invalid_source": 1
+      },
+      "stage_attempts": [
+        {
+          "skill": "director",
+          "outcome": "ok",
+          "attempt": 1,
+          "input_tokens": 216,
+          "output_tokens": 56
+        },
+        {
+          "skill": "research",
+          "outcome": "ok",
+          "attempt": 1,
+          "input_tokens": 288,
+          "output_tokens": 77
+        },
+        {
+          "skill": "strategy",
+          "outcome": "invalid_source",
+          "attempt": 1,
+          "input_tokens": 415,
+          "output_tokens": 139
+        },
+        {
+          "skill": "strategy",
+          "outcome": "ok",
+          "attempt": 2,
+          "input_tokens": 431,
+          "output_tokens": 153
+        }
+      ]
+    },
+    "measured_reports": {
+      "diamond-measurements.json": [
+        {
+          "state": "failed",
+          "first_pass": 0,
+          "attempts": 1,
+          "outcomes": {
+            "recipient_revoked": 1
+          },
+          "input_tokens": 0,
+          "output_tokens": 0,
+          "unconfirmed_usage": 1,
+          "stage_attempts": [
+            {
+              "skill": "director",
+              "outcome": "recipient_revoked",
+              "attempt": 1,
+              "input_tokens": null,
+              "output_tokens": null
+            }
+          ]
+        },
+        {
+          "state": "awaiting_qa",
+          "first_pass": 5,
+          "attempts": 5,
+          "outcomes": {
+            "ok": 5
+          },
+          "input_tokens": 1352,
+          "output_tokens": 494,
+          "unconfirmed_usage": 0,
+          "stage_attempts": [
+            {
+              "skill": "director",
+              "outcome": "ok",
+              "attempt": 1,
+              "input_tokens": 231,
+              "output_tokens": 96
+            },
+            {
+              "skill": "research",
+              "outcome": "ok",
+              "attempt": 1,
+              "input_tokens": 237,
+              "output_tokens": 59
+            },
+            {
+              "skill": "strategy",
+              "outcome": "ok",
+              "attempt": 1,
+              "input_tokens": 276,
+              "output_tokens": 108
+            },
+            {
+              "skill": "content",
+              "outcome": "ok",
+              "attempt": 1,
+              "input_tokens": 305,
+              "output_tokens": 100
+            },
+            {
+              "skill": "seo",
+              "outcome": "ok",
+              "attempt": 1,
+              "input_tokens": 303,
+              "output_tokens": 131
+            }
+          ]
+        },
+        {
+          "state": "awaiting_qa",
+          "first_pass": 5,
+          "attempts": 5,
+          "outcomes": {
+            "ok": 5
+          },
+          "input_tokens": 1339,
+          "output_tokens": 442,
+          "unconfirmed_usage": 0,
+          "stage_attempts": [
+            {
+              "skill": "director",
+              "outcome": "ok",
+              "attempt": 1,
+              "input_tokens": 231,
+              "output_tokens": 92
+            },
+            {
+              "skill": "research",
+              "outcome": "ok",
+              "attempt": 1,
+              "input_tokens": 245,
+              "output_tokens": 73
+            },
+            {
+              "skill": "strategy",
+              "outcome": "ok",
+              "attempt": 1,
+              "input_tokens": 273,
+              "output_tokens": 78
+            },
+            {
+              "skill": "content",
+              "outcome": "ok",
+              "attempt": 1,
+              "input_tokens": 296,
+              "output_tokens": 109
+            },
+            {
+              "skill": "seo",
+              "outcome": "ok",
+              "attempt": 1,
+              "input_tokens": 294,
+              "output_tokens": 90
+            }
+          ]
+        }
+      ],
+      "dynamic-measurements.json": [
+        {
+          "state": "failed",
+          "first_pass": 0,
+          "attempts": 1,
+          "outcomes": {
+            "recipient_revoked": 1
+          },
+          "input_tokens": 0,
+          "output_tokens": 0,
+          "unconfirmed_usage": 1,
+          "stage_attempts": [
+            {
+              "skill": "director",
+              "outcome": "recipient_revoked",
+              "attempt": 1,
+              "input_tokens": null,
+              "output_tokens": null
+            }
+          ]
+        },
+        {
+          "state": "awaiting_qa",
+          "first_pass": 2,
+          "attempts": 2,
+          "outcomes": {
+            "ok": 2
+          },
+          "input_tokens": 595,
+          "output_tokens": 149,
+          "unconfirmed_usage": 0,
+          "stage_attempts": [
+            {
+              "skill": "director",
+              "outcome": "ok",
+              "attempt": 1,
+              "input_tokens": 343,
+              "output_tokens": 53
+            },
+            {
+              "skill": "content",
+              "outcome": "ok",
+              "attempt": 1,
+              "input_tokens": 252,
+              "output_tokens": 96
+            }
+          ]
+        },
+        {
+          "state": "awaiting_qa",
+          "first_pass": 3,
+          "attempts": 3,
+          "outcomes": {
+            "ok": 3
+          },
+          "input_tokens": 957,
+          "output_tokens": 297,
+          "unconfirmed_usage": 0,
+          "stage_attempts": [
+            {
+              "skill": "director",
+              "outcome": "ok",
+              "attempt": 1,
+              "input_tokens": 353,
+              "output_tokens": 104
+            },
+            {
+              "skill": "content",
+              "outcome": "ok",
+              "attempt": 1,
+              "input_tokens": 268,
+              "output_tokens": 93
+            },
+            {
+              "skill": "seo",
+              "outcome": "ok",
+              "attempt": 1,
+              "input_tokens": 336,
+              "output_tokens": 100
+            }
+          ]
+        }
+      ],
+      "parallel-measurements.json": {
+        "real_specialist_calls": 2,
+        "input_tokens": 518,
+        "output_tokens": 200,
+        "two_slot_span_ms": 5781.013429,
+        "estimated_microusd": 0
+      },
+      "pool-measurements.json": [
+        {
+          "state": "failed",
+          "first_pass": 0,
+          "attempts": 1,
+          "outcomes": {
+            "recipient_revoked": 1
+          },
+          "input_tokens": 0,
+          "output_tokens": 0,
+          "unconfirmed_usage": 1,
+          "stage_attempts": [
+            {
+              "skill": "director",
+              "outcome": "recipient_revoked",
+              "attempt": 1,
+              "input_tokens": null,
+              "output_tokens": null
+            }
+          ]
+        },
+        {
+          "state": "awaiting_qa",
+          "first_pass": 4,
+          "attempts": 4,
+          "outcomes": {
+            "ok": 4
+          },
+          "input_tokens": 1280,
+          "output_tokens": 411,
+          "unconfirmed_usage": 0,
+          "stage_attempts": [
+            {
+              "skill": "director",
+              "outcome": "ok",
+              "attempt": 1,
+              "input_tokens": 216,
+              "output_tokens": 105
+            },
+            {
+              "skill": "research",
+              "outcome": "ok",
+              "attempt": 1,
+              "input_tokens": 260,
+              "output_tokens": 124
+            },
+            {
+              "skill": "strategy",
+              "outcome": "ok",
+              "attempt": 1,
+              "input_tokens": 368,
+              "output_tokens": 86
+            },
+            {
+              "skill": "content",
+              "outcome": "ok",
+              "attempt": 1,
+              "input_tokens": 436,
+              "output_tokens": 96
+            }
+          ]
+        },
+        {
+          "state": "awaiting_qa",
+          "first_pass": 4,
+          "attempts": 4,
+          "outcomes": {
+            "ok": 4
+          },
+          "input_tokens": 1237,
+          "output_tokens": 402,
+          "unconfirmed_usage": 0,
+          "stage_attempts": [
+            {
+              "skill": "director",
+              "outcome": "ok",
+              "attempt": 1,
+              "input_tokens": 216,
+              "output_tokens": 85
+            },
+            {
+              "skill": "research",
+              "outcome": "ok",
+              "attempt": 1,
+              "input_tokens": 259,
+              "output_tokens": 108
+            },
+            {
+              "skill": "strategy",
+              "outcome": "ok",
+              "attempt": 1,
+              "input_tokens": 347,
+              "output_tokens": 109
+            },
+            {
+              "skill": "content",
+              "outcome": "ok",
+              "attempt": 1,
+              "input_tokens": 415,
+              "output_tokens": 100
+            }
+          ]
+        }
+      ],
+      "registry-measurements.json": [
+        {
+          "state": "awaiting_qa",
+          "first_pass": 3,
+          "attempts": 3,
+          "outcomes": {
+            "ok": 3
+          },
+          "input_tokens": 991,
+          "output_tokens": 256,
+          "unconfirmed_usage": 0,
+          "stage_attempts": [
+            {
+              "skill": "director",
+              "outcome": "ok",
+              "attempt": 1,
+              "input_tokens": 386,
+              "output_tokens": 97
+            },
+            {
+              "skill": "content",
+              "outcome": "ok",
+              "attempt": 1,
+              "input_tokens": 275,
+              "output_tokens": 78
+            },
+            {
+              "skill": "seo",
+              "outcome": "ok",
+              "attempt": 1,
+              "input_tokens": 330,
+              "output_tokens": 81
+            }
+          ]
+        }
+      ],
+      "research-strategy-measurements.json": {
+        "state": "awaiting_qa",
+        "first_pass": 2,
+        "attempts": 4,
+        "outcomes": {
+          "ok": 3,
+          "invalid_source": 1
+        },
+        "input_tokens": 1350,
+        "output_tokens": 425,
+        "unconfirmed_usage": 0,
+        "stage_attempts": [
+          {
+            "skill": "director",
+            "outcome": "ok",
+            "attempt": 1,
+            "input_tokens": 216,
+            "output_tokens": 56
+          },
+          {
+            "skill": "research",
+            "outcome": "ok",
+            "attempt": 1,
+            "input_tokens": 288,
+            "output_tokens": 77
+          },
+          {
+            "skill": "strategy",
+            "outcome": "invalid_source",
+            "attempt": 1,
+            "input_tokens": 415,
+            "output_tokens": 139
+          },
+          {
+            "skill": "strategy",
+            "outcome": "ok",
+            "attempt": 2,
+            "input_tokens": 431,
+            "output_tokens": 153
+          }
+        ]
+      },
+      "role-qa-measurements.json": {
+        "state": "awaiting_qa",
+        "first_pass": 3,
+        "attempts": 3,
+        "outcomes": {
+          "ok": 3
+        },
+        "input_tokens": 1012,
+        "output_tokens": 272,
+        "unconfirmed_usage": 0,
+        "stage_attempts": [
+          {
+            "skill": "director",
+            "outcome": "ok",
+            "attempt": 1,
+            "input_tokens": 386,
+            "output_tokens": 100
+          },
+          {
+            "skill": "content",
+            "outcome": "ok",
+            "attempt": 1,
+            "input_tokens": 273,
+            "output_tokens": 83
+          },
+          {
+            "skill": "seo",
+            "outcome": "ok",
+            "attempt": 1,
+            "input_tokens": 353,
+            "output_tokens": 89
+          }
+        ]
+      },
+      "c3-internal-receipts/materials/result.json": {
+        "run_id": "272e7ccf-c999-4234-8a0f-20dee4db4517",
+        "checkout": "3d37b1b2d34a69cc80e8def2083bccbd37ebb3c8",
+        "workflow": "WF-03/research-strategy-draft@3",
+        "input_tokens": 2488,
+        "output_tokens": 339,
+        "runtime_s": 14.414,
+        "provider_fee_usd": 0,
+        "unmetered_attempts": 0,
+        "last_error": null,
+        "recorded_calls": 3
+      },
+      "c3-internal-receipts/seller/result.json": {
+        "run_id": "a80f4dc6-b000-498c-a364-2422b86a6d06",
+        "checkout": "3d37b1b2d34a69cc80e8def2083bccbd37ebb3c8",
+        "workflow": "WF-13/landing-seo-draft@6",
+        "input_tokens": 1627,
+        "output_tokens": 318,
+        "runtime_s": 11.344,
+        "provider_fee_usd": 0,
+        "unmetered_attempts": 0,
+        "last_error": null,
+        "recorded_calls": 3
+      },
+      "c3-model-receipts/projected/materials/result.json": {
+        "run_id": "55ea6669-7735-4456-86c3-32eec25058cb",
+        "checkout": "3d37b1b2d34a69cc80e8def2083bccbd37ebb3c8",
+        "workflow": "WF-03/research-strategy-draft@2",
+        "input_tokens": 1610,
+        "output_tokens": 367,
+        "runtime_s": 11.338,
+        "provider_fee_usd": 0,
+        "unmetered_attempts": 0,
+        "last_error": null,
+        "recorded_calls": 3
+      },
+      "c3-model-receipts/projected/service/result.json": {
+        "run_id": "3eae335a-de23-4308-bb69-f93a93578dac",
+        "checkout": "3d37b1b2d34a69cc80e8def2083bccbd37ebb3c8",
+        "workflow": "WF-13/landing-seo-draft@5",
+        "input_tokens": 1424,
+        "output_tokens": 343,
+        "runtime_s": 10.011,
+        "provider_fee_usd": 0,
+        "unmetered_attempts": 0,
+        "last_error": null,
+        "recorded_calls": 3
+      }
+    },
+    "coverage": "Overlapping fixture reports. Missing telemetry and runner billing preclude a reliable all-job token or cost total.",
+    "model_service": "loopback model on the Actions runner",
+    "actions_billed_cost": null
+  }
+]

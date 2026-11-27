@@ -1,0 +1,107 @@
+{
+  "scope": {
+    "tenant_id": "14859c53-3362-41c1-9db0-a7e5a1615bfd",
+    "client_id": "53e6515f-0270-4818-a673-3305f99a26f5",
+    "brand_id": "d904ef9e-ed42-4681-9e11-60b5f32c2711",
+    "campaign_id": "d9c63e46-74d2-4397-bd13-95eb2293f0eb"
+  },
+  "signed_placement": "owned counter card",
+  "buyer": "Purchasing directors",
+  "observed": "A purchasing director compared the specification cards before ordering the two-compartment tray.",
+  "wrong": [
+    "asset_placement_mismatch"
+  ],
+  "counter_order": {
+    "recipient": "Content lead",
+    "asset_type": "counter_terms_card",
+    "asset": "Counter information card",
+    "purpose": "Clarify product information at the counter",
+    "placement": "owned counter card",
+    "option": "explain_terms",
+    "objective": "Choose a useful product guide for a shift handover.",
+    "audience": "Purchasing directors",
+    "buyer_persona": "Purchasing directors",
+    "message": "The passive tray has two separate compartments.",
+    "sources": {
+      "observation": {
+        "handle": "F1",
+        "claim_revision": "03be30b8-bdce-4d4f-bbc6-299e8fbbdc71",
+        "source_revision": "5abd24c4-f759-4160-93f5-3742257343fc",
+        "source_digest": "a82f45c541733beb6f7bb5512430e989f419eba3729cc5c348fe144e2dfbb14b",
+        "document": "PRIVATE_SYNTHETIC_DOCUMENT",
+        "locator": "private locator",
+        "statement": "A purchasing director compared the specification cards before ordering the two-compartment tray.",
+        "qualifiers": [],
+        "category": "description",
+        "price": null,
+        "applicability": null,
+        "quantity": null,
+        "placement": {
+          "locale": "en-US",
+          "market": "5ed797e6-9e8b-4d5b-bc29-ccf2e701eb06",
+          "region": "HN",
+          "channel": "owned counter card",
+          "product": "7d0ef8b2-f984-4951-916c-f8ad345fded2",
+          "variant": null
+        },
+        "excerpt": "A purchasing director compared the specification cards before ordering the two-compartment tray.",
+        "publisher": "PRIVATE_SYNTHETIC_SUPPLIER",
+        "recorded_at": "2026-11-27T06:44:43.486988+00:00",
+        "effective_from": null,
+        "effective_until": "2099-01-01T00:00:00Z",
+        "research_spans": [
+          "ee820d68eb0cc032740eab33ca1c5ca33000ae0cc4c3f648b970a0da658f9a81"
+        ],
+        "positioning_spans": [],
+        "complete_wording": "A purchasing director compared the specification cards before ordering the two-compartment tray.",
+        "permitted_use": "internal strategy review within the pinned placement"
+      },
+      "product": {
+        "handle": "F2",
+        "claim_revision": "c980abac-aa5a-456a-ae24-cf6bfb56332c",
+        "source_revision": "9c7e35ee-46fc-4866-a7ca-1c1de5d73e13",
+        "source_digest": "e89c0e614e813551451e58901c83140962dc2af061d0e3a16e6483c3b37f8b4c",
+        "document": "PRIVATE_SYNTHETIC_DOCUMENT",
+        "locator": "private locator",
+        "statement": "The passive tray has two separate compartments.",
+        "qualifiers": [],
+        "category": "description",
+        "price": null,
+        "applicability": null,
+        "quantity": null,
+        "placement": {
+          "locale": "en-US",
+          "market": "5ed797e6-9e8b-4d5b-bc29-ccf2e701eb06",
+          "region": "HN",
+          "channel": "owned counter card",
+          "product": "7d0ef8b2-f984-4951-916c-f8ad345fded2",
+          "variant": null
+        },
+        "excerpt": "The passive tray has two separate compartments.",
+        "publisher": "PRIVATE_SYNTHETIC_SUPPLIER",
+        "recorded_at": "2026-11-27T06:44:43.902089+00:00",
+        "effective_from": null,
+        "effective_until": "2099-01-01T00:00:00Z",
+        "research_spans": [],
+        "positioning_spans": [
+          "b61fe812ab43e49b82f9b7aa2df1535312e18e4dd761651225a0d047517a8f06"
+        ],
+        "complete_wording": "The passive tray has two separate compartments.",
+        "permitted_use": "internal strategy review within the pinned placement"
+      }
+    },
+    "claim_limits": [
+      "One observed shift at one site. Use in other sites and buyer segments remains unverified.",
+      "Use the complete product declaration with its qualifiers.",
+      "Buyer interpretation is limited to the recorded situation."
+    ],
+    "approval": "Internal drafting only. A new asset requires its own independent QA and channel approval."
+  },
+  "recipient": {
+    "receipt_id": "7ed6d139-9828-4cd2-974b-7f2b8a1244de",
+    "at": "2026-11-27T06:44:46.234219+00:00"
+  },
+  "qualification_withdrawn": [
+    "qualification_withdrawn"
+  ]
+}

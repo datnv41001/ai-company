@@ -1,0 +1,74 @@
+{
+  "unsupported passage with valid ID": {
+    "revision": 2,
+    "receipt": "20bfa9ae-9d61-4e1c-b1e4-9d06bcbb8ec1",
+    "reasons": [
+      "observation_unverified"
+    ],
+    "next_owner": "Strategy editor and knowledge owner"
+  },
+  "real passage from unrelated research": {
+    "revision": 3,
+    "receipt": "0172511d-6a66-4657-bc78-5c704e60147d",
+    "reasons": [
+      "observation_unverified"
+    ],
+    "next_owner": "Strategy editor and knowledge owner"
+  },
+  "substitution of another stakeholder": {
+    "revision": 4,
+    "receipt": "9d6d44d1-de9d-4274-9239-d56fbb1cb260",
+    "reasons": [
+      "buyer_scope_mismatch"
+    ],
+    "next_owner": "Strategy editor and knowledge owner"
+  },
+  "conflicting source": {
+    "revision": 5,
+    "receipt": "b2b91fb1-62f9-46eb-924c-de560e74869b",
+    "reasons": [
+      "contradictory_evidence"
+    ],
+    "next_owner": "Strategy editor and knowledge owner"
+  },
+  "missing evidence": {
+    "revision": 6,
+    "receipt": "fdbbdeae-ceda-429d-9ac1-a585bef176f8",
+    "reasons": [
+      "missing_evidence",
+      "missing_observation"
+    ],
+    "next_owner": "Strategy editor and knowledge owner"
+  },
+  "request clarification": {
+    "revision": 7,
+    "receipt": "fde065c1-6b27-45c1-a700-1f5212f32ec1",
+    "reasons": [
+      "clarify_commission"
+    ],
+    "next_owner": "Strategy editor and knowledge owner"
+  },
+  "incorrect placement": {
+    "revision": 8,
+    "receipt": "bafb4c11-012e-4056-8213-851aeb028eb4",
+    "reasons": [
+      "asset_placement_mismatch"
+    ],
+    "next_owner": "Strategy editor and knowledge owner"
+  },
+  "product assertions need Strategy adoption": {
+    "revision": 9,
+    "receipt": "6f4a3081-3054-4944-9734-434ff3de61d5",
+    "reasons": [
+      "source_purpose_mismatch"
+    ],
+    "next_owner": "Strategy editor and knowledge owner"
+  },
+  "source withdrawn after final QA": {
+    "before": "10da0e7d-8c78-4f37-a9d2-de4443725816",
+    "after": [
+      "current_authority_required"
+    ],
+    "retry": 409
+  }
+}

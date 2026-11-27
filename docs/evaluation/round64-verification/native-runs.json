@@ -1,0 +1,100 @@
+[
+  {
+    "receipt": "local-baseline.xml",
+    "original_sha256": "a66cd0aac8816c1ce2cbcf38057f0f35f35762ad8cbf0192098bb507e5fb6e05",
+    "passed": 727,
+    "skipped": [
+      "test_wrong_tab_leaves_postgres_family_and_history_unchanged[sqlite]",
+      "test_two_workers_commit_orders_and_credential_change[sqlite]"
+    ],
+    "failures": []
+  },
+  {
+    "receipt": "pg-c.xml",
+    "original_sha256": "9a336e0d6817f4822974322672960b28b7151da1031bf577a304f42a85373f29",
+    "passed": 2,
+    "skipped": [],
+    "failures": [
+      "test_runtime_edits_qualified_decisions_and_recipient",
+      "test_signed_holds_and_withdrawn_source"
+    ]
+  },
+  {
+    "receipt": "pg-e.xml",
+    "original_sha256": "1f2d65861d3d961a525fa1e0960ac9803c2ee510c3209004d5ae257073e35201",
+    "passed": 4,
+    "skipped": [],
+    "failures": []
+  },
+  {
+    "receipt": "pg-f.xml",
+    "original_sha256": "03f83c28053d1089097e4dc26de8467d75d10c2893ffad879e13a6b3ac18602b",
+    "passed": 1,
+    "skipped": [],
+    "failures": []
+  },
+  {
+    "receipt": "ui-canonical.xml",
+    "original_sha256": "4a954ed10c0ab1c3110c67316e5a29a73678ecd56b8d3859a2e76466a4ab0f7b",
+    "passed": 0,
+    "skipped": [],
+    "failures": [
+      "test_content_handoff_in_staff_studio"
+    ]
+  },
+  {
+    "receipt": "targeted.xml",
+    "original_sha256": "77e54f51501e40fd6b26b163ead617fd401d01a1e0af88245ab09ff5dfe08d55",
+    "passed": 44,
+    "skipped": [],
+    "failures": []
+  },
+  {
+    "receipt": "browser-local.xml",
+    "original_sha256": "56a06d90e00bb5697f665664c94445188bc6406108d564086bb5aea4b9fb42ab",
+    "passed": 1,
+    "skipped": [],
+    "failures": []
+  },
+  {
+    "receipt": "local-candidate.xml",
+    "original_sha256": "2260dd188e8eac9e77b914a53e64db50d7b84a9077c1d6f0c3a96f74728c4a25",
+    "passed": 749,
+    "skipped": [
+      "test_wrong_tab_leaves_postgres_family_and_history_unchanged[sqlite]",
+      "test_two_workers_commit_orders_and_credential_change[sqlite]"
+    ],
+    "failures": [
+      "test_signed_holds_and_withdrawn_source"
+    ]
+  },
+  {
+    "receipt": "local-exact.xml",
+    "original_sha256": "ca814f86ddb6ae04c87830305ac531ca801ebf32931fc16fbebe7e97be47c4c1",
+    "passed": 749,
+    "skipped": [
+      "test_wrong_tab_leaves_postgres_family_and_history_unchanged[sqlite]",
+      "test_two_workers_commit_orders_and_credential_change[sqlite]"
+    ],
+    "failures": [
+      "test_restricted_production[False]"
+    ]
+  },
+  {
+    "receipt": "restricted-recheck.xml",
+    "original_sha256": "ca8ca455ede044efb7a3d56f61fec9dce82627bd6b6725fa9e39c4b6d7c61046",
+    "passed": 2,
+    "skipped": [],
+    "failures": []
+  },
+  {
+    "receipt": "local-exact-recheck.xml",
+    "original_sha256": "2dea75f94998ba5dbcb79e2c0467630e2907ab853a94191acf88cf3a0fcefccc",
+    "passed": 750,
+    "skipped": [
+      "test_wrong_tab_leaves_postgres_family_and_history_unchanged[sqlite]",
+      "test_two_workers_commit_orders_and_credential_change[sqlite]"
+    ],
+    "failures": []
+  }
+]

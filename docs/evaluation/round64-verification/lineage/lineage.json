@@ -1,0 +1,1141 @@
+{
+  "execution": "Real PostgreSQL-provisioned loopback worker; controlled role replies, zero model invocation",
+  "actors": "Distinct synthetic staff sessions author, qualified reviewer, assigned downstream recipient",
+  "scope": {
+    "tenant_id": "d8aa074d-7e14-47be-9d03-9dc8fe7ae779",
+    "client_id": "d43bd3c2-74a0-4986-b360-f5c0b95e0530",
+    "brand_id": "db9f5167-bebf-4cc1-a69d-c47224c3247a",
+    "campaign_id": "784049f4-8dfb-4903-885e-9727684d647c"
+  },
+  "worker_requests": {
+    "director": {
+      "schema": "c3_skills_director",
+      "context": {
+        "reference": {
+          "brand": "Sample surface studio",
+          "product": "Route Tray",
+          "audience": "Shift supervisors",
+          "objective": "Choose a useful product guide for a shift handover.",
+          "kpi": "Completed request forms · requests · 30 days · Count completed request forms",
+          "locale": "en-US",
+          "region": "HN",
+          "channel": "web",
+          "sku": "TRAY-2",
+          "task_intent": {
+            "purpose": "Choose a useful product guide for a shift handover.",
+            "deliverable_type": "marketing_strategy",
+            "audience": "Shift supervisors",
+            "product": "Route Tray",
+            "channel": "web",
+            "region": "HN",
+            "locale": "en-US",
+            "requirements": [
+              "Prepare a practical guide for one shift handover."
+            ],
+            "exclusions": [
+              "automatic worker tracking"
+            ],
+            "acceptance_criteria": [
+              "Tie the proposed asset to an observed task."
+            ],
+            "buyer_action": "catalogue_download",
+            "editorial_style": "concise"
+          },
+          "brand_guidelines": {
+            "revision": 1,
+            "digest": "bcb80b286fa07bef90a075983b2533de0e6d08d9fd210fe72586311208ca7159",
+            "guidance": "Use the approved product description.",
+            "tone": null,
+            "prohibited_claims": []
+          },
+          "buyer_action": "catalogue_download",
+          "editorial_style": "concise"
+        },
+        "stage": "director",
+        "assignment": "",
+        "predecessors": {}
+      },
+      "completed_attempt_id": "bc072bfd-e7a3-4bcc-a993-62307c7ec7fa"
+    },
+    "research": {
+      "schema": "c3_skills_research",
+      "context": {
+        "reference": {
+          "product": "Route Tray",
+          "market": "Vietnam",
+          "audience": "Shift supervisors",
+          "facts": [
+            {
+              "id": "F1",
+              "wording": "During a separate purchase review a shift supervisor asked to see the tray specifications first.",
+              "qualifiers": [],
+              "category": "description"
+            },
+            {
+              "id": "F2",
+              "wording": "One shift supervisor used the two-tone tray to separate outgoing batches.",
+              "qualifiers": [],
+              "category": "description"
+            },
+            {
+              "id": "F3",
+              "wording": "The passive tray has two separate compartments.",
+              "qualifiers": [],
+              "category": "description"
+            }
+          ],
+          "hypotheses": [
+            "Buyer needs require interviews"
+          ],
+          "gaps": [
+            "Kiểm chứng nhu cầu với khách hàng trong thị trường đã chọn.",
+            "Xác minh số liệu nền và kết quả bằng dữ liệu đo thực tế."
+          ],
+          "region": "HN",
+          "brand": "Sample surface studio",
+          "locale": "en-US",
+          "channel": "web",
+          "sku": "TRAY-2",
+          "task_intent": {
+            "purpose": "Choose a useful product guide for a shift handover.",
+            "deliverable_type": "marketing_strategy",
+            "audience": "Shift supervisors",
+            "product": "Route Tray",
+            "channel": "web",
+            "region": "HN",
+            "locale": "en-US",
+            "requirements": [
+              "Prepare a practical guide for one shift handover."
+            ],
+            "exclusions": [
+              "automatic worker tracking"
+            ],
+            "acceptance_criteria": [
+              "Tie the proposed asset to an observed task."
+            ],
+            "buyer_action": "catalogue_download",
+            "editorial_style": "concise"
+          },
+          "brand_guidelines": {
+            "revision": 1,
+            "digest": "bcb80b286fa07bef90a075983b2533de0e6d08d9fd210fe72586311208ca7159",
+            "guidance": "Use the approved product description.",
+            "tone": null,
+            "prohibited_claims": []
+          },
+          "buyer_action": "catalogue_download",
+          "editorial_style": "concise"
+        },
+        "stage": "research",
+        "assignment": "Review the observed use in the selected segment.",
+        "predecessors": {}
+      },
+      "completed_attempt_id": "7dabd635-8d43-4b9b-a7fb-f61a1900fad7"
+    },
+    "strategy": {
+      "schema": "c3_skills_strategy",
+      "context": {
+        "reference": {
+          "product": "Route Tray",
+          "audience": "Shift supervisors",
+          "facts": [
+            {
+              "id": "F1",
+              "wording": "During a separate purchase review a shift supervisor asked to see the tray specifications first.",
+              "qualifiers": [],
+              "category": "description"
+            },
+            {
+              "id": "F2",
+              "wording": "One shift supervisor used the two-tone tray to separate outgoing batches.",
+              "qualifiers": [],
+              "category": "description"
+            },
+            {
+              "id": "F3",
+              "wording": "The passive tray has two separate compartments.",
+              "qualifiers": [],
+              "category": "description"
+            }
+          ],
+          "hypotheses": [
+            "Buyer needs require interviews"
+          ],
+          "channel": "web",
+          "objective": "Choose a useful product guide for a shift handover.",
+          "kpi": "Completed request forms · requests · 30 days · Count completed request forms",
+          "region": "HN",
+          "brand": "Sample surface studio",
+          "locale": "en-US",
+          "sku": "TRAY-2",
+          "task_intent": {
+            "purpose": "Choose a useful product guide for a shift handover.",
+            "deliverable_type": "marketing_strategy",
+            "audience": "Shift supervisors",
+            "product": "Route Tray",
+            "channel": "web",
+            "region": "HN",
+            "locale": "en-US",
+            "requirements": [
+              "Prepare a practical guide for one shift handover."
+            ],
+            "exclusions": [
+              "automatic worker tracking"
+            ],
+            "acceptance_criteria": [
+              "Tie the proposed asset to an observed task."
+            ],
+            "buyer_action": "catalogue_download",
+            "editorial_style": "concise"
+          },
+          "brand_guidelines": {
+            "revision": 1,
+            "digest": "bcb80b286fa07bef90a075983b2533de0e6d08d9fd210fe72586311208ca7159",
+            "guidance": "Use the approved product description.",
+            "tone": null,
+            "prohibited_claims": []
+          },
+          "buyer_action": "catalogue_download",
+          "editorial_style": "concise"
+        },
+        "stage": "strategy",
+        "assignment": "Compare feasible options for the selected audience.",
+        "predecessors": {
+          "n01": "What happened at the last shift handover?\nReview a second site independently.\nShift supervisors\nBoth sites requested individual worker tracking."
+        }
+      },
+      "completed_attempt_id": "b81e068d-172b-4540-9c46-5adaac94e930"
+    }
+  },
+  "worker_replies": {
+    "director": {
+      "primary_assignment": "Review the observed use in the selected segment.",
+      "secondary_assignment": "Compare feasible options for the selected audience."
+    },
+    "research": {
+      "segment": "Shift supervisors",
+      "buyer_problem": "Both sites requested individual worker tracking.",
+      "research_question": "What happened at the last shift handover?",
+      "evidence_needed": "Review a second site independently.",
+      "source_ids": [
+        "F2",
+        "F3"
+      ]
+    },
+    "strategy": {
+      "positioning": "Explain the tray layout for supervisors.",
+      "channel_choice": "Prepare a draft for the owned product page.",
+      "rationale": "Investigate batch separation at shift handover.",
+      "test_hypothesis": "Test whether a two-panel explanation is useful.",
+      "measurable_action": "Count reviewed requests for the use guide.",
+      "measurement_method": "Review unique request identifiers at the next review.",
+      "source_ids": [
+        "F2",
+        "F3"
+      ]
+    }
+  },
+  "original": {
+    "research": {
+      "buyer_problem": "Both sites requested individual worker tracking.",
+      "research_question": "What happened at the last shift handover?",
+      "evidence": "During a separate purchase review a shift supervisor asked to see the tray specifications first.\nOne shift supervisor used the two-tone tray to separate outgoing batches.\nThe passive tray has two separate compartments.",
+      "hypothesis": "Hypothesis to test: clearer terms for Route Tray help Shift supervisors select a next step."
+    },
+    "strategy": {
+      "positioning": "Explain the tray layout for supervisors.",
+      "channel_choice": "Prepare a draft for the owned product page.",
+      "rationale": "Investigate batch separation at shift handover.",
+      "execution": "Prepare two presentations of Route Tray on web, keep terms fixed and measure the same action."
+    },
+    "measurement": {
+      "test_hypothesis": "Test whether a two-panel explanation is useful.",
+      "measurable_action": "Download the catalogue",
+      "measurement_method": "Review unique request identifiers at the next review."
+    }
+  },
+  "corrected": {
+    "research": {
+      "buyer_problem": "At the observed handover one supervisor separated outgoing batches with the two-tone tray.",
+      "research_question": "Which alternatives did Shift supervisors compare with Route Tray during their latest purchase?",
+      "evidence": "During a separate purchase review a shift supervisor asked to see the tray specifications first.\nOne shift supervisor used the two-tone tray to separate outgoing batches.\nThe passive tray has two separate compartments.",
+      "hypothesis": "Hypothesis to test: clearer terms for Route Tray help Shift supervisors select a next step."
+    },
+    "strategy": {
+      "positioning": "The passive tray has two separate compartments.",
+      "channel_choice": "web",
+      "rationale": "Test on web, the channel within the approved market.",
+      "execution": "Prepare two presentations of Route Tray on web, keep terms fixed and measure the same action."
+    },
+    "measurement": {
+      "test_hypothesis": "Compare placing facts before versus after the call to action in the same audience.",
+      "measurable_action": "Download the catalogue",
+      "measurement_method": "Track completion after form submission or document download. Deduplicate by event identifier."
+    }
+  },
+  "paraphrase_resolution": [
+    {
+      "id": "f8e782ce-532c-4de5-9441-e88c3611a23e",
+      "actor": "bde783c8-5ad7-4d8e-aa87-431a25ced74c",
+      "at": "2026-11-27T06:44:28.974711+00:00",
+      "operation": "c3_resolve",
+      "handle": "F2",
+      "reason": "One supervisor and one handover are retained; the tray separates outgoing batches.",
+      "version": "amc.content-evidence/1",
+      "document_id": "515197e9-f201-47a5-8ed3-c046142585b6",
+      "qa_revision": 3,
+      "statement_id": "8b02a0ae5f26e5166fc27a6b58be022ffed6306855a47e5dd4bbad7f4bca8127",
+      "source_digest": "60b4463b3fe855b0eecdfaf915792e500d45146b671b1112d003074b179470a3",
+      "content_digest": "bfb2d1ed1d4fc8feef39557742075254ae4af1796054c3e12ffa963422bd0f01",
+      "source_revision": "7931ae4d-cff7-463f-94e4-bcb7970f7c29",
+      "qualification_revision": "4416ab9e-d8ac-48e7-bdcb-7628ac6e8bd7"
+    }
+  ],
+  "signed_review": {
+    "version": "amc.internal-strategy-handoff/1",
+    "status": "draft_for_approval",
+    "revision": 3,
+    "content_digest": "bfb2d1ed1d4fc8feef39557742075254ae4af1796054c3e12ffa963422bd0f01",
+    "can_decide": false,
+    "reasons": [],
+    "next_owner": "Content lead",
+    "internal_concept": "Explain the product in use",
+    "permitted_product_wording": [
+      "The passive tray has two separate compartments."
+    ],
+    "references": [
+      {
+        "handle": "F1",
+        "claim_revision": "24ef65a0-3dcc-482a-9f08-f64c36474c9e",
+        "source_revision": "45f5fdca-bfe2-4c90-9ccb-03cfe1461100",
+        "source_digest": "50fe8a92a7183c1cf40ce834562b4ce9870aa702c329c7d3422f670cb7aecbc6",
+        "document": "PRIVATE_SYNTHETIC_DOCUMENT",
+        "locator": "private locator",
+        "statement": "During a separate purchase review a shift supervisor asked to see the tray specifications first.",
+        "qualifiers": [],
+        "category": "description",
+        "price": null,
+        "applicability": null,
+        "quantity": null,
+        "placement": {
+          "locale": "en-US",
+          "market": "34b335c4-378c-4f1c-a727-7f16893e26ea",
+          "region": "HN",
+          "channel": "web",
+          "product": "061354bf-1aff-41fb-a707-9064c614aa59",
+          "variant": null
+        },
+        "excerpt": "During a separate purchase review a shift supervisor asked to see the tray specifications first.",
+        "publisher": "PRIVATE_SYNTHETIC_SUPPLIER",
+        "recorded_at": "2026-11-27T06:44:27.719562+00:00",
+        "effective_from": null,
+        "effective_until": "2099-01-01T00:00:00Z",
+        "research_spans": [],
+        "positioning_spans": [],
+        "complete_wording": "During a separate purchase review a shift supervisor asked to see the tray specifications first.",
+        "permitted_use": "internal strategy review within the pinned placement"
+      },
+      {
+        "handle": "F2",
+        "claim_revision": "59b67e18-b118-4be1-8242-c98bc11e1297",
+        "source_revision": "7931ae4d-cff7-463f-94e4-bcb7970f7c29",
+        "source_digest": "60b4463b3fe855b0eecdfaf915792e500d45146b671b1112d003074b179470a3",
+        "document": "PRIVATE_SYNTHETIC_DOCUMENT",
+        "locator": "private locator",
+        "statement": "One shift supervisor used the two-tone tray to separate outgoing batches.",
+        "qualifiers": [],
+        "category": "description",
+        "price": null,
+        "applicability": null,
+        "quantity": null,
+        "placement": {
+          "locale": "en-US",
+          "market": "34b335c4-378c-4f1c-a727-7f16893e26ea",
+          "region": "HN",
+          "channel": "web",
+          "product": "061354bf-1aff-41fb-a707-9064c614aa59",
+          "variant": null
+        },
+        "excerpt": "One shift supervisor used the two-tone tray to separate outgoing batches.",
+        "publisher": "PRIVATE_SYNTHETIC_SUPPLIER",
+        "recorded_at": "2026-11-27T06:44:27.205882+00:00",
+        "effective_from": null,
+        "effective_until": "2099-01-01T00:00:00Z",
+        "research_spans": [
+          "8b02a0ae5f26e5166fc27a6b58be022ffed6306855a47e5dd4bbad7f4bca8127"
+        ],
+        "positioning_spans": [],
+        "complete_wording": "One shift supervisor used the two-tone tray to separate outgoing batches.",
+        "permitted_use": "internal strategy review within the pinned placement"
+      },
+      {
+        "handle": "F3",
+        "claim_revision": "c4b23d9c-c274-42ea-816e-919c8ae6d428",
+        "source_revision": "370e724f-278b-4403-9127-e325858feabd",
+        "source_digest": "9176646ce3a0658583edfa8c2af5a400fcdb321a4dcbec9e4226f3bc8d1f4b31",
+        "document": "PRIVATE_SYNTHETIC_DOCUMENT",
+        "locator": "private locator",
+        "statement": "The passive tray has two separate compartments.",
+        "qualifiers": [],
+        "category": "description",
+        "price": null,
+        "applicability": null,
+        "quantity": null,
+        "placement": {
+          "locale": "en-US",
+          "market": "34b335c4-378c-4f1c-a727-7f16893e26ea",
+          "region": "HN",
+          "channel": "web",
+          "product": "061354bf-1aff-41fb-a707-9064c614aa59",
+          "variant": null
+        },
+        "excerpt": "The passive tray has two separate compartments.",
+        "publisher": "PRIVATE_SYNTHETIC_SUPPLIER",
+        "recorded_at": "2026-11-27T06:44:27.601849+00:00",
+        "effective_from": null,
+        "effective_until": "2099-01-01T00:00:00Z",
+        "research_spans": [],
+        "positioning_spans": [
+          "1775818def5ad569b9b37fdc6bfb5b80e18801878e776b73e0e13fb41803fa04"
+        ],
+        "complete_wording": "The passive tray has two separate compartments.",
+        "permitted_use": "internal strategy review within the pinned placement"
+      }
+    ],
+    "qualifications": [],
+    "recipients": [],
+    "decision": {
+      "expected_revision": 3,
+      "expected_content_digest": "bfb2d1ed1d4fc8feef39557742075254ae4af1796054c3e12ffa963422bd0f01",
+      "qualification_revision": "4416ab9e-d8ac-48e7-bdcb-7628ac6e8bd7",
+      "option": "explain_use",
+      "asset_type": "web_use_guide",
+      "evidence_state": "supported",
+      "support_handle": "F2",
+      "contrary_handle": null,
+      "product_handle": "F3",
+      "recipient_id": "a05463a3-5d74-4958-8b61-49953da3621a",
+      "observation_kind": "observed_behaviour",
+      "observation_excerpt": "One shift supervisor used the two-tone tray to separate outgoing batches.",
+      "interpretation": "An annotated use guide could help at shift handover.",
+      "buyer_persona": "Shift supervisors",
+      "buying_situation": "A supervisor checks outgoing batches at shift change.",
+      "sample_limit": "One observed shift at one site. Use in other sites and buyer segments remains unverified.",
+      "actor": "bde783c8-5ad7-4d8e-aa87-431a25ced74c",
+      "receipt_id": "972eae7d-bf20-4023-984f-fc50f88e3736",
+      "at": "2026-11-27T06:44:29.844356+00:00",
+      "selected_references": {
+        "F2": {
+          "handle": "F2",
+          "claim_revision": "59b67e18-b118-4be1-8242-c98bc11e1297",
+          "source_revision": "7931ae4d-cff7-463f-94e4-bcb7970f7c29",
+          "source_digest": "60b4463b3fe855b0eecdfaf915792e500d45146b671b1112d003074b179470a3",
+          "document": "PRIVATE_SYNTHETIC_DOCUMENT",
+          "locator": "private locator",
+          "statement": "One shift supervisor used the two-tone tray to separate outgoing batches.",
+          "qualifiers": [],
+          "category": "description",
+          "price": null,
+          "applicability": null,
+          "quantity": null,
+          "placement": {
+            "locale": "en-US",
+            "market": "34b335c4-378c-4f1c-a727-7f16893e26ea",
+            "region": "HN",
+            "channel": "web",
+            "product": "061354bf-1aff-41fb-a707-9064c614aa59",
+            "variant": null
+          },
+          "excerpt": "One shift supervisor used the two-tone tray to separate outgoing batches.",
+          "publisher": "PRIVATE_SYNTHETIC_SUPPLIER",
+          "recorded_at": "2026-11-27T06:44:27.205882+00:00",
+          "effective_from": null,
+          "effective_until": "2099-01-01T00:00:00Z",
+          "research_spans": [
+            "8b02a0ae5f26e5166fc27a6b58be022ffed6306855a47e5dd4bbad7f4bca8127"
+          ],
+          "positioning_spans": [],
+          "complete_wording": "One shift supervisor used the two-tone tray to separate outgoing batches.",
+          "permitted_use": "internal strategy review within the pinned placement"
+        },
+        "F3": {
+          "handle": "F3",
+          "claim_revision": "c4b23d9c-c274-42ea-816e-919c8ae6d428",
+          "source_revision": "370e724f-278b-4403-9127-e325858feabd",
+          "source_digest": "9176646ce3a0658583edfa8c2af5a400fcdb321a4dcbec9e4226f3bc8d1f4b31",
+          "document": "PRIVATE_SYNTHETIC_DOCUMENT",
+          "locator": "private locator",
+          "statement": "The passive tray has two separate compartments.",
+          "qualifiers": [],
+          "category": "description",
+          "price": null,
+          "applicability": null,
+          "quantity": null,
+          "placement": {
+            "locale": "en-US",
+            "market": "34b335c4-378c-4f1c-a727-7f16893e26ea",
+            "region": "HN",
+            "channel": "web",
+            "product": "061354bf-1aff-41fb-a707-9064c614aa59",
+            "variant": null
+          },
+          "excerpt": "The passive tray has two separate compartments.",
+          "publisher": "PRIVATE_SYNTHETIC_SUPPLIER",
+          "recorded_at": "2026-11-27T06:44:27.601849+00:00",
+          "effective_from": null,
+          "effective_until": "2099-01-01T00:00:00Z",
+          "research_spans": [],
+          "positioning_spans": [
+            "1775818def5ad569b9b37fdc6bfb5b80e18801878e776b73e0e13fb41803fa04"
+          ],
+          "complete_wording": "The passive tray has two separate compartments.",
+          "permitted_use": "internal strategy review within the pinned placement"
+        }
+      }
+    },
+    "work_order": {
+      "recipient": "Content lead",
+      "asset_type": "web_use_guide",
+      "asset": "Product-page use guide",
+      "purpose": "Explain a use case on the product page",
+      "placement": "web",
+      "option": "explain_use",
+      "objective": "Choose a useful product guide for a shift handover.",
+      "audience": "Shift supervisors",
+      "buyer_persona": "Shift supervisors",
+      "message": "The passive tray has two separate compartments.",
+      "sources": {
+        "observation": {
+          "handle": "F2",
+          "claim_revision": "59b67e18-b118-4be1-8242-c98bc11e1297",
+          "source_revision": "7931ae4d-cff7-463f-94e4-bcb7970f7c29",
+          "source_digest": "60b4463b3fe855b0eecdfaf915792e500d45146b671b1112d003074b179470a3",
+          "document": "PRIVATE_SYNTHETIC_DOCUMENT",
+          "locator": "private locator",
+          "statement": "One shift supervisor used the two-tone tray to separate outgoing batches.",
+          "qualifiers": [],
+          "category": "description",
+          "price": null,
+          "applicability": null,
+          "quantity": null,
+          "placement": {
+            "locale": "en-US",
+            "market": "34b335c4-378c-4f1c-a727-7f16893e26ea",
+            "region": "HN",
+            "channel": "web",
+            "product": "061354bf-1aff-41fb-a707-9064c614aa59",
+            "variant": null
+          },
+          "excerpt": "One shift supervisor used the two-tone tray to separate outgoing batches.",
+          "publisher": "PRIVATE_SYNTHETIC_SUPPLIER",
+          "recorded_at": "2026-11-27T06:44:27.205882+00:00",
+          "effective_from": null,
+          "effective_until": "2099-01-01T00:00:00Z",
+          "research_spans": [
+            "8b02a0ae5f26e5166fc27a6b58be022ffed6306855a47e5dd4bbad7f4bca8127"
+          ],
+          "positioning_spans": [],
+          "complete_wording": "One shift supervisor used the two-tone tray to separate outgoing batches.",
+          "permitted_use": "internal strategy review within the pinned placement"
+        },
+        "product": {
+          "handle": "F3",
+          "claim_revision": "c4b23d9c-c274-42ea-816e-919c8ae6d428",
+          "source_revision": "370e724f-278b-4403-9127-e325858feabd",
+          "source_digest": "9176646ce3a0658583edfa8c2af5a400fcdb321a4dcbec9e4226f3bc8d1f4b31",
+          "document": "PRIVATE_SYNTHETIC_DOCUMENT",
+          "locator": "private locator",
+          "statement": "The passive tray has two separate compartments.",
+          "qualifiers": [],
+          "category": "description",
+          "price": null,
+          "applicability": null,
+          "quantity": null,
+          "placement": {
+            "locale": "en-US",
+            "market": "34b335c4-378c-4f1c-a727-7f16893e26ea",
+            "region": "HN",
+            "channel": "web",
+            "product": "061354bf-1aff-41fb-a707-9064c614aa59",
+            "variant": null
+          },
+          "excerpt": "The passive tray has two separate compartments.",
+          "publisher": "PRIVATE_SYNTHETIC_SUPPLIER",
+          "recorded_at": "2026-11-27T06:44:27.601849+00:00",
+          "effective_from": null,
+          "effective_until": "2099-01-01T00:00:00Z",
+          "research_spans": [],
+          "positioning_spans": [
+            "1775818def5ad569b9b37fdc6bfb5b80e18801878e776b73e0e13fb41803fa04"
+          ],
+          "complete_wording": "The passive tray has two separate compartments.",
+          "permitted_use": "internal strategy review within the pinned placement"
+        }
+      },
+      "claim_limits": [
+        "One observed shift at one site. Use in other sites and buyer segments remains unverified.",
+        "Use the complete product declaration with its qualifiers.",
+        "Buyer interpretation is limited to the recorded situation."
+      ],
+      "approval": "Internal drafting only. A new asset requires its own independent QA and channel approval."
+    },
+    "audience_mode": "reviewer",
+    "research": {
+      "buyer_problem": "At the observed handover one supervisor separated outgoing batches with the two-tone tray.",
+      "research_question": "Which alternatives did Shift supervisors compare with Route Tray during their latest purchase?",
+      "evidence": "During a separate purchase review a shift supervisor asked to see the tray specifications first.\nOne shift supervisor used the two-tone tray to separate outgoing batches.\nThe passive tray has two separate compartments.",
+      "hypothesis": "Hypothesis to test: clearer terms for Route Tray help Shift supervisors select a next step."
+    },
+    "strategy": {
+      "positioning": "The passive tray has two separate compartments.",
+      "channel_choice": "web",
+      "rationale": "Test on web, the channel within the approved market.",
+      "execution": "Prepare two presentations of Route Tray on web, keep terms fixed and measure the same action."
+    },
+    "audience": "Shift supervisors",
+    "placement": "web",
+    "scope": {
+      "tenant_id": "d8aa074d-7e14-47be-9d03-9dc8fe7ae779",
+      "client_id": "d43bd3c2-74a0-4986-b360-f5c0b95e0530",
+      "brand_id": "db9f5167-bebf-4cc1-a69d-c47224c3247a",
+      "campaign_id": "784049f4-8dfb-4903-885e-9727684d647c"
+    },
+    "options": [
+      {
+        "id": "explain_use",
+        "label": "Explain the product in use",
+        "tradeoff": "A concrete use case leaves other buying situations untested."
+      },
+      {
+        "id": "explain_terms",
+        "label": "Clarify the offer before purchase",
+        "tradeoff": "Commercial clarity may leave product use unexplained."
+      }
+    ],
+    "assets": [
+      {
+        "id": "web_use_guide",
+        "option": "explain_use",
+        "placement": "web",
+        "label": "Product-page use guide",
+        "purpose": "Explain a use case on the product page"
+      },
+      {
+        "id": "web_terms_panel",
+        "option": "explain_terms",
+        "placement": "web",
+        "label": "Product-page terms panel",
+        "purpose": "Clarify product information before purchase"
+      }
+    ],
+    "measurement_status": "planned_only",
+    "measurement": {
+      "pinned_kpi": "Completed request forms · requests · 30 days · Count completed request forms",
+      "studio_fields": {
+        "test_hypothesis": "Compare placing facts before versus after the call to action in the same audience.",
+        "measurable_action": "Download the catalogue",
+        "measurement_method": "Track completion after form submission or document download. Deduplicate by event identifier."
+      },
+      "execution_authorized": false
+    },
+    "provenance": {
+      "brief_id": "414efb3e-50f2-5f78-81d8-9d5cd2228e67",
+      "run_id": "672c1a7b-1994-49a9-bd8b-d59c929b2d65",
+      "document_id": "515197e9-f201-47a5-8ed3-c046142585b6",
+      "manifest": {
+        "id": "62096dcd-83ce-42e4-95ec-d3f313122b27",
+        "digest": "7cdf3de4eca3e24ce1917ff7713007b87e7b98f3699b4367f33ec2a06e4e27e4"
+      },
+      "release": "cf9078f2aa283cc7a9e9c273abd3077338c94ebe0f51a65e0a30c33254d94969",
+      "worker_proposals": {
+        "research": {
+          "segment": "Shift supervisors",
+          "buyer_problem": "Both sites requested individual worker tracking.",
+          "evidence_needed": "Review a second site independently.",
+          "research_question": "What happened at the last shift handover?"
+        },
+        "strategy": {
+          "rationale": "Investigate batch separation at shift handover.",
+          "positioning": "Explain the tray layout for supervisors.",
+          "channel_choice": "Prepare a draft for the owned product page.",
+          "test_hypothesis": "Test whether a two-panel explanation is useful.",
+          "measurable_action": "Count reviewed requests for the use guide.",
+          "measurement_method": "Review unique request identifiers at the next review."
+        }
+      },
+      "last_editor_id": "9e578c9b-82fc-4051-a9cb-8f6db68a55f6",
+      "studio_approvals": {
+        "research": "d67eea64-ecf5-4a2a-8bcd-54abe5871def",
+        "strategy": "631dd8f8-093d-4ed8-9485-a315aa5917f8",
+        "measurement": "466971fd-4e51-4ea4-acf8-ab1183159256"
+      },
+      "final_reviewer": "bde783c8-5ad7-4d8e-aa87-431a25ced74c",
+      "final_qa_digest": "9a01d775a831315bb9622a12f39e93c81bcfa195adb68693660a9626695abf90",
+      "qa_receipt": "f288c03a-a792-46f6-864b-ae1554627cbb"
+    }
+  },
+  "delivered": {
+    "version": "amc.internal-strategy-handoff/1",
+    "status": "draft_for_approval",
+    "revision": 3,
+    "content_digest": "bfb2d1ed1d4fc8feef39557742075254ae4af1796054c3e12ffa963422bd0f01",
+    "can_decide": false,
+    "reasons": [],
+    "next_owner": "Content lead",
+    "internal_concept": "Explain the product in use",
+    "permitted_product_wording": [
+      "The passive tray has two separate compartments."
+    ],
+    "references": [],
+    "qualifications": [],
+    "recipients": [],
+    "decision": {
+      "receipt_id": "972eae7d-bf20-4023-984f-fc50f88e3736",
+      "at": "2026-11-27T06:44:29.844356+00:00"
+    },
+    "work_order": {
+      "asset": "Product-page use guide",
+      "option": "explain_use",
+      "message": "The passive tray has two separate compartments.",
+      "purpose": "Explain a use case on the product page",
+      "approval": "Internal drafting only. A new asset requires its own independent QA and channel approval.",
+      "audience": "Shift supervisors",
+      "objective": "Choose a useful product guide for a shift handover.",
+      "placement": "web",
+      "recipient": "Content lead",
+      "asset_type": "web_use_guide",
+      "claim_limits": [
+        "One observed shift at one site. Use in other sites and buyer segments remains unverified.",
+        "Use the complete product declaration with its qualifiers.",
+        "Buyer interpretation is limited to the recorded situation."
+      ],
+      "buyer_persona": "Shift supervisors"
+    },
+    "audience_mode": "recipient",
+    "research": {},
+    "strategy": {},
+    "audience": "Shift supervisors",
+    "placement": "web",
+    "scope": {},
+    "options": [],
+    "assets": [],
+    "measurement_status": "planned_only",
+    "measurement": {
+      "execution_authorized": false
+    },
+    "provenance": {}
+  },
+  "changed_research": {
+    "version": "amc.internal-strategy-handoff/1",
+    "status": "draft_for_approval",
+    "revision": 5,
+    "content_digest": "bfb2d1ed1d4fc8feef39557742075254ae4af1796054c3e12ffa963422bd0f01",
+    "can_decide": false,
+    "reasons": [],
+    "next_owner": "Content lead",
+    "internal_concept": "Clarify the offer before purchase",
+    "permitted_product_wording": [
+      "The passive tray has two separate compartments."
+    ],
+    "references": [
+      {
+        "handle": "F1",
+        "claim_revision": "24ef65a0-3dcc-482a-9f08-f64c36474c9e",
+        "source_revision": "45f5fdca-bfe2-4c90-9ccb-03cfe1461100",
+        "source_digest": "50fe8a92a7183c1cf40ce834562b4ce9870aa702c329c7d3422f670cb7aecbc6",
+        "document": "PRIVATE_SYNTHETIC_DOCUMENT",
+        "locator": "private locator",
+        "statement": "During a separate purchase review a shift supervisor asked to see the tray specifications first.",
+        "qualifiers": [],
+        "category": "description",
+        "price": null,
+        "applicability": null,
+        "quantity": null,
+        "placement": {
+          "locale": "en-US",
+          "market": "34b335c4-378c-4f1c-a727-7f16893e26ea",
+          "region": "HN",
+          "channel": "web",
+          "product": "061354bf-1aff-41fb-a707-9064c614aa59",
+          "variant": null
+        },
+        "excerpt": "During a separate purchase review a shift supervisor asked to see the tray specifications first.",
+        "publisher": "PRIVATE_SYNTHETIC_SUPPLIER",
+        "recorded_at": "2026-11-27T06:44:27.719562+00:00",
+        "effective_from": null,
+        "effective_until": "2099-01-01T00:00:00Z",
+        "research_spans": [
+          "a915926d5c63502a02fc28f503a3658cfd00cdc4cf693bcf07189e3b5efa0b37"
+        ],
+        "positioning_spans": [],
+        "complete_wording": "During a separate purchase review a shift supervisor asked to see the tray specifications first.",
+        "permitted_use": "internal strategy review within the pinned placement"
+      },
+      {
+        "handle": "F2",
+        "claim_revision": "59b67e18-b118-4be1-8242-c98bc11e1297",
+        "source_revision": "7931ae4d-cff7-463f-94e4-bcb7970f7c29",
+        "source_digest": "60b4463b3fe855b0eecdfaf915792e500d45146b671b1112d003074b179470a3",
+        "document": "PRIVATE_SYNTHETIC_DOCUMENT",
+        "locator": "private locator",
+        "statement": "One shift supervisor used the two-tone tray to separate outgoing batches.",
+        "qualifiers": [],
+        "category": "description",
+        "price": null,
+        "applicability": null,
+        "quantity": null,
+        "placement": {
+          "locale": "en-US",
+          "market": "34b335c4-378c-4f1c-a727-7f16893e26ea",
+          "region": "HN",
+          "channel": "web",
+          "product": "061354bf-1aff-41fb-a707-9064c614aa59",
+          "variant": null
+        },
+        "excerpt": "One shift supervisor used the two-tone tray to separate outgoing batches.",
+        "publisher": "PRIVATE_SYNTHETIC_SUPPLIER",
+        "recorded_at": "2026-11-27T06:44:27.205882+00:00",
+        "effective_from": null,
+        "effective_until": "2099-01-01T00:00:00Z",
+        "research_spans": [],
+        "positioning_spans": [],
+        "complete_wording": "One shift supervisor used the two-tone tray to separate outgoing batches.",
+        "permitted_use": "internal strategy review within the pinned placement"
+      },
+      {
+        "handle": "F3",
+        "claim_revision": "c4b23d9c-c274-42ea-816e-919c8ae6d428",
+        "source_revision": "370e724f-278b-4403-9127-e325858feabd",
+        "source_digest": "9176646ce3a0658583edfa8c2af5a400fcdb321a4dcbec9e4226f3bc8d1f4b31",
+        "document": "PRIVATE_SYNTHETIC_DOCUMENT",
+        "locator": "private locator",
+        "statement": "The passive tray has two separate compartments.",
+        "qualifiers": [],
+        "category": "description",
+        "price": null,
+        "applicability": null,
+        "quantity": null,
+        "placement": {
+          "locale": "en-US",
+          "market": "34b335c4-378c-4f1c-a727-7f16893e26ea",
+          "region": "HN",
+          "channel": "web",
+          "product": "061354bf-1aff-41fb-a707-9064c614aa59",
+          "variant": null
+        },
+        "excerpt": "The passive tray has two separate compartments.",
+        "publisher": "PRIVATE_SYNTHETIC_SUPPLIER",
+        "recorded_at": "2026-11-27T06:44:27.601849+00:00",
+        "effective_from": null,
+        "effective_until": "2099-01-01T00:00:00Z",
+        "research_spans": [],
+        "positioning_spans": [
+          "df03def3bdf6f004ab1d01816ba7eeee49e0b4cddfa927c302842e3dd657efad"
+        ],
+        "complete_wording": "The passive tray has two separate compartments.",
+        "permitted_use": "internal strategy review within the pinned placement"
+      }
+    ],
+    "qualifications": [],
+    "recipients": [],
+    "decision": {
+      "expected_revision": 5,
+      "expected_content_digest": "bfb2d1ed1d4fc8feef39557742075254ae4af1796054c3e12ffa963422bd0f01",
+      "qualification_revision": "4416ab9e-d8ac-48e7-bdcb-7628ac6e8bd7",
+      "option": "explain_terms",
+      "asset_type": "web_terms_panel",
+      "evidence_state": "supported",
+      "support_handle": "F1",
+      "contrary_handle": null,
+      "product_handle": "F3",
+      "recipient_id": "a05463a3-5d74-4958-8b61-49953da3621a",
+      "observation_kind": "observed_behaviour",
+      "observation_excerpt": "During a separate purchase review a shift supervisor asked to see the tray specifications first.",
+      "interpretation": "This buyer asked to compare specifications before a demonstration.",
+      "buyer_persona": "Shift supervisors",
+      "buying_situation": "A supervisor checks outgoing batches at shift change.",
+      "sample_limit": "One observed shift at one site. Use in other sites and buyer segments remains unverified.",
+      "actor": "bde783c8-5ad7-4d8e-aa87-431a25ced74c",
+      "receipt_id": "3bc4a26e-04d6-4607-9611-a4d1ef169ce4",
+      "at": "2026-11-27T06:44:31.514176+00:00",
+      "selected_references": {
+        "F1": {
+          "handle": "F1",
+          "claim_revision": "24ef65a0-3dcc-482a-9f08-f64c36474c9e",
+          "source_revision": "45f5fdca-bfe2-4c90-9ccb-03cfe1461100",
+          "source_digest": "50fe8a92a7183c1cf40ce834562b4ce9870aa702c329c7d3422f670cb7aecbc6",
+          "document": "PRIVATE_SYNTHETIC_DOCUMENT",
+          "locator": "private locator",
+          "statement": "During a separate purchase review a shift supervisor asked to see the tray specifications first.",
+          "qualifiers": [],
+          "category": "description",
+          "price": null,
+          "applicability": null,
+          "quantity": null,
+          "placement": {
+            "locale": "en-US",
+            "market": "34b335c4-378c-4f1c-a727-7f16893e26ea",
+            "region": "HN",
+            "channel": "web",
+            "product": "061354bf-1aff-41fb-a707-9064c614aa59",
+            "variant": null
+          },
+          "excerpt": "During a separate purchase review a shift supervisor asked to see the tray specifications first.",
+          "publisher": "PRIVATE_SYNTHETIC_SUPPLIER",
+          "recorded_at": "2026-11-27T06:44:27.719562+00:00",
+          "effective_from": null,
+          "effective_until": "2099-01-01T00:00:00Z",
+          "research_spans": [
+            "a915926d5c63502a02fc28f503a3658cfd00cdc4cf693bcf07189e3b5efa0b37"
+          ],
+          "positioning_spans": [],
+          "complete_wording": "During a separate purchase review a shift supervisor asked to see the tray specifications first.",
+          "permitted_use": "internal strategy review within the pinned placement"
+        },
+        "F3": {
+          "handle": "F3",
+          "claim_revision": "c4b23d9c-c274-42ea-816e-919c8ae6d428",
+          "source_revision": "370e724f-278b-4403-9127-e325858feabd",
+          "source_digest": "9176646ce3a0658583edfa8c2af5a400fcdb321a4dcbec9e4226f3bc8d1f4b31",
+          "document": "PRIVATE_SYNTHETIC_DOCUMENT",
+          "locator": "private locator",
+          "statement": "The passive tray has two separate compartments.",
+          "qualifiers": [],
+          "category": "description",
+          "price": null,
+          "applicability": null,
+          "quantity": null,
+          "placement": {
+            "locale": "en-US",
+            "market": "34b335c4-378c-4f1c-a727-7f16893e26ea",
+            "region": "HN",
+            "channel": "web",
+            "product": "061354bf-1aff-41fb-a707-9064c614aa59",
+            "variant": null
+          },
+          "excerpt": "The passive tray has two separate compartments.",
+          "publisher": "PRIVATE_SYNTHETIC_SUPPLIER",
+          "recorded_at": "2026-11-27T06:44:27.601849+00:00",
+          "effective_from": null,
+          "effective_until": "2099-01-01T00:00:00Z",
+          "research_spans": [],
+          "positioning_spans": [
+            "df03def3bdf6f004ab1d01816ba7eeee49e0b4cddfa927c302842e3dd657efad"
+          ],
+          "complete_wording": "The passive tray has two separate compartments.",
+          "permitted_use": "internal strategy review within the pinned placement"
+        }
+      }
+    },
+    "work_order": {
+      "recipient": "Content lead",
+      "asset_type": "web_terms_panel",
+      "asset": "Product-page terms panel",
+      "purpose": "Clarify product information before purchase",
+      "placement": "web",
+      "option": "explain_terms",
+      "objective": "Choose a useful product guide for a shift handover.",
+      "audience": "Shift supervisors",
+      "buyer_persona": "Shift supervisors",
+      "message": "The passive tray has two separate compartments.",
+      "sources": {
+        "observation": {
+          "handle": "F1",
+          "claim_revision": "24ef65a0-3dcc-482a-9f08-f64c36474c9e",
+          "source_revision": "45f5fdca-bfe2-4c90-9ccb-03cfe1461100",
+          "source_digest": "50fe8a92a7183c1cf40ce834562b4ce9870aa702c329c7d3422f670cb7aecbc6",
+          "document": "PRIVATE_SYNTHETIC_DOCUMENT",
+          "locator": "private locator",
+          "statement": "During a separate purchase review a shift supervisor asked to see the tray specifications first.",
+          "qualifiers": [],
+          "category": "description",
+          "price": null,
+          "applicability": null,
+          "quantity": null,
+          "placement": {
+            "locale": "en-US",
+            "market": "34b335c4-378c-4f1c-a727-7f16893e26ea",
+            "region": "HN",
+            "channel": "web",
+            "product": "061354bf-1aff-41fb-a707-9064c614aa59",
+            "variant": null
+          },
+          "excerpt": "During a separate purchase review a shift supervisor asked to see the tray specifications first.",
+          "publisher": "PRIVATE_SYNTHETIC_SUPPLIER",
+          "recorded_at": "2026-11-27T06:44:27.719562+00:00",
+          "effective_from": null,
+          "effective_until": "2099-01-01T00:00:00Z",
+          "research_spans": [
+            "a915926d5c63502a02fc28f503a3658cfd00cdc4cf693bcf07189e3b5efa0b37"
+          ],
+          "positioning_spans": [],
+          "complete_wording": "During a separate purchase review a shift supervisor asked to see the tray specifications first.",
+          "permitted_use": "internal strategy review within the pinned placement"
+        },
+        "product": {
+          "handle": "F3",
+          "claim_revision": "c4b23d9c-c274-42ea-816e-919c8ae6d428",
+          "source_revision": "370e724f-278b-4403-9127-e325858feabd",
+          "source_digest": "9176646ce3a0658583edfa8c2af5a400fcdb321a4dcbec9e4226f3bc8d1f4b31",
+          "document": "PRIVATE_SYNTHETIC_DOCUMENT",
+          "locator": "private locator",
+          "statement": "The passive tray has two separate compartments.",
+          "qualifiers": [],
+          "category": "description",
+          "price": null,
+          "applicability": null,
+          "quantity": null,
+          "placement": {
+            "locale": "en-US",
+            "market": "34b335c4-378c-4f1c-a727-7f16893e26ea",
+            "region": "HN",
+            "channel": "web",
+            "product": "061354bf-1aff-41fb-a707-9064c614aa59",
+            "variant": null
+          },
+          "excerpt": "The passive tray has two separate compartments.",
+          "publisher": "PRIVATE_SYNTHETIC_SUPPLIER",
+          "recorded_at": "2026-11-27T06:44:27.601849+00:00",
+          "effective_from": null,
+          "effective_until": "2099-01-01T00:00:00Z",
+          "research_spans": [],
+          "positioning_spans": [
+            "df03def3bdf6f004ab1d01816ba7eeee49e0b4cddfa927c302842e3dd657efad"
+          ],
+          "complete_wording": "The passive tray has two separate compartments.",
+          "permitted_use": "internal strategy review within the pinned placement"
+        }
+      },
+      "claim_limits": [
+        "One observed shift at one site. Use in other sites and buyer segments remains unverified.",
+        "Use the complete product declaration with its qualifiers.",
+        "Buyer interpretation is limited to the recorded situation."
+      ],
+      "approval": "Internal drafting only. A new asset requires its own independent QA and channel approval."
+    },
+    "audience_mode": "reviewer",
+    "research": {
+      "buyer_problem": "During a separate purchase review a shift supervisor asked to see the tray specifications first.",
+      "research_question": "Which alternatives did Shift supervisors compare with Route Tray during their latest purchase?",
+      "evidence": "During a separate purchase review a shift supervisor asked to see the tray specifications first.\nOne shift supervisor used the two-tone tray to separate outgoing batches.\nThe passive tray has two separate compartments.",
+      "hypothesis": "Hypothesis to test: clearer terms for Route Tray help Shift supervisors select a next step."
+    },
+    "strategy": {
+      "positioning": "The passive tray has two separate compartments.",
+      "channel_choice": "web",
+      "rationale": "Test on web, the channel within the approved market.",
+      "execution": "Prepare two presentations of Route Tray on web, keep terms fixed and measure the same action."
+    },
+    "audience": "Shift supervisors",
+    "placement": "web",
+    "scope": {
+      "tenant_id": "d8aa074d-7e14-47be-9d03-9dc8fe7ae779",
+      "client_id": "d43bd3c2-74a0-4986-b360-f5c0b95e0530",
+      "brand_id": "db9f5167-bebf-4cc1-a69d-c47224c3247a",
+      "campaign_id": "784049f4-8dfb-4903-885e-9727684d647c"
+    },
+    "options": [
+      {
+        "id": "explain_use",
+        "label": "Explain the product in use",
+        "tradeoff": "A concrete use case leaves other buying situations untested."
+      },
+      {
+        "id": "explain_terms",
+        "label": "Clarify the offer before purchase",
+        "tradeoff": "Commercial clarity may leave product use unexplained."
+      }
+    ],
+    "assets": [
+      {
+        "id": "web_use_guide",
+        "option": "explain_use",
+        "placement": "web",
+        "label": "Product-page use guide",
+        "purpose": "Explain a use case on the product page"
+      },
+      {
+        "id": "web_terms_panel",
+        "option": "explain_terms",
+        "placement": "web",
+        "label": "Product-page terms panel",
+        "purpose": "Clarify product information before purchase"
+      }
+    ],
+    "measurement_status": "planned_only",
+    "measurement": {
+      "pinned_kpi": "Completed request forms · requests · 30 days · Count completed request forms",
+      "studio_fields": {
+        "test_hypothesis": "Compare placing facts before versus after the call to action in the same audience.",
+        "measurable_action": "Download the catalogue",
+        "measurement_method": "Track completion after form submission or document download. Deduplicate by event identifier."
+      },
+      "execution_authorized": false
+    },
+    "provenance": {
+      "brief_id": "414efb3e-50f2-5f78-81d8-9d5cd2228e67",
+      "run_id": "672c1a7b-1994-49a9-bd8b-d59c929b2d65",
+      "document_id": "515197e9-f201-47a5-8ed3-c046142585b6",
+      "manifest": {
+        "id": "62096dcd-83ce-42e4-95ec-d3f313122b27",
+        "digest": "7cdf3de4eca3e24ce1917ff7713007b87e7b98f3699b4367f33ec2a06e4e27e4"
+      },
+      "release": "cf9078f2aa283cc7a9e9c273abd3077338c94ebe0f51a65e0a30c33254d94969",
+      "worker_proposals": {
+        "research": {
+          "segment": "Shift supervisors",
+          "buyer_problem": "Both sites requested individual worker tracking.",
+          "evidence_needed": "Review a second site independently.",
+          "research_question": "What happened at the last shift handover?"
+        },
+        "strategy": {
+          "rationale": "Investigate batch separation at shift handover.",
+          "positioning": "Explain the tray layout for supervisors.",
+          "channel_choice": "Prepare a draft for the owned product page.",
+          "test_hypothesis": "Test whether a two-panel explanation is useful.",
+          "measurable_action": "Count reviewed requests for the use guide.",
+          "measurement_method": "Review unique request identifiers at the next review."
+        }
+      },
+      "last_editor_id": "9e578c9b-82fc-4051-a9cb-8f6db68a55f6",
+      "studio_approvals": {
+        "research": "8ab25365-0f00-4737-beac-c5b15ab029ca",
+        "strategy": "1f57475c-8768-40d6-a607-f7d99af358b7",
+        "measurement": "f0992cb9-471d-4bd5-a8be-69efee9336ff"
+      },
+      "final_reviewer": "bde783c8-5ad7-4d8e-aa87-431a25ced74c",
+      "final_qa_digest": "457ed91c825dfdc3d9711d75ed69c0d2f913c4dd745ea08b8444c8a6b4a5ce2b",
+      "qa_receipt": "28068c68-838e-463a-9146-041cf9f412dc"
+    }
+  },
+  "changed_recipient_order": {
+    "asset": "Product-page terms panel",
+    "option": "explain_terms",
+    "message": "The passive tray has two separate compartments.",
+    "purpose": "Clarify product information before purchase",
+    "approval": "Internal drafting only. A new asset requires its own independent QA and channel approval.",
+    "audience": "Shift supervisors",
+    "objective": "Choose a useful product guide for a shift handover.",
+    "placement": "web",
+    "recipient": "Content lead",
+    "asset_type": "web_terms_panel",
+    "claim_limits": [
+      "One observed shift at one site. Use in other sites and buyer segments remains unverified.",
+      "Use the complete product declaration with its qualifiers.",
+      "Buyer interpretation is limited to the recorded situation."
+    ],
+    "buyer_persona": "Shift supervisors"
+  },
+  "invalidating_strategy_revision": 6,
+  "durable_counts_before_and_after_handoff": {
+    "workforce_runs": 1,
+    "action_requests": 0,
+    "ledger_events": 6,
+    "other_commands": 45
+  },
+  "contributions": {
+    "worker": "Controlled scripted suggestions, no new inference.",
+    "deterministic": "Manifest, evidence classification, version gates, replay, scoped delivery.",
+    "staff": "Synthetic authenticated edit, qualification decision and explicit option/recipient selection."
+  }
+}

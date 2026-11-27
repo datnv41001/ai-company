@@ -1,0 +1,288 @@
+{
+  "backend": "PostgreSQL; real dispatcher and worker; deterministic specialist replies",
+  "run_id": "86b08297-bf26-44e6-a264-5ecc4625c48d",
+  "manifest_id": "6d61f2a6-441e-4c72-a000-a59980345af8",
+  "stale_request": {
+    "read_revision": 2,
+    "current_revision": 3,
+    "status": 412
+  },
+  "sessions": [
+    {
+      "status": "hold",
+      "viewport": [
+        1280,
+        850
+      ],
+      "theme": "light",
+      "focus": "keyboard summary",
+      "browser": "159.0.8154.6",
+      "open_to_status_ms": 206,
+      "contrast": {
+        "surface": ".strategy-handoff",
+        "view": "light",
+        "checked": 10,
+        "minimum_ratio": 6.0,
+        "failed": [],
+        "unresolved": []
+      },
+      "image": "hold-1280-light.png",
+      "document_id": "2ac91363-bc11-4b88-bc71-93568287cc1f",
+      "revision": 3,
+      "receipt": "e5f87b07-ed22-450e-818b-8e46f08ed54c"
+    },
+    {
+      "status": "hold",
+      "viewport": [
+        1280,
+        850
+      ],
+      "theme": "dark",
+      "focus": "keyboard summary",
+      "browser": "159.0.8154.6",
+      "open_to_status_ms": 206,
+      "contrast": {
+        "surface": ".strategy-handoff",
+        "view": "dark",
+        "checked": 10,
+        "minimum_ratio": 6.0,
+        "failed": [],
+        "unresolved": []
+      },
+      "image": "hold-1280-dark.png",
+      "document_id": "2ac91363-bc11-4b88-bc71-93568287cc1f",
+      "revision": 3,
+      "receipt": "e5f87b07-ed22-450e-818b-8e46f08ed54c"
+    },
+    {
+      "status": "hold",
+      "viewport": [
+        820,
+        1180
+      ],
+      "theme": "light",
+      "focus": "keyboard summary",
+      "browser": "159.0.8154.6",
+      "open_to_status_ms": 201,
+      "contrast": {
+        "surface": ".strategy-handoff",
+        "view": "light",
+        "checked": 10,
+        "minimum_ratio": 6.0,
+        "failed": [],
+        "unresolved": []
+      },
+      "image": "hold-820-light.png",
+      "document_id": "2ac91363-bc11-4b88-bc71-93568287cc1f",
+      "revision": 3,
+      "receipt": "e5f87b07-ed22-450e-818b-8e46f08ed54c"
+    },
+    {
+      "status": "hold",
+      "viewport": [
+        820,
+        1180
+      ],
+      "theme": "dark",
+      "focus": "keyboard summary",
+      "browser": "159.0.8154.6",
+      "open_to_status_ms": 201,
+      "contrast": {
+        "surface": ".strategy-handoff",
+        "view": "dark",
+        "checked": 10,
+        "minimum_ratio": 6.0,
+        "failed": [],
+        "unresolved": []
+      },
+      "image": "hold-820-dark.png",
+      "document_id": "2ac91363-bc11-4b88-bc71-93568287cc1f",
+      "revision": 3,
+      "receipt": "e5f87b07-ed22-450e-818b-8e46f08ed54c"
+    },
+    {
+      "status": "hold",
+      "viewport": [
+        390,
+        844
+      ],
+      "theme": "light",
+      "focus": "keyboard summary",
+      "browser": "159.0.8154.6",
+      "open_to_status_ms": 200,
+      "contrast": {
+        "surface": ".strategy-handoff",
+        "view": "light",
+        "checked": 10,
+        "minimum_ratio": 6.0,
+        "failed": [],
+        "unresolved": []
+      },
+      "image": "hold-390-light.png",
+      "document_id": "2ac91363-bc11-4b88-bc71-93568287cc1f",
+      "revision": 3,
+      "receipt": "e5f87b07-ed22-450e-818b-8e46f08ed54c"
+    },
+    {
+      "status": "hold",
+      "viewport": [
+        390,
+        844
+      ],
+      "theme": "dark",
+      "focus": "keyboard summary",
+      "browser": "159.0.8154.6",
+      "open_to_status_ms": 200,
+      "contrast": {
+        "surface": ".strategy-handoff",
+        "view": "dark",
+        "checked": 10,
+        "minimum_ratio": 6.158,
+        "failed": [],
+        "unresolved": []
+      },
+      "image": "hold-390-dark.png",
+      "document_id": "2ac91363-bc11-4b88-bc71-93568287cc1f",
+      "revision": 3,
+      "receipt": "e5f87b07-ed22-450e-818b-8e46f08ed54c"
+    },
+    {
+      "status": "draft",
+      "viewport": [
+        1280,
+        850
+      ],
+      "theme": "light",
+      "focus": "keyboard summary",
+      "browser": "159.0.8154.6",
+      "open_to_status_ms": 202,
+      "contrast": {
+        "surface": ".strategy-handoff",
+        "view": "light",
+        "checked": 10,
+        "minimum_ratio": 5.655,
+        "failed": [],
+        "unresolved": []
+      },
+      "image": "draft-1280-light.png",
+      "document_id": "2ac91363-bc11-4b88-bc71-93568287cc1f",
+      "revision": 4,
+      "receipt": "08bbc55f-9906-47ac-ad4a-7f832d69b425"
+    },
+    {
+      "status": "draft",
+      "viewport": [
+        1280,
+        850
+      ],
+      "theme": "dark",
+      "focus": "keyboard summary",
+      "browser": "159.0.8154.6",
+      "open_to_status_ms": 202,
+      "contrast": {
+        "surface": ".strategy-handoff",
+        "view": "dark",
+        "checked": 10,
+        "minimum_ratio": 5.857,
+        "failed": [],
+        "unresolved": []
+      },
+      "image": "draft-1280-dark.png",
+      "document_id": "2ac91363-bc11-4b88-bc71-93568287cc1f",
+      "revision": 4,
+      "receipt": "08bbc55f-9906-47ac-ad4a-7f832d69b425"
+    },
+    {
+      "status": "draft",
+      "viewport": [
+        820,
+        1180
+      ],
+      "theme": "light",
+      "focus": "keyboard summary",
+      "browser": "159.0.8154.6",
+      "open_to_status_ms": 198,
+      "contrast": {
+        "surface": ".strategy-handoff",
+        "view": "light",
+        "checked": 10,
+        "minimum_ratio": 5.655,
+        "failed": [],
+        "unresolved": []
+      },
+      "image": "draft-820-light.png",
+      "document_id": "2ac91363-bc11-4b88-bc71-93568287cc1f",
+      "revision": 4,
+      "receipt": "08bbc55f-9906-47ac-ad4a-7f832d69b425"
+    },
+    {
+      "status": "draft",
+      "viewport": [
+        820,
+        1180
+      ],
+      "theme": "dark",
+      "focus": "keyboard summary",
+      "browser": "159.0.8154.6",
+      "open_to_status_ms": 198,
+      "contrast": {
+        "surface": ".strategy-handoff",
+        "view": "dark",
+        "checked": 10,
+        "minimum_ratio": 5.655,
+        "failed": [],
+        "unresolved": []
+      },
+      "image": "draft-820-dark.png",
+      "document_id": "2ac91363-bc11-4b88-bc71-93568287cc1f",
+      "revision": 4,
+      "receipt": "08bbc55f-9906-47ac-ad4a-7f832d69b425"
+    },
+    {
+      "status": "draft",
+      "viewport": [
+        390,
+        844
+      ],
+      "theme": "light",
+      "focus": "keyboard summary",
+      "browser": "159.0.8154.6",
+      "open_to_status_ms": 199,
+      "contrast": {
+        "surface": ".strategy-handoff",
+        "view": "light",
+        "checked": 10,
+        "minimum_ratio": 5.655,
+        "failed": [],
+        "unresolved": []
+      },
+      "image": "draft-390-light.png",
+      "document_id": "2ac91363-bc11-4b88-bc71-93568287cc1f",
+      "revision": 4,
+      "receipt": "08bbc55f-9906-47ac-ad4a-7f832d69b425"
+    },
+    {
+      "status": "draft",
+      "viewport": [
+        390,
+        844
+      ],
+      "theme": "dark",
+      "focus": "keyboard summary",
+      "browser": "159.0.8154.6",
+      "open_to_status_ms": 199,
+      "contrast": {
+        "surface": ".strategy-handoff",
+        "view": "dark",
+        "checked": 10,
+        "minimum_ratio": 5.655,
+        "failed": [],
+        "unresolved": []
+      },
+      "image": "draft-390-dark.png",
+      "document_id": "2ac91363-bc11-4b88-bc71-93568287cc1f",
+      "revision": 4,
+      "receipt": "08bbc55f-9906-47ac-ad4a-7f832d69b425"
+    }
+  ]
+}

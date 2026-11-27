@@ -21,9 +21,20 @@ Schema 3 introduced PostgreSQL row policies for client delivery. At the PR #48 b
 
 ## Stop-ship (P0) before ANY public deployment
 
+### Phạm vi control đã kiểm nội bộ
+
+| Control | Chỗ kiểm tra | Điều còn mở cho production |
+|---|---|---|
+| Danh tính, lời mời, session và thu hồi | [Test identity](../tests/test_verified_identity.py), [test session](../tests/test_device_sessions.py) | Quy trình vận hành danh tính, MFA/SSO theo phạm vi phát hành và quản lý khóa tại môi trường đích. |
+| Cô lập dữ liệu | [PostgreSQL client isolation](reviews/POSTGRES_CLIENT_ISOLATION_20261123.md), [migrations](../migrations/) | Kiểm quyền triển khai thực và đánh giá bảo mật độc lập. |
+| Duyệt bản và quyền chia sẻ | [QA theo revision](../app/revision_qa.py), [test](../tests/test_revision_evidence.py) | Quyền của khách, lưu giữ và xóa dữ liệu, kiểm toán bên vận hành. |
+| Khôi phục | [Runbook cutover](evaluation/sandbox-operations/CUTOVER.md), [CI và số bảng theo SHA](evaluation/knowledge-handoff/KC-AUDIT-01-REFS.json) | Diễn tập hạ tầng đích với RPO/RTO, quan sát và xử lý sự cố. |
+
+Checklist tiếp theo ghi điều kiện phát hành. Để đóng một mục, gắn môi trường, owner, bằng chứng và quyết định; các test sẵn có chỉ chứng minh control trong môi trường đã thử.
+
 - [ ] Auth: verified email, invitation acceptance, rate limits, time-limited abuse protection, password reset, MFA and optional SSO; secure cookie/session strategy and CSRF policy; JWT signing key rotation and explicit revocation.
 - [ ] Tenant isolation: Postgres row-level security with session-scoped tenant identity, enforced default-deny RLS policies on ALL business tables; tenant/brand/client relationship constraints; regression tests on IDOR at API/DB/file/vector/cache/queue/logs.
-- [ ] Replace `Base.metadata.create_all()` with reviewed Alembic migrations; automatically block incompatible migrations and test rollback/restore.
+- [ ] **Production migration gate — OPEN.** Use reviewed, versioned migrations. Before release, demonstrate that incompatible schema versions are blocked, rehearse the upgrade and rollback on the target environment, verify restored data against the backup, and record the operations owner's signoff. On internal main #63, the existing PostgreSQL runner was tested on 22 upgrade paths to core v26 and recovery matched 34 tables. SQLite uses `Base.metadata.create_all()` for local initialization. Adopting Alembic would require a separate ADR with comparative evidence and a tested transition plan. [Startup checks](../app/database.py) · [Evidence on main](evaluation/knowledge-handoff/KC-AUDIT-01-REFS.json)
 - [ ] Worker runtime: durable persistent run state, retries with upper bounds, timeout, idempotency keys, DLQ, cancellation and checkpoint; secure job runner with task-scoped credentials and policy snapshot.
 - [ ] Real LLM safety: per-tenant budgets/rate limits, model fallback policy, structured outputs, source evidence, anti-injection tests, redaction of personal data/secrets, versioned prompts/skills, actual usage-cost ledger.
 - [ ] External actions: official OAuth permissions, connection ownership, secret vault, approval policy including two-person rule or explicit owner override governance, prepared action payload hash, connector-specific idempotency/receipts, reconciliation and rollback.

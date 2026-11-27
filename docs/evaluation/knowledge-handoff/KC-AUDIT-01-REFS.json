@@ -1,0 +1,153 @@
+{
+  "observed_utc": "2026-11-27T09:21:41.349939+00:00",
+  "main": {
+    "sha": "053410d161b15285a1ef264f853d4920a3d559e1",
+    "tree": "a63361c7673ada6121117028f92aebcb3b8aecd1",
+    "passed": 727,
+    "skipped": 2,
+    "upgrade_paths": 22,
+    "restore_tables": 34
+  },
+  "candidate": {
+    "sha": "a0c43a15dbcec783a859c4c525fec2671206483c",
+    "tree": "1c6779ae574d0cd2efd5c8f8798162a7438a0b52",
+    "trial": "80fa77de08afbe0b308fd56ddf3738fbf0b2938d",
+    "trial_tree": "1c6779ae574d0cd2efd5c8f8798162a7438a0b52",
+    "acceptance": "Independent review pending",
+    "api_results": [
+      {
+        "checkout": "a0c43a15dbcec783a859c4c525fec2671206483c",
+        "variant": "head",
+        "passed": 767,
+        "skipped": 2,
+        "restore_tables": 34
+      },
+      {
+        "checkout": "a0c43a15dbcec783a859c4c525fec2671206483c",
+        "variant": "head",
+        "passed": 767,
+        "skipped": 2,
+        "restore_tables": 34
+      },
+      {
+        "checkout": "80fa77de08afbe0b308fd56ddf3738fbf0b2938d",
+        "variant": "integration",
+        "passed": 767,
+        "skipped": 2,
+        "restore_tables": 34
+      }
+    ]
+  },
+  "ci": {
+    "main": {
+      "html_url": "https://github.com/datnv41001/ai-company/actions/runs/45949512674",
+      "head_sha": "053410d161b15285a1ef264f853d4920a3d559e1",
+      "run_attempt": 1,
+      "conclusion": "success"
+    },
+    "push": {
+      "html_url": "https://github.com/datnv41001/ai-company/actions/runs/45966696428",
+      "head_sha": "a0c43a15dbcec783a859c4c525fec2671206483c",
+      "run_attempt": 1,
+      "conclusion": "success"
+    },
+    "pr": {
+      "html_url": "https://github.com/datnv41001/ai-company/actions/runs/45966706157",
+      "head_sha": "a0c43a15dbcec783a859c4c525fec2671206483c",
+      "run_attempt": 2,
+      "conclusion": "success"
+    }
+  },
+  "evidence": {
+    "head": "a0c43a15dbcec783a859c4c525fec2671206483c",
+    "proof": "f4f0d990e7841e52173b1f733f2f6649db6ad1c5",
+    "tag": "evidence/pr64-runtime-handoff-a0c43a15dbce",
+    "sha256": "82a1c5c452b7573bb37e024a1a0792d896f163f2eb934e3150dca8da2de4d292",
+    "bytes": 2818353,
+    "entries": 69,
+    "url": "https://github.com/datnv41001/ai-company/blob/f4f0d990e7841e52173b1f733f2f6649db6ad1c5/docs/evaluation/round64-closure-proof/runtime-handoff.zip?raw=1",
+    "index": "https://github.com/datnv41001/ai-company/blob/f4f0d990e7841e52173b1f733f2f6649db6ad1c5/docs/evaluation/round64-closure-proof/START-HERE.md"
+  },
+  "prs": [
+    {
+      "number": 50,
+      "ancestor_of_main": true,
+      "baseRefOid": "0498949e64f4d030cc9ba2f0f961ab4dfc2e2ab0",
+      "headRefOid": "104af78ba2475973404c1043706042595b3b97bf",
+      "isDraft": true,
+      "state": "OPEN",
+      "title": "Delegate campaign work to scoped Marketing, Sales and Service roles",
+      "url": "https://github.com/datnv41001/ai-company/pull/50"
+    },
+    {
+      "number": 51,
+      "ancestor_of_main": true,
+      "baseRefOid": "104af78ba2475973404c1043706042595b3b97bf",
+      "headRefOid": "a5909321ed012c6ea99fcc0fdfadceb3c334c3ca",
+      "isDraft": true,
+      "state": "OPEN",
+      "title": "Render editable creative assets and run signed sandbox landing pages",
+      "url": "https://github.com/datnv41001/ai-company/pull/51"
+    },
+    {
+      "number": 52,
+      "ancestor_of_main": true,
+      "baseRefOid": "a5909321ed012c6ea99fcc0fdfadceb3c334c3ca",
+      "headRefOid": "95aed621381c782114b18521d2b2d58eb17a7828",
+      "isDraft": true,
+      "state": "OPEN",
+      "title": "Review commercial meaning and produce channel-specific content and ad plans",
+      "url": "https://github.com/datnv41001/ai-company/pull/52"
+    },
+    {
+      "number": 53,
+      "ancestor_of_main": true,
+      "baseRefOid": "380be3eb70a41424c6d45318b0b1890fa950970a",
+      "headRefOid": "56a120cac4bb3f77a4e1fc6fe93298cc838121ea",
+      "isDraft": true,
+      "state": "MERGED",
+      "title": "Govern AMC living knowledge and verify a repository-only handover",
+      "url": "https://github.com/datnv41001/ai-company/pull/53"
+    },
+    {
+      "number": 54,
+      "ancestor_of_main": true,
+      "baseRefOid": "95aed621381c782114b18521d2b2d58eb17a7828",
+      "headRefOid": "eff86cda2f99dd10244dc8127451e941bb546a3c",
+      "isDraft": true,
+      "state": "OPEN",
+      "title": "Biên tập điều kiện trang đặt lịch và tái duyệt bản landing",
+      "url": "https://github.com/datnv41001/ai-company/pull/54"
+    },
+    {
+      "number": 55,
+      "ancestor_of_main": true,
+      "baseRefOid": "eff86cda2f99dd10244dc8127451e941bb546a3c",
+      "headRefOid": "1202b4321ecd452d3b4bb2373a65b780c63e24f9",
+      "isDraft": true,
+      "state": "OPEN",
+      "title": "Department review closure: scoped optimization, approved buyer intake and measured AI quality",
+      "url": "https://github.com/datnv41001/ai-company/pull/55"
+    },
+    {
+      "number": 63,
+      "ancestor_of_main": true,
+      "baseRefOid": "6a11bf4d97e7d1be1f5e0da1d503a54eabd15ad1",
+      "headRefOid": "9f33fd86f99da52a90c25aa5ec196ba601b3910f",
+      "isDraft": false,
+      "state": "MERGED",
+      "title": "Research to Strategy decision evidence for WF-03",
+      "url": "https://github.com/datnv41001/ai-company/pull/63"
+    },
+    {
+      "number": 64,
+      "ancestor_of_main": false,
+      "baseRefOid": "053410d161b15285a1ef264f853d4920a3d559e1",
+      "headRefOid": "a0c43a15dbcec783a859c4c525fec2671206483c",
+      "isDraft": true,
+      "state": "OPEN",
+      "title": "Bind internal Content handoffs to reviewed Research and Strategy in Studio",
+      "url": "https://github.com/datnv41001/ai-company/pull/64"
+    }
+  ]
+}

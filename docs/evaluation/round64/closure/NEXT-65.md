@@ -1,4 +1,8 @@
-# Đề xuất #65 · Research và Strategy cần ít công biên tập hơn
+# AMC-AI-RS-01 · Research và Strategy cần ít công biên tập hơn
+
+**Task brief · PROPOSED.** Baseline `a6fa1976f9a5d4557a4e3b64ac28dec2eb0fc0a4`. Tên lịch sử “đề xuất #65” trong hồ sơ #64 chỉ nghiên cứu này; [PR #65](https://github.com/datnv41001/ai-company/pull/65) bàn giao audit tri thức. Người hưởng lợi là editor nhận bản Research/Strategy đầu tiên. Phạm vi đề xuất là so sánh hai cách trình bày context trên fixture tổng hợp bằng protocol dưới đây. Giữ nguyên WF-03, adapter, model, dữ kiện và quyền. Kết quả đủ trường chỉ đo hợp đồng kỹ thuật. Điểm chuyên môn cần giám khảo; nghiệm thu nghiệp vụ cần practitioner có thẩm quyền.
+
+Trước lượt đầu, ghim SHA/digest hai biến thể, brief và rubric, phân công người chấm và khóa cách làm mù nhãn A/B trong từng cặp. Lưu riêng receipt kỹ thuật, kết quả chấm AI nếu có và quyết định practitioner nếu thực sự có. Đầu ra bàn giao là so sánh theo từng brief, sửa đổi editor đã làm, lỗi và chi phí có thể đo được. Bốn brief chỉ cung cấp tín hiệu thăm dò. Chưa có quyền inference cho nghiên cứu. Nếu dừng, giữ các output đầu tiên và biên nhận đã có, tiếp tục dùng baseline hiện hành. Quyết định có chạy thuộc Product Owner sau khi chốt protocol, ngân sách và người chấm. [Quyền và giao việc](../../../../AGENTS.md) · [Nguồn và giới hạn của bản tích hợp](../MAIN-64.json)
 
 Trên brief gạch lát tại Hà Nội, Qwen ở trial #64 dùng cùng một giả thuyết về tính số thùng và chi phí giao cho cả buyer problem, evidence needed và rationale. Trường measurement method lặp lại measurable action. Đây là một đầu ra quan sát được trên WF‑03 @3. [Raw output theo checkout và lượt gọi](https://github.com/datnv41001/ai-company/blob/876a8c044324c2a0b4a3c9657842aa92a600f4e0/docs/evaluation/round64-verification/actual-model.json)
 

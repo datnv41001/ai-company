@@ -1,5 +1,15 @@
 # Bắt đầu ở đây khi tiếp quản AI Marketing Company
 
+## Tiếp quản sau merge #64 · 27/11/2026
+
+**Main ở `a6fa1976f9a5d4557a4e3b64ac28dec2eb0fc0a4`.** Independent Reviewer duyệt nội bộ có điều kiện trên head `a0c43a15dbcec783a859c4c525fec2671206483c`. Tree main, head và trial đều là `1c6779ae574d0cd2efd5c8f8798162a7438a0b52`. CI push trên main có 3 job bắt buộc đạt, 767 test đạt, 2 skip, 22 đường nâng core v26 và khôi phục khớp 34 bảng. [Chứng nhận main và usage](docs/evaluation/round64/MAIN-64.json) · [CI main](https://github.com/datnv41001/ai-company/actions/runs/45976629774)
+
+Bàn giao Research → Strategy → Content /2 được nghiệm thu cho lập nháp nội bộ bằng dữ liệu tổng hợp. Phiếu giao Content chưa chứng minh Content worker đã chạy. AMC-R63-01/02 và AMC-R64-01 đã đóng trong phạm vi kiểm. AMC-R64-02 còn mở, lỗi timeout Storyboard lần đầu chưa xác định nguyên nhân; giữ cả lần thất bại và rerun trên cùng tree. [Bằng chứng theo commit](https://github.com/datnv41001/ai-company/blob/f4f0d990e7841e52173b1f733f2f6649db6ad1c5/docs/evaluation/round64-closure-proof/START-HERE.md)
+
+**Bàn giao #65.** Bảy finding tài liệu KC-01–07 đã được reviewer chấp thuận trong phạm vi audit. Bước kế tiếp của người điều phối là chuyển riêng permalink của phiếu tại head cuối của [draft PR #65](https://github.com/datnv41001/ai-company/pull/65) cho một AI mới chỉ đọc. Kết quả còn NOT_VERIFIABLE tới khi có transcript và đánh giá độc lập. Phần sản phẩm kế tiếp là [AMC-AI-RS-01](docs/evaluation/round64/closure/NEXT-65.md), đang chờ duyệt protocol, người chấm và ngân sách. Production và Commercial GA giữ NO-GO.
+
+Các mục theo vòng bên dưới là lịch sử ở phiên bản ghi trong từng mục.
+
 ## Vòng #64 · Bàn giao Strategy cho Content trong Studio
 
 Vòng phản biện tiếp theo nâng phiếu nội bộ lên /2. Đọc [bản sửa giới hạn, quy tắc xử lý receipt /1 và điều tra Sales](docs/evaluation/round64/closure/README.md). Người nhận cần thấy CTA, điều cấm và tiêu chí nghiệm thu trên phiếu. Khi dữ kiện riêng tư hoặc mâu thuẫn, trả việc cho reviewer đối chiếu lại trên revision mới.

@@ -1,0 +1,97 @@
+{
+  "main": "a6fa1976f9a5d4557a4e3b64ac28dec2eb0fc0a4",
+  "parents": [
+    "053410d161b15285a1ef264f853d4920a3d559e1",
+    "a0c43a15dbcec783a859c4c525fec2671206483c"
+  ],
+  "approved": "a0c43a15dbcec783a859c4c525fec2671206483c",
+  "trial": "80fa77de08afbe0b308fd56ddf3738fbf0b2938d",
+  "common_tree": "1c6779ae574d0cd2efd5c8f8798162a7438a0b52",
+  "pr64_verdict": "PASS_WITH_CONDITIONS for internal synthetic handoff only",
+  "premerge_proof": "f4f0d990e7841e52173b1f733f2f6649db6ad1c5",
+  "ci": "https://github.com/datnv41001/ai-company/actions/runs/45976629774",
+  "event": "push",
+  "attempt": 1,
+  "jobs": [
+    {
+      "name": "workforce-model (head)",
+      "conclusion": "success",
+      "url": "https://github.com/datnv41001/ai-company/actions/runs/45976629774/job/140429854637"
+    },
+    {
+      "name": "compose-browser (head)",
+      "conclusion": "success",
+      "url": "https://github.com/datnv41001/ai-company/actions/runs/45976629774/job/140429854979"
+    },
+    {
+      "name": "api-tests (head)",
+      "conclusion": "success",
+      "url": "https://github.com/datnv41001/ai-company/actions/runs/45976629774/job/140429855192"
+    },
+    {
+      "name": "matched-model",
+      "conclusion": "skipped",
+      "url": "https://github.com/datnv41001/ai-company/actions/runs/45976629774/job/140433355229"
+    }
+  ],
+  "junit": {
+    "url": "https://github.com/datnv41001/ai-company/actions/runs/45976629774/artifacts/15188443349",
+    "sha256": "a14c0c12097b46c899f549ab582a95248230a0098f52860c53021983dbba56aa",
+    "passed": 767,
+    "skipped": [
+      "test_wrong_tab_leaves_postgres_family_and_history_unchanged[sqlite]",
+      "test_two_workers_commit_orders_and_credential_change[sqlite]"
+    ]
+  },
+  "upgrade_from": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12,
+    13,
+    14,
+    15,
+    16,
+    17,
+    18,
+    19,
+    20,
+    21,
+    22
+  ],
+  "restore_tables": 34,
+  "usage": {
+    "job": "https://github.com/datnv41001/ai-company/actions/runs/45976629774/job/140429854637",
+    "artifact": "https://github.com/datnv41001/ai-company/actions/runs/45976629774/artifacts/15188181200",
+    "wall_seconds": 451,
+    "pool_smoke": {
+      "input_tokens": 2517,
+      "output_tokens": 813,
+      "attempts": 9,
+      "unconfirmed": 1
+    },
+    "materials_fixture": {
+      "model_sha256": "74a4da8c9fdbcd15bd1f6d01d621410d31c6fc00986f5eb687824e7b93d7a9db",
+      "input_tokens": 2488,
+      "output_tokens": 339,
+      "runtime_s": 19.23,
+      "provider_fee_usd": 0,
+      "unmetered_attempts": 0
+    },
+    "service": "Loopback Qwen on Actions runner, standard synthetic fixtures",
+    "coverage": "Overlapping fixture reports. Missing telemetry and runner billing preclude a reliable all-job token or cost total.",
+    "actions_billed_cost": null
+  },
+  "open": [
+    "R64-02",
+    "Initial pre-merge Storyboard timeout; cause unknown"
+  ]
+}

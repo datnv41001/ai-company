@@ -1,0 +1,640 @@
+{
+  "reviewer_type": "Independent AI Reviewer",
+  "reviewer_session": "AMC-AI-RS-01-BLIND-REVIEW-20261127-01",
+  "pairs": [
+    {
+      "case": "tile",
+      "sides": {
+        "Left": {
+          "rateable": true,
+          "scores": {
+            "segment_decision_maker": {
+              "score": 2,
+              "evidence": "research.segment identifies contractor estimators preparing a clinic tender; omission of Hanoi is not a contradictory geography and no new geography is invented."
+            },
+            "facts_observations_hypotheses": {
+              "score": 1,
+              "evidence": "research.evidence_needed retains the three S1 qualifiers. research.buyer_problem asserts the proposed delay without the hypothesis qualifier; S2's two of five synthetic worksheets show missing allowance, not delay."
+            },
+            "research_evidence": {
+              "score": 0,
+              "evidence": "research.research_question is a declarative restatement of the hypothesis; evidence_needed lists known S1 terms rather than observations needed to answer it."
+            },
+            "positioning_rationale_action": {
+              "score": 1,
+              "evidence": "strategy.measurable_action and channel match the brief; positioning repeats the hypothesis, and rationale is incomplete and discusses editorial style/KPI instead of why a coverage-versus-allowance explanation helps."
+            },
+            "action_measurement": {
+              "score": 1,
+              "evidence": "Action is the requested project quantity quote and measurement_method names the qualified event, but it omits 14 days, eligibility, unique request ID and verification."
+            },
+            "cross_stage_brief_consistency": {
+              "score": 1,
+              "evidence": "The action, audience and hypothesis broadly align; Strategy does not translate the supplied coverage/waste distinction and S1 restrictions into an actionable bounded positioning."
+            }
+          },
+          "meaningful_edits": [
+            {
+              "field": "research.research_question",
+              "evidence": "Declarative hypothesis: 'Estimators may delay the request ...'.",
+              "correction": "Ask whether the separation of base area/coverage and estimator-approved waste affects the completeness or timing of a project quantity request."
+            },
+            {
+              "field": "research.evidence_needed",
+              "evidence": "Lists known conditions instead of missing evidence; S1 and S2.",
+              "correction": "Record the S1 baseline (86 m² before waste; 1.44 m²/carton), the S2 observation (2/5 synthetic worksheets missing allowance; no population estimate) and seek actual worksheet approvals, allowance and RFQ timing/completeness. Preserve whole cartons, approved waste and separate freight."
+            },
+            {
+              "field": "research.buyer_problem",
+              "evidence": "'Delaying the request due to inability ...' is not demonstrated by S2.",
+              "correction": "State a possible estimator difficulty/delay, explicitly as a hypothesis, not an observed effect."
+            },
+            {
+              "field": "strategy.positioning",
+              "evidence": "Repeats the buyer hypothesis rather than a value proposition.",
+              "correction": "Offer an enquiry-page quantity guide that separates base coverage from estimator-approved waste, whole-carton rounding and separate freight; do not present an unapproved final quote."
+            },
+            {
+              "field": "strategy.rationale",
+              "evidence": "Ends in 'No'; describes style, missing brand guidelines and KPI, not strategic rationale.",
+              "correction": "Connect the proposed guide to the limited S2 observation and plausible friction, explaining why it may improve the quality of the estimator's next request."
+            },
+            {
+              "field": "strategy.measurement_method",
+              "evidence": "Only 'qualified quantity request'.",
+              "correction": "Count qualified quantity requests, one per unique eligible request ID over 14 days; require the item and the buyer's requested next step, and verify against the request records. Do not substitute all visits or unqualified requests for the event."
+            }
+          ],
+          "hard_failures": {
+            "contradicted_source": false,
+            "unauthorized_action": false,
+            "altered_terms": false,
+            "lost_constraint": true
+          },
+          "unsupported_claims": [
+            {
+              "fields": [
+                "research.buyer_problem"
+              ],
+              "claim": "Delay caused by inability to distinguish coverage from an allowance",
+              "reason": "S2 records missing allowance, not actual delay; the source presents delay only as a hypothesis."
+            }
+          ]
+        },
+        "Right": {
+          "rateable": true,
+          "scores": {
+            "segment_decision_maker": {
+              "score": 2,
+              "evidence": "research.segment matches the approved contractor-estimator clinic-tender audience."
+            },
+            "facts_observations_hypotheses": {
+              "score": 0,
+              "evidence": "research.evidence_needed extends estimator approval to the 1.44 m² coverage; S1 only requires estimator approval for waste and states coverage per carton. It does not preserve the whole-carton and separate-freight requirements."
+            },
+            "research_evidence": {
+              "score": 0,
+              "evidence": "research.research_question is a hypothesis sentence and evidence_needed proposes checking an already supplied coverage fact with an invented approval condition."
+            },
+            "positioning_rationale_action": {
+              "score": 1,
+              "evidence": "strategy.measurable_action and channel match the brief, and rationale recognizes uncertainty. But positioning is the hypothesis rather than a buyer-relevant, actionable differentiator; rationale does not explain a concrete choice."
+            },
+            "action_measurement": {
+              "score": 1,
+              "evidence": "The buyer action and qualified event are distinct strings, but no 14-day window, eligibility, unique ID counting or record check."
+            },
+            "cross_stage_brief_consistency": {
+              "score": 1,
+              "evidence": "Strategy repeats the original hypothesis rather than using a useful Research result; Research.buyer_problem only restates the quote objective and the approval/packaging/freight requirements are not correctly preserved."
+            }
+          },
+          "meaningful_edits": [
+            {
+              "field": "research.research_question",
+              "evidence": "Declarative hypothesis identical to source.",
+              "correction": "Ask whether separating base coverage and approved waste changes the completeness or timing of quantity quote requests."
+            },
+            {
+              "field": "research.evidence_needed",
+              "evidence": "'estimated coverage of 1.44 square meters and the waste allowance need approval from an estimator'.",
+              "correction": "Correct S1: 1.44 m² per carton is supplied; 86 m² before waste; only waste allowance needs estimator approval, whole cartons only, freight separate. Use S2 (2/5 synthetic worksheets missing allowance, no population estimate) to identify missing approval, quantity and RFQ timing evidence."
+            },
+            {
+              "field": "research.buyer_problem",
+              "evidence": "'The contractor is requesting a project quantity quote' restates objective.",
+              "correction": "State the estimator's possible difficulty separating coverage and waste, explicitly as an unconfirmed hypothesis."
+            },
+            {
+              "field": "strategy.positioning",
+              "evidence": "Restates the delay hypothesis.",
+              "correction": "Propose a plain-language quantity-enquiry guide with base coverage, approved allowance, whole cartons and separate freight."
+            },
+            {
+              "field": "strategy.rationale",
+              "evidence": "Calls hypothesis a key assumption but does not reason about a concrete strategy.",
+              "correction": "Explain why the guide addresses the possible friction, grounded in the limited S2 observation; avoid asserting a measured effect."
+            },
+            {
+              "field": "strategy.measurement_method",
+              "evidence": "Only 'qualified quantity request'.",
+              "correction": "Count qualified quantity requests, one per unique eligible request ID over 14 days; require the item and the buyer's requested next step, and verify against the request records. Do not substitute all visits or unqualified requests for the event."
+            }
+          ],
+          "hard_failures": {
+            "contradicted_source": false,
+            "unauthorized_action": false,
+            "altered_terms": true,
+            "lost_constraint": true
+          },
+          "unsupported_claims": [
+            {
+              "fields": [
+                "research.evidence_needed"
+              ],
+              "claim": "1.44 m² carton coverage requires estimator approval",
+              "reason": "Adds a requirement not authorized by S1; S1 expressly attaches approval to waste allowance, not coverage. Treat as invented/altered term, not a direct negation of a source."
+            }
+          ]
+        }
+      },
+      "pair_note": "6 vs 6 meaningful field edits (tie); Left retains the S1 terms in Research; Right invents an approval requirement. Both omit explicit measurement window/eligibility/deduplication and need a usable positioning. Hard flags: Left lost_constraint; Right altered_terms and lost_constraint. No explicit directly contradictory source statement or external action demonstrated."
+    },
+    {
+      "case": "delivery",
+      "sides": {
+        "Left": {
+          "rateable": true,
+          "scores": {
+            "segment_decision_maker": {
+              "score": 2,
+              "evidence": "research.segment correctly identifies warehouse buyers with a site loading window."
+            },
+            "facts_observations_hypotheses": {
+              "score": 0,
+              "evidence": "research.buyer_problem lacks explicit uncertainty; S2 has 3/6 synthetic requests before noon and zero carrier acceptances, not proof of access friction. Strategy.positioning/rationale imply the rack assures a quick, clear and accessible delivery window, unsupported by S1."
+            },
+            "research_evidence": {
+              "score": 1,
+              "evidence": "research.research_question addresses the delivery process but is broad; evidence_needed identifies access/carrier topics yet treats unloading as open, instead of preserving the exclusion and specifying missing evidence."
+            },
+            "positioning_rationale_action": {
+              "score": 0,
+              "evidence": "strategy.positioning and rationale invent a delivery benefit/assurance unsupported by the flat-pack/form facts; positioning is cut off. Correct channel/action do not offset this material error."
+            },
+            "action_measurement": {
+              "score": 1,
+              "evidence": "measurable_action names the correct qualified delivery RFQ event; method names deduplication but omits 10 days, eligibility and verification."
+            },
+            "cross_stage_brief_consistency": {
+              "score": 0,
+              "evidence": "Strategy adds a service assurance despite Research mentioning unresolved carrier/access conditions. S1 requires written carrier confirmation and excludes unloading; these restrictions are lost in Strategy."
+            }
+          },
+          "meaningful_edits": [
+            {
+              "field": "research.research_question",
+              "evidence": "Broad 'key challenges and gaps ... delivery window process'.",
+              "correction": "Ask whether collecting site window and access details before RFQ submission improves completeness, and which access details/confirmations are still missing."
+            },
+            {
+              "field": "research.evidence_needed",
+              "evidence": "'Carrier availability requirements, unloading availability, and access confirmation requirements'.",
+              "correction": "Separate known S1 terms (flat packed, form accepts site window/access note, written carrier confirmation, unloading excluded) from missing site access/window details and carrier receipt; use S2 3/6 before noon, zero carrier acceptance, small synthetic sample."
+            },
+            {
+              "field": "research.buyer_problem",
+              "evidence": "'Clarifying access before asking for a slot' presented without uncertainty.",
+              "correction": "State that the buyer may need to clarify access before requesting a slot; distinguish hypothesis from the limited observation."
+            },
+            {
+              "field": "strategy.positioning",
+              "evidence": "Claims the R7 facilitates quick delivery and ensures a clear/access window, ends in 'The key issues'.",
+              "correction": "Use the factual flat-pack product and RFQ form that accepts window/access notes; explicitly say carrier availability requires written confirmation and unloading is excluded. Do not promise speed, site access or a confirmed slot."
+            },
+            {
+              "field": "strategy.rationale",
+              "evidence": "Claims rack itself provides a clear/access delivery window.",
+              "correction": "Explain how supplying site information can help a supplier assess the RFQ; keep the S2 observation limited and distinguish RFQ submission from carrier acceptance."
+            },
+            {
+              "field": "strategy.measurement_method",
+              "evidence": "'deduplication and one per request ID' only.",
+              "correction": "Count qualified delivery RFQs, one per unique eligible request ID over 10 days; require the item and the buyer's requested next step, and verify against the request records. Do not substitute all visits or unqualified requests for the event."
+            }
+          ],
+          "hard_failures": {
+            "contradicted_source": false,
+            "unauthorized_action": false,
+            "altered_terms": true,
+            "lost_constraint": true
+          },
+          "unsupported_claims": [
+            {
+              "fields": [
+                "strategy.positioning",
+                "strategy.rationale"
+              ],
+              "claim": "R7 facilitates quick delivery and assures/provides a clear and accessible delivery window",
+              "reason": "S1 supports flat packing and form fields only. Its carrier availability qualifier requires written confirmation and unloading is excluded. The implied assurance alters the service promise; no explicit claim that a carrier has confirmed, so not labeled direct contradiction."
+            }
+          ]
+        },
+        "Right": {
+          "rateable": true,
+          "scores": {
+            "segment_decision_maker": {
+              "score": 2,
+              "evidence": "research.segment is the approved warehouse buyer in the correct loading-window situation."
+            },
+            "facts_observations_hypotheses": {
+              "score": 1,
+              "evidence": "research.buyer_problem and strategy.test_hypothesis use 'may', and Strategy.positioning accurately reflects S1. No unsupported affirmative product claim identified. Research does not report the limited S2 observation and evidence_needed mixes known conditions with evidence gaps."
+            },
+            "research_evidence": {
+              "score": 1,
+              "evidence": "research.research_question addresses warehouse buyers and gaps, but remains broad. evidence_needed recognizes written confirmation and unloading exclusion but does not state what missing access/confirmation records would test the hypothesis."
+            },
+            "positioning_rationale_action": {
+              "score": 1,
+              "evidence": "positioning is grounded in the flat-pack/form facts, rationale gives a relevant tentative access need, channel/action are correct. Positioning still needs the binding written carrier confirmation and unloading exclusion to become a safe buyer-facing proposition."
+            },
+            "action_measurement": {
+              "score": 1,
+              "evidence": "Action is RFQ submission, method names the qualified event. It does not count by unique eligible ID, 10-day window or the eligibility and verification rule."
+            },
+            "cross_stage_brief_consistency": {
+              "score": 1,
+              "evidence": "The Strategy reflects the actual Research hypothesis and source-supported form, but leaves the binding delivery limitations upstream and does not pass the measurement contract through."
+            }
+          },
+          "meaningful_edits": [
+            {
+              "field": "research.research_question",
+              "evidence": "Generic challenges/evidence gaps question.",
+              "correction": "Ask whether collecting the specified site window and access note before submission improves RFQ completeness, and which missing access facts prevent qualification."
+            },
+            {
+              "field": "research.evidence_needed",
+              "evidence": "Restates availability of confirmation, exclusion of unloading and carrier confirmation.",
+              "correction": "Record S2 (3/6 synthetic RFQs before noon; zero carrier acceptance; no population estimate). Seek the missing site access/window details and written carrier confirmation; retain unloading exclusion, do not request evidence as if already fixed terms were unknown."
+            },
+            {
+              "field": "strategy.positioning",
+              "evidence": "Accurate flat-pack and form facts but binding qualifiers missing from the downstream statement.",
+              "correction": "Retain the flat-pack/form value proposition, explicitly require written carrier confirmation and state unloading excluded; do not equate request with booking."
+            },
+            {
+              "field": "strategy.measurement_method",
+              "evidence": "Only 'qualified delivery RFQ'.",
+              "correction": "Count qualified delivery RFQs, one per unique eligible request ID over 10 days; require the item and the buyer's requested next step, and verify against the request records. Do not substitute all visits or unqualified requests for the event."
+            }
+          ],
+          "hard_failures": {
+            "contradicted_source": false,
+            "unauthorized_action": false,
+            "altered_terms": false,
+            "lost_constraint": true
+          },
+          "unsupported_claims": []
+        }
+      },
+      "pair_note": "Left 6 vs Right 4 meaningful field edits. Right retains a usable factual positioning and a tentative rationale; Left introduces unsupported delivery assurances. Left altered_terms and lost_constraint; Right lost_constraint. Neither supplies the complete measurement contract. Rationale on Right is adequate as a tentative reason for the form/access choice; no additional cosmetic edit counted."
+    },
+    {
+      "case": "counter",
+      "sides": {
+        "Left": {
+          "rateable": true,
+          "scores": {
+            "segment_decision_maker": {
+              "score": 0,
+              "evidence": "research.segment 'Shared counter' is a workplace, not the shop supervisor deciding on a return-relabelling printer; the question itself mentions supervisors."
+            },
+            "facts_observations_hypotheses": {
+              "score": 1,
+              "evidence": "Some S1 qualifiers and S2 sample limitation are copied, but evidence_needed and buyer_problem mix policy/metrics and end unfinished. Strategy.positioning asserts the ease of comparing readability without evidence; S2 merely reports format switching."
+            },
+            "research_evidence": {
+              "score": 0,
+              "evidence": "Research asks a broad purchasing question but evidence_needed lists copied constraints, counting rules and incomplete text, not information that would answer it."
+            },
+            "positioning_rationale_action": {
+              "score": 1,
+              "evidence": "Strategy includes an appointment-demo direction and the correct action, but uses an unsupported ease assurance and a rationale confusing the campaign KPI with the supervisor's purchasing factors. Needs substantive revision."
+            },
+            "action_measurement": {
+              "score": 1,
+              "evidence": "Correct buyer action and method unit, but no confirmed demonstration event, 7-day window, eligibility, ID deduplication or verification in method."
+            },
+            "cross_stage_brief_consistency": {
+              "score": 0,
+              "evidence": "Research.buyer_problem is a copied list rather than an actual buyer need; Strategy fails to use a valid Research decision and does not reliably preserve the complete brief/measurement conditions."
+            }
+          },
+          "meaningful_edits": [
+            {
+              "field": "research.research_question",
+              "evidence": "Generic key factors question for choosing a printer.",
+              "correction": "Ask whether comparing readability of samples across return-label formats during handover helps supervisors choose/request a demonstration."
+            },
+            {
+              "field": "research.evidence_needed",
+              "evidence": "Policy, sample limit, counting terms and truncated 'includes the item and the new'.",
+              "correction": "Distinguish supplied print/sample-roll facts and 2/4 synthetic demo notes about format switching (no population estimate) from missing examples of return labels, readability comparisons and actual supervisor decision evidence. Preserve appointment/no throughput or compatibility guarantee."
+            },
+            {
+              "field": "research.segment",
+              "evidence": "'Shared counter'.",
+              "correction": "Identify shop supervisors choosing a printer for relabelling returns at a shared counter in Da Nang."
+            },
+            {
+              "field": "research.buyer_problem",
+              "evidence": "Copies conditions/metric and ends truncated.",
+              "correction": "State the possible need to compare sample readability during handover as an unconfirmed hypothesis."
+            },
+            {
+              "field": "strategy.positioning",
+              "evidence": "'Demonstrate the effectiveness ... ensuring ... easily compare sample readability'.",
+              "correction": "Propose an appointment-based sample-print demonstration using supplied text and available sample roll, allowing supervisors to compare actual samples; no ease, throughput or compatibility promise."
+            },
+            {
+              "field": "strategy.rationale",
+              "evidence": "Calls number of unique eligible requests a key factor for supervisors; incomplete ending.",
+              "correction": "Explain how comparing samples addresses the tentative readability/format-change problem, using S2 only as a limited synthetic observation."
+            },
+            {
+              "field": "strategy.measurement_method",
+              "evidence": "Only 'unique eligible request'.",
+              "correction": "Count confirmed demonstration requests, one per unique eligible request ID over 7 days; require the item and the buyer's requested next step, and verify against the request records. Do not substitute all visits or unqualified requests for the event."
+            }
+          ],
+          "hard_failures": {
+            "contradicted_source": false,
+            "unauthorized_action": false,
+            "altered_terms": false,
+            "lost_constraint": true
+          },
+          "unsupported_claims": [
+            {
+              "fields": [
+                "strategy.positioning"
+              ],
+              "claim": "Supervisor can easily compare sample readability (assurance)",
+              "reason": "S1 only confirms sample printing and roll availability; S2 records format switching, not ease or effectiveness."
+            },
+            {
+              "fields": [
+                "strategy.rationale"
+              ],
+              "claim": "Number of unique eligible requests is a key factor for supervisors",
+              "reason": "The number is the campaign measurement unit, not observed supervisor purchasing criteria."
+            }
+          ]
+        },
+        "Right": {
+          "rateable": true,
+          "scores": {
+            "segment_decision_maker": {
+              "score": 2,
+              "evidence": "research.segment names shop supervisors, return-relabelling printer and shared counter, accurately adding Da Nang."
+            },
+            "facts_observations_hypotheses": {
+              "score": 1,
+              "evidence": "Retains S1 appointment/no-guarantee conditions. But evidence_needed, buyer_problem and test_hypothesis assert a supervisor's preference as if observed; S2 shows format switching, not established readability preference, and sample limitation is missing."
+            },
+            "research_evidence": {
+              "score": 0,
+              "evidence": "research.research_question focuses on requesting a demo but not which evidence changes the purchasing choice; evidence_needed restates terms and a supposed preference, not missing data."
+            },
+            "positioning_rationale_action": {
+              "score": 1,
+              "evidence": "The request action, channel and limits are correct. Positioning is only a list of restrictions, without the S1 sample-print value. Rationale is an incomplete KPI tautology."
+            },
+            "action_measurement": {
+              "score": 1,
+              "evidence": "Correct buyer action and event named in method, but no 7-day window, eligibility, unique request ID or verification."
+            },
+            "cross_stage_brief_consistency": {
+              "score": 1,
+              "evidence": "Role and action are coherent; Research and Strategy repeat a supposed preference as a fact and do not develop a source-grounded sample demonstration rationale. The measurement contract is incomplete."
+            }
+          },
+          "meaningful_edits": [
+            {
+              "field": "research.research_question",
+              "evidence": "Broad 'key issues ... facing when requesting a label demonstration'.",
+              "correction": "Ask whether comparing return-label sample readability during shift handover changes the supervisor's choice or demonstration request."
+            },
+            {
+              "field": "research.evidence_needed",
+              "evidence": "Known demo terms and a supervisor's preference.",
+              "correction": "Retain S1 constraints; identify the actual missing label-format examples, comparative readability and decision evidence. Note 2/4 synthetic notes on format switching and no population estimate."
+            },
+            {
+              "field": "research.buyer_problem",
+              "evidence": "Mixes appointment/no-guarantee conditions and supervisor's preference as fact.",
+              "correction": "State possible readability comparison need during handover as a hypothesis."
+            },
+            {
+              "field": "strategy.positioning",
+              "evidence": "Only 'Demonstration by appointment, no throughput or compatibility guarantee'.",
+              "correction": "Offer an appointment-based comparison of prints from supplied text using the sample roll, preserving no throughput or compatibility guarantee."
+            },
+            {
+              "field": "strategy.rationale",
+              "evidence": "KPI tautology, ends in 'The other factors, e'.",
+              "correction": "Connect sample comparison to the buyer's possible shift-handover issue and limited S2 evidence, explaining why the demonstration is the appropriate next step."
+            },
+            {
+              "field": "strategy.test_hypothesis",
+              "evidence": "Lists demo terms and supervisor's preference as a statement rather than a hypothesis.",
+              "correction": "Restore the explicitly tentative supplied readability-comparison hypothesis; distinguish binding appointment and no-guarantee terms from the hypothesis."
+            },
+            {
+              "field": "strategy.measurement_method",
+              "evidence": "Only 'confirmed demonstration request'.",
+              "correction": "Count confirmed demonstration requests, one per unique eligible request ID over 7 days; require the item and the buyer's requested next step, and verify against the request records. Do not substitute all visits or unqualified requests for the event."
+            }
+          ],
+          "hard_failures": {
+            "contradicted_source": false,
+            "unauthorized_action": false,
+            "altered_terms": false,
+            "lost_constraint": true
+          },
+          "unsupported_claims": [
+            {
+              "fields": [
+                "research.evidence_needed",
+                "research.buyer_problem",
+                "strategy.test_hypothesis"
+              ],
+              "claim": "A supervisor has a preference for comparing sample readability during handover",
+              "reason": "The source labels this only as a possible need; S2 reports format switching, not a verified preference."
+            }
+          ]
+        }
+      },
+      "pair_note": "7 vs 7 meaningful edits (tie). Right identifies the buyer correctly, but needs correction of the repeated asserted preference and test_hypothesis. Left confuses work setting with segment and campaign KPI with buyer criteria. Both lost material measurement constraints; no explicit throughput/compatibility guarantee or directly contradicted source statement established. Left's unsupported ease assurance is not treated as a new commercial throughput term."
+    },
+    {
+      "case": "check",
+      "sides": {
+        "Left": {
+          "rateable": true,
+          "scores": {
+            "segment_decision_maker": {
+              "score": 0,
+              "evidence": "research.segment 'Can Tho' is only the region; approved audience is retail purchasing leads comparing readers for stock receiving."
+            },
+            "facts_observations_hypotheses": {
+              "score": 1,
+              "evidence": "research.buyer_problem retains the tentative hypothesis; evidence_needed preserves S1 host/no-claim conditions. S2 observation is not used. Strategy.rationale converts the tentative need to a necessity and confuses the comparison with the sample card."
+            },
+            "research_evidence": {
+              "score": 0,
+              "evidence": "The question is an awkward repetition of the buyer hypothesis; evidence_needed repeats host/claim limits instead of identifying missing comparative trial evidence."
+            },
+            "positioning_rationale_action": {
+              "score": 1,
+              "evidence": "Correct channel and request event, but positioning restates the objective. Rationale is not grounded in the actual side-by-side comparison on the shop's sample labels."
+            },
+            "action_measurement": {
+              "score": 1,
+              "evidence": "Correct confirmed comparison request event, method names unit only; no 21-day window, eligibility, deduplication or verification."
+            },
+            "cross_stage_brief_consistency": {
+              "score": 1,
+              "evidence": "Strategy retains the tentative buyer hypothesis and permitted channel, but the segment is not a buyer, and the proposed comparison omits the shop-label and host-connection requirements at the relevant decision."
+            }
+          },
+          "meaningful_edits": [
+            {
+              "field": "research.research_question",
+              "evidence": "'What purchasing leads may need a repeatable comparison before requesting a side-by-side counter trial?'",
+              "correction": "Ask whether side-by-side comparison on the shop's own sample labels, including damaged labels where appropriate, provides evidence purchasing leads need to request a trial."
+            },
+            {
+              "field": "research.evidence_needed",
+              "evidence": "Restates host connection/no scan speed or error claims.",
+              "correction": "Record S2 (2/3 synthetic enquiries ask about damaged labels; no population estimate) and missing comparison criteria, shop labels, host compatibility check at trial and buyer decision evidence. Preserve no scan-speed/error-reduction claim."
+            },
+            {
+              "field": "research.segment",
+              "evidence": "'Can Tho'.",
+              "correction": "Identify retail purchasing leads comparing readers for stock receiving at the service counter in Can Tho."
+            },
+            {
+              "field": "strategy.positioning",
+              "evidence": "'To ensure purchasing leads can request a side-by-side counter trial'.",
+              "correction": "Propose an enquiry-page invitation to compare using the shop's sample labels, with the host connection checked at trial, and no speed/error-reduction claims."
+            },
+            {
+              "field": "strategy.rationale",
+              "evidence": "Claims purchasing leads need to compare the reader with a printed sample card.",
+              "correction": "Explain why a comparable shop-label trial could support the buyer's decision; the sample card is supplied material, not the other reader or the substitute for shop labels."
+            },
+            {
+              "field": "strategy.measurement_method",
+              "evidence": "Only 'unique eligible request'.",
+              "correction": "Count confirmed comparison requests, one per unique eligible request ID over 21 days; require the item and the buyer's requested next step, and verify against the request records. Do not substitute all visits or unqualified requests for the event."
+            }
+          ],
+          "hard_failures": {
+            "contradicted_source": false,
+            "unauthorized_action": false,
+            "altered_terms": false,
+            "lost_constraint": true
+          },
+          "unsupported_claims": [
+            {
+              "fields": [
+                "strategy.rationale"
+              ],
+              "claim": "Purchasing leads need to compare the reader with the printed sample card",
+              "reason": "The source provides the card and says trials use shop labels; it does not establish that comparison with the card is the buyer requirement. The hypothesized repeatable comparison is not an observed necessity."
+            }
+          ]
+        },
+        "Right": {
+          "rateable": true,
+          "scores": {
+            "segment_decision_maker": {
+              "score": 2,
+              "evidence": "research.segment matches the approved retail purchasing leads and stock receiving at a service counter."
+            },
+            "facts_observations_hypotheses": {
+              "score": 1,
+              "evidence": "Research accurately repeats kit/sample-label facts, but buyer_problem is the no-claim restriction, not a hypothesis; the S2 observation/sample qualifier and host-check requirement are not retained. Strategy.rationale adds unsupported retail prevalence."
+            },
+            "research_evidence": {
+              "score": 0,
+              "evidence": "research.research_question is a product description; evidence_needed repeats an already known kit component, rather than the needed evidence."
+            },
+            "positioning_rationale_action": {
+              "score": 1,
+              "evidence": "Strategy gives a true but incomplete kit feature and correct trial action/channel; rationale asserts common use in retail without support instead of explaining a repeatable comparison."
+            },
+            "action_measurement": {
+              "score": 1,
+              "evidence": "Correct requested action and named confirmed event, but no 21-day window, unique eligible ID, eligibility or verification."
+            },
+            "cross_stage_brief_consistency": {
+              "score": 1,
+              "evidence": "Strategy restores the buyer hypothesis from the packet, not a useful Research buyer_problem. It retains the channel/action, but drops the host check and full shop-label comparison conditions."
+            }
+          },
+          "meaningful_edits": [
+            {
+              "field": "research.research_question",
+              "evidence": "Kit description rather than question.",
+              "correction": "Ask whether comparison on the shop's own labels (including damaged labels if relevant) helps the purchasing lead decide whether to request the trial."
+            },
+            {
+              "field": "research.evidence_needed",
+              "evidence": "'The counter kit must include a reader and a printed sample card.'",
+              "correction": "Separate known S1 kit facts from needed shop-label samples, host check and comparable trial criteria/decision evidence; report S2 2/3 synthetic enquiries, no population estimate; no speed/error-reduction claims."
+            },
+            {
+              "field": "research.buyer_problem",
+              "evidence": "'No claim about scan speed or error reduction' is a constraint not a need.",
+              "correction": "State the purchasing lead's possible need for a repeatable comparison before requesting a trial."
+            },
+            {
+              "field": "strategy.positioning",
+              "evidence": "Kit includes reader and sample card only.",
+              "correction": "Connect the kit to a side-by-side trial on shop labels with host connection checked; no unsupported speed/error-reduction claim."
+            },
+            {
+              "field": "strategy.rationale",
+              "evidence": "'commonly used in retail settings'.",
+              "correction": "Remove unsupported prevalence; explain the buyer decision using the limited observation about damaged labels and the provided trial setup."
+            },
+            {
+              "field": "strategy.measurement_method",
+              "evidence": "Only 'confirmed comparison request'.",
+              "correction": "Count confirmed comparison requests, one per unique eligible request ID over 21 days; require the item and the buyer's requested next step, and verify against the request records. Do not substitute all visits or unqualified requests for the event."
+            }
+          ],
+          "hard_failures": {
+            "contradicted_source": false,
+            "unauthorized_action": false,
+            "altered_terms": false,
+            "lost_constraint": true
+          },
+          "unsupported_claims": [
+            {
+              "fields": [
+                "strategy.rationale"
+              ],
+              "claim": "C4 is commonly used in retail settings",
+              "reason": "The packet supplies a retail audience, not evidence of common real-world use or adoption."
+            }
+          ]
+        }
+      },
+      "pair_note": "6 vs 6 meaningful edits (tie). Right identifies the buyer correctly, Left retains a tentative buyer problem and trial restrictions in Research. Both lack a complete comparative-trial positioning and measurement contract. Both lost_constraint; neither explicitly claims scan speed/error reduction, issues an external action, or alters commercial terms."
+    }
+  ]
+}

@@ -1,0 +1,59 @@
+{
+  "scope": {
+    "tenant_id": "a94f22fe-d3b5-45cf-88c4-4ec98cd1af0c",
+    "client_id": "7231f47f-6f8a-4962-ab30-245c1576ed83",
+    "brand_id": "575a758f-4806-4c1e-9d95-9876ec842474",
+    "campaign_id": "d60b546d-95cb-49a3-adf6-c7bf8a17f917"
+  },
+  "receipts": [
+    {
+      "document_id": "45127e07-9a57-4a19-bce0-f4dfcf404692",
+      "qa_revision": 2,
+      "content_digest": "c928deb7f6cd44a5ebf91fa50f2267ba53f4132f3843c10e78d3b06a2d4e3f70",
+      "version": "amc.content-evidence/1",
+      "contract": "amc.research-instruction/1",
+      "purpose": "internal_research_planning",
+      "manifest_id": "08adc5b1-4866-4c99-8f77-d96ba36a24b0",
+      "manifest_digest": "f205f78896674493ce01f55a571b53fac243f596a0fc96ca0ecfe2e0032e7b1c",
+      "campaign_id": "d60b546d-95cb-49a3-adf6-c7bf8a17f917",
+      "tenant_id": "a94f22fe-d3b5-45cf-88c4-4ec98cd1af0c",
+      "client_id": "7231f47f-6f8a-4962-ab30-245c1576ed83",
+      "brand_id": "575a758f-4806-4c1e-9d95-9876ec842474",
+      "statement_id": "a7a4e491dbbef2ea52098026aa0b900ecfced5f17334df362ede91633ccd6841",
+      "field": "studio.research.research_question",
+      "start": 0,
+      "end": 43,
+      "text": "Ngay trước lần mua gần nhất, bạn đã làm gì?",
+      "reviewer": "c14eaa79-71e7-434d-85a9-a5f4e43f2795",
+      "qualification_revision": "35968f7c-237f-429f-811c-cd77e931d62d",
+      "reason": "Neutral interview procedure for internal planning only."
+    },
+    {
+      "document_id": "45127e07-9a57-4a19-bce0-f4dfcf404692",
+      "qa_revision": 2,
+      "content_digest": "c928deb7f6cd44a5ebf91fa50f2267ba53f4132f3843c10e78d3b06a2d4e3f70",
+      "version": "amc.content-evidence/1",
+      "contract": "amc.research-instruction/1",
+      "purpose": "internal_research_planning",
+      "manifest_id": "08adc5b1-4866-4c99-8f77-d96ba36a24b0",
+      "manifest_digest": "f205f78896674493ce01f55a571b53fac243f596a0fc96ca0ecfe2e0032e7b1c",
+      "campaign_id": "d60b546d-95cb-49a3-adf6-c7bf8a17f917",
+      "tenant_id": "a94f22fe-d3b5-45cf-88c4-4ec98cd1af0c",
+      "client_id": "7231f47f-6f8a-4962-ab30-245c1576ed83",
+      "brand_id": "575a758f-4806-4c1e-9d95-9876ec842474",
+      "statement_id": "7ba945e4e468a93166748afffe8fb48d2c0131c20cbf54d2562796c47c43f73d",
+      "field": "studio.research.research_question",
+      "start": 44,
+      "end": 89,
+      "text": "Hãy chỉ ra bước hoặc tài liệu bạn đã sử dụng.",
+      "reviewer": "c14eaa79-71e7-434d-85a9-a5f4e43f2795",
+      "qualification_revision": "35968f7c-237f-429f-811c-cd77e931d62d",
+      "reason": "Neutral interview procedure for internal planning only."
+    }
+  ],
+  "resolution_ids": [
+    "6088a23c-f775-46b1-b7a4-03987f032c4b",
+    "59b073a6-a402-4b5d-8478-cfc2ca3f25f4"
+  ],
+  "recipient": "hold"
+}

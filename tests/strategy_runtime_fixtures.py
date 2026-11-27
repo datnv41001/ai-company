@@ -35,7 +35,7 @@ PURCHASE_INTENT = INTENT | {
 }
 
 
-def _workers(lab, run, cited, intent):
+def _workers(lab, run, cited, intent, controlled=None):
     requests, outputs = {}, {}
     replies = {
         "director": dict(primary_assignment="Review the observed use in the selected segment.",
@@ -65,7 +65,7 @@ def _workers(lab, run, cited, intent):
         assert job and job["run"] == run["id"]
         schema = job["body"]["response_format"]["json_schema"]
         assert schema["name"] == "c3_skills_" + stage
-        raw = dict(replies[stage])
+        raw = dict(replies[stage], **(controlled or {}).get(stage, {}))
         if stage != "director":
             raw["source_ids"] = cited
         requests[stage] = {"schema": schema["name"], "context": json.loads(job["body"]["messages"][-1]["content"])}
@@ -82,7 +82,7 @@ def _workers(lab, run, cited, intent):
 
 
 @contextmanager
-def commission_lab(api, *, intent=INTENT, observation=OBSERVATION):
+def commission_lab(api, *, intent=INTENT, observation=OBSERVATION, product_statement=PRODUCT, source_facts=None, controlled=None):
     """No credentials are serialized. Browser callers may log in using the two fixture accounts."""
     lab = InternalPool(api, os.environ["AMC_MIGRATION_DSN"])
     try:
@@ -105,6 +105,8 @@ def commission_lab(api, *, intent=INTENT, observation=OBSERVATION):
                         {"wording": observation, "qualifiers": [], "excerpt": observation},
                         {"wording": PRODUCT, "qualifiers": [], "excerpt": PRODUCT},
                         {"wording": SECOND_OBSERVATION, "qualifiers": [], "excerpt": SECOND_OBSERVATION}])
+        if source_facts is not None:
+            info["facts"] = source_facts
         state = prepared(api, owner, base, client, brand, campaign, task["id"], c3_assets.RESEARCH, case=info)
         guide = revision(api, owner, state["path"], "route-studio-guidance", "guidelines", {"guidance": "Use the approved product description."})
         state["params"]["guidelines"] = guide["id"]
@@ -115,7 +117,7 @@ def commission_lab(api, *, intent=INTENT, observation=OBSERVATION):
         run = accepted(api.post(queue, headers=owner["headers"], json=terms))
         assert accepted(api.post(queue, headers=owner["headers"], json=terms))["id"] == run["id"]
         facts = {row["wording"]: row["id"] for row in snap["projection"]["facts"]}
-        requests, raw = _workers(lab, run, [facts[observation], facts[PRODUCT]], intent)
+        requests, raw = _workers(lab, run, [facts[observation], facts[product_statement]], intent, controlled)
         report_url = base + "/workforce/runs/" + run["id"]
         trace = accepted(api.get(report_url, headers=owner["headers"]))
         assert trace["state"] == "awaiting_qa"

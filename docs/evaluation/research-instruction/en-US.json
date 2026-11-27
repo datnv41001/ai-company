@@ -1,0 +1,59 @@
+{
+  "scope": {
+    "tenant_id": "f71ada56-4eb8-403f-a2c4-840647318b86",
+    "client_id": "9b0fc433-4a0a-48d4-9c89-3fee1f559cb4",
+    "brand_id": "b02145bb-0b68-494f-8788-bdf5368df9bd",
+    "campaign_id": "37c7ccd7-ff3c-49e4-803d-5618ea67ac30"
+  },
+  "receipts": [
+    {
+      "document_id": "ffdbfd63-601e-411b-9e08-0b4d778ce848",
+      "qa_revision": 2,
+      "content_digest": "471411ad0a28c3e3ed5f529f5e2cad076f33387f6fa310f44e8beff314c4991f",
+      "version": "amc.content-evidence/1",
+      "contract": "amc.research-instruction/1",
+      "purpose": "internal_research_planning",
+      "manifest_id": "28a6d804-e9d6-4385-9c17-6e627f140ace",
+      "manifest_digest": "909c885f1571613312b84feb5d53152e8e45fd97f5a28e279ed50d5c6de6b5d5",
+      "campaign_id": "37c7ccd7-ff3c-49e4-803d-5618ea67ac30",
+      "tenant_id": "f71ada56-4eb8-403f-a2c4-840647318b86",
+      "client_id": "9b0fc433-4a0a-48d4-9c89-3fee1f559cb4",
+      "brand_id": "b02145bb-0b68-494f-8788-bdf5368df9bd",
+      "statement_id": "73d200a1fc829564ed67aa47236ee626bae71f8b8fdc4f279a1771b54115bcad",
+      "field": "studio.research.research_question",
+      "start": 0,
+      "end": 98,
+      "text": "At the last handover, what did you try to find immediately before using or putting aside the tray?",
+      "reviewer": "9f6d1b86-f361-4a88-a8e0-2701f3c929bc",
+      "qualification_revision": "1473ebb1-453a-4a2d-bfa5-3afef5e669be",
+      "reason": "Neutral interview procedure for internal planning only."
+    },
+    {
+      "document_id": "ffdbfd63-601e-411b-9e08-0b4d778ce848",
+      "qa_revision": 2,
+      "content_digest": "471411ad0a28c3e3ed5f529f5e2cad076f33387f6fa310f44e8beff314c4991f",
+      "version": "amc.content-evidence/1",
+      "contract": "amc.research-instruction/1",
+      "purpose": "internal_research_planning",
+      "manifest_id": "28a6d804-e9d6-4385-9c17-6e627f140ace",
+      "manifest_digest": "909c885f1571613312b84feb5d53152e8e45fd97f5a28e279ed50d5c6de6b5d5",
+      "campaign_id": "37c7ccd7-ff3c-49e4-803d-5618ea67ac30",
+      "tenant_id": "f71ada56-4eb8-403f-a2c4-840647318b86",
+      "client_id": "9b0fc433-4a0a-48d4-9c89-3fee1f559cb4",
+      "brand_id": "b02145bb-0b68-494f-8788-bdf5368df9bd",
+      "statement_id": "7cb19a02cef5d7333488860cb86b5f2080705c542c5a2c8c6a82fc3b7ca00df7",
+      "field": "studio.research.research_question",
+      "start": 99,
+      "end": 134,
+      "text": "Show the step or document you used.",
+      "reviewer": "9f6d1b86-f361-4a88-a8e0-2701f3c929bc",
+      "qualification_revision": "1473ebb1-453a-4a2d-bfa5-3afef5e669be",
+      "reason": "Neutral interview procedure for internal planning only."
+    }
+  ],
+  "resolution_ids": [
+    "3177bc2f-4b00-490e-8116-fe6615a0af5d",
+    "cafcb6c2-c333-4ce6-bf0c-b5d18ae5f742"
+  ],
+  "recipient": "hold"
+}

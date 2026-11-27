@@ -169,7 +169,8 @@ def view(tenant_id: str, did: str, user: User = Depends(current_user), db: Sessi
     if store.approver and result["mode"] == "saved":
         snapshot_id = run.knowledge["c3_manifest"]["id"]
         resolved = store.query(KnowledgeCommand).filter_by(operation="c3_resolve", snapshot_id=snapshot_id)
-        if db.scalar(resolved.where(KnowledgeCommand.key.startswith(f"claim:{doc.qa_revision}:")).limit(1)):
+        current_key = KnowledgeCommand.key.startswith(f"claim:{doc.qa_revision}:") | KnowledgeCommand.key.startswith(f"instruction-v1:{doc.qa_revision}:")
+        if db.scalar(resolved.where(current_key).limit(1)):
             from .c3_projection import unpack
 
             snap, _ = unpack(store, snapshot_id)

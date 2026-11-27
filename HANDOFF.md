@@ -1,5 +1,7 @@
 # Bắt đầu ở đây khi tiếp quản AI Marketing Company
 
+**AMC-RES-QA-01 · candidate chờ phản biện.** Main sau merge #67 là `fe0110bd`. Reviewer có thể phân loại riêng từng hướng dẫn nghiên cứu nội bộ đủ điều kiện ngay trong mục đối chiếu bằng chứng. [Chứng nhận merge, ca RED/GREEN, receipt, ảnh và cách tái hiện](docs/evaluation/research-instruction/README.md). Người tiếp quản cần kiểm cả thu hồi sau khi ký và câu có claim đứng cạnh câu trung lập.
+
 **Nghiên cứu RS-02 · chờ Independent Review.** PR #66 đã merge tại `9cf13803`, giữ kết quả âm của RS-01 và baseline WF-03. [Bàn giao nghiên cứu, phép tái hiện và điều kiện dừng](docs/evaluation/rs02/README.md). Đợt này chỉ dùng replay và fixture tổng hợp.
 
 ## Vòng #64 · Bàn giao Strategy cho Content trong Studio

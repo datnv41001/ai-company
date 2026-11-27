@@ -217,7 +217,7 @@ function createReviewPanel(root, api, notify) {
           for(const sibling of Array.from(form.children).slice(Array.from(form.children).indexOf(evidence)))sibling.hidden=true;
           if(!refresh)refresh=button(studioHost,'Tải bản vừa lưu để tiếp tục phê duyệt',()=>reload());
         };
-        mountMarketingStudio(studioHost,api,url(ctx,path+'/studio'),ctx.role,updated);
+        mountMarketingStudio(studioHost,api,url(ctx,path+'/studio'),ctx.role,updated,()=>modifiedPreview());
         if(doc.content.studio?.groups.copy || doc.content.studio?.delivery_version){title.readOnly=true;preview.readOnly=true;savePreview.hidden=true;}
       }
       el('h4','Kiểm tra phiên bản đang xem',evidence);

@@ -37,6 +37,32 @@
 .studio-channel-sample { display: grid; gap: .6rem; border: 1px solid var(--border); border-radius: var(--radius); background: var(--layer); padding: 1rem; }
 .studio-channel-sample h5, .studio-channel-sample p { margin: 0; }
 .studio-channel-sample small { font-weight: 650; }
+.strategy-handoff {margin:1rem 0; padding:clamp(.75rem,2vw,1.35rem); border:1px solid var(--border); border-radius:var(--radius); background:var(--paper); overflow-wrap:anywhere}
+.strategy-handoff > summary {color:var(--accent); font-weight:700; cursor:pointer; min-height:44px; align-content:center}
+.strategy-handoff > div {display:grid; gap:1rem; padding-top:.75rem}
+.strategy-handoff h4,.strategy-handoff h5,.strategy-handoff h6,.strategy-handoff p,.strategy-handoff dl {margin:0}
+.strategy-handoff h4 {font-size:1.25rem}
+.strategy-handoff h5 {font-size:1.05rem}
+.strategy-handoff h6 {font-size:.9rem}
+.strategy-handoff dt,.strategy-handoff small {color:var(--muted); font-size:.85rem}
+.strategy-handoff dd {margin:0; white-space:pre-line}
+.strategy-handoff dl,.strategy-form-grid {display:grid; grid-template-columns:repeat(auto-fit,minmax(min(100%,14rem),1fr)); gap:.75rem 1rem}
+.strategy-handoff > div > button {justify-self:start}
+.strategy-verdict,.strategy-assignment,.strategy-next,.strategy-decision-form {display:grid; gap:.7rem; padding:1rem; border-radius:var(--radius); background:var(--layer)}
+.strategy-verdict {border-inline-start:.3rem solid var(--warn); color:var(--warn); background:var(--warn-bg)}
+.strategy-verdict[data-status=draft_for_approval] {color:var(--ink); background:var(--tint); border-color:var(--accent)}
+.strategy-handoff > div > details {border-top:1px solid var(--border)}
+.strategy-handoff > div > details summary {padding:.65rem 0; min-height:44px; cursor:pointer}
+.strategy-handoff label {display:grid; gap:.25rem; min-width:0}
+.strategy-handoff select,.strategy-handoff textarea {width:100%; min-width:0; min-height:44px; box-sizing:border-box}
+.strategy-handoff textarea {resize:vertical}
+.strategy-tradeoff {align-self:end; color:var(--muted)}
+.strategy-tradeoff:empty,.strategy-status:empty {display:none}
+.strategy-handoff article {margin-top:.7rem; padding:.75rem; border:1px solid var(--border); border-radius:.65rem}
+.strategy-handoff blockquote {margin:.4rem 0; border-inline-start:.2rem solid var(--border); padding-inline-start:.75rem; white-space:pre-line}
+.strategy-handoff ul {margin:0; padding-inline-start:1.25rem}
+.strategy-handoff .strategy-error {color:var(--danger); padding:.5rem; background:var(--danger-bg)}
+.strategy-handoff :focus-visible {outline:3px solid var(--focus); outline-offset:2px}
 @media(max-width: 740px) {
   .studio-layout { grid-template-columns: minmax(0, 1fr); }
   .studio-layout aside { padding: .8rem; }

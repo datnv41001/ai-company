@@ -17,6 +17,28 @@ The Product Owner confirms the full V1 charter covering 49 modules, 37 logical r
 
 Generate the next task from the current [handoff](HANDOFF.md), the accepted requirement and its evidence gap. Record beneficiary, input, output, dependencies, acceptance test, authorized resources, stop condition and decision owner in the [PR handoff](.github/pull_request_template.md). Escalate unresolved changes to scope, architecture, budget, law or data access before dependent work.
 
+### Task Generation Protocol
+
+Before implementation, the task owner records these fields in the task brief:
+
+1. **Task ID** identifying the assignment across commits, evidence and handoff.
+2. **Background** describing the observed problem and prior decision or finding.
+3. **Business objective** naming the beneficiary and intended outcome.
+4. **Canonical references** identifying the governing requirements and decisions.
+5. **Current baseline commit** giving the repository, branch and full verified SHA.
+6. **Scope** defining the work authorized for this task.
+7. **Non-scope** identifying adjacent work excluded from this assignment.
+8. **Functional requirements** specifying observable behavior or deliverables.
+9. **Technical constraints** covering dependencies, compatibility and resource limits.
+10. **Acceptance criteria** stating how the owner will decide whether the objective was met.
+11. **Test requirements** specifying environments, cases and checks.
+12. **Security requirements** defining data, access and side-effect boundaries.
+13. **Documentation requirements** naming the canonical records that need updating.
+14. **Required evidence** identifying receipts, artifacts and the revision each must cover.
+15. **Stop conditions, rollback requirements and expected handoff** stating when to pause, how to recover, who receives the result and what decision is due.
+
+For an inapplicable field, record the reason. Use the existing PR template to report actual results against the brief, including failures and open conditions.
+
 Project: commercial AI Marketing Company V1.0. Single complete product scope; no partial release masquerading as GA.
 
 **Mandatory read order:**

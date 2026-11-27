@@ -1,5 +1,9 @@
 # Thẻ kiến thức ứng dụng
 
+## K-20 · Phản hồi theo cảnh và kiểm soát biến thử
+
+Một nhận xét có thể thực hiện được cần bản người nhận đã thấy, khoảng thời gian, thay đổi cụ thể, lý do nghiệp vụ và điều kiện nguồn. Chỉnh hook để testing cần giữ toàn bộ thân bài, timeline, visual, quyền, offer, CTA, landing và phân phối. Áp dụng cho Content, Creative, QA; đối chứng bằng so digest và thử sửa từ bản cũ. [Nguồn và các trường hợp](CONNECTED-CREATIVE.md)
+
 Mỗi thẻ phân biệt **điều nguồn ghi nhận** với **giả thuyết áp dụng cho AMC**. Ví dụ sản phẩm là tình huống tổng hợp để xây ca nghiệm thu. Trạng thái triển khai và đầu vào được phép dùng tra trong [ma trận](APPLICABILITY_MATRIX.md).
 
 <a id="k-01"></a>

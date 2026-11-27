@@ -68,7 +68,14 @@ def activate(tenant_id: str, campaign: str, body: Activation, db: Session = Depe
 
 
 def pin(db, brief, workflow):
+    from . import storyboard_runtime
+    from .registry_adapters import resolve
+
     binding = db.scalar(text("select amc_ops.registry_pin(:t,:c,:w)"), {"t": brief.tenant_id, "c": brief.campaign_id, "w": workflow})
     if not binding:
         raise HTTPException(409, "Required workflow skills are unavailable")
+    # Old draft @2 databases retain their immutable release rows. Do not queue
+    # or approve work from those rows using the revised semantic adapter.
+    if workflow == storyboard_runtime.RELEASE and not all(resolve(c) for c in binding["contracts"].values()):
+        raise HTTPException(409, "The draft storyboard binding requires its original runtime")
     return binding

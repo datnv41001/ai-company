@@ -1,5 +1,13 @@
 # Đối chiếu nghiên cứu với AMC
 
+| Bài học vòng R59 | Mức áp dụng | Phép nghiệm thu |
+| --- | --- | --- |
+| Feedback theo cảnh và revision, khóa biến của hook | Một phần, phạm vi storyboard tổng hợp | Hai bản có thể so đúng time, visual, offer, CTA, source và decision. |
+| Assignment đến RFQ đủ điều kiện | Chưa có hợp đồng KPI cho Khe Gọn | Cần định nghĩa được duyệt và thử time window/dedup trước khi tuyển. |
+| Render SaaS với Remotion | Hoãn | Cần được phép, benchmark cùng cảnh và ước tính toàn bộ chi phí. |
+
+[Nguồn và mức bằng chứng](CONNECTED-CREATIVE.md)
+
 **Mốc đối chiếu.** Nhánh nghiên cứu dựa trên [main b976565b](https://github.com/datnv41001/ai-company/blob/b976565be27e3f6e08fda6a55e37037f7595e0f7/HANDOFF.md). C2 có mã riêng đã review nội bộ tại [PR #32, head 068b8517](https://github.com/datnv41001/ai-company/blob/068b85170cf47106c8d08a8c573548e3f530647c/HANDOFF.md), AIRC có pilot ở [PR #28](https://github.com/datnv41001/ai-company/blob/9cf65c79d4a450633f4f1c109e3dd501c9e932a8/engineering/airc500/joint-v5/REPORT.md). Hai nhánh này còn mở tại lần đối chiếu. Kiểm bằng mã ở đúng SHA khi lập kế hoạch.
 
 [Product Spec V1, phần 2, 3 và 4](../PRODUCT_SPEC_V1.md) cung cấp định danh yêu cầu. [ADR-001](../ADR-001-OWN-SaaS-CORE.md) giữ quyền dữ liệu và hành động ở domain core; [HANDOFF](../../HANDOFF.md) nêu giới hạn rollout. Bảng dưới áp dụng ba ràng buộc này trên từng thẻ. “Đã có” chỉ dành cho khả năng quan sát được ở phạm vi ghi trong dòng. “Chưa có” là chưa tìm được luồng hoàn chỉnh trên các mốc trên. Những hướng không phù hợp có lý do riêng trong [nhật ký phản biện](REJECTED_HYPOTHESES.md).

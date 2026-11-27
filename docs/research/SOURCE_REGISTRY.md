@@ -1,5 +1,7 @@
 # Sổ nguồn nghiên cứu AMC
 
+Bổ sung ngày 26/11/2026. Có bản ghim Remotion v4.0.547, hai nguồn Google Ads, hai nguồn TikTok, tài liệu học thuật và quy trình nhận feedback của agency/editor. Sổ ghi rõ phần đã truy cập, quyền và giới hạn. [Nguồn vòng R59](CONNECTED-CREATIVE.md)
+
 Mỗi nguồn mới cần URL, tác giả hoặc đơn vị phát hành, ngày khảo sát, phiên bản/commit nếu có, phần thực sự đọc, loại bằng chứng và giới hạn tin cậy. Ghi quyền truy cập, quyền tái sử dụng và nghĩa vụ attribution theo hành động dự kiến. Theo kiến thức qua thẻ và ma trận tới module/workflow, thử nghiệm, kết quả hoặc lý do chưa áp dụng. Với dữ liệu huấn luyện, phải xác minh quyền cho mục đích đó trước khi nhập.
 
 | Nguồn khảo sát ngày 26/11/2026 | Bài học, độ tin cậy và giới hạn sử dụng | Áp dụng, bằng chứng |

@@ -19,7 +19,7 @@ from .registry_adapters import node_request, validate_output
 from .models import AuditEvent, Deliverable, Membership, utcnow
 from .workforce_gateway import Gateway, GatewayError, PROMPT_VERSION, infer, measured_cost, quality, request_body, reserve_tokens
 from .workforce_models import WorkforceRun
-from . import dynamic_plan, landing_qa, workflow_dag, video_storyboard
+from . import dynamic_plan, landing_qa, workflow_dag, storyboard_runtime
 
 MAX_TRIES = 3
 
@@ -83,7 +83,7 @@ def claim(db, scope, config, *, run_id=None, node=None, commit=True):
     else:
         stage = run.plan[len(run.checkpoints)]
         body = request_body(run, config.model)
-    is_board = video_storyboard.is_run(run)
+    is_board = storyboard_runtime.is_run(run)
     reserved = 0 if is_board else config.price(reserve_tokens(body), body["max_tokens"])
     prior_attempts = node.attempts if node else run.attempts
     if prior_attempts >= MAX_TRIES or run.reserved_microusd + reserved > run.budget_microusd or run.knowledge["prompt_version"] != PROMPT_VERSION:
@@ -115,7 +115,7 @@ def claim(db, scope, config, *, run_id=None, node=None, commit=True):
             "skill": stage,
             "attempt": run.attempts,
             "provider": "deterministic" if is_board else config.provider,
-            "model": video_storyboard.ADAPTER if is_board else config.model,
+            "model": storyboard_runtime.adapter_for(run) if is_board else config.model,
             "prompt": PROMPT_VERSION,
             "started_at": now.isoformat(),
             "outcome": "running",
@@ -172,9 +172,9 @@ def save_checkpoint(db, scope, run, stage, output, node):
         from .registry_qa import assess_role
         contract = binding["contracts"][stage]
         from . import c3_releases
-        if video_storyboard.is_run(run):
+        if storyboard_runtime.is_run(run):
             record["quality"]["role_qa"] = {"policy": contract["qa_policy"], "manifest_digest": run.knowledge["c3_manifest"]["digest"],
-                                           "source_ids":output["source_ids"], "adapter":video_storyboard.ADAPTER}
+                                           "source_ids":output["source_ids"], "adapter":storyboard_runtime.adapter_for(run)}
         elif binding.get("workflow") in c3_releases.WORKFLOWS:
             record["quality"]["role_qa"] = {"policy": contract["qa_policy"], "findings": record["quality"]["claims"],
                                           "manifest_digest":run.knowledge["c3_manifest"]["digest"], "source_ids":output["source_ids"]}
@@ -196,7 +196,7 @@ def save_checkpoint(db, scope, run, stage, output, node):
         if binding and binding["contracts"]["director"]["adapter"] == "director@2":
             preview = research_strategy.proposal(run.checkpoints)
         title = run.knowledge["title"]
-        if video_storyboard.is_run(run):
+        if storyboard_runtime.is_run(run):
             preview = next(p["output"]["text"] for p in run.checkpoints if p["skill"]=="storyboard")
         studio = None
         if binding and binding.get("workflow") in c3_releases.WORKFLOWS:
@@ -246,10 +246,11 @@ def finish(db, scope, config, task, result, error, *, node=None, commit=True):
         return False  # A stale worker must never append a second checkpoint or artifact.
     stage = node.skill if node else run.plan[len(run.checkpoints)]
     metrics = {}
+    verified_refusal = None
     if result is not None:
         raw, inputs, outputs = result
         try:
-            if video_storyboard.is_run(run):
+            if storyboard_runtime.is_run(run):
                 if type(inputs) is not int or type(outputs) is not int or (inputs, outputs) != (0, 0):
                     raise GatewayError("invalid_usage")
                 cost = 0
@@ -270,7 +271,7 @@ def finish(db, scope, config, task, result, error, *, node=None, commit=True):
                     elif binding.get("contracts",{}).get("director",{}).get("adapter")=="director@2":
                         from .research_strategy import director_proposal
                         raw = director_proposal(raw)
-                    if video_storyboard.is_run(run):
+                    if storyboard_runtime.is_run(run):
                         from .storyboard_contract import plan
                         contract, digest = plan(raw,run.knowledge["required_outputs"],binding)
                     else:
@@ -280,19 +281,36 @@ def finish(db, scope, config, task, result, error, *, node=None, commit=True):
                     if director_raw is not None:
                         output["raw_reply"] = director_raw
                 else:
-                    if video_storyboard.is_run(run):
-                        output = video_storyboard.validated(raw, body)
+                    if storyboard_runtime.is_run(run):
+                        output = storyboard_runtime.validated(raw, body)
                     else:
                         output = validate_output(raw, stage, run.plan, run.knowledge["sources"], run.knowledge.get('registry'))
         except GatewayError as exc:
             error = str(exc)
+            # Only the dispatcher's own adapter validation can attest that the
+            # pinned input fails deterministically. A mailbox error cannot.
+            if storyboard_runtime.is_run(run) and error in {"storyboard_needs_revision", "storyboard_invalid_checkpoint"}:
+                verified_refusal = error
             if isinstance(exc, dynamic_plan.InvalidPlan):
                 metrics["plan_error"] = exc.reason
     run.lease = None
     if error:
+        if verified_refusal:
+            metrics["retry_disposition"] = "terminal_for_pinned_input"
+            metrics["recovery"] = (
+                "revise_source_or_policy_and_queue_new_manifest"
+                if verified_refusal == "storyboard_needs_revision"
+                else "inspect_checkpoint_integrity_before_new_run"
+            )
+        elif error in ("timeout", "provider_process"):
+            metrics["retry_disposition"] = "bounded_transport_retry"
+        elif error == "provider_or_format":
+            metrics["retry_disposition"] = "bounded_output_retry" if metrics else "bounded_provider_retry"
+        elif error in ("invalid_output", "incomplete_output", "invalid_contract_output", "invalid_source", "invalid_plan", "invalid_storyboard_reply"):
+            metrics["retry_disposition"] = "bounded_output_retry"
         close_attempt(run, outcome=error, **metrics)
         run.last_error = error
-        run.state = "failed" if run.attempts >= MAX_TRIES else "queued"
+        run.state = "failed" if verified_refusal or run.attempts >= MAX_TRIES else "queued"
         run.ready_at = utcnow() + timedelta(seconds=2**run.attempts)
     else:
         close_attempt(run, outcome="ok", **metrics)

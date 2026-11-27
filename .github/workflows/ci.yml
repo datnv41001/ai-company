@@ -17,7 +17,8 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12.16'
-      - run: python -m pip install -r requirements-dev.txt
+      - run: python -m pip install -r requirements-dev.txt -r requirements-browser.txt
+      - run: python -m playwright install --with-deps chromium
       - run: ruff check app tests migrations scripts
       - name: Test SQLite and PostgreSQL isolation
         shell: bash
@@ -41,7 +42,12 @@ jobs:
           export DATABASE_URL="postgresql+psycopg://amc_runtime:$AMC_RUNTIME_PASSWORD@127.0.0.1:$port/amc_test_ci"
           export AMC_TEST_PG=1 PYTHONPATH=.
           python migrations/apply.py
+          export AMC_BRIEF_EVIDENCE="$RUNNER_TEMP/connected-review/content"
+          export AMC_SEMANTIC_EVIDENCE="$RUNNER_TEMP/connected-review/semantic"
+          export AMC_STORYBOARD_EDITION_EVIDENCE="$RUNNER_TEMP/connected-review/edition"
+          export AMC_CONNECTED_EVIDENCE="$RUNNER_TEMP/connected-review/journey"
           AMC_CONSULTATION_EVIDENCE="$RUNNER_TEMP/business-intake/consultation" AMC_INTAKE_EVIDENCE="$RUNNER_TEMP/business-intake" AMC_WF03_HOLD_EVIDENCE="$RUNNER_TEMP/wf03-holds" python -m pytest -q -rs --junitxml="$RUNNER_TEMP/api-regression.xml"
+          AMC_WORKFORCE_SCREENS="$RUNNER_TEMP/connected-ui" python -m pytest -q tests/browser_storyboard_workforce.py
           python tests/check_sandbox_journal.py --container amc-test-pg
           python tests/check_consultation_cutover.py --container amc-test-pg
           python -c 'import os, sys; sys.path.insert(0, "tests"); from check_postgres_upgrade import rehearse_archive; rehearse_archive(os.environ["AMC_MIGRATION_DSN"], "amc-test-pg", 26)'
@@ -184,6 +190,16 @@ jobs:
           if-no-files-found: error
       - uses: actions/upload-artifact@v4
         with:
+          name: connected-review-${{ matrix.revision }}
+          path: ${{ runner.temp }}/connected-review
+          if-no-files-found: error
+      - uses: actions/upload-artifact@v4
+        with:
+          name: connected-ui-${{ matrix.revision }}
+          path: ${{ runner.temp }}/connected-ui
+          if-no-files-found: error
+      - uses: actions/upload-artifact@v4
+        with:
           name: business-intake-${{ matrix.revision }}
           path: ${{ runner.temp }}/business-intake
           if-no-files-found: error
@@ -228,6 +244,7 @@ jobs:
           docker compose -p amc-acceptance run --rm migrate python migrations/apply.py --publish-registry catalog/landing-seo-v5.json
           docker compose -p amc-acceptance run --rm migrate python migrations/apply.py --publish-registry catalog/landing-seo-v6.json
           docker compose -p amc-acceptance run --rm migrate python migrations/apply.py --publish-registry catalog/video-storyboard-v1.json
+          docker compose -p amc-acceptance run --rm migrate python migrations/apply.py --publish-registry catalog/video-storyboard-v2.json
           AMC_ONBOARDING_SCREENSHOTS="$RUNNER_TEMP/onboarding" AMC_BROWSER_MAILBOX_PROJECT=amc-acceptance AMC_BROWSER_TEST_URL=http://127.0.0.1:8000 python tests/browser_delivery.py
           AMC_KNOWLEDGE_EVIDENCE="$RUNNER_TEMP/knowledge-workspace" AMC_BROWSER_MAILBOX_PROJECT=amc-acceptance AMC_BROWSER_TEST_URL=http://127.0.0.1:8000 python tests/browser_knowledge.py
           AMC_CLAIM_SCREENSHOTS="$RUNNER_TEMP/knowledge-workspace/claim-desk" AMC_BROWSER_MAILBOX_PROJECT=amc-acceptance AMC_BROWSER_TEST_URL=http://127.0.0.1:8000 python tests/browser_claim_desk.py

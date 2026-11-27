@@ -1,5 +1,13 @@
 # Bắt đầu ở đây khi tiếp quản AI Marketing Company
 
+## PR #60 · phản biện về câu mở đầu
+
+Reviewer đã chấp nhận chuỗi hai run liên phòng ban trên `555b968c` và yêu cầu sửa ca câu mở đầu mời báo giá khi người học chỉ cần chọn buổi. Người tiếp quản bắt đầu từ [hồ sơ phản biện và cách tái hiện](docs/evaluation/connected-workforce/SEMANTIC-REVIEW.md). Khi đối chiếu bằng chứng, phân biệt checkpoint Content, bản người biên tập đã nộp và quyết định QA trên revision đó. Giữ PR ở trạng thái draft đến quyết định mới của Independent Reviewer.
+
+## Công việc hiện hành sau review #59
+
+Main `4140563a89539acd19f1a7d5a16662c8dec5f6af` đã tích hợp binding WF-08 opt-in. Để tiếp quản nhánh kế tiếp, bắt đầu ở [hành trình Content → Video → QA → intake](docs/evaluation/connected-workforce/README.md). Hồ sơ chỉ rõ bản nguồn, người quyết định, cách chạy lại và phần còn cần người làm Marketing. Product Owner giữ quyết định phát hành. [CI main](https://github.com/datnv41001/ai-company/actions/runs/45796758300)
+
 ## Công việc hiện hành sau review #58
 
 Main nội bộ đã tích hợp #58 tại `1c40ad3185ac49415c3f555bb5b6406e2cdd8cb1`. Tree `d3923be500fc756b7f64fe611b3a967015e96941` khớp bản ghép đã review. [CI trên main](https://github.com/datnv41001/ai-company/actions/runs/45784910737) · [Bản campaign gốc đã nghiệm thu kỹ thuật](https://github.com/datnv41001/ai-company/tree/58b28ea1d75c63bbe05f9ce13fe233e173cf1dbb/docs/evaluation/round57-verification).

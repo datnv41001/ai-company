@@ -1,0 +1,18 @@
+.storyboard-editor {
+  margin-block: 1rem;
+  padding: .9rem 1rem;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--paper);
+  color: var(--ink);
+}
+.storyboard-editor summary {cursor: pointer; font-weight: 650; color: var(--ink);}
+.storyboard-editor [data-board-status] {color: var(--accent); margin-block: .65rem;}
+.storyboard-editor .board-field-grid {display: grid; gap: .8rem; grid-template-columns: repeat(auto-fit, minmax(min(100%, 13rem), 1fr));}
+.storyboard-editor label {margin-block: .5rem; color: var(--ink);}
+.storyboard-editor .board-field-grid label {min-width: 0;}
+.storyboard-editor textarea {resize: vertical;}
+.storyboard-editor .board-shot {background: var(--layer); padding: .75rem 1rem; margin-block: .5rem .8rem; border-radius: .65rem;}
+.storyboard-editor .board-shot p, .storyboard-editor .board-current-hook {color: var(--muted);}
+.storyboard-editor form details {margin-block: .7rem;}
+.storyboard-editor [data-board-save] {margin-block: .5rem .2rem;}

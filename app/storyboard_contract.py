@@ -1,21 +1,21 @@
 """Exact publisher definition and one-node plan of the native storyboard capability."""
 
-from . import video_storyboard as video
+from . import storyboard_runtime as runtime, video_storyboard as video
 from .knowledge_store import canonical, digest
 
 
-def release_manifest():
+def release_manifest(version=1):
     contracts = {}
-    for stage, role, version, field in (
+    for stage, role, skill_version, field in (
         ("director", "ai-managing-director", video.DIRECTOR_VERSION, "assignment"),
         ("storyboard", video.ROLE, 1, "board_json"),
     ):
         contracts[stage] = dict(
             skill_id=stage,
-            skill_version=version,
+            skill_version=skill_version,
             role_id=role,
-            contract_version=version,
-            adapter=f"{stage}@{version}",
+            contract_version=skill_version,
+            adapter=f"{stage}@{skill_version}",
             adapter_digest=video.source_digest(),
             qa_policy="wf08-source-and-revision@1",
             model="local",
@@ -34,7 +34,7 @@ def release_manifest():
             forbidden_actions=["external_write", "publish", "spend"],
             fallback="agency creative editor",
         )
-    return dict(
+    manifest = dict(
         workflow_id="WF-08/video-storyboard",
         workflow_version=1,
         mode="dynamic-v1",
@@ -44,9 +44,33 @@ def release_manifest():
         required_outputs=["storyboard"],
         contracts=contracts,
     )
+    if version == 1:
+        return manifest
+    if version != 2:
+        raise ValueError("Unknown storyboard release")
+    contracts["content"] = contracts["storyboard"] | {"role_id": "ai-copywriter-content-strategist"}
+    for stage, contract in contracts.items():
+        field = runtime.FIELDS[stage]
+        v = runtime.VERSIONS[stage]
+        contract.update(skill_id=stage, skill_version=v, contract_version=v, adapter=f"{stage}@{v}",
+                        adapter_digest=runtime.source_digest(), qa_policy="wf08-brief-fulfillment@2", objective=runtime.ASSIGNMENTS[stage],
+                        outputs=[field], predecessors=["content"] if stage == "storyboard" else [],
+                        output_schema={"type": "object", "properties": {field: {"type": "string"}}, "required": [field], "additionalProperties": False})
+    return manifest | {"workflow_version": 2, "required": ["director", "content", "storyboard"]}
 
 
 def plan(raw, required, binding):
+    if binding.get("workflow") == runtime.RELEASE:
+        if raw != {"assignment": runtime.ASSIGNMENTS["director"]} or required != ["storyboard"] or set(binding["skills"]) != set(runtime.FIELDS):
+            raise video.GatewayError("invalid_storyboard_binding")
+        nodes = []
+        for n, skill in enumerate(("content", "storyboard"), 1):
+            c = binding["contracts"][skill]
+            nodes.append(dict(node_id=f"n0{n}", skill_type=skill, assignment=runtime.ASSIGNMENTS[skill],
+                              parents=["n01"] if n == 2 else [], binding={k: c[k] for k in
+                              ("role_id", "contract_version", "skill_id", "skill_version", "qa_policy")}))
+        frozen = dict(catalog=1, required=required, nodes=nodes, join=["n02"], registry={k: v for k, v in binding.items() if k != "contracts"})
+        return frozen, digest(canonical(frozen))
     video.director_plan(raw)
     if required != ["storyboard"] or binding.get("workflow") != video.RELEASE or set(binding["skills"]) != {"director", "storyboard"}:
         raise video.GatewayError("invalid_storyboard_binding")

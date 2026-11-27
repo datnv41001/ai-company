@@ -1,4 +1,16 @@
 /* AMC's semantic colors are shared by the command center, knowledge editor and existing review surfaces. */
+.content-handoff{min-width:0;overflow-wrap:anywhere;padding:clamp(14px,2vw,24px);border:1px solid var(--border);border-radius:var(--radius);background:var(--paper);color:var(--ink)}
+.content-handoff h5{font-size:1.25rem;margin:0 0 1rem}
+.content-handoff h6,.content-handoff dt{font-size:.86rem;line-height:1.5;color:var(--muted);font-weight:650;margin:0}
+.handoff-scope{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,190px),1fr));gap:.9rem;margin:0 0 1rem}
+.handoff-scope dd,.handoff-script p{margin:.15rem 0 .85rem}
+.handoff-script{background:var(--layer);padding:1rem;border-left:3px solid var(--accent);border-radius:8px}
+.handoff-script p:last-child{margin-bottom:0}.handoff-declaration{display:flex;align-items:baseline;gap:.65rem;margin:.35rem 0 .8rem}
+.handoff-declaration strong{color:var(--accent);font-size:.82rem;flex:none;white-space:nowrap}.handoff-declaration ul{min-width:0;padding-left:1.1rem;margin:0}
+.content-handoff summary{min-height:var(--touch);padding-block:.7rem;cursor:pointer}
+.director-assignment code{overflow-wrap:anywhere}
+.director-assignment summary{min-height:var(--touch);padding-block:.7rem;cursor:pointer}
+.storyboard-raw{white-space:pre-wrap;overflow-wrap:anywhere;max-width:100%}
 :root {
   color-scheme: light;
   --canvas:#f4f5f0; --paper:#fff; --layer:#f1f4ef; --layer-2:#e7ece6;

@@ -9,7 +9,7 @@ from pydantic import Field
 from sqlalchemy import select
 
 from . import business_workspace as ws, c3_clarification, c3_marketing as marketing, knowledge_models as m
-from . import measurement_integrity, video_storyboard as video
+from . import measurement_integrity, storyboard_runtime, video_storyboard as video
 from .business_knowledge import resolved
 from .commercial_scope import same_placement
 from .company_objectives import check_company_reference
@@ -25,14 +25,14 @@ VERSION = "amc.marketing-manifest/1"
 TASK_MANIFEST = "amc.marketing-manifest/2"
 TASK_RESEARCH = "WF-03/research-strategy-draft@3"
 TASK_LANDING = "WF-13/landing-seo-draft@6"
-TASK_RELEASES = (TASK_RESEARCH, TASK_LANDING, video.RELEASE)
+TASK_RELEASES = (TASK_RESEARCH, TASK_LANDING, *storyboard_runtime.RELEASES)
 GENERIC_UNIT = "Approve a price or applicability revision with an exact selling unit, such as machine or participant"
 
 
 class Selection(Command):
     workspace_brief_id: Ref
     target: Target
-    workflow: Literal[marketing.RESEARCH, marketing.LANDING, TASK_RESEARCH, TASK_LANDING, video.RELEASE]
+    workflow: Literal[marketing.RESEARCH, marketing.LANDING, TASK_RESEARCH, TASK_LANDING, video.RELEASE, storyboard_runtime.RELEASE]
     market: Ref
     kpi: Ref
     claims: Annotated[list[Ref], Field(min_length=1, max_length=12)]
@@ -137,7 +137,7 @@ def materialize(s, workspace, pins, options, at):
             conflict("Phiên bản yêu cầu công việc chưa được hỗ trợ.")
         intent = INTENT_TYPES[version].model_validate(intent_data).model_dump(exclude_none=True)
         expected_kind = "marketing_strategy" if options["workflow"] == TASK_RESEARCH else "landing_page"
-        if options["workflow"] == video.RELEASE:
+        if options["workflow"] in storyboard_runtime.RELEASES:
             expected_kind = "video_storyboard"
         if intent["deliverable_type"] != expected_kind:
             conflict("Loại bản giao của brief khác quy trình đã chọn. Chọn quy trình đúng hoặc làm rõ yêu cầu.")
@@ -160,7 +160,7 @@ def materialize(s, workspace, pins, options, at):
         task_pins = {"guidelines":[rule.id,rule.digest], "task":[brief.id,version,digest(canonical(intent))]}
     private = {"company": [company.id, company.revision], "brand": [brand.id, brand.revision],
                "company_objective": [root.revision_id, root.digest], "dependencies": {id_:row.digest for id_,row in deps.items()}, **task_pins}
-    if options["workflow"] == video.RELEASE:
+    if options["workflow"] in storyboard_runtime.RELEASES:
         try:
             video.concept(public)
         except ValueError as exc:
@@ -228,10 +228,13 @@ def build(s, workspace, body):
         conflict("Chọn quy trình hiểu yêu cầu công việc để dùng nhiệm vụ nội bộ hoặc hướng dẫn thương hiệu.")
     options = body.model_dump(mode="json", exclude={"key","ttl_seconds"} | ({"guidelines"} if legacy else set()))
     public, private, deps = materialize(s, workspace, pins, options, at)
-    if body.workflow == video.RELEASE:
+    if body.workflow in storyboard_runtime.RELEASES:
         if target["kind"] == "internal_task":
             conflict("This storyboard release is available for agency briefs")
         roles = {"storyboard":{"product":public["product"],"fact_handles":[f["id"] for f in public["facts"]],"rights":video.RIGHTS}}
+        if body.workflow == storyboard_runtime.RELEASE:
+            roles["content"] = {"product":public["product"], "audience":public["audience"], "task_digest":digest(canonical(public["task_intent"])),
+                                "fact_handles":[f["id"] for f in public["facts"]]}
     elif legacy:
         roles = {r:marketing.role_view(r,public) for r in ("director", *marketing.ROLES[body.workflow])}
     else:

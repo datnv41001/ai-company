@@ -1,5 +1,7 @@
 # Giả thuyết đã bác bỏ hoặc hoãn
 
+**AMC-AI-RS-01 · Giữ baseline WF-03.** Trên bốn cặp tổng hợp, cách sắp xếp context và hướng dẫn B giảm số trường cần sửa ở một cặp, ba cặp hòa; cả bốn B mất ràng buộc. Ngưỡng đã khóa là cải thiện ở ít nhất ba cặp và giữ đủ ràng buộc. Hai nhánh cùng đạt 1/8 cho câu hỏi nghiên cứu và bằng chứng cần tìm. Hướng xem xét lại là kế thừa nghĩa vụ xác định từ projection và đo riêng chất lượng lập luận trên cohort mới. [Phiếu điểm, kết quả và đề xuất](../evaluation/rs01/FINAL.md)
+
 **R59.** Hoãn giả thuyết đổi renderer sẽ cải thiện hiệu quả Marketing. Giấy phép, chi phí SaaS, footage, audio và mức độ người nhận chấp nhận là các câu hỏi riêng. Không suy ra causal lift từ hai file khác hook hay một chuỗi sandbox. [Phạm vi và nguồn đã đọc](CONNECTED-CREATIVE.md)
 
 | ID | Giả thuyết | Quyết định và căn cứ | Điều kiện xem lại |

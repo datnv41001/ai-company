@@ -20,7 +20,7 @@ PR #59 ở head `01295a7eaf8a4650c417df4f9dbcba751addc7c0` được merge vào m
 
 1. Chủ brief nộp task, ghim business brief, brand, quyền và claim vào manifest. Registry chạy đúng version do admin kích hoạt trong campaign.
 2. Dispatcher cấp lease trong PostgreSQL. Với @2, Director giao Content, Content tạo `handoff_json`, storyboard xác minh digest của checkpoint đó trước khi tạo shot list và phụ đề.
-3. Worker nộp checkpoint và tài liệu đang chờ QA. Editor sửa trên revision/digest đã xem. Người QA có thẩm quyền duyệt đúng nội dung và nguồn hiện hành.
+3. Worker nộp checkpoint và tài liệu đang chờ QA. Ở màn hình điều phối Workforce, mở lần chạy rồi mở **Biên tập storyboard**. Người có quyền sửa trên revision/digest đã xem. Người QA có thẩm quyền duyệt đúng nội dung và nguồn hiện hành.
 4. Studio có một landing đã được duyệt. Chủ gói yêu cầu dựng preview từ đúng bản storyboard. Server kiểm các revision nguồn dùng chung, hai run, manifest, plan, quyền, QA và hash file. Một người khác ký preview.
 5. Cùng ID distribution đi vào visit và submission. Hồ sơ Marketing/CRM nhận đúng thông tin gửi form. Measurement tổng hợp sự kiện của plan. Receipt ghi từng ID/digest để có thể đi ngược chuỗi. [Ca PostgreSQL từ API](../../../tests/test_storyboard_distribution.py)
 
@@ -29,6 +29,17 @@ PR #59 ở head `01295a7eaf8a4650c417df4f9dbcba751addc7c0` được merge vào m
 Khe Gọn cung cấp ca RFQ cũ. Mép Giấy là brief tổng hợp mới cho một thẻ so màu ở nhà in, với đối tượng mua và yêu cầu báo giá riêng. So sánh cả hai brief RFQ và giữ nguyên sản phẩm ở phép thử thứ hai để cô lập ảnh hưởng của purpose/style. Ca có yêu cầu thu âm phải hiện `unsupported`; điều kiện cần xác nhận phải hiện `clarify` và chặn QA. Nguồn giá và qualifier chỉ đi từ manifest. [Dữ liệu thử, Content và các trạng thái QA](../../../tests/test_storyboard_brief.py)
 
 Giữ riêng brief, checkpoint Content, storyboard thô, bản đã sửa, revision, digest, người QA và media bytes. Artifact CI `connected-review-head` hoặc `connected-review-integration` có ba thư mục `content`, `edition` và `journey`. Trong hồ sơ journey, mở `preview.webm`, `captions.vtt` và `landing.html` tại chỗ. Mở `receipt.json` để kiểm trạng thái của cùng lần chạy. So ID trong một bộ hồ sơ; khi chạy lại database sẽ cấp ID mới.
+
+| Brief tổng hợp | Bản đầu của Content | Chỉ dẫn cho người dựng |
+| --- | --- | --- |
+| Khe Gọn, tổ trưởng lắp ráp điện tử, mục đích nhận RFQ | “Cần kiểm tra điều gì?” | Vẽ hai trạng thái; để dữ kiện đã duyệt dưới hình. |
+| Mép Giấy, người phụ trách nhà in, mục đích đối chiếu điều kiện báo giá | “Quý vị cần báo giá?” | Đặt thẻ điều kiện sau minh họa và trước CTA. Giả thuyết về bước đối chiếu mã màu vẫn cần phỏng vấn. |
+
+Cả hai vẫn dùng CTA “Yêu cầu báo giá”. Trong ca Phách Mở, thử hook có kiểm soát giữ 0–5, 5–13, 13–18 giây. Khi editor chủ động đổi thành 0–4, 4–12, 12–18, lần so hook sau khóa timeline mới theo revision nền đó. Chỉ dẫn khung hình và ghi chú dành cho người dựng; renderer minh họa hiện chỉ thực hiện bộ hình có sẵn.
+
+Đường Studio trong diễn tập dùng các câu trả lời provider tổng hợp được cấp qua mailbox thật. Bộ soạn Content/Storyboard @2 thực thi adapter cục bộ. Dữ liệu của Khe Gọn trong mỗi ca kết nối có một visit, một submission, một inquiry, 0 qualified RFQ và 0 đơn. [API, quyền và điều kiện ký preview](../wf08-storyboard/CONNECTED-DISTRIBUTION.md)
+
+Trong lần kiểm tổ hợp đầu, một assertion lấy dòng đầu làm mô tả sản phẩm dù thứ tự nguồn phụ thuộc ID của revision. Giá được trả trước câu mô tả làm phép thử trượt. Đã đổi sang tra đúng `message_source_id` của thông điệp và kiểm nguyên văn dữ kiện tương ứng. Hồ sơ xuất vẫn giữ cả điều kiện giá lẫn nguồn mô tả.
 
 ## 7–9. Giới hạn, nghiên cứu, chi phí
 
@@ -47,5 +58,7 @@ python -m pytest -q tests/test_storyboard_brief.py tests/test_storyboard_edition
 ```
 
 Có thể đặt `AMC_BRIEF_EVIDENCE`, `AMC_STORYBOARD_EDITION_EVIDENCE`, `AMC_CONNECTED_EVIDENCE` và `AMC_STORYBOARD_EVIDENCE` đến các thư mục đầu ra mới để lưu từng bộ. Với SQLite, các ca cần mailbox thật sẽ được bỏ qua. Trước khi quay lui, dừng nhận nhiệm vụ @2 và hoàn tất các lease bằng runtime tương thích; giữ registry, ledger, journal, receipt và bản đã QA để kiểm toán.
+
+Với Playwright Chromium đã cài và PostgreSQL dev nói trên, chạy `python -m pytest -q tests/browser_storyboard_workforce.py`. Đặt `AMC_WORKFORCE_SCREENS` để giữ ảnh chi tiết run thật trên desktop 1280px, tablet 820px và mobile 390px, cả hai theme, cùng biên nhận tương tác bằng bàn phím. Job API xuất bộ này thành artifact `connected-ui-head` và `connected-ui-integration`. Bản lưu lâu dài của hồ sơ nghiệm thu được gắn với head trong phần mô tả [PR #60](https://github.com/datnv41001/ai-company/pull/60).
 
 Reviewer có thể bắt đầu bằng ba câu hỏi. Một yêu cầu lạ đã được để mở đúng lúc chưa? Có truy từ CRM về đúng file preview và QA khi hai khách cùng một agency dùng cùng một mô tả sản phẩm không? Người dựng thực tế cần sửa bao nhiêu phút trước khi nhận việc? Hai câu đầu có ca kỹ thuật và nguồn để đối chiếu. Câu cuối cần người hành nghề. Quyết định roadmap tiếp theo dựa trên lỗi nghiệp vụ và công chỉnh sửa thực tế, giữ V1 ở 49 module, 37 vai trò, 24 workflow mẹ. Production và Commercial GA vẫn **NO-GO**.

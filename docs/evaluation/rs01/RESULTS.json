@@ -1,0 +1,103 @@
+{
+  "checkout": "47b7b9633e44e5d25162fa560b366ab8cfaaeb72",
+  "baseline": "a6fa1976f9a5d4557a4e3b64ac28dec2eb0fc0a4",
+  "model_sha256": "74a4da8c9fdbcd15bd1f6d01d621410d31c6fc00986f5eb687824e7b93d7a9db",
+  "calls": 24,
+  "usage_by_role": {
+    "director": {
+      "calls": 8,
+      "input_tokens": 2938,
+      "output_tokens": 466
+    },
+    "research": {
+      "calls": 8,
+      "input_tokens": 4712,
+      "output_tokens": 881
+    },
+    "strategy": {
+      "calls": 8,
+      "input_tokens": 5977,
+      "output_tokens": 1171
+    }
+  },
+  "unmetered": 0,
+  "input_tokens": 13627,
+  "output_tokens": 2518,
+  "wall_seconds": 128.031,
+  "provider_fee_usd": 0,
+  "hardware_energy_editor_cost": null,
+  "stop": null,
+  "complete_pairs": 4,
+  "pairs": [
+    {
+      "case": "tile",
+      "sides": {
+        "Left": {
+          "complete": true,
+          "edit_count": null,
+          "hard_failures": null
+        },
+        "Right": {
+          "complete": true,
+          "edit_count": null,
+          "hard_failures": null
+        }
+      },
+      "complete": true
+    },
+    {
+      "case": "delivery",
+      "sides": {
+        "Left": {
+          "complete": true,
+          "edit_count": null,
+          "hard_failures": null
+        },
+        "Right": {
+          "complete": true,
+          "edit_count": null,
+          "hard_failures": null
+        }
+      },
+      "complete": true
+    },
+    {
+      "case": "counter",
+      "sides": {
+        "Left": {
+          "complete": true,
+          "edit_count": null,
+          "hard_failures": null
+        },
+        "Right": {
+          "complete": true,
+          "edit_count": null,
+          "hard_failures": null
+        }
+      },
+      "complete": true
+    },
+    {
+      "case": "check",
+      "sides": {
+        "Left": {
+          "complete": true,
+          "edit_count": null,
+          "hard_failures": null
+        },
+        "Right": {
+          "complete": true,
+          "edit_count": null,
+          "hard_failures": null
+        }
+      },
+      "complete": true
+    }
+  ],
+  "locked_independent_scores": 0,
+  "exploratory_threshold": "pending independent scores",
+  "request_digests_verified": true,
+  "blind_pack_sha256": "4fd46c869f2801ccd0af82f10fe1231c4f4606fd272a628ad5e897016715f6ba",
+  "ordered_evidence_plaintext_sha256": "4797e2e0d84498c25a25bdc6faa84217ad08511fff20ebeb4724742565db1ef4",
+  "mapping_commitment": "2c84174c06f805b4823a40e5adadcc4293d77295c3d954c0fe849cf30dba6b6a"
+}

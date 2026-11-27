@@ -1,0 +1,161 @@
+{
+  "historical_junit": {
+    "original_sha256": "ca814f86ddb6ae04c87830305ac531ca801ebf32931fc16fbebe7e97be47c4c1",
+    "sanitized_sha256": "5e00c03997e0bf92a0c5e171820d11329783bdcf04fead66c48634770ba4eb0e",
+    "transform": "Removed machine hostname, absolute checkout path, one process address. Test cases, failures and skips preserved."
+  },
+  "natural_reproduction": false,
+  "status": "OPEN",
+  "baseline": {
+    "checkout": "053410d161b15285a1ef264f853d4920a3d559e1",
+    "natural_attempts": 1,
+    "before_create": {
+      "process_before": "2026-11-27T08:27:28.704646+00:00",
+      "db": "2026-11-27T15:27:28.707097+07:00",
+      "process_after": "2026-11-27T08:27:28.704646+00:00",
+      "db_minus_process_interval_ms": [
+        2.451,
+        2.451
+      ]
+    },
+    "intake": {
+      "id": "23b8d827e386cab9bea616d96d1c15d2af7ed5853c74d67ae387c69215be179e",
+      "plan_id": "46144680-7874-4c0a-9165-98ba65a96e45",
+      "revision": 1,
+      "state": "received",
+      "missing": [
+        "commercial_moq"
+      ],
+      "quantity": "3",
+      "unit": "box",
+      "minimum_order_quantities": [
+        "5"
+      ],
+      "contact_purpose": "quote_request",
+      "last_event_at": "2026-11-27T08:27:29.153791+00:00"
+    },
+    "created": {
+      "id": "50019b48-30c8-4270-9bdc-0a19d96d24b4",
+      "entity_id": "23b8d827e386cab9bea616d96d1c15d2af7ed5853c74d67ae387c69215be179e",
+      "sequence": 31,
+      "plan_id": "46144680-7874-4c0a-9165-98ba65a96e45"
+    },
+    "after_create_process": "2026-11-27T08:27:29.154694+00:00",
+    "before_refer": {
+      "process_before": "2026-11-27T08:27:29.154694+00:00",
+      "db": "2026-11-27T15:27:29.164842+07:00",
+      "process_after": "2026-11-27T08:27:29.164689+00:00",
+      "db_minus_process_interval_ms": [
+        0.153,
+        10.148000000000001
+      ]
+    },
+    "clock_control": {
+      "step": "refer",
+      "occurred_at": "2026-11-27T08:27:29.153790+00:00",
+      "invalid_state": false,
+      "backdated": true,
+      "occurred_minus_last_ms": -0.001,
+      "status": 409,
+      "detail": "Invalid or out-of-order Sales transition"
+    },
+    "state_control": {
+      "step": "assign",
+      "occurred_at": "2026-11-27T08:27:29.153791+00:00",
+      "invalid_state": true,
+      "backdated": false,
+      "occurred_minus_last_ms": 0.0,
+      "status": 409,
+      "detail": "Invalid or out-of-order Sales transition"
+    },
+    "actual": {
+      "step": "refer",
+      "occurred_at": "2026-11-27T08:27:29.154694+00:00",
+      "invalid_state": false,
+      "backdated": false,
+      "occurred_minus_last_ms": 0.903,
+      "status": 200,
+      "detail": null,
+      "receipt": "71a786b6-51b6-4a7e-9fef-a190dfa5e37e",
+      "sequence": 32,
+      "revision": 2,
+      "expected_revision": 1
+    }
+  },
+  "reviewed": {
+    "checkout": "d79f76373af99585b6b8b720b2a60a93f882c48b",
+    "natural_attempts": 1,
+    "before_create": {
+      "process_before": "2026-11-27T08:27:27.684631+00:00",
+      "db": "2026-11-27T15:27:27.686350+07:00",
+      "process_after": "2026-11-27T08:27:27.684631+00:00",
+      "db_minus_process_interval_ms": [
+        1.719,
+        1.719
+      ]
+    },
+    "intake": {
+      "id": "b38528d1d453de430fcdf62d894472d80855b9fb16ac58e9de7c82c6034a782f",
+      "plan_id": "52ad9b0b-3712-4486-b02c-ab0b75a3f9e5",
+      "revision": 1,
+      "state": "received",
+      "missing": [
+        "commercial_moq"
+      ],
+      "quantity": "3",
+      "unit": "box",
+      "minimum_order_quantities": [
+        "5"
+      ],
+      "contact_purpose": "quote_request",
+      "last_event_at": "2026-11-27T08:27:28.312707+00:00"
+    },
+    "created": {
+      "id": "c2ec5e0c-a21d-4833-8f42-1f838d8c013f",
+      "entity_id": "b38528d1d453de430fcdf62d894472d80855b9fb16ac58e9de7c82c6034a782f",
+      "sequence": 31,
+      "plan_id": "52ad9b0b-3712-4486-b02c-ab0b75a3f9e5"
+    },
+    "after_create_process": "2026-11-27T08:27:28.324826+00:00",
+    "before_refer": {
+      "process_before": "2026-11-27T08:27:28.324826+00:00",
+      "db": "2026-11-27T15:27:28.327271+07:00",
+      "process_after": "2026-11-27T08:27:28.324826+00:00",
+      "db_minus_process_interval_ms": [
+        2.4450000000000003,
+        2.4450000000000003
+      ]
+    },
+    "clock_control": {
+      "step": "refer",
+      "occurred_at": "2026-11-27T08:27:28.312706+00:00",
+      "invalid_state": false,
+      "backdated": true,
+      "occurred_minus_last_ms": -0.001,
+      "status": 409,
+      "detail": "Invalid or out-of-order Sales transition"
+    },
+    "state_control": {
+      "step": "assign",
+      "occurred_at": "2026-11-27T08:27:28.312707+00:00",
+      "invalid_state": true,
+      "backdated": false,
+      "occurred_minus_last_ms": 0.0,
+      "status": 409,
+      "detail": "Invalid or out-of-order Sales transition"
+    },
+    "actual": {
+      "step": "refer",
+      "occurred_at": "2026-11-27T08:27:28.324826+00:00",
+      "invalid_state": false,
+      "backdated": false,
+      "occurred_minus_last_ms": 12.119,
+      "status": 200,
+      "detail": null,
+      "receipt": "edc2061d-6442-4155-a38c-2fe0ab5c8f61",
+      "sequence": 32,
+      "revision": 2,
+      "expected_revision": 1
+    }
+  }
+}

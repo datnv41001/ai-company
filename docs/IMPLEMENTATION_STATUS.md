@@ -1,6 +1,8 @@
 # Trạng thái hiện thực và nghiệm thu V1
 
-Mốc main và candidate hiện hành nằm ở [HANDOFF](../HANDOFF.md). Các số liệu dưới đây chỉ áp dụng cho bản và phạm vi ghi trên từng mục.
+**Mốc tích hợp nội bộ:** main `a6fa1976f9a5d4557a4e3b64ac28dec2eb0fc0a4`. WF-03 đã có handoff /2 trên dữ liệu tổng hợp. R64-02 còn mở. Bằng chứng về phiếu Content giới hạn ở việc giao lập nháp. Nghiệm thu của practitioner, quyền thực thi bên ngoài và hiệu quả Marketing vẫn cần kiểm riêng. Các mốc dưới đây giữ phạm vi và thời điểm ban đầu. [Chứng nhận #64](evaluation/round64/MAIN-64.json) · [Việc tiếp theo](../HANDOFF.md)
+
+**Vòng #64.** Studio chuẩn bị lệnh soạn Content nội bộ từ quyết định Strategy có biên nhận. Phạm vi hiện tại là commission in-house, với nguồn và người nhận đủ quyền trên cùng manifest. Bản thực thi, nghiệp vụ thương mại và kết quả thị trường vẫn chờ các cổng riêng. [Luồng, giới hạn và bằng chứng](evaluation/round64/README.md)
 
 **Vòng #63.** Bản làm việc nội bộ của Marketing lead thử đối chiếu checkpoint Research/Strategy @4 với các quan sát được mã hóa trong brief tổng hợp. Có thể giao Content một bản nháp có điều kiện hoặc giữ việc để làm rõ. Runtime WF-03 @3 vẫn dùng bản registry đã phát hành. Năng lực suy luận trên brief mới và giá trị công việc đối với practitioner còn chờ đánh giá. [Đầu ra đối chứng và trạng thái](evaluation/round63/README.md)
 

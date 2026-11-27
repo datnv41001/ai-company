@@ -1,5 +1,7 @@
 # Manifest công bố · AMC-KC-AUDIT-01-CLOSURE
 
+**Sau merge #64.** Base hiện tại của audit là `a6fa1976f9a5d4557a4e3b64ac28dec2eb0fc0a4`. Reviewer đã đóng KC-01–07 trong phạm vi tài liệu. Cold Handoff còn NOT_VERIFIABLE (0 phiên độc lập). [Chứng nhận main](../round64/MAIN-64.json) · [Bàn giao hiện hành](../../../HANDOFF.md). Phần sau giữ nguyên số liệu và SHA của vòng công bố đầu tiên.
+
 Mở danh sách file tại SHA của PR. Người phản biện có thể tải từng blob từ GitHub và so với Git trên máy của mình. Hai commit audit local được giữ nguyên trong lịch sử nhánh. Base là `053410d161b15285a1ef264f853d4920a3d559e1`. Audit gốc là `90737b30c1895a0ddfbec9ba1ccdf333b4905b12`, tree `8d5ec4f6e20451a0cec1d78c6f4f3707ed7bc8bc`, cha `fe61923e7f53a28e215a191491e53f80cbfef000`. SHA và tree bàn giao cuối cùng nằm trong mô tả draft PR để tránh tự tham chiếu.
 
 | Mục cần kiểm | Nguồn công khai | Phạm vi và giới hạn |

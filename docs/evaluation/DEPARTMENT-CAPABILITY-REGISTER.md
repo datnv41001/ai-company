@@ -1,5 +1,7 @@
 # Sổ năng lực phòng Marketing
 
+**Vòng #64 · Research, Strategy và Content.** Người duyệt có thể đối chiếu nguồn, chọn hướng thông điệp và giao đúng loại bản nháp theo placement cho người nhận nội bộ; khi thiếu căn cứ, Studio giữ việc và chỉ rõ ai cần xử lý. Phần mềm kiểm scope, revision và điều kiện phát hành. Việc xác nhận ý nghĩa của quan sát vẫn thuộc người được ủy quyền. [Phạm vi và cách tái hiện](round64/README.md)
+
 **Vòng #63 · Market Research → Strategy → Content.** Trên hai brief tổng hợp, công cụ ngoại tuyến thử truy từ một hướng thông điệp về quan sát, tình huống mua, quyền dùng nguồn và dữ kiện sản phẩm. Người giao brief vẫn phải đề xuất phương án, mã hóa quan sát, rà soát câu chữ và duyệt. Chưa đo công tiết kiệm hoặc kết quả thị trường. [Ca đối chứng](round63/README.md) · [Tiêu chí người nhận](round63/METHODS.md)
 
 **Vòng #62.** Analytics và Sales có phiếu chỉ đọc theo thời điểm ghi nhận. Marketing có thể tra nguồn và lập giả thuyết về MOQ. Năng lực xác nhận qualification bởi Sales, số đơn thực tế và doanh thu thực tế vẫn cần bằng chứng nghiệp vụ. [Ca thử và giới hạn](round62/README.md)

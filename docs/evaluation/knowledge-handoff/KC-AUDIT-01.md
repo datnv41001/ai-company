@@ -1,5 +1,7 @@
 # AMC-KC-AUDIT-01 · Kiểm toán tri thức và bàn giao dự án
 
+**Quyết định sau review.** Independent Reviewer kết luận PASS_WITH_CONDITIONS cho audit tài liệu và xác nhận KC-01–07, gồm hai sửa đổi KC-04/05. Bảng dưới ghi trạng thái quan sát trước merge #64. [Chứng nhận main sau merge](../round64/MAIN-64.json) · [Điều kiện Cold Handoff còn mở](KC-AUDIT-01-MANIFEST.md).
+
 **27/11/2026 · Trình Independent Review.** Người kiểm là Codex trong worktree tài liệu tách từ main #63, dùng PowerShell, Git, GitHub CLI và Python trên Windows. Kết quả kỹ thuật áp dụng cho đúng cây. Phép tiếp quản bởi AI mới cần receipt riêng. Production **NO-GO**, Commercial GA **NO-GO**.
 
 ## Main và candidate

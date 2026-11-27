@@ -111,3 +111,7 @@ Các mục trên liên kết tới nguyên bản. Phần áp dụng là diễn g
 | [Thảo luận của người mua media](https://www.reddit.com/r/FacebookAds/comments/1xhpasx/the_creative_testing_structure_we_use_so_we/), đã đọc bài và các ý kiến trái chiều về đổi hook cùng angle, mẫu nhỏ và click tò mò. [Bài của editor trên LinkedIn](https://www.linkedin.com/posts/gerg%C5%91-gellei-8507282b5_the-creative-strategist-writes-the-brief-activity-7496639176914890752-PeZJ) chỉ truy cập được đoạn mô tả của tác giả về brief và footage lệch nhau. | Quan sát tự báo cáo. Giả thuyết cho pilot là chỉ rõ shot/quyền/hình thay thế sẽ giảm số lần trả sửa. Chưa có xác nhận tại Việt Nam. |
 
 Chỉ diễn giải và dẫn liên kết đến nguyên bản. Phạm vi sử dụng là thiết kế và kiểm thử nội bộ. Không sao chép video, hình quảng cáo, người bình luận hay tệp huấn luyện. [Áp dụng O-01–O-09](APPLICABILITY_MATRIX.md#r58-wf08)
+
+## Vòng #64 · Kiểm nhận định và quyền sửa bản giao
+
+Gao và cộng sự, EMNLP 2023, đóng góp hai câu hỏi cho QA: câu có được các đoạn dẫn hỗ trợ đầy đủ và từng trích dẫn có liên quan không. Microsoft Learn hướng dẫn người dùng thấy, sửa và kiểm lại đầu ra của agent. Mẫu Message House của GitLab đã đăng ký ở #63 được dùng lại cho phân khúc và proof point. [Nguồn gốc, phạm vi đọc và cách áp dụng](../evaluation/round64/METHODS.md)

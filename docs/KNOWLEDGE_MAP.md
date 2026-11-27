@@ -1,5 +1,14 @@
 # Tiếp quản AMC từ một checkout
 
+Muốn biết **bản nào hiện ở main, bản nào còn đang review và việc kế tiếp thuộc ai**, bắt đầu tại [đầu HANDOFF](../HANDOFF.md). Khi thấy mục có ngày cũ trong bất kỳ report nào, chỉ áp dụng số liệu cho SHA của mục đó. [Kiểm toán continuity ngày 27/11](evaluation/knowledge-handoff/KC-AUDIT-01.md)
+
+| Loại tri thức | Nơi cập nhật khi thay đổi |
+|---|---|
+| Mandate, quyền và giao việc | [AGENTS](../AGENTS.md); kết luận review theo [PR template](../.github/pull_request_template.md). |
+| Quyết định sản phẩm và roadmap | [Đặc tả, mục 14 và 17](PRODUCT_SPEC_V1.md); lý do thay kiến trúc ở ADR chịu trách nhiệm. |
+| Mức trưởng thành và thử nghiệm theo phòng ban | [Từ điển trạng thái](IMPLEMENTATION_STATUS.md) và [sổ bằng chứng theo năng lực](evaluation/DEPARTMENT-CAPABILITY-REGISTER.md). |
+| Ranh giới phát hành và giấy phép | [Gate an toàn](SECURITY_AND_GA_BLOCKERS.md) và [sổ giấy phép](../LICENSE-STATUS.md). |
+
 Ở mỗi vòng phát triển, người phụ trách chọn một việc người dùng cần làm, ghi nhận khó khăn từ nguồn công khai có thể đọc và lần tới workflow hiện hữu. Ghi URL, ngày, phần đã đọc, quyền dùng lại, giới hạn và giả thuyết có thể bác bỏ trong [sổ nguồn](research/SOURCE_REGISTRY.md) và [ma trận áp dụng](research/APPLICABILITY_MATRIX.md). Video chỉ có mô tả thì ghi mức mô tả. Kết thúc vòng bằng đầu ra người nhận có thể dùng, kết quả thử và phép đo kinh tế còn thiếu. [Đầu việc theo checkout](../HANDOFF.md) · [Biên nhận main #56](evaluation/department-review/MAIN-56.json) · [Cold handoff lịch sử #53](evaluation/knowledge-handoff/FINAL-53.md)
 
 Đọc theo thứ tự dưới đây. Trước khi báo cáo trạng thái, ghi kết quả của `git rev-parse HEAD`, `git status --short --branch` và nhánh đích. Khi làm việc ngoại tuyến, ghi mốc đồng bộ gần nhất. Mỗi kết quả nghiệm thu chỉ áp dụng cho phiên bản và hành trình đã thử.

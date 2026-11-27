@@ -1,5 +1,7 @@
 # Trạng thái hiện thực và nghiệm thu V1
 
+Mốc main và candidate hiện hành nằm ở [HANDOFF](../HANDOFF.md). Các số liệu dưới đây chỉ áp dụng cho bản và phạm vi ghi trên từng mục.
+
 **Vòng #63.** Bản làm việc nội bộ của Marketing lead thử đối chiếu checkpoint Research/Strategy @4 với các quan sát được mã hóa trong brief tổng hợp. Có thể giao Content một bản nháp có điều kiện hoặc giữ việc để làm rõ. Runtime WF-03 @3 vẫn dùng bản registry đã phát hành. Năng lực suy luận trên brief mới và giá trị công việc đối với practitioner còn chờ đánh giá. [Đầu ra đối chứng và trạng thái](evaluation/round63/README.md)
 
 **Vòng #62.** Sales và Marketing có thể đối chiếu quantity, nguồn MOQ, revision và mốc thương mại trong ba phiếu ngoại tuyến tổng hợp. Hợp đồng `rfq-qualification/1` ở trạng thái proposed. Chi phí lao động tiết kiệm và độ hữu ích cho người dùng thực chưa được đo. [Phạm vi và quyết định còn mở](evaluation/round62/README.md)
@@ -21,6 +23,8 @@ Scope V1 là 49 module, 37 vai trò, 24 workflow mẹ. Main đã nhận WF-08 @1
 **Mốc đối chiếu ngày 26/11/2026** là `main` sau PR #48, commit `380be3eb70a41424c6d45318b0b1890fa950970a`, core v26, Business v3, C3 v5 và journal `ops/2`. Trên mốc này có bằng chứng tích hợp sandbox từ brief tới bản giao, QA, thực thi cục bộ và đối soát. Số yêu cầu **đầy đủ** có quyết định nghiệm thu nghiệp vụ ghi nhận trong hồ sơ là **0/49 module, 0/37 vai trò, 0/24 workflow**. Số đơn vị công việc được doanh nghiệp thực tiếp nhận trong các phép đo là **0**. Chi phí trên một đơn vị được tiếp nhận chưa xác định. Production và Commercial GA giữ **NO-GO**. [Commit nền][main] · [Cutover][cutover] · [Hồ sơ pilot][pilot] · [Điều kiện GA][ga]
 
 ## Cách đọc trạng thái
+
+Quy đổi L0–L6 vào tám trạng thái dưới đây theo từng năng lực. Ý tưởng đứng trước L0. Đặc tả = L0, hiện thực = L1, kiểm kỹ thuật = L2, tích hợp đã xác minh = L3, nghiệm thu nghiệp vụ = L4, đủ điều kiện và được cấp quyền production = L5, xác minh giá trị thương mại = L6. Quyết định GA toàn V1 còn phải đạt mọi gate trong đặc tả. Trạng thái tiến độ của ticket, verdict của reviewer và bảy lớp kiến trúc đo các việc khác nhau.
 
 | Trạng thái | Căn cứ cần tra |
 |---|---|

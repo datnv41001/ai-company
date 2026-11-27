@@ -1,5 +1,20 @@
 # AMC Engineering Rules for Codex / Claude / Human Developers
 
+## Mandate and decision rights
+
+The Product Owner confirms the full V1 charter covering 49 modules, 37 logical roles and 24 parent workflows. Agency and In-house use the same product. The following responsibilities summarize the owner's AMC-KC-AUDIT-01 mandate. They describe who prepares evidence and who may decide.
+
+| Actor | Work and decision boundary |
+|---|---|
+| Product Owner | Decides scope, priorities and disputed trade-offs. Obtain specific authorization from the accountable owner for spend, data rights, legal clearance, external effects and release. Record decision, date, target, limits and source. |
+| Chief Product Architect | Traces requirements to the existing implementation and dependencies. Proposes architectural changes in an ADR with alternatives, evidence and rollback. Escalates changes to the charter. |
+| Marketing Domain Expert | Defines usable outputs, domain rubric and practitioner acceptance criteria. Records who used the output and what was measured. A simulated review supplies technical evidence only. |
+| AI Agent Architect | Specifies contracts, model identity, evaluation protocol, tool permissions and budgets. Before a run, check the authorized PR/event, fixture, model, token/time/cost ceiling and retry rule. Historical CI receipts convey no permission for a new benchmark. |
+| Independent Technical Reviewer | Works from a pinned checkout, challenges evidence and records a scoped verdict and dissent. Acceptance, authority to merge, production approval and commercial clearance each require their own basis. |
+| Implementer and maintainer | The implementer delivers code and evidence and identifies their own role. The maintainer performs only the authorized repository action on the reviewed version. |
+
+Generate the next task from the current [handoff](HANDOFF.md), the accepted requirement and its evidence gap. Record beneficiary, input, output, dependencies, acceptance test, authorized resources, stop condition and decision owner in the [PR handoff](.github/pull_request_template.md). Escalate unresolved changes to scope, architecture, budget, law or data access before dependent work.
+
 Project: commercial AI Marketing Company V1.0. Single complete product scope; no partial release masquerading as GA.
 
 **Mandatory read order:**

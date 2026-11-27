@@ -1,5 +1,13 @@
 # Bắt đầu ở đây khi tiếp quản AI Marketing Company
 
+## Điểm bàn giao ngày 27/11/2026
+
+**Main đã tích hợp đến #63.** Commit `053410d161b15285a1ef264f853d4920a3d559e1`, tree `a63361c7673ada6121117028f92aebcb3b8aecd1`. CI main có 3 job đạt, 727 test đạt và 2 skip, 22 đường nâng schema core v26 và restore đối chiếu 34 bảng. [CI main](https://github.com/datnv41001/ai-company/actions/runs/45949512674)
+
+**Bản cần phản biện là draft #64.** Head `a0c43a15dbcec783a859c4c525fec2671206483c` và trial `80fa77de08afbe0b308fd56ddf3738fbf0b2938d` cùng tree `1c6779ae574d0cd2efd5c8f8798162a7438a0b52`. Việc kế tiếp thuộc Independent Reviewer: đối chiếu sửa R64-01, xem R64-02 còn mở và quyết định trên đúng head. Giữ kết quả âm và lần thử đầu trong gói. Chưa có nghiệm thu head này. Production và Commercial GA đều NO-GO. [PR #64](https://github.com/datnv41001/ai-company/pull/64) · [Hồ sơ theo commit](https://github.com/datnv41001/ai-company/blob/f4f0d990e7841e52173b1f733f2f6649db6ad1c5/docs/evaluation/round64-closure-proof/START-HERE.md)
+
+Các mục theo vòng bên dưới mô tả tình trạng khi viết. Khi tiếp quản sau ngày trên, đối chiếu lại remote và CI. [Bản đồ tri thức](docs/KNOWLEDGE_MAP.md) · [Biên nhận SHA, CI và ancestry](docs/evaluation/knowledge-handoff/KC-AUDIT-01-REFS.json)
+
 ## Vòng #63 · Research giao phương án để Strategy và Content dùng
 
 PR #62 đã merge nội bộ tại `6a11bf4d`. Để tái lập nghiên cứu #63 sau khi cài dependency phát triển, chạy từ gốc repository `python -m scripts.strategy_study --output study-review` với một thư mục đích mới. Đọc `study-review/index.json`, sau đó mở cặp `before.json` và `after.json` của cùng brief. Phép thử dùng decoder cố định, không cần model hoặc tài khoản khách. [Phạm vi, dữ liệu, giới hạn và cách phản biện](docs/evaluation/round63/README.md)

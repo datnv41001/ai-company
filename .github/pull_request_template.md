@@ -18,6 +18,8 @@
 
 ## Bàn giao cho người phản biện
 
+Ghi verdict, người đánh giá, phạm vi, SHA và lý do. **PASS** đủ tiêu chí đang xét. **PASS_WITH_CONDITIONS** chỉ rõ điều kiện, owner và hạn kiểm lại. **CHANGES_REQUIRED** có sai lệch phải sửa. **BLOCKED** có dependency hoặc quyền cản trở phép kiểm. **NOT_VERIFIABLE** thiếu bằng chứng để kết luận. Với lịch sử, “PASS nội bộ” áp dụng cho phạm vi đã ghi; đọc nguyên nhân của “HOLD” để chọn sửa lỗi, gỡ blocker hoặc thu bằng chứng. Giữ nguyên verdict gốc. Ghi riêng từng quyết định cho internal merge, production và Commercial GA.
+
 13. **Phiên bản được review.** Head SHA, PR, link CI và SHA tích hợp. Khi đã merge, bổ sung merge SHA và CI trên main. Dẫn tới tệp bằng chứng nằm trong repository khi artifact CI có thời hạn.
 14. **Việc tiếp theo.** Xếp ưu tiên theo giá trị và dependency, nêu người phụ trách và bằng chứng hoàn thành.
 15. **Câu hỏi cho ChatGPT Independent Reviewer.** Chỉ ra giả định, phép thử đối chứng và bất đồng chưa giải quyết. Ghi lại phản hồi của Codex, bằng chứng và quyết định của đúng người có thẩm quyền.

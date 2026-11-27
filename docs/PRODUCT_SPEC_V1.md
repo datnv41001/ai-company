@@ -202,6 +202,8 @@ Agent không được dùng credential của Super Admin. Secrets ở server/vau
 
 ## 6. Hệ thống tích hợp thực tế — Connector Capability Contract
 
+<a id="p05-connector-reference"></a>
+
 **Từng kết nối bắt buộc khai báo**: `provider, supported_features, app_review_state, oauth_scopes, service_account_policy, per_account_owner, region, read/write modes, rate_limits, quota, expiry, refresh_flow, webhook_signature, idempotency_strategy, error_map, external_object_mapping, revocation, terms_version, health_test`.
 
 | Nhóm tích hợp | Ví dụ / mức hỗ trợ thiết kế |
@@ -267,6 +269,20 @@ OpenAPI v3.1, typed schemas, idempotency key on mutating requests, correlation/t
 **Event schema:** `event_id, schema_version, event_type, tenant_id, brand_id, aggregate_id, occurred_at, actor_id, origin, payload_redacted, correlation_id, causation_id, idempotency_key`; durable outbox -> queue; consumer dedup; no ambiguous "exactly once" promise for external side effects; verify remote state and reconcile.
 
 ## 10. Kiến trúc công nghệ đề xuất, cần ADR xác nhận
+
+### Bảy lớp nghiệp vụ và điểm kiểm trên cây main #63
+
+| Lớp | Điểm kiểm hiện hữu | Giới hạn của bằng chứng |
+|---|---|---|
+| SaaS Core | [FastAPI và UI tĩnh](../app/main.py), [SQLAlchemy](../app/database.py), [migrations](../migrations/) | SQLite cho dev, PostgreSQL cho kiểm quyền và khôi phục. |
+| Business Knowledge | [Kho tri thức](../app/knowledge_store.py), [projection theo phạm vi](../app/c3_projection.py) | Đọc revision được phép cho đúng workspace/brand. |
+| AI Workforce | [Registry adapters](../app/registry_adapters.py), [worker](../app/pool_worker.py) | Xem invocation và receipt trước khi ghi vai trò đã chạy. |
+| Marketing Operations | [Studio](../app/c3_studio.py), [bàn giao Research–Strategy](../app/research_strategy.py) | Xem workflow và đầu ra cụ thể trên SHA đã thử. |
+| Execution Gateway | [Gateway Workforce](../app/workforce_gateway.py), [thực thi sandbox](evaluation/sandbox-operations/README.md) | Adapter sandbox không cấp quyền ghi nền tảng thật. |
+| Business Outcomes | [Visit, submission và CRM](../app/campaign_operations_crm.py), [pilot](evaluation/round62/PILOT-DECISION.md) | Đối soát fixture chưa xác lập doanh thu thực tế. |
+| Continuous Learning | [Ma trận áp dụng kiến thức](research/APPLICABILITY_MATRIX.md), [nghiên cứu ghép cặp](evaluation/round63/PAIRED-STUDY.md) | Kết quả vẫn cần phản biện và quyết định áp dụng. |
+
+Stack đọc được từ checkout gồm Python/FastAPI, SQLAlchemy, PostgreSQL, SQLite dev, JavaScript tĩnh và điều phối workflow trong repo. Những lựa chọn công nghệ bên dưới là đề xuất theo đặc tả. Mọi quyết định thay stack cần ADR riêng. [Bản đồ ADR và mã](KNOWLEDGE_MAP.md)
 
 **UI:** React/Next.js + TypeScript, accessible design system, i18n, RBAC-aware UI nhưng quyền thực thi do backend quyết định.
 
@@ -344,6 +360,26 @@ Commercial legal package: Terms, Subscription Agreement, SOW template (nếu age
 
 ## 14. Engineering execution workstreams (KHÔNG phải các bản MVP)
 
+### Đối chiếu roadmap P00–P12
+
+Các mã sau đến từ bản continuity của dự án. Thứ tự là đề xuất lập kế hoạch. Mỗi dòng chỉ ra nơi lấy bằng chứng và việc cần quyết định khi muốn nâng mức.
+
+| Pha | Phạm vi | Mốc đối chiếu và phần cần chứng minh |
+|---|---|---|
+| P00 | Baseline và nghiệm thu | [HANDOFF](../HANDOFF.md) và biên nhận theo SHA; tái kiểm khi đổi cây. |
+| P01 | 37 hợp đồng vai trò | [Catalog](../catalog/agent_roles.json); mỗi vai trò cần receipt và nghiệm thu riêng. |
+| P02 | Chất lượng Research, Strategy, Content, SEO | [Nghiên cứu WF-03](evaluation/round63/README.md) và [capability register](evaluation/DEPARTMENT-CAPABILITY-REGISTER.md); kiểm chất lượng theo nhiệm vụ. |
+| P03 | Thu thập, chứng minh và dùng tri thức | [Projection](../app/c3_projection.py) và [sổ nguồn](research/SOURCE_REGISTRY.md); kiểm quyền và revision của nguồn. |
+| P04 | Content, Image, Design, Video | [Content Factory](evaluation/content-factory/README.md), [Workforce Video](evaluation/workforce-video/README.md); còn cần nghiệm thu đầu ra bởi practitioner. |
+| P05 | Đọc dữ liệu Marketing thật theo quyền | [Hợp đồng connector ở mục 6](#p05-connector-reference); cần chủ dữ liệu, phạm vi, môi trường và quyền cụ thể. |
+| P06 | Đối soát CRM, RFQ, Sales | [Hồ sơ RFQ](evaluation/round62/README.md); doanh thu/nghiệm thu thực tế cần dữ liệu được phép. |
+| P07 | Connector Execution Gateway | [Thực thi sandbox](evaluation/sandbox-operations/README.md); tác động thật cần duyệt theo adapter. |
+| P08 | Tự vận hành ngày, tuần, tháng | [Worker pool](POOL-RUNBOOK.md); lịch vận hành end-to-end đủ chu kỳ còn cần bằng chứng. |
+| P09 | Workflow/module còn lại | [Ma trận coverage](IMPLEMENTATION_STATUS.md); đối chiếu từng ID và dependency. |
+| P10 | SaaS, billing, thương mại | Ba sổ tài chính tại mục 11; kinh tế đơn vị và quyền thu phí còn cần nghiệm thu. |
+| P11 | Security, hạ tầng, giám sát, backup/recovery | [Security gates](SECURITY_AND_GA_BLOCKERS.md); dùng biên nhận restore và diễn tập môi trường đích. |
+| P12 | Nghiệm thu và phát hành toàn V1 | Mục 13 và [tình trạng giấy phép](../LICENSE-STATUS.md); quyết định release hiện ở [HANDOFF](../HANDOFF.md). |
+
 | Workstream | Công việc | Mối phụ thuộc | Sản phẩm cuối |
 |---|---|---|---|
 | WS-A | Domain & UX architecture | PRD, RACI, policies | schema, design system, user journeys |
@@ -392,6 +428,8 @@ Các nhánh công việc có thể triển khai song song; **một sản phẩm 
 - Community evidence (not representative): https://www.reddit.com/r/marketingagency/comments/1rwx8iv/marketing_agencies_whats_the_most_annoying_part/ , https://www.reddit.com/r/agency/comments/1tvdf0o/my_2_cents_on_where_a_system_makes_sense/
 
 ## 17. Decision Log
+
+Đọc mỗi mục theo nguồn, người có quyền, ngày, phạm vi và phiên bản. CONFIRMED = xác nhận được phát biểu hoặc quan sát; PROPOSED = có phương án, đang chờ quyết định; ACCEPTED = có người có thẩm quyền chấp thuận trong phạm vi ghi nhận; IMPLEMENTED = có hiện thực trên cây chỉ định; VERIFIED = có kiểm chứng gắn với cây và kết quả; SUPERSEDED = đã chỉ được quyết định hoặc phiên bản thay thế; UNKNOWN = thiếu căn cứ. Các nhãn mô tả loại bằng chứng, không tự chuyển tiếp. D-014 ghi hoạt động tại lúc biên soạn đặc tả ngày 23/11. Đối chiếu hiện trạng tại [HANDOFF](../HANDOFF.md) và thẩm quyền tại [AGENTS](../AGENTS.md).
 
 - **D-009 (23/11/2026):** Supersede prior split between generic AI Company vs marketing package. One product: AI Marketing Company; shared Agency and In-house operating modes.
 - **D-010 (23/11/2026):** Require one complete V1.0 GA release, not sequential marketing MVPs. Internal technical workstreams permissible; full feature coverage and QA required before claiming completion.

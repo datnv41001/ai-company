@@ -11,6 +11,8 @@ from uuid import uuid4
 import pytest
 
 from app import c3_assets, c3_skill_library, c3_studio, campaign_channels
+from app.knowledge_store import canonical, digest
+from app.revision_qa import content_digest
 from c3_fixtures import capture, withdraw
 from knowledge_fixtures import accepted
 from migrations.apply import publish_registry
@@ -100,16 +102,34 @@ def test_connected_distribution(pool, release):
     trace = accepted(api.get(trace_url, headers=owner["headers"]))
     raw = json.loads(trace["checkpoints"][-1]["output"]["text"])
     board_doc, original = doc_and_decision(lab, base, owner, rid)
+    def document_bytes():
+        documents = accepted(api.get(base + "/deliverables", headers=owner["headers"]))
+        doc = next(d for d in documents if d["id"] == trace["deliverable_id"])
+        return {"title": doc["title"], "preview": doc["content"]["client_preview"]}
+
+    first_document = document_bytes()
+    assert content_digest(**first_document) == original["expected_content_digest"]
     qa = reader(api, owner, "admin")
     terms = {k: v for k, v in original.items() if k.startswith("expected_")}
     edition = accepted(api.post(trace_url + "/storyboard-edition", headers=owner["headers"], json=terms | {"hook_variant": "audience"}))
     current = dict(expected_qa_revision=edition["revision"], expected_content_digest=edition["content_digest"])
     accepted(api.post(board_doc + "/submit", headers=owner["headers"]))
     accepted(api.post(board_doc + "/review", headers=qa["headers"], json=original | current))
+    signed_document = document_bytes()
+    assert content_digest(**signed_document) == current["expected_content_digest"]
     landing_path, landing, plan = approved_destination(lab, base, owner, buyer, prep, snap, qa)
     root = landing_path + "/storyboard-distributions"
     evidence = {"request_scope": "authenticated synthetic", "release": release, "states": states, "worker_journal": trace["journal"],
-                "raw_checkpoint": trace["checkpoints"][-1], "rejected": {}}
+                "raw_checkpoint": trace["checkpoints"][-1], "edition_receipt": edition["receipt"],
+                "task_intent": snap["projection"]["task_intent"], "rejected": {},
+                "qa_documents": {"raw": first_document, "approved": signed_document}}
+    if release == 2:
+        content = next(c for c in trace["checkpoints"] if c["skill"] == "content")
+        handoff = json.loads(content["output"]["sections"]["content_handoff"])
+        assert digest(canonical(handoff)) == content["output"]["text"] == raw["content_handoff_digest"]
+        assert raw["content_handoff_digest"] == edition["storyboard"]["content_handoff_digest"]
+        assert handoff["manifest"] == raw["source_refs"]["manifest"]
+        evidence["content_checkpoint"] = content
 
     def put(url, data, actor=owner):
         return api.post(url, headers=actor["headers"], json=data)
@@ -204,6 +224,8 @@ def test_connected_distribution(pool, release):
         dest.mkdir(parents=True, exist_ok=False)
         for name, data in files.items():
             (dest / name).write_bytes(data)
+        if release == 2:
+            (dest / "content-handoff.json").write_text(json.dumps(handoff, ensure_ascii=False, indent=2) + "\n", encoding="utf8", newline="\n")
         for name, item in (("receipt", evidence), ("worker-board", raw), ("approved-edition", edition["storyboard"])):
             (dest / (name + ".json")).write_text(json.dumps(item, ensure_ascii=False, indent=2) + "\n", encoding="utf8", newline="\n")
 

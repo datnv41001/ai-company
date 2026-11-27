@@ -1,5 +1,11 @@
 # Đối chiếu nghiên cứu với AMC
 
+| Vòng #63 · phương pháp | Mức áp dụng | Quyết định hoặc phép thử |
+|---|---|---|
+| Bắt đầu từ quyết định của người mua rồi phân biệt quan sát, diễn giải và hành động | Một phần. WF-03 @3 có hai checkpoint và manifest. Handoff ngoại tuyến đối chiếu đoạn nguồn với nhiệm vụ Content. | Đổi người ra quyết định hoặc tình huống mua của cùng sản phẩm, kiểm lại hướng viết và câu hỏi còn mở. [Rubric](../evaluation/round63/METHODS.md#acceptance) |
+| Tách nguồn trực tiếp, bối cảnh thị trường và bằng chứng sản phẩm | Một phần. Thông tin về đối tượng và quyền sử dụng đi theo từng nguồn trong bộ ca tổng hợp. | Một nhận xét từ nhóm khác có thể gợi giả thuyết. Để giao thông điệp cần nguồn đúng phân khúc và căn cứ cho từng claim. [Quyết định thiết kế](../evaluation/round63/METHODS.md#sources) |
+| Ước lượng thị phần, hiệu quả kênh hoặc doanh thu từ những quan sát chọn lọc | Không phù hợp với nguồn hiện tại. | Giữ khoảng trống chứng cứ và câu hỏi về cách đo. Nghiên cứu tiếp cần mẫu, mẫu số, thời gian và quyền sử dụng phù hợp. [Giới hạn](../evaluation/round63/METHODS.md#acceptance) |
+
 **Vòng #62 · áp dụng một phần.** Business Desk và intake đã cung cấp nền tảng cho việc truy nguồn. Tách điều kiện theo cutoff, xác nhận Sales và chứng từ thương mại là phạm vi prototype có giới hạn. Chín nhóm Marketing có người nhận, workflow, dependency và phép thử trước khi đưa cải tiến vào backlog. O-09 còn chờ đối chứng trên cohort được giữ kín. [Ma trận theo công việc và nguồn](../evaluation/round62/MARKET.md)
 
 | Kiến thức vòng #61 | Mức áp dụng hiện tại | Phép nghiệm thu tiếp |

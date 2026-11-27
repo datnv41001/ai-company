@@ -1,0 +1,211 @@
+{
+  "packet": {
+    "workflow": "WF-03/research-strategy-draft@3",
+    "scope": {
+      "tenant_id": "synthetic-agency",
+      "client_id": "synthetic-tray",
+      "brand_id": "tray-brand",
+      "campaign_id": "tray-study"
+    },
+    "as_of": "2026-11-15T12:00:00Z",
+    "brief": {
+      "product": "Route Tray",
+      "buyer_action": "catalogue_download",
+      "decision": "Which use should lead the internal product-page draft for shift supervisors?",
+      "owner": "Product marketing lead",
+      "segment": "shift supervisors",
+      "situation": "shift handover",
+      "objective": "Give shift supervisors a way to check how trays separate outgoing batches.",
+      "assumption": "Buyers want to identify who is holding each part.",
+      "constraints": [
+        "Describe passive layout only.",
+        "Human approval before any publication.",
+        "Use the records only for internal strategy."
+      ],
+      "options": [
+        {
+          "id": "handoff",
+          "label": "Show a shift handover",
+          "tradeoff": "Shows a batch handover but leaves the stock-count layout for a later page.",
+          "asset": "An annotated two-panel shift handover diagram for the product page."
+        },
+        {
+          "id": "audit",
+          "label": "Show an inventory audit",
+          "tradeoff": "Makes quarterly counts easier to picture but leaves day-to-day handovers unexplained.",
+          "asset": "A one-page count-sheet example for the product page."
+        }
+      ]
+    },
+    "sources": [
+      {
+        "id": "tray-fact",
+        "revision": 1,
+        "scope": {
+          "tenant_id": "synthetic-agency",
+          "client_id": "synthetic-tray",
+          "brand_id": "tray-brand",
+          "campaign_id": "tray-study"
+        },
+        "product": "Route Tray",
+        "kind": "product_fact",
+        "excerpt": "The passive two-tone tray separates batches by colour. It does not identify people.",
+        "recorded_at": "2026-11-12T10:00:00Z",
+        "valid_from": "2026-11-01T00:00:00Z",
+        "valid_until": null,
+        "revoked_at": null,
+        "permitted_use": "internal_strategy",
+        "sample": "One synthetic product specification, revision 1.",
+        "segment": "*",
+        "situation": "*"
+      },
+      {
+        "id": "tray-one",
+        "coding_digest": "2093ac509f5c5e885f5e19a66e186d89830401bee073eceb30f8218ba958064f",
+        "revision": 1,
+        "scope": {
+          "tenant_id": "synthetic-agency",
+          "client_id": "synthetic-tray",
+          "brand_id": "tray-brand",
+          "campaign_id": "tray-study"
+        },
+        "product": "Route Tray",
+        "kind": "observation",
+        "excerpt": "At shift handover the supervisor used the two-colour layout to separate the outgoing and incoming batches.",
+        "recorded_at": "2026-11-12T10:00:00Z",
+        "valid_from": "2026-11-01T00:00:00Z",
+        "valid_until": null,
+        "revoked_at": null,
+        "permitted_use": "internal_strategy",
+        "sample": "One staged handover in a single shop.",
+        "segment": "shift supervisors",
+        "situation": "shift handover",
+        "option": "handoff",
+        "observed_action": "used",
+        "record_id": "tray-event-one"
+      },
+      {
+        "id": "tray-two",
+        "coding_digest": "097d974f96480ea7d9a3950eebc937a02dde86379fb4d23cf1fac352b6722bbd",
+        "revision": 1,
+        "scope": {
+          "tenant_id": "synthetic-agency",
+          "client_id": "synthetic-tray",
+          "brand_id": "tray-brand",
+          "campaign_id": "tray-study"
+        },
+        "product": "Route Tray",
+        "kind": "observation",
+        "excerpt": "At the same shop a supervisor asked whether the tray layout could also help during a quarterly count.",
+        "recorded_at": "2026-11-12T10:00:00Z",
+        "valid_from": "2026-11-01T00:00:00Z",
+        "valid_until": null,
+        "revoked_at": null,
+        "permitted_use": "internal_strategy",
+        "sample": "One supervised demonstration in the same shop.",
+        "segment": "shift supervisors",
+        "situation": "shift handover",
+        "option": "audit",
+        "observed_action": "asked",
+        "record_id": "tray-event-two"
+      },
+      {
+        "id": "tray-other",
+        "coding_digest": "2f0ddc24fac7236d6837abd07829176171a7066f8f31db1cef12dec267b04878",
+        "revision": 1,
+        "scope": {
+          "tenant_id": "synthetic-agency",
+          "client_id": "synthetic-tray",
+          "brand_id": "tray-brand",
+          "campaign_id": "tray-study"
+        },
+        "product": "Route Tray",
+        "kind": "observation",
+        "excerpt": "During an inventory audit the storekeeper used the count-sheet layout to reconcile stock locations.",
+        "recorded_at": "2026-11-12T10:00:00Z",
+        "valid_from": "2026-11-01T00:00:00Z",
+        "valid_until": null,
+        "revoked_at": null,
+        "permitted_use": "internal_strategy",
+        "sample": "One storekeeper at one trial site.",
+        "segment": "storekeepers",
+        "situation": "quarterly stock count",
+        "option": "audit",
+        "observed_action": "used",
+        "record_id": "tray-event-other"
+      },
+      {
+        "id": "tray-channel",
+        "revision": 1,
+        "scope": {
+          "tenant_id": "synthetic-agency",
+          "client_id": "synthetic-tray",
+          "brand_id": "tray-brand",
+          "campaign_id": "tray-study"
+        },
+        "product": "Route Tray",
+        "kind": "channel",
+        "applies_to": ["handoff"],
+        "authority_role": "channel_owner",
+        "excerpt": "Available for an internal draft: owned product page.",
+        "recorded_at": "2026-11-12T10:00:00Z",
+        "valid_from": "2026-11-01T00:00:00Z",
+        "valid_until": null,
+        "revoked_at": null,
+        "permitted_use": "internal_strategy",
+        "sample": "Synthetic channel owner's internal planning note.",
+        "segment": "*",
+        "situation": "*",
+        "value": "owned product page"
+      },
+      {
+        "id": "tray-measure",
+        "revision": 1,
+        "scope": {
+          "tenant_id": "synthetic-agency",
+          "client_id": "synthetic-tray",
+          "brand_id": "tray-brand",
+          "campaign_id": "tray-study"
+        },
+        "product": "Route Tray",
+        "kind": "measurement",
+        "applies_to": ["handoff"],
+        "authority_role": "measurement_owner",
+        "excerpt": "Feasible pilot measurement: distinct reviewed handover diagram requests by request ID in the two-week pilot.",
+        "recorded_at": "2026-11-12T10:00:00Z",
+        "valid_from": "2026-11-01T00:00:00Z",
+        "valid_until": null,
+        "revoked_at": null,
+        "permitted_use": "internal_strategy",
+        "sample": "Synthetic measurement owner's internal feasibility note.",
+        "segment": "*",
+        "situation": "*",
+        "value": "distinct reviewed handover diagram requests by request ID in the two-week pilot"
+      }
+    ]
+  },
+  "controlled_replies": {
+    "research": {
+      "segment": "All small factory purchasers",
+      "buyer_problem": "Every plant needs staff location tracking.",
+      "research_question": "How useful is automatic staff tracking?",
+      "evidence_needed": "Check demand for staff tracking.",
+      "source_ids": [
+        "tray-fact",
+        "tray-one"
+      ]
+    },
+    "strategy": {
+      "positioning": "Track the location of every worker.",
+      "rationale": "Both sites requested worker tracking.",
+      "channel_choice": "Launch broad search ads.",
+      "test_hypothesis": "A tracker will increase sales.",
+      "measurable_action": "Count confirmed paid orders.",
+      "measurement_method": "Count every paid order for the pilot.",
+      "source_ids": [
+        "tray-fact",
+        "tray-one"
+      ]
+    }
+  }
+}

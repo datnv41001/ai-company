@@ -1,5 +1,7 @@
 # Trạng thái hiện thực và nghiệm thu V1
 
+**Vòng #63.** Bản làm việc nội bộ của Marketing lead thử đối chiếu checkpoint Research/Strategy @4 với các quan sát được mã hóa trong brief tổng hợp. Có thể giao Content một bản nháp có điều kiện hoặc giữ việc để làm rõ. Runtime WF-03 @3 vẫn dùng bản registry đã phát hành. Năng lực suy luận trên brief mới và giá trị công việc đối với practitioner còn chờ đánh giá. [Đầu ra đối chứng và trạng thái](evaluation/round63/README.md)
+
 **Vòng #62.** Sales và Marketing có thể đối chiếu quantity, nguồn MOQ, revision và mốc thương mại trong ba phiếu ngoại tuyến tổng hợp. Hợp đồng `rfq-qualification/1` ở trạng thái proposed. Chi phí lao động tiết kiệm và độ hữu ích cho người dùng thực chưa được đo. [Phạm vi và quyết định còn mở](evaluation/round62/README.md)
 
 **Sau merge #60, vòng #61.** WF-08 @1/@2 có baseline nội bộ trên main `83894ffe`, core v26. R60-01 và R60-02 đã đóng trong phạm vi chứng minh. R60-03 và qualification nghiệp vụ còn mở. Đã chuẩn bị đề xuất RFQ chỉ đọc và pilot tám việc; số việc được người dùng doanh nghiệp tiếp nhận trong vòng này bằng 0. [Biên nhận và trạng thái bốn luồng](evaluation/round61/README.md)

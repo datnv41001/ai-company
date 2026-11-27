@@ -1,0 +1,81 @@
+{
+  "checkout": "83894ffefa0dbc720ae3d887e2f90e53f4b23ae0",
+  "published_fixture": "tests/evaluation/department/task-handoff/offline-result.json",
+  "replay_matches_reference_json": true,
+  "fixture_traces": 12,
+  "guards": {
+    "foreign_policy": true,
+    "foreign_crm": true,
+    "foreign_message": true,
+    "stale_policy": true,
+    "unapproved_policy": true,
+    "expired_policy": true,
+    "missing_record_ref": true,
+    "well_shaped_false_ready": true,
+    "well_shaped_irrelevant_ask": true
+  },
+  "replay_sha256_windows": "79877b6db7ec614b9c3f5363b05203ea09ef88e6aea5f20442102092f5007db8",
+  "offline_model_calls": 0,
+  "wf08": {
+    "1": {
+      "manifest_digest": "4dd698583db731fc5e02dfba95eeb92c028466a885266b92a48367c8978ad40e",
+      "adapter_digest": "1cff466d97f960a7ca4c2eb2b5e6507e3d659412318ab50d1b0b7af9ac4a5ac9"
+    },
+    "2": {
+      "manifest_digest": "8751146323a37269206ce40d80465a29155edbad8fcf8b88673f12902fe6b524",
+      "adapter_digest": "5ad26a3fd5c2983051b0f600911a1292cdbf189124a1e2d80d646eae2a4bf348"
+    }
+  },
+  "cold_handoff": {
+    "archive_sha256": "c5c0eaaa772883016edb5b0c4de8dbad515bc1fc24e5a5ebe5b2d3c7b3eefc70",
+    "reader": "AI engineering handoff, fresh context; read-only pinned Git broker",
+    "operator": "Maintainer ran loopback app and selected tests in isolated Git archive on Windows, preinstalled Python dependencies",
+    "source_reads": [
+      "AGENTS.md",
+      "HANDOFF.md",
+      "README.md",
+      "app/storyboard_distribution.py",
+      "docs/ADR-001-OWN-SaaS-CORE.md",
+      "docs/CODEX_LOCAL_HANDOFF.md",
+      "docs/GITHUB_RESEARCH_AND_REUSE.md",
+      "docs/IMPLEMENTATION_STATUS.md",
+      "docs/KNOWLEDGE_MAP.md",
+      "docs/PRODUCT_MISSION.md",
+      "docs/PRODUCT_SPEC_V1.md",
+      "docs/SECURITY_AND_GA_BLOCKERS.md",
+      "docs/evaluation/connected-workforce/MEASUREMENT.md",
+      "docs/evaluation/connected-workforce/PRACTITIONER.md",
+      "docs/evaluation/connected-workforce/README.md",
+      "docs/evaluation/connected-workforce/SEMANTIC-REVIEW.md",
+      "tests/test_storyboard_runtime_compatibility.py",
+      "tests/test_storyboard_semantics.py"
+    ],
+    "startup": "python scripts/init_env.py; python -m uvicorn app.main:app --no-proxy-headers --host 127.0.0.1 --port <ephemeral>",
+    "health": {
+      "status": 200,
+      "body": {
+        "status": "ok",
+        "stage": "engineering_bootstrap",
+        "environment": "local",
+        "production_ready": false
+      }
+    },
+    "http": {
+      "/": 200,
+      "/docs": 200
+    },
+    "tests": [
+      "tests/test_storyboard_semantics.py",
+      "tests/test_storyboard_runtime_compatibility.py"
+    ],
+    "sqlite": "3 passed, 15 skipped in 2.71s",
+    "postgresql": {
+      "schema": 26,
+      "passed": 18,
+      "failed": 0,
+      "skipped": 0,
+      "duration_seconds": 109.513,
+      "junit_sha256": "e8f1c36c3bef45be24b0baa894030bbaaa460066b85a0c241ffa8ca49266084a"
+    }
+  }
+}

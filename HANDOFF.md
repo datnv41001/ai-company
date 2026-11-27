@@ -1,5 +1,9 @@
 # Bắt đầu ở đây khi tiếp quản AI Marketing Company
 
+## Công việc hiện hành sau nghiệm thu nội bộ #60
+
+Mốc mã sản phẩm là merge `83894ffefa0dbc720ae3d887e2f90e53f4b23ae0`. Kiểm parent, tree và CI ở [biên nhận main](docs/evaluation/round61/MAIN-60.json). Để tiếp quản vòng #61, đọc [quyết định cần Product Owner và Sales Ops duyệt](docs/evaluation/round61/README.md). Ưu tiên đề xuất là một phiếu đối soát RFQ chỉ đọc. Cả thiết kế cohort AI và readiness pilot đều đang ở bước chuẩn bị. Các mục cũ bên dưới mô tả trạng thái tại thời điểm từng vòng.
+
 ## PR #60 · phản biện về câu mở đầu
 
 Reviewer đã chấp nhận chuỗi hai run liên phòng ban trên `555b968c` và yêu cầu sửa ca câu mở đầu mời báo giá khi người học chỉ cần chọn buổi. Người tiếp quản bắt đầu từ [hồ sơ phản biện và cách tái hiện](docs/evaluation/connected-workforce/SEMANTIC-REVIEW.md). Khi đối chiếu bằng chứng, phân biệt checkpoint Content, bản người biên tập đã nộp và quyết định QA trên revision đó. Giữ PR ở trạng thái draft đến quyết định mới của Independent Reviewer.

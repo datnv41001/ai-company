@@ -1,5 +1,11 @@
 # Đối chiếu nghiên cứu với AMC
 
+| Kiến thức vòng #61 | Mức áp dụng hiện tại | Phép nghiệm thu tiếp |
+|---|---|---|
+| Handoff cần phân biệt hỏi khách và chuyển chủ chính sách | Một phần. C3 và lab O-09 có authority, fixture và scoring; chưa chứng minh trên cohort kín mới. | Đổi từng điều kiện nguồn, so với hai rule và chấm cả câu hỏi/đích bàn giao. [Workstream B](../evaluation/round61/INTELLIGENCE.md) |
+| Phân biệt đủ hồ sơ, Sales xác nhận và phát hành báo giá | Một phần. Funnel đọc trạng thái hiện tại; qualified RFQ có xác nhận, revision policy và cutoff còn là đề xuất. | Sales đối chiếu từ receipt của inquiry 1 hộp với MOQ 5 và ca bổ sung ở revision sau. [Workstream C](../evaluation/round61/MARKETING.md) |
+| Chấm bản đầu và chi phí trên việc được nhận | Đã có protocol và scorer. Chưa có quyết định từ người hành nghề cho tám việc đề xuất. | Ghi cả chi phí việc bị trả/mất mù và thời gian chờ; chỉ tính đơn giá khi có chi phí đầy đủ cùng mẫu số dương. [Workstream D](../evaluation/round61/PRACTITIONER.md) |
+
 | Bài học vòng R59 | Mức áp dụng | Phép nghiệm thu |
 | --- | --- | --- |
 | Feedback theo cảnh và revision, khóa biến của hook | Một phần, phạm vi storyboard tổng hợp | Hai bản có thể so đúng time, visual, offer, CTA, source và decision. |

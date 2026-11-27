@@ -1,0 +1,316 @@
+[
+  {
+    "variant": "head",
+    "actions_artifact": "https://github.com/datnv41001/ai-company/actions/runs/45940584846/artifacts/15172497070",
+    "native_v3": {
+      "path": "c3-internal-receipts/materials/result.json",
+      "sha256": "0ca9a0d9297f19e78fba7d14eec0277e37e2c2c62071073e29d0807939af3015",
+      "checkout": "365cdbbfb44f2360a91c9ea88e83040284bb60ac",
+      "provider": "llama.cpp loopback",
+      "model_sha256": "74a4da8c9fdbcd15bd1f6d01d621410d31c6fc00986f5eb687824e7b93d7a9db",
+      "case": "materials",
+      "workflow": "WF-03/research-strategy-draft@3",
+      "run_id": "a1a8a963-efaf-4403-9e81-4e6182963e9f",
+      "state": "awaiting_qa",
+      "journal": [
+        {
+          "skill": "director",
+          "attempt": 1,
+          "outcome": "ok",
+          "input_tokens": 575,
+          "output_tokens": 64
+        },
+        {
+          "skill": "research",
+          "attempt": 1,
+          "outcome": "ok",
+          "input_tokens": 873,
+          "output_tokens": 106
+        },
+        {
+          "skill": "strategy",
+          "attempt": 1,
+          "outcome": "ok",
+          "input_tokens": 1040,
+          "output_tokens": 169
+        }
+      ],
+      "runtime_s": 14.124,
+      "input_tokens": 2488,
+      "output_tokens": 339,
+      "unmetered_attempts": 0,
+      "provider_fee_usd": 0,
+      "first_pass_runtime": true,
+      "checkpoints": [
+        {
+          "schema": "c3_skills_director",
+          "request_sha256": "866d7508ca1595728cd37a699f35bbb52bb6feb2daa9bbf8f2e540406baf427f",
+          "raw_output": {
+            "primary_assignment": "Compare the approved facts with the buyer hypothesis.",
+            "secondary_assignment": "Design a bounded test of the positioning and define its metric."
+          }
+        },
+        {
+          "schema": "c3_skills_research",
+          "request_sha256": "66a1108b82f813dab5b275977135fd8ee9683afaba9ea17dffe77838ebf4e23a",
+          "raw_output": {
+            "segment": "Hà Nội",
+            "source_ids": [
+              "F1",
+              "F2"
+            ],
+            "buyer_problem": "Nhà thầu có thể ưu tiên tính nhanh số thùng và chi phí giao.",
+            "evidence_needed": "Nhà thầu có thể ưu tiên tính nhanh số thùng và chi phí giao.",
+            "research_question": "Nhà thầu có thể ưu tiên tính nhanh số thùng và chi phí giao?"
+          }
+        },
+        {
+          "schema": "c3_skills_strategy",
+          "request_sha256": "7b9a0f4d82d17b261b098618b59e1d20783d46291bc403e534a10232368e8174",
+          "raw_output": {
+            "rationale": "Nhà thầu có thể ưu tiên tính nhanh số thùng và chi phí giao.",
+            "source_ids": [
+              "F1",
+              "F2"
+            ],
+            "positioning": "Tăng khách hàng yêu cầu báo giá gạch ốp lát tại Hà Nội",
+            "channel_choice": "trang yêu cầu báo giá",
+            "test_hypothesis": "Nhà thầu có thể ưu tiên tính nhanh số thùng và chi phí giao.",
+            "measurable_action": "yêu cầu báo giá hợp lệ có diện tích và quận trong 30 ngày",
+            "measurement_method": "yêu cầu báo giá hợp lệ có diện tích và quận trong 30 ngày"
+          }
+        }
+      ],
+      "renderer_evidence": {
+        "status": "source_handles_only",
+        "facts": [
+          {
+            "handle": "F1",
+            "text": "Gạch GB-6060 đóng 1,44 m² mỗi thùng. Chỉ dòng nhám 60×60 cm."
+          },
+          {
+            "handle": "F2",
+            "text": "Giá tham khảo: 210.000 VND / 1 m², đã gồm thuế. Đơn tối thiểu: 50 m². Áp dụng từ 50 m². Số lượng đối chiếu: 50 m². Tại Hà Nội, chưa gồm vận chuyển và thi công."
+          }
+        ],
+        "suggested_handles": {
+          "research": [
+            "F1",
+            "F2"
+          ],
+          "strategy": [
+            "F1",
+            "F2"
+          ]
+        }
+      },
+      "measurement_plan": {
+        "selected_kpi": "yêu cầu báo giá hợp lệ có diện tích và quận trong 30 ngày · yêu cầu báo giá · 30 ngày · yêu cầu báo giá hợp lệ có diện tích và quận trong 30 ngày",
+        "measurable_action": "yêu cầu báo giá hợp lệ có diện tích và quận trong 30 ngày",
+        "measurement_method": "yêu cầu báo giá hợp lệ có diện tích và quận trong 30 ngày"
+      }
+    },
+    "legacy_smoke": {
+      "path": "research-strategy-measurements.json",
+      "sha256": "a5671f9e304979dc496507ec5208f77170108bd9e7fcf540e1bf8672188d08b0",
+      "usage": {
+        "state": "awaiting_qa",
+        "first_pass": 2,
+        "first_attempts": 3,
+        "attempts": 4,
+        "outcomes": {
+          "ok": 3,
+          "invalid_source": 1
+        },
+        "stage_attempts": [
+          {
+            "skill": "director",
+            "outcome": "ok",
+            "attempt": 1,
+            "input_tokens": 216,
+            "output_tokens": 56
+          },
+          {
+            "skill": "research",
+            "outcome": "ok",
+            "attempt": 1,
+            "input_tokens": 288,
+            "output_tokens": 77
+          },
+          {
+            "skill": "strategy",
+            "outcome": "invalid_source",
+            "attempt": 1,
+            "input_tokens": 415,
+            "output_tokens": 139
+          },
+          {
+            "skill": "strategy",
+            "outcome": "ok",
+            "attempt": 2,
+            "input_tokens": 431,
+            "output_tokens": 153
+          }
+        ],
+        "unconfirmed_usage": 0
+      }
+    }
+  },
+  {
+    "variant": "integration",
+    "actions_artifact": "https://github.com/datnv41001/ai-company/actions/runs/45940584846/artifacts/15173350825",
+    "native_v3": {
+      "path": "c3-internal-receipts/materials/result.json",
+      "sha256": "2513daae9cea0251d5e3620882dbd0a7ec3b9e94feaec0cdbf51e8b138e67754",
+      "checkout": "c09102ce344f31860a368ebd9186b7ecc4bb9a5e",
+      "provider": "llama.cpp loopback",
+      "model_sha256": "74a4da8c9fdbcd15bd1f6d01d621410d31c6fc00986f5eb687824e7b93d7a9db",
+      "case": "materials",
+      "workflow": "WF-03/research-strategy-draft@3",
+      "run_id": "47792acd-29fb-40ef-a459-dd8e06f0c1bd",
+      "state": "awaiting_qa",
+      "journal": [
+        {
+          "skill": "director",
+          "attempt": 1,
+          "outcome": "ok",
+          "input_tokens": 575,
+          "output_tokens": 64
+        },
+        {
+          "skill": "research",
+          "attempt": 1,
+          "outcome": "ok",
+          "input_tokens": 873,
+          "output_tokens": 101
+        },
+        {
+          "skill": "strategy",
+          "attempt": 1,
+          "outcome": "ok",
+          "input_tokens": 1033,
+          "output_tokens": 175
+        }
+      ],
+      "runtime_s": 21.454,
+      "input_tokens": 2481,
+      "output_tokens": 340,
+      "unmetered_attempts": 0,
+      "provider_fee_usd": 0,
+      "first_pass_runtime": true,
+      "checkpoints": [
+        {
+          "schema": "c3_skills_director",
+          "request_sha256": "866d7508ca1595728cd37a699f35bbb52bb6feb2daa9bbf8f2e540406baf427f",
+          "raw_output": {
+            "primary_assignment": "Compare the approved facts with the buyer hypothesis.",
+            "secondary_assignment": "Design a bounded test of the positioning and define its metric."
+          }
+        },
+        {
+          "schema": "c3_skills_research",
+          "request_sha256": "ccce8f72327ff3cd25c9a2e7a77af0342e602fd1a6a28917220acf301fba5d76",
+          "raw_output": {
+            "segment": "Hà Nội",
+            "source_ids": [
+              "F1",
+              "F2"
+            ],
+            "buyer_problem": "Nhà thầu có thể ưu tiên tính nhanh số thùng và chi phí giao.",
+            "evidence_needed": "Kiểm chứng nhu cầu với khách hàng trong thị trường đã chọn.",
+            "research_question": "Nhà thầu có thể ưu tiên tính nhanh số thùng và chi phí giao?"
+          }
+        },
+        {
+          "schema": "c3_skills_strategy",
+          "request_sha256": "a540ec31eca20a3fa00a4d887ea6a94c8cd6ba1a2aea86ffd0859c2a8c0e57bf",
+          "raw_output": {
+            "rationale": "Nhà thầu có thể ưu tiên tính nhanh số thùng và chi phí giao.",
+            "source_ids": [
+              "F1",
+              "F2"
+            ],
+            "positioning": "Tăng khách hàng yêu cầu báo giá gạch ốp lát tại Hà Nội",
+            "channel_choice": "trang yêu cầu báo giá",
+            "test_hypothesis": "Nhà thầu có thể ưu tiên tính nhanh số thùng và chi phí giao.",
+            "measurable_action": "giúp người mua thực hiện đúng bước tiếp theo trong phạm vi đã duyệt.",
+            "measurement_method": "giúp người mua thực hiện đúng bước tiếp theo trong phạm vi đã duyệt."
+          }
+        }
+      ],
+      "renderer_evidence": {
+        "status": "source_handles_only",
+        "facts": [
+          {
+            "handle": "F1",
+            "text": "Giá tham khảo: 210.000 VND / 1 m², đã gồm thuế. Đơn tối thiểu: 50 m². Áp dụng từ 50 m². Số lượng đối chiếu: 50 m². Tại Hà Nội, chưa gồm vận chuyển và thi công."
+          },
+          {
+            "handle": "F2",
+            "text": "Gạch GB-6060 đóng 1,44 m² mỗi thùng. Chỉ dòng nhám 60×60 cm."
+          }
+        ],
+        "suggested_handles": {
+          "research": [
+            "F1",
+            "F2"
+          ],
+          "strategy": [
+            "F1",
+            "F2"
+          ]
+        }
+      },
+      "measurement_plan": {
+        "selected_kpi": "yêu cầu báo giá hợp lệ có diện tích và quận trong 30 ngày · yêu cầu báo giá · 30 ngày · yêu cầu báo giá hợp lệ có diện tích và quận trong 30 ngày",
+        "measurable_action": "giúp người mua thực hiện đúng bước tiếp theo trong phạm vi đã duyệt.",
+        "measurement_method": "giúp người mua thực hiện đúng bước tiếp theo trong phạm vi đã duyệt."
+      }
+    },
+    "legacy_smoke": {
+      "path": "research-strategy-measurements.json",
+      "sha256": "f2078b5eb96a5be1faae643556f6e40297beec5cbf0b7c271a7156903b2eccf3",
+      "usage": {
+        "state": "awaiting_qa",
+        "first_pass": 2,
+        "first_attempts": 3,
+        "attempts": 4,
+        "outcomes": {
+          "ok": 3,
+          "invalid_source": 1
+        },
+        "stage_attempts": [
+          {
+            "skill": "director",
+            "outcome": "ok",
+            "attempt": 1,
+            "input_tokens": 216,
+            "output_tokens": 56
+          },
+          {
+            "skill": "research",
+            "outcome": "ok",
+            "attempt": 1,
+            "input_tokens": 288,
+            "output_tokens": 77
+          },
+          {
+            "skill": "strategy",
+            "outcome": "invalid_source",
+            "attempt": 1,
+            "input_tokens": 415,
+            "output_tokens": 139
+          },
+          {
+            "skill": "strategy",
+            "outcome": "ok",
+            "attempt": 2,
+            "input_tokens": 431,
+            "output_tokens": 153
+          }
+        ],
+        "unconfirmed_usage": 0
+      }
+    }
+  }
+]

@@ -1,5 +1,7 @@
 # Sổ năng lực phòng Marketing
 
+**Vòng #63 · Market Research → Strategy → Content.** Trên hai brief tổng hợp, công cụ ngoại tuyến thử truy từ một hướng thông điệp về quan sát, tình huống mua, quyền dùng nguồn và dữ kiện sản phẩm. Người giao brief vẫn phải đề xuất phương án, mã hóa quan sát, rà soát câu chữ và duyệt. Chưa đo công tiết kiệm hoặc kết quả thị trường. [Ca đối chứng](round63/README.md) · [Tiêu chí người nhận](round63/METHODS.md)
+
 **Vòng #62.** Analytics và Sales có phiếu chỉ đọc theo thời điểm ghi nhận. Marketing có thể tra nguồn và lập giả thuyết về MOQ. Năng lực xác nhận qualification bởi Sales, số đơn thực tế và doanh thu thực tế vẫn cần bằng chứng nghiệp vụ. [Ca thử và giới hạn](round62/README.md)
 
 **Vòng #61.** Ma trận chín nhóm nêu đầu ra cần bàn giao, dependency đã có, quyền dữ liệu, khoảng trống, ước lượng công và phép nghiệm thu. Analytics/Sales là ứng viên ưu tiên vì intake hiện đọc được nhưng trạng thái đủ điều kiện theo thời điểm còn cần đối soát. Chưa nâng cấp mức nghiệm thu của role hoặc workflow từ đề xuất này. [Ma trận năng lực và hợp đồng RFQ](round61/MARKETING.md)

@@ -1,5 +1,9 @@
 # Bắt đầu ở đây khi tiếp quản AI Marketing Company
 
+## Vòng #63 · Research giao phương án để Strategy và Content dùng
+
+PR #62 đã merge nội bộ tại `6a11bf4d`. Để tái lập nghiên cứu #63 sau khi cài dependency phát triển, chạy từ gốc repository `python -m scripts.strategy_study --output study-review` với một thư mục đích mới. Đọc `study-review/index.json`, sau đó mở cặp `before.json` và `after.json` của cùng brief. Phép thử dùng decoder cố định, không cần model hoặc tài khoản khách. [Phạm vi, dữ liệu, giới hạn và cách phản biện](docs/evaluation/round63/README.md)
+
 ## Vòng #62 · Sales đối chiếu yêu cầu báo giá
 
 Từ main `2daa715d`, dùng Python trong môi trường phát triển để chạy `python -m scripts.rfq_card --output rfq-review`. Mở ba tệp HTML để đọc ca Khe Gọn và hai revision của một inquiry tổng hợp riêng. Mỗi bản có JSON đi kèm. [Hồ sơ nghiệm thu, lệnh kiểm thử và quyền đọc](docs/evaluation/round62/README.md)

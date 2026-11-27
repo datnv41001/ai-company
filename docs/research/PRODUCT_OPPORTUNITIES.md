@@ -1,5 +1,7 @@
 # Cơ hội sản phẩm từ nghiên cứu
 
+**AMC-R62-01 · P3, mở trước khi mở rộng exporter.** Hai fixture đã duyệt dùng [renderer RFQ](../../scripts/rfq_card.py) với lựa chọn lời hướng dẫn riêng và [projection](../../scripts/rfq_evidence.py) có `_action`. Khi Sales Operations cần một loại hồ sơ khác, chủ exporter phải lấy hành động và vai trò từ cùng kết luận rồi so HTML/JSON với receipt ở các ca consent mất hiệu lực, policy bị thu hồi, inquiry bị hủy hoặc từ chối. Phạm vi hiện tại là hai fixture ngoại tuyến. Quyết định mở đường đọc lịch sử cần authority contract riêng.
+
 **Cơ hội cho người dựng và Marketing lead.** Đo số phút từ khi nhận tờ dựng đến khi người dựng đủ dữ kiện làm tiếp, số vòng trả lại và lỗi brand/offer còn sót. Phụ thuộc source đủ quyền, revision, reviewer độc lập và người nhận thật. Nghiệm thu kỹ thuật theo đúng brief và digest; giá trị kinh tế được nghiệm thu riêng qua [nhiệm vụ pilot](../evaluation/connected-workforce/PRACTITIONER.md).
 
 C2 là luồng đang cho người dùng thử. C3 là luồng áp dụng tiếp theo. Danh sách này cung cấp đầu vào cho quyết định roadmap; chỉ PR triển khai cùng bằng chứng mới thay đổi trạng thái sản phẩm. Trạng thái hiện tại của từng phương pháp được ghi trong [ma trận](APPLICABILITY_MATRIX.md).
@@ -105,6 +107,10 @@ Khi lấy một mục vào sprint, chủ module ghi rõ base SHA, tiêu chí b�
 <a id="o-09"></a>
 
 ## O-09 · Làm rõ yêu cầu ngay trước khi bàn giao Sales hoặc Service
+
+**AMC-R62-02 · P3, mở trước khi niêm phong.** Ba nhánh đã chọn đều tất định. Custodian và người kiểm thứ hai dùng fixture công khai để lập bảng đối chiếu từng dữ kiện quan sát được qua ba view, gồm nguồn, scope, revision, thời điểm, giá trị còn thiếu, lời khách và thứ tự sự kiện. Ghi rõ ô bị mất khi chiếu sang hợp đồng cũ, kiểm cả dữ kiện giúp chọn và dữ kiện phản bác. Dữ kiện mà một nhánh không thể thấy phải được giải quyết hoặc ghi thành giới hạn của đối chứng trước khi đóng băng. Kiểm giá trị dẫn xuất để tách nhãn, tên nhánh và đáp án khỏi input. Phép so mặc định là end-to-end. Muốn quy tác động riêng cho thuật toán cần giữ projection và thông tin đầu vào cố định cho đối chứng thành phần.
+
+**Bàn giao thực tế.** PO chỉ định custodian, người giữ digest độc lập và vault nằm ngoài quyền quản trị của developer. Custodian dùng mẫu trắng hiện có, thử quyền bằng tệp canary vô hại cho từng vai trò, phục hồi thử bản backup và lưu kết quả. Người giữ digest ký nhận cam kết trước khi phát inputs. Chấm đủ 72 vị trí của 3 nhánh trên cùng 12 họ VI/EN, kể cả lỗi hoặc không trả lời. Đến 27/11/2026 chưa có custodian/vault, 0 thẻ holdout đã chạy. [Gói custodian theo commit](https://github.com/datnv41001/ai-company/blob/ff842385fdef3b21007a9d4ed51d368de5ed0620/docs/evaluation/round62-verification/custodian-handoff.zip?raw=1) · [Giao thức và ngưỡng chấm](../evaluation/round62/BENCHMARK.md)
 
 **Quyết định.** Ưu tiên đúng một câu hỏi nghiên cứu cho WF-14/WF-20. Khi nào hồ sơ đủ chuyển tiếp và khi nào tư vấn viên phải hỏi lại hoặc xin người có thẩm quyền? Chủ lợi ích là người nhận công việc và khách đang chờ được tư vấn. Người duyệt pilot là chủ quy trình Sales/Service. Tần suất lỗi, mức sẵn lòng trả, công lao động và giá trị mỗi lead trong doanh nghiệp vẫn chưa đo. [Nguồn và tình huống](KNOWLEDGE_CARDS.md#k-12) · [Ma trận vai trò](APPLICABILITY_MATRIX.md#nine-jobs)
 

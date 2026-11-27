@@ -1,0 +1,355 @@
+{
+  "reviewer_session": "AMC-AI-RS-01-BLIND-REVIEW-20261127-01",
+  "score_commit": "2dca5fcc0470bd25ed9e17d581df34d3ea5ee400",
+  "score_sha256": "da97785dc1bc9850021b35c9ea101267db7c8c53c6cf4276cced66517da54bec",
+  "experiment_checkout": "47b7b9633e44e5d25162fa560b366ab8cfaaeb72",
+  "mapping_commitment": "2c84174c06f805b4823a40e5adadcc4293d77295c3d954c0fe849cf30dba6b6a",
+  "telemetry": {
+    "calls": 24,
+    "incomplete_chains": 0,
+    "retries": 0,
+    "input_range": [
+      362,
+      794
+    ],
+    "output_range": [
+      57,
+      179
+    ],
+    "input_tokens": 13627,
+    "output_tokens": 2518,
+    "last_response_seconds": 127.98500000000058,
+    "wall_seconds": 128.031,
+    "provider_fee_usd": 0,
+    "hardware_energy_editor_cost": null,
+    "model_sha256": "74a4da8c9fdbcd15bd1f6d01d621410d31c6fc00986f5eb687824e7b93d7a9db",
+    "temperature": 0,
+    "seed": 42
+  },
+  "pairs": [
+    {
+      "case": "tile",
+      "labels": {
+        "Left": "A",
+        "Right": "B"
+      },
+      "arms": {
+        "A": {
+          "score": 6,
+          "edits": 6,
+          "unsupported_entries": 1,
+          "dossiers_with_unsupported": 1,
+          "criteria": {
+            "segment_decision_maker": 2,
+            "facts_observations_hypotheses": 1,
+            "research_evidence": 0,
+            "positioning_rationale_action": 1,
+            "action_measurement": 1,
+            "cross_stage_brief_consistency": 1
+          },
+          "edited_fields": [
+            "research.research_question",
+            "research.evidence_needed",
+            "research.buyer_problem",
+            "strategy.positioning",
+            "strategy.rationale",
+            "strategy.measurement_method"
+          ],
+          "hard_failures": {
+            "contradicted_source": false,
+            "unauthorized_action": false,
+            "altered_terms": false,
+            "lost_constraint": true
+          }
+        },
+        "B": {
+          "score": 5,
+          "edits": 6,
+          "unsupported_entries": 1,
+          "dossiers_with_unsupported": 1,
+          "criteria": {
+            "segment_decision_maker": 2,
+            "facts_observations_hypotheses": 0,
+            "research_evidence": 0,
+            "positioning_rationale_action": 1,
+            "action_measurement": 1,
+            "cross_stage_brief_consistency": 1
+          },
+          "edited_fields": [
+            "research.research_question",
+            "research.evidence_needed",
+            "research.buyer_problem",
+            "strategy.positioning",
+            "strategy.rationale",
+            "strategy.measurement_method"
+          ],
+          "hard_failures": {
+            "contradicted_source": false,
+            "unauthorized_action": false,
+            "altered_terms": true,
+            "lost_constraint": true
+          }
+        }
+      }
+    },
+    {
+      "case": "delivery",
+      "labels": {
+        "Left": "A",
+        "Right": "B"
+      },
+      "arms": {
+        "A": {
+          "score": 4,
+          "edits": 6,
+          "unsupported_entries": 1,
+          "dossiers_with_unsupported": 1,
+          "criteria": {
+            "segment_decision_maker": 2,
+            "facts_observations_hypotheses": 0,
+            "research_evidence": 1,
+            "positioning_rationale_action": 0,
+            "action_measurement": 1,
+            "cross_stage_brief_consistency": 0
+          },
+          "edited_fields": [
+            "research.research_question",
+            "research.evidence_needed",
+            "research.buyer_problem",
+            "strategy.positioning",
+            "strategy.rationale",
+            "strategy.measurement_method"
+          ],
+          "hard_failures": {
+            "contradicted_source": false,
+            "unauthorized_action": false,
+            "altered_terms": true,
+            "lost_constraint": true
+          }
+        },
+        "B": {
+          "score": 7,
+          "edits": 4,
+          "unsupported_entries": 0,
+          "dossiers_with_unsupported": 0,
+          "criteria": {
+            "segment_decision_maker": 2,
+            "facts_observations_hypotheses": 1,
+            "research_evidence": 1,
+            "positioning_rationale_action": 1,
+            "action_measurement": 1,
+            "cross_stage_brief_consistency": 1
+          },
+          "edited_fields": [
+            "research.research_question",
+            "research.evidence_needed",
+            "strategy.positioning",
+            "strategy.measurement_method"
+          ],
+          "hard_failures": {
+            "contradicted_source": false,
+            "unauthorized_action": false,
+            "altered_terms": false,
+            "lost_constraint": true
+          }
+        }
+      }
+    },
+    {
+      "case": "counter",
+      "labels": {
+        "Left": "A",
+        "Right": "B"
+      },
+      "arms": {
+        "A": {
+          "score": 3,
+          "edits": 7,
+          "unsupported_entries": 2,
+          "dossiers_with_unsupported": 1,
+          "criteria": {
+            "segment_decision_maker": 0,
+            "facts_observations_hypotheses": 1,
+            "research_evidence": 0,
+            "positioning_rationale_action": 1,
+            "action_measurement": 1,
+            "cross_stage_brief_consistency": 0
+          },
+          "edited_fields": [
+            "research.research_question",
+            "research.evidence_needed",
+            "research.segment",
+            "research.buyer_problem",
+            "strategy.positioning",
+            "strategy.rationale",
+            "strategy.measurement_method"
+          ],
+          "hard_failures": {
+            "contradicted_source": false,
+            "unauthorized_action": false,
+            "altered_terms": false,
+            "lost_constraint": true
+          }
+        },
+        "B": {
+          "score": 6,
+          "edits": 7,
+          "unsupported_entries": 1,
+          "dossiers_with_unsupported": 1,
+          "criteria": {
+            "segment_decision_maker": 2,
+            "facts_observations_hypotheses": 1,
+            "research_evidence": 0,
+            "positioning_rationale_action": 1,
+            "action_measurement": 1,
+            "cross_stage_brief_consistency": 1
+          },
+          "edited_fields": [
+            "research.research_question",
+            "research.evidence_needed",
+            "research.buyer_problem",
+            "strategy.positioning",
+            "strategy.rationale",
+            "strategy.test_hypothesis",
+            "strategy.measurement_method"
+          ],
+          "hard_failures": {
+            "contradicted_source": false,
+            "unauthorized_action": false,
+            "altered_terms": false,
+            "lost_constraint": true
+          }
+        }
+      }
+    },
+    {
+      "case": "check",
+      "labels": {
+        "Left": "A",
+        "Right": "B"
+      },
+      "arms": {
+        "A": {
+          "score": 4,
+          "edits": 6,
+          "unsupported_entries": 1,
+          "dossiers_with_unsupported": 1,
+          "criteria": {
+            "segment_decision_maker": 0,
+            "facts_observations_hypotheses": 1,
+            "research_evidence": 0,
+            "positioning_rationale_action": 1,
+            "action_measurement": 1,
+            "cross_stage_brief_consistency": 1
+          },
+          "edited_fields": [
+            "research.research_question",
+            "research.evidence_needed",
+            "research.segment",
+            "strategy.positioning",
+            "strategy.rationale",
+            "strategy.measurement_method"
+          ],
+          "hard_failures": {
+            "contradicted_source": false,
+            "unauthorized_action": false,
+            "altered_terms": false,
+            "lost_constraint": true
+          }
+        },
+        "B": {
+          "score": 6,
+          "edits": 6,
+          "unsupported_entries": 1,
+          "dossiers_with_unsupported": 1,
+          "criteria": {
+            "segment_decision_maker": 2,
+            "facts_observations_hypotheses": 1,
+            "research_evidence": 0,
+            "positioning_rationale_action": 1,
+            "action_measurement": 1,
+            "cross_stage_brief_consistency": 1
+          },
+          "edited_fields": [
+            "research.research_question",
+            "research.evidence_needed",
+            "research.buyer_problem",
+            "strategy.positioning",
+            "strategy.rationale",
+            "strategy.measurement_method"
+          ],
+          "hard_failures": {
+            "contradicted_source": false,
+            "unauthorized_action": false,
+            "altered_terms": false,
+            "lost_constraint": true
+          }
+        }
+      }
+    }
+  ],
+  "arm_totals": {
+    "A": {
+      "score": 17,
+      "edits": 25,
+      "unsupported_entries": 5,
+      "dossiers_with_unsupported": 4
+    },
+    "B": {
+      "score": 24,
+      "edits": 23,
+      "unsupported_entries": 3,
+      "dossiers_with_unsupported": 3
+    }
+  },
+  "criterion_totals": {
+    "A": {
+      "segment_decision_maker": 4,
+      "facts_observations_hypotheses": 3,
+      "research_evidence": 1,
+      "positioning_rationale_action": 3,
+      "action_measurement": 4,
+      "cross_stage_brief_consistency": 2
+    },
+    "B": {
+      "segment_decision_maker": 8,
+      "facts_observations_hypotheses": 3,
+      "research_evidence": 1,
+      "positioning_rationale_action": 4,
+      "action_measurement": 4,
+      "cross_stage_brief_consistency": 4
+    }
+  },
+  "hard_failure_dossier_counts": {
+    "A": {
+      "contradicted_source": 0,
+      "unauthorized_action": 0,
+      "altered_terms": 1,
+      "lost_constraint": 4
+    },
+    "B": {
+      "contradicted_source": 0,
+      "unauthorized_action": 0,
+      "altered_terms": 1,
+      "lost_constraint": 4
+    }
+  },
+  "B_vs_A": {
+    "meaningful_edits": {
+      "wins": 1,
+      "ties": 3,
+      "losses": 0
+    },
+    "rubric_score": {
+      "wins": 3,
+      "ties": 0,
+      "losses": 1
+    }
+  },
+  "gates": {
+    "fewer_edits_in_three_pairs": false,
+    "no_increase_in_contradicted_claim_flags": true,
+    "no_lost_constraint_in_B": false
+  },
+  "threshold_met": false
+}

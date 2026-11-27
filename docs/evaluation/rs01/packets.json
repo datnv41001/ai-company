@@ -1,0 +1,206 @@
+[
+  {
+    "id": "tile",
+    "projection": {
+      "brand": "Kiln Row",
+      "product": "Floor tile K18",
+      "region": "Hanoi",
+      "audience": "Contractor estimators preparing a tender for a clinic",
+      "locale": "en",
+      "channel": "product enquiry page",
+      "objective": "Request a project quantity quote",
+      "kpi": "qualified quantity request",
+      "facts": [
+        {
+          "id": "S1",
+          "wording": "A carton covers 1.44 square metres; the tender sheet lists 86 square metres before waste.",
+          "qualifiers": [
+            "Whole cartons only. Waste allowance needs estimator approval. Freight is quoted separately."
+          ]
+        },
+        {
+          "id": "S2",
+          "wording": "Two of five synthetic tender worksheets list area but omit an allowance.",
+          "qualifiers": [
+            "Synthetic convenience sample; no population estimate."
+          ]
+        }
+      ],
+      "hypotheses": [
+        "Estimators may delay the request when they cannot distinguish coverage from an allowance."
+      ],
+      "task_intent": {
+        "product": "Floor tile K18",
+        "audience": "Contractor estimators preparing a tender for a clinic",
+        "region": "Hanoi",
+        "locale": "en",
+        "channel": "product enquiry page",
+        "buyer_action": "Request a project quantity quote",
+        "editorial_style": "plain language",
+        "requirements": [
+          "Whole cartons only. Waste allowance needs estimator approval. Freight is quoted separately."
+        ]
+      },
+      "measurement_contract": {
+        "event": "qualified quantity request",
+        "unit": "unique eligible request",
+        "window": "14 days",
+        "deduplication": "one per request ID",
+        "eligibility": "includes the item and the buyer's requested next step"
+      }
+    }
+  },
+  {
+    "id": "delivery",
+    "projection": {
+      "brand": "Bay Nine",
+      "product": "Modular storage rack R7",
+      "region": "Hai Phong",
+      "audience": "Warehouse buyers arranging delivery to a site with a loading window",
+      "locale": "en",
+      "channel": "product enquiry page",
+      "objective": "Submit a delivery-window RFQ",
+      "kpi": "qualified delivery RFQ",
+      "facts": [
+        {
+          "id": "S1",
+          "wording": "The rack is delivered flat packed. The quote form accepts a site window and access note.",
+          "qualifiers": [
+            "Carrier availability requires written confirmation; unloading is excluded."
+          ]
+        },
+        {
+          "id": "S2",
+          "wording": "Three of six synthetic RFQs requested arrival before noon; none recorded carrier acceptance.",
+          "qualifiers": [
+            "Synthetic convenience sample; no population estimate."
+          ]
+        }
+      ],
+      "hypotheses": [
+        "A buyer may need to clarify access before asking the supplier for a slot."
+      ],
+      "task_intent": {
+        "product": "Modular storage rack R7",
+        "audience": "Warehouse buyers arranging delivery to a site with a loading window",
+        "region": "Hai Phong",
+        "locale": "en",
+        "channel": "product enquiry page",
+        "buyer_action": "Submit a delivery-window RFQ",
+        "editorial_style": "plain language",
+        "requirements": [
+          "Carrier availability requires written confirmation; unloading is excluded."
+        ]
+      },
+      "measurement_contract": {
+        "event": "qualified delivery RFQ",
+        "unit": "unique eligible request",
+        "window": "10 days",
+        "deduplication": "one per request ID",
+        "eligibility": "includes the item and the buyer's requested next step"
+      }
+    }
+  },
+  {
+    "id": "counter",
+    "projection": {
+      "brand": "Counter Leaf",
+      "product": "Countertop label printer L2",
+      "region": "Da Nang",
+      "audience": "Shop supervisors choosing a printer for relabelling returns at a shared counter",
+      "locale": "en",
+      "channel": "product enquiry page",
+      "objective": "Request a label demonstration",
+      "kpi": "confirmed demonstration request",
+      "facts": [
+        {
+          "id": "S1",
+          "wording": "The device prints a sample from a supplied text file. A sample roll is available at the counter.",
+          "qualifiers": [
+            "Demonstration by appointment. No throughput or compatibility guarantee."
+          ]
+        },
+        {
+          "id": "S2",
+          "wording": "Two of four synthetic demo notes mention switching label formats during a shift.",
+          "qualifiers": [
+            "Synthetic convenience sample; no population estimate."
+          ]
+        }
+      ],
+      "hypotheses": [
+        "A supervisor may want to compare sample readability during handover."
+      ],
+      "task_intent": {
+        "product": "Countertop label printer L2",
+        "audience": "Shop supervisors choosing a printer for relabelling returns at a shared counter",
+        "region": "Da Nang",
+        "locale": "en",
+        "channel": "product enquiry page",
+        "buyer_action": "Request a label demonstration",
+        "editorial_style": "plain language",
+        "requirements": [
+          "Demonstration by appointment. No throughput or compatibility guarantee."
+        ]
+      },
+      "measurement_contract": {
+        "event": "confirmed demonstration request",
+        "unit": "unique eligible request",
+        "window": "7 days",
+        "deduplication": "one per request ID",
+        "eligibility": "includes the item and the buyer's requested next step"
+      }
+    }
+  },
+  {
+    "id": "check",
+    "projection": {
+      "brand": "Desk Reed",
+      "product": "Compact barcode reader C4",
+      "region": "Can Tho",
+      "audience": "Retail purchasing leads comparing readers for receiving stock at the service counter",
+      "locale": "en",
+      "channel": "product enquiry page",
+      "objective": "Request a side-by-side counter trial",
+      "kpi": "confirmed comparison request",
+      "facts": [
+        {
+          "id": "S1",
+          "wording": "The counter kit includes a reader and a printed sample card. Trials use the shop's sample labels.",
+          "qualifiers": [
+            "Host connection must be checked at the trial. No claim about scan speed or error reduction."
+          ]
+        },
+        {
+          "id": "S2",
+          "wording": "In three synthetic enquiry notes, two buyers asked whether a damaged label could be included.",
+          "qualifiers": [
+            "Synthetic convenience sample; no population estimate."
+          ]
+        }
+      ],
+      "hypotheses": [
+        "Purchasing leads may need a repeatable comparison before requesting a trial."
+      ],
+      "task_intent": {
+        "product": "Compact barcode reader C4",
+        "audience": "Retail purchasing leads comparing readers for receiving stock at the service counter",
+        "region": "Can Tho",
+        "locale": "en",
+        "channel": "product enquiry page",
+        "buyer_action": "Request a side-by-side counter trial",
+        "editorial_style": "plain language",
+        "requirements": [
+          "Host connection must be checked at the trial. No claim about scan speed or error reduction."
+        ]
+      },
+      "measurement_contract": {
+        "event": "confirmed comparison request",
+        "unit": "unique eligible request",
+        "window": "21 days",
+        "deduplication": "one per request ID",
+        "eligibility": "includes the item and the buyer's requested next step"
+      }
+    }
+  }
+]

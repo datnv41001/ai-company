@@ -115,3 +115,7 @@ Chỉ diễn giải và dẫn liên kết đến nguyên bản. Phạm vi sử d
 ## Vòng #64 · Kiểm nhận định và quyền sửa bản giao
 
 Gao và cộng sự, EMNLP 2023, đóng góp hai câu hỏi cho QA: câu có được các đoạn dẫn hỗ trợ đầy đủ và từng trích dẫn có liên quan không. Microsoft Learn hướng dẫn người dùng thấy, sửa và kiểm lại đầu ra của agent. Mẫu Message House của GitLab đã đăng ký ở #63 được dùng lại cho phân khúc và proof point. [Nguồn gốc, phạm vi đọc và cách áp dụng](../evaluation/round64/METHODS.md)
+
+## AMC-AI-RS-01 · Chấm bản nháp theo cặp
+
+Phương pháp chấm Research/Strategy ở vòng tiếp theo dùng câu hỏi cụ thể theo field, chấm mù theo cặp và tách đánh giá AI khỏi nghiệm thu practitioner. Ba nguồn là abstract công khai của các bài ACL Anthology, đọc ngày 27/11/2026. [Thiết kế đã khóa, nguồn và giới hạn AMC-AI-RS-01](../evaluation/rs01/PROTOCOL.md)

@@ -47,6 +47,9 @@ def test_staff_read_checked_content_handoff(pool, tmp_path):
                     expect(page.locator("#workspace")).to_be_visible()
                     page.evaluate("location.hash='/workforce'")
                     panel = page.locator("#workforce-panel")
+                    shell = panel.locator(":scope > details")
+                    if not shell.evaluate("element => element.open"):
+                        shell.locator(":scope > summary").press("Enter")
                     header = panel.get_by_role("heading", name=case["product"] + " · ", exact=False)
                     row = header.locator("..")
                     started = monotonic()
@@ -77,7 +80,7 @@ def test_staff_read_checked_content_handoff(pool, tmp_path):
                         assert not audit["failed"], audit
                         audits.append(audit)
                     editor = row.locator("[data-board-editor]")
-                    editor.locator("summary").press("Enter")
+                    editor.locator(":scope > summary").press("Enter")
                     selector = editor.locator("[name=mode]")
                     selector.select_option("controlled_hook")
                     hook = "direct" if width == 820 else "style_alternate"
@@ -95,10 +98,35 @@ def test_staff_read_checked_content_handoff(pool, tmp_path):
                                          scroll_width=page.evaluate("document.documentElement.scrollWidth"), contrast=audits,
                                          themes=["light","dark"], keyboard="Enter opens report, toggles evidence and saves a hook edit",
                                          edited_revision=edited["revision"], edited_digest=edited["content_digest"]))
+                    if width == 390:
+                        stale = check_stale_edition(page, editor, pool, owner, url, edited, folder)
                 finally:
                     page.close()
         finally:
             browser.close()
     receipt = dict(run_id=queued["id"], document_id=report["deliverable_id"], manifest_digest=snap["digest"],
-                   content_digest=output["handoff_digest"], browser=browser.version, sessions=sessions)
+                   content_digest=output["handoff_digest"], browser=browser.version, sessions=sessions, stale=stale)
     (folder / "browser-receipt.json").write_text(json.dumps(receipt, ensure_ascii=False, indent=2) + "\n", encoding="utf8", newline="\n")
+
+
+def check_stale_edition(page, editor, pool, owner, url, viewed, folder):
+    path = url + "/storyboard-edition"
+    current_note = "Đã xác minh điều kiện ở thẻ giá."
+    latest = pool.api.post(path, headers=owner["headers"], json={
+        "expected_qa_revision": viewed["revision"], "expected_content_digest": viewed["content_digest"],
+        "mode": "editorial", "editor_note": current_note,
+    })
+    assert latest.status_code == 200, latest.text
+    latest = latest.json()
+    editor.locator("[name=editor_note]").fill("Ghi chú từ bản cũ.")
+    with page.expect_response(lambda r: r.request.method == "POST" and r.url.endswith(path)) as response:
+        editor.locator("[data-board-save]").press("Enter")
+    assert response.value.status == 412
+    expect(editor.get_by_role("status")).to_contain_text("Đã tải lại bản hiện hành")
+    expect(editor.locator("[name=editor_note]")).to_have_value(current_note)
+    current = pool.api.get(path, headers=owner["headers"]).json()
+    assert (current["revision"], current["content_digest"]) == (latest["revision"], latest["content_digest"])
+    editor.evaluate("e=>e.scrollIntoView({block:'start'})")
+    capture_themes(page, folder / "storyboard-stale-390.png")
+    return {"viewed_revision": viewed["revision"], "preserved_revision": latest["revision"],
+            "preserved_content_digest": latest["content_digest"], "status": response.value.status}

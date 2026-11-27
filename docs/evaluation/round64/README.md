@@ -1,5 +1,7 @@
 # Bàn giao Research → Strategy → Content trong Studio
 
+**Sau Independent Review trên `d79f7637`.** Contract đang trình review là /2. Phần bên dưới mô tả bước tích hợp ban đầu. [Thay đổi phiếu Content, cách tiếp quản và kết quả điều tra Sales](closure/README.md)
+
 Người phụ trách Marketing cần biết có thể giao Content soạn gì, cho ai, dùng câu chữ nào và trên kênh nào. Lát cắt này phục vụ một commission **in-house** với nguồn tổng hợp. Nó kết thúc ở việc chuẩn bị bản nháp trong AMC. Quyết định phát hành, quyền dùng creative hiện hữu, ngân sách và phép đo hiệu quả cần thẩm quyền riêng.
 
 ## Từ brief đến người nhận

@@ -31,6 +31,10 @@ function mountStrategyHandoff(parent, api, path, dirty) {
     recipient_only: 'Chuyển phiếu cho người nhận Content được chỉ định.',
     observation_unverified: 'Đối chiếu loại bằng chứng và trích nguyên văn đoạn quan sát.',
     asset_required: 'Xác định tài sản và vị trí được phép trước khi giao việc cho Content.',
+    brief_release_required: 'Người duyệt cần xác nhận những yêu cầu có thể chuyển cho Content.',
+    brief_conflict: 'Đối chiếu lại tình huống và hướng viết với brief đã ký trước khi giao việc.',
+    brief_disclosure_blocked: 'Làm việc với chủ brief để chuẩn bị các yêu cầu được phép chuyển cho Content.',
+    legacy_decision_requires_review: 'Phiếu cũ thiếu yêu cầu sản xuất. Lưu một bản Studio mới và gửi QA lại.',
   };
   const outcomes = {
     supported: 'Có căn cứ cho đề xuất', conflicting: 'Nguồn trái chiều',
@@ -69,6 +73,30 @@ function mountStrategyHandoff(parent, api, path, dirty) {
     const list = add(target, 'ul');
     for (const value of values) add(list, 'li', value);
   }
+  function productionBrief(parent, title, brief) {
+    const section = add(parent, 'section');
+    section.className = 'strategy-production-brief';
+    add(section, 'h6', title);
+    const fields = add(section, 'dl');
+    field(fields, 'Mục tiêu', brief.objective);
+    field(fields, 'Mục đích của nhiệm vụ', brief.purpose);
+    field(fields, 'Đối tượng', brief.audience);
+    field(fields, 'Hành động của người mua', marketingActionLabels[brief.buyer_action] || brief.buyer_action);
+    field(fields, 'Lời kêu gọi hành động', brief.cta);
+    field(fields, 'Cách diễn đạt', marketingStyleLabels[brief.editorial_style] || brief.editorial_style);
+    for (const [key, label] of [
+      ['requirements', 'Yêu cầu bắt buộc'], ['exclusions', 'Nội dung phải loại trừ'], ['acceptance_criteria', 'Tiêu chí nghiệm thu']
+    ]) {
+      const row = add(fields, 'div');
+      add(row, 'dt', label);
+      const value = add(row, 'dd');
+      if (brief[key]?.length) lines(value, brief[key]);
+      else value.textContent = 'Brief chưa ghi mục này.';
+    }
+  }
+  function measurementLabel(status) {
+    return status === 'approved_definition_only' ? 'Đã duyệt định nghĩa chỉ số. Chờ quyền thực hiện phép đo.' : 'Chưa có hợp đồng đo lường được duyệt';
+  }
   function button(target, text, action) {
     const b = add(target, 'button', text);
     b.type = 'button';
@@ -95,6 +123,13 @@ function mountStrategyHandoff(parent, api, path, dirty) {
     heading.tabIndex = -1;
     add(banner, 'p', 'Bản Studio v' + view.revision + (view.placement ? ' · '+view.placement : ''));
     const order = view.work_order;
+    if (order && (!order.brief || !order.guidance || !order.measurement)) {
+      heading.textContent = statusLabels.hold;
+      banner.dataset.status = 'hold';
+      message(banner, reasonLabels.legacy_decision_requires_review);
+      button(content, 'Tải lại phiếu bàn giao', () => load(true));
+      return heading;
+    }
     if (order) {
       const assignment = add(content, 'section');
       assignment.className = 'strategy-assignment';
@@ -102,10 +137,18 @@ function mountStrategyHandoff(parent, api, path, dirty) {
       const list = add(assignment, 'dl');
       field(list, 'Người nhận', role(order.recipient)); field(list, 'Tài sản', assetLabels[order.asset_type] || order.asset);
       field(list, 'Mục đích', order.purpose); field(list, 'Vị trí', order.placement);
-      field(list, 'Đối tượng', order.buyer_persona || order.audience); field(list, 'Mục tiêu', order.objective);
-      field(list, 'Thông điệp', order.message);
-      field(list, 'Phê duyệt tiếp theo', order.approval);
+      productionBrief(assignment, 'Yêu cầu sản xuất từ brief', order.brief);
+      add(assignment, 'h6', 'Hướng dẫn từ Strategy');
+      const guidance = add(assignment, 'dl');
+      field(guidance, 'Tình huống đã đối chiếu', order.guidance.situation);
+      field(guidance, 'Hướng thông điệp', order.guidance.direction);
+      field(guidance, 'Phạm vi quan sát', order.guidance.sample_scope);
+      field(guidance, 'Dữ kiện sản phẩm được phép dùng', order.message);
       if (order.claim_limits?.length) { add(assignment, 'strong', 'Giới hạn khi viết'); lines(assignment, order.claim_limits); }
+      const approval = add(assignment, 'dl');
+      field(approval, 'Phê duyệt tiếp theo', order.approval);
+      field(approval, 'Đo lường', measurementLabel(order.measurement.status));
+      if (order.measurement.execution_authorized === false) field(approval, 'Phạm vi thực hiện', 'Chỉ chuẩn bị bản nháp nội bộ. Chờ duyệt để thực hiện phép đo.');
     } else {
       add(banner, 'p', 'Tạm giữ việc giao tài sản theo kênh.');
     }
@@ -116,7 +159,7 @@ function mountStrategyHandoff(parent, api, path, dirty) {
     const actions = add(next, 'dl');
     field(actions, 'Người xử lý', role(view.next_owner));
     if (view.internal_concept) field(actions, 'Có thể chuẩn bị nội bộ', concepts[view.internal_concept] || view.internal_concept);
-    field(actions, 'Đo lường', view.measurement_status === 'approved_definition_only' ? 'Đã duyệt định nghĩa chỉ số; chờ quyền thực hiện phép đo.' : 'Chưa có hợp đồng đo lường được duyệt');
+    if (!order) field(actions, 'Đo lường', measurementLabel(view.measurement_status));
     field(actions, 'Thực thi', 'Xuất bản, thử nghiệm và chi ngân sách cần phê duyệt riêng.');
     if (view.permitted_product_wording?.length) {
       add(next, 'strong', 'Dữ kiện được phép dùng'); lines(next, view.permitted_product_wording);
@@ -182,7 +225,7 @@ function mountStrategyHandoff(parent, api, path, dirty) {
     const form = add(content, 'form');
     form.className = 'strategy-decision-form';
     add(form, 'h5', 'Ghi quyết định trên bản đã QA');
-    const grid = add(form, 'div');
+    let grid = add(form, 'div');
     grid.className = 'strategy-form-grid';
     function control(title, tag) {
       const label = add(grid, 'label', title);
@@ -240,6 +283,32 @@ function mountStrategyHandoff(parent, api, path, dirty) {
     const situation = input('Tình huống mua');
     const interpretation = input('Diễn giải đối chiếu với nguồn');
     const limit = input('Giới hạn mẫu và khả năng suy rộng');
+    const release = view.brief_release;
+    if (!release) {
+      message(form, reasonLabels.legacy_decision_requires_review);
+      return;
+    }
+    productionBrief(form, 'Nội dung brief chuyển cho người nhận', release.fields);
+    add(form, 'p', 'Đối chiếu brief với bản biên tập. Chọn tình huống và hướng viết được phép giao cho Content. Ghi chú và trích dẫn ở phần nghiên cứu chỉ dành cho người duyệt.');
+    grid = add(form, 'div');
+    grid.className = 'strategy-form-grid';
+    const releaseReview = choices('Quyết định chuyển nội dung brief', [
+      ['aligned', 'Phù hợp với bản biên tập và được phép chuyển'], ['conflict', 'Có mâu thuẫn với brief'],
+      ['private', 'Có nội dung cần giữ riêng']
+    ]);
+    const releaseSituation = choices('Tình huống cho người nhận', [
+      ['work_handover', 'Bàn giao công việc hoặc ca làm'], ['purchase_review', 'Xem xét mua hàng trước khi đặt'],
+      ['product_use', 'Đánh giá cách sử dụng sản phẩm']
+    ], false);
+    const releaseDirection = choices('Hướng viết cho người nhận', [
+      ['demonstrate_use', 'Minh họa cách sử dụng'], ['explain_specifications', 'Giải thích thông số'],
+      ['clarify_terms', 'Làm rõ điều kiện mua']
+    ], false);
+    releaseReview.addEventListener('change', () => {
+      const aligned = releaseReview.value === 'aligned';
+      releaseSituation.required = aligned;
+      releaseDirection.required = aligned;
+    });
     const notice = message(form, '');
     const submit = add(form, 'button', 'Ghi quyết định nội bộ');
     submit.type = 'submit';
@@ -250,7 +319,8 @@ function mountStrategyHandoff(parent, api, path, dirty) {
         qualification_revision:mandate.value, option:option.value, asset_type:asset.value || null, evidence_state:state.value,
         support_handle:support.value || null, contrary_handle:contrary.value || null, product_handle:product.value || null,
         recipient_id:recipient.value || null, observation_kind:observation.value, observation_excerpt:excerpt.value || null,
-        interpretation:interpretation.value, buyer_persona:persona.value, buying_situation:situation.value, sample_limit:limit.value};
+        interpretation:interpretation.value, buyer_persona:persona.value, buying_situation:situation.value, sample_limit:limit.value,
+        release:{brief_digest:release.digest, review:releaseReview.value, situation:releaseSituation.value || null, direction:releaseDirection.value || null}};
       submit.disabled = true;
       const ticket = ++sequence;
       notice.textContent = 'Đang ghi quyết định…';

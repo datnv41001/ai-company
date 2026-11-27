@@ -2,6 +2,8 @@
 
 ## Vòng #64 · Bàn giao Strategy cho Content trong Studio
 
+Vòng phản biện tiếp theo nâng phiếu nội bộ lên /2. Đọc [bản sửa giới hạn, quy tắc xử lý receipt /1 và điều tra Sales](docs/evaluation/round64/closure/README.md). Người nhận cần thấy CTA, điều cấm và tiêu chí nghiệm thu trên phiếu. Khi dữ kiện riêng tư hoặc mâu thuẫn, trả việc cho reviewer đối chiếu lại trên revision mới.
+
 Bắt đầu từ [hướng dẫn tiếp quản, quyền và ca kiểm PostgreSQL/Chromium](docs/evaluation/round64/README.md). PR #63 đã merge nội bộ tại `053410d1`. Trong Studio, người biên tập sửa đề xuất, QA duyệt revision, người có mandate lập quyết định và người được giao nhận bản công việc bằng phiên riêng. Mỗi lần đổi nội dung phải đối chiếu lại trên revision mới. Gói nghiệm thu gắn với head và trial được liên kết trong draft PR.
 
 ## Vòng #63 · Research giao phương án để Strategy và Content dùng

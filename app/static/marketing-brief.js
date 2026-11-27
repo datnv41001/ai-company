@@ -25,6 +25,13 @@ function attachMarketingProvenance(parent, path, read, active) {
   };
 }
 
+const marketingActionLabels = {
+  rfq:'Yêu cầu báo giá', appointment:'Gửi đề nghị hẹn', sample_request:'Yêu cầu mẫu thử', colour_card_request:'Yêu cầu bảng màu',
+  catalogue_download:'Tải danh mục', registration:'Đăng ký', purchase:'Mua hàng', request_assessment:'Yêu cầu khảo sát',
+  submit_reference:'Gửi mẫu tham chiếu', select_sample:'Gửi lựa chọn mẫu', choose_session:'Chọn buổi'
+};
+const marketingStyleLabels = {plain:'Dễ hiểu', concise:'Ngắn gọn', formal:'Trang trọng', friendly:'Thân thiện'};
+
 /* A client or staff author explicitly approves this bounded summary for the Marketing team. */
 function taskIntentForm(parent, seed, onSubmit, options={}) {
   const box=document.createElement('details'), heading=document.createElement('summary'), fields=document.createElement('div');
@@ -48,9 +55,7 @@ function taskIntentForm(parent, seed, onSubmit, options={}) {
   type.add(new Option('Trang đích và metadata SEO','landing_page'));type.add(new Option('Nghiên cứu và chiến lược','marketing_strategy'));
   const action=field('buyer_action','Hành động người mua cần thực hiện','select');
   action.add(new Option('Chọn hành động…',''));
-  for(const [code,label] of Object.entries({rfq:'Yêu cầu báo giá',appointment:'Gửi đề nghị hẹn',sample_request:'Yêu cầu mẫu thử',
-    colour_card_request:'Yêu cầu bảng màu',catalogue_download:'Tải danh mục',registration:'Đăng ký',purchase:'Mua hàng',
-    request_assessment:'Yêu cầu khảo sát',submit_reference:'Gửi mẫu tham chiếu',select_sample:'Gửi lựa chọn mẫu',choose_session:'Chọn buổi'})){
+  for(const [code,label] of Object.entries(marketingActionLabels)){
     action.add(new Option(label,code));
   }
   const material=field('buyer_input','Người mua cần gửi gì (nếu có)?','select');
@@ -59,7 +64,7 @@ function taskIntentForm(parent, seed, onSubmit, options={}) {
     material.add(new Option(label,code));
   }
   const style=field('editorial_style','Cách diễn đạt','select');
-  for(const [code,label] of Object.entries({plain:'Dễ hiểu',concise:'Ngắn gọn',formal:'Trang trọng',friendly:'Thân thiện'})){
+  for(const [code,label] of Object.entries(marketingStyleLabels)){
     style.add(new Option(label,code));
   }
   field('purpose','Mục đích của công việc lần này');

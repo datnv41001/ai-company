@@ -45,7 +45,7 @@ def open_handoff(browser, origin, ctx, actor, size):
     return page, panel, ms
 
 
-def fill_decision(panel, ctx, evidence, state):
+def fill_decision(panel, ctx, evidence, state, release_review="aligned"):
     form = panel.locator(".strategy-decision-form")
     expect(form).to_be_visible()
     ref = {r["statement"]: r["handle"] for r in evidence["references"]}
@@ -62,6 +62,15 @@ def fill_decision(panel, ctx, evidence, state):
     form.get_by_label("Tình huống mua").fill("Shift handover in one synthetic shop.")
     form.get_by_label("Diễn giải đối chiếu với nguồn").fill("The observation supports preparing an internal layout guide.")
     form.get_by_label("Giới hạn mẫu và khả năng suy rộng").fill("One observed shift; no claim about other sites.")
+    brief = form.locator(".strategy-production-brief")
+    expect(brief).to_contain_text("automatic worker tracking")
+    expect(brief).to_contain_text("Tie the proposed asset to an observed task.")
+    release = form.get_by_label("Quyết định chuyển nội dung brief")
+    expect(release).to_have_value("")
+    release.select_option(release_review)
+    if release_review == "aligned":
+        form.get_by_label("Tình huống cho người nhận").select_option("work_handover")
+        form.get_by_label("Hướng viết cho người nhận").select_option("demonstrate_use")
     return form
 
 
@@ -91,7 +100,42 @@ def snapshot(browser, origin, ctx, actor, folder, stage, expected_view):
                 expect(panel.locator(".strategy-decision-form")).to_have_count(0)
                 expect(panel.locator(".strategy-assignment")).to_contain_text("Hướng dẫn sử dụng trên trang sản phẩm")
                 expect(panel.locator(".strategy-assignment")).to_contain_text(expected_view["work_order"]["message"])
-                assert "Both sites requested" not in panel.locator(".strategy-assignment").inner_text()
+                assignment = panel.locator(".strategy-assignment")
+                assignment.evaluate("e=>e.scrollIntoView({block:'start'})")
+                if width == VIEWPORTS[0][0]:
+                    page.screenshot(path=folder / "recipient-order.png", animations="disabled")
+                visible = assignment.inner_text()
+                order = expected_view["work_order"]
+                requirements = [
+                    "Tải danh mục",
+                    "Ngắn gọn",
+                    "Prepare a practical guide for one shift handover.",
+                    "automatic worker tracking",
+                    "Tie the proposed asset to an observed task.",
+                    order["brief"]["cta"],
+                    order["brief"]["purpose"],
+                    order["brief"]["objective"],
+                    order["brief"]["audience"],
+                    order["guidance"]["situation"],
+                    order["guidance"]["direction"],
+                    order["guidance"]["sample_scope"],
+                    order["approval"],
+                    "Chỉ chuẩn bị bản nháp nội bộ.",
+                ]
+                missing = [item for item in requirements if item not in visible]
+                assert not missing, f"Missing in the signed-in recipient’s work order: {missing}"
+                private = [
+                    UNSUPPORTED,
+                    OBSERVATION,
+                    "Shift handover in one synthetic shop.",
+                    "One observed shift; no claim about other sites.",
+                    "The observation supports preparing an internal layout guide.",
+                    ctx["mandate"]["id"],
+                    ctx["reviewer"]["id"],
+                ]
+                assert all(value not in visible for value in private)
+                if width == VIEWPORTS[0][0]:
+                    (folder / "recipient-visible-order.txt").write_text(visible + "\n", encoding="utf8")
             summary = panel.locator("summary").first
             summary.focus()
             expect(summary).to_be_focused()
@@ -106,6 +150,10 @@ def snapshot(browser, origin, ctx, actor, folder, stage, expected_view):
                 assert not audit["failed"], audit["failed"]
                 image = f"{stage}-{width}-{theme}.png"
                 page.screenshot(path=folder / image, animations="disabled")
+                if stage == "draft":
+                    constraints = panel.locator(".strategy-production-brief").get_by_text("Yêu cầu bắt buộc", exact=True)
+                    constraints.evaluate("e=>e.scrollIntoView({block:'start'})")
+                    page.screenshot(path=folder / f"recipient-requirements-{width}-{theme}.png", animations="disabled")
                 metrics.append(
                     {
                         "status": stage,
@@ -176,6 +224,17 @@ def test_content_handoff_in_staff_studio(tmp_path):
             page.wait_for_load_state("networkidle")
             page.close()
             sessions = snapshot(browser, origin, ctx, reviewer, folder, "hold", held)
+
+            prepare_review(api, ctx)
+            conflicting = get()
+            page, panel, _ = open_handoff(browser, origin, ctx, reviewer, VIEWPORTS[1])
+            assert save(page, fill_decision(panel, ctx, conflicting, "supported", "conflict")) == 200
+            expect(panel.get_by_text("Đối chiếu lại tình huống và hướng viết với brief đã ký trước khi giao việc.", exact=True)).to_be_visible()
+            expect(panel.locator(".strategy-assignment")).to_have_count(0)
+            panel.evaluate("e=>e.scrollIntoView({block:'start'})")
+            page.screenshot(path=folder / "brief-conflict-hold.png", animations="disabled")
+            page.wait_for_load_state("networkidle")
+            page.close()
 
             prepare_review(api, ctx)
             candidate = get()

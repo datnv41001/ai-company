@@ -19,16 +19,23 @@ from test_claim_desk import reader
 
 OBSERVATION = "One shift supervisor used the two-tone tray to separate outgoing batches."
 PRODUCT = "The passive tray has two separate compartments."
-SECOND_OBSERVATION = "During a separate purchase review a shift supervisor asked to see the tray specifications first."
+SECOND_OBSERVATION = "During another shift handover a supervisor asked to see the tray specifications before sorting outgoing batches."
 PARAPHRASE = "At the observed handover one supervisor separated outgoing batches with the two-tone tray."
 UNSUPPORTED = "Both sites requested individual worker tracking."
 INTENT = dict(product="Route Tray", audience="Shift supervisors", region="HN", locale="en-US", channel="web",
               purpose="Choose a useful product guide for a shift handover.", deliverable_type="marketing_strategy", buyer_action="catalogue_download",
               editorial_style="concise", requirements=["Prepare a practical guide for one shift handover."], exclusions=["automatic worker tracking"],
               acceptance_criteria=["Tie the proposed asset to an observed task."])
+PURCHASE_OBSERVATION = "A purchasing director compared the specification cards before ordering the two-compartment tray."
+PURCHASE_INTENT = INTENT | {
+    "audience": "Purchasing directors", "channel": "owned counter card",
+    "purpose": "Help purchasing directors compare the tray specifications before ordering.",
+    "requirements": ["Prepare a counter card for comparing tray specifications before ordering."],
+    "acceptance_criteria": ["Show the approved tray specifications and the catalogue action on the card."],
+}
 
 
-def _workers(lab, run, cited):
+def _workers(lab, run, cited, intent):
     requests, outputs = {}, {}
     replies = {
         "director": dict(primary_assignment="Review the observed use in the selected segment.",
@@ -40,6 +47,15 @@ def _workers(lab, run, cited):
                          measurable_action="Count reviewed requests for the use guide.",
                          measurement_method="Review unique request identifiers at the next review."),
     }
+    if intent == PURCHASE_INTENT:
+        replies["research"] = dict(segment=intent["audience"], buyer_problem=PURCHASE_OBSERVATION,
+                                   research_question="Which tray specifications did the director compare before ordering?",
+                                   evidence_needed="Review the purchasing interaction at another counter.")
+        replies["strategy"] = dict(positioning=PRODUCT, channel_choice=intent["channel"],
+                                   rationale="Explain the product specifications when buyers compare the trays.",
+                                   test_hypothesis="Test whether a printed specifications card helps buyers compare the trays.",
+                                   measurable_action="Count completed catalogue downloads.",
+                                   measurement_method="Count completed unique catalogue downloads per eligible visit.")
     for stage in ("director", "research", "strategy"):
         worker = lab.workers[0]
         assert worker.take() is None
@@ -66,7 +82,7 @@ def _workers(lab, run, cited):
 
 
 @contextmanager
-def commission_lab(api, *, channel="web", audience=INTENT["audience"], observation=OBSERVATION):
+def commission_lab(api, *, intent=INTENT, observation=OBSERVATION):
     """No credentials are serialized. Browser callers may log in using the two fixture accounts."""
     lab = InternalPool(api, os.environ["AMC_MIGRATION_DSN"])
     try:
@@ -81,12 +97,11 @@ def commission_lab(api, *, channel="web", audience=INTENT["audience"], observati
         api.put(base + "/workforce/registry/" + campaign, headers=owner["headers"], json={
             "workflow": c3_assets.RESEARCH, "action": "activate", "skills": definition["required"]
         }).raise_for_status()
-        intent = INTENT | {"audience": audience, "channel": channel}
         task = accepted(api.post(base + "/workforce/internal-tasks", headers=owner["headers"], json={
             "key": uuid4().hex, "campaign_id": campaign, "intent": intent,
         }))
-        info = dict(product=intent["product"], audience=audience, locale=intent["locale"], region=intent["region"],
-                    channel=channel, objective=intent["purpose"], sku="TRAY-2", facts=[
+        info = dict(product=intent["product"], audience=intent["audience"], locale=intent["locale"], region=intent["region"],
+                    channel=intent["channel"], objective=intent["purpose"], sku="TRAY-2", facts=[
                         {"wording": observation, "qualifiers": [], "excerpt": observation},
                         {"wording": PRODUCT, "qualifiers": [], "excerpt": PRODUCT},
                         {"wording": SECOND_OBSERVATION, "qualifiers": [], "excerpt": SECOND_OBSERVATION}])
@@ -100,7 +115,7 @@ def commission_lab(api, *, channel="web", audience=INTENT["audience"], observati
         run = accepted(api.post(queue, headers=owner["headers"], json=terms))
         assert accepted(api.post(queue, headers=owner["headers"], json=terms))["id"] == run["id"]
         facts = {row["wording"]: row["id"] for row in snap["projection"]["facts"]}
-        requests, raw = _workers(lab, run, [facts[observation], facts[PRODUCT]])
+        requests, raw = _workers(lab, run, [facts[observation], facts[PRODUCT]], intent)
         report_url = base + "/workforce/runs/" + run["id"]
         trace = accepted(api.get(report_url, headers=owner["headers"]))
         assert trace["state"] == "awaiting_qa"

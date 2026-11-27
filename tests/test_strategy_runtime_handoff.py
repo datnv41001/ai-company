@@ -4,15 +4,19 @@ from concurrent.futures import ThreadPoolExecutor
 import json
 import os
 from pathlib import Path
+from uuid import uuid4
 
 import pytest
+from psycopg.types.json import Jsonb
 
 from agency_fixtures import account, create, postgres_api
+from app.knowledge_store import canonical, digest
 from c3_fixtures import withdraw
 from identity_fixtures import invite_member
 from knowledge_fixtures import accepted
 from strategy_runtime_fixtures import (
-    OBSERVATION, PARAPHRASE, PRODUCT, SECOND_OBSERVATION, UNSUPPORTED, commission_lab, prepare_review, studio_save,
+    INTENT, OBSERVATION, PARAPHRASE, PRODUCT, PURCHASE_INTENT, PURCHASE_OBSERVATION, SECOND_OBSERVATION,
+    UNSUPPORTED, commission_lab, prepare_review, studio_save,
 )
 from test_claim_desk import reader
 
@@ -32,6 +36,8 @@ def terms(view, ctx, observation=OBSERVATION):
     return {"expected_revision": view["revision"], "expected_content_digest": view["content_digest"],
             "qualification_revision": ctx["mandate"]["id"], "recipient_id": ctx["recipient"]["id"],
             "option": "explain_use", "asset_type": "web_use_guide", "evidence_state": "supported",
+            "release": {"brief_digest":view["brief_release"]["digest"], "review":"aligned",
+                        "situation":"work_handover", "direction":"demonstrate_use"},
             "support_handle": handles[observation], "product_handle": handles[PRODUCT], "observation_kind": "observed_behaviour",
             "observation_excerpt": observation, "interpretation": "An annotated use guide could help at shift handover.",
             "buyer_persona": view["audience"], "buying_situation": "A supervisor checks outgoing batches at shift change.",
@@ -49,6 +55,33 @@ def immutable_counts(ctx):
         "other_commands": db.execute("SELECT count(*) FROM knowledge_commands WHERE tenant_id=%s AND operation != 'c3_strategy_decision'",
                                       (ctx["owner"]["tenant"],)).fetchone()[0],
     }
+
+
+def check_content_readback(signer, downstream, payload, intent):
+    """Compare independently authenticated projections to the original commissioning intent."""
+    order = downstream["work_order"]
+    assert order == {k: v for k, v in signer["work_order"].items() if k != "sources"}
+    assert downstream["decision"]["receipt_id"] == signer["decision"]["receipt_id"]
+    brief = order["brief"]
+    assert brief["purpose"] == intent["purpose"] and brief["objective"] == intent["purpose"]
+    for key in ("audience", "buyer_action", "editorial_style", "requirements", "exclusions", "acceptance_criteria"):
+        assert brief[key] == intent[key], key
+    assert brief["cta"] == "Download the catalogue"
+    assert order["message"] == PRODUCT and order["approval"] and order["recipient"] == "Content lead"
+    assert order["measurement"]["status"] == "planned_only" and order["measurement"]["execution_authorized"] is False
+    situations = {"work_handover":"At a work or shift handover.", "purchase_review":"During a purchasing review before ordering."}
+    directions = {"demonstrate_use":"Show how to use the product in the reviewed situation.",
+                  "clarify_terms":"Clarify the information needed before ordering using only the approved wording."}
+    assert order["guidance"]["situation"] == situations[payload["release"]["situation"]]
+    assert order["guidance"]["direction"] == directions[payload["release"]["direction"]]
+    assert "Wider demand or performance remains unverified" in order["guidance"]["sample_scope"]
+    assert set(downstream["decision"]) == {"receipt_id", "at"}
+    text = json.dumps(downstream)
+    for private_text in (payload["sample_limit"], payload["buying_situation"], payload["interpretation"],
+                         payload["observation_excerpt"], payload["qualification_revision"], payload["recipient_id"],
+                         signer["decision"]["actor"], "PRIVATE_SYNTHETIC", "private locator"):
+        assert private_text not in text
+    assert "budget" not in brief and "deadline" not in brief and "kpi" not in brief
 
 
 def test_runtime_edits_qualified_decisions_and_recipient(api_for_strategy):
@@ -99,6 +132,7 @@ def test_runtime_edits_qualified_decisions_and_recipient(api_for_strategy):
                                         (ctx["snap"]["id"],)).fetchone()[0] == 1
         assert api.post(endpoint, headers=reviewer, json=payload | {"sample_limit":"Different signed decision."}).status_code == 409
         obtained = accepted(api.get(endpoint, headers=recipient))
+        check_content_readback(first, obtained, payload, INTENT)
         order = obtained["work_order"]
         assert obtained["audience_mode"] == "recipient" and order["asset_type"] == "web_use_guide"
         assert order["placement"] == "web" and order["message"] == PRODUCT
@@ -129,12 +163,16 @@ def test_runtime_edits_qualified_decisions_and_recipient(api_for_strategy):
         extra = next(ref for ref in revised_view["references"] if ref["excerpt"] == SECOND_OBSERVATION)
         revised_terms = terms(revised_view, ctx) | {"support_handle":extra["handle"], "observation_excerpt":SECOND_OBSERVATION,
                         "option":"explain_terms", "asset_type":"web_terms_panel",
+                        "buying_situation":"The supervisor checks specifications before sorting outgoing batches at handover.",
+                        "sample_limit":"One supervisor during a second handover; applicability elsewhere remains unverified.",
                         "interpretation":"This buyer asked to compare specifications before a demonstration."}
+        revised_terms["release"].update(direction="explain_specifications")
         updated = accepted(api.post(endpoint, headers=reviewer, json=revised_terms))
         assert updated["work_order"]["asset_type"] == "web_terms_panel"
         assert updated["decision"]["receipt_id"] != first["decision"]["receipt_id"]
         new_order = accepted(api.get(endpoint, headers=recipient))["work_order"]
         assert new_order["message"] == PRODUCT and new_order["asset_type"] != order["asset_type"]
+        assert new_order["guidance"]["direction"] != order["guidance"]["direction"]
         changed_strategy = deepcopy(revised["studio"]["groups"])
         changed_strategy["strategy"]["channel_choice"] = "owned counter card"
         strategy_edit = studio_save(api, ctx, changed_strategy)
@@ -176,11 +214,22 @@ def test_signed_holds_and_withdrawn_source(api_for_strategy):
             ("request clarification", {"evidence_state":"needs_clarification"}, "clarify_commission"),
             ("incorrect placement", {"asset_type":"counter_use_card"}, "asset_placement_mismatch"),
             ("product assertions need Strategy adoption", {"product_handle":"alternate"}, "source_purpose_mismatch"),
+            ("missing permission to transfer", {"release":None}, "brief_release_required"),
+            ("different signed brief", {"release":{"brief_digest":"0"*64}}, "brief_release_required"),
+            ("reviewer withholds private material", {"release":{"review":"private"}}, "brief_disclosure_blocked"),
+            ("reviewer flags editorial conflict", {"release":{"review":"conflict"}}, "brief_conflict"),
+            ("changed buying situation conflicts with approved brief", {"release":{"situation":"purchase_review"}}, "brief_conflict"),
+            ("editorial instruction promotes excluded feature", {"interpretation":"Promote automatic worker tracking during handover."}, "brief_conflict"),
         ):
             prepare_review(api, ctx)
             ready = accepted(api.get(endpoint, headers=signer))
             alternate = next(ref["handle"] for ref in ready["references"] if ref["excerpt"] == SECOND_OBSERVATION)
-            body = terms(ready, ctx) | {k: alternate if v == "alternate" else v for k, v in change.items()}
+            body = terms(ready, ctx)
+            for key, value in change.items():
+                if key == "release" and isinstance(value, dict):
+                    body[key].update(value)
+                else:
+                    body[key] = alternate if value == "alternate" else value
             held = accepted(api.post(endpoint, headers=signer, json=body))
             delivery = accepted(api.get(endpoint, headers=downstream))
             assert held["status"] == "hold" and reason in held["reasons"], (label, held["reasons"])
@@ -203,11 +252,28 @@ def test_signed_holds_and_withdrawn_source(api_for_strategy):
         export("negative-cases.json", results)
 
 
+def test_restricted_locator_inside_signed_brief_is_withheld(api_for_strategy):
+    api = api_for_strategy
+    private_instruction = "Put the source reference private locator on the finished card."
+    with commission_lab(api, intent=INTENT | {"requirements":[private_instruction]}) as ctx:
+        prepare_review(api, ctx)
+        endpoint = ctx["studio"] + "/content-handoff"
+        qa = ctx["reviewer"]["headers"]
+        ready = accepted(api.get(endpoint, headers=qa))
+        assert private_instruction in ready["brief_release"]["fields"]["requirements"]
+        signed = accepted(api.post(endpoint, headers=qa, json=terms(ready, ctx)))
+        assert signed["status"] == "hold" and "brief_disclosure_blocked" in signed["reasons"]
+        downstream = accepted(api.get(endpoint, headers=ctx["recipient"]["headers"]))
+        assert not downstream["work_order"] and "private locator" not in json.dumps(downstream)
+        export("private-handoff.json", {"case":"Current private source locator copied into a signed requirement",
+               "signer_reasons":signed["reasons"], "recipient_reasons":downstream["reasons"], "released":False})
+
+
 def test_counter_channel_and_changed_buyer_withdrawn_qualification(api_for_strategy):
     api = api_for_strategy
-    observed = "A purchasing director compared the specification cards before ordering the two-compartment tray."
-    channel = "owned counter card"
-    with commission_lab(api, channel=channel, audience="Purchasing directors", observation=observed) as ctx:
+    observed = PURCHASE_OBSERVATION
+    channel = PURCHASE_INTENT["channel"]
+    with commission_lab(api, intent=PURCHASE_INTENT, observation=observed) as ctx:
         signer, recipient = ctx["reviewer"]["headers"], ctx["recipient"]["headers"]
         endpoint = ctx["studio"] + "/content-handoff"
         prepare_review(api, ctx, problem=observed, channel=channel)
@@ -215,21 +281,28 @@ def test_counter_channel_and_changed_buyer_withdrawn_qualification(api_for_strat
         assert ready["placement"] == channel and ready["audience"] == "Purchasing directors"
         body = terms(ready, ctx, observed) | {"option":"explain_terms", "asset_type":"web_terms_panel",
                     "buying_situation":"A director compares printed specifications before ordering.",
-                    "interpretation":"A printed terms card could explain the offer during purchasing."}
+                    "interpretation":"A printed terms card could explain the offer during purchasing.",
+                    "sample_limit":"One purchasing director observed at one counter during one order comparison."}
+        body["release"].update(situation="purchase_review", direction="clarify_terms")
         wrong = accepted(api.post(endpoint, headers=signer, json=body))
         assert wrong["status"] == "hold" and "asset_placement_mismatch" in wrong["reasons"]
         prepare_review(api, ctx, problem=observed, channel=channel)
         current = accepted(api.get(endpoint, headers=signer))
         body.update(expected_revision=current["revision"], expected_content_digest=current["content_digest"], asset_type="counter_terms_card")
+        body["release"]["brief_digest"] = current["brief_release"]["digest"]
         correct = accepted(api.post(endpoint, headers=signer, json=body))
         delivered = accepted(api.get(endpoint, headers=recipient))
         assert delivered["work_order"]["asset_type"] == "counter_terms_card" and delivered["work_order"]["message"] == PRODUCT
+        check_content_readback(correct, delivered, body, PURCHASE_INTENT)
+        assert not any(word in json.dumps(delivered).lower() for word in ("shift handover", "observed shift"))
+        assert "one purchasing director" in correct["decision"]["sample_limit"].lower()
         accepted(withdraw(api, ctx["owner"], ctx["state"], ctx["mandate"]))
         revoked = accepted(api.get(endpoint, headers=recipient))
         assert revoked["status"] == "hold" and not revoked["work_order"]
         assert api.post(endpoint, headers=signer, json=body).status_code == 409
         export("placement.json", {"scope":ctx["scope"], "signed_placement":channel, "buyer":ready["audience"],
                "observed":observed, "wrong":wrong["reasons"], "counter_order":correct["work_order"],
+               "signed_sample_limit":body["sample_limit"], "readback":delivered["work_order"],
                "recipient":delivered["decision"], "qualification_withdrawn":revoked["reasons"]})
 
 
@@ -257,3 +330,55 @@ def test_two_similarly_named_agency_campaigns_are_not_authority(api_for_strategy
             assert response.status_code in (403, 404)
             checks.append({"client":own["id"], "requested_client":other["id"], "campaign":named["id"], "status":response.status_code})
     export("client-scope.json", {"workspace":"Synthetic agency", "campaign_name":"Tray pilot", "checks":checks})
+
+
+def test_legacy_decision_requires_a_fresh_review(api_for_strategy):
+    api = api_for_strategy
+    archived = Path(__file__).resolve().parents[1] / "docs/evaluation/round64/closure/reviewed-handoff-red.json"
+    old_order = json.loads(archived.read_text(encoding="utf-8"))["recipient"]["work_order"]
+    with commission_lab(api) as ctx:
+        prepare_review(api, ctx)
+        endpoint = ctx["studio"] + "/content-handoff"
+        qa, recipient = ctx["reviewer"]["headers"], ctx["recipient"]["headers"]
+        ready = accepted(api.get(endpoint, headers=qa))
+        current_post = terms(ready, ctx)
+        # Import the historical /1 storage shape into this already signed QA revision.
+        # The privileged fixture writes one immutable row. All subsequent reads and writes use real staff sessions.
+        old_request = {k: v for k, v in current_post.items() if k != "release"}
+        old_request["contrary_handle"] = None
+        row_id, version = str(uuid4()), "amc.internal-strategy-handoff/1"
+        key = "strategy:" + digest(canonical([version, ready["provenance"]["document_id"], ready["revision"]]))
+        by_handle = {r["handle"]:r for r in ready["references"]}
+        selected = {h:by_handle[h] for h in (old_request["support_handle"], old_request["product_handle"])}
+        old = dict(version=version, request=old_request, scope=ctx["scope"], placement=ready["placement"],
+                   provenance=ready["provenance"], qa_receipt=ready["provenance"]["qa_receipt"],
+                   revision=ready["revision"], content_digest=ready["content_digest"], reasons=[],
+                   work_order=old_order | {"sources":{"observation":selected[old_request["support_handle"]],
+                                                      "product":selected[old_request["product_handle"]]}},
+                   selected_references=selected)
+        db = ctx["lab"].owner
+        db.execute("INSERT INTO knowledge_commands (id,tenant_id,client_id,brand_id,visibility,key,actor,operation,"
+                   "request_digest,result,snapshot_id,effective_at) VALUES (%s,%s,%s,%s,'restricted',%s,%s,"
+                   "'c3_strategy_decision',%s,%s,%s,clock_timestamp())",
+                   (row_id,ctx["scope"]["tenant_id"],ctx["scope"]["client_id"],ctx["scope"]["brand_id"],key,
+                    ctx["reviewer"]["id"],digest(canonical(old)),Jsonb(old),ctx["snap"]["id"]))
+        held = []
+        for actor in (qa, recipient):
+            projection = accepted(api.get(endpoint, headers=actor))
+            assert projection["status"] == "hold" and "legacy_decision_requires_review" in projection["reasons"]
+            assert projection["work_order"] is None
+            held.append(projection["reasons"])
+        for post in (old_request, current_post):
+            assert api.post(endpoint, headers=qa, json=post).status_code == 409
+        prepare_review(api, ctx)
+        fresh = accepted(api.get(endpoint, headers=qa))
+        assert fresh["revision"] > ready["revision"]
+        body = terms(fresh, ctx)
+        signed = accepted(api.post(endpoint, headers=qa, json=body))
+        delivered = accepted(api.get(endpoint, headers=recipient))
+        check_content_readback(signed, delivered, body, INTENT)
+        assert signed["decision"]["receipt_id"] != row_id
+        assert db.execute("SELECT result FROM knowledge_commands WHERE id=%s", (row_id,)).fetchone()[0] == old
+        export("legacy-handoff.json", {"historical_receipt_fixture":row_id, "historical_version":version,
+               "historical_revision":ready["revision"], "signer_and_recipient_holds":held, "same_revision_retries":409,
+               "fresh_revision":fresh["revision"], "fresh_contract":signed["version"], "fresh_receipt":delivered["decision"]})

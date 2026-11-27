@@ -1,5 +1,6 @@
 """Commission a new internal Content draft from an independently approved WF-03 Studio revision."""
 
+import re
 from typing import Annotated, Literal
 
 from fastapi import APIRouter, Depends, HTTPException
@@ -7,6 +8,8 @@ from pydantic import Field, StringConstraints
 from sqlalchemy import select
 
 from . import c3_boundaries as boundaries, c3_evidence_review as evidence, c3_order_units, c3_projection
+from .c3_actions import ACTIONS
+from .c3_studio import buyer_action
 from .database import get_db
 from .knowledge_contracts import Input, Ref
 from .knowledge_models import KnowledgeCommand, KnowledgeRevision
@@ -19,7 +22,8 @@ from .workforce_models import WorkforceBrief
 
 
 router = APIRouter()
-VERSION = "amc.internal-strategy-handoff/1"
+VERSION = "amc.internal-strategy-handoff/2"
+LEGACY = "amc.internal-strategy-handoff/1"
 OP = "c3_strategy_decision"
 OPTIONS = {
     "explain_use": ("Explain the product in use", "A concrete use case leaves other buying situations untested."),
@@ -34,6 +38,13 @@ ASSETS = {
 }
 Handle = Annotated[str, Field(pattern=r"^F[1-9][0-9]?$")]
 Note = Annotated[str, StringConstraints(strip_whitespace=True, min_length=3, max_length=500)]
+
+
+class ContentRelease(Input):
+    brief_digest: Annotated[str, Field(pattern=r"^[0-9a-f]{64}$")]
+    review: Literal["aligned", "conflict", "private"]
+    situation: Literal["work_handover", "purchase_review", "product_use"] | None = None
+    direction: Literal["demonstrate_use", "explain_specifications", "clarify_terms"] | None = None
 
 
 class Decision(Input):
@@ -53,6 +64,7 @@ class Decision(Input):
     buyer_persona: Note
     buying_situation: Note
     sample_limit: Note
+    release: ContentRelease | None = None
 
 
 def available(db, run):
@@ -60,7 +72,91 @@ def available(db, run):
             bool(boundaries.internal_author(db.get(WorkforceBrief, run.brief_id))))
 
 
-def evaluate(body, references, projection, strategy):
+SITUATIONS = {
+    "work_handover": "At a work or shift handover.",
+    "purchase_review": "During a purchasing review before ordering.",
+    "product_use": "While evaluating product use.",
+}
+DIRECTIONS = {
+    "demonstrate_use": "Show how to use the product in the reviewed situation.",
+    "explain_specifications": "Explain the approved specification in the context of the buyer's task.",
+    "clarify_terms": "Clarify the information needed before ordering using only the approved wording.",
+}
+SAMPLE_SCOPE = {
+    "work_handover": "The selected source passage informs this handover only.",
+    "purchase_review": "The selected source passage informs this purchasing review only.",
+    "product_use": "The selected source passage informs this use situation only.",
+}
+SITUATION_CUES = {
+    "work_handover": re.compile(r"\b(?:shift (?:handover|handoff|change)|giao ca|bàn giao ca)\b", re.I),
+    "purchase_review": re.compile(r"\b(?:purchas(?:e|ing) review|before ordering|procurement review|trước khi đặt hàng)\b", re.I),
+}
+
+
+def brief_release(projection):
+    """Only these signed commission fields are candidates for the reviewer's disclosure decision."""
+    intent = projection.get("task_intent") or {}
+    fields = {key: intent.get(key) for key in ("purpose", "buyer_action", "editorial_style")}
+    fields.update({key: list(intent.get(key) or []) for key in ("requirements", "exclusions", "acceptance_criteria")})
+    fields.update(objective=projection["objective"], audience=projection["audience"],
+                  cta=buyer_action(projection) if fields["buyer_action"] in ACTIONS else "")
+    return {"fields": fields, "digest": digest(canonical([VERSION, fields]))}
+
+
+def _public_guidance(body, projection, references, private_context):
+    brief = brief_release(projection)
+    fields, release = brief["fields"], body.release
+    if not release or release.brief_digest != brief["digest"]:
+        return "brief_release_required", None
+    if release.review == "private":
+        return "brief_disclosure_blocked", None
+    if release.review == "conflict":
+        return "brief_conflict", None
+    if (not release.situation or not release.direction or not fields["cta"] or not fields["purpose"]
+            or fields["editorial_style"] not in ("plain", "concise", "formal", "friendly")
+            or not fields["requirements"] or not fields["acceptance_criteria"]):
+        return "brief_release_required", None
+
+    lines = [fields["objective"], fields["audience"], fields["purpose"], *fields["requirements"],
+             *fields["exclusions"], *fields["acceptance_criteria"]]
+    if body.product_handle:
+        lines.append(references[body.product_handle].get("complete_wording") or "")
+    # An approved claim can use public wording; deliberately protected document/locator/author identities cannot be
+    # copied into a brief line to route around redaction. Other sensitive prose requires the explicit privacy review.
+    protected = {str(ref[key]).casefold() for ref in references.values()
+                 for key in ("publisher", "document", "locator", "source_revision", "claim_revision", "source_digest")
+                 if ref.get(key)}
+    protected.update(value.casefold() for value in (body.qualification_revision, body.recipient_id, body.sample_limit,
+                                                   body.interpretation, body.buying_situation) if value)
+    protected.update(ref["excerpt"].casefold() for ref in references.values()
+                     if ref.get("excerpt") and (ref.get("research_spans") or ref["excerpt"] != ref.get("complete_wording")))
+    protected.update(value.strip().rstrip(".!?").casefold() for value in private_context if value and value.strip().rstrip(".!?"))
+    if any(any(re.search(r"(?<!\w)" + re.escape(value) + r"(?!\w)", line.casefold()) for value in protected) for line in lines):
+        return "brief_disclosure_blocked", None
+    # A reviewer reconciles meanings. These deterministic checks catch explicit contradictions even on an aligned submission.
+    for text in (" ".join([fields["purpose"], *fields["requirements"]]), body.buying_situation):
+        cues = {kind for kind, pattern in SITUATION_CUES.items() if pattern.search(text)}
+        if cues and release.situation not in cues:
+            return "brief_conflict", None
+    if ((release.direction == "demonstrate_use" and body.option != "explain_use")
+            or (release.direction == "clarify_terms" and body.option != "explain_terms")):
+        return "brief_conflict", None
+    instructions = [body.interpretation, body.buying_situation, *fields["requirements"], *fields["acceptance_criteria"]]
+    for term in fields["exclusions"]:
+        inclusion = re.compile(r"\b(?:add|include|require|promote|enable|introduce|bổ sung|thêm|bật)\s+(?:the\s+)?"
+                               + re.escape(term.strip()) + r"(?!\w)", re.I)
+        for line in instructions:
+            for match in inclusion.finditer(line):
+                if not re.search(r"(?:\bnot|\bnever|n['’]t|\bkhông|\bđừng)\s+$", line[:match.start()], re.I):
+                    return "brief_conflict", None
+    return None, {"brief": fields, "guidance": {"situation": SITUATIONS[release.situation],
+                  "direction": DIRECTIONS[release.direction],
+                  "sample_scope": SAMPLE_SCOPE[release.situation] + " Wider demand or performance remains unverified."},
+                  "measurement": {"status": "approved_definition_only" if projection.get("measurement_contract") else "planned_only",
+                                  "execution_authorized": False}}
+
+
+def evaluate(body, references, projection, strategy, *, private_context=()):
     """Only exact released product wording can enter a new draft. Interpretation remains editorial."""
     reasons = []
     if body.evidence_state != "supported":
@@ -96,15 +192,18 @@ def evaluate(body, references, projection, strategy):
         reasons.append("strategy_placement_mismatch")
     if not body.recipient_id:
         reasons.append("recipient_required")
+    release_reason, guidance = _public_guidance(body, projection, references, private_context)
+    if release_reason:
+        reasons.append(release_reason)
     if reasons:
         return reasons, None
     return [], {
         "recipient": "Content lead", "asset_type": body.asset_type, "asset": label, "purpose": purpose,
         "placement": projection["channel"], "option": body.option, "objective": projection["objective"],
-        "audience": projection["audience"], "buyer_persona": body.buyer_persona,
+        "audience": projection["audience"], "buyer_persona": projection["audience"], **guidance,
         "message": references[body.product_handle]["complete_wording"],
         "sources": {"observation": references[body.support_handle], "product": references[body.product_handle]},
-        "claim_limits": [body.sample_limit, "Use the complete product declaration with its qualifiers.",
+        "claim_limits": ["Use the complete product declaration with its qualifiers.",
                          "Buyer interpretation is limited to the recorded situation."],
         "approval": "Internal drafting only. A new asset requires its own independent QA and channel approval.",
     }
@@ -178,17 +277,22 @@ def _limited(view):
     # Research material, qualification details, raw model output and other staff's identity stay upstream.
     return {**view, "audience_mode": "recipient", "research": {}, "strategy": {}, "options": [], "assets": [],
             "references": [], "qualifications": [], "recipients": [], "scope": {}, "provenance": {},
-            "measurement": {"execution_authorized": False}}
+            "brief_release": None, "audience": None, "measurement": {"execution_authorized": False}}
 
 
 def _recipient_decision(view, receipt):
     view = _limited(view)
+    if receipt.result.get("version") != VERSION:
+        return _hold(view, "legacy_decision_requires_review", "Studio editor and independent QA")
     _present_decision(view, receipt)
     view["decision"] = {"receipt_id": receipt.id, "at": stamp(receipt.effective_at)}
     if view["work_order"]:
-        order = dict(view["work_order"])
-        order.pop("sources")
-        view["work_order"] = order
+        order = view["work_order"]
+        view["work_order"] = {key: order[key] for key in (
+            "recipient", "asset_type", "asset", "purpose", "placement", "option", "objective", "audience", "buyer_persona",
+            "message", "claim_limits", "approval", "brief", "guidance", "measurement")}
+    else:
+        view["permitted_product_wording"] = []
     return view
 
 
@@ -215,7 +319,13 @@ def _decide(tenant, did, user, db, body):
             conflict("Save and obtain independent QA for the current Studio revision first")
         return _hold(_limited(view), "save_and_approve", "Studio editor and independent QA")
     key = "strategy:" + digest(canonical([VERSION, doc.id, doc.qa_revision]))
-    prior = db.scalar(store.query(KnowledgeCommand).filter_by(snapshot_id=run.knowledge["c3_manifest"]["id"], operation=OP, key=key))
+    commands = store.query(KnowledgeCommand).filter_by(snapshot_id=run.knowledge["c3_manifest"]["id"], operation=OP)
+    legacy_key = "strategy:" + digest(canonical([LEGACY, doc.id, doc.qa_revision]))
+    if db.scalar(commands.filter_by(key=legacy_key)) is not None:
+        if body:
+            conflict("A legacy trial decision exists. Save and independently approve a new Studio revision.")
+        return _hold(_limited(view), "legacy_decision_requires_review", "Studio editor and independent QA")
+    prior = db.scalar(commands.filter_by(key=key))
     recipient_id = prior.result["request"].get("recipient_id") if prior else None
     if prior and not body and user.id not in (prior.actor, recipient_id):
         return _hold(_limited(view), "recipient_only", "Assigned Content lead")
@@ -238,6 +348,7 @@ def _decide(tenant, did, user, db, body):
             conflict("The final QA receipt changed")
         return _hold(_limited(view), "current_authority_required", "Independent Marketing reviewer")
     view["provenance"]["qa_receipt"] = qa_receipt.id
+    view["brief_release"] = brief_release(run.knowledge["c3_projection"])
     if prior:
         if body and (user.id != prior.actor or body.model_dump() != prior.result["request"]):
             conflict("This revision already has a different editorial decision. Save a new Studio revision.")
@@ -289,7 +400,11 @@ def _decide(tenant, did, user, db, body):
     handles = [h for h in (body.support_handle, body.contrary_handle, body.product_handle) if h]
     if any(h not in references for h in handles):
         conflict("Select evidence from this commission and revision")
-    reasons, order = evaluate(body, references, run.knowledge["c3_projection"], view["strategy"])
+    private_context = authors | {user.id, doc.reviewed_by}
+    raw_problem = view["provenance"]["worker_proposals"].get("research", {}).get("buyer_problem")
+    if raw_problem and raw_problem != view["research"].get("buyer_problem"):
+        private_context.add(raw_problem)
+    reasons, order = evaluate(body, references, run.knowledge["c3_projection"], view["strategy"], private_context=private_context)
     data = {"version": VERSION, "request": body.model_dump(), "scope": view["scope"], "placement": view["placement"],
             "provenance": view["provenance"], "qa_receipt": qa_receipt.id, "revision": doc.qa_revision,
             "content_digest": view["content_digest"], "reasons": reasons, "work_order": order,

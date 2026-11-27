@@ -1,0 +1,40 @@
+[
+  {
+    "id": "bench-gauge",
+    "company": "Xưởng Mô Phỏng A",
+    "brand": "Bàn Chuẩn A",
+    "product": "Dịch vụ kiểm tra đồng hồ áp suất",
+    "sku": "BAN-A",
+    "audience": "Trưởng ca hiệu chuẩn",
+    "objective": "Đặt lịch kiểm tra trên bàn chuẩn",
+    "kpi": "Tỷ lệ xác nhận lịch",
+    "buyer_action": "appointment",
+    "unit": "machine",
+    "amount": 380000,
+    "wording": "Phiếu bàn giao ghi mã đồng hồ.",
+    "qualifier": "Chỉ áp dụng với thiết bị đưa tới xưởng.",
+    "cta": "Đặt lịch và cung cấp mã thiết bị.",
+    "measurement": {
+      "version": "appointment-measurement/1",
+      "business_outcome": "appointment.confirmed_per_requested",
+      "window_days": 18,
+      "owner_role": "service_operations"
+    }
+  },
+  {
+    "id": "bin-divider",
+    "company": "Kho Mô Phỏng B",
+    "brand": "Ngăn Kho B",
+    "product": "Bộ vách chia ô kho",
+    "sku": "KHO-B",
+    "audience": "Phụ trách mua hàng kho phụ tùng",
+    "objective": "Yêu cầu báo giá vách chia theo kích thước ô",
+    "kpi": "Yêu cầu báo giá",
+    "buyer_action": "rfq",
+    "unit": "box",
+    "amount": 215000,
+    "wording": "Phiếu hỏi giá nhận kích thước ô và số hộp.",
+    "qualifier": "Kích thước lắp đặt phải được bên mua xác nhận.",
+    "cta": "Gửi kích thước ô và số hộp cần báo giá."
+  }
+]

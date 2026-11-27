@@ -1,5 +1,7 @@
 # Sổ năng lực phòng Marketing
 
+**RS-02 · Research và Strategy.** Runtime hiện hữu ghép dữ kiện và điều kiện đã duyệt, ghim KPI appointment và giới hạn handoff theo người nhận. Replay cho thấy một lời hứa giao nhanh vẫn nằm ở phần định vị của bản Studio ngoại tuyến. Câu hỏi giúp editor chọn giữa hai phương án hiện mới được minh họa bằng fixture kiểm soát; chưa đo cải thiện năng lực model hoặc thời gian biên tập. [Bảng theo brief và giới hạn QA](rs02/README.md)
+
 **Vòng #64 · Research, Strategy và Content.** Người duyệt có thể đối chiếu nguồn, chọn hướng thông điệp và giao đúng loại bản nháp theo placement cho người nhận nội bộ; khi thiếu căn cứ, Studio giữ việc và chỉ rõ ai cần xử lý. Phần mềm kiểm scope, revision và điều kiện phát hành. Việc xác nhận ý nghĩa của quan sát vẫn thuộc người được ủy quyền. [Phạm vi và cách tái hiện](round64/README.md)
 
 **Vòng #63 · Market Research → Strategy → Content.** Trên hai brief tổng hợp, công cụ ngoại tuyến thử truy từ một hướng thông điệp về quan sát, tình huống mua, quyền dùng nguồn và dữ kiện sản phẩm. Người giao brief vẫn phải đề xuất phương án, mã hóa quan sát, rà soát câu chữ và duyệt. Chưa đo công tiết kiệm hoặc kết quả thị trường. [Ca đối chứng](round63/README.md) · [Tiêu chí người nhận](round63/METHODS.md)

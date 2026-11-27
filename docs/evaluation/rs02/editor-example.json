@@ -1,0 +1,20 @@
+{
+  "authorship": "Codex acting as fixture writer, using the existing synthetic shift-handover commission. No independent human editor or practitioner contribution has been verified.",
+  "decision": "Choose the first internal web asset: a use guide for shift handover, or a terms panel for buyers checking specifications. No external publication.",
+  "buyer": "Shift supervisor preparing outgoing batches; a procurement reviewer may have a separate information need.",
+  "observation": "One shift supervisor used the two-tone tray to separate outgoing batches.",
+  "known_product": "The passive tray has two separate compartments.",
+  "hypotheses": [
+    "The supervisor understands the specification but cannot see how the tray fits the handover.",
+    "The supervisor understands sorting but needs specifications to decide whether to use the tray."
+  ],
+  "question": "At the last handover, what did you try to find immediately before using or putting aside the tray? Show the step or document you used.",
+  "evidence_needed": "Observe the next two eligible handovers with permission. Record the first information sought, a contrary case and whether the task stops. Convenience observations cannot establish prevalence.",
+  "switch_rule": "Both observations request specifications first: hold the guide and propose a terms panel for a new decision. Both show sorting confusion: keep the internal use guide. Mixed or unavailable observations: hold and ask the commissioning owner.",
+  "authority_hold": "No recruitment, customer contact or transfer of notes. A different audience, channel or asset direction needs qualification and review. A released guide authorizes internal drafting only.",
+  "decision_fields": {
+    "buying_situation": "A shift supervisor checks outgoing batches at a handover before separating them.",
+    "sample_limit": "One synthetic observation of one supervisor at one handover. No frequency estimate or verified purchasing demand.",
+    "interpretation": "Draft a use guide for this observed situation. Ask what was sought before using the tray. If both later handovers seek specifications first, hold the guide and ask the owner to review a terms panel. Mixed observations require a hold."
+  }
+}

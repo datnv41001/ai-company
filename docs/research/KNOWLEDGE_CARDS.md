@@ -1,5 +1,7 @@
 # Thẻ kiến thức ứng dụng
 
+**RS-02 · 27/11/2026 · Chọn một câu hỏi có thể đổi quyết định.** GOV.UK Service Manual, hướng dẫn thực hành chính thức cho đội phát triển dịch vụ. Trang [lập kế hoạch nghiên cứu](https://www.gov.uk/service-manual/user-research/plan-user-research-for-your-service) giúp chọn câu hỏi theo nhu cầu của đội; trang [thiết kế một vòng nghiên cứu](https://www.gov.uk/service-manual/user-research/plan-round-of-user-research) nối câu hỏi với nhóm cần quan sát và phương pháp; trang [hiểu nhu cầu người dùng](https://www.gov.uk/service-manual/user-research/start-by-learning-user-needs) phân biệt dữ kiện với giả định cần kiểm. Đã đọc nội dung công khai ngày 27/11/2026. Có căn cứ trực tiếp về phương pháp; chưa có thử nghiệm thị trường AMC chứng minh hiệu quả. Áp dụng bằng hai giải thích cạnh tranh và một quy tắc đổi hướng có thể kiểm ở cấp brief. [Ca thử, tác giả và giới hạn](../evaluation/rs02/editor-example.json) · [Đối chứng được đề xuất](../evaluation/rs02/NEXT-PROTOCOL.md)
+
 ## #61 · Đo một quyết định đủ căn cứ
 
 | Bài học và loại bằng chứng | Áp dụng tại AMC | Phép thử có thể bác bỏ |

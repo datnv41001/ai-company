@@ -1,0 +1,171 @@
+{
+  "contract": "rfq-qualification/1",
+  "contract_status": "proposed",
+  "environment": "synthetic_offline",
+  "scope": {
+    "tenant_id": "76ac76b5-304f-4b09-9d11-6b32641dbfcb",
+    "client_id": "31eb7b1a-1f38-4176-9f6f-deaedad80007",
+    "brand_id": "e541f244-68f1-4ed8-a0b1-2686df9e9449",
+    "campaign_id": "a7a39adb-92d6-4de8-8c74-27195fcae248"
+  },
+  "inquiry_id": "fca88fc6b8bdabb3174af5d0bff40bcbeb939cdb7801f152e7143a67f34e64c8",
+  "revision": 1,
+  "recorded_as_of": "2026-11-27T04:10:30.346121+00:00",
+  "generated_at": "2026-11-27T04:49:15.065845+00:00",
+  "request": {
+    "product_id": "c67b7510-22ec-4887-8ff4-5f222933564a",
+    "sku": "KG-P",
+    "unit": "box",
+    "quantity": "1",
+    "location": "Synthetic site A",
+    "required_date": "2026-11-29",
+    "contact_purpose": "quote_request",
+    "product_name": "Khay chia linh kiện Khe Gọn"
+  },
+  "rule": {
+    "status": "incomplete",
+    "missing": [
+      "commercial_moq"
+    ],
+    "recorded_state": "received",
+    "receipt_id": "08f5e408-1054-4807-a4e4-670f65e7dbbd"
+  },
+  "commercial": {
+    "status": "below_minimum",
+    "recorded_minimums": [
+      "5"
+    ],
+    "unit": "box",
+    "receipt_id": "08f5e408-1054-4807-a4e4-670f65e7dbbd",
+    "plan_id": "22268037-c96e-47ca-8f8b-e8bd73f69fc6",
+    "contract_digest": "013676e444a842f852fc89964edde2228c246d8ab2c8ce5210c03be09397ea3c",
+    "contract_revision": 1,
+    "policy": null,
+    "consent": "recorded_at_intake",
+    "origin_receipt_id": "08f5e408-1054-4807-a4e4-670f65e7dbbd"
+  },
+  "qualification": {
+    "status": "no_authorized_receipt",
+    "receipt_id": null,
+    "decision_owner": "Sales Operations or authorized delegate"
+  },
+  "assignment": {
+    "assignee_id": null,
+    "receipt_id": "08f5e408-1054-4807-a4e4-670f65e7dbbd"
+  },
+  "milestones": {
+    "sales_acceptance": {
+      "status": "no_receipt",
+      "receipt_id": null
+    },
+    "quote": {
+      "status": "no_receipt",
+      "receipt_id": null
+    },
+    "order": {
+      "status": "no_receipt",
+      "receipt_id": null
+    },
+    "confirmed_revenue": {
+      "status": "no_receipt",
+      "receipt_id": null
+    }
+  },
+  "attribution": {
+    "status": "landing_to_submission",
+    "creative": null,
+    "plan_digest": "b5f0f0ec2844f2e802f21feb50e48bfd9b3c78de749b8ab3713cbc208223c3e6",
+    "document_id": "50afd6f0-0bae-49cc-ba83-eb60bb1adc55",
+    "landing_revision": 2,
+    "landing_package": "35b3dea3-8715-492c-b3aa-b19456d83d2d",
+    "package_digest": "7bcd1181d5f08e27b8bcd52a30f523355aa4da5c2729b385dc05782a790ff59f",
+    "intake_contract_digest": "013676e444a842f852fc89964edde2228c246d8ab2c8ce5210c03be09397ea3c",
+    "visit_receipt": "16e68342-6652-4385-b3aa-a137a7c60e9a",
+    "submission_receipt": "08f5e408-1054-4807-a4e4-670f65e7dbbd"
+  },
+  "history": [
+    {
+      "receipt_id": "08f5e408-1054-4807-a4e4-670f65e7dbbd",
+      "sequence": 12,
+      "revision": 1,
+      "kind": "rfq",
+      "step": null,
+      "state": "received",
+      "recorded_at": "2026-11-27T04:10:30.346121+00:00",
+      "occurred_at": "2026-11-27T04:10:30.344733+00:00"
+    }
+  ],
+  "feedback": {
+    "observation": {
+      "receipt_id": "08f5e408-1054-4807-a4e4-670f65e7dbbd",
+      "revision": 1,
+      "quantity": "1",
+      "unit": "box",
+      "condition": "below_minimum"
+    },
+    "missing_evidence": [
+      "Buyer explanation",
+      "Comparable inquiries under the same offer and intake revision"
+    ],
+    "hypotheses": [
+      "The intake wording may leave the minimum unclear.",
+      "A buyer may be requesting a sample."
+    ],
+    "owner": "Marketing operator with offer owner",
+    "verification": "Review the exact published wording, then compare independent inquiries and permitted buyer explanations.",
+    "proposed_next_step": "Request a scoped review of the offer and intake wording."
+  },
+  "next_step": {
+    "owner": "Offer owner / Sales Operations",
+    "action": "Verify the recorded minimum and who may authorize an exception before routing."
+  },
+  "unknowns": [
+    "Official qualification decision",
+    "Real commercial documents and revenue",
+    "Buyer motivation",
+    "Current consent outside the archived receipts",
+    "Approved policy revision and effective interval",
+    "Complete creative-to-submission lineage"
+  ],
+  "plan_provenance": {
+    "plan_id": "22268037-c96e-47ca-8f8b-e8bd73f69fc6",
+    "plan_revision": 1,
+    "plan_digest": "b5f0f0ec2844f2e802f21feb50e48bfd9b3c78de749b8ab3713cbc208223c3e6",
+    "approval_receipt": "cdae7362-f94c-4a9f-ba71-5f7401f2fd01",
+    "approval_effective_at": "2026-11-27T11:10:05.337591+07:00",
+    "plan_digest_observed_by": "2026-11-27T04:10:30.346121+00:00",
+    "observing_submission_receipt": "08f5e408-1054-4807-a4e4-670f65e7dbbd",
+    "manifest": {
+      "id": "e8ccb3e3-3094-4129-9145-9310facdc408",
+      "digest": "5308cbee2a8e8b0ec904779af18932f5365a6d54714d4f00d3b2cbf0efa15081",
+      "brief_id": "b233404d-2dd4-4d3c-a62f-09d66fa3644b",
+      "workflow": "WF-13/landing-seo-draft@6"
+    }
+  },
+  "archived_measurement": {
+    "intake_funnel": {
+      "version": "intake-funnel/2",
+      "contract_digest": "013676e444a842f852fc89964edde2228c246d8ab2c8ce5210c03be09397ea3c",
+      "window": "approved_plan_lifetime",
+      "action": "rfq",
+      "landing_visits": 1,
+      "valid_submissions": 1,
+      "manual_requests": 0,
+      "inquiries": 1,
+      "qualified_rfqs": 0,
+      "sales_accepted": 0,
+      "quotes_issued": 0,
+      "orders": 0,
+      "confirmed_revenue_vnd": 0,
+      "current_states": {
+        "received": 1
+      },
+      "qualified_quotes": 0
+    },
+    "primary_measurement": null
+  },
+  "evidence_source": {
+    "path": "tests/fixtures/rfq_evidence/lineage.json",
+    "sha256": "ed9f793aeef37236957536cc9fc1068eceeeca8d206cf373ae8b357b3738ecea"
+  }
+}

@@ -1,0 +1,19 @@
+{
+  "case": "15-repeat-pure",
+  "source": {
+    "sha256": "78bf3434b29df64d1fd7777f6ea884174d2a92c6c4c69a435c3c3b11748e7d61"
+  },
+  "recorded_as_of": "2026-11-27T01:38:48.685303+00:00",
+  "revision": 1,
+  "expected": [
+    true,
+    true,
+    "no_authorized_receipt"
+  ],
+  "actual": [
+    true,
+    true,
+    "no_authorized_receipt"
+  ],
+  "result": "pass"
+}

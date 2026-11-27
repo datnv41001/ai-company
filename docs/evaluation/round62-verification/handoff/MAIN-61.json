@@ -1,0 +1,35 @@
+{
+  "applicable_rules": [],
+  "trial": "6f03bacbbc66445da740e42dac31899395e0a5c3",
+  "main_before": "83894ffefa0dbc720ae3d887e2f90e53f4b23ae0",
+  "pr61_ci": "not run, documentation only",
+  "branch_protection": false,
+  "merged_at": "2026-11-27T04:03:26Z",
+  "document_tree": "4a82f3402f01e2e140c3107bd6450986686b339f",
+  "parents": [
+    "83894ffefa0dbc720ae3d887e2f90e53f4b23ae0",
+    "6ce3211f23ea8f7d7d3038f93bcb74f1c1fc929a"
+  ],
+  "prior_product_tree": "1c40c678b0556cfa512b0a5f59c4eef457c60ef6",
+  "pr": 61,
+  "required_checks": [],
+  "merge": "2daa715dde0d13be227454822e32cabe6fd2f241",
+  "product_ci_60": 45931055472,
+  "maintainer": "datnv41001",
+  "head": "6ce3211f23ea8f7d7d3038f93bcb74f1c1fc929a",
+  "junit_archive": {
+    "path": "docs/evaluation/round61/main-junit.zip",
+    "bytes": 14708,
+    "sha256": "9035b4cfa2cd98ae69b0b60ee2bc7980f7ff7fd48625e19c357150eddbc6d0b4",
+    "crc": "verified"
+  },
+  "junit_xml": {
+    "entry": "api-regression.xml",
+    "bytes": 92709,
+    "sha256": "a2b8918aed608b69eee15b27ad30e0e447749e4c99eb96fb5e0c0c229498a3e0",
+    "cases": 686,
+    "failure": 0,
+    "error": 0,
+    "skipped": 2
+  }
+}

@@ -1,0 +1,43 @@
+{
+  "case": "01-original",
+  "source": {
+    "archive_sha256": "78bf3434b29df64d1fd7777f6ea884174d2a92c6c4c69a435c3c3b11748e7d61"
+  },
+  "recorded_as_of": "2026-11-27T01:38:48.685303+00:00",
+  "revision": 1,
+  "expected": {
+    "sku": null,
+    "quantity": "1",
+    "unit": "box",
+    "moq": [
+      "5"
+    ],
+    "status": "below_minimum",
+    "missing": [
+      "commercial_moq"
+    ],
+    "attribution": "creative_to_submission",
+    "source": "bfa89191b60c16f092b392dc085c1740095a5d445cd6f2a6bbf5deedded1d6f4",
+    "visit": "c0c10a9f-cef5-4581-87ba-19338db87474",
+    "approval": "no_authorized_receipt",
+    "assigned": null
+  },
+  "actual": {
+    "sku": null,
+    "quantity": "1",
+    "unit": "box",
+    "moq": [
+      "5"
+    ],
+    "status": "below_minimum",
+    "missing": [
+      "commercial_moq"
+    ],
+    "attribution": "creative_to_submission",
+    "source": "bfa89191b60c16f092b392dc085c1740095a5d445cd6f2a6bbf5deedded1d6f4",
+    "visit": "c0c10a9f-cef5-4581-87ba-19338db87474",
+    "approval": "no_authorized_receipt",
+    "assigned": null
+  },
+  "result": "pass"
+}

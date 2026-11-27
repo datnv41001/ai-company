@@ -1,0 +1,184 @@
+{
+  "backend": "PostgreSQL",
+  "campaign_a": "fae08fee-f7ef-4609-a1a9-f083ac652799",
+  "campaign_b": "d1a56fb6-d80b-405d-b64d-747710ef4e28",
+  "campaign_name": "Campaign A",
+  "client_a": "82c360bb-0e4b-4e82-a36e-f6ad8e2b13da",
+  "client_b": "cc1c30e6-220b-47be-92e3-733a8e6c0666",
+  "inquiry_id": "1dd8287b672f2830f8becfcc518306e2ec9509573f662b7f7128114c8787fd9d",
+  "cutoff": "2026-11-27T04:46:48.475801+00:00",
+  "revision_at_cutoff": 1,
+  "checks": [
+    {
+      "case": "customer sees its own client record fae08fee-f7ef-4609-a1a9-f083ac652799",
+      "expected": [
+        "82c360bb-0e4b-4e82-a36e-f6ad8e2b13da"
+      ],
+      "actual": [
+        "82c360bb-0e4b-4e82-a36e-f6ad8e2b13da"
+      ]
+    },
+    {
+      "case": "raw agency campaigns are internal fae08fee-f7ef-4609-a1a9-f083ac652799",
+      "expected": [
+        false,
+        false
+      ],
+      "actual": [
+        false,
+        false
+      ]
+    },
+    {
+      "case": "client Desk access fae08fee-f7ef-4609-a1a9-f083ac652799 fae08fee-f7ef-4609-a1a9-f083ac652799",
+      "expected": 404,
+      "actual": 404
+    },
+    {
+      "case": "client Desk access fae08fee-f7ef-4609-a1a9-f083ac652799 d1a56fb6-d80b-405d-b64d-747710ef4e28",
+      "expected": 404,
+      "actual": 404
+    },
+    {
+      "case": "customer sees its own client record d1a56fb6-d80b-405d-b64d-747710ef4e28",
+      "expected": [
+        "cc1c30e6-220b-47be-92e3-733a8e6c0666"
+      ],
+      "actual": [
+        "cc1c30e6-220b-47be-92e3-733a8e6c0666"
+      ]
+    },
+    {
+      "case": "raw agency campaigns are internal d1a56fb6-d80b-405d-b64d-747710ef4e28",
+      "expected": [
+        false,
+        false
+      ],
+      "actual": [
+        false,
+        false
+      ]
+    },
+    {
+      "case": "client Desk access d1a56fb6-d80b-405d-b64d-747710ef4e28 fae08fee-f7ef-4609-a1a9-f083ac652799",
+      "expected": 404,
+      "actual": 404
+    },
+    {
+      "case": "client Desk access d1a56fb6-d80b-405d-b64d-747710ef4e28 d1a56fb6-d80b-405d-b64d-747710ef4e28",
+      "expected": 404,
+      "actual": 404
+    },
+    {
+      "case": "foreign tenant operator",
+      "expected": 404,
+      "actual": 404
+    },
+    {
+      "case": "same agency, same campaign name without role B",
+      "expected": 404,
+      "actual": 404
+    },
+    {
+      "case": "same agency, same campaign name with role B",
+      "expected": [
+        "buyer-b-inquiry"
+      ],
+      "actual": [
+        "buyer-b-inquiry"
+      ]
+    },
+    {
+      "case": "same agency role A",
+      "expected": [
+        "1dd8287b672f2830f8becfcc518306e2ec9509573f662b7f7128114c8787fd9d"
+      ],
+      "actual": [
+        "1dd8287b672f2830f8becfcc518306e2ec9509573f662b7f7128114c8787fd9d"
+      ]
+    },
+    {
+      "case": "reviewer with both roles keeps reviewer projection",
+      "expected": [
+        "id",
+        "plan_id",
+        "revision",
+        "state"
+      ],
+      "actual": [
+        "id",
+        "plan_id",
+        "revision",
+        "state"
+      ]
+    },
+    {
+      "case": "second role does not inherit case assignment",
+      "expected": [],
+      "actual": []
+    },
+    {
+      "case": "unassigned Sales",
+      "expected": [],
+      "actual": []
+    },
+    {
+      "case": "operator direct restricted RFQ journal",
+      "expected": 0,
+      "actual": 0
+    },
+    {
+      "case": "reviewer direct restricted RFQ journal",
+      "expected": 0,
+      "actual": 0
+    },
+    {
+      "case": "existing approver sees synthetic journal",
+      "expected": true,
+      "actual": true
+    },
+    {
+      "case": "repeat reads at an old cutoff return the current Desk revision",
+      "expected": 2,
+      "actual": 2
+    },
+    {
+      "case": "repeat signed inbox GETs append no command",
+      "expected": 20,
+      "actual": 20
+    },
+    {
+      "case": "assigned Sales",
+      "expected": [
+        "1dd8287b672f2830f8becfcc518306e2ec9509573f662b7f7128114c8787fd9d"
+      ],
+      "actual": [
+        "1dd8287b672f2830f8becfcc518306e2ec9509573f662b7f7128114c8787fd9d"
+      ]
+    },
+    {
+      "case": "assigned Sales direct restricted RFQ journal",
+      "expected": 0,
+      "actual": 0
+    },
+    {
+      "case": "removed assignment with old cutoff",
+      "expected": [],
+      "actual": []
+    },
+    {
+      "case": "replacement assignee",
+      "expected": [
+        "1dd8287b672f2830f8becfcc518306e2ec9509573f662b7f7128114c8787fd9d"
+      ],
+      "actual": [
+        "1dd8287b672f2830f8becfcc518306e2ec9509573f662b7f7128114c8787fd9d"
+      ]
+    },
+    {
+      "case": "revoked role with old cutoff",
+      "expected": 404,
+      "actual": 404
+    }
+  ]
+}

@@ -1,0 +1,96 @@
+{
+  "head": "b82c2eadd424c1154452ae5e84071fccf0b2a4fa",
+  "trial": "3dd828f2435df9963a474118494b08a940256ee3",
+  "events": [
+    {
+      "run": "45938622029",
+      "url": "https://github.com/datnv41001/ai-company/actions/runs/45938622029",
+      "event": "push",
+      "run_attempt": 1,
+      "jobs": [
+        {
+          "name": "compose-browser (head)",
+          "outcome": "success",
+          "url": "https://github.com/datnv41001/ai-company/actions/runs/45938622029/job/140307525360"
+        },
+        {
+          "name": "api-tests (head)",
+          "outcome": "failure",
+          "url": "https://github.com/datnv41001/ai-company/actions/runs/45938622029/job/140307525511",
+          "suite": "1 failed, 704 passed, 2 skipped",
+          "cause": "duplicate fixture export to connected-review/journey/wf08-v2"
+        },
+        {
+          "name": "workforce-model (head)",
+          "outcome": "success",
+          "url": "https://github.com/datnv41001/ai-company/actions/runs/45938622029/job/140307525735",
+          "wall_seconds": 526.0,
+          "measured_pool_input": 2453,
+          "measured_pool_output": 766,
+          "scope": "pool smoke token counts, whole-job elapsed time, billing unknown"
+        },
+        {
+          "name": "matched-model",
+          "outcome": "skipped",
+          "url": "https://github.com/datnv41001/ai-company/actions/runs/45938622029/job/140310278384"
+        }
+      ]
+    },
+    {
+      "run": "45938629680",
+      "url": "https://github.com/datnv41001/ai-company/actions/runs/45938629680",
+      "event": "pull_request",
+      "run_attempt": 1,
+      "jobs": [
+        {
+          "name": "compose-browser (integration)",
+          "outcome": "success",
+          "url": "https://github.com/datnv41001/ai-company/actions/runs/45938629680/job/140307548888"
+        },
+        {
+          "name": "workforce-model (integration)",
+          "outcome": "success",
+          "url": "https://github.com/datnv41001/ai-company/actions/runs/45938629680/job/140307549144",
+          "wall_seconds": 571.0,
+          "measured_pool_input": 2453,
+          "measured_pool_output": 769,
+          "scope": "pool smoke token counts, whole-job elapsed time, billing unknown"
+        },
+        {
+          "name": "api-tests (integration)",
+          "outcome": "failure",
+          "url": "https://github.com/datnv41001/ai-company/actions/runs/45938629680/job/140307549165",
+          "suite": "1 failed, 704 passed, 2 skipped",
+          "cause": "duplicate fixture export to connected-review/journey/wf08-v2"
+        },
+        {
+          "name": "workforce-model (head)",
+          "outcome": "success",
+          "url": "https://github.com/datnv41001/ai-company/actions/runs/45938629680/job/140307549210",
+          "wall_seconds": 536.0,
+          "measured_pool_input": 2453,
+          "measured_pool_output": 766,
+          "scope": "pool smoke token counts, whole-job elapsed time, billing unknown"
+        },
+        {
+          "name": "api-tests (head)",
+          "outcome": "failure",
+          "url": "https://github.com/datnv41001/ai-company/actions/runs/45938629680/job/140307549212",
+          "suite": "1 failed, 704 passed, 2 skipped",
+          "cause": "duplicate fixture export to connected-review/journey/wf08-v2"
+        },
+        {
+          "name": "compose-browser (head)",
+          "outcome": "success",
+          "url": "https://github.com/datnv41001/ai-company/actions/runs/45938629680/job/140307549215"
+        },
+        {
+          "name": "matched-model",
+          "outcome": "skipped",
+          "url": "https://github.com/datnv41001/ai-company/actions/runs/45938629680/job/140310523177"
+        }
+      ]
+    }
+  ],
+  "resolution": "Each workflow test owns its evidence directory. The connected storyboard test still requires an empty export path. Fresh CI runs on the amended source; no model job rerun."
+}

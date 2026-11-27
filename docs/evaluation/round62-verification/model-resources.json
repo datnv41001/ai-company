@@ -1,0 +1,50 @@
+[
+  {
+    "event": "push",
+    "variant": "head",
+    "run_id": 45940579260,
+    "attempt": 1,
+    "job": "https://github.com/datnv41001/ai-company/actions/runs/45940579260/job/140313702212",
+    "complete_model_artifact": "https://github.com/datnv41001/ai-company/actions/runs/45940579260/artifacts/15172816525",
+    "unchanged_model_job_and_tail_lf_sha256": "45bc8427f7bce7bb3f265a7df67a5e3efba7b503b856d1dd09dcac4aae916dbc",
+    "whole_job_wall_seconds": 463.0,
+    "pool_input_tokens_reported": 2461,
+    "pool_output_tokens_reported": 813,
+    "pool_attempts": 9,
+    "token_scope": "standard pool smoke only; partial job telemetry",
+    "paid_model_api": "none; local model container on runner",
+    "actions_billed_cost": "unknown"
+  },
+  {
+    "event": "pull_request",
+    "variant": "head",
+    "run_id": 45940584846,
+    "attempt": 1,
+    "job": "https://github.com/datnv41001/ai-company/actions/runs/45940584846/job/140313719033",
+    "complete_model_artifact": "https://github.com/datnv41001/ai-company/actions/runs/45940584846/artifacts/15172497070",
+    "unchanged_model_job_and_tail_lf_sha256": "45bc8427f7bce7bb3f265a7df67a5e3efba7b503b856d1dd09dcac4aae916dbc",
+    "whole_job_wall_seconds": 354.0,
+    "pool_input_tokens_reported": 2517,
+    "pool_output_tokens_reported": 813,
+    "pool_attempts": 9,
+    "token_scope": "standard pool smoke only; partial job telemetry",
+    "paid_model_api": "none; local model container on runner",
+    "actions_billed_cost": "unknown"
+  },
+  {
+    "event": "pull_request",
+    "variant": "integration",
+    "run_id": 45940584846,
+    "attempt": 1,
+    "job": "https://github.com/datnv41001/ai-company/actions/runs/45940584846/job/140313719115",
+    "complete_model_artifact": "https://github.com/datnv41001/ai-company/actions/runs/45940584846/artifacts/15173350825",
+    "unchanged_model_job_and_tail_lf_sha256": "45bc8427f7bce7bb3f265a7df67a5e3efba7b503b856d1dd09dcac4aae916dbc",
+    "whole_job_wall_seconds": 508.0,
+    "pool_input_tokens_reported": 2517,
+    "pool_output_tokens_reported": 813,
+    "pool_attempts": 9,
+    "token_scope": "standard pool smoke only; partial job telemetry",
+    "paid_model_api": "none; local model container on runner",
+    "actions_billed_cost": "unknown"
+  }
+]

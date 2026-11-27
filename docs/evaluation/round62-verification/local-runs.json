@@ -1,0 +1,25 @@
+{
+  "scope": "baseline.xml belongs to the unchanged #61 document tree. full.xml is the development worktree run begun before the draft commit. The three CI JUnits certify the published head and trial.",
+  "early_runs": [
+    {
+      "scope": "fixture client isolation",
+      "observed": "expected own raw agency campaign; actual route hides both",
+      "resolution": "positive control on client record, both Desk and raw campaign negative, and two populated roles"
+    },
+    {
+      "scope": "fixture initialization",
+      "observed": "existing profile revision collided with expected 0",
+      "resolution": "dedicated second client/brand with its own populated inquiry"
+    },
+    {
+      "scope": "native pytest temp directory",
+      "observed": "PermissionError before tests",
+      "resolution": "explicit isolated writable temp directory"
+    },
+    {
+      "scope": "contrast measurement",
+      "observed": "3-digit CSS hexadecimal returned NaN",
+      "resolution": "expand shorthand; retained 4.5 criterion"
+    }
+  ]
+}

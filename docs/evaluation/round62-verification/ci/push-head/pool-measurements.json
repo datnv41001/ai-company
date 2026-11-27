@@ -1,0 +1,125 @@
+{
+  "campaigns": [
+    {
+      "campaign": "A",
+      "state": "failed",
+      "first_pass": 0,
+      "first_attempts": 1,
+      "attempts": 1,
+      "outcomes": {
+        "recipient_revoked": 1
+      },
+      "input_tokens": 0,
+      "output_tokens": 0,
+      "director_attempts": [
+        "recipient_revoked"
+      ],
+      "stage_attempts": [
+        {
+          "skill": "director",
+          "outcome": "recipient_revoked",
+          "attempt": 1,
+          "input_tokens": null,
+          "output_tokens": null
+        }
+      ],
+      "unconfirmed_usage": 1
+    },
+    {
+      "campaign": "B",
+      "state": "awaiting_qa",
+      "first_pass": 4,
+      "first_attempts": 4,
+      "attempts": 4,
+      "outcomes": {
+        "ok": 4
+      },
+      "input_tokens": 1320,
+      "output_tokens": 474,
+      "director_attempts": [
+        "ok"
+      ],
+      "stage_attempts": [
+        {
+          "skill": "director",
+          "outcome": "ok",
+          "attempt": 1,
+          "input_tokens": 216,
+          "output_tokens": 147
+        },
+        {
+          "skill": "research",
+          "outcome": "ok",
+          "attempt": 1,
+          "input_tokens": 288,
+          "output_tokens": 106
+        },
+        {
+          "skill": "strategy",
+          "outcome": "ok",
+          "attempt": 1,
+          "input_tokens": 372,
+          "output_tokens": 89
+        },
+        {
+          "skill": "content",
+          "outcome": "ok",
+          "attempt": 1,
+          "input_tokens": 444,
+          "output_tokens": 132
+        }
+      ],
+      "unconfirmed_usage": 0
+    },
+    {
+      "campaign": "C",
+      "state": "awaiting_qa",
+      "first_pass": 4,
+      "first_attempts": 4,
+      "attempts": 4,
+      "outcomes": {
+        "ok": 4
+      },
+      "input_tokens": 1141,
+      "output_tokens": 339,
+      "director_attempts": [
+        "ok"
+      ],
+      "stage_attempts": [
+        {
+          "skill": "director",
+          "outcome": "ok",
+          "attempt": 1,
+          "input_tokens": 216,
+          "output_tokens": 92
+        },
+        {
+          "skill": "research",
+          "outcome": "ok",
+          "attempt": 1,
+          "input_tokens": 267,
+          "output_tokens": 72
+        },
+        {
+          "skill": "strategy",
+          "outcome": "ok",
+          "attempt": 1,
+          "input_tokens": 300,
+          "output_tokens": 78
+        },
+        {
+          "skill": "content",
+          "outcome": "ok",
+          "attempt": 1,
+          "input_tokens": 358,
+          "output_tokens": 97
+        }
+      ],
+      "unconfirmed_usage": 0
+    }
+  ],
+  "worker_campaign_counts": [
+    2,
+    1
+  ]
+}

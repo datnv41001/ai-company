@@ -1,0 +1,67 @@
+{
+  "case": "09-wrong-unit",
+  "source": {
+    "event": {
+      "id": "synthetic-intake",
+      "campaign_id": "campaign-a",
+      "scope": {
+        "tenant_id": "example-agency",
+        "client_id": "client-a",
+        "brand_id": "brand-a",
+        "campaign_id": "campaign-a"
+      },
+      "plan_id": "plan-a",
+      "sequence": 7,
+      "kind": "rfq",
+      "entity": "leads",
+      "entity_id": "inquiry-a",
+      "recorded_at": "2026-11-01T10:00:00Z",
+      "value": {
+        "id": "inquiry-a",
+        "plan_id": "plan-a",
+        "revision": 1,
+        "product_id": "demo-product",
+        "unit": "kg",
+        "quantity": "5",
+        "minimum_order_quantities": [
+          "5"
+        ],
+        "intake": {
+          "revision": 1,
+          "contract_digest": "fixture-contract",
+          "consent": {
+            "granted": true,
+            "purpose": "quote_request"
+          },
+          "fields": [
+            {
+              "maps_to": "quantity",
+              "unit": "box"
+            }
+          ]
+        },
+        "contact_purpose": "quote_request",
+        "location": "test site",
+        "required_date": "2026-11-09",
+        "assignee_id": null,
+        "occurred_at": "2026-10-31T09:00:00Z",
+        "last_event_at": "2026-10-31T09:00:00Z",
+        "session_id": "session-a",
+        "missing": [],
+        "state": "qualified",
+        "sales_accepted": false,
+        "quoted": false,
+        "ordered": false,
+        "confirmed": false,
+        "gross_vnd": 0,
+        "refunded_vnd": 0
+      }
+    },
+    "synthetic_policy": null
+  },
+  "recorded_as_of": "2026-11-02T10:00:00Z",
+  "revision": 1,
+  "expected": "unit_mismatch",
+  "actual": "unit_mismatch",
+  "result": "pass"
+}

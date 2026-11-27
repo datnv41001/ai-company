@@ -1,0 +1,10 @@
+{
+  "stage": "red-pinned",
+  "tracked_product": "555b968c85b09d52d50d2fd165ea9ff320e5afcd",
+  "tracked_tree": "a202c3d9287d23fc8f6a4e34ef3f7220ef3c4886",
+  "changed_tracked_files": [],
+  "added_test": "tests/test_storyboard_semantics.py",
+  "test_sha256": "dba8928812372a31ab5aea78ed4d7fcf591d674a804f2211ec247d37cb3d6825",
+  "setup": "Separate detached worktree. Reviewed application, catalog and migrations unchanged. New tests overlaid as an untracked file.",
+  "method": "Isolated loopback PostgreSQL fixture, actual deterministic queue workers, API editor / submit / independent revision QA. No model calls or real customer data."
+}

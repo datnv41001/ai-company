@@ -1,0 +1,622 @@
+{
+  "action": "appointment",
+  "style": "plain",
+  "signed_intent": {
+    "purpose": "Nhận đề nghị đặt lịch Buổi khảo sát luồng nhận hàng Luồng Rõ",
+    "deliverable_type": "video_storyboard",
+    "audience": "Trưởng vận hành kho phân phối",
+    "product": "Buổi khảo sát luồng nhận hàng Luồng Rõ",
+    "channel": "vertical-social",
+    "region": "HN",
+    "locale": "vi-VN",
+    "requirements": [
+      "Soạn storyboard có hình minh họa.",
+      "Minh họa dữ kiện sản phẩm trước lời mời hành động."
+    ],
+    "exclusions": [
+      "Không cam kết tiết kiệm chi phí, chứng nhận tuân thủ hay thời gian bàn giao."
+    ],
+    "acceptance_criteria": [
+      "Có phụ đề tiếng Việt khớp lời thoại.",
+      "Đối chiếu điều kiện thương mại theo đúng nguồn."
+    ],
+    "buyer_action": "appointment",
+    "editorial_style": "plain",
+    "duration_seconds": 32,
+    "aspect_ratio": "9:16",
+    "rights": "synthetic_illustration_only"
+  },
+  "source_facts": [
+    {
+      "id": "F1",
+      "wording": "VND 760000 / 1 visit (tax included)",
+      "qualifiers": [
+        "Người phụ trách xác nhận lịch sau khi nhận đề nghị."
+      ],
+      "category": "price",
+      "price": {
+        "moq": "1",
+        "tax": "included",
+        "unit": "visit",
+        "currency": "VND",
+        "tier_max": null,
+        "tier_min": "1",
+        "conditions": [
+          "Người phụ trách xác nhận lịch sau khi nhận đề nghị."
+        ],
+        "amount_minor": 760000,
+        "basis_quantity": "1"
+      },
+      "quantity": "1"
+    },
+    {
+      "id": "F2",
+      "wording": "Bàn giao sơ đồ luồng nhận hàng",
+      "qualifiers": [
+        "Trong phạm vi buổi khảo sát."
+      ],
+      "category": "description"
+    }
+  ],
+  "run": "20fed1f6-451c-43a0-a29a-f357ff4a8b08",
+  "manifest": {
+    "digest": "50f998aacec76c599bdca5ed7689c342d9b28e73d82ecb1b25e567a5d98c4891",
+    "id": "2d183371-ff0d-44ec-8fc8-ac3a197cdb86"
+  },
+  "content": {
+    "angle": "show_evidence",
+    "audience": "Trưởng vận hành kho phân phối",
+    "audience_hypotheses": [
+      "Ca giao nhận có thể tạo điểm chờ; cần quan sát trước khi kết luận."
+    ],
+    "channel": "vertical-social",
+    "channel_copy": {
+      "action": "Gửi đề nghị khảo sát",
+      "declarations": [
+        {
+          "lines": [
+            "Giá tham khảo: 760.000 VND / 1 lượt, đã gồm thuế.",
+            "Đơn tối thiểu: 1 lượt.",
+            "Áp dụng từ 1 lượt.",
+            "Số lượng đối chiếu: 1 lượt.",
+            "Người phụ trách xác nhận lịch sau khi nhận đề nghị."
+          ],
+          "source_id": "F1"
+        },
+        {
+          "lines": [
+            "Bàn giao sơ đồ luồng nhận hàng",
+            "Trong phạm vi buổi khảo sát."
+          ],
+          "source_id": "F2"
+        }
+      ],
+      "opening": "Bạn muốn hẹn lúc nào?"
+    },
+    "editorial_style": "plain",
+    "manifest": {
+      "digest": "50f998aacec76c599bdca5ed7689c342d9b28e73d82ecb1b25e567a5d98c4891",
+      "id": "2d183371-ff0d-44ec-8fc8-ac3a197cdb86"
+    },
+    "message_source_id": "F2",
+    "method": "deterministic",
+    "production_direction": "Vẽ hai trạng thái minh họa; đặt dữ kiện đã duyệt ngay dưới hình.",
+    "purpose": "Nhận đề nghị đặt lịch Buổi khảo sát luồng nhận hàng Luồng Rõ",
+    "question_to_validate": "Người mua muốn biết phạm vi nào trước khi đề nghị đặt lịch?",
+    "role": "ai-copywriter-content-strategist",
+    "version": "amc.content-storyboard-handoff/1"
+  },
+  "original": {
+    "audience": "Trưởng vận hành kho phân phối",
+    "brand": "Luồng Rõ",
+    "brand_direction": "Liên kết mỗi cảnh với dữ kiện đã duyệt; dùng câu ngắn.",
+    "brief_fulfillment": {
+      "fact_handles": [
+        "F1",
+        "F2"
+      ],
+      "manifest": {
+        "digest": "50f998aacec76c599bdca5ed7689c342d9b28e73d82ecb1b25e567a5d98c4891",
+        "id": "2d183371-ff0d-44ec-8fc8-ac3a197cdb86"
+      },
+      "ready_for_qa": true,
+      "rows": [
+        {
+          "evidence": "signed objective, action-compatible opening, current CTA and requested preparation",
+          "field": "purpose",
+          "requested": "Nhận đề nghị đặt lịch Buổi khảo sát luồng nhận hàng Luồng Rõ",
+          "status": "met"
+        },
+        {
+          "evidence": "spoken and captioned opening against action-specific style alternatives",
+          "field": "editorial_style",
+          "requested": "plain",
+          "status": "met"
+        },
+        {
+          "evidence": "shots[].visual; rights",
+          "field": "requirements[0]",
+          "requested": "Soạn storyboard có hình minh họa.",
+          "status": "met"
+        },
+        {
+          "evidence": "proof before action; source_ids",
+          "field": "requirements[1]",
+          "requested": "Minh họa dữ kiện sản phẩm trước lời mời hành động.",
+          "status": "met"
+        },
+        {
+          "evidence": "shots[].voice; WebVTT",
+          "field": "acceptance_criteria[0]",
+          "requested": "Có phụ đề tiếng Việt khớp lời thoại.",
+          "status": "met"
+        },
+        {
+          "evidence": "source_refs.declarations; terms or recorded missing price",
+          "field": "acceptance_criteria[1]",
+          "requested": "Đối chiếu điều kiện thương mại theo đúng nguồn.",
+          "status": "met"
+        },
+        {
+          "evidence": "Vietnamese vertical-social script and captions, 9:16",
+          "field": "channel",
+          "requested": "vertical-social",
+          "status": "met"
+        }
+      ],
+      "version": "amc.storyboard-fulfillment/1"
+    },
+    "buyer_action": "appointment",
+    "channel": "vertical-social",
+    "concept": "service_deliverable",
+    "content_handoff_digest": "1878fc9ce94d7c767a8741eefb0d434dca5333951e8da7b3998e2ca74cef1aa7",
+    "cta": "Gửi đề nghị khảo sát",
+    "duration_seconds": 32,
+    "editorial": {
+      "note": "Đối chiếu giá theo nguồn đã ghim.",
+      "price_source_ids": [
+        "F1"
+      ],
+      "price_status": "approved"
+    },
+    "format": "9:16",
+    "hook": "Bạn muốn hẹn lúc nào?",
+    "hook_variant": "direct",
+    "method_ref": {
+      "digest": "db4558733a1d4924ee5e5aa2b61f82f918973bc4551514637054645af1118819",
+      "path": "catalog/video-storyboard-sop-v1.json",
+      "revision": "wf08-production-sop/1"
+    },
+    "product": "Buổi khảo sát luồng nhận hàng Luồng Rõ",
+    "rights": "synthetic_illustration_only",
+    "shots": [
+      {
+        "caption": "Bạn muốn hẹn lúc nào?",
+        "end_s": 5,
+        "purpose": "hook",
+        "source_ids": [],
+        "start_s": 0,
+        "visual": "Vẽ hai trạng thái minh họa; đặt dữ kiện đã duyệt ngay dưới hình.",
+        "visual_mode": "process",
+        "voice": "Bạn muốn hẹn lúc nào?"
+      },
+      {
+        "caption": "Bàn giao sơ đồ luồng nhận hàng. Trong\nphạm vi buổi khảo sát.",
+        "end_s": 12,
+        "purpose": "proof",
+        "source_ids": [
+          "F2"
+        ],
+        "start_s": 5,
+        "visual": "Vẽ luồng bàn giao rồi phóng vào kết quả được duyệt. Ghi đúng phạm vi của F2.",
+        "visual_mode": "document",
+        "voice": "Bàn giao sơ đồ luồng nhận hàng. Trong phạm vi buổi khảo sát."
+      },
+      {
+        "caption": "Giá tham khảo: 760.000 VND / 1 lượt, đã\ngồm thuế. Đơn tối thiểu: 1 lượt.",
+        "end_s": 20,
+        "purpose": "terms",
+        "source_ids": [
+          "F1"
+        ],
+        "start_s": 12,
+        "visual": "Tách số tiền, đơn vị tính thuế và mức đặt tối thiểu.",
+        "visual_mode": "offer",
+        "voice": "Giá tham khảo: 760.000 VND / 1 lượt, đã gồm thuế. Đơn tối thiểu: 1 lượt."
+      },
+      {
+        "caption": "Người phụ trách xác nhận lịch sau khi\nnhận đề nghị.",
+        "end_s": 27,
+        "purpose": "conditions",
+        "source_ids": [
+          "F1"
+        ],
+        "start_s": 20,
+        "visual": "Giữ nguyên điều kiện trên thẻ chữ.",
+        "visual_mode": "document",
+        "voice": "Người phụ trách xác nhận lịch sau khi nhận đề nghị."
+      },
+      {
+        "caption": "Gửi đề nghị khảo sát",
+        "end_s": 32,
+        "purpose": "action",
+        "source_ids": [],
+        "start_s": 27,
+        "visual": "Hiện nút gửi yêu cầu; không vẽ dấu đã xác nhận.",
+        "visual_mode": "request",
+        "voice": "Gửi đề nghị khảo sát"
+      }
+    ],
+    "source_refs": {
+      "declarations": {
+        "F1": {
+          "category": "price",
+          "conditions": [
+            "Người phụ trách xác nhận lịch sau khi nhận đề nghị."
+          ],
+          "qualifiers": [
+            "Người phụ trách xác nhận lịch sau khi nhận đề nghị."
+          ],
+          "wording": "VND 760000 / 1 visit (tax included)"
+        },
+        "F2": {
+          "category": "description",
+          "conditions": [],
+          "qualifiers": [
+            "Trong phạm vi buổi khảo sát."
+          ],
+          "wording": "Bàn giao sơ đồ luồng nhận hàng"
+        }
+      },
+      "facts": [
+        "F1",
+        "F2"
+      ],
+      "guidelines": "b44545db196285fb8c3b7ed25b603c0e333e8d9374725e561a5c3375be4bcf26",
+      "manifest": {
+        "digest": "50f998aacec76c599bdca5ed7689c342d9b28e73d82ecb1b25e567a5d98c4891",
+        "id": "2d183371-ff0d-44ec-8fc8-ac3a197cdb86"
+      }
+    },
+    "version": "amc.storyboard/2",
+    "vtt": "WEBVTT\n\n1\n00:00:00.000 --> 00:00:05.000\nBạn muốn hẹn lúc nào?\n\n2\n00:00:05.000 --> 00:00:12.000\nBàn giao sơ đồ luồng nhận hàng. Trong\nphạm vi buổi khảo sát.\n\n3\n00:00:12.000 --> 00:00:20.000\nGiá tham khảo: 760.000 VND / 1 lượt, đã\ngồm thuế. Đơn tối thiểu: 1 lượt.\n\n4\n00:00:20.000 --> 00:00:27.000\nNgười phụ trách xác nhận lịch sau khi\nnhận đề nghị.\n\n5\n00:00:27.000 --> 00:00:32.000\nGửi đề nghị khảo sát\n"
+  },
+  "alternate": {
+    "audience": "Trưởng vận hành kho phân phối",
+    "brand": "Luồng Rõ",
+    "brand_direction": "Liên kết mỗi cảnh với dữ kiện đã duyệt; dùng câu ngắn.",
+    "brief_fulfillment": {
+      "version": "amc.storyboard-fulfillment/1",
+      "rows": [
+        {
+          "field": "purpose",
+          "requested": "Nhận đề nghị đặt lịch Buổi khảo sát luồng nhận hàng Luồng Rõ",
+          "status": "met",
+          "evidence": "signed objective, action-compatible opening, current CTA and requested preparation"
+        },
+        {
+          "field": "editorial_style",
+          "requested": "plain",
+          "status": "met",
+          "evidence": "spoken and captioned opening against action-specific style alternatives"
+        },
+        {
+          "field": "requirements[0]",
+          "requested": "Soạn storyboard có hình minh họa.",
+          "status": "met",
+          "evidence": "shots[].visual; rights"
+        },
+        {
+          "field": "requirements[1]",
+          "requested": "Minh họa dữ kiện sản phẩm trước lời mời hành động.",
+          "status": "met",
+          "evidence": "proof before action; source_ids"
+        },
+        {
+          "field": "acceptance_criteria[0]",
+          "requested": "Có phụ đề tiếng Việt khớp lời thoại.",
+          "status": "met",
+          "evidence": "shots[].voice; WebVTT"
+        },
+        {
+          "field": "acceptance_criteria[1]",
+          "requested": "Đối chiếu điều kiện thương mại theo đúng nguồn.",
+          "status": "met",
+          "evidence": "source_refs.declarations; terms or recorded missing price"
+        },
+        {
+          "field": "channel",
+          "requested": "vertical-social",
+          "status": "met",
+          "evidence": "Vietnamese vertical-social script and captions, 9:16"
+        }
+      ],
+      "ready_for_qa": true,
+      "manifest": {
+        "digest": "50f998aacec76c599bdca5ed7689c342d9b28e73d82ecb1b25e567a5d98c4891",
+        "id": "2d183371-ff0d-44ec-8fc8-ac3a197cdb86"
+      },
+      "fact_handles": [
+        "F1",
+        "F2"
+      ]
+    },
+    "buyer_action": "appointment",
+    "channel": "vertical-social",
+    "concept": "service_deliverable",
+    "content_handoff_digest": "1878fc9ce94d7c767a8741eefb0d434dca5333951e8da7b3998e2ca74cef1aa7",
+    "cta": "Gửi đề nghị khảo sát",
+    "duration_seconds": 32,
+    "editorial": {
+      "note": "Đối chiếu giá theo nguồn đã ghim.",
+      "price_source_ids": [
+        "F1"
+      ],
+      "price_status": "approved"
+    },
+    "format": "9:16",
+    "hook": "Bạn cần biết gì trước khi hẹn?",
+    "hook_variant": "style_alternate",
+    "method_ref": {
+      "digest": "db4558733a1d4924ee5e5aa2b61f82f918973bc4551514637054645af1118819",
+      "path": "catalog/video-storyboard-sop-v1.json",
+      "revision": "wf08-production-sop/1"
+    },
+    "product": "Buổi khảo sát luồng nhận hàng Luồng Rõ",
+    "rights": "synthetic_illustration_only",
+    "shots": [
+      {
+        "caption": "Bạn cần biết gì trước khi hẹn?",
+        "end_s": 5,
+        "purpose": "hook",
+        "source_ids": [],
+        "start_s": 0,
+        "visual": "Vẽ hai trạng thái minh họa; đặt dữ kiện đã duyệt ngay dưới hình.",
+        "visual_mode": "process",
+        "voice": "Bạn cần biết gì trước khi hẹn?"
+      },
+      {
+        "caption": "Bàn giao sơ đồ luồng nhận hàng. Trong\nphạm vi buổi khảo sát.",
+        "end_s": 12,
+        "purpose": "proof",
+        "source_ids": [
+          "F2"
+        ],
+        "start_s": 5,
+        "visual": "Vẽ luồng bàn giao rồi phóng vào kết quả được duyệt. Ghi đúng phạm vi của F2.",
+        "visual_mode": "document",
+        "voice": "Bàn giao sơ đồ luồng nhận hàng. Trong phạm vi buổi khảo sát."
+      },
+      {
+        "caption": "Giá tham khảo: 760.000 VND / 1 lượt, đã\ngồm thuế. Đơn tối thiểu: 1 lượt.",
+        "end_s": 20,
+        "purpose": "terms",
+        "source_ids": [
+          "F1"
+        ],
+        "start_s": 12,
+        "visual": "Tách số tiền, đơn vị tính thuế và mức đặt tối thiểu.",
+        "visual_mode": "offer",
+        "voice": "Giá tham khảo: 760.000 VND / 1 lượt, đã gồm thuế. Đơn tối thiểu: 1 lượt."
+      },
+      {
+        "caption": "Người phụ trách xác nhận lịch sau khi\nnhận đề nghị.",
+        "end_s": 27,
+        "purpose": "conditions",
+        "source_ids": [
+          "F1"
+        ],
+        "start_s": 20,
+        "visual": "Giữ nguyên điều kiện trên thẻ chữ.",
+        "visual_mode": "document",
+        "voice": "Người phụ trách xác nhận lịch sau khi nhận đề nghị."
+      },
+      {
+        "caption": "Gửi đề nghị khảo sát",
+        "end_s": 32,
+        "purpose": "action",
+        "source_ids": [],
+        "start_s": 27,
+        "visual": "Hiện nút gửi yêu cầu; không vẽ dấu đã xác nhận.",
+        "visual_mode": "request",
+        "voice": "Gửi đề nghị khảo sát"
+      }
+    ],
+    "source_refs": {
+      "declarations": {
+        "F1": {
+          "category": "price",
+          "conditions": [
+            "Người phụ trách xác nhận lịch sau khi nhận đề nghị."
+          ],
+          "qualifiers": [
+            "Người phụ trách xác nhận lịch sau khi nhận đề nghị."
+          ],
+          "wording": "VND 760000 / 1 visit (tax included)"
+        },
+        "F2": {
+          "category": "description",
+          "conditions": [],
+          "qualifiers": [
+            "Trong phạm vi buổi khảo sát."
+          ],
+          "wording": "Bàn giao sơ đồ luồng nhận hàng"
+        }
+      },
+      "facts": [
+        "F1",
+        "F2"
+      ],
+      "guidelines": "b44545db196285fb8c3b7ed25b603c0e333e8d9374725e561a5c3375be4bcf26",
+      "manifest": {
+        "digest": "50f998aacec76c599bdca5ed7689c342d9b28e73d82ecb1b25e567a5d98c4891",
+        "id": "2d183371-ff0d-44ec-8fc8-ac3a197cdb86"
+      }
+    },
+    "version": "amc.storyboard/2",
+    "vtt": "WEBVTT\n\n1\n00:00:00.000 --> 00:00:05.000\nBạn cần biết gì trước khi hẹn?\n\n2\n00:00:05.000 --> 00:00:12.000\nBàn giao sơ đồ luồng nhận hàng. Trong\nphạm vi buổi khảo sát.\n\n3\n00:00:12.000 --> 00:00:20.000\nGiá tham khảo: 760.000 VND / 1 lượt, đã\ngồm thuế. Đơn tối thiểu: 1 lượt.\n\n4\n00:00:20.000 --> 00:00:27.000\nNgười phụ trách xác nhận lịch sau khi\nnhận đề nghị.\n\n5\n00:00:27.000 --> 00:00:32.000\nGửi đề nghị khảo sát\n"
+  },
+  "edit_receipt": {
+    "run_id": "20fed1f6-451c-43a0-a29a-f357ff4a8b08",
+    "document_id": "1b697b71-7abe-48cb-b84a-1fe252c2dd26",
+    "revision": 2,
+    "content_digest": "f9dbd7770fb80b7c54894623a28961d1a3eed3303ea5f375d7675e832f74e692",
+    "baseline_revision": 1,
+    "baseline_content_digest": "119694625c21970ab32e262bd23971cd8de98c834a8dd2e5fcd12e28dc2f899e",
+    "baseline_board_digest": "7f22a7965992549c0604102e0d2828f6de0f045ad75a688c29144b7eb14abb0e",
+    "board_digest": "7eb933ce4280c3259bad47cc5a2edf8d3ca11bd64383ec5735434da5f5ff33af",
+    "edits": {
+      "expected_qa_revision": 1,
+      "expected_content_digest": "119694625c21970ab32e262bd23971cd8de98c834a8dd2e5fcd12e28dc2f899e",
+      "mode": "controlled_hook",
+      "hook_variant": "style_alternate",
+      "shot_edits": []
+    },
+    "comparison": {
+      "mode": "controlled_hook",
+      "classification": "offline_single_hook_design",
+      "changed_variables": [
+        "hook"
+      ],
+      "baseline_holds": {
+        "body": "f92b1a114b1d90038726cf79adcd11df4db7cc2dcd5f7ab7397f571a3a832c15",
+        "opening_structure": "17585df992f5875a90a7196d7e8a31312f76e61481fbad2ce18d3c259b9b32d5",
+        "timeline": "646b46ab8edb6ac00bea07663979d6ce2fc2d3c9264eb1fa6017385f58868942",
+        "visual": "de08315659945aa6a9554e99bba03a465fa6cf5f608edb726947734a31e8f4be",
+        "cta": "4be52f81a229edaae071278a3eb1aa6c222dab57478c174599022f9dcc05ab93",
+        "offer_claims_rights": "6ee791d47b4e72001563cd49b7d6158ec18911168f075a53065bbff2825c8670",
+        "brief_and_direction": "ae0d805e8b37fdea9ec0d194ac4fc5f4acf67e816395f3eaa6f8c0099292f972",
+        "landing": "7ddc173cbd9de7f9d7659d5c33879a17ba4f96a8d94747046478cced715cf89d",
+        "distribution": "1759933be3ff6781aea2344a76b40530fca70979d032f2ad9c4ee3075306d061"
+      },
+      "candidate_holds": {
+        "body": "f92b1a114b1d90038726cf79adcd11df4db7cc2dcd5f7ab7397f571a3a832c15",
+        "opening_structure": "17585df992f5875a90a7196d7e8a31312f76e61481fbad2ce18d3c259b9b32d5",
+        "timeline": "646b46ab8edb6ac00bea07663979d6ce2fc2d3c9264eb1fa6017385f58868942",
+        "visual": "de08315659945aa6a9554e99bba03a465fa6cf5f608edb726947734a31e8f4be",
+        "cta": "4be52f81a229edaae071278a3eb1aa6c222dab57478c174599022f9dcc05ab93",
+        "offer_claims_rights": "6ee791d47b4e72001563cd49b7d6158ec18911168f075a53065bbff2825c8670",
+        "brief_and_direction": "ae0d805e8b37fdea9ec0d194ac4fc5f4acf67e816395f3eaa6f8c0099292f972",
+        "landing": "7ddc173cbd9de7f9d7659d5c33879a17ba4f96a8d94747046478cced715cf89d",
+        "distribution": "1759933be3ff6781aea2344a76b40530fca70979d032f2ad9c4ee3075306d061"
+      },
+      "landing": {
+        "kind": "offline_no_landing"
+      },
+      "distribution": {
+        "kind": "offline_no_delivery",
+        "channel": "vertical-social",
+        "audience": "Trưởng vận hành kho phân phối"
+      },
+      "observed_traffic": 0,
+      "outcome": null,
+      "external_calls": 0,
+      "spend_microusd": 0
+    }
+  },
+  "qa": [
+    [
+      "dea9eb56-6621-4f9e-8a8c-daae225cf5e6",
+      "b30c5b71-c31e-4d84-a3e3-020bc5bb7f72",
+      {
+        "run_id": "20fed1f6-451c-43a0-a29a-f357ff4a8b08",
+        "document_id": "1b697b71-7abe-48cb-b84a-1fe252c2dd26",
+        "qa_revision": 1,
+        "hook_variant": "direct",
+        "content_digest": "119694625c21970ab32e262bd23971cd8de98c834a8dd2e5fcd12e28dc2f899e",
+        "release_digest": "8751146323a37269206ce40d80465a29155edbad8fcf8b88673f12902fe6b524",
+        "manifest_digest": "50f998aacec76c599bdca5ed7689c342d9b28e73d82ecb1b25e567a5d98c4891",
+        "storyboard_digest": "7f22a7965992549c0604102e0d2828f6de0f045ad75a688c29144b7eb14abb0e"
+      }
+    ],
+    [
+      "b6fd1ce7-8024-42ca-803f-08054924d21f",
+      "b30c5b71-c31e-4d84-a3e3-020bc5bb7f72",
+      {
+        "run_id": "20fed1f6-451c-43a0-a29a-f357ff4a8b08",
+        "document_id": "1b697b71-7abe-48cb-b84a-1fe252c2dd26",
+        "qa_revision": 2,
+        "hook_variant": "style_alternate",
+        "content_digest": "f9dbd7770fb80b7c54894623a28961d1a3eed3303ea5f375d7675e832f74e692",
+        "release_digest": "8751146323a37269206ce40d80465a29155edbad8fcf8b88673f12902fe6b524",
+        "edition_receipt": "46404631-361b-43d0-acfa-52fc7ec2e45e",
+        "manifest_digest": "50f998aacec76c599bdca5ed7689c342d9b28e73d82ecb1b25e567a5d98c4891",
+        "storyboard_digest": "7eb933ce4280c3259bad47cc5a2edf8d3ca11bd64383ec5735434da5f5ff33af",
+        "edition_receipt_digest": "bf9af09f351a432961f5c7343106709322389231c85e88d2fcb5df6e942722cd"
+      }
+    ]
+  ],
+  "worker_journal": [
+    {
+      "node_id": "director",
+      "plan_revision": 1,
+      "skill": "director",
+      "attempt": 1,
+      "provider": "deterministic",
+      "model": "local-storyboard/2",
+      "prompt": "marketing-workforce-2",
+      "started_at": "2026-11-27T02:12:14.743256+00:00",
+      "outcome": "ok",
+      "reserved_microusd": 0,
+      "input_tokens": 0,
+      "output_tokens": 0,
+      "estimated_microusd": 0,
+      "finished_at": "2026-11-27T02:12:14.887740+00:00"
+    },
+    {
+      "node_id": "n01",
+      "plan_revision": 1,
+      "skill": "content",
+      "attempt": 1,
+      "provider": "deterministic",
+      "model": "local-storyboard/2",
+      "prompt": "marketing-workforce-2",
+      "started_at": "2026-11-27T02:12:14.932242+00:00",
+      "outcome": "ok",
+      "reserved_microusd": 0,
+      "input_tokens": 0,
+      "output_tokens": 0,
+      "estimated_microusd": 0,
+      "finished_at": "2026-11-27T02:12:15.056026+00:00"
+    },
+    {
+      "node_id": "n02",
+      "plan_revision": 1,
+      "skill": "storyboard",
+      "attempt": 1,
+      "provider": "deterministic",
+      "model": "local-storyboard/2",
+      "prompt": "marketing-workforce-2",
+      "started_at": "2026-11-27T02:12:15.082983+00:00",
+      "outcome": "ok",
+      "reserved_microusd": 0,
+      "input_tokens": 0,
+      "output_tokens": 0,
+      "estimated_microusd": 0,
+      "finished_at": "2026-11-27T02:12:15.156213+00:00"
+    }
+  ],
+  "provenance": {
+    "manifest_digest": "50f998aacec76c599bdca5ed7689c342d9b28e73d82ecb1b25e567a5d98c4891",
+    "entries": [
+      {
+        "handle": "F1",
+        "claim_revision": "2eb1df89-ee13-4307-b1bd-4e4804948326",
+        "binding_revision": "15a5f8c2-1112-45de-8e77-098bf49d1844",
+        "source_revision": "0b5e05a0-a2e5-49c7-a897-934b69ffd11c",
+        "source_digest": "082946812f2b89a436d4fae7079d4a97200252bdaaa6d74d86705053d31fdef0",
+        "document": "PRIVATE_SYNTHETIC_DOCUMENT",
+        "locator": "private locator"
+      },
+      {
+        "handle": "F2",
+        "claim_revision": "d9130ec6-1f6a-4e73-84ad-72d6774b0512",
+        "binding_revision": "7e4d9da7-e098-49f9-852f-7f52cc538ac9",
+        "source_revision": "385fa7b2-0bfd-4bf1-b606-5b18f34d0c74",
+        "source_digest": "61e3ddc8a6b707f1c11e4ce443410eecc722a11f00f7b3d389c6678a148c46f6",
+        "document": "PRIVATE_SYNTHETIC_DOCUMENT",
+        "locator": "private locator"
+      }
+    ]
+  }
+}

@@ -1,0 +1,503 @@
+{
+  "action": "choose_session",
+  "style": "formal",
+  "signed_intent": {
+    "purpose": "Thu nhận lựa chọn buổi Buổi đọc nhịp Phách Mở",
+    "deliverable_type": "video_storyboard",
+    "audience": "Người lớn quay lại học nhạc",
+    "product": "Buổi đọc nhịp Phách Mở",
+    "channel": "vertical-social",
+    "region": "HN",
+    "locale": "vi-VN",
+    "requirements": [
+      "Soạn storyboard có hình minh họa.",
+      "Minh họa dữ kiện sản phẩm trước lời mời hành động."
+    ],
+    "exclusions": [],
+    "acceptance_criteria": [
+      "Có phụ đề tiếng Việt khớp lời thoại.",
+      "Đối chiếu điều kiện thương mại theo đúng nguồn."
+    ],
+    "buyer_action": "choose_session",
+    "editorial_style": "formal",
+    "duration_seconds": 18,
+    "aspect_ratio": "9:16",
+    "rights": "synthetic_illustration_only"
+  },
+  "source_facts": [
+    {
+      "id": "F1",
+      "wording": "Bảng nhịp có ký hiệu phách mạnh và phách nhẹ.",
+      "qualifiers": [
+        "Áp dụng cho phần luyện đọc."
+      ],
+      "category": "description"
+    }
+  ],
+  "run": "89f7310f-68ff-4778-a91c-f0c68e49fbe2",
+  "manifest": {
+    "digest": "a915efe048973cbf38d7a56d5d16c1aaecc766c65233801dec53031ce93f9b7d",
+    "id": "c587719d-c59d-487c-a851-4554a068be83"
+  },
+  "content": {
+    "angle": "show_evidence",
+    "audience": "Người lớn quay lại học nhạc",
+    "audience_hypotheses": [
+      "Buyer needs require interviews"
+    ],
+    "channel": "vertical-social",
+    "channel_copy": {
+      "action": "Chọn buổi",
+      "declarations": [
+        {
+          "lines": [
+            "Bảng nhịp có ký hiệu phách mạnh và phách nhẹ.",
+            "Áp dụng cho phần luyện đọc."
+          ],
+          "source_id": "F1"
+        }
+      ],
+      "opening": "Quý vị muốn chọn buổi nào?"
+    },
+    "editorial_style": "formal",
+    "manifest": {
+      "digest": "a915efe048973cbf38d7a56d5d16c1aaecc766c65233801dec53031ce93f9b7d",
+      "id": "c587719d-c59d-487c-a851-4554a068be83"
+    },
+    "message_source_id": "F1",
+    "method": "deterministic",
+    "production_direction": "Vẽ hai trạng thái minh họa; đặt dữ kiện đã duyệt ngay dưới hình.",
+    "purpose": "Thu nhận lựa chọn buổi Buổi đọc nhịp Phách Mở",
+    "question_to_validate": "Người học cần biết gì để chọn buổi phù hợp?",
+    "role": "ai-copywriter-content-strategist",
+    "version": "amc.content-storyboard-handoff/1"
+  },
+  "original": {
+    "audience": "Người lớn quay lại học nhạc",
+    "brand": "Phách Mở",
+    "brand_direction": "Liên kết mỗi cảnh với dữ kiện đã duyệt; dùng câu ngắn.",
+    "brief_fulfillment": {
+      "fact_handles": [
+        "F1"
+      ],
+      "manifest": {
+        "digest": "a915efe048973cbf38d7a56d5d16c1aaecc766c65233801dec53031ce93f9b7d",
+        "id": "c587719d-c59d-487c-a851-4554a068be83"
+      },
+      "ready_for_qa": true,
+      "rows": [
+        {
+          "evidence": "signed objective, action-compatible opening, current CTA and requested preparation",
+          "field": "purpose",
+          "requested": "Thu nhận lựa chọn buổi Buổi đọc nhịp Phách Mở",
+          "status": "met"
+        },
+        {
+          "evidence": "spoken and captioned opening against action-specific style alternatives",
+          "field": "editorial_style",
+          "requested": "formal",
+          "status": "met"
+        },
+        {
+          "evidence": "shots[].visual; rights",
+          "field": "requirements[0]",
+          "requested": "Soạn storyboard có hình minh họa.",
+          "status": "met"
+        },
+        {
+          "evidence": "proof before action; source_ids",
+          "field": "requirements[1]",
+          "requested": "Minh họa dữ kiện sản phẩm trước lời mời hành động.",
+          "status": "met"
+        },
+        {
+          "evidence": "shots[].voice; WebVTT",
+          "field": "acceptance_criteria[0]",
+          "requested": "Có phụ đề tiếng Việt khớp lời thoại.",
+          "status": "met"
+        },
+        {
+          "evidence": "source_refs.declarations; terms or recorded missing price",
+          "field": "acceptance_criteria[1]",
+          "requested": "Đối chiếu điều kiện thương mại theo đúng nguồn.",
+          "status": "met"
+        },
+        {
+          "evidence": "Vietnamese vertical-social script and captions, 9:16",
+          "field": "channel",
+          "requested": "vertical-social",
+          "status": "met"
+        }
+      ],
+      "version": "amc.storyboard-fulfillment/1"
+    },
+    "buyer_action": "choose_session",
+    "channel": "vertical-social",
+    "concept": "educational",
+    "content_handoff_digest": "f1e2934b3bbc76e36dd8c3b2ac588a63446f89fe3c109a1bea053c72ebf8ca4a",
+    "cta": "Chọn buổi",
+    "duration_seconds": 18,
+    "editorial": {
+      "note": "Chưa có giá được duyệt. Giữ thông tin này trong tờ giao người dựng.",
+      "price_source_ids": [],
+      "price_status": "unavailable"
+    },
+    "format": "9:16",
+    "hook": "Quý vị muốn chọn buổi nào?",
+    "hook_variant": "direct",
+    "method_ref": {
+      "digest": "db4558733a1d4924ee5e5aa2b61f82f918973bc4551514637054645af1118819",
+      "path": "catalog/video-storyboard-sop-v1.json",
+      "revision": "wf08-production-sop/1"
+    },
+    "product": "Buổi đọc nhịp Phách Mở",
+    "rights": "synthetic_illustration_only",
+    "shots": [
+      {
+        "caption": "Quý vị muốn chọn buổi nào?",
+        "end_s": 5,
+        "purpose": "hook",
+        "source_ids": [],
+        "start_s": 0,
+        "visual": "Vẽ hai trạng thái minh họa; đặt dữ kiện đã duyệt ngay dưới hình.",
+        "visual_mode": "comparison",
+        "voice": "Quý vị muốn chọn buổi nào?"
+      },
+      {
+        "caption": "Bảng nhịp có ký hiệu phách mạnh và\nphách nhẹ. Áp dụng cho phần luyện đọc.",
+        "end_s": 13,
+        "purpose": "proof",
+        "source_ids": [
+          "F1"
+        ],
+        "start_s": 5,
+        "visual": "Đặt hai thẻ lựa chọn cạnh nhau rồi đánh dấu bước người xem cần thực hiện. Ghi đúng phạm vi của F1.",
+        "visual_mode": "comparison",
+        "voice": "Bảng nhịp có ký hiệu phách mạnh và phách nhẹ. Áp dụng cho phần luyện đọc."
+      },
+      {
+        "caption": "Chọn buổi",
+        "end_s": 18,
+        "purpose": "action",
+        "source_ids": [],
+        "start_s": 13,
+        "visual": "Hiện nút gửi yêu cầu; không vẽ dấu đã xác nhận.",
+        "visual_mode": "request",
+        "voice": "Chọn buổi"
+      }
+    ],
+    "source_refs": {
+      "declarations": {
+        "F1": {
+          "category": "description",
+          "conditions": [],
+          "qualifiers": [
+            "Áp dụng cho phần luyện đọc."
+          ],
+          "wording": "Bảng nhịp có ký hiệu phách mạnh và phách nhẹ."
+        }
+      },
+      "facts": [
+        "F1"
+      ],
+      "guidelines": "b44545db196285fb8c3b7ed25b603c0e333e8d9374725e561a5c3375be4bcf26",
+      "manifest": {
+        "digest": "a915efe048973cbf38d7a56d5d16c1aaecc766c65233801dec53031ce93f9b7d",
+        "id": "c587719d-c59d-487c-a851-4554a068be83"
+      }
+    },
+    "version": "amc.storyboard/2",
+    "vtt": "WEBVTT\n\n1\n00:00:00.000 --> 00:00:05.000\nQuý vị muốn chọn buổi nào?\n\n2\n00:00:05.000 --> 00:00:13.000\nBảng nhịp có ký hiệu phách mạnh và\nphách nhẹ. Áp dụng cho phần luyện đọc.\n\n3\n00:00:13.000 --> 00:00:18.000\nChọn buổi\n"
+  },
+  "alternate": {
+    "audience": "Người lớn quay lại học nhạc",
+    "brand": "Phách Mở",
+    "brand_direction": "Liên kết mỗi cảnh với dữ kiện đã duyệt; dùng câu ngắn.",
+    "brief_fulfillment": {
+      "version": "amc.storyboard-fulfillment/1",
+      "rows": [
+        {
+          "field": "purpose",
+          "requested": "Thu nhận lựa chọn buổi Buổi đọc nhịp Phách Mở",
+          "status": "met",
+          "evidence": "signed objective, action-compatible opening, current CTA and requested preparation"
+        },
+        {
+          "field": "editorial_style",
+          "requested": "formal",
+          "status": "met",
+          "evidence": "spoken and captioned opening against action-specific style alternatives"
+        },
+        {
+          "field": "requirements[0]",
+          "requested": "Soạn storyboard có hình minh họa.",
+          "status": "met",
+          "evidence": "shots[].visual; rights"
+        },
+        {
+          "field": "requirements[1]",
+          "requested": "Minh họa dữ kiện sản phẩm trước lời mời hành động.",
+          "status": "met",
+          "evidence": "proof before action; source_ids"
+        },
+        {
+          "field": "acceptance_criteria[0]",
+          "requested": "Có phụ đề tiếng Việt khớp lời thoại.",
+          "status": "met",
+          "evidence": "shots[].voice; WebVTT"
+        },
+        {
+          "field": "acceptance_criteria[1]",
+          "requested": "Đối chiếu điều kiện thương mại theo đúng nguồn.",
+          "status": "met",
+          "evidence": "source_refs.declarations; terms or recorded missing price"
+        },
+        {
+          "field": "channel",
+          "requested": "vertical-social",
+          "status": "met",
+          "evidence": "Vietnamese vertical-social script and captions, 9:16"
+        }
+      ],
+      "ready_for_qa": true,
+      "manifest": {
+        "digest": "a915efe048973cbf38d7a56d5d16c1aaecc766c65233801dec53031ce93f9b7d",
+        "id": "c587719d-c59d-487c-a851-4554a068be83"
+      },
+      "fact_handles": [
+        "F1"
+      ]
+    },
+    "buyer_action": "choose_session",
+    "channel": "vertical-social",
+    "concept": "educational",
+    "content_handoff_digest": "f1e2934b3bbc76e36dd8c3b2ac588a63446f89fe3c109a1bea053c72ebf8ca4a",
+    "cta": "Chọn buổi",
+    "duration_seconds": 18,
+    "editorial": {
+      "note": "Chưa có giá được duyệt. Giữ thông tin này trong tờ giao người dựng.",
+      "price_source_ids": [],
+      "price_status": "unavailable"
+    },
+    "format": "9:16",
+    "hook": "Buổi nào phù hợp với quý vị?",
+    "hook_variant": "style_alternate",
+    "method_ref": {
+      "digest": "db4558733a1d4924ee5e5aa2b61f82f918973bc4551514637054645af1118819",
+      "path": "catalog/video-storyboard-sop-v1.json",
+      "revision": "wf08-production-sop/1"
+    },
+    "product": "Buổi đọc nhịp Phách Mở",
+    "rights": "synthetic_illustration_only",
+    "shots": [
+      {
+        "caption": "Buổi nào phù hợp với quý vị?",
+        "end_s": 5,
+        "purpose": "hook",
+        "source_ids": [],
+        "start_s": 0,
+        "visual": "Vẽ hai trạng thái minh họa; đặt dữ kiện đã duyệt ngay dưới hình.",
+        "visual_mode": "comparison",
+        "voice": "Buổi nào phù hợp với quý vị?"
+      },
+      {
+        "caption": "Bảng nhịp có ký hiệu phách mạnh và\nphách nhẹ. Áp dụng cho phần luyện đọc.",
+        "end_s": 13,
+        "purpose": "proof",
+        "source_ids": [
+          "F1"
+        ],
+        "start_s": 5,
+        "visual": "Đặt hai thẻ lựa chọn cạnh nhau rồi đánh dấu bước người xem cần thực hiện. Ghi đúng phạm vi của F1.",
+        "visual_mode": "comparison",
+        "voice": "Bảng nhịp có ký hiệu phách mạnh và phách nhẹ. Áp dụng cho phần luyện đọc."
+      },
+      {
+        "caption": "Chọn buổi",
+        "end_s": 18,
+        "purpose": "action",
+        "source_ids": [],
+        "start_s": 13,
+        "visual": "Hiện nút gửi yêu cầu; không vẽ dấu đã xác nhận.",
+        "visual_mode": "request",
+        "voice": "Chọn buổi"
+      }
+    ],
+    "source_refs": {
+      "declarations": {
+        "F1": {
+          "category": "description",
+          "conditions": [],
+          "qualifiers": [
+            "Áp dụng cho phần luyện đọc."
+          ],
+          "wording": "Bảng nhịp có ký hiệu phách mạnh và phách nhẹ."
+        }
+      },
+      "facts": [
+        "F1"
+      ],
+      "guidelines": "b44545db196285fb8c3b7ed25b603c0e333e8d9374725e561a5c3375be4bcf26",
+      "manifest": {
+        "digest": "a915efe048973cbf38d7a56d5d16c1aaecc766c65233801dec53031ce93f9b7d",
+        "id": "c587719d-c59d-487c-a851-4554a068be83"
+      }
+    },
+    "version": "amc.storyboard/2",
+    "vtt": "WEBVTT\n\n1\n00:00:00.000 --> 00:00:05.000\nBuổi nào phù hợp với quý vị?\n\n2\n00:00:05.000 --> 00:00:13.000\nBảng nhịp có ký hiệu phách mạnh và\nphách nhẹ. Áp dụng cho phần luyện đọc.\n\n3\n00:00:13.000 --> 00:00:18.000\nChọn buổi\n"
+  },
+  "edit_receipt": {
+    "run_id": "89f7310f-68ff-4778-a91c-f0c68e49fbe2",
+    "document_id": "47ec74d1-6d9c-45bd-8fef-77dc28820225",
+    "revision": 2,
+    "content_digest": "976f0e9d76797e109bda33a47d6dee1f8faed1cbc1c9db8c4cbbb113b0ab753d",
+    "baseline_revision": 1,
+    "baseline_content_digest": "f183ac4a96dcea76bb5e09724af71fb60153dc91523e20d92153e5dffa35f280",
+    "baseline_board_digest": "7cc05f56deeb4af3bc7074bf723c06cc8c2c28481a1cc4ffe1f1380ad3e6ad98",
+    "board_digest": "951de5ba9c1aa1a28d629731a1426b2c2937db2f96bf9d24fed2b399b8e21612",
+    "edits": {
+      "expected_qa_revision": 1,
+      "expected_content_digest": "f183ac4a96dcea76bb5e09724af71fb60153dc91523e20d92153e5dffa35f280",
+      "mode": "controlled_hook",
+      "hook_variant": "style_alternate",
+      "shot_edits": []
+    },
+    "comparison": {
+      "mode": "controlled_hook",
+      "classification": "offline_single_hook_design",
+      "changed_variables": [
+        "hook"
+      ],
+      "baseline_holds": {
+        "body": "d3ea9006d8c3f1d57025a856906cf9c6e2fca3e85c0e860f13c1b881c74f1e67",
+        "opening_structure": "17585df992f5875a90a7196d7e8a31312f76e61481fbad2ce18d3c259b9b32d5",
+        "timeline": "354c706fa6d50c26cf1630f83097f706bfccffa4135cbd21bdb3672dc7dfafbd",
+        "visual": "c434212199f5dcaa5d35571215ab306a96bb2a0a8b109c8951b4a52e3c0a6fdb",
+        "cta": "0d17d0164df3bf33b52a869c58f6e35233d383196d8995518ffca4bd3d04cd7d",
+        "offer_claims_rights": "a1ff841256b95f99e7ed770c88f48db31ad2dce38a6626beecb890deca5347f8",
+        "brief_and_direction": "2bc81920bbeb0970577c02fc8cba101f2aadb2def47047b2ba4126c0861a4be8",
+        "landing": "7ddc173cbd9de7f9d7659d5c33879a17ba4f96a8d94747046478cced715cf89d",
+        "distribution": "0be40a1644d464f808d6290f7387f1bfb914fae27bb47f2a457e505af8cedead"
+      },
+      "candidate_holds": {
+        "body": "d3ea9006d8c3f1d57025a856906cf9c6e2fca3e85c0e860f13c1b881c74f1e67",
+        "opening_structure": "17585df992f5875a90a7196d7e8a31312f76e61481fbad2ce18d3c259b9b32d5",
+        "timeline": "354c706fa6d50c26cf1630f83097f706bfccffa4135cbd21bdb3672dc7dfafbd",
+        "visual": "c434212199f5dcaa5d35571215ab306a96bb2a0a8b109c8951b4a52e3c0a6fdb",
+        "cta": "0d17d0164df3bf33b52a869c58f6e35233d383196d8995518ffca4bd3d04cd7d",
+        "offer_claims_rights": "a1ff841256b95f99e7ed770c88f48db31ad2dce38a6626beecb890deca5347f8",
+        "brief_and_direction": "2bc81920bbeb0970577c02fc8cba101f2aadb2def47047b2ba4126c0861a4be8",
+        "landing": "7ddc173cbd9de7f9d7659d5c33879a17ba4f96a8d94747046478cced715cf89d",
+        "distribution": "0be40a1644d464f808d6290f7387f1bfb914fae27bb47f2a457e505af8cedead"
+      },
+      "landing": {
+        "kind": "offline_no_landing"
+      },
+      "distribution": {
+        "kind": "offline_no_delivery",
+        "channel": "vertical-social",
+        "audience": "Người lớn quay lại học nhạc"
+      },
+      "observed_traffic": 0,
+      "outcome": null,
+      "external_calls": 0,
+      "spend_microusd": 0
+    }
+  },
+  "qa": [
+    [
+      "61bb82b3-31cc-4891-bb4f-328cd655ed4e",
+      "2e0261e0-7167-47cc-a438-e060410ee10c",
+      {
+        "run_id": "89f7310f-68ff-4778-a91c-f0c68e49fbe2",
+        "document_id": "47ec74d1-6d9c-45bd-8fef-77dc28820225",
+        "qa_revision": 1,
+        "hook_variant": "direct",
+        "content_digest": "f183ac4a96dcea76bb5e09724af71fb60153dc91523e20d92153e5dffa35f280",
+        "release_digest": "8751146323a37269206ce40d80465a29155edbad8fcf8b88673f12902fe6b524",
+        "manifest_digest": "a915efe048973cbf38d7a56d5d16c1aaecc766c65233801dec53031ce93f9b7d",
+        "storyboard_digest": "7cc05f56deeb4af3bc7074bf723c06cc8c2c28481a1cc4ffe1f1380ad3e6ad98"
+      }
+    ],
+    [
+      "91be6669-3c01-4e82-a5a0-61366689677f",
+      "2e0261e0-7167-47cc-a438-e060410ee10c",
+      {
+        "run_id": "89f7310f-68ff-4778-a91c-f0c68e49fbe2",
+        "document_id": "47ec74d1-6d9c-45bd-8fef-77dc28820225",
+        "qa_revision": 2,
+        "hook_variant": "style_alternate",
+        "content_digest": "976f0e9d76797e109bda33a47d6dee1f8faed1cbc1c9db8c4cbbb113b0ab753d",
+        "release_digest": "8751146323a37269206ce40d80465a29155edbad8fcf8b88673f12902fe6b524",
+        "edition_receipt": "71d3ef8c-252c-43e2-a78d-768d5b08cf24",
+        "manifest_digest": "a915efe048973cbf38d7a56d5d16c1aaecc766c65233801dec53031ce93f9b7d",
+        "storyboard_digest": "951de5ba9c1aa1a28d629731a1426b2c2937db2f96bf9d24fed2b399b8e21612",
+        "edition_receipt_digest": "897b60ebf76108fc11b020371a1a74af0791fd517d98925d5aebfde4b809ec9e"
+      }
+    ]
+  ],
+  "worker_journal": [
+    {
+      "node_id": "director",
+      "plan_revision": 1,
+      "skill": "director",
+      "attempt": 1,
+      "provider": "deterministic",
+      "model": "local-storyboard/2",
+      "prompt": "marketing-workforce-2",
+      "started_at": "2026-11-27T02:09:47.710382+00:00",
+      "outcome": "ok",
+      "reserved_microusd": 0,
+      "input_tokens": 0,
+      "output_tokens": 0,
+      "estimated_microusd": 0,
+      "finished_at": "2026-11-27T02:09:47.830343+00:00"
+    },
+    {
+      "node_id": "n01",
+      "plan_revision": 1,
+      "skill": "content",
+      "attempt": 1,
+      "provider": "deterministic",
+      "model": "local-storyboard/2",
+      "prompt": "marketing-workforce-2",
+      "started_at": "2026-11-27T02:09:47.877767+00:00",
+      "outcome": "ok",
+      "reserved_microusd": 0,
+      "input_tokens": 0,
+      "output_tokens": 0,
+      "estimated_microusd": 0,
+      "finished_at": "2026-11-27T02:09:47.927358+00:00"
+    },
+    {
+      "node_id": "n02",
+      "plan_revision": 1,
+      "skill": "storyboard",
+      "attempt": 1,
+      "provider": "deterministic",
+      "model": "local-storyboard/2",
+      "prompt": "marketing-workforce-2",
+      "started_at": "2026-11-27T02:09:47.950515+00:00",
+      "outcome": "ok",
+      "reserved_microusd": 0,
+      "input_tokens": 0,
+      "output_tokens": 0,
+      "estimated_microusd": 0,
+      "finished_at": "2026-11-27T02:09:48.008236+00:00"
+    }
+  ],
+  "provenance": {
+    "manifest_digest": "a915efe048973cbf38d7a56d5d16c1aaecc766c65233801dec53031ce93f9b7d",
+    "entries": [
+      {
+        "handle": "F1",
+        "claim_revision": "39631414-1af9-42fc-a5b4-4a8f65977cc3",
+        "binding_revision": "58d92ba3-18f6-47d9-922b-044560e28a12",
+        "source_revision": "3bcfe873-abfd-4f8d-a85d-bd814f78d27a",
+        "source_digest": "5b99aa7a4793f4dfc1bb0be9ae713731acd00ad8af27da2ea224c1523b912136",
+        "document": "PRIVATE_SYNTHETIC_DOCUMENT",
+        "locator": "private locator"
+      }
+    ]
+  }
+}

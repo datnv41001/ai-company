@@ -1,0 +1,153 @@
+{
+  "run_id": "3a24b8ee-177d-4134-838e-c55af2b513b0",
+  "document_id": "b0b5ea07-4932-4da7-958a-808e6b9d12c6",
+  "manifest_digest": "0a748015e67c246ec5635b6e80bb11e693abeea4e04850f16d8657e6a9f5a5a5",
+  "content_digest": "1d07f4eb89072324cad18c73145834660d6f52781c951021f05cb9689f42c779",
+  "browser": "159.0.8154.6",
+  "sessions": [
+    {
+      "width": 1280,
+      "height": 850,
+      "open_to_verified_copy_ms": 59,
+      "scroll_width": 1280,
+      "contrast": [
+        {
+          "surface": ".content-handoff",
+          "view": "light",
+          "checked": 8,
+          "minimum_ratio": 6.113,
+          "failed": [],
+          "unresolved": []
+        },
+        {
+          "surface": ".content-handoff",
+          "view": "dark",
+          "checked": 8,
+          "minimum_ratio": 6.113,
+          "failed": [],
+          "unresolved": []
+        }
+      ],
+      "themes": [
+        "light",
+        "dark"
+      ],
+      "keyboard": "Enter opens report, toggles evidence and saves a hook edit",
+      "edited_revision": 2,
+      "edited_digest": "d39f9a43f117fee7e19b6d994a7e02a8318c603cb7bd492a9bdabcc6fd930c44",
+      "source_labels": [
+        {
+          "source_id": "F1",
+          "lines": 1
+        },
+        {
+          "source_id": "F2",
+          "lines": 1
+        }
+      ],
+      "hook_fit": {
+        "available_px": 394,
+        "widest_label_px": 161
+      },
+      "director_plan_digest": "981f84bef99934d76afd63eaf6dc13f6dfbcaf67791dacb7f714c457100510ba"
+    },
+    {
+      "width": 820,
+      "height": 1180,
+      "open_to_verified_copy_ms": 55,
+      "scroll_width": 820,
+      "contrast": [
+        {
+          "surface": ".content-handoff",
+          "view": "light",
+          "checked": 8,
+          "minimum_ratio": 6.113,
+          "failed": [],
+          "unresolved": []
+        },
+        {
+          "surface": ".content-handoff",
+          "view": "dark",
+          "checked": 8,
+          "minimum_ratio": 7.909,
+          "failed": [],
+          "unresolved": []
+        }
+      ],
+      "themes": [
+        "light",
+        "dark"
+      ],
+      "keyboard": "Enter opens report, toggles evidence and saves a hook edit",
+      "edited_revision": 3,
+      "edited_digest": "8aebffcaa12ade2da6789cda1eca667245e0d74a071e6c1cd13302f03e5a840b",
+      "source_labels": [
+        {
+          "source_id": "F1",
+          "lines": 1
+        },
+        {
+          "source_id": "F2",
+          "lines": 1
+        }
+      ],
+      "hook_fit": {
+        "available_px": 298,
+        "widest_label_px": 161
+      },
+      "director_plan_digest": "981f84bef99934d76afd63eaf6dc13f6dfbcaf67791dacb7f714c457100510ba"
+    },
+    {
+      "width": 390,
+      "height": 844,
+      "open_to_verified_copy_ms": 57,
+      "scroll_width": 390,
+      "contrast": [
+        {
+          "surface": ".content-handoff",
+          "view": "light",
+          "checked": 8,
+          "minimum_ratio": 6.113,
+          "failed": [],
+          "unresolved": []
+        },
+        {
+          "surface": ".content-handoff",
+          "view": "dark",
+          "checked": 8,
+          "minimum_ratio": 7.909,
+          "failed": [],
+          "unresolved": []
+        }
+      ],
+      "themes": [
+        "light",
+        "dark"
+      ],
+      "keyboard": "Enter opens report, toggles evidence and saves a hook edit",
+      "edited_revision": 4,
+      "edited_digest": "d39f9a43f117fee7e19b6d994a7e02a8318c603cb7bd492a9bdabcc6fd930c44",
+      "source_labels": [
+        {
+          "source_id": "F1",
+          "lines": 1
+        },
+        {
+          "source_id": "F2",
+          "lines": 1
+        }
+      ],
+      "hook_fit": {
+        "available_px": 246,
+        "widest_label_px": 161
+      },
+      "director_plan_digest": "981f84bef99934d76afd63eaf6dc13f6dfbcaf67791dacb7f714c457100510ba"
+    }
+  ],
+  "stale": {
+    "viewed_revision": 4,
+    "preserved_revision": 5,
+    "preserved_content_digest": "7c5923bc449d7e58b0fa8304501398c7f53ba20e62ab0b833f44097ee59a491c",
+    "status": 412
+  }
+}

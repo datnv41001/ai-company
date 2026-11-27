@@ -1,0 +1,337 @@
+{
+  "red": {
+    "note": "Exploratory initial 12-case run on the working directory. Four observed foreign RFQ approvals and two RFQ control passes before six later registry digest mismatches while runtime was being edited. Not a pinned full-suite result.",
+    "tests": 12,
+    "passed": 2,
+    "failed": 10,
+    "rows": [
+      {
+        "test": "test_signed_hook_semantics_through_independent_qa[formal-choose_session]",
+        "outcome": "failed",
+        "failure_line": "AssertionError: ('choose_session', 'formal', 'Quý vị cần báo giá?')"
+      },
+      {
+        "test": "test_signed_hook_semantics_through_independent_qa[formal-appointment]",
+        "outcome": "failed",
+        "failure_line": "AssertionError: ('appointment', 'formal', 'Quý vị cần báo giá?')"
+      },
+      {
+        "test": "test_signed_hook_semantics_through_independent_qa[formal-rfq]",
+        "outcome": "passed",
+        "failure_line": null
+      },
+      {
+        "test": "test_signed_hook_semantics_through_independent_qa[concise-choose_session]",
+        "outcome": "failed",
+        "failure_line": "AssertionError: ('choose_session', 'concise', 'Báo giá cần gì?')"
+      },
+      {
+        "test": "test_signed_hook_semantics_through_independent_qa[concise-appointment]",
+        "outcome": "failed",
+        "failure_line": "AssertionError: ('appointment', 'concise', 'Báo giá cần gì?')"
+      },
+      {
+        "test": "test_signed_hook_semantics_through_independent_qa[concise-rfq]",
+        "outcome": "passed",
+        "failure_line": null
+      },
+      {
+        "test": "test_signed_hook_semantics_through_independent_qa[friendly-choose_session]",
+        "outcome": "failed",
+        "failure_line": "AssertionError: assert {'workflow_id...ryboard', ...} == {'workflow_id...ryboard', ...}"
+      },
+      {
+        "test": "test_signed_hook_semantics_through_independent_qa[friendly-appointment]",
+        "outcome": "failed",
+        "failure_line": "AssertionError: assert {'workflow_id...ryboard', ...} == {'workflow_id...ryboard', ...}"
+      },
+      {
+        "test": "test_signed_hook_semantics_through_independent_qa[friendly-rfq]",
+        "outcome": "failed",
+        "failure_line": "AssertionError: assert {'workflow_id...ryboard', ...} == {'workflow_id...ryboard', ...}"
+      },
+      {
+        "test": "test_signed_hook_semantics_through_independent_qa[plain-choose_session]",
+        "outcome": "failed",
+        "failure_line": "AssertionError: assert {'workflow_id...ryboard', ...} == {'workflow_id...ryboard', ...}"
+      },
+      {
+        "test": "test_signed_hook_semantics_through_independent_qa[plain-appointment]",
+        "outcome": "failed",
+        "failure_line": "AssertionError: assert {'workflow_id...ryboard', ...} == {'workflow_id...ryboard', ...}"
+      },
+      {
+        "test": "test_signed_hook_semantics_through_independent_qa[plain-rfq]",
+        "outcome": "failed",
+        "failure_line": "AssertionError: assert {'workflow_id...ryboard', ...} == {'workflow_id...ryboard', ...}"
+      }
+    ],
+    "junit_sha256": "df6b1f722623c8567cf863f506611cced682eeee28feee63ca06534aaa78fa52",
+    "outputs": 6
+  },
+  "red-final": {
+    "note": "First complete historical suite on separate detached worktree: four foreign RFQ approvals, two original non-RFQ quote-condition handoffs, one formerly valid but wrong QA opening.",
+    "tests": 15,
+    "passed": 8,
+    "failed": 7,
+    "rows": [
+      {
+        "test": "test_signed_hook_semantics_through_independent_qa[formal-choose_session]",
+        "outcome": "failed",
+        "failure_line": "AssertionError: ('choose_session', 'formal', 'Quý vị cần báo giá?')"
+      },
+      {
+        "test": "test_signed_hook_semantics_through_independent_qa[formal-appointment]",
+        "outcome": "failed",
+        "failure_line": "AssertionError: ('appointment', 'formal', 'Quý vị cần báo giá?')"
+      },
+      {
+        "test": "test_signed_hook_semantics_through_independent_qa[formal-rfq]",
+        "outcome": "passed",
+        "failure_line": null
+      },
+      {
+        "test": "test_signed_hook_semantics_through_independent_qa[concise-choose_session]",
+        "outcome": "failed",
+        "failure_line": "AssertionError: ('choose_session', 'concise', 'Báo giá cần gì?')"
+      },
+      {
+        "test": "test_signed_hook_semantics_through_independent_qa[concise-appointment]",
+        "outcome": "failed",
+        "failure_line": "AssertionError: ('appointment', 'concise', 'Báo giá cần gì?')"
+      },
+      {
+        "test": "test_signed_hook_semantics_through_independent_qa[concise-rfq]",
+        "outcome": "passed",
+        "failure_line": null
+      },
+      {
+        "test": "test_signed_hook_semantics_through_independent_qa[friendly-choose_session]",
+        "outcome": "passed",
+        "failure_line": null
+      },
+      {
+        "test": "test_signed_hook_semantics_through_independent_qa[friendly-appointment]",
+        "outcome": "passed",
+        "failure_line": null
+      },
+      {
+        "test": "test_signed_hook_semantics_through_independent_qa[friendly-rfq]",
+        "outcome": "passed",
+        "failure_line": null
+      },
+      {
+        "test": "test_signed_hook_semantics_through_independent_qa[plain-choose_session]",
+        "outcome": "passed",
+        "failure_line": null
+      },
+      {
+        "test": "test_signed_hook_semantics_through_independent_qa[plain-appointment]",
+        "outcome": "passed",
+        "failure_line": null
+      },
+      {
+        "test": "test_signed_hook_semantics_through_independent_qa[plain-rfq]",
+        "outcome": "passed",
+        "failure_line": null
+      },
+      {
+        "test": "test_commercial_instruction_cannot_authorize_an_rfq[appointment-True]",
+        "outcome": "failed",
+        "failure_line": "AssertionError: assert 'báo giá' not in 'quý vị cần báo giá?'"
+      },
+      {
+        "test": "test_commercial_instruction_cannot_authorize_an_rfq[choose_session-False]",
+        "outcome": "failed",
+        "failure_line": "AssertionError: assert 'báo giá' not in 'quý vị cần báo giá?'"
+      },
+      {
+        "test": "test_qa_recomputes_purpose_after_a_foreign_conversion_opening",
+        "outcome": "failed",
+        "failure_line": "AssertionError: hook"
+      }
+    ],
+    "junit_sha256": "9da3a10d2c48ee9de575fa0e643ee56acec4a7ff9f2032df0fc7f5e3096b5613",
+    "outputs": 14
+  },
+  "red-pinned": {
+    "note": "Final test source on untouched tracked old worktree; strongest explicit-action oracle. Four cross-purpose RFQs and eight generic/ambiguous matrix cases; two information-vs-conversion cases; one QA predicate false positive. One existing negative control correctly rejected an unrecognized foreign wording.",
+    "tests": 16,
+    "passed": 1,
+    "failed": 15,
+    "rows": [
+      {
+        "test": "test_signed_hook_semantics_through_independent_qa[formal-choose_session]",
+        "outcome": "failed",
+        "failure_line": "AssertionError: ('choose_session', 'Quý vị cần báo giá?')"
+      },
+      {
+        "test": "test_signed_hook_semantics_through_independent_qa[formal-appointment]",
+        "outcome": "failed",
+        "failure_line": "AssertionError: ('appointment', 'Quý vị cần báo giá?')"
+      },
+      {
+        "test": "test_signed_hook_semantics_through_independent_qa[formal-rfq]",
+        "outcome": "failed",
+        "failure_line": "AssertionError: ('rfq', 'Quý vị cần đối chiếu gì?')"
+      },
+      {
+        "test": "test_signed_hook_semantics_through_independent_qa[concise-choose_session]",
+        "outcome": "failed",
+        "failure_line": "AssertionError: ('choose_session', 'Báo giá cần gì?')"
+      },
+      {
+        "test": "test_signed_hook_semantics_through_independent_qa[concise-appointment]",
+        "outcome": "failed",
+        "failure_line": "AssertionError: ('appointment', 'Báo giá cần gì?')"
+      },
+      {
+        "test": "test_signed_hook_semantics_through_independent_qa[concise-rfq]",
+        "outcome": "failed",
+        "failure_line": "AssertionError: ('rfq', 'Kiểm tra đâu trước?')"
+      },
+      {
+        "test": "test_signed_hook_semantics_through_independent_qa[friendly-choose_session]",
+        "outcome": "failed",
+        "failure_line": "AssertionError: ('choose_session', 'Mình xem điều kiện nhé?')"
+      },
+      {
+        "test": "test_signed_hook_semantics_through_independent_qa[friendly-appointment]",
+        "outcome": "failed",
+        "failure_line": "AssertionError: ('appointment', 'Mình xem điều kiện nhé?')"
+      },
+      {
+        "test": "test_signed_hook_semantics_through_independent_qa[friendly-rfq]",
+        "outcome": "failed",
+        "failure_line": "AssertionError: ('rfq', 'Mình xem điều kiện nhé?')"
+      },
+      {
+        "test": "test_signed_hook_semantics_through_independent_qa[plain-choose_session]",
+        "outcome": "failed",
+        "failure_line": "AssertionError: ('choose_session', 'Hãy xem điều kiện trước.')"
+      },
+      {
+        "test": "test_signed_hook_semantics_through_independent_qa[plain-appointment]",
+        "outcome": "failed",
+        "failure_line": "AssertionError: ('appointment', 'Hãy xem điều kiện trước.')"
+      },
+      {
+        "test": "test_signed_hook_semantics_through_independent_qa[plain-rfq]",
+        "outcome": "failed",
+        "failure_line": "AssertionError: ('rfq', 'Hãy xem điều kiện trước.')"
+      },
+      {
+        "test": "test_commercial_instruction_cannot_authorize_an_rfq[appointment-True]",
+        "outcome": "failed",
+        "failure_line": "AssertionError: assert 'báo giá' not in 'quý vị cần báo giá?'"
+      },
+      {
+        "test": "test_commercial_instruction_cannot_authorize_an_rfq[choose_session-False]",
+        "outcome": "failed",
+        "failure_line": "AssertionError: assert 'báo giá' not in 'quý vị cần báo giá?'"
+      },
+      {
+        "test": "test_qa_recomputes_purpose_after_a_foreign_conversion_opening[Qu\\xfd v\\u1ecb c\\u1ea7n b\\xe1o gi\\xe1?]",
+        "outcome": "failed",
+        "failure_line": "Failed: DID NOT RAISE ValueError"
+      },
+      {
+        "test": "test_qa_recomputes_purpose_after_a_foreign_conversion_opening[Qu\\xfd v\\u1ecb mu\\u1ed1n \\u0111\\u1eb7t l\\u1ecbch h\\u1eb9n?]",
+        "outcome": "passed",
+        "failure_line": null
+      }
+    ],
+    "junit_sha256": "a595140e7269a95bf593cd9bf89da8ab8c5a20ef98525160de0e24262d069515",
+    "outputs": 14
+  },
+  "green-dev": {
+    "note": "Final test source exercised against the corrected working directory using real PostgreSQL. Commit-pinned source and CI to be attested separately.",
+    "tests": 16,
+    "passed": 16,
+    "failed": 0,
+    "rows": [
+      {
+        "test": "test_signed_hook_semantics_through_independent_qa[formal-choose_session]",
+        "outcome": "passed",
+        "failure_line": null
+      },
+      {
+        "test": "test_signed_hook_semantics_through_independent_qa[formal-appointment]",
+        "outcome": "passed",
+        "failure_line": null
+      },
+      {
+        "test": "test_signed_hook_semantics_through_independent_qa[formal-rfq]",
+        "outcome": "passed",
+        "failure_line": null
+      },
+      {
+        "test": "test_signed_hook_semantics_through_independent_qa[concise-choose_session]",
+        "outcome": "passed",
+        "failure_line": null
+      },
+      {
+        "test": "test_signed_hook_semantics_through_independent_qa[concise-appointment]",
+        "outcome": "passed",
+        "failure_line": null
+      },
+      {
+        "test": "test_signed_hook_semantics_through_independent_qa[concise-rfq]",
+        "outcome": "passed",
+        "failure_line": null
+      },
+      {
+        "test": "test_signed_hook_semantics_through_independent_qa[friendly-choose_session]",
+        "outcome": "passed",
+        "failure_line": null
+      },
+      {
+        "test": "test_signed_hook_semantics_through_independent_qa[friendly-appointment]",
+        "outcome": "passed",
+        "failure_line": null
+      },
+      {
+        "test": "test_signed_hook_semantics_through_independent_qa[friendly-rfq]",
+        "outcome": "passed",
+        "failure_line": null
+      },
+      {
+        "test": "test_signed_hook_semantics_through_independent_qa[plain-choose_session]",
+        "outcome": "passed",
+        "failure_line": null
+      },
+      {
+        "test": "test_signed_hook_semantics_through_independent_qa[plain-appointment]",
+        "outcome": "passed",
+        "failure_line": null
+      },
+      {
+        "test": "test_signed_hook_semantics_through_independent_qa[plain-rfq]",
+        "outcome": "passed",
+        "failure_line": null
+      },
+      {
+        "test": "test_commercial_instruction_cannot_authorize_an_rfq[appointment-True]",
+        "outcome": "passed",
+        "failure_line": null
+      },
+      {
+        "test": "test_commercial_instruction_cannot_authorize_an_rfq[choose_session-False]",
+        "outcome": "passed",
+        "failure_line": null
+      },
+      {
+        "test": "test_qa_recomputes_purpose_after_a_foreign_conversion_opening[Qu\\xfd v\\u1ecb c\\u1ea7n b\\xe1o gi\\xe1?]",
+        "outcome": "passed",
+        "failure_line": null
+      },
+      {
+        "test": "test_qa_recomputes_purpose_after_a_foreign_conversion_opening[Qu\\xfd v\\u1ecb mu\\u1ed1n \\u0111\\u1eb7t l\\u1ecbch h\\u1eb9n?]",
+        "outcome": "passed",
+        "failure_line": null
+      }
+    ],
+    "junit_sha256": "126e0d34283fe1dc93d81e629056080a4acc3a7e1d1ebbc4180de2a81ef6488c",
+    "outputs": 14
+  }
+}

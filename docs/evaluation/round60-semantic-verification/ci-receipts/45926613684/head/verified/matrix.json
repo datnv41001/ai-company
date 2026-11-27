@@ -1,0 +1,648 @@
+{
+  "matrix": [
+    {
+      "action": "rfq",
+      "style": "plain",
+      "reviewed": {
+        "source_file": "rfq-plain.json",
+        "file_sha256": "12222e7e098178bc11cdcf3c78de9a30e5812ab99983019e7912c103f1944e97",
+        "run_id": "5bbd8503-49ce-4faf-a0fc-607d32622455",
+        "manifest": {
+          "digest": "fc2255e1a1702a556879408b0e352cec3ffc1a56229685b628cbeb50accf7ac8",
+          "id": "24120a0d-dc01-4a24-8e45-2a27e2539def"
+        },
+        "original": "Cần kiểm tra điều gì?",
+        "alternate": "Hãy xem điều kiện trước.",
+        "cta": "Yêu cầu báo giá",
+        "release_digest": "25bd28157c9b48a49de070857e929acbe5cebeec9fd2b34951c53e5766e44405",
+        "verified_qa_commands": [
+          "1fa33865-4627-47f2-ad1a-398b407633f0",
+          "c0ab08d1-1877-4fb1-a3e6-ddb7bc9b2ac2"
+        ],
+        "revisions": [
+          1,
+          2
+        ],
+        "changed_variables": [
+          "hook"
+        ]
+      },
+      "corrected": {
+        "source_file": "rfq-plain.json",
+        "file_sha256": "39520721d75404fa5f75a4c5b86008d1162ea9b9d017cb8ddbb49b9f9445275b",
+        "run_id": "8bf83375-7f71-47e7-afee-8b51270992b8",
+        "manifest": {
+          "digest": "37e24694fc128efda6ea48aea07e9a23d415771bb09ff406cbb6160f8ebf2354",
+          "id": "5a204082-fec0-4748-a141-0e680dd95b9a"
+        },
+        "original": "Bạn cần báo giá gì?",
+        "alternate": "Hỏi báo giá cần chuẩn bị gì?",
+        "cta": "Yêu cầu báo giá",
+        "release_digest": "8751146323a37269206ce40d80465a29155edbad8fcf8b88673f12902fe6b524",
+        "verified_qa_commands": [
+          "2a84bda8-5bf3-4365-a73c-5a00a0ee52a8",
+          "383fb620-8f72-4b36-80f4-753422e2a5ed"
+        ],
+        "revisions": [
+          1,
+          2
+        ],
+        "changed_variables": [
+          "hook"
+        ]
+      }
+    },
+    {
+      "action": "rfq",
+      "style": "concise",
+      "reviewed": {
+        "source_file": "rfq-concise.json",
+        "file_sha256": "f29865f7236778fc7f05ca39859c25f3dae4d935b8dc07de1f41bbb96a6e4ef8",
+        "run_id": "6ecc6d34-81e4-4850-9689-7410f4baade8",
+        "manifest": {
+          "digest": "f61dd5b40f2cfdacba284e7bb8c4506e562968fc9b67e453f9b2d397ef3b9871",
+          "id": "c11f868f-4e21-4eed-8bb3-963588fbf86a"
+        },
+        "original": "Kiểm tra đâu trước?",
+        "alternate": "Báo giá cần gì?",
+        "cta": "Yêu cầu báo giá",
+        "release_digest": "25bd28157c9b48a49de070857e929acbe5cebeec9fd2b34951c53e5766e44405",
+        "verified_qa_commands": [
+          "f72c6c59-f437-43e8-ba08-99af53153c83",
+          "09b072af-d907-44d4-8216-7dcecaf1d6c8"
+        ],
+        "revisions": [
+          1,
+          2
+        ],
+        "changed_variables": [
+          "hook"
+        ]
+      },
+      "corrected": {
+        "source_file": "rfq-concise.json",
+        "file_sha256": "8fe773726e7398482a7c626579fc992e305f48d4febf3be617fdd6602fb6b265",
+        "run_id": "1f3e1739-1f36-4c25-9d60-b7f929e53dc6",
+        "manifest": {
+          "digest": "f4c25a42d19ff6f9a33c9385da3c50dd179db5f22dfdafb3dc51bc62d79948b2",
+          "id": "20cdc972-d091-40cb-a2d1-300630a24108"
+        },
+        "original": "Cần báo giá?",
+        "alternate": "Hỏi báo giá cần gì?",
+        "cta": "Yêu cầu báo giá",
+        "release_digest": "8751146323a37269206ce40d80465a29155edbad8fcf8b88673f12902fe6b524",
+        "verified_qa_commands": [
+          "65e788ef-fc34-4be1-a7d0-8d99d5a882b4",
+          "30aa2454-d3b5-47d6-ab04-1d1c9b7dc3cd"
+        ],
+        "revisions": [
+          1,
+          2
+        ],
+        "changed_variables": [
+          "hook"
+        ]
+      }
+    },
+    {
+      "action": "rfq",
+      "style": "formal",
+      "reviewed": {
+        "source_file": "rfq-formal.json",
+        "file_sha256": "1ae4683fbe97f8363db5c6726d59d35dffc3a8f4a7e52ea9e3a0fff496b98549",
+        "run_id": "cd2316a8-e936-452d-a77c-a49b401cdd6e",
+        "manifest": {
+          "digest": "450c6e067fddc8bc9e72d333114d000ce575a807e7e4ef37b4f4084a5181f8ba",
+          "id": "bdddf274-1b88-4ed1-85b2-bd7b1a21fc4c"
+        },
+        "original": "Quý vị cần đối chiếu gì?",
+        "alternate": "Quý vị cần báo giá?",
+        "cta": "Yêu cầu báo giá",
+        "release_digest": "25bd28157c9b48a49de070857e929acbe5cebeec9fd2b34951c53e5766e44405",
+        "verified_qa_commands": [
+          "33192f79-245e-4603-bcc4-e9e4a5a1a784",
+          "663f073f-ff3c-4401-98cd-33332e505d5a"
+        ],
+        "revisions": [
+          1,
+          2
+        ],
+        "changed_variables": [
+          "hook"
+        ]
+      },
+      "corrected": {
+        "source_file": "rfq-formal.json",
+        "file_sha256": "9dd03f7e44eae0fba451bf083a5ac26d942c21cc4476a0c9d5a94be005add6fb",
+        "run_id": "9f9d868f-9262-40f3-8e5b-29f0c8ee67d1",
+        "manifest": {
+          "digest": "133258923ab5d5ae8f7ae2d1f4098aadb82d6c7df2ef1d74b19460b8bd9b1afb",
+          "id": "772d9775-4d81-4bb1-85b0-301a6b5e2ebe"
+        },
+        "original": "Quý vị cần báo giá?",
+        "alternate": "Quý vị muốn hỏi báo giá nào?",
+        "cta": "Yêu cầu báo giá",
+        "release_digest": "8751146323a37269206ce40d80465a29155edbad8fcf8b88673f12902fe6b524",
+        "verified_qa_commands": [
+          "783b1aed-1342-4f32-bd95-549d8ced3465",
+          "598a5e01-b17d-4280-a15c-4943c47a407e"
+        ],
+        "revisions": [
+          1,
+          2
+        ],
+        "changed_variables": [
+          "hook"
+        ]
+      }
+    },
+    {
+      "action": "rfq",
+      "style": "friendly",
+      "reviewed": {
+        "source_file": "rfq-friendly.json",
+        "file_sha256": "873d6a9b3a6e89063c86b64a5882895a6a1e1ec5980a77a2bf7ef2c46e494292",
+        "run_id": "3beca6de-10a9-455f-97c5-bcdea7a26411",
+        "manifest": {
+          "digest": "2cae999341e1c8536dfa47c4df7e3c0dd62ad3e303342fae5a25c501beabffa5",
+          "id": "1d3fb530-7c61-4c59-8bff-2a8890ec3bbf"
+        },
+        "original": "Mình cùng xem nhé?",
+        "alternate": "Mình xem điều kiện nhé?",
+        "cta": "Yêu cầu báo giá",
+        "release_digest": "25bd28157c9b48a49de070857e929acbe5cebeec9fd2b34951c53e5766e44405",
+        "verified_qa_commands": [
+          "b1ace1a2-09b8-403a-8525-10e1267bc40c",
+          "246719a1-db4b-4d4e-9017-144fb0955b9b"
+        ],
+        "revisions": [
+          1,
+          2
+        ],
+        "changed_variables": [
+          "hook"
+        ]
+      },
+      "corrected": {
+        "source_file": "rfq-friendly.json",
+        "file_sha256": "edf75d3443ec982c6836e3a2cace30a49085458b0614721505485e96d20bd4df",
+        "run_id": "5e1a5adc-fccd-42a5-b6c2-4c55642b3416",
+        "manifest": {
+          "digest": "a15963171be71f392e8d08b402cd1de52f115a73c66b7ecc7033412d9f10acfd",
+          "id": "62c5e8dd-5503-4997-ac3d-c26486a011b8"
+        },
+        "original": "Mình cần báo giá gì nhỉ?",
+        "alternate": "Mình xem gì trước khi hỏi báo giá?",
+        "cta": "Yêu cầu báo giá",
+        "release_digest": "8751146323a37269206ce40d80465a29155edbad8fcf8b88673f12902fe6b524",
+        "verified_qa_commands": [
+          "a8c6cc24-2944-4b8e-a4d0-d0874c32eec0",
+          "e35622b3-7245-4257-b0fe-fb452274b366"
+        ],
+        "revisions": [
+          1,
+          2
+        ],
+        "changed_variables": [
+          "hook"
+        ]
+      }
+    },
+    {
+      "action": "appointment",
+      "style": "plain",
+      "reviewed": {
+        "source_file": "appointment-plain.json",
+        "file_sha256": "eba9bf6a0cf6a66a5545b65250a1994a760bb93aead8dae65881e9113ceff243",
+        "run_id": "9ee4f60c-0204-49c2-af7d-5447f40c585d",
+        "manifest": {
+          "digest": "25e6d19d5b2a1cd4819110d2e51af6e048fc4bc18c14bc7937956bc8161967ca",
+          "id": "44cbcd71-fd96-4e95-821b-15373289678c"
+        },
+        "original": "Cần kiểm tra điều gì?",
+        "alternate": "Hãy xem điều kiện trước.",
+        "cta": "Gửi đề nghị khảo sát",
+        "release_digest": "25bd28157c9b48a49de070857e929acbe5cebeec9fd2b34951c53e5766e44405",
+        "verified_qa_commands": [
+          "b254997b-9fbd-426a-aed6-690c816886f2",
+          "977cdd45-11c7-4bd3-86b9-9eefbf213cae"
+        ],
+        "revisions": [
+          1,
+          2
+        ],
+        "changed_variables": [
+          "hook"
+        ]
+      },
+      "corrected": {
+        "source_file": "appointment-plain.json",
+        "file_sha256": "e646402fda0293a4310644a5b1c446de93da4037bdc41cc20af1835b472acb9f",
+        "run_id": "34e7d80e-8135-413b-b8ac-7bf9661ca9d3",
+        "manifest": {
+          "digest": "76fcbc637249086d1860580a916ae320c56ed35300d168e459a4902ab7602772",
+          "id": "212e53a2-9670-4bfa-89fd-9c4420e05bb6"
+        },
+        "original": "Bạn muốn hẹn lúc nào?",
+        "alternate": "Bạn cần biết gì trước khi hẹn?",
+        "cta": "Gửi đề nghị khảo sát",
+        "release_digest": "8751146323a37269206ce40d80465a29155edbad8fcf8b88673f12902fe6b524",
+        "verified_qa_commands": [
+          "0a621fda-8d31-4de6-aecd-c7d3f7dd1dac",
+          "0006b288-ca58-4a1b-a52b-1e43034620bc"
+        ],
+        "revisions": [
+          1,
+          2
+        ],
+        "changed_variables": [
+          "hook"
+        ]
+      }
+    },
+    {
+      "action": "appointment",
+      "style": "concise",
+      "reviewed": {
+        "source_file": "appointment-concise.json",
+        "file_sha256": "d8c4e3be6b128247d5f40ae03b0d680dc604a79311a73e3e9fafe8001fb9da49",
+        "run_id": "7e56e8be-e3d6-44fe-911c-7b6e67cb1657",
+        "manifest": {
+          "digest": "9f9ee6af6c3f99d74ab72ff7226e3dffe58bc4535dba9c373d80380bca101e01",
+          "id": "34b746b8-3c95-4ec6-9d50-be5e48e9e4b5"
+        },
+        "original": "Kiểm tra đâu trước?",
+        "alternate": "Báo giá cần gì?",
+        "cta": "Gửi đề nghị khảo sát",
+        "release_digest": "25bd28157c9b48a49de070857e929acbe5cebeec9fd2b34951c53e5766e44405",
+        "verified_qa_commands": [
+          "34278791-ed24-42ad-bf63-507fe4c93682",
+          "3ec232ec-61d7-4960-a26d-8310df36a8ad"
+        ],
+        "revisions": [
+          1,
+          2
+        ],
+        "changed_variables": [
+          "hook"
+        ]
+      },
+      "corrected": {
+        "source_file": "appointment-concise.json",
+        "file_sha256": "1e150f945fbe79a397623d3e438db8803f03260a9b1f4491f073a0c825cda063",
+        "run_id": "573216c7-0338-4e3b-83cd-c700b845fb62",
+        "manifest": {
+          "digest": "7c85a5920df6ff3322442805ea327c4269ce7c0ee573b81dcdab92f5000f9567",
+          "id": "3b494f60-5815-493d-92fc-2a08f7405b26"
+        },
+        "original": "Hẹn khi nào?",
+        "alternate": "Cần gì trước khi hẹn?",
+        "cta": "Gửi đề nghị khảo sát",
+        "release_digest": "8751146323a37269206ce40d80465a29155edbad8fcf8b88673f12902fe6b524",
+        "verified_qa_commands": [
+          "52149600-a7b6-4788-bfa6-cc59fe12fa36",
+          "e6f2bef2-9757-4743-bfc7-abe353e270f3"
+        ],
+        "revisions": [
+          1,
+          2
+        ],
+        "changed_variables": [
+          "hook"
+        ]
+      }
+    },
+    {
+      "action": "appointment",
+      "style": "formal",
+      "reviewed": {
+        "source_file": "appointment-formal.json",
+        "file_sha256": "5931bc910e6a14d8501d7c241459f5c388f64ca138708972b4a2e9ec10708cf4",
+        "run_id": "290dd919-e643-4df6-bc7b-b0a981d87ba7",
+        "manifest": {
+          "digest": "28653f81b3258dd3495d9ed806e142ea43fde1b2fb7977c0d3f2c2267fc52311",
+          "id": "b88b745e-a5be-4d86-a803-d2e910789aed"
+        },
+        "original": "Quý vị cần đối chiếu gì?",
+        "alternate": "Quý vị cần báo giá?",
+        "cta": "Gửi đề nghị khảo sát",
+        "release_digest": "25bd28157c9b48a49de070857e929acbe5cebeec9fd2b34951c53e5766e44405",
+        "verified_qa_commands": [
+          "5cd272f7-ac85-488d-aaa3-c174b70fab9b",
+          "11c71641-8c91-4973-88ba-e975053887f0"
+        ],
+        "revisions": [
+          1,
+          2
+        ],
+        "changed_variables": [
+          "hook"
+        ]
+      },
+      "corrected": {
+        "source_file": "appointment-formal.json",
+        "file_sha256": "36e6e478f1ddf3ca2c1c4137446cbbbfd60cc9dccc2940680f9f27f99595202b",
+        "run_id": "cdbcfd7b-2dfa-4957-bf04-0dbef1de9f57",
+        "manifest": {
+          "digest": "0f9941a613ee1e7bc0bb92e3e62eae5d824688e5cb01702d8022eb0618b142c8",
+          "id": "19633056-9850-4dd9-aba9-befd444e82b5"
+        },
+        "original": "Quý vị muốn đề nghị lịch hẹn nào?",
+        "alternate": "Quý vị cần biết gì trước khi hẹn?",
+        "cta": "Gửi đề nghị khảo sát",
+        "release_digest": "8751146323a37269206ce40d80465a29155edbad8fcf8b88673f12902fe6b524",
+        "verified_qa_commands": [
+          "3838262d-a765-4aa1-8d0b-8506c836ac28",
+          "3753d0e6-17d3-4b52-b083-3cfa41aa1fcd"
+        ],
+        "revisions": [
+          1,
+          2
+        ],
+        "changed_variables": [
+          "hook"
+        ]
+      }
+    },
+    {
+      "action": "appointment",
+      "style": "friendly",
+      "reviewed": {
+        "source_file": "appointment-friendly.json",
+        "file_sha256": "22a3c0698bbe06db7b6fd728ebb97dbd674ffb3a53a4e1bc4186c8b03b21a2f6",
+        "run_id": "8c1d8f56-4be3-4808-a6fe-a12bc95af5ca",
+        "manifest": {
+          "digest": "69ee9785da6837c5a786ab99a09c982df4a9782141aa2137337ad1233683c6d2",
+          "id": "0e019742-bb58-49dc-89fa-ebf260776fbb"
+        },
+        "original": "Mình cùng xem nhé?",
+        "alternate": "Mình xem điều kiện nhé?",
+        "cta": "Gửi đề nghị khảo sát",
+        "release_digest": "25bd28157c9b48a49de070857e929acbe5cebeec9fd2b34951c53e5766e44405",
+        "verified_qa_commands": [
+          "cebd8112-df82-4778-951e-fa4fcfe10b97",
+          "8006d5c8-6b28-4ffc-8443-45140dc539d7"
+        ],
+        "revisions": [
+          1,
+          2
+        ],
+        "changed_variables": [
+          "hook"
+        ]
+      },
+      "corrected": {
+        "source_file": "appointment-friendly.json",
+        "file_sha256": "b8f39e9122125e46d9e30f0fb1da717dd38fe87d90c8d628da19c90dc3e8c9fc",
+        "run_id": "5209da15-fb83-43fb-a525-b7ae352bc58c",
+        "manifest": {
+          "digest": "5fdf332fb84b57ab0c6043152ad1e19aacef9821785d1ca90c88583db641d2f4",
+          "id": "0771024e-f270-440c-985b-300503ebeeb5"
+        },
+        "original": "Mình muốn hẹn khi nào nhỉ?",
+        "alternate": "Mình xem gì trước khi hẹn nhé?",
+        "cta": "Gửi đề nghị khảo sát",
+        "release_digest": "8751146323a37269206ce40d80465a29155edbad8fcf8b88673f12902fe6b524",
+        "verified_qa_commands": [
+          "ddf2da39-2f51-42e8-91e4-8cc578562e87",
+          "6948991c-6c04-4f74-b769-9bbb8670c8da"
+        ],
+        "revisions": [
+          1,
+          2
+        ],
+        "changed_variables": [
+          "hook"
+        ]
+      }
+    },
+    {
+      "action": "choose_session",
+      "style": "plain",
+      "reviewed": {
+        "source_file": "choose_session-plain.json",
+        "file_sha256": "254e2f84c37559bdb3d6c8a699b6450f14a744941559696f609942f7a0f6b66c",
+        "run_id": "42314b2e-a89b-4553-8e8c-519b76fded62",
+        "manifest": {
+          "digest": "ab2adbfb222e075a42ebd542dfac79f22211c7997416dc214c8981e9b97314dd",
+          "id": "cf9ec198-1809-4794-a94d-7c4cd028bf0f"
+        },
+        "original": "Cần kiểm tra điều gì?",
+        "alternate": "Hãy xem điều kiện trước.",
+        "cta": "Chọn buổi",
+        "release_digest": "25bd28157c9b48a49de070857e929acbe5cebeec9fd2b34951c53e5766e44405",
+        "verified_qa_commands": [
+          "6ce9c992-863c-4821-8fed-c3df57c11ac0",
+          "9556b36d-5459-4fa0-9006-345252745257"
+        ],
+        "revisions": [
+          1,
+          2
+        ],
+        "changed_variables": [
+          "hook"
+        ]
+      },
+      "corrected": {
+        "source_file": "choose_session-plain.json",
+        "file_sha256": "51e55609d48412c10828cc011002ae912043b9f2f235da6126bf5b915363e87b",
+        "run_id": "f816ea4e-aaed-4942-bfb2-6f2e96264fc5",
+        "manifest": {
+          "digest": "a7874b141e492496d7f63dd8614469db509cad770a14b3bc287987c4371ba67b",
+          "id": "22e47a06-7bf6-4c74-996a-09b6c1d17859"
+        },
+        "original": "Bạn muốn chọn buổi nào?",
+        "alternate": "Buổi nào hợp với bạn?",
+        "cta": "Chọn buổi",
+        "release_digest": "8751146323a37269206ce40d80465a29155edbad8fcf8b88673f12902fe6b524",
+        "verified_qa_commands": [
+          "7f225b5a-ec72-4cba-ae2d-67fe6e261383",
+          "7e20c915-3f47-430a-863c-c900801e660c"
+        ],
+        "revisions": [
+          1,
+          2
+        ],
+        "changed_variables": [
+          "hook"
+        ]
+      }
+    },
+    {
+      "action": "choose_session",
+      "style": "concise",
+      "reviewed": {
+        "source_file": "choose_session-concise.json",
+        "file_sha256": "3533ee1500af02d90c3a95ed623a3ee4c6206628e5e304eed157ffe9c9031146",
+        "run_id": "256a4c04-991c-4d04-ae6b-fe2f5b542a7a",
+        "manifest": {
+          "digest": "e9adbd3c653610eecaabc831b5f73e3b5ab5ed0cafd6b8f925317080bc37d384",
+          "id": "6294ac8c-24da-40b8-b18f-34aef1b95dbe"
+        },
+        "original": "Kiểm tra đâu trước?",
+        "alternate": "Báo giá cần gì?",
+        "cta": "Chọn buổi",
+        "release_digest": "25bd28157c9b48a49de070857e929acbe5cebeec9fd2b34951c53e5766e44405",
+        "verified_qa_commands": [
+          "a19ecce1-a8ce-4532-a117-431cf53270d8",
+          "f1721506-cf1e-4891-9a21-3886409a294a"
+        ],
+        "revisions": [
+          1,
+          2
+        ],
+        "changed_variables": [
+          "hook"
+        ]
+      },
+      "corrected": {
+        "source_file": "choose_session-concise.json",
+        "file_sha256": "38f53baa8a28559e16bec7c621acc8c6c38d9356143a32ee76d51a78b5d08d0b",
+        "run_id": "5bf044c3-83ef-45e0-9030-abd7cf2977ef",
+        "manifest": {
+          "digest": "42eb03d7139084db053e94b9b5fe70012815cc85a354dec5d5a8fe147f68661a",
+          "id": "89fb52b5-4997-43bb-8c07-2e832e618aec"
+        },
+        "original": "Chọn buổi nào?",
+        "alternate": "Buổi nào phù hợp?",
+        "cta": "Chọn buổi",
+        "release_digest": "8751146323a37269206ce40d80465a29155edbad8fcf8b88673f12902fe6b524",
+        "verified_qa_commands": [
+          "5dc83c92-7a75-4f7e-9b5a-b5b223251776",
+          "362fe5d8-fb07-44b8-add3-a32e201d60de"
+        ],
+        "revisions": [
+          1,
+          2
+        ],
+        "changed_variables": [
+          "hook"
+        ]
+      }
+    },
+    {
+      "action": "choose_session",
+      "style": "formal",
+      "reviewed": {
+        "source_file": "choose_session-formal.json",
+        "file_sha256": "a5e5450db8c1de17bbedd96f809172d1e041cbfc4b415610b96e9d7503be8902",
+        "run_id": "fdc46982-09cb-4002-a2f8-b5f7a2fb48dc",
+        "manifest": {
+          "digest": "33b66086d3809571b8127cb439ff16b4928d284e07682d1b88da906e00c42503",
+          "id": "029d47f6-cf87-4417-941d-8bbad1c2faf7"
+        },
+        "original": "Quý vị cần đối chiếu gì?",
+        "alternate": "Quý vị cần báo giá?",
+        "cta": "Chọn buổi",
+        "release_digest": "25bd28157c9b48a49de070857e929acbe5cebeec9fd2b34951c53e5766e44405",
+        "verified_qa_commands": [
+          "5f6e6476-a08a-4080-9f30-cec6a12e2b35",
+          "9f755d36-4803-43dc-892d-a60b4e3be97b"
+        ],
+        "revisions": [
+          1,
+          2
+        ],
+        "changed_variables": [
+          "hook"
+        ]
+      },
+      "corrected": {
+        "source_file": "choose_session-formal.json",
+        "file_sha256": "d15cd3175391f27e0109dae6274b419ec489149e91657ba5685b29cf444fcdc3",
+        "run_id": "3e2ac54d-44af-4811-9948-b3db9779d9a1",
+        "manifest": {
+          "digest": "cd8e56b53455bd709eef0a2e53a3a19c2b5a1683e8e1b092ac39a733b99cb575",
+          "id": "fb1c0ee2-2dd6-49e6-967d-193ac59616e0"
+        },
+        "original": "Quý vị muốn chọn buổi nào?",
+        "alternate": "Buổi nào phù hợp với quý vị?",
+        "cta": "Chọn buổi",
+        "release_digest": "8751146323a37269206ce40d80465a29155edbad8fcf8b88673f12902fe6b524",
+        "verified_qa_commands": [
+          "5daffcc8-4f8f-4552-af46-0d88028d0c99",
+          "8c608e24-85c0-4884-a370-713649d79a2e"
+        ],
+        "revisions": [
+          1,
+          2
+        ],
+        "changed_variables": [
+          "hook"
+        ]
+      }
+    },
+    {
+      "action": "choose_session",
+      "style": "friendly",
+      "reviewed": {
+        "source_file": "choose_session-friendly.json",
+        "file_sha256": "c9fca0aefb5a14f67bfae5e15de6ed0b663c8f26d841a011a31c4a50e7b79600",
+        "run_id": "e5c2ea6f-8eba-433f-a9e0-165a14c11afe",
+        "manifest": {
+          "digest": "e4b718cfd2b1be9d1ddf4abe767e7e32e2eb25cde006ff2194dbef068dcee2fb",
+          "id": "6f0dcb59-e6ed-4774-a7b7-f9fea3699e59"
+        },
+        "original": "Mình cùng xem nhé?",
+        "alternate": "Mình xem điều kiện nhé?",
+        "cta": "Chọn buổi",
+        "release_digest": "25bd28157c9b48a49de070857e929acbe5cebeec9fd2b34951c53e5766e44405",
+        "verified_qa_commands": [
+          "84175950-9afe-4f0c-a920-a8483d2db2e6",
+          "eaabb20a-6d44-4a90-9bc4-9f8730799bd4"
+        ],
+        "revisions": [
+          1,
+          2
+        ],
+        "changed_variables": [
+          "hook"
+        ]
+      },
+      "corrected": {
+        "source_file": "choose_session-friendly.json",
+        "file_sha256": "52ce20b831f06cfb1412574afd6b512fc9366b04e571146d267a9cbbb38220be",
+        "run_id": "8ef835fb-59f9-4b12-8149-2300d58ab919",
+        "manifest": {
+          "digest": "7e6932848208c464d61f262fcf8deb34ea7b7aa2bcc77d88d089fa39da46506f",
+          "id": "917f6212-9015-46ef-91ef-deb450d17db8"
+        },
+        "original": "Mình chọn buổi nào nhỉ?",
+        "alternate": "Buổi nào hợp với mình nhỉ?",
+        "cta": "Chọn buổi",
+        "release_digest": "8751146323a37269206ce40d80465a29155edbad8fcf8b88673f12902fe6b524",
+        "verified_qa_commands": [
+          "efccedee-bd72-430f-a85f-036adc5a8167",
+          "d22e52b5-4051-475e-b456-c071fc9e000d"
+        ],
+        "revisions": [
+          1,
+          2
+        ],
+        "changed_variables": [
+          "hook"
+        ]
+      }
+    }
+  ],
+  "commercial_information": [
+    {
+      "action": "appointment",
+      "reviewed": 200,
+      "corrected": 200,
+      "reviewed_angle": "quote_conditions",
+      "corrected_angle": "commercial_conditions",
+      "original": "Quý vị cần báo giá?",
+      "corrected_opening": "Quý vị muốn đề nghị lịch hẹn nào?"
+    },
+    {
+      "action": "choose_session",
+      "reviewed": 409,
+      "corrected": 409,
+      "reviewed_angle": "quote_conditions",
+      "corrected_angle": "show_evidence",
+      "original": "Quý vị cần báo giá?",
+      "corrected_opening": "Quý vị muốn chọn buổi nào?"
+    }
+  ]
+}

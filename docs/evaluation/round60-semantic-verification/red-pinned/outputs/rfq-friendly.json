@@ -1,0 +1,622 @@
+{
+  "action": "rfq",
+  "style": "friendly",
+  "signed_intent": {
+    "purpose": "Nhận yêu cầu báo giá Khay chia linh kiện Khe Gọn",
+    "deliverable_type": "video_storyboard",
+    "audience": "Tổ trưởng lắp ráp điện tử",
+    "product": "Khay chia linh kiện Khe Gọn",
+    "channel": "vertical-social",
+    "region": "HN",
+    "locale": "vi-VN",
+    "requirements": [
+      "Soạn storyboard có hình minh họa.",
+      "Minh họa dữ kiện sản phẩm trước lời mời hành động."
+    ],
+    "exclusions": [
+      "Không suy diễn chứng nhận an toàn điện hoặc công bố mức giảm thời gian lắp ráp."
+    ],
+    "acceptance_criteria": [
+      "Có phụ đề tiếng Việt khớp lời thoại.",
+      "Đối chiếu điều kiện thương mại theo đúng nguồn."
+    ],
+    "buyer_action": "rfq",
+    "editorial_style": "friendly",
+    "duration_seconds": 32,
+    "aspect_ratio": "9:16",
+    "rights": "synthetic_illustration_only"
+  },
+  "source_facts": [
+    {
+      "id": "F1",
+      "wording": "VND 380000 / 1 box (tax included)",
+      "qualifiers": [
+        "Xác nhận số lượng trước khi đặt."
+      ],
+      "category": "price",
+      "price": {
+        "moq": "5",
+        "tax": "included",
+        "unit": "box",
+        "currency": "VND",
+        "tier_max": null,
+        "tier_min": "5",
+        "conditions": [
+          "Xác nhận số lượng trước khi đặt."
+        ],
+        "amount_minor": 380000,
+        "basis_quantity": "1"
+      },
+      "quantity": "5"
+    },
+    {
+      "id": "F2",
+      "wording": "Vách ngăn có thể tháo rời",
+      "qualifiers": [
+        "Áp dụng cho mẫu tiêu chuẩn."
+      ],
+      "category": "description"
+    }
+  ],
+  "run": "3beca6de-10a9-455f-97c5-bcdea7a26411",
+  "manifest": {
+    "digest": "2cae999341e1c8536dfa47c4df7e3c0dd62ad3e303342fae5a25c501beabffa5",
+    "id": "1d3fb530-7c61-4c59-8bff-2a8890ec3bbf"
+  },
+  "content": {
+    "angle": "show_evidence",
+    "audience": "Tổ trưởng lắp ráp điện tử",
+    "audience_hypotheses": [
+      "Người phụ trách có thể cần chia vách theo công đoạn; phải phỏng vấn để xác minh."
+    ],
+    "channel": "vertical-social",
+    "channel_copy": {
+      "action": "Yêu cầu báo giá",
+      "declarations": [
+        {
+          "lines": [
+            "Giá tham khảo: 380.000 VND / 1 hộp, đã gồm thuế.",
+            "Đơn tối thiểu: 5 hộp.",
+            "Áp dụng từ 5 hộp.",
+            "Số lượng đối chiếu: 5 hộp.",
+            "Xác nhận số lượng trước khi đặt."
+          ],
+          "source_id": "F1"
+        },
+        {
+          "lines": [
+            "Vách ngăn có thể tháo rời",
+            "Áp dụng cho mẫu tiêu chuẩn."
+          ],
+          "source_id": "F2"
+        }
+      ],
+      "opening": "Mình cùng xem nhé?"
+    },
+    "editorial_style": "friendly",
+    "manifest": {
+      "digest": "2cae999341e1c8536dfa47c4df7e3c0dd62ad3e303342fae5a25c501beabffa5",
+      "id": "1d3fb530-7c61-4c59-8bff-2a8890ec3bbf"
+    },
+    "message_source_id": "F2",
+    "method": "deterministic",
+    "production_direction": "Vẽ hai trạng thái minh họa; đặt dữ kiện đã duyệt ngay dưới hình.",
+    "purpose": "Nhận yêu cầu báo giá Khay chia linh kiện Khe Gọn",
+    "question_to_validate": "Người mua cần đối chiếu điều gì trước khi hỏi báo giá?",
+    "role": "ai-copywriter-content-strategist",
+    "version": "amc.content-storyboard-handoff/1"
+  },
+  "original": {
+    "audience": "Tổ trưởng lắp ráp điện tử",
+    "brand": "Khe Gọn",
+    "brand_direction": "Liên kết mỗi cảnh với dữ kiện đã duyệt; dùng câu ngắn.",
+    "brief_fulfillment": {
+      "fact_handles": [
+        "F1",
+        "F2"
+      ],
+      "manifest": {
+        "digest": "2cae999341e1c8536dfa47c4df7e3c0dd62ad3e303342fae5a25c501beabffa5",
+        "id": "1d3fb530-7c61-4c59-8bff-2a8890ec3bbf"
+      },
+      "ready_for_qa": true,
+      "rows": [
+        {
+          "evidence": "signed objective, supported purpose, current action and requested preparation",
+          "field": "purpose",
+          "requested": "Nhận yêu cầu báo giá Khay chia linh kiện Khe Gọn",
+          "status": "met"
+        },
+        {
+          "evidence": "current opening against approved style alternatives",
+          "field": "editorial_style",
+          "requested": "friendly",
+          "status": "met"
+        },
+        {
+          "evidence": "shots[].visual; rights",
+          "field": "requirements[0]",
+          "requested": "Soạn storyboard có hình minh họa.",
+          "status": "met"
+        },
+        {
+          "evidence": "proof before action; source_ids",
+          "field": "requirements[1]",
+          "requested": "Minh họa dữ kiện sản phẩm trước lời mời hành động.",
+          "status": "met"
+        },
+        {
+          "evidence": "shots[].voice; WebVTT",
+          "field": "acceptance_criteria[0]",
+          "requested": "Có phụ đề tiếng Việt khớp lời thoại.",
+          "status": "met"
+        },
+        {
+          "evidence": "source_refs.declarations; terms or recorded missing price",
+          "field": "acceptance_criteria[1]",
+          "requested": "Đối chiếu điều kiện thương mại theo đúng nguồn.",
+          "status": "met"
+        },
+        {
+          "evidence": "Vietnamese vertical-social script and captions, 9:16",
+          "field": "channel",
+          "requested": "vertical-social",
+          "status": "met"
+        }
+      ],
+      "version": "amc.storyboard-fulfillment/1"
+    },
+    "buyer_action": "rfq",
+    "channel": "vertical-social",
+    "concept": "product_demonstration",
+    "content_handoff_digest": "642651ead3c2355b3bb02b2b43f0744890f3fc17ce82189cface122dd12e41a0",
+    "cta": "Yêu cầu báo giá",
+    "duration_seconds": 32,
+    "editorial": {
+      "note": "Đối chiếu giá theo nguồn đã ghim.",
+      "price_source_ids": [
+        "F1"
+      ],
+      "price_status": "approved"
+    },
+    "format": "9:16",
+    "hook": "Mình cùng xem nhé?",
+    "hook_variant": "direct",
+    "method_ref": {
+      "digest": "db4558733a1d4924ee5e5aa2b61f82f918973bc4551514637054645af1118819",
+      "path": "catalog/video-storyboard-sop-v1.json",
+      "revision": "wf08-production-sop/1"
+    },
+    "product": "Khay chia linh kiện Khe Gọn",
+    "rights": "synthetic_illustration_only",
+    "shots": [
+      {
+        "caption": "Mình cùng xem nhé?",
+        "end_s": 6,
+        "purpose": "hook",
+        "source_ids": [],
+        "start_s": 0,
+        "visual": "Vẽ hai trạng thái minh họa; đặt dữ kiện đã duyệt ngay dưới hình.",
+        "visual_mode": "mechanism",
+        "voice": "Mình cùng xem nhé?"
+      },
+      {
+        "caption": "Vách ngăn có thể tháo rời. Áp dụng cho\nmẫu tiêu chuẩn.",
+        "end_s": 13,
+        "purpose": "proof",
+        "source_ids": [
+          "F2"
+        ],
+        "start_s": 6,
+        "visual": "Tách thao tác thành hai trạng thái để người xem đối chiếu. Ghi đúng phạm vi của F2.",
+        "visual_mode": "mechanism",
+        "voice": "Vách ngăn có thể tháo rời. Áp dụng cho mẫu tiêu chuẩn."
+      },
+      {
+        "caption": "Giá tham khảo: 380.000 VND / 1 hộp, đã\ngồm thuế. Đơn tối thiểu: 5 hộp.",
+        "end_s": 21,
+        "purpose": "terms",
+        "source_ids": [
+          "F1"
+        ],
+        "start_s": 13,
+        "visual": "Tách số tiền, đơn vị tính thuế và mức đặt tối thiểu.",
+        "visual_mode": "offer",
+        "voice": "Giá tham khảo: 380.000 VND / 1 hộp, đã gồm thuế. Đơn tối thiểu: 5 hộp."
+      },
+      {
+        "caption": "Xác nhận số lượng trước khi đặt.",
+        "end_s": 27,
+        "purpose": "conditions",
+        "source_ids": [
+          "F1"
+        ],
+        "start_s": 21,
+        "visual": "Giữ nguyên điều kiện trên thẻ chữ.",
+        "visual_mode": "document",
+        "voice": "Xác nhận số lượng trước khi đặt."
+      },
+      {
+        "caption": "Yêu cầu báo giá",
+        "end_s": 32,
+        "purpose": "action",
+        "source_ids": [],
+        "start_s": 27,
+        "visual": "Hiện nút gửi yêu cầu; không vẽ dấu đã xác nhận.",
+        "visual_mode": "request",
+        "voice": "Yêu cầu báo giá"
+      }
+    ],
+    "source_refs": {
+      "declarations": {
+        "F1": {
+          "category": "price",
+          "conditions": [
+            "Xác nhận số lượng trước khi đặt."
+          ],
+          "qualifiers": [
+            "Xác nhận số lượng trước khi đặt."
+          ],
+          "wording": "VND 380000 / 1 box (tax included)"
+        },
+        "F2": {
+          "category": "description",
+          "conditions": [],
+          "qualifiers": [
+            "Áp dụng cho mẫu tiêu chuẩn."
+          ],
+          "wording": "Vách ngăn có thể tháo rời"
+        }
+      },
+      "facts": [
+        "F1",
+        "F2"
+      ],
+      "guidelines": "b44545db196285fb8c3b7ed25b603c0e333e8d9374725e561a5c3375be4bcf26",
+      "manifest": {
+        "digest": "2cae999341e1c8536dfa47c4df7e3c0dd62ad3e303342fae5a25c501beabffa5",
+        "id": "1d3fb530-7c61-4c59-8bff-2a8890ec3bbf"
+      }
+    },
+    "version": "amc.storyboard/2",
+    "vtt": "WEBVTT\n\n1\n00:00:00.000 --> 00:00:06.000\nMình cùng xem nhé?\n\n2\n00:00:06.000 --> 00:00:13.000\nVách ngăn có thể tháo rời. Áp dụng cho\nmẫu tiêu chuẩn.\n\n3\n00:00:13.000 --> 00:00:21.000\nGiá tham khảo: 380.000 VND / 1 hộp, đã\ngồm thuế. Đơn tối thiểu: 5 hộp.\n\n4\n00:00:21.000 --> 00:00:27.000\nXác nhận số lượng trước khi đặt.\n\n5\n00:00:27.000 --> 00:00:32.000\nYêu cầu báo giá\n"
+  },
+  "alternate": {
+    "audience": "Tổ trưởng lắp ráp điện tử",
+    "brand": "Khe Gọn",
+    "brand_direction": "Liên kết mỗi cảnh với dữ kiện đã duyệt; dùng câu ngắn.",
+    "brief_fulfillment": {
+      "version": "amc.storyboard-fulfillment/1",
+      "rows": [
+        {
+          "field": "purpose",
+          "requested": "Nhận yêu cầu báo giá Khay chia linh kiện Khe Gọn",
+          "status": "met",
+          "evidence": "signed objective, supported purpose, current action and requested preparation"
+        },
+        {
+          "field": "editorial_style",
+          "requested": "friendly",
+          "status": "met",
+          "evidence": "current opening against approved style alternatives"
+        },
+        {
+          "field": "requirements[0]",
+          "requested": "Soạn storyboard có hình minh họa.",
+          "status": "met",
+          "evidence": "shots[].visual; rights"
+        },
+        {
+          "field": "requirements[1]",
+          "requested": "Minh họa dữ kiện sản phẩm trước lời mời hành động.",
+          "status": "met",
+          "evidence": "proof before action; source_ids"
+        },
+        {
+          "field": "acceptance_criteria[0]",
+          "requested": "Có phụ đề tiếng Việt khớp lời thoại.",
+          "status": "met",
+          "evidence": "shots[].voice; WebVTT"
+        },
+        {
+          "field": "acceptance_criteria[1]",
+          "requested": "Đối chiếu điều kiện thương mại theo đúng nguồn.",
+          "status": "met",
+          "evidence": "source_refs.declarations; terms or recorded missing price"
+        },
+        {
+          "field": "channel",
+          "requested": "vertical-social",
+          "status": "met",
+          "evidence": "Vietnamese vertical-social script and captions, 9:16"
+        }
+      ],
+      "ready_for_qa": true,
+      "manifest": {
+        "digest": "2cae999341e1c8536dfa47c4df7e3c0dd62ad3e303342fae5a25c501beabffa5",
+        "id": "1d3fb530-7c61-4c59-8bff-2a8890ec3bbf"
+      },
+      "fact_handles": [
+        "F1",
+        "F2"
+      ]
+    },
+    "buyer_action": "rfq",
+    "channel": "vertical-social",
+    "concept": "product_demonstration",
+    "content_handoff_digest": "642651ead3c2355b3bb02b2b43f0744890f3fc17ce82189cface122dd12e41a0",
+    "cta": "Yêu cầu báo giá",
+    "duration_seconds": 32,
+    "editorial": {
+      "note": "Đối chiếu giá theo nguồn đã ghim.",
+      "price_source_ids": [
+        "F1"
+      ],
+      "price_status": "approved"
+    },
+    "format": "9:16",
+    "hook": "Mình xem điều kiện nhé?",
+    "hook_variant": "style_alternate",
+    "method_ref": {
+      "digest": "db4558733a1d4924ee5e5aa2b61f82f918973bc4551514637054645af1118819",
+      "path": "catalog/video-storyboard-sop-v1.json",
+      "revision": "wf08-production-sop/1"
+    },
+    "product": "Khay chia linh kiện Khe Gọn",
+    "rights": "synthetic_illustration_only",
+    "shots": [
+      {
+        "caption": "Mình xem điều kiện nhé?",
+        "end_s": 6,
+        "purpose": "hook",
+        "source_ids": [],
+        "start_s": 0,
+        "visual": "Vẽ hai trạng thái minh họa; đặt dữ kiện đã duyệt ngay dưới hình.",
+        "visual_mode": "mechanism",
+        "voice": "Mình xem điều kiện nhé?"
+      },
+      {
+        "caption": "Vách ngăn có thể tháo rời. Áp dụng cho\nmẫu tiêu chuẩn.",
+        "end_s": 13,
+        "purpose": "proof",
+        "source_ids": [
+          "F2"
+        ],
+        "start_s": 6,
+        "visual": "Tách thao tác thành hai trạng thái để người xem đối chiếu. Ghi đúng phạm vi của F2.",
+        "visual_mode": "mechanism",
+        "voice": "Vách ngăn có thể tháo rời. Áp dụng cho mẫu tiêu chuẩn."
+      },
+      {
+        "caption": "Giá tham khảo: 380.000 VND / 1 hộp, đã\ngồm thuế. Đơn tối thiểu: 5 hộp.",
+        "end_s": 21,
+        "purpose": "terms",
+        "source_ids": [
+          "F1"
+        ],
+        "start_s": 13,
+        "visual": "Tách số tiền, đơn vị tính thuế và mức đặt tối thiểu.",
+        "visual_mode": "offer",
+        "voice": "Giá tham khảo: 380.000 VND / 1 hộp, đã gồm thuế. Đơn tối thiểu: 5 hộp."
+      },
+      {
+        "caption": "Xác nhận số lượng trước khi đặt.",
+        "end_s": 27,
+        "purpose": "conditions",
+        "source_ids": [
+          "F1"
+        ],
+        "start_s": 21,
+        "visual": "Giữ nguyên điều kiện trên thẻ chữ.",
+        "visual_mode": "document",
+        "voice": "Xác nhận số lượng trước khi đặt."
+      },
+      {
+        "caption": "Yêu cầu báo giá",
+        "end_s": 32,
+        "purpose": "action",
+        "source_ids": [],
+        "start_s": 27,
+        "visual": "Hiện nút gửi yêu cầu; không vẽ dấu đã xác nhận.",
+        "visual_mode": "request",
+        "voice": "Yêu cầu báo giá"
+      }
+    ],
+    "source_refs": {
+      "declarations": {
+        "F1": {
+          "category": "price",
+          "conditions": [
+            "Xác nhận số lượng trước khi đặt."
+          ],
+          "qualifiers": [
+            "Xác nhận số lượng trước khi đặt."
+          ],
+          "wording": "VND 380000 / 1 box (tax included)"
+        },
+        "F2": {
+          "category": "description",
+          "conditions": [],
+          "qualifiers": [
+            "Áp dụng cho mẫu tiêu chuẩn."
+          ],
+          "wording": "Vách ngăn có thể tháo rời"
+        }
+      },
+      "facts": [
+        "F1",
+        "F2"
+      ],
+      "guidelines": "b44545db196285fb8c3b7ed25b603c0e333e8d9374725e561a5c3375be4bcf26",
+      "manifest": {
+        "digest": "2cae999341e1c8536dfa47c4df7e3c0dd62ad3e303342fae5a25c501beabffa5",
+        "id": "1d3fb530-7c61-4c59-8bff-2a8890ec3bbf"
+      }
+    },
+    "version": "amc.storyboard/2",
+    "vtt": "WEBVTT\n\n1\n00:00:00.000 --> 00:00:06.000\nMình xem điều kiện nhé?\n\n2\n00:00:06.000 --> 00:00:13.000\nVách ngăn có thể tháo rời. Áp dụng cho\nmẫu tiêu chuẩn.\n\n3\n00:00:13.000 --> 00:00:21.000\nGiá tham khảo: 380.000 VND / 1 hộp, đã\ngồm thuế. Đơn tối thiểu: 5 hộp.\n\n4\n00:00:21.000 --> 00:00:27.000\nXác nhận số lượng trước khi đặt.\n\n5\n00:00:27.000 --> 00:00:32.000\nYêu cầu báo giá\n"
+  },
+  "edit_receipt": {
+    "run_id": "3beca6de-10a9-455f-97c5-bcdea7a26411",
+    "document_id": "6e50907c-7772-4376-8755-bbb1ed948cac",
+    "revision": 2,
+    "content_digest": "d41fa856fe441d2f8b05564f89c130420443a04424dc94ecaec78da82adf7173",
+    "baseline_revision": 1,
+    "baseline_content_digest": "9e1e472b10998857621b06763dbf2f23ee6094840a3d9bf89672a1bc2ce8f254",
+    "baseline_board_digest": "8abd43fcd89b6351bc9706965a81153215f31b76071224436de3566f580caaee",
+    "board_digest": "58a24762912759599cd61cafa7db39149f0afbd67ff15cb01d8a8c7ac5b3bac7",
+    "edits": {
+      "expected_qa_revision": 1,
+      "expected_content_digest": "9e1e472b10998857621b06763dbf2f23ee6094840a3d9bf89672a1bc2ce8f254",
+      "mode": "controlled_hook",
+      "hook_variant": "style_alternate",
+      "shot_edits": []
+    },
+    "comparison": {
+      "mode": "controlled_hook",
+      "classification": "offline_single_hook_design",
+      "changed_variables": [
+        "hook"
+      ],
+      "baseline_holds": {
+        "body": "de388ab8eb7358d88ab777b98457fa4f90c82c8bb0cb5a4254cecddcc439002e",
+        "opening_structure": "17585df992f5875a90a7196d7e8a31312f76e61481fbad2ce18d3c259b9b32d5",
+        "timeline": "9bfb6ef712c88ab8cc9192e7b0a8af4970c4307ec92f13a02c29b448dd905b99",
+        "visual": "19ebbf242e9d09eeaf8ab27646be2cafd54da4cee373583760c44880372af315",
+        "cta": "67ccde462caa591babb7b07a906b05000dae45b26369e7e7972c0baf0cb71c71",
+        "offer_claims_rights": "6693f49a27baac32d3e1867a8861403176278093ee4ce671e90471a640386650",
+        "brief_and_direction": "b4d64a4d22fa22504e2764c0a286eeaedcb498fbfc736bbe92303ee1e027937b",
+        "landing": "7ddc173cbd9de7f9d7659d5c33879a17ba4f96a8d94747046478cced715cf89d",
+        "distribution": "998858fb3e2f62d3a4cdbf2850dd26eee8f292555acb8f3822f55504374d3957"
+      },
+      "candidate_holds": {
+        "body": "de388ab8eb7358d88ab777b98457fa4f90c82c8bb0cb5a4254cecddcc439002e",
+        "opening_structure": "17585df992f5875a90a7196d7e8a31312f76e61481fbad2ce18d3c259b9b32d5",
+        "timeline": "9bfb6ef712c88ab8cc9192e7b0a8af4970c4307ec92f13a02c29b448dd905b99",
+        "visual": "19ebbf242e9d09eeaf8ab27646be2cafd54da4cee373583760c44880372af315",
+        "cta": "67ccde462caa591babb7b07a906b05000dae45b26369e7e7972c0baf0cb71c71",
+        "offer_claims_rights": "6693f49a27baac32d3e1867a8861403176278093ee4ce671e90471a640386650",
+        "brief_and_direction": "b4d64a4d22fa22504e2764c0a286eeaedcb498fbfc736bbe92303ee1e027937b",
+        "landing": "7ddc173cbd9de7f9d7659d5c33879a17ba4f96a8d94747046478cced715cf89d",
+        "distribution": "998858fb3e2f62d3a4cdbf2850dd26eee8f292555acb8f3822f55504374d3957"
+      },
+      "landing": {
+        "kind": "offline_no_landing"
+      },
+      "distribution": {
+        "kind": "offline_no_delivery",
+        "channel": "vertical-social",
+        "audience": "Tổ trưởng lắp ráp điện tử"
+      },
+      "observed_traffic": 0,
+      "outcome": null,
+      "external_calls": 0,
+      "spend_microusd": 0
+    }
+  },
+  "qa": [
+    [
+      "b1ace1a2-09b8-403a-8525-10e1267bc40c",
+      "1be5a3cf-c27d-4e37-a833-0d5877c6d00d",
+      {
+        "run_id": "3beca6de-10a9-455f-97c5-bcdea7a26411",
+        "document_id": "6e50907c-7772-4376-8755-bbb1ed948cac",
+        "qa_revision": 1,
+        "hook_variant": "direct",
+        "content_digest": "9e1e472b10998857621b06763dbf2f23ee6094840a3d9bf89672a1bc2ce8f254",
+        "release_digest": "25bd28157c9b48a49de070857e929acbe5cebeec9fd2b34951c53e5766e44405",
+        "manifest_digest": "2cae999341e1c8536dfa47c4df7e3c0dd62ad3e303342fae5a25c501beabffa5",
+        "storyboard_digest": "8abd43fcd89b6351bc9706965a81153215f31b76071224436de3566f580caaee"
+      }
+    ],
+    [
+      "246719a1-db4b-4d4e-9017-144fb0955b9b",
+      "1be5a3cf-c27d-4e37-a833-0d5877c6d00d",
+      {
+        "run_id": "3beca6de-10a9-455f-97c5-bcdea7a26411",
+        "document_id": "6e50907c-7772-4376-8755-bbb1ed948cac",
+        "qa_revision": 2,
+        "hook_variant": "style_alternate",
+        "content_digest": "d41fa856fe441d2f8b05564f89c130420443a04424dc94ecaec78da82adf7173",
+        "release_digest": "25bd28157c9b48a49de070857e929acbe5cebeec9fd2b34951c53e5766e44405",
+        "edition_receipt": "0c8df43f-b02c-432b-906e-86738f422aca",
+        "manifest_digest": "2cae999341e1c8536dfa47c4df7e3c0dd62ad3e303342fae5a25c501beabffa5",
+        "storyboard_digest": "58a24762912759599cd61cafa7db39149f0afbd67ff15cb01d8a8c7ac5b3bac7",
+        "edition_receipt_digest": "ff1765cbf9f855db180b9bfa432f793b99ec2b0e72f22ad1501d7685a1195477"
+      }
+    ]
+  ],
+  "worker_journal": [
+    {
+      "node_id": "director",
+      "plan_revision": 1,
+      "skill": "director",
+      "attempt": 1,
+      "provider": "deterministic",
+      "model": "local-storyboard/2",
+      "prompt": "marketing-workforce-2",
+      "started_at": "2026-11-27T02:08:58.009521+00:00",
+      "outcome": "ok",
+      "reserved_microusd": 0,
+      "input_tokens": 0,
+      "output_tokens": 0,
+      "estimated_microusd": 0,
+      "finished_at": "2026-11-27T02:08:58.189455+00:00"
+    },
+    {
+      "node_id": "n01",
+      "plan_revision": 1,
+      "skill": "content",
+      "attempt": 1,
+      "provider": "deterministic",
+      "model": "local-storyboard/2",
+      "prompt": "marketing-workforce-2",
+      "started_at": "2026-11-27T02:08:58.232925+00:00",
+      "outcome": "ok",
+      "reserved_microusd": 0,
+      "input_tokens": 0,
+      "output_tokens": 0,
+      "estimated_microusd": 0,
+      "finished_at": "2026-11-27T02:08:58.278522+00:00"
+    },
+    {
+      "node_id": "n02",
+      "plan_revision": 1,
+      "skill": "storyboard",
+      "attempt": 1,
+      "provider": "deterministic",
+      "model": "local-storyboard/2",
+      "prompt": "marketing-workforce-2",
+      "started_at": "2026-11-27T02:08:58.306483+00:00",
+      "outcome": "ok",
+      "reserved_microusd": 0,
+      "input_tokens": 0,
+      "output_tokens": 0,
+      "estimated_microusd": 0,
+      "finished_at": "2026-11-27T02:08:58.354208+00:00"
+    }
+  ],
+  "provenance": {
+    "manifest_digest": "2cae999341e1c8536dfa47c4df7e3c0dd62ad3e303342fae5a25c501beabffa5",
+    "entries": [
+      {
+        "handle": "F1",
+        "claim_revision": "61b561c8-a432-42c0-b5d0-fb3692fca3b1",
+        "binding_revision": "638fb0e9-e678-4769-99ec-47828e00f61c",
+        "source_revision": "748cd048-b2fb-46b8-a639-c83610b6b6e6",
+        "source_digest": "0abc6b325afeb5d3a4a56eb65260dce84a9d7d0d8d563407b61abd5093993f24",
+        "document": "PRIVATE_SYNTHETIC_DOCUMENT",
+        "locator": "private locator"
+      },
+      {
+        "handle": "F2",
+        "claim_revision": "c4b9341f-78a4-43f8-acc9-095502ad6e8b",
+        "binding_revision": "a601f052-cfdc-4fb1-9a3b-03cf8703301a",
+        "source_revision": "7b8b956c-4e8b-45f0-a843-4d1de2fa3f9d",
+        "source_digest": "4594a0268416288bf3855f13a5c16164923f587563e9132b7e362f599f300972",
+        "document": "PRIVATE_SYNTHETIC_DOCUMENT",
+        "locator": "private locator"
+      }
+    ]
+  }
+}

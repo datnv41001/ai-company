@@ -1,0 +1,1 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites name="pytest tests"><testsuite name="pytest" errors="0" failures="0" skipped="0" tests="1" time="52.357" timestamp="2026-11-27T09:03:45.644026+07:00" hostname="CNTT-Dat"><testcase classname="outputs.round60-semantic.ui.before.baseline_browser" name="test_original_report" time="49.874" /></testsuite></testsuites>

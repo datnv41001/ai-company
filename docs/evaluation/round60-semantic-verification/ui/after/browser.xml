@@ -1,0 +1,1 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites name="pytest tests"><testsuite name="pytest" errors="0" failures="0" skipped="0" tests="1" time="112.737" timestamp="2026-11-27T09:06:01.373317+07:00" hostname="CNTT-Dat"><testcase classname="tests.browser_storyboard_workforce" name="test_staff_read_checked_content_handoff" time="110.148" /></testsuite></testsuites>

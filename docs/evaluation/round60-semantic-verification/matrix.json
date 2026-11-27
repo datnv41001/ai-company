@@ -1,0 +1,290 @@
+[
+  {
+    "action": "rfq",
+    "style": "plain",
+    "versions": [
+      {
+        "phase": "reviewed",
+        "evidence": "red-pinned/outputs/rfq-plain.json",
+        "original": "Cần kiểm tra điều gì?",
+        "alternate": "Hãy xem điều kiện trước.",
+        "cta": "Yêu cầu báo giá",
+        "original_qa_ready": true,
+        "alternate_qa_ready": true
+      },
+      {
+        "phase": "candidate",
+        "evidence": "green/outputs/rfq-plain.json",
+        "original": "Bạn cần báo giá gì?",
+        "alternate": "Hỏi báo giá cần chuẩn bị gì?",
+        "cta": "Yêu cầu báo giá",
+        "original_qa_ready": true,
+        "alternate_qa_ready": true
+      }
+    ]
+  },
+  {
+    "action": "rfq",
+    "style": "concise",
+    "versions": [
+      {
+        "phase": "reviewed",
+        "evidence": "red-pinned/outputs/rfq-concise.json",
+        "original": "Kiểm tra đâu trước?",
+        "alternate": "Báo giá cần gì?",
+        "cta": "Yêu cầu báo giá",
+        "original_qa_ready": true,
+        "alternate_qa_ready": true
+      },
+      {
+        "phase": "candidate",
+        "evidence": "green/outputs/rfq-concise.json",
+        "original": "Cần báo giá?",
+        "alternate": "Hỏi báo giá cần gì?",
+        "cta": "Yêu cầu báo giá",
+        "original_qa_ready": true,
+        "alternate_qa_ready": true
+      }
+    ]
+  },
+  {
+    "action": "rfq",
+    "style": "formal",
+    "versions": [
+      {
+        "phase": "reviewed",
+        "evidence": "red-pinned/outputs/rfq-formal.json",
+        "original": "Quý vị cần đối chiếu gì?",
+        "alternate": "Quý vị cần báo giá?",
+        "cta": "Yêu cầu báo giá",
+        "original_qa_ready": true,
+        "alternate_qa_ready": true
+      },
+      {
+        "phase": "candidate",
+        "evidence": "green/outputs/rfq-formal.json",
+        "original": "Quý vị cần báo giá?",
+        "alternate": "Quý vị muốn hỏi báo giá nào?",
+        "cta": "Yêu cầu báo giá",
+        "original_qa_ready": true,
+        "alternate_qa_ready": true
+      }
+    ]
+  },
+  {
+    "action": "rfq",
+    "style": "friendly",
+    "versions": [
+      {
+        "phase": "reviewed",
+        "evidence": "red-pinned/outputs/rfq-friendly.json",
+        "original": "Mình cùng xem nhé?",
+        "alternate": "Mình xem điều kiện nhé?",
+        "cta": "Yêu cầu báo giá",
+        "original_qa_ready": true,
+        "alternate_qa_ready": true
+      },
+      {
+        "phase": "candidate",
+        "evidence": "green/outputs/rfq-friendly.json",
+        "original": "Mình cần báo giá gì nhỉ?",
+        "alternate": "Mình xem gì trước khi hỏi báo giá?",
+        "cta": "Yêu cầu báo giá",
+        "original_qa_ready": true,
+        "alternate_qa_ready": true
+      }
+    ]
+  },
+  {
+    "action": "appointment",
+    "style": "plain",
+    "versions": [
+      {
+        "phase": "reviewed",
+        "evidence": "red-pinned/outputs/appointment-plain.json",
+        "original": "Cần kiểm tra điều gì?",
+        "alternate": "Hãy xem điều kiện trước.",
+        "cta": "Gửi đề nghị khảo sát",
+        "original_qa_ready": true,
+        "alternate_qa_ready": true
+      },
+      {
+        "phase": "candidate",
+        "evidence": "green/outputs/appointment-plain.json",
+        "original": "Bạn muốn hẹn lúc nào?",
+        "alternate": "Bạn cần biết gì trước khi hẹn?",
+        "cta": "Gửi đề nghị khảo sát",
+        "original_qa_ready": true,
+        "alternate_qa_ready": true
+      }
+    ]
+  },
+  {
+    "action": "appointment",
+    "style": "concise",
+    "versions": [
+      {
+        "phase": "reviewed",
+        "evidence": "red-pinned/outputs/appointment-concise.json",
+        "original": "Kiểm tra đâu trước?",
+        "alternate": "Báo giá cần gì?",
+        "cta": "Gửi đề nghị khảo sát",
+        "original_qa_ready": true,
+        "alternate_qa_ready": true
+      },
+      {
+        "phase": "candidate",
+        "evidence": "green/outputs/appointment-concise.json",
+        "original": "Hẹn khi nào?",
+        "alternate": "Cần gì trước khi hẹn?",
+        "cta": "Gửi đề nghị khảo sát",
+        "original_qa_ready": true,
+        "alternate_qa_ready": true
+      }
+    ]
+  },
+  {
+    "action": "appointment",
+    "style": "formal",
+    "versions": [
+      {
+        "phase": "reviewed",
+        "evidence": "red-pinned/outputs/appointment-formal.json",
+        "original": "Quý vị cần đối chiếu gì?",
+        "alternate": "Quý vị cần báo giá?",
+        "cta": "Gửi đề nghị khảo sát",
+        "original_qa_ready": true,
+        "alternate_qa_ready": true
+      },
+      {
+        "phase": "candidate",
+        "evidence": "green/outputs/appointment-formal.json",
+        "original": "Quý vị muốn đề nghị lịch hẹn nào?",
+        "alternate": "Quý vị cần biết gì trước khi hẹn?",
+        "cta": "Gửi đề nghị khảo sát",
+        "original_qa_ready": true,
+        "alternate_qa_ready": true
+      }
+    ]
+  },
+  {
+    "action": "appointment",
+    "style": "friendly",
+    "versions": [
+      {
+        "phase": "reviewed",
+        "evidence": "red-pinned/outputs/appointment-friendly.json",
+        "original": "Mình cùng xem nhé?",
+        "alternate": "Mình xem điều kiện nhé?",
+        "cta": "Gửi đề nghị khảo sát",
+        "original_qa_ready": true,
+        "alternate_qa_ready": true
+      },
+      {
+        "phase": "candidate",
+        "evidence": "green/outputs/appointment-friendly.json",
+        "original": "Mình muốn hẹn khi nào nhỉ?",
+        "alternate": "Mình xem gì trước khi hẹn nhé?",
+        "cta": "Gửi đề nghị khảo sát",
+        "original_qa_ready": true,
+        "alternate_qa_ready": true
+      }
+    ]
+  },
+  {
+    "action": "choose_session",
+    "style": "plain",
+    "versions": [
+      {
+        "phase": "reviewed",
+        "evidence": "red-pinned/outputs/choose_session-plain.json",
+        "original": "Cần kiểm tra điều gì?",
+        "alternate": "Hãy xem điều kiện trước.",
+        "cta": "Chọn buổi",
+        "original_qa_ready": true,
+        "alternate_qa_ready": true
+      },
+      {
+        "phase": "candidate",
+        "evidence": "green/outputs/choose_session-plain.json",
+        "original": "Bạn muốn chọn buổi nào?",
+        "alternate": "Buổi nào hợp với bạn?",
+        "cta": "Chọn buổi",
+        "original_qa_ready": true,
+        "alternate_qa_ready": true
+      }
+    ]
+  },
+  {
+    "action": "choose_session",
+    "style": "concise",
+    "versions": [
+      {
+        "phase": "reviewed",
+        "evidence": "red-pinned/outputs/choose_session-concise.json",
+        "original": "Kiểm tra đâu trước?",
+        "alternate": "Báo giá cần gì?",
+        "cta": "Chọn buổi",
+        "original_qa_ready": true,
+        "alternate_qa_ready": true
+      },
+      {
+        "phase": "candidate",
+        "evidence": "green/outputs/choose_session-concise.json",
+        "original": "Chọn buổi nào?",
+        "alternate": "Buổi nào phù hợp?",
+        "cta": "Chọn buổi",
+        "original_qa_ready": true,
+        "alternate_qa_ready": true
+      }
+    ]
+  },
+  {
+    "action": "choose_session",
+    "style": "formal",
+    "versions": [
+      {
+        "phase": "reviewed",
+        "evidence": "red-pinned/outputs/choose_session-formal.json",
+        "original": "Quý vị cần đối chiếu gì?",
+        "alternate": "Quý vị cần báo giá?",
+        "cta": "Chọn buổi",
+        "original_qa_ready": true,
+        "alternate_qa_ready": true
+      },
+      {
+        "phase": "candidate",
+        "evidence": "green/outputs/choose_session-formal.json",
+        "original": "Quý vị muốn chọn buổi nào?",
+        "alternate": "Buổi nào phù hợp với quý vị?",
+        "cta": "Chọn buổi",
+        "original_qa_ready": true,
+        "alternate_qa_ready": true
+      }
+    ]
+  },
+  {
+    "action": "choose_session",
+    "style": "friendly",
+    "versions": [
+      {
+        "phase": "reviewed",
+        "evidence": "red-pinned/outputs/choose_session-friendly.json",
+        "original": "Mình cùng xem nhé?",
+        "alternate": "Mình xem điều kiện nhé?",
+        "cta": "Chọn buổi",
+        "original_qa_ready": true,
+        "alternate_qa_ready": true
+      },
+      {
+        "phase": "candidate",
+        "evidence": "green/outputs/choose_session-friendly.json",
+        "original": "Mình chọn buổi nào nhỉ?",
+        "alternate": "Buổi nào hợp với mình nhỉ?",
+        "cta": "Chọn buổi",
+        "original_qa_ready": true,
+        "alternate_qa_ready": true
+      }
+    ]
+  }
+]

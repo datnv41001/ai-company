@@ -1,0 +1,105 @@
+{
+  "base": "4140563a89539acd19f1a7d5a16662c8dec5f6af",
+  "old": "555b968c85b09d52d50d2fd165ea9ff320e5afcd",
+  "head": "edbca9483f59a20f8c3d1f54123a92e353cc3426",
+  "trial": {
+    "sha": "7a506789ca4183f59d9e6e0d2b9486a86d692879",
+    "tree": "1c40c678b0556cfa512b0a5f59c4eef457c60ef6",
+    "parents": [
+      "4140563a89539acd19f1a7d5a16662c8dec5f6af",
+      "edbca9483f59a20f8c3d1f54123a92e353cc3426"
+    ]
+  },
+  "native_full": {
+    "tests": 686,
+    "failures": 0,
+    "skipped": 2,
+    "passed": 684,
+    "sha256": "a23c0ae3122e4aaf900900ef243bd26a9cdfc0303b53c2db76654a1677b270a8"
+  },
+  "native_old_baseline": {
+    "tests": 668,
+    "failures": 0,
+    "skipped": 2,
+    "passed": 666,
+    "sha256": "2233826173a8a301d93bb7544b89e11abbf1e907fefd78982ede9d32c144680f"
+  },
+  "native_targeted": {
+    "tests": 35,
+    "failures": 0,
+    "skipped": 0,
+    "passed": 35,
+    "sha256": "523fab0f4556061dc6b272a4a6abf00934d60076216c5cd2810445bbaf2836cd"
+  },
+  "ci": {
+    "push/head": {
+      "source": "https://github.com/datnv41001/ai-company/actions/runs/45926613684/artifacts/15167144251",
+      "artifact_digest": "sha256:5db294f05f7633c68dffbfbfe56b9f63a88b441e3e39e59e1bfc790cc8e69725",
+      "ui": "https://github.com/datnv41001/ai-company/actions/runs/45926613684/artifacts/15167178876",
+      "ui_digest": "sha256:49446e676862b0ab9382c7b914cff98d89b24db704284003b468bc715e25ea0c",
+      "checkout": "edbca9483f59a20f8c3d1f54123a92e353cc3426",
+      "files": {
+        "appointment-concise.json": "1e150f945fbe79a397623d3e438db8803f03260a9b1f4491f073a0c825cda063",
+        "appointment-formal.json": "36e6e478f1ddf3ca2c1c4137446cbbbfd60cc9dccc2940680f9f27f99595202b",
+        "appointment-friendly.json": "b8f39e9122125e46d9e30f0fb1da717dd38fe87d90c8d628da19c90dc3e8c9fc",
+        "appointment-plain.json": "e646402fda0293a4310644a5b1c446de93da4037bdc41cc20af1835b472acb9f",
+        "choose_session-concise.json": "38f53baa8a28559e16bec7c621acc8c6c38d9356143a32ee76d51a78b5d08d0b",
+        "choose_session-formal.json": "d15cd3175391f27e0109dae6274b419ec489149e91657ba5685b29cf444fcdc3",
+        "choose_session-friendly.json": "52ce20b831f06cfb1412574afd6b512fc9366b04e571146d267a9cbbb38220be",
+        "choose_session-plain.json": "51e55609d48412c10828cc011002ae912043b9f2f235da6126bf5b915363e87b",
+        "rfq-concise.json": "8fe773726e7398482a7c626579fc992e305f48d4febf3be617fdd6602fb6b265",
+        "rfq-formal.json": "9dd03f7e44eae0fba451bf083a5ac26d942c21cc4476a0c9d5a94be005add6fb",
+        "rfq-friendly.json": "edf75d3443ec982c6836e3a2cace30a49085458b0614721505485e96d20bd4df",
+        "rfq-plain.json": "39520721d75404fa5f75a4c5b86008d1162ea9b9d017cb8ddbb49b9f9445275b",
+        "terms-appointment.json": "8d8080a60cef0ee1ad44fc052d0ecc40fb790b78a11008d80be8c36446b07cee",
+        "terms-choose_session.json": "3c9d9db5d6f6d63c81c8f843241c47d10c82fbadf3da4888170e6d4dc7f081bb"
+      }
+    },
+    "pull_request/head": {
+      "source": "https://github.com/datnv41001/ai-company/actions/runs/45926618364/artifacts/15167407409",
+      "artifact_digest": "sha256:630418c2a9b3428e96f6ed80cbf06ee5eb88202022171c8449971c8c12facade",
+      "ui": "https://github.com/datnv41001/ai-company/actions/runs/45926618364/artifacts/15167397254",
+      "ui_digest": "sha256:8f732df3fc4d914154e96cf769f37fc2be0b0457fcf1bb52c4e90f5bff8fbb4b",
+      "checkout": "edbca9483f59a20f8c3d1f54123a92e353cc3426",
+      "files": {
+        "appointment-concise.json": "78a25626883d49bb631de5169869d474ae1cc32533e35f83682458fed0cd86d8",
+        "appointment-formal.json": "e96976d9b6420f400060264b5eaff1cfdf0b9b9f8000d3a49bad950ed3bf25f4",
+        "appointment-friendly.json": "870ddd0f5040ed2c6c6b593aa2bc2c023062e99de4b3359c0837315b54accc05",
+        "appointment-plain.json": "8acc0216195637544c418fba5f70a82081aaf4b8f6e33c8028fdd4de25fe08a9",
+        "choose_session-concise.json": "c19adf95171940b3386cfe39d2fa61f30067fe4337f44f4c1811af54cc3b9087",
+        "choose_session-formal.json": "fcdd0d609f0ea26d6431053187337e708cbacac0a19228efd1d86d0a642f0c94",
+        "choose_session-friendly.json": "86f6832b5fb816272ceac96f45669a90f66691ab0450620cf585957423662d8e",
+        "choose_session-plain.json": "4fd1f46ba721f66c19ed40f33db5485ffe117e8f59864cdebcac0fc448d170db",
+        "rfq-concise.json": "56c4493a1636c540e790da4f2e6392dc2787330ff494ea2676bb65ce247e7d32",
+        "rfq-formal.json": "60a9278b9742d6e08bf32a2789aca83893c466865a6e1807c2390b9e1b96aa99",
+        "rfq-friendly.json": "e5eb2df3d248d2c1f2257929b8ca809ce1d0b5c43c684c151e4803a6354e1580",
+        "rfq-plain.json": "79052c2a823545f46b1352dfbbd3af8eba18963f73514875884f84731fb3971f",
+        "terms-appointment.json": "85b4f00f07e97f494534790a9d2449b518ad66c5e07b1110bcbe67154eadb5a3",
+        "terms-choose_session.json": "311e62965b8a06458cc50b6e39e0d5ccc4dfe19ebd499dcf009bee9533fb44a2"
+      }
+    },
+    "pull_request/integration": {
+      "source": "https://github.com/datnv41001/ai-company/actions/runs/45926618364/artifacts/15167183859",
+      "artifact_digest": "sha256:f67765b9dc90076927941e2d17f6967bdaebd6b451150f2ace70680cff76457d",
+      "ui": "https://github.com/datnv41001/ai-company/actions/runs/45926618364/artifacts/15167801525",
+      "ui_digest": "sha256:2ecc896035d95afb7e83813135da904f15038a4a9150d7d414f570543fa3a611",
+      "checkout": "7a506789ca4183f59d9e6e0d2b9486a86d692879",
+      "files": {
+        "appointment-concise.json": "66666ee8a4d17c93706a51334e108cc14344dacc3555f3eebe8f6440f1afd980",
+        "appointment-formal.json": "d3de71f1ad6c4c1b592ee14da1f147ce573a34d20a45461891debdb93489f1b8",
+        "appointment-friendly.json": "1712b4f4ccbb5cf16c429a372078d9fec8cd7fec477849abfa69ce85cb95e102",
+        "appointment-plain.json": "55b35c6bdf5e9debc3b24519863ae7509ecf12c5ff16aef7978646c684f406a4",
+        "choose_session-concise.json": "e3695627ddba0fb4701db1d69e23f1520df9c24a1786eddd0f478f0a4ed2d792",
+        "choose_session-formal.json": "bcf928949a1c4d6c1c3f2bba85ecc47d893b43591bdb17e6eeeca1da31303b5f",
+        "choose_session-friendly.json": "93eeb23427122643813205de19ce011221c79c2fbe02d8a9cd81dc7bf5b0f48c",
+        "choose_session-plain.json": "8cddcf002cc5050586595d4b5fbcd13310d49219398b035964fa43ec29ccd78d",
+        "rfq-concise.json": "89c36bedfca1fcb26dcc5e0ff16dda69dbe30f44c340803af8ff9fac70421b72",
+        "rfq-formal.json": "722a377c2609a419eebf58c9a3c1cb5799e780e8212427e3b109181238e5872d",
+        "rfq-friendly.json": "e5ae2b17b1feac953d45994926ca0ad8cb75c9fc09c70f0ff00954a16d6e368a",
+        "rfq-plain.json": "3553e6a156a204f85bfb7e8b2fc05b2ee00c695b33d250edaf456916a31f8c5d",
+        "terms-appointment.json": "9e3181365a15bd41043793da6f4dac1dbdf39f48b929e351d9a633822eea9cfa",
+        "terms-choose_session.json": "7821ebda9709c0c9bf40f4f52a0dab69cb3ed69e519c0b9f771797305b29fddb"
+      }
+    }
+  }
+}

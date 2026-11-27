@@ -1,0 +1,35 @@
+{
+  "doc": "/api/tenants/45a1dda4-917a-4293-85d2-3b0cb5b5001a/deliverables/83c3aa15-12a0-41ea-a334-ceec006cda34",
+  "decision": {
+    "expected_qa_revision": 1,
+    "expected_content_digest": "6787d4a6e8fd870921474037003f66aa0831feb90d77c995aac59831b9d4c729",
+    "decision": "approved",
+    "note": "Reviewed exact synthetic product declaration"
+  },
+  "trace": "/api/tenants/45a1dda4-917a-4293-85d2-3b0cb5b5001a/workforce/runs/b2954d80-e9b3-487e-adc4-a001eed748c2",
+  "source_id": "20e105d2-d893-456b-ba99-fd84975c1d77",
+  "board_digest": "8b79aca7774e12b70e605dcbb0807753e39f17cb08f464af6aef31744e7c7dd4",
+  "old_draft": "25bd28157c9b48a49de070857e929acbe5cebeec9fd2b34951c53e5766e44405",
+  "updated": {
+    "http": {
+      "history": 200,
+      "edition": 409,
+      "qa": 409
+    },
+    "board_digest": "8b79aca7774e12b70e605dcbb0807753e39f17cb08f464af6aef31744e7c7dd4",
+    "republish": "Immutable skill version changed",
+    "edition_detail": "The draft storyboard binding requires its original runtime",
+    "qa_detail": "The draft storyboard binding requires its original runtime",
+    "stored_draft": "25bd28157c9b48a49de070857e929acbe5cebeec9fd2b34951c53e5766e44405"
+  },
+  "rollback": {
+    "http": {
+      "history": 200,
+      "edition": 200,
+      "qa": 200
+    },
+    "board_digest": "8b79aca7774e12b70e605dcbb0807753e39f17cb08f464af6aef31744e7c7dd4",
+    "republish": "identical manifest replayed",
+    "stored_draft": "25bd28157c9b48a49de070857e929acbe5cebeec9fd2b34951c53e5766e44405"
+  }
+}

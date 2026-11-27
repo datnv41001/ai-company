@@ -1,0 +1,108 @@
+{
+  "run_id": "7d445632-cd31-4c20-a4f9-39693bb0da03",
+  "document_id": "ff3a4211-4612-45d2-b400-ce249de7f0e2",
+  "manifest_digest": "c7cbbaa33d754c60a5960348c4f60f9587c4b492eb22d067d6eb7376e939ea54",
+  "content_digest": "6c88871d17c5d204da121b904cd5ae832434152d4e63dbcecf7451dce7b02173",
+  "browser": "158.0.8127.88",
+  "sessions": [
+    {
+      "width": 1280,
+      "height": 850,
+      "open_to_verified_copy_ms": 141,
+      "scroll_width": 1280,
+      "contrast": [
+        {
+          "surface": ".content-handoff",
+          "view": "light",
+          "checked": 8,
+          "minimum_ratio": 6.113,
+          "failed": [],
+          "unresolved": []
+        },
+        {
+          "surface": ".content-handoff",
+          "view": "dark",
+          "checked": 8,
+          "minimum_ratio": 7.909,
+          "failed": [],
+          "unresolved": []
+        }
+      ],
+      "themes": [
+        "light",
+        "dark"
+      ],
+      "keyboard": "Enter opens report, toggles evidence and saves a hook edit",
+      "edited_revision": 2,
+      "edited_digest": "267acd2657305d5db2927caa2ac6a4614d5b04fde460efddd3de26e85df88d64"
+    },
+    {
+      "width": 820,
+      "height": 1180,
+      "open_to_verified_copy_ms": 265,
+      "scroll_width": 820,
+      "contrast": [
+        {
+          "surface": ".content-handoff",
+          "view": "light",
+          "checked": 8,
+          "minimum_ratio": 6.113,
+          "failed": [],
+          "unresolved": []
+        },
+        {
+          "surface": ".content-handoff",
+          "view": "dark",
+          "checked": 8,
+          "minimum_ratio": 7.909,
+          "failed": [],
+          "unresolved": []
+        }
+      ],
+      "themes": [
+        "light",
+        "dark"
+      ],
+      "keyboard": "Enter opens report, toggles evidence and saves a hook edit",
+      "edited_revision": 3,
+      "edited_digest": "5d8741d19a39fc2c91efceea546330c222fe55cd5e4c032dcf2a0c3d77c5384c"
+    },
+    {
+      "width": 390,
+      "height": 844,
+      "open_to_verified_copy_ms": 203,
+      "scroll_width": 390,
+      "contrast": [
+        {
+          "surface": ".content-handoff",
+          "view": "light",
+          "checked": 8,
+          "minimum_ratio": 6.113,
+          "failed": [],
+          "unresolved": []
+        },
+        {
+          "surface": ".content-handoff",
+          "view": "dark",
+          "checked": 8,
+          "minimum_ratio": 7.909,
+          "failed": [],
+          "unresolved": []
+        }
+      ],
+      "themes": [
+        "light",
+        "dark"
+      ],
+      "keyboard": "Enter opens report, toggles evidence and saves a hook edit",
+      "edited_revision": 4,
+      "edited_digest": "267acd2657305d5db2927caa2ac6a4614d5b04fde460efddd3de26e85df88d64"
+    }
+  ],
+  "stale": {
+    "viewed_revision": 4,
+    "preserved_revision": 5,
+    "preserved_content_digest": "a7aa5ede894d1a2f6287980a45a9dad44629b26d5a1223a1575542420f4c6944",
+    "status": 412
+  }
+}

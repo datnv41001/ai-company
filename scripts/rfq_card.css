@@ -1,0 +1,25 @@
+/* Offline subset of AMC design-system.css semantic tokens. No external assets. */
+:root {
+  color-scheme: light; --canvas:#f4f5f0; --paper:#fff; --ink:#172c28; --muted:#48605a;
+  --border:#c7d1c9; --accent:#126450; --focus:#235dd8; --hero:#153f36; --hero-ink:#f2fbef;
+  font: 400 16px/1.5 Inter,"Segoe UI",system-ui,sans-serif;
+}
+@media (prefers-color-scheme:dark) {
+  :root {color-scheme:dark; --canvas:#101a18; --paper:#192622; --ink:#edf6ef; --muted:#b2c8ba;
+    --border:#3f5149; --accent:#a7dbb7; --focus:#a6c5ff; --hero:#123d32; --hero-ink:#f3faed}
+}
+* {box-sizing:border-box}
+body {margin:0; background:var(--canvas); color:var(--ink)}
+main {max-width:64rem; margin:auto; padding:clamp(1rem,4vw,3rem); overflow-wrap:anywhere}
+header {display:flex; justify-content:space-between; flex-wrap:wrap; gap:.5rem; color:var(--muted); font-weight:650}
+section {background:var(--paper); border:1px solid var(--border); border-radius:16px; padding:clamp(1rem,3vw,2rem); margin-top:1rem}
+.hero {background:var(--hero); color:var(--hero-ink); padding-block:clamp(1.5rem,4vw,3rem)}
+h1 {font-size:clamp(1.65rem,4vw,2.8rem); line-height:1.12; margin:.35em 0}
+h2 {font-size:1.25rem; margin:0 0 .8rem}
+p {max-width:72ch; margin:.55em 0}
+dl {display:grid; grid-template-columns:repeat(auto-fit,minmax(min(100%,14rem),1fr)); gap:1rem; margin:0}
+dt {font-size:.85rem; color:var(--muted)} dd {margin:0; font-weight:550}
+details {border-top:1px solid var(--border); margin-top:1rem}
+summary,a {min-height:44px; padding-block:.65rem; cursor:pointer} a {color:var(--accent); display:inline-block}
+:focus-visible {outline:3px solid var(--focus); outline-offset:3px}
+pre {font-size:.87rem; white-space:pre-wrap; overflow-wrap:anywhere} ol {padding-left:1.5rem} li {margin:.6rem 0}

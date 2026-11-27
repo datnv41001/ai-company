@@ -85,6 +85,10 @@ def approved_destination(lab, base, owner, buyer, prep, board_snapshot, qa):
 @PG
 @pytest.mark.parametrize("release", [1, 2], ids=["legacy", "content-handoff"])
 def test_connected_distribution(pool, release):
+    run_connected_distribution(pool, release)
+
+
+def run_connected_distribution(pool, release, *, inspect_intake=None):
     lab, api = pool, pool.api
     case = next(c for c in CASES if c["id"] == "index-tray")
     case = case | {"objective": "Nhận yêu cầu báo giá " + case["product"]}
@@ -204,6 +208,8 @@ def test_connected_distribution(pool, release):
     assert primary is None and signed_plan.get("measurement_contract") is None and "primary_measurement" not in observations
     assert metric["window"] == "approved_plan_lifetime" and metric["landing_visits"] == metric["valid_submissions"] == 1
     assert metric["manual_requests"] == metric["orders"] == 0
+    if inspect_intake is not None:
+        inspect_intake(pool, owner, operator, plan, signed_plan, visit, submission, metric, contract)
     if release == 2:
         changed = accepted(put(trace_url + "/storyboard-edition", current | {
             "mode": "controlled_hook", "hook_variant": "style_alternate",

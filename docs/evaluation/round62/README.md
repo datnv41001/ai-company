@@ -58,6 +58,8 @@ Chạy `python -m pytest -q tests/test_rfq_evidence.py tests/test_rfq_card_expor
 
 ## 8. Artifact và phục hồi
 
+CI đầu trên `b82c2ead` phát hiện test RFQ và test Storyboard cùng xuất vào `connected-review/journey/wf08-v2`. Lỗi `FileExistsError` bảo vệ file đã tạo. Bản sửa truyền thư mục xuất của Storyboard qua lời gọi test sở hữu thư mục đó; RFQ có thư mục riêng. Chạy cùng lúc hai bài với cả hai biến xuất evidence để kiểm hồi quy. [Push đầu](https://github.com/datnv41001/ai-company/actions/runs/45938622029) · [PR đầu](https://github.com/datnv41001/ai-company/actions/runs/45938629680)
+
 Trên Windows, 20 ca projection/export đạt, 1 ca PostgreSQL kiểm 25 phép đối chiếu đạt, Chromium mở 3 phiếu ở 3 kích thước × 2 theme. Lần chạy đầu của test giao diện dùng sai bộ giải mã màu cho token CSS `#fff` và trả NaN. Đã sửa phép đo hỗ trợ cả mã hex 3/6 chữ số, giữ ngưỡng contrast 4,5. Một lượt khởi tạo pytest bị từ chối thư mục tạm mặc định; lượt đạt dùng thư mục tạm riêng.
 
 Artifact `rfq-evidence-head` và `rfq-evidence-integration` lưu phiếu, màn hình, dữ liệu kiểm, JUnit browser và kết quả đối chiếu. `api-regression-*` lưu JUnit suite đầy đủ. Mỗi revision có link đến lần CI trong draft PR. Để ngừng sử dụng phiếu, ngừng chạy exporter; có thể revert commit qua review. Schema v26, runtime, grants, KPI và dữ liệu sản phẩm không cần rollback.

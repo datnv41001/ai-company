@@ -1,0 +1,51 @@
+{
+  "placement": {
+    "channel": {
+      "status": "supported",
+      "value": "owned counter card",
+      "sources": [
+        "tray-channel"
+      ],
+      "needs_owner_verification": []
+    },
+    "asset": "An annotated two-panel shift handover diagram for the product page.",
+    "status": "draft_for_approval"
+  },
+  "original": {
+    "scope": {
+      "tenant_id": "46189e32-7eab-488c-aa7d-b00f6a8697e5",
+      "client_id": "7aaa1f21-900b-41ed-900d-18ab6dee0b1d",
+      "brand_id": "897870ce-443c-47da-879e-0ea98c6b92df",
+      "campaign_id": "2fdd350f-5c57-453e-8383-8a3d6c725c21"
+    },
+    "run": "1b3b9da1-6b2a-44b9-8cb3-592a89149554",
+    "raw_research": {
+      "segment": "Shift supervisors",
+      "buyer_problem": "Both sites requested individual worker tracking.",
+      "research_question": "What happened at the last shift handover?",
+      "evidence_needed": "Review a second site independently.",
+      "source_ids": [
+        "F1",
+        "F2"
+      ]
+    },
+    "revision": 2,
+    "gate_rows": [
+      {
+        "id": "bef46e899cbdc7b88dcee12cf10c0264f9a70eceb21ed7f6fd90268d152fb492",
+        "field": "studio.research.buyer_problem",
+        "start": 0,
+        "end": 48,
+        "text": "Both sites requested individual worker tracking.",
+        "claim_type": "unclassified",
+        "outcome": "unresolved",
+        "reason": "unsupported",
+        "handles": [],
+        "diagnostic": "unsupported_assertion",
+        "sources": []
+      }
+    ],
+    "research_sign_status": 409,
+    "final_status": 409
+  }
+}

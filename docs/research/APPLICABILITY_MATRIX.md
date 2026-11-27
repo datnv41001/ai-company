@@ -1,5 +1,10 @@
 # Đối chiếu nghiên cứu với AMC
 
+| Ứng dụng vòng #64 | Trạng thái | Điều kiện nghiệm thu |
+| --- | --- | --- |
+| Tách trích dẫn, diễn giải về người mua và dữ kiện vào Content | Có một phần qua staff Studio trên WF-03 @3 | Reviewer có mandate đối chiếu đoạn nguồn, xác nhận tình huống và giới hạn mẫu. Câu sản phẩm phải truy được về dữ kiện riêng. |
+| Cho người dùng kiểm tra, sửa và kiểm lại đề xuất | Tích hợp vào luồng biên tập, QA và nhận việc | Quyết định cũ hết hiệu lực khi revision đổi. Người nhận chỉ đọc bản hiện hành trong phạm vi được giao. [Nguồn và giới hạn](../evaluation/round64/METHODS.md) |
+
 | Vòng #63 · phương pháp | Mức áp dụng | Quyết định hoặc phép thử |
 |---|---|---|
 | Bắt đầu từ quyết định của người mua rồi phân biệt quan sát, diễn giải và hành động | Một phần. WF-03 @3 có hai checkpoint và manifest. Handoff ngoại tuyến đối chiếu đoạn nguồn với nhiệm vụ Content. | Đổi người ra quyết định hoặc tình huống mua của cùng sản phẩm, kiểm lại hướng viết và câu hỏi còn mở. [Rubric](../evaluation/round63/METHODS.md#acceptance) |

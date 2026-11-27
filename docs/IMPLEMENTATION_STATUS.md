@@ -1,5 +1,7 @@
 # Trạng thái hiện thực và nghiệm thu V1
 
+**Vòng #64.** Studio chuẩn bị lệnh soạn Content nội bộ từ quyết định Strategy có biên nhận. Phạm vi hiện tại là commission in-house, với nguồn và người nhận đủ quyền trên cùng manifest. Bản thực thi, nghiệp vụ thương mại và kết quả thị trường vẫn chờ các cổng riêng. [Luồng, giới hạn và bằng chứng](evaluation/round64/README.md)
+
 **Vòng #63.** Bản làm việc nội bộ của Marketing lead thử đối chiếu checkpoint Research/Strategy @4 với các quan sát được mã hóa trong brief tổng hợp. Có thể giao Content một bản nháp có điều kiện hoặc giữ việc để làm rõ. Runtime WF-03 @3 vẫn dùng bản registry đã phát hành. Năng lực suy luận trên brief mới và giá trị công việc đối với practitioner còn chờ đánh giá. [Đầu ra đối chứng và trạng thái](evaluation/round63/README.md)
 
 **Vòng #62.** Sales và Marketing có thể đối chiếu quantity, nguồn MOQ, revision và mốc thương mại trong ba phiếu ngoại tuyến tổng hợp. Hợp đồng `rfq-qualification/1` ở trạng thái proposed. Chi phí lao động tiết kiệm và độ hữu ích cho người dùng thực chưa được đo. [Phạm vi và quyết định còn mở](evaluation/round62/README.md)

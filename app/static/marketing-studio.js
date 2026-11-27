@@ -10,7 +10,7 @@ const studioLabels = {
   activation:'Triển khai trên kênh',next_decision:'Quyết định tiếp theo',conversion:'Hành động của người mua',method:'Phương pháp đo'
 };
 let studioHintSequence=0;
-function mountMarketingStudio(host,api,path,role,afterSave) {
+function mountMarketingStudio(host,api,path,role,afterSave,previewDirty=()=>false) {
   const add=(p,tag,text)=>{const e=document.createElement(tag);if(text!==undefined)e.textContent=text;p.append(e);return e;};
   const panel=add(host,'details');panel.className='marketing-studio';
   add(panel,'summary','Biên tập tài liệu Marketing');
@@ -50,6 +50,9 @@ function mountMarketingStudio(host,api,path,role,afterSave) {
     const name=k=>studioLabels[k]||spec.labels[k]||k;
     const count=Object.keys(view.approvals).length;
     add(body,'p',count+'/'+Object.keys(draft).length+' phần đã được duyệt ở lần lưu '+view.revision+'.');
+    if(view.strategy_handoff_available){
+      mountStrategyHandoff(body,api,path+'/content-handoff',()=>dirty || previewDirty());
+    }
     if(!edition){
       button(body,'Soạn bộ tài liệu giao khách',()=>{
         Object.assign(draft,structuredClone(spec.groups));edition=spec.version;setDirty(true);

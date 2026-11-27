@@ -8,7 +8,7 @@ from sqlalchemy import select
 from sqlalchemy.orm import Session
 
 from . import c3_assets, c3_boundaries, c3_customer_assets, c3_evidence_review, c3_order_units, c3_studio
-from . import campaign_channels
+from . import campaign_channels, c3_strategy_handoff
 from .database import get_db
 from .delivery import save_working_revision, working_copy
 from .knowledge_contracts import Input
@@ -21,6 +21,7 @@ from .security import current_user, require_tenant
 from .workforce_models import WorkforceBrief
 
 router = APIRouter(prefix="/api/tenants/{tenant_id}/deliverables/{did}/studio", tags=["Marketing Studio"])
+router.include_router(c3_strategy_handoff.router)
 Text = Annotated[str, Field(max_length=30000)]
 
 
@@ -128,6 +129,7 @@ def present(db, doc, run):
         "revision": doc.qa_revision,
         "mode": "saved" if bundle else "proposal",
         "status": doc.status,
+        "strategy_handoff_available": c3_strategy_handoff.available(db, run),
         "groups": groups,
         "delivery_version": edition,
         "customer_edition": {

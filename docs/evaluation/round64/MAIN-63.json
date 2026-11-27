@@ -1,0 +1,87 @@
+{
+  "main_before": "6a11bf4d97e7d1be1f5e0da1d503a54eabd15ad1",
+  "head": "9f33fd86f99da52a90c25aa5ec196ba601b3910f",
+  "trial": "85d2235f5f03330a5ea02b83211ca0e7423b054b",
+  "tree": "a63361c7673ada6121117028f92aebcb3b8aecd1",
+  "maintainer": "datnv41001",
+  "merge": "053410d161b15285a1ef264f853d4920a3d559e1",
+  "parents": [
+    "6a11bf4d97e7d1be1f5e0da1d503a54eabd15ad1",
+    "9f33fd86f99da52a90c25aa5ec196ba601b3910f"
+  ],
+  "merged_at": "2026-11-27T06:04:09Z",
+  "main_ci": {
+    "url": "https://github.com/datnv41001/ai-company/actions/runs/45949512674",
+    "jobs": [
+      {
+        "name": "api-tests (head)",
+        "result": "success",
+        "url": "https://github.com/datnv41001/ai-company/actions/runs/45949512674/job/140341848177"
+      },
+      {
+        "name": "workforce-model (head)",
+        "result": "success",
+        "url": "https://github.com/datnv41001/ai-company/actions/runs/45949512674/job/140341848432"
+      },
+      {
+        "name": "compose-browser (head)",
+        "result": "success",
+        "url": "https://github.com/datnv41001/ai-company/actions/runs/45949512674/job/140341848443"
+      },
+      {
+        "name": "matched-model",
+        "result": "skipped",
+        "url": "https://github.com/datnv41001/ai-company/actions/runs/45949512674/job/140344246348"
+      }
+    ],
+    "passed": 727,
+    "skipped": [
+      {
+        "case": "test_wrong_tab_leaves_postgres_family_and_history_unchanged[sqlite]",
+        "reason": "PostgreSQL storage assertions"
+      },
+      {
+        "case": "test_two_workers_commit_orders_and_credential_change[sqlite]",
+        "reason": "real HTTP and PostgreSQL case"
+      }
+    ],
+    "junit_sha256": "70003c76cb19669d4f95d945e3996e7e2a5c756f631f5fac5d35bd58bfe7cc11",
+    "junit_url": "https://github.com/datnv41001/ai-company/actions/runs/45949512674/artifacts/15176878235",
+    "upgrade_from": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17,
+      18,
+      19,
+      20,
+      21,
+      22
+    ],
+    "restored_tables": 34
+  },
+  "accepted_archive": {
+    "evidence_commit": "9530686010f7b53dbe646ff25785621e3edeb6d1",
+    "zip_path": "docs/evaluation/round63-verification/research-strategy.zip",
+    "zip_bytes": 198702,
+    "zip_sha256": "dd376c5e655db6df0c239fbe802025c8955729cb9780aadaefc5a35a73497856",
+    "crc_entries": 57,
+    "verified_manifest_entries": 56,
+    "paired_json_digests": 18
+  },
+  "evidence_url": "https://github.com/datnv41001/ai-company/blob/9530686010f7b53dbe646ff25785621e3edeb6d1/docs/evaluation/round63-verification/research-strategy.zip",
+  "decision_scope": "Internal merge of offline synthetic study only"
+}

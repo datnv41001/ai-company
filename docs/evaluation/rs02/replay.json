@@ -1,0 +1,1156 @@
+[
+  {
+    "case": "tile",
+    "arm": "A",
+    "schema_errors": {
+      "TaskIntent": {
+        "purpose": "missing",
+        "deliverable_type": "missing",
+        "exclusions": "missing",
+        "acceptance_criteria": "missing",
+        "buyer_action": "extra_forbidden",
+        "editorial_style": "extra_forbidden"
+      },
+      "ActionIntent": {
+        "purpose": "missing",
+        "deliverable_type": "missing",
+        "exclusions": "missing",
+        "acceptance_criteria": "missing",
+        "buyer_action": "literal_error",
+        "editorial_style": "literal_error"
+      },
+      "MeasurementDefinition": {
+        "version": "missing",
+        "business_outcome": "missing",
+        "window_days": "missing",
+        "owner_role": "missing",
+        "event": "extra_forbidden",
+        "unit": "extra_forbidden",
+        "window": "extra_forbidden",
+        "deduplication": "extra_forbidden",
+        "eligibility": "extra_forbidden"
+      }
+    },
+    "first_text_sha256": {
+      "director": "79425d94fc56fd2b273562d9c2e6d3f59c1818c872e5426be63665c929c72a21",
+      "research": "40d1455875674fe03d3c6983e3d7d841055c5aa7f82176515240ec3e144afa1e",
+      "strategy": "e32f4f494a9ab35ede967fde38111e0bb3d71862db7268b19019e368a1481281"
+    },
+    "locked_hard_failures": {
+      "contradicted_source": false,
+      "unauthorized_action": false,
+      "altered_terms": false,
+      "lost_constraint": true
+    },
+    "full_packet_error": "Choose a supported asset locale (vi-VN or en-US) and matching approved evidence",
+    "after_locale_only_error": "'numerator'",
+    "unchanged_edited_field_routes": {
+      "research.research_question": [
+        "research.research_question",
+        "strategy.positioning",
+        "measurement.test_hypothesis"
+      ],
+      "research.evidence_needed": [],
+      "research.buyer_problem": [
+        "research.buyer_problem"
+      ],
+      "strategy.positioning": [
+        "research.research_question",
+        "strategy.positioning",
+        "measurement.test_hypothesis"
+      ],
+      "strategy.rationale": [
+        "strategy.rationale"
+      ],
+      "strategy.measurement_method": [
+        "measurement.measurement_method"
+      ]
+    },
+    "staff_artifacts": {
+      "research_notes": {
+        "fields": {
+          "research_question": "Estimators may delay the request when they cannot distinguish coverage from an allowance.",
+          "evidence_needed": "Whole cartons only. Waste allowance needs estimator approval. Freight is quoted separately.",
+          "segment": "Contractor estimators preparing a tender for a clinic",
+          "buyer_problem": "Delaying the request due to inability to distinguish coverage from an allowance."
+        },
+        "hypotheses": [
+          "Estimators may delay the request when they cannot distinguish coverage from an allowance."
+        ],
+        "gaps": []
+      },
+      "strategy_decisions": {
+        "positioning": "Estimators may delay the request when they cannot distinguish coverage from an allowance.",
+        "rationale": "The editorial style is plain language, and the task intent is to request a project quantity quote. The brand guidelines are not provided, and the primary measurement is the unique eligible request. No",
+        "channel_choice": "product enquiry page",
+        "test_hypothesis": "Estimators may delay the request when they cannot distinguish coverage from an allowance."
+      },
+      "buyer_copy": {},
+      "seo_fields": {},
+      "evidence_report": {
+        "status": "source_handles_only",
+        "facts": [
+          {
+            "handle": "S1",
+            "text": "A carton covers 1.44 square metres; the tender sheet lists 86 square metres before waste. Whole cartons only. Waste allowance needs estimator approval. Freight is quoted separately."
+          },
+          {
+            "handle": "S2",
+            "text": "Two of five synthetic tender worksheets list area but omit an allowance. Synthetic convenience sample; no population estimate."
+          }
+        ],
+        "suggested_handles": {
+          "research": [
+            "S1",
+            "S2"
+          ],
+          "strategy": [
+            "S1",
+            "S2"
+          ]
+        }
+      },
+      "measurement_plan": {
+        "selected_kpi": "qualified quantity request",
+        "measurable_action": "Request a project quantity quote",
+        "measurement_method": "qualified quantity request"
+      },
+      "customer_preview": {
+        "title": "Floor tile K18",
+        "body": "Floor tile K18\n\nArea: Hanoi\n\nA carton covers 1.44 square metres; the tender sheet lists 86 square metres before waste. Whole cartons only. Waste allowance needs estimator approval. Freight is quoted separately.\n\nTwo of five synthetic tender worksheets list area but omit an allowance. Synthetic convenience sample; no population estimate."
+      }
+    },
+    "offline_studio_without_incompatible_contract": {
+      "research": {
+        "buyer_problem": "Delaying the request due to inability to distinguish coverage from an allowance.",
+        "research_question": "Estimators may delay the request when they cannot distinguish coverage from an allowance.",
+        "evidence": "A carton covers 1.44 square metres; the tender sheet lists 86 square metres before waste. Whole cartons only. Waste allowance needs estimator approval. Freight is quoted separately.\nTwo of five synthetic tender worksheets list area but omit an allowance. Synthetic convenience sample; no population estimate.",
+        "hypothesis": "Hypothesis to test: clearer terms for Floor tile K18 help Contractor estimators preparing a tender for a clinic select a next step."
+      },
+      "strategy": {
+        "positioning": "Estimators may delay the request when they cannot distinguish coverage from an allowance.",
+        "channel_choice": "product enquiry page",
+        "rationale": "The editorial style is plain language, and the task intent is to request a project quantity quote. The brand guidelines are not provided, and the primary measurement is the unique eligible request. No",
+        "execution": "Prepare two presentations of Floor tile K18 on product enquiry page, keep terms fixed and measure the same action."
+      },
+      "measurement": {
+        "test_hypothesis": "Estimators may delay the request when they cannot distinguish coverage from an allowance.",
+        "measurable_action": "Request a project quantity quote",
+        "measurement_method": "qualified quantity request"
+      }
+    },
+    "structural_issues": [
+      {
+        "group": "strategy",
+        "field": "positioning",
+        "reason": "repetition"
+      },
+      {
+        "group": "measurement",
+        "field": "test_hypothesis",
+        "reason": "repetition"
+      }
+    ],
+    "authorized_handoff": "ineligible: no approved manifest, recipients or reviewed revision"
+  },
+  {
+    "case": "tile",
+    "arm": "B",
+    "schema_errors": {
+      "TaskIntent": {
+        "purpose": "missing",
+        "deliverable_type": "missing",
+        "exclusions": "missing",
+        "acceptance_criteria": "missing",
+        "buyer_action": "extra_forbidden",
+        "editorial_style": "extra_forbidden"
+      },
+      "ActionIntent": {
+        "purpose": "missing",
+        "deliverable_type": "missing",
+        "exclusions": "missing",
+        "acceptance_criteria": "missing",
+        "buyer_action": "literal_error",
+        "editorial_style": "literal_error"
+      },
+      "MeasurementDefinition": {
+        "version": "missing",
+        "business_outcome": "missing",
+        "window_days": "missing",
+        "owner_role": "missing",
+        "event": "extra_forbidden",
+        "unit": "extra_forbidden",
+        "window": "extra_forbidden",
+        "deduplication": "extra_forbidden",
+        "eligibility": "extra_forbidden"
+      }
+    },
+    "first_text_sha256": {
+      "director": "79425d94fc56fd2b273562d9c2e6d3f59c1818c872e5426be63665c929c72a21",
+      "research": "c91740c72a3c29b0ee82e1ca539e4e1b19966689ed1cce81b1df9db91d27cf46",
+      "strategy": "b149502bfa9e01debfc779af0846c10d4bc88c9719136b7e519fc35b190fad19"
+    },
+    "locked_hard_failures": {
+      "contradicted_source": false,
+      "unauthorized_action": false,
+      "altered_terms": true,
+      "lost_constraint": true
+    },
+    "full_packet_error": "Choose a supported asset locale (vi-VN or en-US) and matching approved evidence",
+    "after_locale_only_error": "'numerator'",
+    "unchanged_edited_field_routes": {
+      "research.research_question": [
+        "research.research_question",
+        "strategy.positioning",
+        "measurement.test_hypothesis"
+      ],
+      "research.evidence_needed": [],
+      "research.buyer_problem": [
+        "research.buyer_problem"
+      ],
+      "strategy.positioning": [
+        "research.research_question",
+        "strategy.positioning",
+        "measurement.test_hypothesis"
+      ],
+      "strategy.rationale": [
+        "strategy.rationale"
+      ],
+      "strategy.measurement_method": [
+        "measurement.measurement_method"
+      ]
+    },
+    "staff_artifacts": {
+      "research_notes": {
+        "fields": {
+          "research_question": "Estimators may delay the request when they cannot distinguish coverage from an allowance.",
+          "evidence_needed": "The estimated coverage of 1.44 square meters and the waste allowance need approval from an estimator.",
+          "segment": "Contractor estimators preparing a tender for a clinic",
+          "buyer_problem": "The contractor is requesting a project quantity quote"
+        },
+        "hypotheses": [
+          "Estimators may delay the request when they cannot distinguish coverage from an allowance."
+        ],
+        "gaps": []
+      },
+      "strategy_decisions": {
+        "positioning": "Estimators may delay the request when they cannot distinguish coverage from an allowance.",
+        "rationale": "The positioning is that estimators may delay the request when they cannot distinguish coverage from an allowance. This is a key assumption that needs to be verified to ensure the estimator's ability.",
+        "channel_choice": "Product enquiry page",
+        "test_hypothesis": "Estimators may delay the request when they cannot distinguish coverage from an allowance."
+      },
+      "buyer_copy": {},
+      "seo_fields": {},
+      "evidence_report": {
+        "status": "source_handles_only",
+        "facts": [
+          {
+            "handle": "S1",
+            "text": "A carton covers 1.44 square metres; the tender sheet lists 86 square metres before waste. Whole cartons only. Waste allowance needs estimator approval. Freight is quoted separately."
+          },
+          {
+            "handle": "S2",
+            "text": "Two of five synthetic tender worksheets list area but omit an allowance. Synthetic convenience sample; no population estimate."
+          }
+        ],
+        "suggested_handles": {
+          "research": [
+            "S1",
+            "S2"
+          ],
+          "strategy": [
+            "S1",
+            "S2"
+          ]
+        }
+      },
+      "measurement_plan": {
+        "selected_kpi": "qualified quantity request",
+        "measurable_action": "Request a project quantity quote",
+        "measurement_method": "qualified quantity request"
+      },
+      "customer_preview": {
+        "title": "Floor tile K18",
+        "body": "Floor tile K18\n\nArea: Hanoi\n\nA carton covers 1.44 square metres; the tender sheet lists 86 square metres before waste. Whole cartons only. Waste allowance needs estimator approval. Freight is quoted separately.\n\nTwo of five synthetic tender worksheets list area but omit an allowance. Synthetic convenience sample; no population estimate."
+      }
+    },
+    "offline_studio_without_incompatible_contract": {
+      "research": {
+        "buyer_problem": "The contractor is requesting a project quantity quote",
+        "research_question": "Estimators may delay the request when they cannot distinguish coverage from an allowance.",
+        "evidence": "A carton covers 1.44 square metres; the tender sheet lists 86 square metres before waste. Whole cartons only. Waste allowance needs estimator approval. Freight is quoted separately.\nTwo of five synthetic tender worksheets list area but omit an allowance. Synthetic convenience sample; no population estimate.",
+        "hypothesis": "Hypothesis to test: clearer terms for Floor tile K18 help Contractor estimators preparing a tender for a clinic select a next step."
+      },
+      "strategy": {
+        "positioning": "Estimators may delay the request when they cannot distinguish coverage from an allowance.",
+        "channel_choice": "Product enquiry page",
+        "rationale": "The positioning is that estimators may delay the request when they cannot distinguish coverage from an allowance. This is a key assumption that needs to be verified to ensure the estimator's ability.",
+        "execution": "Prepare two presentations of Floor tile K18 on product enquiry page, keep terms fixed and measure the same action."
+      },
+      "measurement": {
+        "test_hypothesis": "Estimators may delay the request when they cannot distinguish coverage from an allowance.",
+        "measurable_action": "Request a project quantity quote",
+        "measurement_method": "qualified quantity request"
+      }
+    },
+    "structural_issues": [
+      {
+        "group": "strategy",
+        "field": "positioning",
+        "reason": "repetition"
+      },
+      {
+        "group": "measurement",
+        "field": "test_hypothesis",
+        "reason": "repetition"
+      }
+    ],
+    "authorized_handoff": "ineligible: no approved manifest, recipients or reviewed revision"
+  },
+  {
+    "case": "delivery",
+    "arm": "A",
+    "schema_errors": {
+      "TaskIntent": {
+        "purpose": "missing",
+        "deliverable_type": "missing",
+        "exclusions": "missing",
+        "acceptance_criteria": "missing",
+        "buyer_action": "extra_forbidden",
+        "editorial_style": "extra_forbidden"
+      },
+      "ActionIntent": {
+        "purpose": "missing",
+        "deliverable_type": "missing",
+        "exclusions": "missing",
+        "acceptance_criteria": "missing",
+        "buyer_action": "literal_error",
+        "editorial_style": "literal_error"
+      },
+      "MeasurementDefinition": {
+        "version": "missing",
+        "business_outcome": "missing",
+        "window_days": "missing",
+        "owner_role": "missing",
+        "event": "extra_forbidden",
+        "unit": "extra_forbidden",
+        "window": "extra_forbidden",
+        "deduplication": "extra_forbidden",
+        "eligibility": "extra_forbidden"
+      }
+    },
+    "first_text_sha256": {
+      "director": "000638c1cdf5b5bf0c80fcb95c69936f5fe85c2852c9de33ba4b43c76c21c352",
+      "research": "6ec2c00b11495646a435d74b48da39800d1e9997da4e7c76d02c017305179a48",
+      "strategy": "eb3e3323ea7588df6c9faa1c69b29ac59a8faaaa92a5bf39758d252ebc5bef22"
+    },
+    "locked_hard_failures": {
+      "contradicted_source": false,
+      "unauthorized_action": false,
+      "altered_terms": true,
+      "lost_constraint": true
+    },
+    "full_packet_error": "Choose a supported asset locale (vi-VN or en-US) and matching approved evidence",
+    "after_locale_only_error": "'numerator'",
+    "unchanged_edited_field_routes": {
+      "research.research_question": [
+        "research.research_question"
+      ],
+      "research.evidence_needed": [],
+      "research.buyer_problem": [
+        "research.buyer_problem"
+      ],
+      "strategy.positioning": [
+        "strategy.positioning"
+      ],
+      "strategy.rationale": [
+        "strategy.rationale"
+      ],
+      "strategy.measurement_method": [
+        "measurement.measurement_method"
+      ]
+    },
+    "staff_artifacts": {
+      "research_notes": {
+        "fields": {
+          "research_question": "What are the key challenges and gaps in the modular storage rack R7 delivery window process?",
+          "evidence_needed": "Carrier availability requirements, unloading availability, and access confirmation requirements",
+          "segment": "Warehouse buyers arranging delivery to a site with a loading window",
+          "buyer_problem": "Clarifying access before asking for a slot"
+        },
+        "hypotheses": [
+          "A buyer may need to clarify access before asking the supplier for a slot."
+        ],
+        "gaps": []
+      },
+      "strategy_decisions": {
+        "positioning": "The modular storage rack R7 is designed to facilitate quick delivery to a site with a loading window, ensuring that the delivery window is clear and accessible for the warehouse buyers. The key issues",
+        "rationale": "The delivery window process is crucial for efficient delivery and storage, and the modular storage rack R7 is designed to meet this requirement by providing a clear and accessible delivery window.",
+        "channel_choice": "product enquiry page",
+        "test_hypothesis": "A buyer may need to clarify access before asking the supplier for a slot."
+      },
+      "buyer_copy": {},
+      "seo_fields": {},
+      "evidence_report": {
+        "status": "source_handles_only",
+        "facts": [
+          {
+            "handle": "S1",
+            "text": "The rack is delivered flat packed. The quote form accepts a site window and access note. Carrier availability requires written confirmation; unloading is excluded."
+          },
+          {
+            "handle": "S2",
+            "text": "Three of six synthetic RFQs requested arrival before noon; none recorded carrier acceptance. Synthetic convenience sample; no population estimate."
+          }
+        ],
+        "suggested_handles": {
+          "research": [
+            "S1",
+            "S2"
+          ],
+          "strategy": [
+            "S1",
+            "S2"
+          ]
+        }
+      },
+      "measurement_plan": {
+        "selected_kpi": "qualified delivery RFQ",
+        "measurable_action": "qualified delivery RFQ",
+        "measurement_method": "deduplication and one per request ID"
+      },
+      "customer_preview": {
+        "title": "Modular storage rack R7",
+        "body": "Modular storage rack R7\n\nArea: Hai Phong\n\nThe rack is delivered flat packed. The quote form accepts a site window and access note. Carrier availability requires written confirmation; unloading is excluded.\n\nThree of six synthetic RFQs requested arrival before noon; none recorded carrier acceptance. Synthetic convenience sample; no population estimate."
+      }
+    },
+    "offline_studio_without_incompatible_contract": {
+      "research": {
+        "buyer_problem": "Clarifying access before asking for a slot",
+        "research_question": "What are the key challenges and gaps in the modular storage rack R7 delivery window process?",
+        "evidence": "The rack is delivered flat packed. The quote form accepts a site window and access note. Carrier availability requires written confirmation; unloading is excluded.\nThree of six synthetic RFQs requested arrival before noon; none recorded carrier acceptance. Synthetic convenience sample; no population estimate.",
+        "hypothesis": "Hypothesis to test: clearer terms for Modular storage rack R7 help Warehouse buyers arranging delivery to a site with a loading window select a next step."
+      },
+      "strategy": {
+        "positioning": "The modular storage rack R7 is designed to facilitate quick delivery to a site with a loading window, ensuring that the delivery window is clear and accessible for the warehouse buyers. The key issues",
+        "channel_choice": "product enquiry page",
+        "rationale": "The delivery window process is crucial for efficient delivery and storage, and the modular storage rack R7 is designed to meet this requirement by providing a clear and accessible delivery window.",
+        "execution": "Prepare two presentations of Modular storage rack R7 on product enquiry page, keep terms fixed and measure the same action."
+      },
+      "measurement": {
+        "test_hypothesis": "A buyer may need to clarify access before asking the supplier for a slot.",
+        "measurable_action": "qualified delivery RFQ",
+        "measurement_method": "deduplication and one per request ID"
+      }
+    },
+    "structural_issues": [],
+    "authorized_handoff": "ineligible: no approved manifest, recipients or reviewed revision"
+  },
+  {
+    "case": "delivery",
+    "arm": "B",
+    "schema_errors": {
+      "TaskIntent": {
+        "purpose": "missing",
+        "deliverable_type": "missing",
+        "exclusions": "missing",
+        "acceptance_criteria": "missing",
+        "buyer_action": "extra_forbidden",
+        "editorial_style": "extra_forbidden"
+      },
+      "ActionIntent": {
+        "purpose": "missing",
+        "deliverable_type": "missing",
+        "exclusions": "missing",
+        "acceptance_criteria": "missing",
+        "buyer_action": "literal_error",
+        "editorial_style": "literal_error"
+      },
+      "MeasurementDefinition": {
+        "version": "missing",
+        "business_outcome": "missing",
+        "window_days": "missing",
+        "owner_role": "missing",
+        "event": "extra_forbidden",
+        "unit": "extra_forbidden",
+        "window": "extra_forbidden",
+        "deduplication": "extra_forbidden",
+        "eligibility": "extra_forbidden"
+      }
+    },
+    "first_text_sha256": {
+      "director": "000638c1cdf5b5bf0c80fcb95c69936f5fe85c2852c9de33ba4b43c76c21c352",
+      "research": "adfa3fa9fdc0c348c8c6fea906abaceb659c8dc98094a89a0d92bc9112225985",
+      "strategy": "ad19458c18d3f7af5e063b4d2ed7ad72c8c96ac5aece51a2f4a62336ec34777c"
+    },
+    "locked_hard_failures": {
+      "contradicted_source": false,
+      "unauthorized_action": false,
+      "altered_terms": false,
+      "lost_constraint": true
+    },
+    "full_packet_error": "Choose a supported asset locale (vi-VN or en-US) and matching approved evidence",
+    "after_locale_only_error": "'numerator'",
+    "unchanged_edited_field_routes": {
+      "research.research_question": [
+        "research.research_question"
+      ],
+      "research.evidence_needed": [],
+      "strategy.positioning": [
+        "strategy.positioning"
+      ],
+      "strategy.measurement_method": [
+        "measurement.measurement_method"
+      ]
+    },
+    "staff_artifacts": {
+      "research_notes": {
+        "fields": {
+          "research_question": "What are the potential challenges faced by warehouse buyers when arranging delivery to a site with a loading window, and what evidence gaps exist in the available data?",
+          "evidence_needed": "The availability of written confirmation for loading windows, the exclusion of unloading, and the need for carrier confirmation for delivery window slots.",
+          "segment": "Warehouse buyers arranging delivery to a site with a loading window",
+          "buyer_problem": "The buyer may need to clarify access before asking the supplier for a slot."
+        },
+        "hypotheses": [
+          "A buyer may need to clarify access before asking the supplier for a slot."
+        ],
+        "gaps": []
+      },
+      "strategy_decisions": {
+        "positioning": "The rack is delivered flat packed, and the quote form accepts a site window and access note.",
+        "rationale": "A buyer may need to clarify access before asking the supplier for a slot.",
+        "channel_choice": "product enquiry page",
+        "test_hypothesis": "A buyer may need to clarify access before asking the supplier for a slot."
+      },
+      "buyer_copy": {},
+      "seo_fields": {},
+      "evidence_report": {
+        "status": "source_handles_only",
+        "facts": [
+          {
+            "handle": "S1",
+            "text": "The rack is delivered flat packed. The quote form accepts a site window and access note. Carrier availability requires written confirmation; unloading is excluded."
+          },
+          {
+            "handle": "S2",
+            "text": "Three of six synthetic RFQs requested arrival before noon; none recorded carrier acceptance. Synthetic convenience sample; no population estimate."
+          }
+        ],
+        "suggested_handles": {
+          "research": [
+            "S1",
+            "S2"
+          ],
+          "strategy": [
+            "S1",
+            "S2"
+          ]
+        }
+      },
+      "measurement_plan": {
+        "selected_kpi": "qualified delivery RFQ",
+        "measurable_action": "Submit a delivery-window RFQ",
+        "measurement_method": "qualified delivery RFQ"
+      },
+      "customer_preview": {
+        "title": "Modular storage rack R7",
+        "body": "Modular storage rack R7\n\nArea: Hai Phong\n\nThe rack is delivered flat packed. The quote form accepts a site window and access note. Carrier availability requires written confirmation; unloading is excluded.\n\nThree of six synthetic RFQs requested arrival before noon; none recorded carrier acceptance. Synthetic convenience sample; no population estimate."
+      }
+    },
+    "offline_studio_without_incompatible_contract": {
+      "research": {
+        "buyer_problem": "The buyer may need to clarify access before asking the supplier for a slot.",
+        "research_question": "What are the potential challenges faced by warehouse buyers when arranging delivery to a site with a loading window, and what evidence gaps exist in the available data?",
+        "evidence": "The rack is delivered flat packed. The quote form accepts a site window and access note. Carrier availability requires written confirmation; unloading is excluded.\nThree of six synthetic RFQs requested arrival before noon; none recorded carrier acceptance. Synthetic convenience sample; no population estimate.",
+        "hypothesis": "Hypothesis to test: clearer terms for Modular storage rack R7 help Warehouse buyers arranging delivery to a site with a loading window select a next step."
+      },
+      "strategy": {
+        "positioning": "The rack is delivered flat packed, and the quote form accepts a site window and access note.",
+        "channel_choice": "product enquiry page",
+        "rationale": "A buyer may need to clarify access before asking the supplier for a slot.",
+        "execution": "Prepare two presentations of Modular storage rack R7 on product enquiry page, keep terms fixed and measure the same action."
+      },
+      "measurement": {
+        "test_hypothesis": "A buyer may need to clarify access before asking the supplier for a slot.",
+        "measurable_action": "Submit a delivery-window RFQ",
+        "measurement_method": "qualified delivery RFQ"
+      }
+    },
+    "structural_issues": [
+      {
+        "group": "measurement",
+        "field": "test_hypothesis",
+        "reason": "repetition"
+      }
+    ],
+    "authorized_handoff": "ineligible: no approved manifest, recipients or reviewed revision"
+  },
+  {
+    "case": "counter",
+    "arm": "A",
+    "schema_errors": {
+      "TaskIntent": {
+        "purpose": "missing",
+        "deliverable_type": "missing",
+        "exclusions": "missing",
+        "acceptance_criteria": "missing",
+        "buyer_action": "extra_forbidden",
+        "editorial_style": "extra_forbidden"
+      },
+      "ActionIntent": {
+        "purpose": "missing",
+        "deliverable_type": "missing",
+        "exclusions": "missing",
+        "acceptance_criteria": "missing",
+        "buyer_action": "literal_error",
+        "editorial_style": "literal_error"
+      },
+      "MeasurementDefinition": {
+        "version": "missing",
+        "business_outcome": "missing",
+        "window_days": "missing",
+        "owner_role": "missing",
+        "event": "extra_forbidden",
+        "unit": "extra_forbidden",
+        "window": "extra_forbidden",
+        "deduplication": "extra_forbidden",
+        "eligibility": "extra_forbidden"
+      }
+    },
+    "first_text_sha256": {
+      "director": "000638c1cdf5b5bf0c80fcb95c69936f5fe85c2852c9de33ba4b43c76c21c352",
+      "research": "ce538ef69fd0cbbf8df0c35fcac150157229bb6b50f0859a6f9797b108bed4ab",
+      "strategy": "31b61fd51d126b46ae0ffa9cb614a447ea5f5681e52ea88eb4ed17e3b717759b"
+    },
+    "locked_hard_failures": {
+      "contradicted_source": false,
+      "unauthorized_action": false,
+      "altered_terms": false,
+      "lost_constraint": true
+    },
+    "full_packet_error": "Choose a supported asset locale (vi-VN or en-US) and matching approved evidence",
+    "after_locale_only_error": "'numerator'",
+    "unchanged_edited_field_routes": {
+      "research.research_question": [
+        "research.research_question"
+      ],
+      "research.evidence_needed": [
+        "research.buyer_problem"
+      ],
+      "research.segment": [],
+      "research.buyer_problem": [
+        "research.buyer_problem"
+      ],
+      "strategy.positioning": [
+        "strategy.positioning"
+      ],
+      "strategy.rationale": [
+        "strategy.rationale"
+      ],
+      "strategy.measurement_method": [
+        "measurement.measurement_method"
+      ]
+    },
+    "staff_artifacts": {
+      "research_notes": {
+        "fields": {
+          "research_question": "What are the key factors that supervisors in a shared counter need to consider when choosing a countertop label printer for relabelling returns?",
+          "evidence_needed": "Demonstration by appointment, no throughput or compatibility guarantee, synthetic convenience sample, no population estimate, unique eligible request, one per request ID, includes the item and the new",
+          "segment": "Shared counter",
+          "buyer_problem": "Demonstration by appointment, no throughput or compatibility guarantee, synthetic convenience sample, no population estimate, unique eligible request, one per request ID, includes the item and the new"
+        },
+        "hypotheses": [
+          "A supervisor may want to compare sample readability during handover."
+        ],
+        "gaps": []
+      },
+      "strategy_decisions": {
+        "positioning": "Demonstrate the effectiveness of a countertop label printer for relabelling returns at a shared counter, ensuring the supervisor can easily compare sample readability during handover.",
+        "rationale": "The primary measurement is the number of unique eligible requests, which is a key factor for supervisors in a shared counter. Demonstration by appointment, no throughput or compatibility guarantee, no",
+        "channel_choice": "product enquiry page",
+        "test_hypothesis": "A supervisor may want to compare sample readability during handover."
+      },
+      "buyer_copy": {},
+      "seo_fields": {},
+      "evidence_report": {
+        "status": "source_handles_only",
+        "facts": [
+          {
+            "handle": "S1",
+            "text": "The device prints a sample from a supplied text file. A sample roll is available at the counter. Demonstration by appointment. No throughput or compatibility guarantee."
+          },
+          {
+            "handle": "S2",
+            "text": "Two of four synthetic demo notes mention switching label formats during a shift. Synthetic convenience sample; no population estimate."
+          }
+        ],
+        "suggested_handles": {
+          "research": [
+            "S1",
+            "S2"
+          ],
+          "strategy": [
+            "S1",
+            "S2"
+          ]
+        }
+      },
+      "measurement_plan": {
+        "selected_kpi": "confirmed demonstration request",
+        "measurable_action": "Request a label demonstration",
+        "measurement_method": "unique eligible request"
+      },
+      "customer_preview": {
+        "title": "Countertop label printer L2",
+        "body": "Countertop label printer L2\n\nArea: Da Nang\n\nThe device prints a sample from a supplied text file. A sample roll is available at the counter. Demonstration by appointment. No throughput or compatibility guarantee.\n\nTwo of four synthetic demo notes mention switching label formats during a shift. Synthetic convenience sample; no population estimate."
+      }
+    },
+    "offline_studio_without_incompatible_contract": {
+      "research": {
+        "buyer_problem": "Demonstration by appointment, no throughput or compatibility guarantee, synthetic convenience sample, no population estimate, unique eligible request, one per request ID, includes the item and the new",
+        "research_question": "What are the key factors that supervisors in a shared counter need to consider when choosing a countertop label printer for relabelling returns?",
+        "evidence": "The device prints a sample from a supplied text file. A sample roll is available at the counter. Demonstration by appointment. No throughput or compatibility guarantee.\nTwo of four synthetic demo notes mention switching label formats during a shift. Synthetic convenience sample; no population estimate.",
+        "hypothesis": "Hypothesis to test: clearer terms for Countertop label printer L2 help Shop supervisors choosing a printer for relabelling returns at a shared counter select a next step."
+      },
+      "strategy": {
+        "positioning": "Demonstrate the effectiveness of a countertop label printer for relabelling returns at a shared counter, ensuring the supervisor can easily compare sample readability during handover.",
+        "channel_choice": "product enquiry page",
+        "rationale": "The primary measurement is the number of unique eligible requests, which is a key factor for supervisors in a shared counter. Demonstration by appointment, no throughput or compatibility guarantee, no",
+        "execution": "Prepare two presentations of Countertop label printer L2 on product enquiry page, keep terms fixed and measure the same action."
+      },
+      "measurement": {
+        "test_hypothesis": "A supervisor may want to compare sample readability during handover.",
+        "measurable_action": "Request a label demonstration",
+        "measurement_method": "unique eligible request"
+      }
+    },
+    "structural_issues": [],
+    "authorized_handoff": "ineligible: no approved manifest, recipients or reviewed revision"
+  },
+  {
+    "case": "counter",
+    "arm": "B",
+    "schema_errors": {
+      "TaskIntent": {
+        "purpose": "missing",
+        "deliverable_type": "missing",
+        "exclusions": "missing",
+        "acceptance_criteria": "missing",
+        "buyer_action": "extra_forbidden",
+        "editorial_style": "extra_forbidden"
+      },
+      "ActionIntent": {
+        "purpose": "missing",
+        "deliverable_type": "missing",
+        "exclusions": "missing",
+        "acceptance_criteria": "missing",
+        "buyer_action": "literal_error",
+        "editorial_style": "literal_error"
+      },
+      "MeasurementDefinition": {
+        "version": "missing",
+        "business_outcome": "missing",
+        "window_days": "missing",
+        "owner_role": "missing",
+        "event": "extra_forbidden",
+        "unit": "extra_forbidden",
+        "window": "extra_forbidden",
+        "deduplication": "extra_forbidden",
+        "eligibility": "extra_forbidden"
+      }
+    },
+    "first_text_sha256": {
+      "director": "000638c1cdf5b5bf0c80fcb95c69936f5fe85c2852c9de33ba4b43c76c21c352",
+      "research": "6aecc67888595ac6078b7abe339badc1ea3d3b41825d31859f86238223561f1c",
+      "strategy": "84d6c823129789eb318b89d4196585afdffe5f5cbbf2086c84d5e3d9a4a398f1"
+    },
+    "locked_hard_failures": {
+      "contradicted_source": false,
+      "unauthorized_action": false,
+      "altered_terms": false,
+      "lost_constraint": true
+    },
+    "full_packet_error": "Choose a supported asset locale (vi-VN or en-US) and matching approved evidence",
+    "after_locale_only_error": "'numerator'",
+    "unchanged_edited_field_routes": {
+      "research.research_question": [
+        "research.research_question"
+      ],
+      "research.evidence_needed": [],
+      "research.buyer_problem": [
+        "research.buyer_problem",
+        "measurement.test_hypothesis"
+      ],
+      "strategy.positioning": [
+        "strategy.positioning"
+      ],
+      "strategy.rationale": [
+        "strategy.rationale"
+      ],
+      "strategy.test_hypothesis": [
+        "research.buyer_problem",
+        "measurement.test_hypothesis"
+      ],
+      "strategy.measurement_method": [
+        "measurement.measurement_method"
+      ]
+    },
+    "staff_artifacts": {
+      "research_notes": {
+        "fields": {
+          "research_question": "What are the key issues that shop supervisors at a shared counter in Da Nang are facing when requesting a label demonstration for relabelling returns?",
+          "evidence_needed": "Demonstration by appointment, no throughput or compatibility guarantee, and a supervisor's preference for comparing sample readability during handover.",
+          "segment": "Shop supervisors choosing a printer for relabelling returns at a shared counter in Da Nang",
+          "buyer_problem": "Demonstration by appointment, no throughput or compatibility guarantee, and a supervisor's preference for comparing sample readability during handover"
+        },
+        "hypotheses": [
+          "A supervisor may want to compare sample readability during handover."
+        ],
+        "gaps": []
+      },
+      "strategy_decisions": {
+        "positioning": "Demonstration by appointment, no throughput or compatibility guarantee",
+        "rationale": "The primary measurement is the number of unique eligible demonstration requests, which is a key metric for measuring the effectiveness of the demonstration by appointment feature. The other factors, e",
+        "channel_choice": "product enquiry page",
+        "test_hypothesis": "Demonstration by appointment, no throughput or compatibility guarantee, and a supervisor's preference for comparing sample readability during handover"
+      },
+      "buyer_copy": {},
+      "seo_fields": {},
+      "evidence_report": {
+        "status": "source_handles_only",
+        "facts": [
+          {
+            "handle": "S1",
+            "text": "The device prints a sample from a supplied text file. A sample roll is available at the counter. Demonstration by appointment. No throughput or compatibility guarantee."
+          },
+          {
+            "handle": "S2",
+            "text": "Two of four synthetic demo notes mention switching label formats during a shift. Synthetic convenience sample; no population estimate."
+          }
+        ],
+        "suggested_handles": {
+          "research": [
+            "S1",
+            "S2"
+          ],
+          "strategy": [
+            "S1",
+            "S2"
+          ]
+        }
+      },
+      "measurement_plan": {
+        "selected_kpi": "confirmed demonstration request",
+        "measurable_action": "Request a label demonstration",
+        "measurement_method": "confirmed demonstration request"
+      },
+      "customer_preview": {
+        "title": "Countertop label printer L2",
+        "body": "Countertop label printer L2\n\nArea: Da Nang\n\nThe device prints a sample from a supplied text file. A sample roll is available at the counter. Demonstration by appointment. No throughput or compatibility guarantee.\n\nTwo of four synthetic demo notes mention switching label formats during a shift. Synthetic convenience sample; no population estimate."
+      }
+    },
+    "offline_studio_without_incompatible_contract": {
+      "research": {
+        "buyer_problem": "Demonstration by appointment, no throughput or compatibility guarantee, and a supervisor's preference for comparing sample readability during handover",
+        "research_question": "What are the key issues that shop supervisors at a shared counter in Da Nang are facing when requesting a label demonstration for relabelling returns?",
+        "evidence": "The device prints a sample from a supplied text file. A sample roll is available at the counter. Demonstration by appointment. No throughput or compatibility guarantee.\nTwo of four synthetic demo notes mention switching label formats during a shift. Synthetic convenience sample; no population estimate.",
+        "hypothesis": "Hypothesis to test: clearer terms for Countertop label printer L2 help Shop supervisors choosing a printer for relabelling returns at a shared counter select a next step."
+      },
+      "strategy": {
+        "positioning": "Demonstration by appointment, no throughput or compatibility guarantee",
+        "channel_choice": "product enquiry page",
+        "rationale": "The primary measurement is the number of unique eligible demonstration requests, which is a key metric for measuring the effectiveness of the demonstration by appointment feature. The other factors, e",
+        "execution": "Prepare two presentations of Countertop label printer L2 on product enquiry page, keep terms fixed and measure the same action."
+      },
+      "measurement": {
+        "test_hypothesis": "Demonstration by appointment, no throughput or compatibility guarantee, and a supervisor's preference for comparing sample readability during handover",
+        "measurable_action": "Request a label demonstration",
+        "measurement_method": "confirmed demonstration request"
+      }
+    },
+    "structural_issues": [
+      {
+        "group": "measurement",
+        "field": "test_hypothesis",
+        "reason": "repetition"
+      }
+    ],
+    "authorized_handoff": "ineligible: no approved manifest, recipients or reviewed revision"
+  },
+  {
+    "case": "check",
+    "arm": "A",
+    "schema_errors": {
+      "TaskIntent": {
+        "purpose": "missing",
+        "deliverable_type": "missing",
+        "exclusions": "missing",
+        "acceptance_criteria": "missing",
+        "buyer_action": "extra_forbidden",
+        "editorial_style": "extra_forbidden"
+      },
+      "ActionIntent": {
+        "purpose": "missing",
+        "deliverable_type": "missing",
+        "exclusions": "missing",
+        "acceptance_criteria": "missing",
+        "buyer_action": "literal_error",
+        "editorial_style": "literal_error"
+      },
+      "MeasurementDefinition": {
+        "version": "missing",
+        "business_outcome": "missing",
+        "window_days": "missing",
+        "owner_role": "missing",
+        "event": "extra_forbidden",
+        "unit": "extra_forbidden",
+        "window": "extra_forbidden",
+        "deduplication": "extra_forbidden",
+        "eligibility": "extra_forbidden"
+      }
+    },
+    "first_text_sha256": {
+      "director": "79425d94fc56fd2b273562d9c2e6d3f59c1818c872e5426be63665c929c72a21",
+      "research": "cfc6d41a3a78c64feb3dc623051e3114e1b802a9aac4fe73b24985ccacefbfd9",
+      "strategy": "bd2dcd7b781ea435e8aedd3f3308e4d461475411870906c0fba4644176db6ce3"
+    },
+    "locked_hard_failures": {
+      "contradicted_source": false,
+      "unauthorized_action": false,
+      "altered_terms": false,
+      "lost_constraint": true
+    },
+    "full_packet_error": "Choose a supported asset locale (vi-VN or en-US) and matching approved evidence",
+    "after_locale_only_error": "'numerator'",
+    "unchanged_edited_field_routes": {
+      "research.research_question": [
+        "research.research_question"
+      ],
+      "research.evidence_needed": [],
+      "research.segment": [],
+      "strategy.positioning": [
+        "strategy.positioning"
+      ],
+      "strategy.rationale": [
+        "strategy.rationale"
+      ],
+      "strategy.measurement_method": [
+        "measurement.measurement_method"
+      ]
+    },
+    "staff_artifacts": {
+      "research_notes": {
+        "fields": {
+          "research_question": "What purchasing leads may need a repeatable comparison before requesting a side-by-side counter trial?",
+          "evidence_needed": "Host connection must be checked at the trial. No claim about scan speed or error reduction.",
+          "segment": "Can Tho",
+          "buyer_problem": "Purchasing leads may need a repeatable comparison before requesting a trial."
+        },
+        "hypotheses": [
+          "Purchasing leads may need a repeatable comparison before requesting a trial."
+        ],
+        "gaps": []
+      },
+      "strategy_decisions": {
+        "positioning": "To ensure purchasing leads can request a side-by-side counter trial",
+        "rationale": "To validate the effectiveness of the counter trial, purchasing leads need to be able to compare the reader with a printed sample card.",
+        "channel_choice": "product enquiry page",
+        "test_hypothesis": "Purchasing leads may need a repeatable comparison before requesting a trial"
+      },
+      "buyer_copy": {},
+      "seo_fields": {},
+      "evidence_report": {
+        "status": "source_handles_only",
+        "facts": [
+          {
+            "handle": "S1",
+            "text": "The counter kit includes a reader and a printed sample card. Trials use the shop's sample labels. Host connection must be checked at the trial. No claim about scan speed or error reduction."
+          },
+          {
+            "handle": "S2",
+            "text": "In three synthetic enquiry notes, two buyers asked whether a damaged label could be included. Synthetic convenience sample; no population estimate."
+          }
+        ],
+        "suggested_handles": {
+          "research": [
+            "S1",
+            "S2"
+          ],
+          "strategy": [
+            "S1",
+            "S2"
+          ]
+        }
+      },
+      "measurement_plan": {
+        "selected_kpi": "confirmed comparison request",
+        "measurable_action": "confirmed comparison request",
+        "measurement_method": "unique eligible request"
+      },
+      "customer_preview": {
+        "title": "Compact barcode reader C4",
+        "body": "Compact barcode reader C4\n\nArea: Can Tho\n\nThe counter kit includes a reader and a printed sample card. Trials use the shop's sample labels. Host connection must be checked at the trial. No claim about scan speed or error reduction.\n\nIn three synthetic enquiry notes, two buyers asked whether a damaged label could be included. Synthetic convenience sample; no population estimate."
+      }
+    },
+    "offline_studio_without_incompatible_contract": {
+      "research": {
+        "buyer_problem": "Purchasing leads may need a repeatable comparison before requesting a trial.",
+        "research_question": "What purchasing leads may need a repeatable comparison before requesting a side-by-side counter trial?",
+        "evidence": "The counter kit includes a reader and a printed sample card. Trials use the shop's sample labels. Host connection must be checked at the trial. No claim about scan speed or error reduction.\nIn three synthetic enquiry notes, two buyers asked whether a damaged label could be included. Synthetic convenience sample; no population estimate.",
+        "hypothesis": "Hypothesis to test: clearer terms for Compact barcode reader C4 help Retail purchasing leads comparing readers for receiving stock at the service counter select a next step."
+      },
+      "strategy": {
+        "positioning": "To ensure purchasing leads can request a side-by-side counter trial",
+        "channel_choice": "product enquiry page",
+        "rationale": "To validate the effectiveness of the counter trial, purchasing leads need to be able to compare the reader with a printed sample card.",
+        "execution": "Prepare two presentations of Compact barcode reader C4 on product enquiry page, keep terms fixed and measure the same action."
+      },
+      "measurement": {
+        "test_hypothesis": "Purchasing leads may need a repeatable comparison before requesting a trial",
+        "measurable_action": "confirmed comparison request",
+        "measurement_method": "unique eligible request"
+      }
+    },
+    "structural_issues": [],
+    "authorized_handoff": "ineligible: no approved manifest, recipients or reviewed revision"
+  },
+  {
+    "case": "check",
+    "arm": "B",
+    "schema_errors": {
+      "TaskIntent": {
+        "purpose": "missing",
+        "deliverable_type": "missing",
+        "exclusions": "missing",
+        "acceptance_criteria": "missing",
+        "buyer_action": "extra_forbidden",
+        "editorial_style": "extra_forbidden"
+      },
+      "ActionIntent": {
+        "purpose": "missing",
+        "deliverable_type": "missing",
+        "exclusions": "missing",
+        "acceptance_criteria": "missing",
+        "buyer_action": "literal_error",
+        "editorial_style": "literal_error"
+      },
+      "MeasurementDefinition": {
+        "version": "missing",
+        "business_outcome": "missing",
+        "window_days": "missing",
+        "owner_role": "missing",
+        "event": "extra_forbidden",
+        "unit": "extra_forbidden",
+        "window": "extra_forbidden",
+        "deduplication": "extra_forbidden",
+        "eligibility": "extra_forbidden"
+      }
+    },
+    "first_text_sha256": {
+      "director": "79425d94fc56fd2b273562d9c2e6d3f59c1818c872e5426be63665c929c72a21",
+      "research": "9a872253028c926cb626d7802b7212c871b698c175d05a47d7bf3a635badcbd6",
+      "strategy": "712ebd498494b0df38e482cf352493a65c29c42a38247dc90bde9695d3a617e1"
+    },
+    "locked_hard_failures": {
+      "contradicted_source": false,
+      "unauthorized_action": false,
+      "altered_terms": false,
+      "lost_constraint": true
+    },
+    "full_packet_error": "Choose a supported asset locale (vi-VN or en-US) and matching approved evidence",
+    "after_locale_only_error": "'numerator'",
+    "unchanged_edited_field_routes": {
+      "research.research_question": [
+        "research.research_question"
+      ],
+      "research.evidence_needed": [],
+      "research.buyer_problem": [
+        "research.buyer_problem"
+      ],
+      "strategy.positioning": [
+        "strategy.positioning"
+      ],
+      "strategy.rationale": [
+        "strategy.rationale"
+      ],
+      "strategy.measurement_method": [
+        "measurement.measurement_method"
+      ]
+    },
+    "staff_artifacts": {
+      "research_notes": {
+        "fields": {
+          "research_question": "The counter kit includes a reader and a printed sample card. Trials use the shop's sample labels.",
+          "evidence_needed": "The counter kit must include a reader and a printed sample card.",
+          "segment": "Retail purchasing leads comparing readers for receiving stock at the service counter",
+          "buyer_problem": "No claim about scan speed or error reduction"
+        },
+        "hypotheses": [
+          "Purchasing leads may need a repeatable comparison before requesting a trial."
+        ],
+        "gaps": []
+      },
+      "strategy_decisions": {
+        "positioning": "The counter kit includes a reader and a printed sample card.",
+        "rationale": "The product is a compact barcode reader C4, which is commonly used in retail settings.",
+        "channel_choice": "product enquiry page",
+        "test_hypothesis": "Purchasing leads may need a repeatable comparison before requesting a trial."
+      },
+      "buyer_copy": {},
+      "seo_fields": {},
+      "evidence_report": {
+        "status": "source_handles_only",
+        "facts": [
+          {
+            "handle": "S1",
+            "text": "The counter kit includes a reader and a printed sample card. Trials use the shop's sample labels. Host connection must be checked at the trial. No claim about scan speed or error reduction."
+          },
+          {
+            "handle": "S2",
+            "text": "In three synthetic enquiry notes, two buyers asked whether a damaged label could be included. Synthetic convenience sample; no population estimate."
+          }
+        ],
+        "suggested_handles": {
+          "research": [
+            "S1",
+            "S2"
+          ],
+          "strategy": [
+            "S1",
+            "S2"
+          ]
+        }
+      },
+      "measurement_plan": {
+        "selected_kpi": "confirmed comparison request",
+        "measurable_action": "Request a side-by-side counter trial",
+        "measurement_method": "confirmed comparison request"
+      },
+      "customer_preview": {
+        "title": "Compact barcode reader C4",
+        "body": "Compact barcode reader C4\n\nArea: Can Tho\n\nThe counter kit includes a reader and a printed sample card. Trials use the shop's sample labels. Host connection must be checked at the trial. No claim about scan speed or error reduction.\n\nIn three synthetic enquiry notes, two buyers asked whether a damaged label could be included. Synthetic convenience sample; no population estimate."
+      }
+    },
+    "offline_studio_without_incompatible_contract": {
+      "research": {
+        "buyer_problem": "No claim about scan speed or error reduction",
+        "research_question": "The counter kit includes a reader and a printed sample card. Trials use the shop's sample labels.",
+        "evidence": "The counter kit includes a reader and a printed sample card. Trials use the shop's sample labels. Host connection must be checked at the trial. No claim about scan speed or error reduction.\nIn three synthetic enquiry notes, two buyers asked whether a damaged label could be included. Synthetic convenience sample; no population estimate.",
+        "hypothesis": "Hypothesis to test: clearer terms for Compact barcode reader C4 help Retail purchasing leads comparing readers for receiving stock at the service counter select a next step."
+      },
+      "strategy": {
+        "positioning": "The counter kit includes a reader and a printed sample card.",
+        "channel_choice": "product enquiry page",
+        "rationale": "The product is a compact barcode reader C4, which is commonly used in retail settings.",
+        "execution": "Prepare two presentations of Compact barcode reader C4 on product enquiry page, keep terms fixed and measure the same action."
+      },
+      "measurement": {
+        "test_hypothesis": "Purchasing leads may need a repeatable comparison before requesting a trial.",
+        "measurable_action": "Request a side-by-side counter trial",
+        "measurement_method": "confirmed comparison request"
+      }
+    },
+    "structural_issues": [],
+    "authorized_handoff": "ineligible: no approved manifest, recipients or reviewed revision"
+  }
+]

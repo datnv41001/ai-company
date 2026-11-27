@@ -1,0 +1,68 @@
+{
+  "algorithm": "SHA-256 over exact Git blob bytes",
+  "scope": "all candidate changes against baseline except this manifest",
+  "base": "9cf1380361efe03d6de4455f9f0313aa32a8db80",
+  "tested_commit": "578069a82696f2cd7279cf0ad5ddeb0c89f8d611",
+  "files": [
+    {
+      "path": "HANDOFF.md",
+      "bytes": 142292,
+      "sha256": "f1b9d4a68165e9b3bd1b96e940410547fc7d1fc6e05fc03465a13950c914ae39"
+    },
+    {
+      "path": "docs/evaluation/DEPARTMENT-CAPABILITY-REGISTER.md",
+      "bytes": 14752,
+      "sha256": "1951c676ba8bd701e900854153250ee9e6042c6d40a8f3ca0e1abd7e3819b55c"
+    },
+    {
+      "path": "docs/evaluation/rs02/NEXT-PROTOCOL.md",
+      "bytes": 6112,
+      "sha256": "80b0f80e92feb052af2fe039a6ad6e52ebeb51d56b594870538201e351875bd2"
+    },
+    {
+      "path": "docs/evaluation/rs02/README.md",
+      "bytes": 9878,
+      "sha256": "31fa750d8bfa5fd5e7cde842f9f298f507fcb59a74387bc84e7f374a3b37606f"
+    },
+    {
+      "path": "docs/evaluation/rs02/controlled-briefs.json",
+      "bytes": 1457,
+      "sha256": "5c72fc68cfb9953e4d781be0994ce3c95a025f6570d210f7d7ff6d13d499cc8e"
+    },
+    {
+      "path": "docs/evaluation/rs02/editor-example.json",
+      "bytes": 2227,
+      "sha256": "5a24ca6f14343cb5309a17762d8924ecbb3c46449602b4824777baa85f379bf3"
+    },
+    {
+      "path": "docs/evaluation/rs02/junit.xml",
+      "bytes": 9645,
+      "sha256": "f9d6714f6f9b2ab33293b1f403507a90645902f5754ddd84bdf8243351fc2667"
+    },
+    {
+      "path": "docs/evaluation/rs02/replay.json",
+      "bytes": 53995,
+      "sha256": "c0e4a9341dfb161f3340d326643319800297d85977ee45ff06191158535c9db1"
+    },
+    {
+      "path": "docs/evaluation/rs02/test-receipt.json",
+      "bytes": 1586,
+      "sha256": "26fc8973c07ff2a51d1417fe805178cc3f0bc71f1f417bd821eaafb9912d2aa9"
+    },
+    {
+      "path": "docs/research/KNOWLEDGE_CARDS.md",
+      "bytes": 25286,
+      "sha256": "428cec91c06af78fe47e0ead81ae991db4ac6f93ff5d069bce6a95c18492e9c8"
+    },
+    {
+      "path": "tests/evaluation/rs02_replay.py",
+      "bytes": 5002,
+      "sha256": "00811fc9211ebf24207234ec790322f4bab42062768628f2ef25a31b7757af28"
+    },
+    {
+      "path": "tests/test_rs02_contract_alignment.py",
+      "bytes": 7787,
+      "sha256": "9881c5485618a37c7f328695f46a96f350e6db8796337ec1246d397eb9e8bc26"
+    }
+  ]
+}

@@ -1,5 +1,7 @@
 # Bắt đầu ở đây khi tiếp quản AI Marketing Company
 
+**Nghiên cứu RS-02 · chờ Independent Review.** PR #66 đã merge tại `9cf13803`, giữ kết quả âm của RS-01 và baseline WF-03. [Bàn giao nghiên cứu, phép tái hiện và điều kiện dừng](docs/evaluation/rs02/README.md). Đợt này chỉ dùng replay và fixture tổng hợp.
+
 ## Vòng #64 · Bàn giao Strategy cho Content trong Studio
 
 Vòng phản biện tiếp theo nâng phiếu nội bộ lên /2. Đọc [bản sửa giới hạn, quy tắc xử lý receipt /1 và điều tra Sales](docs/evaluation/round64/closure/README.md). Người nhận cần thấy CTA, điều cấm và tiêu chí nghiệm thu trên phiếu. Khi dữ kiện riêng tư hoặc mâu thuẫn, trả việc cho reviewer đối chiếu lại trên revision mới.

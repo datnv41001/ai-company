@@ -1,0 +1,29 @@
+{
+  "tested_commit": "578069a82696f2cd7279cf0ad5ddeb0c89f8d611",
+  "tested_tree": "c75ec1a940dcbede360b845773f4c6a52b28f509",
+  "merge_baseline": "9cf1380361efe03d6de4455f9f0313aa32a8db80",
+  "python": "3.12.14",
+  "postgresql": "16.16",
+  "database": "disposable loopback PostgreSQL with schema 26 and scoped roles; SQLite also exercised",
+  "command": "python -m pytest -q -rs -p no:cacheprovider tests/test_rs02_contract_alignment.py tests/test_strategy_runtime_handoff.py tests/test_strategy_handoff_contract.py tests/test_measurement_integrity.py --junitxml=candidate.xml",
+  "pytest": {
+    "version": "9.2.0",
+    "passed": 58,
+    "skipped": 0,
+    "failures": 0,
+    "errors": 0,
+    "seconds": "119.696"
+  },
+  "junit": "junit.xml (hostname removed; individual test names and durations retained)",
+  "deterministic_checks": [
+    "python tests/evaluation/rs01_final.py: passed including the frozen manifest",
+    "python tests/evaluation/rs02_replay.py: 8 dossiers, 24 first-response hashes matched",
+    "ruff check tests/evaluation/rs02_replay.py tests/test_rs02_contract_alignment.py: passed"
+  ],
+  "observed_during_development": {
+    "attempt": "explicitly approve the edited interview prompt as ordinary evidence",
+    "result": "Failed: two research_question spans were unresolved; preserved as a hold regression and a separate authorized handoff.",
+    "regression": "test_edited_interview_question_documents_evidence_hold"
+  },
+  "scope": "targeted deterministic local acceptance, no provider inference, hosted CI, practitioner trial or effectiveness measurement"
+}

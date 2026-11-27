@@ -1,0 +1,118 @@
+{
+  "audience": "Tổ trưởng lắp ráp điện tử",
+  "brand": "Khe Gọn",
+  "brand_direction": "Liên kết mỗi cảnh với dữ kiện đã duyệt; dùng câu ngắn.",
+  "buyer_action": "rfq",
+  "channel": "vertical-social",
+  "concept": "product_demonstration",
+  "cta": "Yêu cầu báo giá",
+  "duration_seconds": 32,
+  "editorial": {
+    "note": "Đối chiếu giá theo nguồn đã ghim.",
+    "price_source_ids": [
+      "F2"
+    ],
+    "price_status": "approved"
+  },
+  "format": "9:16",
+  "hook": "Cách dùng nào phù hợp với công việc?",
+  "hook_variant": "direct",
+  "method_ref": {
+    "digest": "db4558733a1d4924ee5e5aa2b61f82f918973bc4551514637054645af1118819",
+    "path": "catalog/video-storyboard-sop-v1.json",
+    "revision": "wf08-production-sop/1"
+  },
+  "product": "Khay chia linh kiện Khe Gọn",
+  "rights": "synthetic_illustration_only",
+  "shots": [
+    {
+      "caption": "Cách dùng nào phù hợp với công việc?",
+      "end_s": 6,
+      "purpose": "hook",
+      "source_ids": [],
+      "start_s": 0,
+      "visual": "Tách thao tác thành hai trạng thái để người xem đối chiếu.",
+      "visual_mode": "mechanism",
+      "voice": "Cách dùng nào phù hợp với công việc?"
+    },
+    {
+      "caption": "Vách ngăn có thể tháo rời. Áp dụng cho\nmẫu tiêu chuẩn.",
+      "end_s": 13,
+      "purpose": "proof",
+      "source_ids": [
+        "F1"
+      ],
+      "start_s": 6,
+      "visual": "Tách thao tác thành hai trạng thái để người xem đối chiếu. Ghi đúng phạm vi của F1.",
+      "visual_mode": "mechanism",
+      "voice": "Vách ngăn có thể tháo rời. Áp dụng cho mẫu tiêu chuẩn."
+    },
+    {
+      "caption": "Giá tham khảo: 380.000 VND / 1 hộp, đã\ngồm thuế. Đơn tối thiểu: 5 hộp.",
+      "end_s": 21,
+      "purpose": "terms",
+      "source_ids": [
+        "F2"
+      ],
+      "start_s": 13,
+      "visual": "Tách số tiền, đơn vị tính thuế và mức đặt tối thiểu.",
+      "visual_mode": "offer",
+      "voice": "Giá tham khảo: 380.000 VND / 1 hộp, đã gồm thuế. Đơn tối thiểu: 5 hộp."
+    },
+    {
+      "caption": "Xác nhận số lượng trước khi đặt.",
+      "end_s": 27,
+      "purpose": "conditions",
+      "source_ids": [
+        "F2"
+      ],
+      "start_s": 21,
+      "visual": "Giữ nguyên điều kiện trên thẻ chữ.",
+      "visual_mode": "document",
+      "voice": "Xác nhận số lượng trước khi đặt."
+    },
+    {
+      "caption": "Yêu cầu báo giá",
+      "end_s": 32,
+      "purpose": "action",
+      "source_ids": [],
+      "start_s": 27,
+      "visual": "Hiện nút gửi yêu cầu; không vẽ dấu đã xác nhận.",
+      "visual_mode": "request",
+      "voice": "Yêu cầu báo giá"
+    }
+  ],
+  "source_refs": {
+    "declarations": {
+      "F1": {
+        "category": "description",
+        "conditions": [],
+        "qualifiers": [
+          "Áp dụng cho mẫu tiêu chuẩn."
+        ],
+        "wording": "Vách ngăn có thể tháo rời"
+      },
+      "F2": {
+        "category": "price",
+        "conditions": [
+          "Xác nhận số lượng trước khi đặt."
+        ],
+        "qualifiers": [
+          "Xác nhận số lượng trước khi đặt."
+        ],
+        "wording": "VND 380000 / 1 box (tax included)"
+      }
+    },
+    "facts": [
+      "F1",
+      "F2"
+    ],
+    "guidelines": "b44545db196285fb8c3b7ed25b603c0e333e8d9374725e561a5c3375be4bcf26",
+    "manifest": {
+      "digest": "0315fbbf766c6cf9aa229125656c9519335e574826da46409c8f50e04ca03e66",
+      "id": "65906eff-c323-4171-a1c7-78110951a602"
+    }
+  },
+  "version": "amc.storyboard/1",
+  "vtt": "WEBVTT\n\n1\n00:00:00.000 --> 00:00:06.000\nCách dùng nào phù hợp với công việc?\n\n2\n00:00:06.000 --> 00:00:13.000\nVách ngăn có thể tháo rời. Áp dụng cho\nmẫu tiêu chuẩn.\n\n3\n00:00:13.000 --> 00:00:21.000\nGiá tham khảo: 380.000 VND / 1 hộp, đã\ngồm thuế. Đơn tối thiểu: 5 hộp.\n\n4\n00:00:21.000 --> 00:00:27.000\nXác nhận số lượng trước khi đặt.\n\n5\n00:00:27.000 --> 00:00:32.000\nYêu cầu báo giá\n"
+}

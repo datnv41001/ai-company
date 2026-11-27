@@ -1,0 +1,25 @@
+{
+  "purpose": "Nhận yêu cầu báo giá Khay chia linh kiện Khe Gọn",
+  "deliverable_type": "video_storyboard",
+  "audience": "Tổ trưởng lắp ráp điện tử",
+  "product": "Khay chia linh kiện Khe Gọn",
+  "channel": "vertical-social",
+  "region": "HN",
+  "locale": "vi-VN",
+  "requirements": [
+    "Soạn storyboard có hình minh họa.",
+    "Minh họa dữ kiện sản phẩm trước lời mời hành động."
+  ],
+  "exclusions": [
+    "Không suy diễn chứng nhận an toàn điện hoặc công bố mức giảm thời gian lắp ráp."
+  ],
+  "acceptance_criteria": [
+    "Có phụ đề tiếng Việt khớp lời thoại.",
+    "Đối chiếu điều kiện thương mại theo đúng nguồn."
+  ],
+  "buyer_action": "rfq",
+  "editorial_style": "plain",
+  "duration_seconds": 32,
+  "aspect_ratio": "9:16",
+  "rights": "synthetic_illustration_only"
+}

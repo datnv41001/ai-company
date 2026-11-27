@@ -1,0 +1,24 @@
+{
+  "scheme": "file",
+  "browser": "158.0.8127.88",
+  "sessions": [
+    {
+      "video_width": 540,
+      "video_height": 960,
+      "duration": 32,
+      "viewport": 390,
+      "scroll_width": 390,
+      "caption_cues": 5,
+      "network_requests": 0
+    },
+    {
+      "video_width": 540,
+      "video_height": 960,
+      "duration": 32,
+      "viewport": 1280,
+      "scroll_width": 1280,
+      "caption_cues": 5,
+      "network_requests": 0
+    }
+  ]
+}

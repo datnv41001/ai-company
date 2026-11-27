@@ -1,0 +1,44 @@
+{
+  "head": {
+    "checkout": "555b968c85b09d52d50d2fd165ea9ff320e5afcd",
+    "tree": "a202c3d9287d23fc8f6a4e34ef3f7220ef3c4886",
+    "workflow_run": "45922226616",
+    "artifacts": {
+      "name": "connected-review-head",
+      "id": 15165782201,
+      "digest": "sha256:2e29a0ca55f5c774f1302234cf1bbe19a35cb611b0b73bfcb7a02322165dfbc7",
+      "bytes": 585620,
+      "run_id": "45922226616",
+      "url": "https://github.com/datnv41001/ai-company/actions/runs/45922226616/artifacts/15165782201"
+    },
+    "ui": {
+      "name": "connected-ui-head",
+      "id": 15164739258,
+      "digest": "sha256:c8d9171ed4ea341475f6d7f415e0d65793056d4993b5343c575840388766a7e9",
+      "bytes": 1208302,
+      "run_id": "45922226616",
+      "url": "https://github.com/datnv41001/ai-company/actions/runs/45922226616/artifacts/15164739258"
+    }
+  },
+  "integration": {
+    "checkout": "cf2b976aea0642e60d20487d881dcab8c41b02db",
+    "tree": "a202c3d9287d23fc8f6a4e34ef3f7220ef3c4886",
+    "workflow_run": "45922226616",
+    "artifacts": {
+      "name": "connected-review-integration",
+      "id": 15165378406,
+      "digest": "sha256:26c3389d315c9b787f9181f54eee54acfe7e2735adbb59d2d382675780602f80",
+      "bytes": 585632,
+      "run_id": "45922226616",
+      "url": "https://github.com/datnv41001/ai-company/actions/runs/45922226616/artifacts/15165378406"
+    },
+    "ui": {
+      "name": "connected-ui-integration",
+      "id": 15165098881,
+      "digest": "sha256:6b4258493df5b082ccae71e828e25267b4144a456d96cb47b103e194715528cf",
+      "bytes": 1204967,
+      "run_id": "45922226616",
+      "url": "https://github.com/datnv41001/ai-company/actions/runs/45922226616/artifacts/15165098881"
+    }
+  }
+}

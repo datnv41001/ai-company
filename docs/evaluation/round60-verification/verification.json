@@ -1,0 +1,19 @@
+{
+  "head": "555b968c85b09d52d50d2fd165ea9ff320e5afcd",
+  "tree": "a202c3d9287d23fc8f6a4e34ef3f7220ef3c4886",
+  "base": "4140563a89539acd19f1a7d5a16662c8dec5f6af",
+  "trial": "cf2b976aea0642e60d20487d881dcab8c41b02db",
+  "trial_tree": "a202c3d9287d23fc8f6a4e34ef3f7220ef3c4886",
+  "windows": {
+    "passed": 666,
+    "skipped": 2,
+    "junit_sha256": "e5d716f5ccd326524aa0004116d353c477cfce88c67c573378ec3050e5220a32"
+  },
+  "windows_targeted": {
+    "passed": 17,
+    "skipped": 0,
+    "junit_sha256": "52e4b86cc23783d313a9134a8e49c9998dbad8284799770a51ce4e9c8b12fb49"
+  },
+  "bundle_sha256": "934f81acc5e84fe6e50254ed174265233995f1c6c1b8cc042d7383dfa89c795d",
+  "bundle_bytes": 5572587
+}

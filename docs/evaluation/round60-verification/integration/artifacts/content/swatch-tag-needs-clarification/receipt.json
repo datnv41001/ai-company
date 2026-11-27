@@ -1,0 +1,66 @@
+{
+  "run_id": "ea9a25c2-5e05-4f35-957d-349111cb2da7",
+  "workflow": "WF-08/video-storyboard@2",
+  "manifest": {
+    "digest": "16f1ed3cd2d83c69107168c4c069f7e49b9a45e43014c1f8564be1167fe3e12c",
+    "id": "af793360-49fc-4c45-a962-251de62f4a13"
+  },
+  "handoff_digest": "5029428d7ba5953a6eda8611b11bf0516ddcb12deec014a418b9bd9642ef37e6",
+  "journal": [
+    {
+      "node_id": "director",
+      "plan_revision": 1,
+      "skill": "director",
+      "attempt": 1,
+      "provider": "deterministic",
+      "model": "local-storyboard/2",
+      "prompt": "marketing-workforce-2",
+      "started_at": "2026-11-27T01:35:02.126100+00:00",
+      "outcome": "ok",
+      "reserved_microusd": 0,
+      "input_tokens": 0,
+      "output_tokens": 0,
+      "estimated_microusd": 0,
+      "finished_at": "2026-11-27T01:35:02.200227+00:00"
+    },
+    {
+      "node_id": "n01",
+      "plan_revision": 1,
+      "skill": "content",
+      "attempt": 1,
+      "provider": "deterministic",
+      "model": "local-storyboard/2",
+      "prompt": "marketing-workforce-2",
+      "started_at": "2026-11-27T01:35:02.244899+00:00",
+      "outcome": "ok",
+      "reserved_microusd": 0,
+      "input_tokens": 0,
+      "output_tokens": 0,
+      "estimated_microusd": 0,
+      "finished_at": "2026-11-27T01:35:02.304137+00:00"
+    },
+    {
+      "node_id": "n02",
+      "plan_revision": 1,
+      "skill": "storyboard",
+      "attempt": 1,
+      "provider": "deterministic",
+      "model": "local-storyboard/2",
+      "prompt": "marketing-workforce-2",
+      "started_at": "2026-11-27T01:35:02.345697+00:00",
+      "outcome": "ok",
+      "reserved_microusd": 0,
+      "input_tokens": 0,
+      "output_tokens": 0,
+      "estimated_microusd": 0,
+      "finished_at": "2026-11-27T01:35:02.401615+00:00"
+    }
+  ],
+  "document_id": "d3d07701-697b-471f-b595-75e03c6f6e3a",
+  "revision": 1,
+  "digest": "8654f6bb117d97e768743a97bdd02c2609534c343d10af1eaf6e84fdb7242a4a",
+  "qa_status": 409,
+  "reviewer_id": "8e3d692c-e9c1-4c93-94a9-8fc46388a2d0",
+  "review_decision": "blocked",
+  "reviewed_body": null
+}

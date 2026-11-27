@@ -1,0 +1,48 @@
+{
+  "earlier_local_attempts": [
+    {
+      "file": "round60-core.log",
+      "sha256": "ab4ba1b61e0e88caeac00dee80d9987896d6bd08934c25f426998f26667cc060",
+      "cases": [
+        "tests/test_storyboard_brief.py::test_content_checkpoint_handoff_and_current_qa[new-print-quote]"
+      ],
+      "totals": [
+        "1 failed, 16 passed in 218.71s (0:03:38)"
+      ],
+      "error_classes": [
+        "AssertionError"
+      ]
+    },
+    {
+      "file": "round60-editor-final-pg.log",
+      "sha256": "ace74708e3fd7f366a6bade5c5dd4cc38b16527b8102173b269ea1ce4f4205b8",
+      "cases": [
+        "tests/test_storyboard_editions.py::test_offline_hook_experiment_and_editor_handoff",
+        "tests/test_video_storyboard.py::test_queued_storyboard_and_revised_qa[index-tray]",
+        "tests/test_video_storyboard.py::test_queued_storyboard_and_revised_qa[receipt-map]",
+        "tests/test_video_storyboard.py::test_queued_storyboard_and_revised_qa[rhythm-class]",
+        "tests/test_video_storyboard.py::test_conflicting_brand_policy_fails_with_receipt"
+      ],
+      "totals": [
+        "5 failed, 2 passed in 89.11s (0:01:29)"
+      ],
+      "error_classes": []
+    },
+    {
+      "file": "round60-nov27-browser-preflight.log",
+      "sha256": "05992ad97d008219dc5a6c6986651893352f1035de3261bfbbaa9c8241204396",
+      "cases": [
+        "tests/browser_storyboard_workforce.py::test_staff_read_checked_content_handoff"
+      ],
+      "totals": [
+        "1 failed in 46.38s"
+      ],
+      "error_classes": [
+        "TimeoutError"
+      ]
+    }
+  ],
+  "desktop_interruption": "Windows sandbox stopped before executing commands (CreateProcessWithLogonW, code 32). No tests were counted for that interruption.",
+  "source_id_correction": "The previous integration run of 17 cases selected the first price declaration where product copy was expected. The corrected check resolves the selected source ID and compares its original wording.",
+  "archival_policy": "Raw local logs are retained at source. This portable extract carries failure identities, observed totals and hashes without local credentials or private environment details."
+}

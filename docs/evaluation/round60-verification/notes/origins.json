@@ -1,0 +1,44 @@
+[
+  {
+    "name": "README.md",
+    "repository_path": "docs/evaluation/connected-workforce/README.md",
+    "sha256": "378317c9abf97a21af84d6dd5107c2a99ddeb2a663cef76341070ee5490b20a6",
+    "source": "https://github.com/datnv41001/ai-company/blob/555b968c85b09d52d50d2fd165ea9ff320e5afcd/docs/evaluation/connected-workforce/README.md"
+  },
+  {
+    "name": "MEASUREMENT.md",
+    "repository_path": "docs/evaluation/connected-workforce/MEASUREMENT.md",
+    "sha256": "40f7fdb2625f17e15b6382a6032709f18e13730805718f14c2899a4b1bed120c",
+    "source": "https://github.com/datnv41001/ai-company/blob/555b968c85b09d52d50d2fd165ea9ff320e5afcd/docs/evaluation/connected-workforce/MEASUREMENT.md"
+  },
+  {
+    "name": "PRACTITIONER.md",
+    "repository_path": "docs/evaluation/connected-workforce/PRACTITIONER.md",
+    "sha256": "0f6cf3d2773d84438ab55a7cded75f7b02b4d62444eb4566eae0234f114fb394",
+    "source": "https://github.com/datnv41001/ai-company/blob/555b968c85b09d52d50d2fd165ea9ff320e5afcd/docs/evaluation/connected-workforce/PRACTITIONER.md"
+  },
+  {
+    "name": "WF08-CONTENT-HANDOFF.md",
+    "repository_path": "docs/WF08-CONTENT-HANDOFF.md",
+    "sha256": "d3225dd88c172052333694d862e76eab16c1e02ae96e4bb8911d79eabbb7acf1",
+    "source": "https://github.com/datnv41001/ai-company/blob/555b968c85b09d52d50d2fd165ea9ff320e5afcd/docs/WF08-CONTENT-HANDOFF.md"
+  },
+  {
+    "name": "EDITORIAL-AND-HOOK-TRIALS.md",
+    "repository_path": "docs/evaluation/wf08-storyboard/EDITORIAL-AND-HOOK-TRIALS.md",
+    "sha256": "6d5f162a8b8f0bae5c064ea899d51c28aa28deda6be3b28eb2ecd9991e08f34e",
+    "source": "https://github.com/datnv41001/ai-company/blob/555b968c85b09d52d50d2fd165ea9ff320e5afcd/docs/evaluation/wf08-storyboard/EDITORIAL-AND-HOOK-TRIALS.md"
+  },
+  {
+    "name": "CONNECTED-DISTRIBUTION.md",
+    "repository_path": "docs/evaluation/wf08-storyboard/CONNECTED-DISTRIBUTION.md",
+    "sha256": "5decbba5d20fef405f4818a427cd7845d4ec6a9950aeb794eeef6b90853520d5",
+    "source": "https://github.com/datnv41001/ai-company/blob/555b968c85b09d52d50d2fd165ea9ff320e5afcd/docs/evaluation/wf08-storyboard/CONNECTED-DISTRIBUTION.md"
+  },
+  {
+    "name": "CONNECTED-CREATIVE.md",
+    "repository_path": "docs/research/CONNECTED-CREATIVE.md",
+    "sha256": "d5f98c9ee4bb9d5420517d509a82d034bd3fe6d163876158f8c5c432928376af",
+    "source": "https://github.com/datnv41001/ai-company/blob/555b968c85b09d52d50d2fd165ea9ff320e5afcd/docs/research/CONNECTED-CREATIVE.md"
+  }
+]

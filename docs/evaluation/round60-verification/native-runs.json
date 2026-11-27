@@ -1,0 +1,26 @@
+{
+  "head": "555b968c85b09d52d50d2fd165ea9ff320e5afcd",
+  "tree": "a202c3d9287d23fc8f6a4e34ef3f7220ef3c4886",
+  "suites": {
+    "targeted": {
+      "command": "python -m pytest -q -rs tests/test_storyboard_distribution.py tests/test_storyboard_brief.py tests/test_storyboard_editions.py tests/test_video_storyboard.py --junitxml=native-17.xml",
+      "started": "2026-11-27T01:19:50.704779+00:00",
+      "finished": "2026-11-27T01:22:13.542449+00:00",
+      "junit_sha256": "52e4b86cc23783d313a9134a8e49c9998dbad8284799770a51ce4e9c8b12fb49",
+      "passed": 17,
+      "skipped": 0,
+      "failures": [],
+      "exit_code": 0
+    },
+    "full": {
+      "command": "python -m pytest -q -rs  --junitxml=native-full.xml",
+      "started": "2026-11-27T01:22:13.638162+00:00",
+      "finished": "2026-11-27T01:46:36.261606+00:00",
+      "junit_sha256": "e5d716f5ccd326524aa0004116d353c477cfce88c67c573378ec3050e5220a32",
+      "passed": 666,
+      "skipped": 2,
+      "failures": [],
+      "exit_code": 0
+    }
+  }
+}

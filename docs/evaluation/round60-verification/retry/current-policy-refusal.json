@@ -1,0 +1,42 @@
+{
+  "run_id": "77285b6e-88d8-41f0-8ed0-27bf3d2a7e46",
+  "state": "failed",
+  "last_error": "storyboard_needs_revision",
+  "deliverable_id": null,
+  "journal": [
+    {
+      "node_id": "director",
+      "plan_revision": 1,
+      "skill": "director",
+      "attempt": 1,
+      "provider": "deterministic",
+      "model": "local-storyboard/1",
+      "prompt": "marketing-workforce-2",
+      "started_at": "2026-11-27T01:22:12.096046+00:00",
+      "outcome": "ok",
+      "reserved_microusd": 0,
+      "input_tokens": 0,
+      "output_tokens": 0,
+      "estimated_microusd": 0,
+      "finished_at": "2026-11-27T01:22:12.173112+00:00"
+    },
+    {
+      "node_id": "n01",
+      "plan_revision": 1,
+      "skill": "storyboard",
+      "attempt": 1,
+      "provider": "deterministic",
+      "model": "local-storyboard/1",
+      "prompt": "marketing-workforce-2",
+      "started_at": "2026-11-27T01:22:12.199076+00:00",
+      "outcome": "storyboard_needs_revision",
+      "reserved_microusd": 0,
+      "input_tokens": 0,
+      "output_tokens": 0,
+      "estimated_microusd": 0,
+      "retry_disposition": "terminal_for_pinned_input",
+      "recovery": "revise_source_or_policy_and_queue_new_manifest",
+      "finished_at": "2026-11-27T01:22:12.245388+00:00"
+    }
+  ]
+}

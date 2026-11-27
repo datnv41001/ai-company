@@ -1,0 +1,106 @@
+{
+  "scope": {
+    "brand_id": "187c5e4e-93f2-4c2a-b6bc-55db378ea7d4",
+    "client_id": "d311cd27-b70a-46f7-a5af-14febbe28220",
+    "tenant_id": "f6e82b91-6a85-4b94-a9fa-2406b6291903",
+    "campaign_id": "91789988-ec85-4e05-bca1-0b5fa5f3cde9"
+  },
+  "storyboard": {
+    "run_id": "de72f72c-116b-43f8-b38a-31cd4455ca0e",
+    "brief_id": "e1308e40-4ab9-4cfb-977e-627e97032b0f",
+    "manifest": {
+      "id": "dd240d81-d4f8-420d-8b8c-c0036cb99ff7",
+      "digest": "c62cf6159186def5434cf9f950dc86bd810631ba760f8d214248a545297a541b"
+    },
+    "revision": 2,
+    "qa_receipt": "5a18e84e-9d22-4cc8-87ff-c57dc093ee1b",
+    "document_id": "a687fc66-5136-458c-b4fe-c4642e4c6070",
+    "board_digest": "6e3e065eca5fbea9e16afa8b72a13b98fd8f08caca7ad4d1dfc73c2530e6446c",
+    "queue_receipt": "879a1816-1e72-4d23-971f-5ac71f52c828",
+    "content_digest": "be52bc78345bb7bc2be8199bf3f046e84ab5406d124d4a6b2c11ceb8af305ca7",
+    "checkpoint_digest": "4eb410f82a80986f9e50f0ae1e952b947e05f2323366dbf189f1c0fd55edd777"
+  },
+  "landing": {
+    "run_id": "d0aadb60-3a1f-4f62-a4f3-0a33c7414853",
+    "plan_id": "bddbc601-d581-42d3-8419-59c3b3cffbfe",
+    "manifest": {
+      "id": "fa725b29-51c7-4b54-8f14-8e8e958115f3",
+      "digest": "cc10d1c73b72aa5647a5399896ee07a1e8db4d66b78fd65ba8993a5e725dd77b"
+    },
+    "revision": 2,
+    "package_id": "dc703e18-0407-49d4-8cbc-00252d5f9185",
+    "qa_receipt": "8b0af094-529a-4dcd-af56-935a029abb6a",
+    "document_id": "d8da8068-ba92-4a47-bf61-22692e6c56bc",
+    "file_digest": "58101c97f1b0277658b2b833c9d3a5d2e8aaeb854a0351e6d7c0076b58537b15",
+    "plan_digest": "cf1c6ed764f5a0dd97a37374d34ddf59b37cb4f589decb285c0ca11542536828",
+    "package_digest": "0d8490709faf35ba339d64a8131cf5c9b0afd7c01f0e0deadf0a5f1a570935e6"
+  },
+  "source_revisions_digest": "2a85a917fa0dd4cb5f6e3ab901736500cbd6fde114daa5e3c136444dd3f03a57",
+  "source_claims": {
+    "F1": {
+      "category": "description",
+      "conditions": [],
+      "qualifiers": [
+        "Áp dụng cho mẫu tiêu chuẩn."
+      ],
+      "wording": "Vách ngăn có thể tháo rời"
+    },
+    "F2": {
+      "category": "price",
+      "conditions": [
+        "Xác nhận số lượng trước khi đặt."
+      ],
+      "qualifiers": [
+        "Xác nhận số lượng trước khi đặt."
+      ],
+      "wording": "VND 380000 / 1 box (tax included)"
+    }
+  },
+  "source_guidelines_digest": "b44545db196285fb8c3b7ed25b603c0e333e8d9374725e561a5c3375be4bcf26",
+  "source_pin_coverage": "The API receipt binds the approved shared source projection digest and each manifest ID/digest. This export contains the content and storyboard sources. Recomputing both complete manifest projections independently requires rerunning the pinned PostgreSQL test.",
+  "preview_qa": {
+    "receipt": "d17e4db4-0202-4bff-8d1c-5ca84968c6f2",
+    "reviewer": "c2f763fb-62ad-431e-bcba-58deff67e1f6"
+  },
+  "distribution_id": "22590ada-59ed-49c5-8411-1749b03cc67d",
+  "distribution_digest": "5a4e2b2ddb0c51f4a709eb37e8e92f1dc8250c246a5e3c60519db5a226273836",
+  "worker_board_sha256_canonical": "ffe3ddcf4572eb008342936b02e26e32aa1e834028f16e67a05d9720f508ef46",
+  "approved_board_sha256_canonical": "6e3e065eca5fbea9e16afa8b72a13b98fd8f08caca7ad4d1dfc73c2530e6446c",
+  "content_handoff_digest": "908442fd255add6afdc291113853e256684f7cc9e71dd805e22789f82dd3580a",
+  "preview_sha256": "079b7170b196636406e9b803fe78f4511dbc6e78623c1cefdb0248829c149937",
+  "visit_id": "c0c10a9f-cef5-4581-87ba-19338db87474",
+  "session_id": "65b6aef5b79cc032823fec2ea66977cc81ddef161382266f76759cb596dace08",
+  "submission_id": "d375d3f1-7f0b-40cb-8245-765751fda3d7",
+  "crm_id": "c12a116adfac2ca6f80d1e6a27f8c51098aceb97a8fccd0e4f4329202026508b",
+  "measurement": {
+    "version": "intake-funnel/2",
+    "contract_digest": "bfa89191b60c16f092b392dc085c1740095a5d445cd6f2a6bbf5deedded1d6f4",
+    "window": "approved_plan_lifetime",
+    "action": "rfq",
+    "landing_visits": 1,
+    "valid_submissions": 1,
+    "manual_requests": 0,
+    "inquiries": 1,
+    "qualified_rfqs": 0,
+    "sales_accepted": 0,
+    "quotes_issued": 0,
+    "orders": 0,
+    "confirmed_revenue_vnd": 0,
+    "current_states": {
+      "received": 1
+    },
+    "qualified_quotes": 0
+  },
+  "rejected": {
+    "other_customer": 404,
+    "foreign_tenant": 404,
+    "agency_owner_cross_client_source": 404,
+    "stale_revision": 412,
+    "reused_request_changed_style": 409,
+    "unsigned_preview": 409,
+    "self_approval": 409,
+    "unbound_submission_for_connected_visit": 409,
+    "replay_as_unbound_submission": 409,
+    "stale_distribution_after_edit": 409
+  }
+}

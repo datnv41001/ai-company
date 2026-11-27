@@ -1,0 +1,91 @@
+{
+  "derivation": "Actual buyer-visible copy projected from the immutable worker and approved documents in this same run.",
+  "run_id": "f047f35c-5c5c-4697-95a6-1a622d715b41",
+  "source_digest": null,
+  "raw_revision": 1,
+  "approved_revision": 2,
+  "raw": {
+    "hook": "Cách dùng nào phù hợp với công việc?",
+    "cta": "Yêu cầu báo giá",
+    "vtt": "WEBVTT\n\n1\n00:00:00.000 --> 00:00:06.000\nCách dùng nào phù hợp với công việc?\n\n2\n00:00:06.000 --> 00:00:13.000\nVách ngăn có thể tháo rời. Áp dụng cho\nmẫu tiêu chuẩn.\n\n3\n00:00:13.000 --> 00:00:21.000\nGiá tham khảo: 380.000 VND / 1 hộp, đã\ngồm thuế. Đơn tối thiểu: 5 hộp.\n\n4\n00:00:21.000 --> 00:00:27.000\nXác nhận số lượng trước khi đặt.\n\n5\n00:00:27.000 --> 00:00:32.000\nYêu cầu báo giá\n",
+    "shots": [
+      {
+        "start_s": 0,
+        "end_s": 6,
+        "purpose": "hook",
+        "voice": "Cách dùng nào phù hợp với công việc?",
+        "caption": "Cách dùng nào phù hợp với công việc?"
+      },
+      {
+        "start_s": 6,
+        "end_s": 13,
+        "purpose": "proof",
+        "voice": "Vách ngăn có thể tháo rời. Áp dụng cho mẫu tiêu chuẩn.",
+        "caption": "Vách ngăn có thể tháo rời. Áp dụng cho\nmẫu tiêu chuẩn."
+      },
+      {
+        "start_s": 13,
+        "end_s": 21,
+        "purpose": "terms",
+        "voice": "Giá tham khảo: 380.000 VND / 1 hộp, đã gồm thuế. Đơn tối thiểu: 5 hộp.",
+        "caption": "Giá tham khảo: 380.000 VND / 1 hộp, đã\ngồm thuế. Đơn tối thiểu: 5 hộp."
+      },
+      {
+        "start_s": 21,
+        "end_s": 27,
+        "purpose": "conditions",
+        "voice": "Xác nhận số lượng trước khi đặt.",
+        "caption": "Xác nhận số lượng trước khi đặt."
+      },
+      {
+        "start_s": 27,
+        "end_s": 32,
+        "purpose": "action",
+        "voice": "Yêu cầu báo giá",
+        "caption": "Yêu cầu báo giá"
+      }
+    ]
+  },
+  "approved": {
+    "hook": "Tổ trưởng lắp ráp điện tử cần biết gì?",
+    "cta": "Yêu cầu báo giá",
+    "vtt": "WEBVTT\n\n1\n00:00:00.000 --> 00:00:06.000\nTổ trưởng lắp ráp điện tử cần biết gì?\n\n2\n00:00:06.000 --> 00:00:13.000\nVách ngăn có thể tháo rời. Áp dụng cho\nmẫu tiêu chuẩn.\n\n3\n00:00:13.000 --> 00:00:21.000\nGiá tham khảo: 380.000 VND / 1 hộp, đã\ngồm thuế. Đơn tối thiểu: 5 hộp.\n\n4\n00:00:21.000 --> 00:00:27.000\nXác nhận số lượng trước khi đặt.\n\n5\n00:00:27.000 --> 00:00:32.000\nYêu cầu báo giá\n",
+    "shots": [
+      {
+        "start_s": 0,
+        "end_s": 6,
+        "purpose": "hook",
+        "voice": "Tổ trưởng lắp ráp điện tử cần biết gì?",
+        "caption": "Tổ trưởng lắp ráp điện tử cần biết gì?"
+      },
+      {
+        "start_s": 6,
+        "end_s": 13,
+        "purpose": "proof",
+        "voice": "Vách ngăn có thể tháo rời. Áp dụng cho mẫu tiêu chuẩn.",
+        "caption": "Vách ngăn có thể tháo rời. Áp dụng cho\nmẫu tiêu chuẩn."
+      },
+      {
+        "start_s": 13,
+        "end_s": 21,
+        "purpose": "terms",
+        "voice": "Giá tham khảo: 380.000 VND / 1 hộp, đã gồm thuế. Đơn tối thiểu: 5 hộp.",
+        "caption": "Giá tham khảo: 380.000 VND / 1 hộp, đã\ngồm thuế. Đơn tối thiểu: 5 hộp."
+      },
+      {
+        "start_s": 21,
+        "end_s": 27,
+        "purpose": "conditions",
+        "voice": "Xác nhận số lượng trước khi đặt.",
+        "caption": "Xác nhận số lượng trước khi đặt."
+      },
+      {
+        "start_s": 27,
+        "end_s": 32,
+        "purpose": "action",
+        "voice": "Yêu cầu báo giá",
+        "caption": "Yêu cầu báo giá"
+      }
+    ]
+  }
+}

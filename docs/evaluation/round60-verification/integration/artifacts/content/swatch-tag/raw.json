@@ -1,0 +1,175 @@
+{
+  "audience": "Người phụ trách nhà in",
+  "brand": "Mép Giấy",
+  "brand_direction": "Liên kết mỗi cảnh với dữ kiện đã duyệt; dùng câu ngắn.",
+  "brief_fulfillment": {
+    "fact_handles": [
+      "F1",
+      "F2"
+    ],
+    "manifest": {
+      "digest": "7485e125d0163693b4d607a707d9b0c8548314a340cb18ed6bf584e76a8ca34d",
+      "id": "dd544c90-8ca5-4fff-8ff2-9aef18b41ae2"
+    },
+    "ready_for_qa": true,
+    "rows": [
+      {
+        "evidence": "signed objective, supported purpose, current action and requested preparation",
+        "field": "purpose",
+        "requested": "Giúp người mua đối chiếu điều kiện báo giá Thẻ so màu Mép Giấy",
+        "status": "met"
+      },
+      {
+        "evidence": "current opening against approved style alternatives",
+        "field": "editorial_style",
+        "requested": "formal",
+        "status": "met"
+      },
+      {
+        "evidence": "shots[].visual; rights",
+        "field": "requirements[0]",
+        "requested": "Soạn storyboard có hình minh họa.",
+        "status": "met"
+      },
+      {
+        "evidence": "approved terms before action",
+        "field": "requirements[1]",
+        "requested": "Giải thích điều kiện báo giá trước lời mời hành động.",
+        "status": "met"
+      },
+      {
+        "evidence": "shots[].voice; WebVTT",
+        "field": "acceptance_criteria[0]",
+        "requested": "Có phụ đề tiếng Việt khớp lời thoại.",
+        "status": "met"
+      },
+      {
+        "evidence": "source_refs.declarations; terms or recorded missing price",
+        "field": "acceptance_criteria[1]",
+        "requested": "Đối chiếu điều kiện thương mại theo đúng nguồn.",
+        "status": "met"
+      },
+      {
+        "evidence": "Vietnamese vertical-social script and captions, 9:16",
+        "field": "channel",
+        "requested": "vertical-social",
+        "status": "met"
+      }
+    ],
+    "version": "amc.storyboard-fulfillment/1"
+  },
+  "buyer_action": "rfq",
+  "channel": "vertical-social",
+  "concept": "product_demonstration",
+  "content_handoff_digest": "f0da91e2a89f5f4453a1513bf5d3ec3565d3b06b4e15169c4a28c305a3781bb5",
+  "cta": "Yêu cầu báo giá",
+  "duration_seconds": 32,
+  "editorial": {
+    "note": "Đối chiếu giá theo nguồn đã ghim.",
+    "price_source_ids": [
+      "F1"
+    ],
+    "price_status": "approved"
+  },
+  "format": "9:16",
+  "hook": "Quý vị cần báo giá?",
+  "hook_variant": "direct",
+  "method_ref": {
+    "digest": "db4558733a1d4924ee5e5aa2b61f82f918973bc4551514637054645af1118819",
+    "path": "catalog/video-storyboard-sop-v1.json",
+    "revision": "wf08-production-sop/1"
+  },
+  "product": "Thẻ so màu Mép Giấy",
+  "rights": "synthetic_illustration_only",
+  "shots": [
+    {
+      "caption": "Quý vị cần báo giá?",
+      "end_s": 6,
+      "purpose": "hook",
+      "source_ids": [],
+      "start_s": 0,
+      "visual": "Đặt thẻ điều kiện sau minh họa và trước lời mời báo giá.",
+      "visual_mode": "mechanism",
+      "voice": "Quý vị cần báo giá?"
+    },
+    {
+      "caption": "Thẻ có ô ghi mã màu. Áp dụng cho bản\ngiấy mẫu.",
+      "end_s": 13,
+      "purpose": "proof",
+      "source_ids": [
+        "F2"
+      ],
+      "start_s": 6,
+      "visual": "Tách thao tác thành hai trạng thái để người xem đối chiếu. Ghi đúng phạm vi của F2.",
+      "visual_mode": "mechanism",
+      "voice": "Thẻ có ô ghi mã màu. Áp dụng cho bản giấy mẫu."
+    },
+    {
+      "caption": "Giá tham khảo: 380.000 VND / 1 hộp, đã\ngồm thuế. Đơn tối thiểu: 1 hộp.",
+      "end_s": 21,
+      "purpose": "terms",
+      "source_ids": [
+        "F1"
+      ],
+      "start_s": 13,
+      "visual": "Tách số tiền, đơn vị tính thuế và mức đặt tối thiểu.",
+      "visual_mode": "offer",
+      "voice": "Giá tham khảo: 380.000 VND / 1 hộp, đã gồm thuế. Đơn tối thiểu: 1 hộp."
+    },
+    {
+      "caption": "Xác nhận số lượng trước khi đặt.",
+      "end_s": 27,
+      "purpose": "conditions",
+      "source_ids": [
+        "F1"
+      ],
+      "start_s": 21,
+      "visual": "Giữ nguyên điều kiện trên thẻ chữ.",
+      "visual_mode": "document",
+      "voice": "Xác nhận số lượng trước khi đặt."
+    },
+    {
+      "caption": "Yêu cầu báo giá",
+      "end_s": 32,
+      "purpose": "action",
+      "source_ids": [],
+      "start_s": 27,
+      "visual": "Hiện nút gửi yêu cầu; không vẽ dấu đã xác nhận.",
+      "visual_mode": "request",
+      "voice": "Yêu cầu báo giá"
+    }
+  ],
+  "source_refs": {
+    "declarations": {
+      "F1": {
+        "category": "price",
+        "conditions": [
+          "Xác nhận số lượng trước khi đặt."
+        ],
+        "qualifiers": [
+          "Xác nhận số lượng trước khi đặt."
+        ],
+        "wording": "VND 380000 / 1 box (tax included)"
+      },
+      "F2": {
+        "category": "description",
+        "conditions": [],
+        "qualifiers": [
+          "Áp dụng cho bản giấy mẫu."
+        ],
+        "wording": "Thẻ có ô ghi mã màu"
+      }
+    },
+    "facts": [
+      "F1",
+      "F2"
+    ],
+    "guidelines": "b44545db196285fb8c3b7ed25b603c0e333e8d9374725e561a5c3375be4bcf26",
+    "manifest": {
+      "digest": "7485e125d0163693b4d607a707d9b0c8548314a340cb18ed6bf584e76a8ca34d",
+      "id": "dd544c90-8ca5-4fff-8ff2-9aef18b41ae2"
+    }
+  },
+  "version": "amc.storyboard/2",
+  "vtt": "WEBVTT\n\n1\n00:00:00.000 --> 00:00:06.000\nQuý vị cần báo giá?\n\n2\n00:00:06.000 --> 00:00:13.000\nThẻ có ô ghi mã màu. Áp dụng cho bản\ngiấy mẫu.\n\n3\n00:00:13.000 --> 00:00:21.000\nGiá tham khảo: 380.000 VND / 1 hộp, đã\ngồm thuế. Đơn tối thiểu: 1 hộp.\n\n4\n00:00:21.000 --> 00:00:27.000\nXác nhận số lượng trước khi đặt.\n\n5\n00:00:27.000 --> 00:00:32.000\nYêu cầu báo giá\n"
+}

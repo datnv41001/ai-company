@@ -1,0 +1,43 @@
+{
+  "angle": "show_evidence",
+  "audience": "Tổ trưởng lắp ráp điện tử",
+  "audience_hypotheses": [
+    "Người phụ trách có thể cần chia vách theo công đoạn; phải phỏng vấn để xác minh."
+  ],
+  "channel": "vertical-social",
+  "channel_copy": {
+    "action": "Yêu cầu báo giá",
+    "declarations": [
+      {
+        "lines": [
+          "Vách ngăn có thể tháo rời",
+          "Áp dụng cho mẫu tiêu chuẩn."
+        ],
+        "source_id": "F1"
+      },
+      {
+        "lines": [
+          "Giá tham khảo: 380.000 VND / 1 hộp, đã gồm thuế.",
+          "Đơn tối thiểu: 5 hộp.",
+          "Áp dụng từ 5 hộp.",
+          "Số lượng đối chiếu: 5 hộp.",
+          "Xác nhận số lượng trước khi đặt."
+        ],
+        "source_id": "F2"
+      }
+    ],
+    "opening": "Cần kiểm tra điều gì?"
+  },
+  "editorial_style": "plain",
+  "manifest": {
+    "digest": "c62cf6159186def5434cf9f950dc86bd810631ba760f8d214248a545297a541b",
+    "id": "dd240d81-d4f8-420d-8b8c-c0036cb99ff7"
+  },
+  "message_source_id": "F1",
+  "method": "deterministic",
+  "production_direction": "Vẽ hai trạng thái minh họa; đặt dữ kiện đã duyệt ngay dưới hình.",
+  "purpose": "Nhận yêu cầu báo giá Khay chia linh kiện Khe Gọn",
+  "question_to_validate": "Người mua cần đối chiếu điều gì trước khi hỏi báo giá?",
+  "role": "ai-copywriter-content-strategist",
+  "version": "amc.content-storyboard-handoff/1"
+}

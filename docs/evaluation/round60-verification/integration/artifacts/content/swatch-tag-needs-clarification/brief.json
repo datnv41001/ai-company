@@ -1,0 +1,24 @@
+{
+  "purpose": "Nhận yêu cầu báo giá Thẻ so màu Mép Giấy",
+  "deliverable_type": "video_storyboard",
+  "audience": "Người phụ trách nhà in",
+  "product": "Thẻ so màu Mép Giấy",
+  "channel": "vertical-social",
+  "region": "HN",
+  "locale": "vi-VN",
+  "requirements": [
+    "Soạn storyboard có hình minh họa.",
+    "Thu âm lời thoại."
+  ],
+  "exclusions": [
+    "bền màu tuyệt đối"
+  ],
+  "acceptance_criteria": [
+    "Người xem sẽ nhớ thương hiệu."
+  ],
+  "buyer_action": "rfq",
+  "editorial_style": "plain",
+  "duration_seconds": 32,
+  "aspect_ratio": "9:16",
+  "rights": "synthetic_illustration_only"
+}

@@ -1,0 +1,52 @@
+{
+  "head": "555b968c85b09d52d50d2fd165ea9ff320e5afcd",
+  "test_file": "tests/test_storyboard_brief.py",
+  "test_blob_sha256": "21354b42a804265c915a1f29c24c302f1cf294d1dc48cab0212b3237cd39b7cf",
+  "assertions": [
+    "message = next(f for f in plan[\"channel_copy\"][\"declarations\"] if f[\"source_id\"] == plan[\"message_source_id\"])",
+    "assert message[\"lines\"][0] == case[\"wording\"]"
+  ],
+  "cases": [
+    {
+      "fixture": "index-tray",
+      "case": "reverse_declaration_order",
+      "observed": "accepted"
+    },
+    {
+      "fixture": "index-tray",
+      "case": "existing_wrong_id_with_correct_wording_still_elsewhere",
+      "observed": "rejected_AssertionError"
+    },
+    {
+      "fixture": "index-tray",
+      "case": "changed_selected_wording",
+      "observed": "rejected_AssertionError"
+    },
+    {
+      "fixture": "index-tray",
+      "case": "missing_source_id",
+      "observed": "rejected_StopIteration"
+    },
+    {
+      "fixture": "swatch-tag",
+      "case": "reverse_declaration_order",
+      "observed": "accepted"
+    },
+    {
+      "fixture": "swatch-tag",
+      "case": "existing_wrong_id_with_correct_wording_still_elsewhere",
+      "observed": "rejected_AssertionError"
+    },
+    {
+      "fixture": "swatch-tag",
+      "case": "changed_selected_wording",
+      "observed": "rejected_AssertionError"
+    },
+    {
+      "fixture": "swatch-tag",
+      "case": "missing_source_id",
+      "observed": "rejected_StopIteration"
+    }
+  ],
+  "scope": "Sensitivity checks on copies of native synthetic outputs. The full PostgreSQL tests separately compare wording with commissioned cases."
+}

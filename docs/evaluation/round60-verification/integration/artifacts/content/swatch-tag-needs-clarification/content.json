@@ -1,0 +1,43 @@
+{
+  "angle": "show_evidence",
+  "audience": "Người phụ trách nhà in",
+  "audience_hypotheses": [
+    "Cần phỏng vấn để biết người phụ trách đối chiếu mã màu ở bước nào."
+  ],
+  "channel": "vertical-social",
+  "channel_copy": {
+    "action": "Yêu cầu báo giá",
+    "declarations": [
+      {
+        "lines": [
+          "Giá tham khảo: 380.000 VND / 1 hộp, đã gồm thuế.",
+          "Đơn tối thiểu: 1 hộp.",
+          "Áp dụng từ 1 hộp.",
+          "Số lượng đối chiếu: 1 hộp.",
+          "Xác nhận số lượng trước khi đặt."
+        ],
+        "source_id": "F1"
+      },
+      {
+        "lines": [
+          "Thẻ có ô ghi mã màu",
+          "Áp dụng cho bản giấy mẫu."
+        ],
+        "source_id": "F2"
+      }
+    ],
+    "opening": "Cần kiểm tra điều gì?"
+  },
+  "editorial_style": "plain",
+  "manifest": {
+    "digest": "16f1ed3cd2d83c69107168c4c069f7e49b9a45e43014c1f8564be1167fe3e12c",
+    "id": "af793360-49fc-4c45-a962-251de62f4a13"
+  },
+  "message_source_id": "F2",
+  "method": "deterministic",
+  "production_direction": "Vẽ hai trạng thái minh họa; đặt dữ kiện đã duyệt ngay dưới hình.",
+  "purpose": "Nhận yêu cầu báo giá Thẻ so màu Mép Giấy",
+  "question_to_validate": "Người mua cần đối chiếu điều gì trước khi hỏi báo giá?",
+  "role": "ai-copywriter-content-strategist",
+  "version": "amc.content-storyboard-handoff/1"
+}

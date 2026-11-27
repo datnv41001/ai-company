@@ -1,0 +1,2 @@
+# Preserve receipt and media bytes across Git checkouts, including caption newlines.
+* -text

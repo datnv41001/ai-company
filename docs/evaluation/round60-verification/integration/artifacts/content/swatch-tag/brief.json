@@ -1,0 +1,25 @@
+{
+  "purpose": "Giúp người mua đối chiếu điều kiện báo giá Thẻ so màu Mép Giấy",
+  "deliverable_type": "video_storyboard",
+  "audience": "Người phụ trách nhà in",
+  "product": "Thẻ so màu Mép Giấy",
+  "channel": "vertical-social",
+  "region": "HN",
+  "locale": "vi-VN",
+  "requirements": [
+    "Soạn storyboard có hình minh họa.",
+    "Giải thích điều kiện báo giá trước lời mời hành động."
+  ],
+  "exclusions": [
+    "bền màu tuyệt đối"
+  ],
+  "acceptance_criteria": [
+    "Có phụ đề tiếng Việt khớp lời thoại.",
+    "Đối chiếu điều kiện thương mại theo đúng nguồn."
+  ],
+  "buyer_action": "rfq",
+  "editorial_style": "formal",
+  "duration_seconds": 32,
+  "aspect_ratio": "9:16",
+  "rights": "synthetic_illustration_only"
+}

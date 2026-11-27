@@ -1,0 +1,66 @@
+{
+  "run_id": "ef04b56d-7f2f-4c78-b2ea-32d0a904a692",
+  "workflow": "WF-08/video-storyboard@2",
+  "manifest": {
+    "digest": "312b9e2f03e867f96a8ff6ecd6724e5fd87facbfc3b428b060985fd6f9ee06d4",
+    "id": "43017e1f-aee8-445f-87d1-cef0f6eaeb92"
+  },
+  "handoff_digest": "498cfc6cf1b42d4bdd92d4f3d2153ae87e1ea3188fddad5d309d4e6bb6290d79",
+  "journal": [
+    {
+      "node_id": "director",
+      "plan_revision": 1,
+      "skill": "director",
+      "attempt": 1,
+      "provider": "deterministic",
+      "model": "local-storyboard/2",
+      "prompt": "marketing-workforce-2",
+      "started_at": "2026-11-27T01:38:10.189239+00:00",
+      "outcome": "ok",
+      "reserved_microusd": 0,
+      "input_tokens": 0,
+      "output_tokens": 0,
+      "estimated_microusd": 0,
+      "finished_at": "2026-11-27T01:38:10.328709+00:00"
+    },
+    {
+      "node_id": "n01",
+      "plan_revision": 1,
+      "skill": "content",
+      "attempt": 1,
+      "provider": "deterministic",
+      "model": "local-storyboard/2",
+      "prompt": "marketing-workforce-2",
+      "started_at": "2026-11-27T01:38:10.414686+00:00",
+      "outcome": "ok",
+      "reserved_microusd": 0,
+      "input_tokens": 0,
+      "output_tokens": 0,
+      "estimated_microusd": 0,
+      "finished_at": "2026-11-27T01:38:10.519652+00:00"
+    },
+    {
+      "node_id": "n02",
+      "plan_revision": 1,
+      "skill": "storyboard",
+      "attempt": 1,
+      "provider": "deterministic",
+      "model": "local-storyboard/2",
+      "prompt": "marketing-workforce-2",
+      "started_at": "2026-11-27T01:38:10.599837+00:00",
+      "outcome": "ok",
+      "reserved_microusd": 0,
+      "input_tokens": 0,
+      "output_tokens": 0,
+      "estimated_microusd": 0,
+      "finished_at": "2026-11-27T01:38:10.699808+00:00"
+    }
+  ],
+  "document_id": "69c6e60a-2111-4913-8fdd-fecef9017b2c",
+  "revision": 1,
+  "digest": "dfc0dbc19b67e0f05dc36639b322dc87e834aaed854cebffea51c9392fd7d106",
+  "qa_status": 409,
+  "reviewer_id": "c4d6f612-dd23-46a2-ac10-0151978f0a34",
+  "review_decision": "blocked",
+  "reviewed_body": null
+}

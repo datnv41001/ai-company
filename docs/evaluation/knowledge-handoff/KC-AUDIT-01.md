@@ -54,6 +54,14 @@ Chưa có quyết định mới cho paid inference, benchmark, thay stack, quy�
 
 ## Tái lập và rollback
 
+<a id="directive-provenance"></a>
+
+### Nguồn MASTER DIRECTIVE · bổ sung sau Independent Review
+
+Ngày 27/11/2026, Independent Reviewer xác nhận Product Owner đã trực tiếp ban hành MASTER DIRECTIVE trong hội thoại. Codex nhận xác nhận qua chỉ thị AMC-KC-AUDIT-01-CLOSURE, SHA-256 `a9802092201e979e737fcf4c7def4676c23e84053f9b236ab4fde795f3fe6212`. Đây là nguồn cho chín chủ đề được giao và năm verdict đã ghi tại [AGENTS](../../../AGENTS.md) và [mẫu PR](../../../.github/pull_request_template.md). Ma trận trách nhiệm, lựa chọn nơi lưu và cách ánh xạ roadmap là diễn giải phục vụ bàn giao của Reviewer hoặc Codex. Codex chưa tiếp cận bản gốc hội thoại hay văn bản ký riêng.
+
+Reviewer ghi verdict **NOT_VERIFIABLE** cho lượt audit local do không truy xuất được commit từ GitHub. Khi review lại, đối chiếu [manifest](KC-AUDIT-01-MANIFEST.md). Verdict cho phiên AI mới vẫn cần biên nhận độc lập. R64-02 còn OPEN. Nguyên nhân timeout Storyboard ở lần chạy API integration đầu của #64 vẫn chưa xác định; đã có lần chạy lại thành công trên cùng tree. [Bằng chứng lần đầu và lần chạy lại](https://github.com/datnv41001/ai-company/blob/f4f0d990e7841e52173b1f733f2f6649db6ad1c5/docs/evaluation/round64-closure-proof/START-HERE.md)
+
 [Biên nhận checkout sạch, smoke và giới hạn phép thử độc lập](KC-AUDIT-01-DRILL.md). Verdict cho tiêu chí AI mới là **NOT_VERIFIABLE**; audit dừng tại Independent Review.
 
 1. Ghi `git status --short --branch`, `git rev-parse HEAD` và `git rev-parse "HEAD^{tree}"`. Đối chiếu main và head trong biên nhận bằng `gh pr view 64 --json state,isDraft,headRefOid,baseRefOid` và `gh api repos/datnv41001/ai-company/git/ref/heads/main`.

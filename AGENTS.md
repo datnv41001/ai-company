@@ -2,6 +2,8 @@
 
 ## Mandate and decision rights
 
+On 27 November 2026 the Independent Reviewer relayed the Product Owner's MASTER DIRECTIVE. Its nine subjects are the product objective, architect and reviewer responsibilities, context recovery, research, architecture principles, review, task generation, knowledge continuity and the immediate audit. The owner specified the five review outcomes in the [PR template](.github/pull_request_template.md). The matrix below is the operational interpretation prepared for the repository. The [audit provenance](docs/evaluation/knowledge-handoff/KC-AUDIT-01.md#directive-provenance) records what was attested and how it was received.
+
 The Product Owner confirms the full V1 charter covering 49 modules, 37 logical roles and 24 parent workflows. Agency and In-house use the same product. The following responsibilities summarize the owner's AMC-KC-AUDIT-01 mandate. They describe who prepares evidence and who may decide.
 
 | Actor | Work and decision boundary |

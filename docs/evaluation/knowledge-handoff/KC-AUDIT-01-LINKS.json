@@ -1,0 +1,29 @@
+{
+  "base": "053410d161b15285a1ef264f853d4920a3d559e1",
+  "commit": "90737b30c1895a0ddfbec9ba1ccdf333b4905b12",
+  "tree": "8d5ec4f6e20451a0cec1d78c6f4f3707ed7bc8bc",
+  "diff": [
+    ".github/pull_request_template.md",
+    "AGENTS.md",
+    "HANDOFF.md",
+    "docs/IMPLEMENTATION_STATUS.md",
+    "docs/KNOWLEDGE_MAP.md",
+    "docs/PRODUCT_SPEC_V1.md",
+    "docs/SECURITY_AND_GA_BLOCKERS.md",
+    "docs/evaluation/knowledge-handoff/KC-AUDIT-01-DRILL.md",
+    "docs/evaluation/knowledge-handoff/KC-AUDIT-01-REFS.json",
+    "docs/evaluation/knowledge-handoff/KC-AUDIT-01.md"
+  ],
+  "canonical_local_references": 424,
+  "broken_preexisting": [],
+  "new_broken_links": [],
+  "catalog": [
+    49,
+    37,
+    24
+  ],
+  "roadmap_phases": 13,
+  "base_nonblank_lines_preserved": true,
+  "changed_text_recognizable_credentials": 0,
+  "zip_sha256": "82a1c5c452b7573bb37e024a1a0792d896f163f2eb934e3150dca8da2de4d292"
+}

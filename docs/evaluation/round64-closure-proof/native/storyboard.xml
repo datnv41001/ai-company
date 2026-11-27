@@ -1,0 +1,2 @@
+<?xml version='1.0' encoding='utf-8'?>
+<testsuites name="pytest tests"><testsuite name="pytest" errors="0" failures="0" skipped="0" tests="1" time="20.158" timestamp="2026-11-27T15:57:33.621164+07:00"><testcase classname="tests.browser_storyboard_workforce" name="test_staff_read_checked_content_handoff" time="19.664" /></testsuite></testsuites>

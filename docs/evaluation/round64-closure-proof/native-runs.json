@@ -1,0 +1,76 @@
+{
+  "sales-base.xml": {
+    "original_sha256": "7acc982f0eaba7598c761885a938362db56908328076531488a3b6ec351e98ca",
+    "cases": 1,
+    "passed": 1,
+    "skipped": 0,
+    "nonpassing": []
+  },
+  "sales-old.xml": {
+    "original_sha256": "c0a40949890c1accfd3c33915accdb7797b81705f95c211bf46c26cb0b8a6bab",
+    "cases": 1,
+    "passed": 1,
+    "skipped": 0,
+    "nonpassing": []
+  },
+  "sales-consent-base.xml": {
+    "original_sha256": "277fed085f7f4828c59d26244ec57aa6fe732647e33bb9f6d9b181a2fcf71d4f",
+    "cases": 1,
+    "passed": 1,
+    "skipped": 0,
+    "nonpassing": []
+  },
+  "sales-consent-old.xml": {
+    "original_sha256": "dc7ff05b6d2f7c95643d8d75de5302da8016dd3b11e396eb9aab79f45c881cc0",
+    "cases": 1,
+    "passed": 1,
+    "skipped": 0,
+    "nonpassing": []
+  },
+  "checked.xml": {
+    "original_sha256": "e999355805654c024461436424d81fb4d8d4cdb24116f7f12f91137de014b66a",
+    "cases": 48,
+    "passed": 48,
+    "skipped": 0,
+    "nonpassing": []
+  },
+  "checked-browser.xml": {
+    "original_sha256": "383096017a7b18d608491c84e53e95f28799490171937ca8b0d7f803001dc49c",
+    "cases": 1,
+    "passed": 1,
+    "skipped": 0,
+    "nonpassing": []
+  },
+  "full.xml": {
+    "original_sha256": "bd25bb490d52c97b1baf2ce698ec8d81ac54b57249250d94c709c4dedb05c3e6",
+    "cases": 769,
+    "passed": 767,
+    "skipped": 2,
+    "nonpassing": []
+  },
+  "storyboard.xml": {
+    "original_sha256": "5e1c075a2eaba628d05686f0769bdeb66885f4e90c7dd54607eb864a298f140e",
+    "cases": 1,
+    "passed": 1,
+    "skipped": 0,
+    "nonpassing": []
+  },
+  "red/reviewed-red.junit.xml": {
+    "original_sha256": "28b45101619d2dbb15f2e6ecf53e7029298bc84d4d304a8ec4530ca013dd4edf",
+    "cases": 1,
+    "passed": 0,
+    "skipped": 0,
+    "nonpassing": [
+      "test_reviewed_recipient_can_recover_the_original_commission"
+    ]
+  },
+  "ui/red-junit.xml": {
+    "original_sha256": "1ca1ebaf6cb889e5b3253c7a28af4e92742eb8bebb922a831f19e3bd59ca01bc",
+    "cases": 1,
+    "passed": 0,
+    "skipped": 0,
+    "nonpassing": [
+      "test_content_handoff_in_staff_studio"
+    ]
+  }
+}

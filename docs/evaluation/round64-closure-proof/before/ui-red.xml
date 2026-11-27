@@ -1,0 +1,2 @@
+<?xml version='1.0' encoding='utf-8'?>
+<testsuites name="pytest tests"><testsuite name="pytest" errors="0" failures="1" skipped="0" tests="1" time="35.741" timestamp="2026-11-27T15:25:34.276757+07:00"><testcase classname="outputs.round64-closure.ui.test_reviewed_recipient_red" name="test_content_handoff_in_staff_studio" time="33.313"><failure>See the synthetic readback and diagnostic report for this case.</failure></testcase></testsuite></testsuites>

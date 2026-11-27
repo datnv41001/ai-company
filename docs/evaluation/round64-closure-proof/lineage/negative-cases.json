@@ -1,0 +1,122 @@
+{
+  "unsupported passage with valid ID": {
+    "revision": 2,
+    "receipt": "7f750b77-1ce8-4ae4-b3a7-f88f3812c564",
+    "reasons": [
+      "observation_unverified"
+    ],
+    "next_owner": "Strategy editor and knowledge owner"
+  },
+  "real passage from unrelated research": {
+    "revision": 3,
+    "receipt": "e1c568cd-408b-48e6-8a23-2f87f3014290",
+    "reasons": [
+      "observation_unverified"
+    ],
+    "next_owner": "Strategy editor and knowledge owner"
+  },
+  "substitution of another stakeholder": {
+    "revision": 4,
+    "receipt": "e3891ee6-308d-410a-b92a-fe11313f7994",
+    "reasons": [
+      "buyer_scope_mismatch"
+    ],
+    "next_owner": "Strategy editor and knowledge owner"
+  },
+  "conflicting source": {
+    "revision": 5,
+    "receipt": "22a1ea1a-fa35-415b-861a-9958aedea6ae",
+    "reasons": [
+      "contradictory_evidence"
+    ],
+    "next_owner": "Strategy editor and knowledge owner"
+  },
+  "missing evidence": {
+    "revision": 6,
+    "receipt": "43ae38e2-ad62-4121-a14d-e55a18bc0cb4",
+    "reasons": [
+      "missing_evidence",
+      "missing_observation"
+    ],
+    "next_owner": "Strategy editor and knowledge owner"
+  },
+  "request clarification": {
+    "revision": 7,
+    "receipt": "9cef35a8-2599-4fb7-8175-72c842e11e6a",
+    "reasons": [
+      "clarify_commission"
+    ],
+    "next_owner": "Strategy editor and knowledge owner"
+  },
+  "incorrect placement": {
+    "revision": 8,
+    "receipt": "dec8fb9c-4378-49a2-a73b-55ad7783b114",
+    "reasons": [
+      "asset_placement_mismatch"
+    ],
+    "next_owner": "Strategy editor and knowledge owner"
+  },
+  "product assertions need Strategy adoption": {
+    "revision": 9,
+    "receipt": "8c7115ce-b68f-44df-8a4f-40da066fc625",
+    "reasons": [
+      "source_purpose_mismatch"
+    ],
+    "next_owner": "Strategy editor and knowledge owner"
+  },
+  "missing permission to transfer": {
+    "revision": 10,
+    "receipt": "7a24fed0-934f-483e-b263-969b4da1297d",
+    "reasons": [
+      "brief_release_required"
+    ],
+    "next_owner": "Strategy editor and knowledge owner"
+  },
+  "different signed brief": {
+    "revision": 11,
+    "receipt": "14eb90e8-7416-4f1d-90e3-ec528923c24a",
+    "reasons": [
+      "brief_release_required"
+    ],
+    "next_owner": "Strategy editor and knowledge owner"
+  },
+  "reviewer withholds private material": {
+    "revision": 12,
+    "receipt": "ca91037d-9a83-4ced-a87e-9f810f9d7380",
+    "reasons": [
+      "brief_disclosure_blocked"
+    ],
+    "next_owner": "Strategy editor and knowledge owner"
+  },
+  "reviewer flags editorial conflict": {
+    "revision": 13,
+    "receipt": "861242d5-8532-43de-b38e-1d9451d3f274",
+    "reasons": [
+      "brief_conflict"
+    ],
+    "next_owner": "Strategy editor and knowledge owner"
+  },
+  "changed buying situation conflicts with approved brief": {
+    "revision": 14,
+    "receipt": "03c5fac8-31c0-4b5b-9ca3-a2b810b23701",
+    "reasons": [
+      "brief_conflict"
+    ],
+    "next_owner": "Strategy editor and knowledge owner"
+  },
+  "editorial instruction promotes excluded feature": {
+    "revision": 15,
+    "receipt": "6b217e8c-893f-480f-90f9-6ad91e5d5fd0",
+    "reasons": [
+      "brief_conflict"
+    ],
+    "next_owner": "Strategy editor and knowledge owner"
+  },
+  "source withdrawn after final QA": {
+    "before": "4f6dc852-3474-4208-8bc2-edab51773fba",
+    "after": [
+      "current_authority_required"
+    ],
+    "retry": 409
+  }
+}

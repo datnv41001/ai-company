@@ -1,0 +1,78 @@
+{
+  "before_create": {
+    "process_before": "2026-11-27T08:42:03.022195+00:00",
+    "db": "2026-11-27T15:42:03.024310+07:00",
+    "process_after": "2026-11-27T08:42:03.024320+00:00",
+    "db_minus_process_interval_ms": [
+      -0.01,
+      2.115
+    ]
+  },
+  "intake": {
+    "id": "fe4424dfdb92836d22706f2ecc7dcd783a3145db279580fd818457a47758947b",
+    "plan_id": "58426488-3f03-47c7-8eb6-2c4be05a50e7",
+    "revision": 1,
+    "state": "received",
+    "missing": [
+      "commercial_moq"
+    ],
+    "quantity": "3",
+    "unit": "box",
+    "minimum_order_quantities": [
+      "5"
+    ],
+    "contact_purpose": "quote_request",
+    "last_event_at": "2026-11-27T08:42:03.692371+00:00",
+    "consent": {
+      "purpose": "quote_request",
+      "granted": true
+    }
+  },
+  "created": {
+    "id": "577b31c7-0da1-4031-aabe-945e6f9722c7",
+    "entity_id": "fe4424dfdb92836d22706f2ecc7dcd783a3145db279580fd818457a47758947b",
+    "sequence": 31,
+    "plan_id": "58426488-3f03-47c7-8eb6-2c4be05a50e7"
+  },
+  "after_create_process": "2026-11-27T08:42:03.703352+00:00",
+  "before_refer": {
+    "process_before": "2026-11-27T08:42:03.703352+00:00",
+    "db": "2026-11-27T15:42:03.704901+07:00",
+    "process_after": "2026-11-27T08:42:03.703352+00:00",
+    "db_minus_process_interval_ms": [
+      1.549,
+      1.549
+    ]
+  },
+  "clock_control": {
+    "step": "refer",
+    "occurred_at": "2026-11-27T08:42:03.692370+00:00",
+    "invalid_state": false,
+    "backdated": true,
+    "occurred_minus_last_ms": -0.001,
+    "status": 409,
+    "detail": "Invalid or out-of-order Sales transition"
+  },
+  "state_control": {
+    "step": "assign",
+    "occurred_at": "2026-11-27T08:42:03.692371+00:00",
+    "invalid_state": true,
+    "backdated": false,
+    "occurred_minus_last_ms": 0.0,
+    "status": 409,
+    "detail": "Invalid or out-of-order Sales transition"
+  },
+  "actual": {
+    "step": "refer",
+    "occurred_at": "2026-11-27T08:42:03.703352+00:00",
+    "invalid_state": false,
+    "backdated": false,
+    "occurred_minus_last_ms": 10.981,
+    "status": 200,
+    "detail": null,
+    "receipt": "f0765689-b579-4b9a-bbdf-91e16dfcfb56",
+    "sequence": 32,
+    "revision": 2,
+    "expected_revision": 1
+  }
+}

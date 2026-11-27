@@ -1,0 +1,10 @@
+{
+  "case": "Current private source locator copied into a signed requirement",
+  "signer_reasons": [
+    "brief_disclosure_blocked"
+  ],
+  "recipient_reasons": [
+    "brief_disclosure_blocked"
+  ],
+  "released": false
+}

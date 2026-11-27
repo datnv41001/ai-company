@@ -1,0 +1,176 @@
+{
+  "scope": {
+    "tenant_id": "0b1e7354-9d62-4cc6-a8d8-5f909a26a35f",
+    "client_id": "a4aa7480-b949-49d9-9fbd-01c7a7dc66d4",
+    "brand_id": "832e86f0-5bb1-4461-ac04-18f888458f89",
+    "campaign_id": "930f0285-5a26-43f3-ac4c-3442570dcb1c"
+  },
+  "signed_placement": "owned counter card",
+  "buyer": "Purchasing directors",
+  "observed": "A purchasing director compared the specification cards before ordering the two-compartment tray.",
+  "wrong": [
+    "asset_placement_mismatch"
+  ],
+  "counter_order": {
+    "recipient": "Content lead",
+    "asset_type": "counter_terms_card",
+    "asset": "Counter information card",
+    "purpose": "Clarify product information at the counter",
+    "placement": "owned counter card",
+    "option": "explain_terms",
+    "objective": "Help purchasing directors compare the tray specifications before ordering.",
+    "audience": "Purchasing directors",
+    "buyer_persona": "Purchasing directors",
+    "brief": {
+      "purpose": "Help purchasing directors compare the tray specifications before ordering.",
+      "buyer_action": "catalogue_download",
+      "editorial_style": "concise",
+      "requirements": [
+        "Prepare a counter card for comparing tray specifications before ordering."
+      ],
+      "exclusions": [
+        "automatic worker tracking"
+      ],
+      "acceptance_criteria": [
+        "Show the approved tray specifications and the catalogue action on the card."
+      ],
+      "objective": "Help purchasing directors compare the tray specifications before ordering.",
+      "audience": "Purchasing directors",
+      "cta": "Download the catalogue"
+    },
+    "guidance": {
+      "situation": "During a purchasing review before ordering.",
+      "direction": "Clarify the information needed before ordering using only the approved wording.",
+      "sample_scope": "The selected source passage informs this purchasing review only. Wider demand or performance remains unverified."
+    },
+    "measurement": {
+      "status": "planned_only",
+      "execution_authorized": false
+    },
+    "message": "The passive tray has two separate compartments.",
+    "sources": {
+      "observation": {
+        "handle": "F2",
+        "claim_revision": "464b3b31-4f83-45ba-9a6a-f661662ce24c",
+        "source_revision": "b2c421b6-7943-467c-a883-c0da56127b60",
+        "source_digest": "9a2b92d66c4522a833b62cbbfac87434d23dc06573aee7ef1638518617cd2ff4",
+        "document": "PRIVATE_SYNTHETIC_DOCUMENT",
+        "locator": "private locator",
+        "statement": "A purchasing director compared the specification cards before ordering the two-compartment tray.",
+        "qualifiers": [],
+        "category": "description",
+        "price": null,
+        "applicability": null,
+        "quantity": null,
+        "placement": {
+          "locale": "en-US",
+          "market": "0e607813-489e-40ac-85a0-71fbb4fe3abe",
+          "region": "HN",
+          "channel": "owned counter card",
+          "product": "994e4ead-c16b-4625-b67b-8778a84e4f09",
+          "variant": null
+        },
+        "excerpt": "A purchasing director compared the specification cards before ordering the two-compartment tray.",
+        "publisher": "PRIVATE_SYNTHETIC_SUPPLIER",
+        "recorded_at": "2026-11-27T09:12:57.820235+00:00",
+        "effective_from": null,
+        "effective_until": "2099-01-01T00:00:00Z",
+        "research_spans": [
+          "89ca8243b2a20457e2c636ad4c9f016d236ccdb1ff01f19aa2778f36dc530d31"
+        ],
+        "positioning_spans": [],
+        "complete_wording": "A purchasing director compared the specification cards before ordering the two-compartment tray.",
+        "permitted_use": "internal strategy review within the pinned placement"
+      },
+      "product": {
+        "handle": "F1",
+        "claim_revision": "1569545a-7b03-45fa-bd07-e5d1928681e5",
+        "source_revision": "676ec274-917c-4a59-930c-ca1e41002289",
+        "source_digest": "a9114e88403b0d24325d8b68d77d2b1be38ab02996ae8cb96dd63d5c7be5675c",
+        "document": "PRIVATE_SYNTHETIC_DOCUMENT",
+        "locator": "private locator",
+        "statement": "The passive tray has two separate compartments.",
+        "qualifiers": [],
+        "category": "description",
+        "price": null,
+        "applicability": null,
+        "quantity": null,
+        "placement": {
+          "locale": "en-US",
+          "market": "0e607813-489e-40ac-85a0-71fbb4fe3abe",
+          "region": "HN",
+          "channel": "owned counter card",
+          "product": "994e4ead-c16b-4625-b67b-8778a84e4f09",
+          "variant": null
+        },
+        "excerpt": "The passive tray has two separate compartments.",
+        "publisher": "PRIVATE_SYNTHETIC_SUPPLIER",
+        "recorded_at": "2026-11-27T09:12:58.213350+00:00",
+        "effective_from": null,
+        "effective_until": "2099-01-01T00:00:00Z",
+        "research_spans": [],
+        "positioning_spans": [
+          "08dae7e6ce5a2d70e6c9f57a436bb80493774b75707732557a6c7d4798ae9020"
+        ],
+        "complete_wording": "The passive tray has two separate compartments.",
+        "permitted_use": "internal strategy review within the pinned placement"
+      }
+    },
+    "claim_limits": [
+      "Use the complete product declaration with its qualifiers.",
+      "Buyer interpretation is limited to the recorded situation."
+    ],
+    "approval": "Internal drafting only. A new asset requires its own independent QA and channel approval."
+  },
+  "signed_sample_limit": "One purchasing director observed at one counter during one order comparison.",
+  "readback": {
+    "recipient": "Content lead",
+    "asset_type": "counter_terms_card",
+    "asset": "Counter information card",
+    "purpose": "Clarify product information at the counter",
+    "placement": "owned counter card",
+    "option": "explain_terms",
+    "objective": "Help purchasing directors compare the tray specifications before ordering.",
+    "audience": "Purchasing directors",
+    "buyer_persona": "Purchasing directors",
+    "message": "The passive tray has two separate compartments.",
+    "claim_limits": [
+      "Use the complete product declaration with its qualifiers.",
+      "Buyer interpretation is limited to the recorded situation."
+    ],
+    "approval": "Internal drafting only. A new asset requires its own independent QA and channel approval.",
+    "brief": {
+      "cta": "Download the catalogue",
+      "purpose": "Help purchasing directors compare the tray specifications before ordering.",
+      "audience": "Purchasing directors",
+      "objective": "Help purchasing directors compare the tray specifications before ordering.",
+      "exclusions": [
+        "automatic worker tracking"
+      ],
+      "buyer_action": "catalogue_download",
+      "requirements": [
+        "Prepare a counter card for comparing tray specifications before ordering."
+      ],
+      "editorial_style": "concise",
+      "acceptance_criteria": [
+        "Show the approved tray specifications and the catalogue action on the card."
+      ]
+    },
+    "guidance": {
+      "direction": "Clarify the information needed before ordering using only the approved wording.",
+      "situation": "During a purchasing review before ordering.",
+      "sample_scope": "The selected source passage informs this purchasing review only. Wider demand or performance remains unverified."
+    },
+    "measurement": {
+      "status": "planned_only",
+      "execution_authorized": false
+    }
+  },
+  "recipient": {
+    "receipt_id": "3cb6c8d1-27f8-44e3-a635-783fc6e643f9",
+    "at": "2026-11-27T09:13:00.636654+00:00"
+  },
+  "qualification_withdrawn": [
+    "qualification_withdrawn"
+  ]
+}

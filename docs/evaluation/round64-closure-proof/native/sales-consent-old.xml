@@ -1,0 +1,2 @@
+<?xml version='1.0' encoding='utf-8'?>
+<testsuites name="pytest tests"><testsuite name="pytest" errors="0" failures="0" skipped="0" tests="1" time="56.063" timestamp="2026-11-27T15:41:10.480428+07:00"><testcase classname="tests.test_production_studios" name="test_restricted_production[False]" time="55.842" /></testsuite></testsuites>

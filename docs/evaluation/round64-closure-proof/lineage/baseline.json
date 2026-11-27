@@ -1,0 +1,56 @@
+{
+  "type": "Candidate rerun against the inherited final QA gate",
+  "worker": {
+    "segment": "Shift supervisors",
+    "buyer_problem": "Both sites requested individual worker tracking.",
+    "research_question": "What happened at the last shift handover?",
+    "evidence_needed": "Review a second site independently.",
+    "source_ids": [
+      "F1",
+      "F2"
+    ]
+  },
+  "original_groups": {
+    "research": {
+      "buyer_problem": "Both sites requested individual worker tracking.",
+      "research_question": "What happened at the last shift handover?",
+      "evidence": "One shift supervisor used the two-tone tray to separate outgoing batches.\nThe passive tray has two separate compartments.\nDuring another shift handover a supervisor asked to see the tray specifications before sorting outgoing batches.",
+      "hypothesis": "Hypothesis to test: clearer terms for Route Tray help Shift supervisors select a next step."
+    },
+    "strategy": {
+      "positioning": "Explain the tray layout for supervisors.",
+      "channel_choice": "Prepare a draft for the owned product page.",
+      "rationale": "Investigate batch separation at shift handover.",
+      "execution": "Prepare two presentations of Route Tray on web, keep terms fixed and measure the same action."
+    },
+    "measurement": {
+      "test_hypothesis": "Test whether a two-panel explanation is useful.",
+      "measurable_action": "Download the catalogue",
+      "measurement_method": "Review unique request identifiers at the next review."
+    }
+  },
+  "assertion": {
+    "id": "f698138fa2d79dd609bcd8798e672d89014fa7bec8c1a2e38e988d5c14e377e3",
+    "field": "studio.research.buyer_problem",
+    "start": 0,
+    "end": 48,
+    "text": "Both sites requested individual worker tracking.",
+    "claim_type": "unclassified",
+    "outcome": "unresolved",
+    "reason": "unsupported",
+    "handles": [],
+    "diagnostic": "unsupported_assertion",
+    "sources": []
+  },
+  "group_status": 409,
+  "final_qa": {
+    "detail": "Content evidence requires a correction or a qualified decision on unsupported claims"
+  },
+  "scope": {
+    "tenant_id": "b67d2703-c6e6-432c-86f7-a1ea3dfed2f9",
+    "client_id": "745e7628-3a4d-4f63-a4da-429f017af489",
+    "brand_id": "33a54cab-f940-4e23-93eb-2773aaf7ae45",
+    "campaign_id": "c0a5abb4-bc8e-439c-bf82-15f4c3d04191"
+  },
+  "run_id": "57a66fd9-1911-4986-982e-c3f264cf91e1"
+}

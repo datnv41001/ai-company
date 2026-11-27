@@ -1,0 +1,218 @@
+[
+  {
+    "checkout": "a0c43a15dbcec783a859c4c525fec2671206483c",
+    "workflow": "WF-03/research-strategy-draft@3",
+    "provider": "llama.cpp loopback",
+    "model_sha256": "74a4da8c9fdbcd15bd1f6d01d621410d31c6fc00986f5eb687824e7b93d7a9db",
+    "run_id": "00b5fa4b-6975-4b55-b583-051bd92c5858",
+    "first_pass_runtime": true,
+    "state": "awaiting_qa",
+    "input_tokens": 2488,
+    "output_tokens": 339,
+    "runtime_s": 18.929,
+    "provider_fee_usd": 0,
+    "unmetered_attempts": 0,
+    "source_artifact": "https://github.com/datnv41001/ai-company/actions/runs/45966696428/artifacts/15183651625",
+    "source_result_sha256": "9697f94746ae4924c139ddc7ddb8c8a99173798b9bb5696f9878e714391f130b",
+    "attempts": [
+      {
+        "schema": "c3_skills_director",
+        "request_sha256": "866d7508ca1595728cd37a699f35bbb52bb6feb2daa9bbf8f2e540406baf427f",
+        "input_tokens": 575,
+        "output_tokens": 64,
+        "raw_output": {
+          "primary_assignment": "Compare the approved facts with the buyer hypothesis.",
+          "secondary_assignment": "Design a bounded test of the positioning and define its metric."
+        }
+      },
+      {
+        "schema": "c3_skills_research",
+        "request_sha256": "66a1108b82f813dab5b275977135fd8ee9683afaba9ea17dffe77838ebf4e23a",
+        "input_tokens": 873,
+        "output_tokens": 106,
+        "raw_output": {
+          "segment": "Hà Nội",
+          "source_ids": [
+            "F1",
+            "F2"
+          ],
+          "buyer_problem": "Nhà thầu có thể ưu tiên tính nhanh số thùng và chi phí giao.",
+          "evidence_needed": "Nhà thầu có thể ưu tiên tính nhanh số thùng và chi phí giao.",
+          "research_question": "Nhà thầu có thể ưu tiên tính nhanh số thùng và chi phí giao?"
+        }
+      },
+      {
+        "schema": "c3_skills_strategy",
+        "request_sha256": "7b9a0f4d82d17b261b098618b59e1d20783d46291bc403e534a10232368e8174",
+        "input_tokens": 1040,
+        "output_tokens": 169,
+        "raw_output": {
+          "rationale": "Nhà thầu có thể ưu tiên tính nhanh số thùng và chi phí giao.",
+          "source_ids": [
+            "F1",
+            "F2"
+          ],
+          "positioning": "Tăng khách hàng yêu cầu báo giá gạch ốp lát tại Hà Nội",
+          "channel_choice": "trang yêu cầu báo giá",
+          "test_hypothesis": "Nhà thầu có thể ưu tiên tính nhanh số thùng và chi phí giao.",
+          "measurable_action": "yêu cầu báo giá hợp lệ có diện tích và quận trong 30 ngày",
+          "measurement_method": "yêu cầu báo giá hợp lệ có diện tích và quận trong 30 ngày"
+        }
+      }
+    ],
+    "scripted_edit_example": {
+      "kind": "scripted staff edit",
+      "field": [
+        "strategy",
+        "positioning"
+      ],
+      "before": "Tăng khách hàng yêu cầu báo giá gạch ốp lát tại Hà Nội",
+      "after": "Gạch lát nền GB-6060 nhám 60×60 cm tại Hà Nội. gửi diện tích cần báo giá."
+    },
+    "attribution": "Existing CI model smoke. The controlled PostgreSQL handoff lineage is a separate run."
+  },
+  {
+    "checkout": "a0c43a15dbcec783a859c4c525fec2671206483c",
+    "workflow": "WF-03/research-strategy-draft@3",
+    "provider": "llama.cpp loopback",
+    "model_sha256": "74a4da8c9fdbcd15bd1f6d01d621410d31c6fc00986f5eb687824e7b93d7a9db",
+    "run_id": "7b5d1a4f-7ac1-4cac-92e2-933fae9c92e7",
+    "first_pass_runtime": true,
+    "state": "awaiting_qa",
+    "input_tokens": 2481,
+    "output_tokens": 340,
+    "runtime_s": 26.538,
+    "provider_fee_usd": 0,
+    "unmetered_attempts": 0,
+    "source_artifact": "https://github.com/datnv41001/ai-company/actions/runs/45966706157/artifacts/15184171140",
+    "source_result_sha256": "5fa7eabb8dddb681530707110a9705926447dc6fc863d1c8c6842e66ec96a65f",
+    "attempts": [
+      {
+        "schema": "c3_skills_director",
+        "request_sha256": "866d7508ca1595728cd37a699f35bbb52bb6feb2daa9bbf8f2e540406baf427f",
+        "input_tokens": 575,
+        "output_tokens": 64,
+        "raw_output": {
+          "primary_assignment": "Compare the approved facts with the buyer hypothesis.",
+          "secondary_assignment": "Design a bounded test of the positioning and define its metric."
+        }
+      },
+      {
+        "schema": "c3_skills_research",
+        "request_sha256": "ccce8f72327ff3cd25c9a2e7a77af0342e602fd1a6a28917220acf301fba5d76",
+        "input_tokens": 873,
+        "output_tokens": 101,
+        "raw_output": {
+          "segment": "Hà Nội",
+          "source_ids": [
+            "F1",
+            "F2"
+          ],
+          "buyer_problem": "Nhà thầu có thể ưu tiên tính nhanh số thùng và chi phí giao.",
+          "evidence_needed": "Kiểm chứng nhu cầu với khách hàng trong thị trường đã chọn.",
+          "research_question": "Nhà thầu có thể ưu tiên tính nhanh số thùng và chi phí giao?"
+        }
+      },
+      {
+        "schema": "c3_skills_strategy",
+        "request_sha256": "a540ec31eca20a3fa00a4d887ea6a94c8cd6ba1a2aea86ffd0859c2a8c0e57bf",
+        "input_tokens": 1033,
+        "output_tokens": 175,
+        "raw_output": {
+          "rationale": "Nhà thầu có thể ưu tiên tính nhanh số thùng và chi phí giao.",
+          "source_ids": [
+            "F1",
+            "F2"
+          ],
+          "positioning": "Tăng khách hàng yêu cầu báo giá gạch ốp lát tại Hà Nội",
+          "channel_choice": "trang yêu cầu báo giá",
+          "test_hypothesis": "Nhà thầu có thể ưu tiên tính nhanh số thùng và chi phí giao.",
+          "measurable_action": "giúp người mua thực hiện đúng bước tiếp theo trong phạm vi đã duyệt.",
+          "measurement_method": "giúp người mua thực hiện đúng bước tiếp theo trong phạm vi đã duyệt."
+        }
+      }
+    ],
+    "scripted_edit_example": {
+      "kind": "scripted staff edit",
+      "field": [
+        "strategy",
+        "positioning"
+      ],
+      "before": "Tăng khách hàng yêu cầu báo giá gạch ốp lát tại Hà Nội",
+      "after": "Gạch lát nền GB-6060 nhám 60×60 cm tại Hà Nội. gửi diện tích cần báo giá."
+    },
+    "attribution": "Existing CI model smoke. The controlled PostgreSQL handoff lineage is a separate run."
+  },
+  {
+    "checkout": "80fa77de08afbe0b308fd56ddf3738fbf0b2938d",
+    "workflow": "WF-03/research-strategy-draft@3",
+    "provider": "llama.cpp loopback",
+    "model_sha256": "74a4da8c9fdbcd15bd1f6d01d621410d31c6fc00986f5eb687824e7b93d7a9db",
+    "run_id": "5e7aa8a0-f45b-4526-b53c-6a3da519e66a",
+    "first_pass_runtime": true,
+    "state": "awaiting_qa",
+    "input_tokens": 2488,
+    "output_tokens": 339,
+    "runtime_s": 14.631,
+    "provider_fee_usd": 0,
+    "unmetered_attempts": 0,
+    "source_artifact": "https://github.com/datnv41001/ai-company/actions/runs/45966706157/artifacts/15183087868",
+    "source_result_sha256": "1a90174ae4d56f993ae277888550cbb1902ae490b4f33d00de118a525857a5fa",
+    "attempts": [
+      {
+        "schema": "c3_skills_director",
+        "request_sha256": "866d7508ca1595728cd37a699f35bbb52bb6feb2daa9bbf8f2e540406baf427f",
+        "input_tokens": 575,
+        "output_tokens": 64,
+        "raw_output": {
+          "primary_assignment": "Compare the approved facts with the buyer hypothesis.",
+          "secondary_assignment": "Design a bounded test of the positioning and define its metric."
+        }
+      },
+      {
+        "schema": "c3_skills_research",
+        "request_sha256": "66a1108b82f813dab5b275977135fd8ee9683afaba9ea17dffe77838ebf4e23a",
+        "input_tokens": 873,
+        "output_tokens": 106,
+        "raw_output": {
+          "segment": "Hà Nội",
+          "source_ids": [
+            "F1",
+            "F2"
+          ],
+          "buyer_problem": "Nhà thầu có thể ưu tiên tính nhanh số thùng và chi phí giao.",
+          "evidence_needed": "Nhà thầu có thể ưu tiên tính nhanh số thùng và chi phí giao.",
+          "research_question": "Nhà thầu có thể ưu tiên tính nhanh số thùng và chi phí giao?"
+        }
+      },
+      {
+        "schema": "c3_skills_strategy",
+        "request_sha256": "7b9a0f4d82d17b261b098618b59e1d20783d46291bc403e534a10232368e8174",
+        "input_tokens": 1040,
+        "output_tokens": 169,
+        "raw_output": {
+          "rationale": "Nhà thầu có thể ưu tiên tính nhanh số thùng và chi phí giao.",
+          "source_ids": [
+            "F1",
+            "F2"
+          ],
+          "positioning": "Tăng khách hàng yêu cầu báo giá gạch ốp lát tại Hà Nội",
+          "channel_choice": "trang yêu cầu báo giá",
+          "test_hypothesis": "Nhà thầu có thể ưu tiên tính nhanh số thùng và chi phí giao.",
+          "measurable_action": "yêu cầu báo giá hợp lệ có diện tích và quận trong 30 ngày",
+          "measurement_method": "yêu cầu báo giá hợp lệ có diện tích và quận trong 30 ngày"
+        }
+      }
+    ],
+    "scripted_edit_example": {
+      "kind": "scripted staff edit",
+      "field": [
+        "strategy",
+        "positioning"
+      ],
+      "before": "Tăng khách hàng yêu cầu báo giá gạch ốp lát tại Hà Nội",
+      "after": "Gạch lát nền GB-6060 nhám 60×60 cm tại Hà Nội. gửi diện tích cần báo giá."
+    },
+    "attribution": "Existing CI model smoke. The controlled PostgreSQL handoff lineage is a separate run."
+  }
+]

@@ -1,0 +1,78 @@
+{
+  "head": "d79f76373af99585b6b8b720b2a60a93f882c48b",
+  "tree": "a19ba1ccdd4a7e85ffe12e004e62c64d61d0f59b",
+  "commission": {
+    "buyer_action": "catalogue_download",
+    "editorial_style": "concise",
+    "requirements": [
+      "Prepare a practical guide for one shift handover."
+    ],
+    "exclusions": [
+      "automatic worker tracking"
+    ],
+    "acceptance_criteria": [
+      "Tie the proposed asset to an observed task."
+    ]
+  },
+  "revision": 2,
+  "content_digest": "bfb2d1ed1d4fc8feef39557742075254ae4af1796054c3e12ffa963422bd0f01",
+  "signed_receipt": "cb172216-5299-4e0f-b357-73ef0a49075a",
+  "signed_buying_situation": "A supervisor checks outgoing batches at shift change.",
+  "signed_interpretation": "An annotated use guide could help at shift handover.",
+  "signer_order_without_restricted_sources": {
+    "recipient": "Content lead",
+    "asset_type": "web_use_guide",
+    "asset": "Product-page use guide",
+    "purpose": "Explain a use case on the product page",
+    "placement": "web",
+    "option": "explain_use",
+    "objective": "Choose a useful product guide for a shift handover.",
+    "audience": "Shift supervisors",
+    "buyer_persona": "Shift supervisors",
+    "message": "The passive tray has two separate compartments.",
+    "claim_limits": [
+      "One observed shift at one site. Use in other sites and buyer segments remains unverified.",
+      "Use the complete product declaration with its qualifiers.",
+      "Buyer interpretation is limited to the recorded situation."
+    ],
+    "approval": "Internal drafting only. A new asset requires its own independent QA and channel approval."
+  },
+  "recipient": {
+    "status": "draft_for_approval",
+    "decision": {
+      "receipt_id": "cb172216-5299-4e0f-b357-73ef0a49075a",
+      "at": "2026-11-27T08:25:37.911471+00:00"
+    },
+    "work_order": {
+      "asset": "Product-page use guide",
+      "option": "explain_use",
+      "message": "The passive tray has two separate compartments.",
+      "purpose": "Explain a use case on the product page",
+      "approval": "Internal drafting only. A new asset requires its own independent QA and channel approval.",
+      "audience": "Shift supervisors",
+      "objective": "Choose a useful product guide for a shift handover.",
+      "placement": "web",
+      "recipient": "Content lead",
+      "asset_type": "web_use_guide",
+      "claim_limits": [
+        "One observed shift at one site. Use in other sites and buyer segments remains unverified.",
+        "Use the complete product declaration with its qualifiers.",
+        "Buyer interpretation is limited to the recorded situation."
+      ],
+      "buyer_persona": "Shift supervisors"
+    }
+  },
+  "missing_commission_fields": {
+    "buyer_action": "catalogue_download",
+    "editorial_style": "concise",
+    "requirements": [
+      "Prepare a practical guide for one shift handover."
+    ],
+    "exclusions": [
+      "automatic worker tracking"
+    ],
+    "acceptance_criteria": [
+      "Tie the proposed asset to an observed task."
+    ]
+  }
+}

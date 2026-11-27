@@ -1,0 +1,30 @@
+{
+  "source": "PostgreSQL signed requests",
+  "scope": {
+    "tenant_id": "b67d2703-c6e6-432c-86f7-a1ea3dfed2f9",
+    "client_id": "745e7628-3a4d-4f63-a4da-429f017af489",
+    "brand_id": "33a54cab-f940-4e23-93eb-2773aaf7ae45",
+    "campaign_id": "c0a5abb4-bc8e-439c-bf82-15f4c3d04191"
+  },
+  "original_recipient": {
+    "receipt_id": "4bd3caea-e15a-4718-84cc-f428793d6d75",
+    "at": "2026-11-27T09:12:35.278589+00:00"
+  },
+  "unassigned": [
+    "recipient_only"
+  ],
+  "demoted_recipient": [
+    "independent_reviewer_required"
+  ],
+  "demoted_recipient_signer_view": [
+    "recipient_authority_required"
+  ],
+  "author_post": 403,
+  "invalid_handle": 409,
+  "conflicting_retry": 409,
+  "stale_after_research_edit": 412,
+  "stale_after_strategy_edit": 412,
+  "concurrent_submissions": 2,
+  "committed_decisions": 1,
+  "lost_ack_receipt": "4bd3caea-e15a-4718-84cc-f428793d6d75"
+}

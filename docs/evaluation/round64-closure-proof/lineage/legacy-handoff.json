@@ -1,0 +1,20 @@
+{
+  "historical_receipt_fixture": "0b7544bb-ddef-4cb9-ba35-c63a3ceda89b",
+  "historical_version": "amc.internal-strategy-handoff/1",
+  "historical_revision": 2,
+  "signer_and_recipient_holds": [
+    [
+      "legacy_decision_requires_review"
+    ],
+    [
+      "legacy_decision_requires_review"
+    ]
+  ],
+  "same_revision_retries": 409,
+  "fresh_revision": 3,
+  "fresh_contract": "amc.internal-strategy-handoff/2",
+  "fresh_receipt": {
+    "receipt_id": "2ed0f846-4181-4f6f-be79-a72c3003df8f",
+    "at": "2026-11-27T09:13:05.950134+00:00"
+  }
+}

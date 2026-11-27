@@ -1,0 +1,46 @@
+Việc được giao cho Content
+Người nhận
+Phụ trách Content
+Tài sản
+Hướng dẫn sử dụng trên trang sản phẩm
+Mục đích
+Explain a use case on the product page
+Vị trí
+web
+Yêu cầu sản xuất từ brief
+Mục tiêu
+Choose a useful product guide for a shift handover.
+Mục đích của nhiệm vụ
+Choose a useful product guide for a shift handover.
+Đối tượng
+Shift supervisors
+Hành động của người mua
+Tải danh mục
+Lời kêu gọi hành động
+Download the catalogue
+Cách diễn đạt
+Ngắn gọn
+Yêu cầu bắt buộc
+Prepare a practical guide for one shift handover.
+Nội dung phải loại trừ
+automatic worker tracking
+Tiêu chí nghiệm thu
+Tie the proposed asset to an observed task.
+Hướng dẫn từ Strategy
+Tình huống đã đối chiếu
+At a work or shift handover.
+Hướng thông điệp
+Show how to use the product in the reviewed situation.
+Phạm vi quan sát
+The selected source passage informs this handover only. Wider demand or performance remains unverified.
+Dữ kiện sản phẩm được phép dùng
+The passive tray has two separate compartments.
+Giới hạn khi viết
+Use the complete product declaration with its qualifiers.
+Buyer interpretation is limited to the recorded situation.
+Phê duyệt tiếp theo
+Internal drafting only. A new asset requires its own independent QA and channel approval.
+Đo lường
+Chưa có hợp đồng đo lường được duyệt
+Phạm vi thực hiện
+Chỉ chuẩn bị bản nháp nội bộ. Chờ duyệt để thực hiện phép đo.

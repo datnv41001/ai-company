@@ -1,0 +1,414 @@
+{
+  "scope": {
+    "tenant_id": "synthetic-agency",
+    "client_id": "synthetic-tray",
+    "brand_id": "tray-brand",
+    "campaign_id": "tray-study"
+  },
+  "as_of": "2026-11-15T12:00:00Z",
+  "provenance": {
+    "workflow": "WF-03/research-strategy-draft@3",
+    "catalog_sha256": "cf9078f2aa283cc7a9e9c273abd3077338c94ebe0f51a65e0a30c33254d94969",
+    "roles": {
+      "research": {
+        "adapter": "research@4",
+        "digest": "cb32178ff6ab9076426ab22cbfb8624c282d76e47d6f08a12e4447f504391239",
+        "checkpoint_sha256": "1aa80731287ca19c2d9b8ba2e123120346eff1fb73ac22388c05c53e6f9504d8",
+        "qa_policy": "c3-research@2"
+      },
+      "strategy": {
+        "adapter": "strategy@4",
+        "digest": "225597105f7168efbf65e5e2e4e9cbb5fd725b2eca9b319fd352d5b39b10bf64",
+        "checkpoint_sha256": "5a2a400bf82c3daf7cc6e2027179b1508d18a68e5eb6c48a9cb5d025373f5961",
+        "qa_policy": "c3-strategy@2"
+      }
+    },
+    "packet_sha256": "751214a141b39fdb8a8f16a23ae9d753606712273d0a3d4a84dea9ebb019aab1"
+  },
+  "research": {
+    "decision": "Which use should lead the internal product-page draft for shift supervisors?",
+    "segment": "shift supervisors",
+    "buying_episode": "shift handover",
+    "observations": [
+      {
+        "source_id": "tray-counter",
+        "revision": 1,
+        "quote": "At a different staged handover a shift supervisor used the quarterly count layout.",
+        "excerpt": "At a different staged handover a shift supervisor used the quarterly count layout.",
+        "sample": "One supervisor in a separate staged handover.",
+        "kind": "observation",
+        "segment": "shift supervisors",
+        "situation": "shift handover",
+        "recorded_at": "2026-11-12T10:00:00Z",
+        "valid_from": "2026-11-01T00:00:00Z",
+        "valid_until": null,
+        "record_id": "separate-tray-event",
+        "option": "audit",
+        "observed_action": "used"
+      },
+      {
+        "source_id": "tray-one",
+        "revision": 1,
+        "quote": "At shift handover the supervisor used the two-colour layout to separate the outgoing and incoming batches.",
+        "excerpt": "At shift handover the supervisor used the two-colour layout to separate the outgoing and incoming batches.",
+        "sample": "One staged handover in a single shop.",
+        "kind": "observation",
+        "segment": "shift supervisors",
+        "situation": "shift handover",
+        "recorded_at": "2026-11-12T10:00:00Z",
+        "valid_from": "2026-11-01T00:00:00Z",
+        "valid_until": null,
+        "record_id": "tray-event-one",
+        "option": "handoff",
+        "observed_action": "used"
+      },
+      {
+        "source_id": "tray-two",
+        "revision": 1,
+        "quote": "At the same shop a supervisor asked whether the tray layout could also help during a quarterly count.",
+        "excerpt": "At the same shop a supervisor asked whether the tray layout could also help during a quarterly count.",
+        "sample": "One supervised demonstration in the same shop.",
+        "kind": "observation",
+        "segment": "shift supervisors",
+        "situation": "shift handover",
+        "recorded_at": "2026-11-12T10:00:00Z",
+        "valid_from": "2026-11-01T00:00:00Z",
+        "valid_until": null,
+        "record_id": "tray-event-two",
+        "option": "audit",
+        "observed_action": "asked"
+      }
+    ],
+    "context_only": [
+      {
+        "source_id": "tray-other",
+        "revision": 1,
+        "quote": "During an inventory audit the storekeeper used the count-sheet layout to reconcile stock locations.",
+        "excerpt": "During an inventory audit the storekeeper used the count-sheet layout to reconcile stock locations.",
+        "sample": "One storekeeper at one trial site.",
+        "kind": "observation",
+        "segment": "storekeepers",
+        "situation": "quarterly stock count",
+        "recorded_at": "2026-11-12T10:00:00Z",
+        "valid_from": "2026-11-01T00:00:00Z",
+        "valid_until": null
+      }
+    ],
+    "awaiting_observation_review": [],
+    "counterevidence": [],
+    "product_facts": [
+      {
+        "source_id": "tray-fact",
+        "revision": 1,
+        "quote": "The passive two-tone tray separates batches by colour. It does not identify people.",
+        "excerpt": "The passive two-tone tray separates batches by colour. It does not identify people.",
+        "sample": "One synthetic product specification, revision 1.",
+        "kind": "product_fact",
+        "segment": "*",
+        "situation": "*",
+        "recorded_at": "2026-11-12T10:00:00Z",
+        "valid_from": "2026-11-01T00:00:00Z",
+        "valid_until": null
+      }
+    ],
+    "working_assumption": "Buyers want to identify who is holding each part.",
+    "missing": [
+      "channel",
+      "measurement"
+    ],
+    "questions": [
+      "Walk me through the last time you faced this buying decision. What happened?",
+      "What alternatives did you consider, and what changed your decision?"
+    ],
+    "interpretation": "The available records do not distinguish a preferred direction.",
+    "limitations": [
+      "Synthetic channel owner's internal planning note.",
+      "One supervisor in a separate staged handover.",
+      "One synthetic product specification, revision 1.",
+      "Synthetic measurement owner's internal feasibility note.",
+      "One staged handover in a single shop.",
+      "One storekeeper at one trial site.",
+      "One supervised demonstration in the same shop."
+    ],
+    "evidence_matrix": [
+      {
+        "source_id": "tray-channel",
+        "revision": 1,
+        "quote": "Available for an internal draft: owned product page.",
+        "excerpt": "Available for an internal draft: owned product page.",
+        "sample": "Synthetic channel owner's internal planning note.",
+        "kind": "channel",
+        "segment": "*",
+        "situation": "*",
+        "recorded_at": "2026-11-12T10:00:00Z",
+        "valid_from": "2026-11-01T00:00:00Z",
+        "valid_until": null
+      },
+      {
+        "source_id": "tray-counter",
+        "revision": 1,
+        "quote": "At a different staged handover a shift supervisor used the quarterly count layout.",
+        "excerpt": "At a different staged handover a shift supervisor used the quarterly count layout.",
+        "sample": "One supervisor in a separate staged handover.",
+        "kind": "observation",
+        "segment": "shift supervisors",
+        "situation": "shift handover",
+        "recorded_at": "2026-11-12T10:00:00Z",
+        "valid_from": "2026-11-01T00:00:00Z",
+        "valid_until": null
+      },
+      {
+        "source_id": "tray-fact",
+        "revision": 1,
+        "quote": "The passive two-tone tray separates batches by colour. It does not identify people.",
+        "excerpt": "The passive two-tone tray separates batches by colour. It does not identify people.",
+        "sample": "One synthetic product specification, revision 1.",
+        "kind": "product_fact",
+        "segment": "*",
+        "situation": "*",
+        "recorded_at": "2026-11-12T10:00:00Z",
+        "valid_from": "2026-11-01T00:00:00Z",
+        "valid_until": null
+      },
+      {
+        "source_id": "tray-measure",
+        "revision": 1,
+        "quote": "Feasible pilot measurement: distinct reviewed handover diagram requests by request ID in the two-week pilot.",
+        "excerpt": "Feasible pilot measurement: distinct reviewed handover diagram requests by request ID in the two-week pilot.",
+        "sample": "Synthetic measurement owner's internal feasibility note.",
+        "kind": "measurement",
+        "segment": "*",
+        "situation": "*",
+        "recorded_at": "2026-11-12T10:00:00Z",
+        "valid_from": "2026-11-01T00:00:00Z",
+        "valid_until": null
+      },
+      {
+        "source_id": "tray-one",
+        "revision": 1,
+        "quote": "At shift handover the supervisor used the two-colour layout to separate the outgoing and incoming batches.",
+        "excerpt": "At shift handover the supervisor used the two-colour layout to separate the outgoing and incoming batches.",
+        "sample": "One staged handover in a single shop.",
+        "kind": "observation",
+        "segment": "shift supervisors",
+        "situation": "shift handover",
+        "recorded_at": "2026-11-12T10:00:00Z",
+        "valid_from": "2026-11-01T00:00:00Z",
+        "valid_until": null
+      },
+      {
+        "source_id": "tray-two",
+        "revision": 1,
+        "quote": "At the same shop a supervisor asked whether the tray layout could also help during a quarterly count.",
+        "excerpt": "At the same shop a supervisor asked whether the tray layout could also help during a quarterly count.",
+        "sample": "One supervised demonstration in the same shop.",
+        "kind": "observation",
+        "segment": "shift supervisors",
+        "situation": "shift handover",
+        "recorded_at": "2026-11-12T10:00:00Z",
+        "valid_from": "2026-11-01T00:00:00Z",
+        "valid_until": null
+      }
+    ],
+    "checkpoint_field_review": [
+      {
+        "role": "research",
+        "field": "research_question",
+        "text_sha256": "411a34853bd81cb55d9f6862550a1c13de282e74a06a53c14f37fe4ad548ba83",
+        "status": "needs_editor_review",
+        "literal_sources": [],
+        "cited_sources": [
+          "tray-fact",
+          "tray-one"
+        ]
+      },
+      {
+        "role": "research",
+        "field": "evidence_needed",
+        "text_sha256": "caf75086758d0c405cb83e4d86eeeb102f98e1424ad5169c494bb34864e93026",
+        "status": "needs_editor_review",
+        "literal_sources": [],
+        "cited_sources": [
+          "tray-fact",
+          "tray-one"
+        ]
+      },
+      {
+        "role": "research",
+        "field": "segment",
+        "text_sha256": "1398863cc66ff386eda5e4a143450bb04fcb0aff53d2a70021d5c6a6bd40a763",
+        "status": "needs_editor_review",
+        "literal_sources": [],
+        "cited_sources": [
+          "tray-fact",
+          "tray-one"
+        ]
+      },
+      {
+        "role": "research",
+        "field": "buyer_problem",
+        "text_sha256": "de446a923f7c8a3d0ab1ba77ad82e4406ed140417e91b44bd68af2cd571724ba",
+        "status": "needs_editor_review",
+        "literal_sources": [],
+        "cited_sources": [
+          "tray-fact",
+          "tray-one"
+        ]
+      },
+      {
+        "role": "strategy",
+        "field": "positioning",
+        "text_sha256": "67d28d1b35e2b8c95d552753afa287e7381ef6e5d0dfce3212b7d1005595aba8",
+        "status": "needs_editor_review",
+        "literal_sources": [],
+        "cited_sources": [
+          "tray-fact",
+          "tray-one"
+        ]
+      },
+      {
+        "role": "strategy",
+        "field": "rationale",
+        "text_sha256": "2426fddd7f2535edb6309a8e937bca97d34611eec56302d45da251fe28561e67",
+        "status": "needs_editor_review",
+        "literal_sources": [],
+        "cited_sources": [
+          "tray-fact",
+          "tray-one"
+        ]
+      },
+      {
+        "role": "strategy",
+        "field": "channel_choice",
+        "text_sha256": "877b6be677ae7b95205111296e0deba55a5a7a26562a9e81fdc02dfd34fc0e48",
+        "status": "needs_editor_review",
+        "literal_sources": [],
+        "cited_sources": [
+          "tray-fact",
+          "tray-one"
+        ]
+      },
+      {
+        "role": "strategy",
+        "field": "test_hypothesis",
+        "text_sha256": "56da26ec5c85cfad2fb079ffa65541488975c8a86ea7f184819e05f99ef4b609",
+        "status": "needs_editor_review",
+        "literal_sources": [],
+        "cited_sources": [
+          "tray-fact",
+          "tray-one"
+        ]
+      },
+      {
+        "role": "strategy",
+        "field": "measurable_action",
+        "text_sha256": "1003309cee45efc6587913ba1488196ce74d1f7ed6c01cb73ac36158de81b444",
+        "status": "needs_editor_review",
+        "literal_sources": [],
+        "cited_sources": [
+          "tray-fact",
+          "tray-one"
+        ]
+      },
+      {
+        "role": "strategy",
+        "field": "measurement_method",
+        "text_sha256": "d50c56e7fc4ceb63c1b1c4afe7d6661e0670dafc3a8b74e95a7813ae64f07f4f",
+        "status": "needs_editor_review",
+        "literal_sources": [],
+        "cited_sources": [
+          "tray-fact",
+          "tray-one"
+        ]
+      }
+    ]
+  },
+  "strategy": {
+    "status": "conflicting_evidence",
+    "selected_option": null,
+    "options": [
+      {
+        "id": "handoff",
+        "label": "Show a shift handover",
+        "tradeoff": "Shows a batch handover but leaves the stock-count layout for a later page.",
+        "asset": "An annotated two-panel shift handover diagram for the product page.",
+        "used": [
+          "tray-one"
+        ],
+        "declined": [],
+        "asked": []
+      },
+      {
+        "id": "audit",
+        "label": "Show an inventory audit",
+        "tradeoff": "Makes quarterly counts easier to picture but leaves day-to-day handovers unexplained.",
+        "asset": "A one-page count-sheet example for the product page.",
+        "used": [
+          "tray-counter"
+        ],
+        "declined": [],
+        "asked": [
+          "tray-two"
+        ]
+      }
+    ],
+    "rationale": [
+      "Obtain another matched observation or clarify the commission before selecting a direction."
+    ],
+    "basis_sources": [],
+    "owner": "Product marketing lead",
+    "positioning": null,
+    "tradeoff": null,
+    "conditions": {
+      "segment": "shift supervisors",
+      "episode": "shift handover",
+      "as_of": "2026-11-15T12:00:00Z",
+      "claim_limits": [
+        "Describe passive layout only.",
+        "Human approval before any publication.",
+        "Use the records only for internal strategy."
+      ]
+    },
+    "channel": {
+      "status": "unknown",
+      "value": null,
+      "sources": [],
+      "needs_owner_verification": []
+    },
+    "measurement": {
+      "status": "unknown",
+      "value": null,
+      "sources": [],
+      "needs_owner_verification": []
+    },
+    "test_hypothesis": null,
+    "reconsider_if": "A comparable buyer declines the selected approach or uses another, or its source rights change.",
+    "approval": "Owner reviews the alternatives and signed claim wording before any external use."
+  },
+  "department_handoff": {
+    "status": "hold",
+    "recipient": "Content lead",
+    "objective": "Give shift supervisors a way to check how trays separate outgoing batches.",
+    "audience": "shift supervisors",
+    "situation": "shift handover",
+    "asset": null,
+    "internal_concept": null,
+    "message": null,
+    "sources": [
+      "tray-fact"
+    ],
+    "claim_limits": [
+      "Describe passive layout only.",
+      "Human approval before any publication.",
+      "Use the records only for internal strategy.",
+      "Describe the product only with the permitted fact text and its qualifiers.",
+      "Do not present one observed choice as buyer preference across the segment or as measured lift."
+    ],
+    "channel": null,
+    "approval": {
+      "role": "Product marketing lead",
+      "action": "Review the internal draft and source rights before distribution."
+    }
+  },
+  "level": "internal_synthetic_workpaper"
+}

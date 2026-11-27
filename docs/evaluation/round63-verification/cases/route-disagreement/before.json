@@ -1,0 +1,366 @@
+{
+  "kind": "synthetic fixed decoder; released request/validation and staff composition",
+  "model_calls": 0,
+  "packet_sha256": "751214a141b39fdb8a8f16a23ae9d753606712273d0a3d4a84dea9ebb019aab1",
+  "checkpoints": {
+    "research": {
+      "text": "How useful is automatic staff tracking?\nCheck demand for staff tracking.\nAll small factory purchasers\nEvery plant needs staff location tracking.",
+      "sections": {
+        "research_question": "How useful is automatic staff tracking?",
+        "evidence_needed": "Check demand for staff tracking.",
+        "segment": "All small factory purchasers",
+        "buyer_problem": "Every plant needs staff location tracking."
+      },
+      "source_ids": [
+        "tray-fact",
+        "tray-one"
+      ],
+      "raw_reply": {
+        "segment": "All small factory purchasers",
+        "buyer_problem": "Every plant needs staff location tracking.",
+        "research_question": "How useful is automatic staff tracking?",
+        "evidence_needed": "Check demand for staff tracking.",
+        "source_ids": [
+          "tray-fact",
+          "tray-one"
+        ]
+      },
+      "marketing_skills": {
+        "market-research@1": "86eeef60340cfd5035e4ecbba3807b7afca9b4abd4356e047d8806b8c9f77621",
+        "icp-segmentation@1": "b69cd2acdf276b874a4cb956987cfd9ebf00efe4fd286e80d4b835ec6ab5102f"
+      }
+    },
+    "strategy": {
+      "text": "Track the location of every worker.\nBoth sites requested worker tracking.\nLaunch broad search ads.\nA tracker will increase sales.\nCount confirmed paid orders.\nCount every paid order for the pilot.",
+      "sections": {
+        "positioning": "Track the location of every worker.",
+        "rationale": "Both sites requested worker tracking.",
+        "channel_choice": "Launch broad search ads.",
+        "test_hypothesis": "A tracker will increase sales.",
+        "measurable_action": "Count confirmed paid orders.",
+        "measurement_method": "Count every paid order for the pilot."
+      },
+      "source_ids": [
+        "tray-fact",
+        "tray-one"
+      ],
+      "raw_reply": {
+        "positioning": "Track the location of every worker.",
+        "rationale": "Both sites requested worker tracking.",
+        "channel_choice": "Launch broad search ads.",
+        "test_hypothesis": "A tracker will increase sales.",
+        "measurable_action": "Count confirmed paid orders.",
+        "measurement_method": "Count every paid order for the pilot.",
+        "source_ids": [
+          "tray-fact",
+          "tray-one"
+        ]
+      },
+      "marketing_skills": {
+        "positioning-value@1": "b83430d074a232e1b0e8a2485a935c20bdc2d72521ac25478ac34f99475af93c",
+        "campaign-channel@1": "e5f47b865cad8e80a7efab8d1ef1854cf9a4cf5b8185b80ecc263fea1dc631d0",
+        "kpi-measurement@1": "b3f38b752f72b7a4bb76afc2783e08308f3d19a473b3a18eeed277d6552a13f9"
+      }
+    },
+    "binding": {
+      "workflow": "WF-03/research-strategy-draft@3",
+      "scope": {
+        "tenant_id": "synthetic-agency",
+        "client_id": "synthetic-tray",
+        "brand_id": "tray-brand",
+        "campaign_id": "tray-study"
+      },
+      "packet_sha256": "751214a141b39fdb8a8f16a23ae9d753606712273d0a3d4a84dea9ebb019aab1",
+      "source_refs": {
+        "tray-channel": "tray-channel",
+        "tray-counter": "tray-counter",
+        "tray-fact": "tray-fact",
+        "tray-measure": "tray-measure",
+        "tray-one": "tray-one",
+        "tray-other": "tray-other",
+        "tray-two": "tray-two"
+      },
+      "source_revisions": {
+        "tray-channel": 1,
+        "tray-counter": 1,
+        "tray-fact": 1,
+        "tray-measure": 1,
+        "tray-one": 1,
+        "tray-other": 1,
+        "tray-two": 1
+      }
+    }
+  },
+  "request_contexts": {
+    "research": {
+      "reference": {
+        "product": "Route Tray",
+        "audience": "shift supervisors",
+        "facts": [
+          {
+            "id": "tray-channel",
+            "wording": "Available for an internal draft: owned product page.",
+            "qualifiers": [
+              "{\"applies_to\": [\"handoff\"], \"authority_role\": \"channel_owner\", \"kind\": \"channel\", \"permitted_use\": \"internal_strategy\", \"product\": \"Route Tray\", \"recorded_at\": \"2026-11-12T10:00:00Z\", \"revision\": 1, \"revoked_at\": null, \"sample\": \"Synthetic channel owner's internal planning note.\", \"segment\": \"*\", \"situation\": \"*\", \"valid_from\": \"2026-11-01T00:00:00Z\", \"valid_until\": null, \"value\": \"owned product page\"}"
+            ]
+          },
+          {
+            "id": "tray-counter",
+            "wording": "At a different staged handover a shift supervisor used the quarterly count layout.",
+            "qualifiers": [
+              "{\"coding_digest\": \"c6b159beb0c7f7e8df4c132e2cdca7abd6297f66f9925c7191f7e60a3bf10963\", \"kind\": \"observation\", \"observed_action\": \"used\", \"option\": \"audit\", \"permitted_use\": \"internal_strategy\", \"product\": \"Route Tray\", \"record_id\": \"separate-tray-event\", \"recorded_at\": \"2026-11-12T10:00:00Z\", \"revision\": 1, \"revoked_at\": null, \"sample\": \"One supervisor in a separate staged handover.\", \"segment\": \"shift supervisors\", \"situation\": \"shift handover\", \"valid_from\": \"2026-11-01T00:00:00Z\", \"valid_until\": null}"
+            ]
+          },
+          {
+            "id": "tray-fact",
+            "wording": "The passive two-tone tray separates batches by colour. It does not identify people.",
+            "qualifiers": [
+              "{\"kind\": \"product_fact\", \"permitted_use\": \"internal_strategy\", \"product\": \"Route Tray\", \"recorded_at\": \"2026-11-12T10:00:00Z\", \"revision\": 1, \"revoked_at\": null, \"sample\": \"One synthetic product specification, revision 1.\", \"segment\": \"*\", \"situation\": \"*\", \"valid_from\": \"2026-11-01T00:00:00Z\", \"valid_until\": null}"
+            ]
+          },
+          {
+            "id": "tray-measure",
+            "wording": "Feasible pilot measurement: distinct reviewed handover diagram requests by request ID in the two-week pilot.",
+            "qualifiers": [
+              "{\"applies_to\": [\"handoff\"], \"authority_role\": \"measurement_owner\", \"kind\": \"measurement\", \"permitted_use\": \"internal_strategy\", \"product\": \"Route Tray\", \"recorded_at\": \"2026-11-12T10:00:00Z\", \"revision\": 1, \"revoked_at\": null, \"sample\": \"Synthetic measurement owner's internal feasibility note.\", \"segment\": \"*\", \"situation\": \"*\", \"valid_from\": \"2026-11-01T00:00:00Z\", \"valid_until\": null, \"value\": \"distinct reviewed handover diagram requests by request ID in the two-week pilot\"}"
+            ]
+          },
+          {
+            "id": "tray-one",
+            "wording": "At shift handover the supervisor used the two-colour layout to separate the outgoing and incoming batches.",
+            "qualifiers": [
+              "{\"coding_digest\": \"2093ac509f5c5e885f5e19a66e186d89830401bee073eceb30f8218ba958064f\", \"kind\": \"observation\", \"observed_action\": \"used\", \"option\": \"handoff\", \"permitted_use\": \"internal_strategy\", \"product\": \"Route Tray\", \"record_id\": \"tray-event-one\", \"recorded_at\": \"2026-11-12T10:00:00Z\", \"revision\": 1, \"revoked_at\": null, \"sample\": \"One staged handover in a single shop.\", \"segment\": \"shift supervisors\", \"situation\": \"shift handover\", \"valid_from\": \"2026-11-01T00:00:00Z\", \"valid_until\": null}"
+            ]
+          },
+          {
+            "id": "tray-other",
+            "wording": "During an inventory audit the storekeeper used the count-sheet layout to reconcile stock locations.",
+            "qualifiers": [
+              "{\"coding_digest\": \"2f0ddc24fac7236d6837abd07829176171a7066f8f31db1cef12dec267b04878\", \"kind\": \"observation\", \"observed_action\": \"used\", \"option\": \"audit\", \"permitted_use\": \"internal_strategy\", \"product\": \"Route Tray\", \"record_id\": \"tray-event-other\", \"recorded_at\": \"2026-11-12T10:00:00Z\", \"revision\": 1, \"revoked_at\": null, \"sample\": \"One storekeeper at one trial site.\", \"segment\": \"storekeepers\", \"situation\": \"quarterly stock count\", \"valid_from\": \"2026-11-01T00:00:00Z\", \"valid_until\": null}"
+            ]
+          },
+          {
+            "id": "tray-two",
+            "wording": "At the same shop a supervisor asked whether the tray layout could also help during a quarterly count.",
+            "qualifiers": [
+              "{\"coding_digest\": \"097d974f96480ea7d9a3950eebc937a02dde86379fb4d23cf1fac352b6722bbd\", \"kind\": \"observation\", \"observed_action\": \"asked\", \"option\": \"audit\", \"permitted_use\": \"internal_strategy\", \"product\": \"Route Tray\", \"record_id\": \"tray-event-two\", \"recorded_at\": \"2026-11-12T10:00:00Z\", \"revision\": 1, \"revoked_at\": null, \"sample\": \"One supervised demonstration in the same shop.\", \"segment\": \"shift supervisors\", \"situation\": \"shift handover\", \"valid_from\": \"2026-11-01T00:00:00Z\", \"valid_until\": null}"
+            ]
+          }
+        ],
+        "hypotheses": [
+          "Buyers want to identify who is holding each part."
+        ],
+        "gaps": [],
+        "region": "synthetic study site",
+        "brand": "tray-brand",
+        "locale": "en-US",
+        "channel": "owned product page",
+        "task_intent": {
+          "purpose": "Which use should lead the internal product-page draft for shift supervisors?",
+          "requirements": [
+            "{\"assumption\": \"Buyers want to identify who is holding each part.\", \"buyer_action\": \"catalogue_download\", \"constraints\": [\"Describe passive layout only.\", \"Human approval before any publication.\", \"Use the records only for internal strategy.\"], \"decision\": \"Which use should lead the internal product-page draft for shift supervisors?\", \"objective\": \"Give shift supervisors a way to check how trays separate outgoing batches.\", \"options\": [{\"asset\": \"An annotated two-panel shift handover diagram for the product page.\", \"id\": \"handoff\", \"label\": \"Show a shift handover\", \"tradeoff\": \"Shows a batch handover but leaves the stock-count layout for a later page.\"}, {\"asset\": \"A one-page count-sheet example for the product page.\", \"id\": \"audit\", \"label\": \"Show an inventory audit\", \"tradeoff\": \"Makes quarterly counts easier to picture but leaves day-to-day handovers unexplained.\"}], \"owner\": \"Product marketing lead\", \"product\": \"Route Tray\", \"segment\": \"shift supervisors\", \"situation\": \"shift handover\"}"
+          ],
+          "audience": "shift supervisors",
+          "product": "Route Tray",
+          "exclusions": [
+            "Describe passive layout only.",
+            "Human approval before any publication.",
+            "Use the records only for internal strategy."
+          ],
+          "buyer_action": "catalogue_download",
+          "editorial_style": "plain",
+          "acceptance_criteria": [
+            "Keep observations separate from market-wide claims."
+          ]
+        },
+        "brand_guidelines": {},
+        "buyer_action": "catalogue_download",
+        "editorial_style": "plain"
+      },
+      "stage": "research",
+      "assignment": "Which use should lead the internal product-page draft for shift supervisors?",
+      "predecessors": {}
+    },
+    "strategy": {
+      "reference": {
+        "product": "Route Tray",
+        "audience": "shift supervisors",
+        "facts": [
+          {
+            "id": "tray-channel",
+            "wording": "Available for an internal draft: owned product page.",
+            "qualifiers": [
+              "{\"applies_to\": [\"handoff\"], \"authority_role\": \"channel_owner\", \"kind\": \"channel\", \"permitted_use\": \"internal_strategy\", \"product\": \"Route Tray\", \"recorded_at\": \"2026-11-12T10:00:00Z\", \"revision\": 1, \"revoked_at\": null, \"sample\": \"Synthetic channel owner's internal planning note.\", \"segment\": \"*\", \"situation\": \"*\", \"valid_from\": \"2026-11-01T00:00:00Z\", \"valid_until\": null, \"value\": \"owned product page\"}"
+            ]
+          },
+          {
+            "id": "tray-counter",
+            "wording": "At a different staged handover a shift supervisor used the quarterly count layout.",
+            "qualifiers": [
+              "{\"coding_digest\": \"c6b159beb0c7f7e8df4c132e2cdca7abd6297f66f9925c7191f7e60a3bf10963\", \"kind\": \"observation\", \"observed_action\": \"used\", \"option\": \"audit\", \"permitted_use\": \"internal_strategy\", \"product\": \"Route Tray\", \"record_id\": \"separate-tray-event\", \"recorded_at\": \"2026-11-12T10:00:00Z\", \"revision\": 1, \"revoked_at\": null, \"sample\": \"One supervisor in a separate staged handover.\", \"segment\": \"shift supervisors\", \"situation\": \"shift handover\", \"valid_from\": \"2026-11-01T00:00:00Z\", \"valid_until\": null}"
+            ]
+          },
+          {
+            "id": "tray-fact",
+            "wording": "The passive two-tone tray separates batches by colour. It does not identify people.",
+            "qualifiers": [
+              "{\"kind\": \"product_fact\", \"permitted_use\": \"internal_strategy\", \"product\": \"Route Tray\", \"recorded_at\": \"2026-11-12T10:00:00Z\", \"revision\": 1, \"revoked_at\": null, \"sample\": \"One synthetic product specification, revision 1.\", \"segment\": \"*\", \"situation\": \"*\", \"valid_from\": \"2026-11-01T00:00:00Z\", \"valid_until\": null}"
+            ]
+          },
+          {
+            "id": "tray-measure",
+            "wording": "Feasible pilot measurement: distinct reviewed handover diagram requests by request ID in the two-week pilot.",
+            "qualifiers": [
+              "{\"applies_to\": [\"handoff\"], \"authority_role\": \"measurement_owner\", \"kind\": \"measurement\", \"permitted_use\": \"internal_strategy\", \"product\": \"Route Tray\", \"recorded_at\": \"2026-11-12T10:00:00Z\", \"revision\": 1, \"revoked_at\": null, \"sample\": \"Synthetic measurement owner's internal feasibility note.\", \"segment\": \"*\", \"situation\": \"*\", \"valid_from\": \"2026-11-01T00:00:00Z\", \"valid_until\": null, \"value\": \"distinct reviewed handover diagram requests by request ID in the two-week pilot\"}"
+            ]
+          },
+          {
+            "id": "tray-one",
+            "wording": "At shift handover the supervisor used the two-colour layout to separate the outgoing and incoming batches.",
+            "qualifiers": [
+              "{\"coding_digest\": \"2093ac509f5c5e885f5e19a66e186d89830401bee073eceb30f8218ba958064f\", \"kind\": \"observation\", \"observed_action\": \"used\", \"option\": \"handoff\", \"permitted_use\": \"internal_strategy\", \"product\": \"Route Tray\", \"record_id\": \"tray-event-one\", \"recorded_at\": \"2026-11-12T10:00:00Z\", \"revision\": 1, \"revoked_at\": null, \"sample\": \"One staged handover in a single shop.\", \"segment\": \"shift supervisors\", \"situation\": \"shift handover\", \"valid_from\": \"2026-11-01T00:00:00Z\", \"valid_until\": null}"
+            ]
+          },
+          {
+            "id": "tray-other",
+            "wording": "During an inventory audit the storekeeper used the count-sheet layout to reconcile stock locations.",
+            "qualifiers": [
+              "{\"coding_digest\": \"2f0ddc24fac7236d6837abd07829176171a7066f8f31db1cef12dec267b04878\", \"kind\": \"observation\", \"observed_action\": \"used\", \"option\": \"audit\", \"permitted_use\": \"internal_strategy\", \"product\": \"Route Tray\", \"record_id\": \"tray-event-other\", \"recorded_at\": \"2026-11-12T10:00:00Z\", \"revision\": 1, \"revoked_at\": null, \"sample\": \"One storekeeper at one trial site.\", \"segment\": \"storekeepers\", \"situation\": \"quarterly stock count\", \"valid_from\": \"2026-11-01T00:00:00Z\", \"valid_until\": null}"
+            ]
+          },
+          {
+            "id": "tray-two",
+            "wording": "At the same shop a supervisor asked whether the tray layout could also help during a quarterly count.",
+            "qualifiers": [
+              "{\"coding_digest\": \"097d974f96480ea7d9a3950eebc937a02dde86379fb4d23cf1fac352b6722bbd\", \"kind\": \"observation\", \"observed_action\": \"asked\", \"option\": \"audit\", \"permitted_use\": \"internal_strategy\", \"product\": \"Route Tray\", \"record_id\": \"tray-event-two\", \"recorded_at\": \"2026-11-12T10:00:00Z\", \"revision\": 1, \"revoked_at\": null, \"sample\": \"One supervised demonstration in the same shop.\", \"segment\": \"shift supervisors\", \"situation\": \"shift handover\", \"valid_from\": \"2026-11-01T00:00:00Z\", \"valid_until\": null}"
+            ]
+          }
+        ],
+        "hypotheses": [
+          "Buyers want to identify who is holding each part."
+        ],
+        "channel": "owned product page",
+        "objective": "Give shift supervisors a way to check how trays separate outgoing batches.",
+        "kpi": "distinct reviewed handover diagram requests by request ID in the two-week pilot",
+        "region": "synthetic study site",
+        "brand": "tray-brand",
+        "locale": "en-US",
+        "task_intent": {
+          "purpose": "Which use should lead the internal product-page draft for shift supervisors?",
+          "requirements": [
+            "{\"assumption\": \"Buyers want to identify who is holding each part.\", \"buyer_action\": \"catalogue_download\", \"constraints\": [\"Describe passive layout only.\", \"Human approval before any publication.\", \"Use the records only for internal strategy.\"], \"decision\": \"Which use should lead the internal product-page draft for shift supervisors?\", \"objective\": \"Give shift supervisors a way to check how trays separate outgoing batches.\", \"options\": [{\"asset\": \"An annotated two-panel shift handover diagram for the product page.\", \"id\": \"handoff\", \"label\": \"Show a shift handover\", \"tradeoff\": \"Shows a batch handover but leaves the stock-count layout for a later page.\"}, {\"asset\": \"A one-page count-sheet example for the product page.\", \"id\": \"audit\", \"label\": \"Show an inventory audit\", \"tradeoff\": \"Makes quarterly counts easier to picture but leaves day-to-day handovers unexplained.\"}], \"owner\": \"Product marketing lead\", \"product\": \"Route Tray\", \"segment\": \"shift supervisors\", \"situation\": \"shift handover\"}"
+          ],
+          "audience": "shift supervisors",
+          "product": "Route Tray",
+          "exclusions": [
+            "Describe passive layout only.",
+            "Human approval before any publication.",
+            "Use the records only for internal strategy."
+          ],
+          "buyer_action": "catalogue_download",
+          "editorial_style": "plain",
+          "acceptance_criteria": [
+            "Keep observations separate from market-wide claims."
+          ]
+        },
+        "brand_guidelines": {},
+        "buyer_action": "catalogue_download",
+        "editorial_style": "plain"
+      },
+      "stage": "strategy",
+      "assignment": "Which use should lead the internal product-page draft for shift supervisors?",
+      "predecessors": {
+        "research": {
+          "text": "How useful is automatic staff tracking?\nCheck demand for staff tracking.\nAll small factory purchasers\nEvery plant needs staff location tracking.",
+          "sections": {
+            "research_question": "How useful is automatic staff tracking?",
+            "evidence_needed": "Check demand for staff tracking.",
+            "segment": "All small factory purchasers",
+            "buyer_problem": "Every plant needs staff location tracking."
+          },
+          "source_ids": [
+            "tray-fact",
+            "tray-one"
+          ],
+          "raw_reply": {
+            "segment": "All small factory purchasers",
+            "buyer_problem": "Every plant needs staff location tracking.",
+            "research_question": "How useful is automatic staff tracking?",
+            "evidence_needed": "Check demand for staff tracking.",
+            "source_ids": [
+              "tray-fact",
+              "tray-one"
+            ]
+          },
+          "marketing_skills": {
+            "market-research@1": "86eeef60340cfd5035e4ecbba3807b7afca9b4abd4356e047d8806b8c9f77621",
+            "icp-segmentation@1": "b69cd2acdf276b874a4cb956987cfd9ebf00efe4fd286e80d4b835ec6ab5102f"
+          }
+        }
+      }
+    }
+  },
+  "staff_groups": {
+    "research": {
+      "buyer_problem": "Every plant needs staff location tracking.",
+      "research_question": "How useful is automatic staff tracking?",
+      "evidence": "Available for an internal draft: owned product page. {\"applies_to\": [\"handoff\"], \"authority_role\": \"channel_owner\", \"kind\": \"channel\", \"permitted_use\": \"internal_strategy\", \"product\": \"Route Tray\", \"recorded_at\": \"2026-11-12T10:00:00Z\", \"revision\": 1, \"revoked_at\": null, \"sample\": \"Synthetic channel owner's internal planning note.\", \"segment\": \"*\", \"situation\": \"*\", \"valid_from\": \"2026-11-01T00:00:00Z\", \"valid_until\": null, \"value\": \"owned product page\"}\nAt a different staged handover a shift supervisor used the quarterly count layout. {\"coding_digest\": \"c6b159beb0c7f7e8df4c132e2cdca7abd6297f66f9925c7191f7e60a3bf10963\", \"kind\": \"observation\", \"observed_action\": \"used\", \"option\": \"audit\", \"permitted_use\": \"internal_strategy\", \"product\": \"Route Tray\", \"record_id\": \"separate-tray-event\", \"recorded_at\": \"2026-11-12T10:00:00Z\", \"revision\": 1, \"revoked_at\": null, \"sample\": \"One supervisor in a separate staged handover.\", \"segment\": \"shift supervisors\", \"situation\": \"shift handover\", \"valid_from\": \"2026-11-01T00:00:00Z\", \"valid_until\": null}\nThe passive two-tone tray separates batches by colour. It does not identify people. {\"kind\": \"product_fact\", \"permitted_use\": \"internal_strategy\", \"product\": \"Route Tray\", \"recorded_at\": \"2026-11-12T10:00:00Z\", \"revision\": 1, \"revoked_at\": null, \"sample\": \"One synthetic product specification, revision 1.\", \"segment\": \"*\", \"situation\": \"*\", \"valid_from\": \"2026-11-01T00:00:00Z\", \"valid_until\": null}\nFeasible pilot measurement: distinct reviewed handover diagram requests by request ID in the two-week pilot. {\"applies_to\": [\"handoff\"], \"authority_role\": \"measurement_owner\", \"kind\": \"measurement\", \"permitted_use\": \"internal_strategy\", \"product\": \"Route Tray\", \"recorded_at\": \"2026-11-12T10:00:00Z\", \"revision\": 1, \"revoked_at\": null, \"sample\": \"Synthetic measurement owner's internal feasibility note.\", \"segment\": \"*\", \"situation\": \"*\", \"valid_from\": \"2026-11-01T00:00:00Z\", \"valid_until\": null, \"value\": \"distinct reviewed handover diagram requests by request ID in the two-week pilot\"}\nAt shift handover the supervisor used the two-colour layout to separate the outgoing and incoming batches. {\"coding_digest\": \"2093ac509f5c5e885f5e19a66e186d89830401bee073eceb30f8218ba958064f\", \"kind\": \"observation\", \"observed_action\": \"used\", \"option\": \"handoff\", \"permitted_use\": \"internal_strategy\", \"product\": \"Route Tray\", \"record_id\": \"tray-event-one\", \"recorded_at\": \"2026-11-12T10:00:00Z\", \"revision\": 1, \"revoked_at\": null, \"sample\": \"One staged handover in a single shop.\", \"segment\": \"shift supervisors\", \"situation\": \"shift handover\", \"valid_from\": \"2026-11-01T00:00:00Z\", \"valid_until\": null}\nDuring an inventory audit the storekeeper used the count-sheet layout to reconcile stock locations. {\"coding_digest\": \"2f0ddc24fac7236d6837abd07829176171a7066f8f31db1cef12dec267b04878\", \"kind\": \"observation\", \"observed_action\": \"used\", \"option\": \"audit\", \"permitted_use\": \"internal_strategy\", \"product\": \"Route Tray\", \"record_id\": \"tray-event-other\", \"recorded_at\": \"2026-11-12T10:00:00Z\", \"revision\": 1, \"revoked_at\": null, \"sample\": \"One storekeeper at one trial site.\", \"segment\": \"storekeepers\", \"situation\": \"quarterly stock count\", \"valid_from\": \"2026-11-01T00:00:00Z\", \"valid_until\": null}\nAt the same shop a supervisor asked whether the tray layout could also help during a quarterly count. {\"coding_digest\": \"097d974f96480ea7d9a3950eebc937a02dde86379fb4d23cf1fac352b6722bbd\", \"kind\": \"observation\", \"observed_action\": \"asked\", \"option\": \"audit\", \"permitted_use\": \"internal_strategy\", \"product\": \"Route Tray\", \"record_id\": \"tray-event-two\", \"recorded_at\": \"2026-11-12T10:00:00Z\", \"revision\": 1, \"revoked_at\": null, \"sample\": \"One supervised demonstration in the same shop.\", \"segment\": \"shift supervisors\", \"situation\": \"shift handover\", \"valid_from\": \"2026-11-01T00:00:00Z\", \"valid_until\": null}",
+      "hypothesis": "Hypothesis to test: clearer terms for Route Tray help shift supervisors select a next step."
+    },
+    "strategy": {
+      "positioning": "Track the location of every worker.",
+      "channel_choice": "Launch broad search ads.",
+      "rationale": "Both sites requested worker tracking.",
+      "execution": "Prepare two presentations of Route Tray on owned product page, keep terms fixed and measure the same action."
+    },
+    "measurement": {
+      "test_hypothesis": "A tracker will increase sales.",
+      "measurable_action": "Download the catalogue",
+      "measurement_method": "Count every paid order for the pilot."
+    }
+  },
+  "staff_findings": [],
+  "source_report": {
+    "status": "source_handles_only",
+    "facts": [
+      {
+        "handle": "tray-channel",
+        "text": "Available for an internal draft: owned product page. {\"applies_to\": [\"handoff\"], \"authority_role\": \"channel_owner\", \"kind\": \"channel\", \"permitted_use\": \"internal_strategy\", \"product\": \"Route Tray\", \"recorded_at\": \"2026-11-12T10:00:00Z\", \"revision\": 1, \"revoked_at\": null, \"sample\": \"Synthetic channel owner's internal planning note.\", \"segment\": \"*\", \"situation\": \"*\", \"valid_from\": \"2026-11-01T00:00:00Z\", \"valid_until\": null, \"value\": \"owned product page\"}"
+      },
+      {
+        "handle": "tray-counter",
+        "text": "At a different staged handover a shift supervisor used the quarterly count layout. {\"coding_digest\": \"c6b159beb0c7f7e8df4c132e2cdca7abd6297f66f9925c7191f7e60a3bf10963\", \"kind\": \"observation\", \"observed_action\": \"used\", \"option\": \"audit\", \"permitted_use\": \"internal_strategy\", \"product\": \"Route Tray\", \"record_id\": \"separate-tray-event\", \"recorded_at\": \"2026-11-12T10:00:00Z\", \"revision\": 1, \"revoked_at\": null, \"sample\": \"One supervisor in a separate staged handover.\", \"segment\": \"shift supervisors\", \"situation\": \"shift handover\", \"valid_from\": \"2026-11-01T00:00:00Z\", \"valid_until\": null}"
+      },
+      {
+        "handle": "tray-fact",
+        "text": "The passive two-tone tray separates batches by colour. It does not identify people. {\"kind\": \"product_fact\", \"permitted_use\": \"internal_strategy\", \"product\": \"Route Tray\", \"recorded_at\": \"2026-11-12T10:00:00Z\", \"revision\": 1, \"revoked_at\": null, \"sample\": \"One synthetic product specification, revision 1.\", \"segment\": \"*\", \"situation\": \"*\", \"valid_from\": \"2026-11-01T00:00:00Z\", \"valid_until\": null}"
+      },
+      {
+        "handle": "tray-measure",
+        "text": "Feasible pilot measurement: distinct reviewed handover diagram requests by request ID in the two-week pilot. {\"applies_to\": [\"handoff\"], \"authority_role\": \"measurement_owner\", \"kind\": \"measurement\", \"permitted_use\": \"internal_strategy\", \"product\": \"Route Tray\", \"recorded_at\": \"2026-11-12T10:00:00Z\", \"revision\": 1, \"revoked_at\": null, \"sample\": \"Synthetic measurement owner's internal feasibility note.\", \"segment\": \"*\", \"situation\": \"*\", \"valid_from\": \"2026-11-01T00:00:00Z\", \"valid_until\": null, \"value\": \"distinct reviewed handover diagram requests by request ID in the two-week pilot\"}"
+      },
+      {
+        "handle": "tray-one",
+        "text": "At shift handover the supervisor used the two-colour layout to separate the outgoing and incoming batches. {\"coding_digest\": \"2093ac509f5c5e885f5e19a66e186d89830401bee073eceb30f8218ba958064f\", \"kind\": \"observation\", \"observed_action\": \"used\", \"option\": \"handoff\", \"permitted_use\": \"internal_strategy\", \"product\": \"Route Tray\", \"record_id\": \"tray-event-one\", \"recorded_at\": \"2026-11-12T10:00:00Z\", \"revision\": 1, \"revoked_at\": null, \"sample\": \"One staged handover in a single shop.\", \"segment\": \"shift supervisors\", \"situation\": \"shift handover\", \"valid_from\": \"2026-11-01T00:00:00Z\", \"valid_until\": null}"
+      },
+      {
+        "handle": "tray-other",
+        "text": "During an inventory audit the storekeeper used the count-sheet layout to reconcile stock locations. {\"coding_digest\": \"2f0ddc24fac7236d6837abd07829176171a7066f8f31db1cef12dec267b04878\", \"kind\": \"observation\", \"observed_action\": \"used\", \"option\": \"audit\", \"permitted_use\": \"internal_strategy\", \"product\": \"Route Tray\", \"record_id\": \"tray-event-other\", \"recorded_at\": \"2026-11-12T10:00:00Z\", \"revision\": 1, \"revoked_at\": null, \"sample\": \"One storekeeper at one trial site.\", \"segment\": \"storekeepers\", \"situation\": \"quarterly stock count\", \"valid_from\": \"2026-11-01T00:00:00Z\", \"valid_until\": null}"
+      },
+      {
+        "handle": "tray-two",
+        "text": "At the same shop a supervisor asked whether the tray layout could also help during a quarterly count. {\"coding_digest\": \"097d974f96480ea7d9a3950eebc937a02dde86379fb4d23cf1fac352b6722bbd\", \"kind\": \"observation\", \"observed_action\": \"asked\", \"option\": \"audit\", \"permitted_use\": \"internal_strategy\", \"product\": \"Route Tray\", \"record_id\": \"tray-event-two\", \"recorded_at\": \"2026-11-12T10:00:00Z\", \"revision\": 1, \"revoked_at\": null, \"sample\": \"One supervised demonstration in the same shop.\", \"segment\": \"shift supervisors\", \"situation\": \"shift handover\", \"valid_from\": \"2026-11-01T00:00:00Z\", \"valid_until\": null}"
+      }
+    ],
+    "suggested_handles": {
+      "research": [
+        "tray-fact",
+        "tray-one"
+      ],
+      "strategy": [
+        "tray-fact",
+        "tray-one"
+      ]
+    }
+  }
+}

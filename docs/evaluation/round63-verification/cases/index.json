@@ -1,0 +1,83 @@
+[
+  {
+    "case": "route-shift",
+    "packet_sha256": "1c519037b787b8531841724c8fe3b1168a1378e4d5325a0c4966c7c6627a9a19",
+    "before_sha256": "2cc2a03254c0e57fd29f08152a32a929c4128c03d8473c6ba427c9ba2143f077",
+    "after_sha256": "5a2d284db7aa9414612c63a76a9e39dfac4855d6ba5b82caaffd9cc8066eef41",
+    "status": "proposed",
+    "selected": "handoff",
+    "handoff": "draft_for_approval"
+  },
+  {
+    "case": "studio-first-visit",
+    "packet_sha256": "a65aa36bd7361ef69f41aa294d7e88a71c0c2ad2da45b614da3ad5a1108f3fd8",
+    "before_sha256": "1913d1995aab6a95f4a4a5c822ab7eca208243bfb46df40128a2c01add96eeeb",
+    "after_sha256": "125bd6c58912b913611948c6dfffaf8956b5871ab85416f138eaf362a3f2c54c",
+    "status": "proposed",
+    "selected": "first_visit",
+    "handoff": "hold"
+  },
+  {
+    "case": "route-storekeeper",
+    "packet_sha256": "30616c560de9a25856c762b951dd4e158bf1665a783879e8a3e2827fa674dabf",
+    "before_sha256": "b86962ed4ab461aac77105bbb0ab2250bf90967c4992761710c8ece99a322b5d",
+    "after_sha256": "2e665ce0da3c3c9a0e09ce6d50de40655e138970fefcad050d86b99a831723be",
+    "status": "proposed",
+    "selected": "audit",
+    "handoff": "hold"
+  },
+  {
+    "case": "route-corrected-observation",
+    "packet_sha256": "9c77c56d363fb2ee41a8566ff9783534064c83fb5032670db3c2c455e305e8f0",
+    "before_sha256": "97fa687f379ca3c4ce7b9bc7aa15b46a6056b1dd36856f0d861d167fffe11128",
+    "after_sha256": "ba9f733a55edd3aa1bd06b92d16fb4946290852ba3b23c81131e9ae194892ea4",
+    "status": "proposed",
+    "selected": "audit",
+    "handoff": "hold"
+  },
+  {
+    "case": "route-disagreement",
+    "packet_sha256": "751214a141b39fdb8a8f16a23ae9d753606712273d0a3d4a84dea9ebb019aab1",
+    "before_sha256": "1aeda02dbb2e0742f7e97703851a9c8d90e4e51771016592f47c7d70831db0ec",
+    "after_sha256": "32c864093f52c7a1d035cc4283cf17f7b63bbc1552d834357e2886e09383dfbf",
+    "status": "conflicting_evidence",
+    "selected": null,
+    "handoff": "hold"
+  },
+  {
+    "case": "route-withdrawn-channel-expired-measure",
+    "packet_sha256": "0b545a5c2f4bc77b9182b59ec280b684e489192678d2c5bd69fc9fac7949eb41",
+    "before_sha256": "ff1d1135c14350b52148c8bdf5048f84ab12a12e684e6f6bd3e7125048199968",
+    "after_sha256": "f856f7d7e09aab1d7c5b1a31c22f0ebe44506723c3ba1aad06a0cbe4a89f29ef",
+    "status": "proposed",
+    "selected": "handoff",
+    "handoff": "hold"
+  },
+  {
+    "case": "studio-clarify",
+    "packet_sha256": "b2269d08b1f6a3d40ff031e8c1b8e5a13bff40c552d0b112014082deb1c28451",
+    "before_sha256": "a00578e8b62d44540f8b9414f7d6f3c26713d6d25ab03d0a6476bf87d2ceedd5",
+    "after_sha256": "7629977b716d9c21ee05fe072f0a2a9d687d74365fd61379ecd610b0146c40f5",
+    "status": "needs_clarification",
+    "selected": null,
+    "handoff": "hold"
+  },
+  {
+    "case": "studio-unrepresented",
+    "packet_sha256": "09435b0e2ab48ff0aa7f81a48e3ea3de30b34e84fdfa45fb05bf26a918b468ab",
+    "before_sha256": "5024d20fc466f9daf919e4af85214d9e132a4bda62f5d0c704c1de5dd0384854",
+    "after_sha256": "1e129a6dc1bc99ef2d6c2aadb497afec796b9a133cfa860eac13bcded2534004",
+    "status": "insufficient_evidence",
+    "selected": null,
+    "handoff": "hold"
+  },
+  {
+    "case": "studio-foreign-record",
+    "packet_sha256": "01e7c7633cf77d2d6406a3c6dbf9a14596d16745a3040f012a1a39e8ee90f45d",
+    "before_sha256": "45d22fa996576ab68fc6b2802138db0007234e7328572d683b6584dc1a350ffc",
+    "after_sha256": "80710fe4699dd01e46939bd5557299021e9211e5b0c5d393df712364070aca7f",
+    "status": "proposed",
+    "selected": "first_visit",
+    "handoff": "hold"
+  }
+]

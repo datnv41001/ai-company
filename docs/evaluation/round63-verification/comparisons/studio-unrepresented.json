@@ -1,0 +1,32 @@
+{
+  "case": "studio-unrepresented",
+  "packet_sha256": "09435b0e2ab48ff0aa7f81a48e3ea3de30b34e84fdfa45fb05bf26a918b468ab",
+  "cutoff": "2026-11-15T12:00:00Z",
+  "expected": {
+    "status": "insufficient_evidence",
+    "choice": null,
+    "channel": "unknown",
+    "measurement": "unknown"
+  },
+  "actual": {
+    "status": "insufficient_evidence",
+    "choice": null,
+    "channel": "unknown",
+    "measurement": "unknown"
+  },
+  "basis": [],
+  "standard_staff_findings": [],
+  "scripted_baseline_claim": "Every learner wants a private group booking.",
+  "claim_review": {
+    "role": "strategy",
+    "field": "rationale",
+    "text_sha256": "a0b0f29a623bf72b0e76e1fe55a024b3d9d3a2a48137d046482a6fb5f8a652f8",
+    "status": "needs_editor_review",
+    "literal_sources": [],
+    "cited_sources": [
+      "studio-fact",
+      "studio-one"
+    ]
+  },
+  "handoff": "hold"
+}

@@ -1,0 +1,34 @@
+{
+  "case": "route-storekeeper",
+  "packet_sha256": "30616c560de9a25856c762b951dd4e158bf1665a783879e8a3e2827fa674dabf",
+  "cutoff": "2026-11-15T12:00:00Z",
+  "expected": {
+    "status": "proposed",
+    "choice": "audit",
+    "channel": "unknown",
+    "measurement": "unknown"
+  },
+  "actual": {
+    "status": "proposed",
+    "choice": "audit",
+    "channel": "unknown",
+    "measurement": "unknown"
+  },
+  "basis": [
+    "tray-other"
+  ],
+  "standard_staff_findings": [],
+  "scripted_baseline_claim": "Both sites requested worker tracking.",
+  "claim_review": {
+    "role": "strategy",
+    "field": "rationale",
+    "text_sha256": "2426fddd7f2535edb6309a8e937bca97d34611eec56302d45da251fe28561e67",
+    "status": "needs_editor_review",
+    "literal_sources": [],
+    "cited_sources": [
+      "tray-fact",
+      "tray-one"
+    ]
+  },
+  "handoff": "hold"
+}

@@ -1,0 +1,34 @@
+{
+  "case": "route-shift",
+  "packet_sha256": "1c519037b787b8531841724c8fe3b1168a1378e4d5325a0c4966c7c6627a9a19",
+  "cutoff": "2026-11-15T12:00:00Z",
+  "expected": {
+    "status": "proposed",
+    "choice": "handoff",
+    "channel": "supported",
+    "measurement": "supported"
+  },
+  "actual": {
+    "status": "proposed",
+    "choice": "handoff",
+    "channel": "supported",
+    "measurement": "supported"
+  },
+  "basis": [
+    "tray-one"
+  ],
+  "standard_staff_findings": [],
+  "scripted_baseline_claim": "Both sites requested worker tracking.",
+  "claim_review": {
+    "role": "strategy",
+    "field": "rationale",
+    "text_sha256": "2426fddd7f2535edb6309a8e937bca97d34611eec56302d45da251fe28561e67",
+    "status": "needs_editor_review",
+    "literal_sources": [],
+    "cited_sources": [
+      "tray-fact",
+      "tray-one"
+    ]
+  },
+  "handoff": "draft_for_approval"
+}

@@ -1,0 +1,34 @@
+{
+  "case": "studio-first-visit",
+  "packet_sha256": "a65aa36bd7361ef69f41aa294d7e88a71c0c2ad2da45b614da3ad5a1108f3fd8",
+  "cutoff": "2026-11-15T12:00:00Z",
+  "expected": {
+    "status": "proposed",
+    "choice": "first_visit",
+    "channel": "unknown",
+    "measurement": "unknown"
+  },
+  "actual": {
+    "status": "proposed",
+    "choice": "first_visit",
+    "channel": "unknown",
+    "measurement": "unknown"
+  },
+  "basis": [
+    "studio-one"
+  ],
+  "standard_staff_findings": [],
+  "scripted_baseline_claim": "Every learner wants a private group booking.",
+  "claim_review": {
+    "role": "strategy",
+    "field": "rationale",
+    "text_sha256": "a0b0f29a623bf72b0e76e1fe55a024b3d9d3a2a48137d046482a6fb5f8a652f8",
+    "status": "needs_editor_review",
+    "literal_sources": [],
+    "cited_sources": [
+      "studio-fact",
+      "studio-one"
+    ]
+  },
+  "handoff": "hold"
+}

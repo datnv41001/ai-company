@@ -1,0 +1,342 @@
+[
+  {
+    "event": "push",
+    "branch": "main",
+    "checkout_variant": "head",
+    "workflow_head": "6a11bf4d97e7d1be1f5e0da1d503a54eabd15ad1",
+    "job": "https://github.com/datnv41001/ai-company/actions/runs/45943428831/job/140322624618",
+    "attempt": 1,
+    "artifact": "https://github.com/datnv41001/ai-company/actions/runs/45943428831/artifacts/15173872116",
+    "whole_job_wall_seconds": 350,
+    "standard_pool_smoke_only": {
+      "input_tokens": 2517,
+      "output_tokens": 813,
+      "attempts": 9,
+      "unconfirmed": 1
+    },
+    "released_v3_materials": {
+      "checkout": "6a11bf4d97e7d1be1f5e0da1d503a54eabd15ad1",
+      "state": "awaiting_qa",
+      "journal": [
+        {
+          "skill": "director",
+          "attempt": 1,
+          "outcome": "ok",
+          "input_tokens": 575,
+          "output_tokens": 64
+        },
+        {
+          "skill": "research",
+          "attempt": 1,
+          "outcome": "ok",
+          "input_tokens": 873,
+          "output_tokens": 106
+        },
+        {
+          "skill": "strategy",
+          "attempt": 1,
+          "outcome": "ok",
+          "input_tokens": 1040,
+          "output_tokens": 169
+        }
+      ],
+      "first_pass": true,
+      "model_sha256": "74a4da8c9fdbcd15bd1f6d01d621410d31c6fc00986f5eb687824e7b93d7a9db"
+    },
+    "legacy_v1_research_strategy_smoke": {
+      "first_pass": 2,
+      "first_attempts": 3,
+      "outcomes": {
+        "ok": 3,
+        "invalid_source": 1
+      },
+      "stage_attempts": [
+        {
+          "skill": "director",
+          "outcome": "ok",
+          "attempt": 1,
+          "input_tokens": 216,
+          "output_tokens": 56
+        },
+        {
+          "skill": "research",
+          "outcome": "ok",
+          "attempt": 1,
+          "input_tokens": 288,
+          "output_tokens": 77
+        },
+        {
+          "skill": "strategy",
+          "outcome": "invalid_source",
+          "attempt": 1,
+          "input_tokens": 415,
+          "output_tokens": 139
+        },
+        {
+          "skill": "strategy",
+          "outcome": "ok",
+          "attempt": 2,
+          "input_tokens": 431,
+          "output_tokens": 153
+        }
+      ]
+    },
+    "model_service": "loopback model on the Actions runner",
+    "actions_billed_cost": null
+  },
+  {
+    "event": "push",
+    "branch": "feature/research-strategy-decision-evidence",
+    "checkout_variant": "head",
+    "workflow_head": "9f33fd86f99da52a90c25aa5ec196ba601b3910f",
+    "job": "https://github.com/datnv41001/ai-company/actions/runs/45946082341/job/140330992018",
+    "attempt": 1,
+    "artifact": "https://github.com/datnv41001/ai-company/actions/runs/45946082341/artifacts/15175445472",
+    "whole_job_wall_seconds": 543,
+    "standard_pool_smoke_only": {
+      "input_tokens": 2453,
+      "output_tokens": 768,
+      "attempts": 9,
+      "unconfirmed": 1
+    },
+    "released_v3_materials": {
+      "checkout": "9f33fd86f99da52a90c25aa5ec196ba601b3910f",
+      "state": "awaiting_qa",
+      "journal": [
+        {
+          "skill": "director",
+          "attempt": 1,
+          "outcome": "ok",
+          "input_tokens": 575,
+          "output_tokens": 64
+        },
+        {
+          "skill": "research",
+          "attempt": 1,
+          "outcome": "ok",
+          "input_tokens": 873,
+          "output_tokens": 106
+        },
+        {
+          "skill": "strategy",
+          "attempt": 1,
+          "outcome": "ok",
+          "input_tokens": 1040,
+          "output_tokens": 221
+        }
+      ],
+      "first_pass": true,
+      "model_sha256": "74a4da8c9fdbcd15bd1f6d01d621410d31c6fc00986f5eb687824e7b93d7a9db"
+    },
+    "legacy_v1_research_strategy_smoke": {
+      "first_pass": 2,
+      "first_attempts": 3,
+      "outcomes": {
+        "ok": 3,
+        "invalid_source": 1
+      },
+      "stage_attempts": [
+        {
+          "skill": "director",
+          "outcome": "ok",
+          "attempt": 1,
+          "input_tokens": 216,
+          "output_tokens": 56
+        },
+        {
+          "skill": "research",
+          "outcome": "ok",
+          "attempt": 1,
+          "input_tokens": 288,
+          "output_tokens": 80
+        },
+        {
+          "skill": "strategy",
+          "outcome": "invalid_source",
+          "attempt": 1,
+          "input_tokens": 418,
+          "output_tokens": 202
+        },
+        {
+          "skill": "strategy",
+          "outcome": "ok",
+          "attempt": 2,
+          "input_tokens": 434,
+          "output_tokens": 207
+        }
+      ]
+    },
+    "model_service": "loopback model on the Actions runner",
+    "actions_billed_cost": null
+  },
+  {
+    "event": "pull_request",
+    "branch": "feature/research-strategy-decision-evidence",
+    "checkout_variant": "head",
+    "workflow_head": "9f33fd86f99da52a90c25aa5ec196ba601b3910f",
+    "job": "https://github.com/datnv41001/ai-company/actions/runs/45946088218/job/140331011713",
+    "attempt": 1,
+    "artifact": "https://github.com/datnv41001/ai-company/actions/runs/45946088218/artifacts/15174749358",
+    "whole_job_wall_seconds": 391,
+    "standard_pool_smoke_only": {
+      "input_tokens": 2517,
+      "output_tokens": 813,
+      "attempts": 9,
+      "unconfirmed": 1
+    },
+    "released_v3_materials": {
+      "checkout": "9f33fd86f99da52a90c25aa5ec196ba601b3910f",
+      "state": "awaiting_qa",
+      "journal": [
+        {
+          "skill": "director",
+          "attempt": 1,
+          "outcome": "ok",
+          "input_tokens": 575,
+          "output_tokens": 64
+        },
+        {
+          "skill": "research",
+          "attempt": 1,
+          "outcome": "ok",
+          "input_tokens": 873,
+          "output_tokens": 101
+        },
+        {
+          "skill": "strategy",
+          "attempt": 1,
+          "outcome": "ok",
+          "input_tokens": 1033,
+          "output_tokens": 175
+        }
+      ],
+      "first_pass": true,
+      "model_sha256": "74a4da8c9fdbcd15bd1f6d01d621410d31c6fc00986f5eb687824e7b93d7a9db"
+    },
+    "legacy_v1_research_strategy_smoke": {
+      "first_pass": 2,
+      "first_attempts": 3,
+      "outcomes": {
+        "ok": 3,
+        "invalid_source": 1
+      },
+      "stage_attempts": [
+        {
+          "skill": "director",
+          "outcome": "ok",
+          "attempt": 1,
+          "input_tokens": 216,
+          "output_tokens": 56
+        },
+        {
+          "skill": "research",
+          "outcome": "ok",
+          "attempt": 1,
+          "input_tokens": 288,
+          "output_tokens": 77
+        },
+        {
+          "skill": "strategy",
+          "outcome": "invalid_source",
+          "attempt": 1,
+          "input_tokens": 415,
+          "output_tokens": 139
+        },
+        {
+          "skill": "strategy",
+          "outcome": "ok",
+          "attempt": 2,
+          "input_tokens": 431,
+          "output_tokens": 153
+        }
+      ]
+    },
+    "model_service": "loopback model on the Actions runner",
+    "actions_billed_cost": null
+  },
+  {
+    "event": "pull_request",
+    "branch": "feature/research-strategy-decision-evidence",
+    "checkout_variant": "integration",
+    "workflow_head": "9f33fd86f99da52a90c25aa5ec196ba601b3910f",
+    "job": "https://github.com/datnv41001/ai-company/actions/runs/45946088218/job/140331011945",
+    "attempt": 1,
+    "artifact": "https://github.com/datnv41001/ai-company/actions/runs/45946088218/artifacts/15174858054",
+    "whole_job_wall_seconds": 399,
+    "standard_pool_smoke_only": {
+      "input_tokens": 2517,
+      "output_tokens": 815,
+      "attempts": 9,
+      "unconfirmed": 1
+    },
+    "released_v3_materials": {
+      "checkout": "85d2235f5f03330a5ea02b83211ca0e7423b054b",
+      "state": "awaiting_qa",
+      "journal": [
+        {
+          "skill": "director",
+          "attempt": 1,
+          "outcome": "ok",
+          "input_tokens": 575,
+          "output_tokens": 64
+        },
+        {
+          "skill": "research",
+          "attempt": 1,
+          "outcome": "ok",
+          "input_tokens": 873,
+          "output_tokens": 101
+        },
+        {
+          "skill": "strategy",
+          "attempt": 1,
+          "outcome": "ok",
+          "input_tokens": 1033,
+          "output_tokens": 175
+        }
+      ],
+      "first_pass": true,
+      "model_sha256": "74a4da8c9fdbcd15bd1f6d01d621410d31c6fc00986f5eb687824e7b93d7a9db"
+    },
+    "legacy_v1_research_strategy_smoke": {
+      "first_pass": 2,
+      "first_attempts": 3,
+      "outcomes": {
+        "ok": 3,
+        "invalid_source": 1
+      },
+      "stage_attempts": [
+        {
+          "skill": "director",
+          "outcome": "ok",
+          "attempt": 1,
+          "input_tokens": 216,
+          "output_tokens": 56
+        },
+        {
+          "skill": "research",
+          "outcome": "ok",
+          "attempt": 1,
+          "input_tokens": 288,
+          "output_tokens": 77
+        },
+        {
+          "skill": "strategy",
+          "outcome": "invalid_source",
+          "attempt": 1,
+          "input_tokens": 415,
+          "output_tokens": 139
+        },
+        {
+          "skill": "strategy",
+          "outcome": "ok",
+          "attempt": 2,
+          "input_tokens": 431,
+          "output_tokens": 153
+        }
+      ]
+    },
+    "model_service": "loopback model on the Actions runner",
+    "actions_billed_cost": null
+  }
+]

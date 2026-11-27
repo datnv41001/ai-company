@@ -1,0 +1,306 @@
+{
+  "kind": "synthetic fixed decoder; released request/validation and staff composition",
+  "model_calls": 0,
+  "packet_sha256": "a65aa36bd7361ef69f41aa294d7e88a71c0c2ad2da45b614da3ad5a1108f3fd8",
+  "checkpoints": {
+    "research": {
+      "text": "What did you check before choosing your first class?\nCompare different learners before drawing broader conclusions.\nfirst-time participants\nAt the trial desk a first-time participant used the preparation checklist to choose practice fabric.",
+      "sections": {
+        "research_question": "What did you check before choosing your first class?",
+        "evidence_needed": "Compare different learners before drawing broader conclusions.",
+        "segment": "first-time participants",
+        "buyer_problem": "At the trial desk a first-time participant used the preparation checklist to choose practice fabric."
+      },
+      "source_ids": [
+        "studio-fact",
+        "studio-one"
+      ],
+      "raw_reply": {
+        "segment": "first-time participants",
+        "buyer_problem": "At the trial desk a first-time participant used the preparation checklist to choose practice fabric.",
+        "research_question": "What did you check before choosing your first class?",
+        "evidence_needed": "Compare different learners before drawing broader conclusions.",
+        "source_ids": [
+          "studio-fact",
+          "studio-one"
+        ]
+      },
+      "marketing_skills": {
+        "market-research@1": "86eeef60340cfd5035e4ecbba3807b7afca9b4abd4356e047d8806b8c9f77621",
+        "icp-segmentation@1": "b69cd2acdf276b874a4cb956987cfd9ebf00efe4fd286e80d4b835ec6ab5102f"
+      }
+    },
+    "strategy": {
+      "text": "Help learners prepare for their first mending session.\nEvery learner wants a private group booking.\nUse paid video ads.\nA preparation checklist may clarify what to bring.\nCount requests for a class place.\nCount every request as paid attendance.",
+      "sections": {
+        "positioning": "Help learners prepare for their first mending session.",
+        "rationale": "Every learner wants a private group booking.",
+        "channel_choice": "Use paid video ads.",
+        "test_hypothesis": "A preparation checklist may clarify what to bring.",
+        "measurable_action": "Count requests for a class place.",
+        "measurement_method": "Count every request as paid attendance."
+      },
+      "source_ids": [
+        "studio-fact",
+        "studio-one"
+      ],
+      "raw_reply": {
+        "positioning": "Help learners prepare for their first mending session.",
+        "rationale": "Every learner wants a private group booking.",
+        "channel_choice": "Use paid video ads.",
+        "test_hypothesis": "A preparation checklist may clarify what to bring.",
+        "measurable_action": "Count requests for a class place.",
+        "measurement_method": "Count every request as paid attendance.",
+        "source_ids": [
+          "studio-fact",
+          "studio-one"
+        ]
+      },
+      "marketing_skills": {
+        "positioning-value@1": "b83430d074a232e1b0e8a2485a935c20bdc2d72521ac25478ac34f99475af93c",
+        "campaign-channel@1": "e5f47b865cad8e80a7efab8d1ef1854cf9a4cf5b8185b80ecc263fea1dc631d0",
+        "kpi-measurement@1": "b3f38b752f72b7a4bb76afc2783e08308f3d19a473b3a18eeed277d6552a13f9"
+      }
+    },
+    "binding": {
+      "workflow": "WF-03/research-strategy-draft@3",
+      "scope": {
+        "tenant_id": "synthetic-agency",
+        "client_id": "synthetic-studio",
+        "brand_id": "studio-brand",
+        "campaign_id": "studio-study"
+      },
+      "packet_sha256": "a65aa36bd7361ef69f41aa294d7e88a71c0c2ad2da45b614da3ad5a1108f3fd8",
+      "source_refs": {
+        "studio-fact": "studio-fact",
+        "studio-one": "studio-one",
+        "studio-other": "studio-other",
+        "studio-two": "studio-two"
+      },
+      "source_revisions": {
+        "studio-fact": 1,
+        "studio-one": 1,
+        "studio-other": 1,
+        "studio-two": 1
+      }
+    }
+  },
+  "request_contexts": {
+    "research": {
+      "reference": {
+        "product": "Fold Studio",
+        "audience": "first-time participants",
+        "facts": [
+          {
+            "id": "studio-fact",
+            "wording": "The studio provides practice fabric and basic mending tools for the beginner class.",
+            "qualifiers": [
+              "{\"kind\": \"product_fact\", \"permitted_use\": \"internal_strategy\", \"product\": \"Fold Studio\", \"recorded_at\": \"2026-11-12T10:00:00Z\", \"revision\": 1, \"revoked_at\": null, \"sample\": \"One synthetic class specification, revision 1.\", \"segment\": \"*\", \"situation\": \"*\", \"valid_from\": \"2026-11-01T00:00:00Z\", \"valid_until\": null}"
+            ]
+          },
+          {
+            "id": "studio-one",
+            "wording": "At the trial desk a first-time participant used the preparation checklist to choose practice fabric.",
+            "qualifiers": [
+              "{\"coding_digest\": \"3ccba150ab5be459ef12f20fb892a9c0d3b228616ba5e30d2020b5d1cac279ed\", \"kind\": \"observation\", \"observed_action\": \"used\", \"option\": \"first_visit\", \"permitted_use\": \"internal_strategy\", \"product\": \"Fold Studio\", \"record_id\": \"studio-event-one\", \"recorded_at\": \"2026-11-12T10:00:00Z\", \"revision\": 1, \"revoked_at\": null, \"sample\": \"One staged desk session with a single learner.\", \"segment\": \"first-time participants\", \"situation\": \"choosing a first class\", \"valid_from\": \"2026-11-01T00:00:00Z\", \"valid_until\": null}"
+            ]
+          },
+          {
+            "id": "studio-other",
+            "wording": "During team-event planning the organizer used the private-group enquiry note to prepare a request.",
+            "qualifiers": [
+              "{\"coding_digest\": \"6334240834302f9cd0f16eb7ab5bf9de1fa9c7ec1b013555c9fe04758d794f2b\", \"kind\": \"observation\", \"observed_action\": \"used\", \"option\": \"group_booking\", \"permitted_use\": \"internal_strategy\", \"product\": \"Fold Studio\", \"record_id\": \"studio-event-other\", \"recorded_at\": \"2026-11-12T10:00:00Z\", \"revision\": 1, \"revoked_at\": null, \"sample\": \"One synthetic organizer interview.\", \"segment\": \"team organizers\", \"situation\": \"planning a private group\", \"valid_from\": \"2026-11-01T00:00:00Z\", \"valid_until\": null}"
+            ]
+          },
+          {
+            "id": "studio-two",
+            "wording": "At a second staged session a first-time participant declined the private-group enquiry note.",
+            "qualifiers": [
+              "{\"coding_digest\": \"8ba34a929287eb49e4906d4d647adfc6b8a0cd9e7f428400d3754741ddc71561\", \"kind\": \"observation\", \"observed_action\": \"declined\", \"option\": \"group_booking\", \"permitted_use\": \"internal_strategy\", \"product\": \"Fold Studio\", \"record_id\": \"studio-event-two\", \"recorded_at\": \"2026-11-12T10:00:00Z\", \"revision\": 1, \"revoked_at\": null, \"sample\": \"Another staged visit in the same studio, using a single learner.\", \"segment\": \"first-time participants\", \"situation\": \"choosing a first class\", \"valid_from\": \"2026-11-01T00:00:00Z\", \"valid_until\": null}"
+            ]
+          }
+        ],
+        "hypotheses": [
+          "First-time learners primarily want to reserve several seats."
+        ],
+        "gaps": [],
+        "region": "synthetic study site",
+        "brand": "studio-brand",
+        "locale": "en-US",
+        "channel": "",
+        "task_intent": {
+          "purpose": "Which question should the first-class booking guide answer first?",
+          "requirements": [
+            "{\"assumption\": \"First-time learners primarily want to reserve several seats.\", \"assumption_option\": \"group_booking\", \"buyer_action\": \"appointment\", \"constraints\": [\"Describe the practice class only.\", \"Human approval before any publication.\", \"Use the records only for internal strategy.\"], \"decision\": \"Which question should the first-class booking guide answer first?\", \"objective\": \"Help a first-time participant decide whether to bring their own garment.\", \"options\": [{\"asset\": \"A first-class preparation panel for the booking guide.\", \"id\": \"first_visit\", \"label\": \"Explain what a first-time participant brings\", \"tradeoff\": \"Resolves a preparation question but uses space that could explain group arrangements.\"}, {\"asset\": \"A private-group enquiry note for the booking guide.\", \"id\": \"group_booking\", \"label\": \"Explain how an organizer requests group places\", \"tradeoff\": \"Helps an organizer coordinate several places but adds steps irrelevant to individual learners.\"}], \"owner\": \"Studio programme manager\", \"product\": \"Fold Studio\", \"segment\": \"first-time participants\", \"situation\": \"choosing a first class\"}"
+          ],
+          "audience": "first-time participants",
+          "product": "Fold Studio",
+          "exclusions": [
+            "Describe the practice class only.",
+            "Human approval before any publication.",
+            "Use the records only for internal strategy."
+          ],
+          "buyer_action": "appointment",
+          "editorial_style": "plain",
+          "acceptance_criteria": [
+            "Keep observations separate from market-wide claims."
+          ]
+        },
+        "brand_guidelines": {},
+        "buyer_action": "appointment",
+        "editorial_style": "plain"
+      },
+      "stage": "research",
+      "assignment": "Which question should the first-class booking guide answer first?",
+      "predecessors": {}
+    },
+    "strategy": {
+      "reference": {
+        "product": "Fold Studio",
+        "audience": "first-time participants",
+        "facts": [
+          {
+            "id": "studio-fact",
+            "wording": "The studio provides practice fabric and basic mending tools for the beginner class.",
+            "qualifiers": [
+              "{\"kind\": \"product_fact\", \"permitted_use\": \"internal_strategy\", \"product\": \"Fold Studio\", \"recorded_at\": \"2026-11-12T10:00:00Z\", \"revision\": 1, \"revoked_at\": null, \"sample\": \"One synthetic class specification, revision 1.\", \"segment\": \"*\", \"situation\": \"*\", \"valid_from\": \"2026-11-01T00:00:00Z\", \"valid_until\": null}"
+            ]
+          },
+          {
+            "id": "studio-one",
+            "wording": "At the trial desk a first-time participant used the preparation checklist to choose practice fabric.",
+            "qualifiers": [
+              "{\"coding_digest\": \"3ccba150ab5be459ef12f20fb892a9c0d3b228616ba5e30d2020b5d1cac279ed\", \"kind\": \"observation\", \"observed_action\": \"used\", \"option\": \"first_visit\", \"permitted_use\": \"internal_strategy\", \"product\": \"Fold Studio\", \"record_id\": \"studio-event-one\", \"recorded_at\": \"2026-11-12T10:00:00Z\", \"revision\": 1, \"revoked_at\": null, \"sample\": \"One staged desk session with a single learner.\", \"segment\": \"first-time participants\", \"situation\": \"choosing a first class\", \"valid_from\": \"2026-11-01T00:00:00Z\", \"valid_until\": null}"
+            ]
+          },
+          {
+            "id": "studio-other",
+            "wording": "During team-event planning the organizer used the private-group enquiry note to prepare a request.",
+            "qualifiers": [
+              "{\"coding_digest\": \"6334240834302f9cd0f16eb7ab5bf9de1fa9c7ec1b013555c9fe04758d794f2b\", \"kind\": \"observation\", \"observed_action\": \"used\", \"option\": \"group_booking\", \"permitted_use\": \"internal_strategy\", \"product\": \"Fold Studio\", \"record_id\": \"studio-event-other\", \"recorded_at\": \"2026-11-12T10:00:00Z\", \"revision\": 1, \"revoked_at\": null, \"sample\": \"One synthetic organizer interview.\", \"segment\": \"team organizers\", \"situation\": \"planning a private group\", \"valid_from\": \"2026-11-01T00:00:00Z\", \"valid_until\": null}"
+            ]
+          },
+          {
+            "id": "studio-two",
+            "wording": "At a second staged session a first-time participant declined the private-group enquiry note.",
+            "qualifiers": [
+              "{\"coding_digest\": \"8ba34a929287eb49e4906d4d647adfc6b8a0cd9e7f428400d3754741ddc71561\", \"kind\": \"observation\", \"observed_action\": \"declined\", \"option\": \"group_booking\", \"permitted_use\": \"internal_strategy\", \"product\": \"Fold Studio\", \"record_id\": \"studio-event-two\", \"recorded_at\": \"2026-11-12T10:00:00Z\", \"revision\": 1, \"revoked_at\": null, \"sample\": \"Another staged visit in the same studio, using a single learner.\", \"segment\": \"first-time participants\", \"situation\": \"choosing a first class\", \"valid_from\": \"2026-11-01T00:00:00Z\", \"valid_until\": null}"
+            ]
+          }
+        ],
+        "hypotheses": [
+          "First-time learners primarily want to reserve several seats."
+        ],
+        "channel": "",
+        "objective": "Help a first-time participant decide whether to bring their own garment.",
+        "kpi": "",
+        "region": "synthetic study site",
+        "brand": "studio-brand",
+        "locale": "en-US",
+        "task_intent": {
+          "purpose": "Which question should the first-class booking guide answer first?",
+          "requirements": [
+            "{\"assumption\": \"First-time learners primarily want to reserve several seats.\", \"assumption_option\": \"group_booking\", \"buyer_action\": \"appointment\", \"constraints\": [\"Describe the practice class only.\", \"Human approval before any publication.\", \"Use the records only for internal strategy.\"], \"decision\": \"Which question should the first-class booking guide answer first?\", \"objective\": \"Help a first-time participant decide whether to bring their own garment.\", \"options\": [{\"asset\": \"A first-class preparation panel for the booking guide.\", \"id\": \"first_visit\", \"label\": \"Explain what a first-time participant brings\", \"tradeoff\": \"Resolves a preparation question but uses space that could explain group arrangements.\"}, {\"asset\": \"A private-group enquiry note for the booking guide.\", \"id\": \"group_booking\", \"label\": \"Explain how an organizer requests group places\", \"tradeoff\": \"Helps an organizer coordinate several places but adds steps irrelevant to individual learners.\"}], \"owner\": \"Studio programme manager\", \"product\": \"Fold Studio\", \"segment\": \"first-time participants\", \"situation\": \"choosing a first class\"}"
+          ],
+          "audience": "first-time participants",
+          "product": "Fold Studio",
+          "exclusions": [
+            "Describe the practice class only.",
+            "Human approval before any publication.",
+            "Use the records only for internal strategy."
+          ],
+          "buyer_action": "appointment",
+          "editorial_style": "plain",
+          "acceptance_criteria": [
+            "Keep observations separate from market-wide claims."
+          ]
+        },
+        "brand_guidelines": {},
+        "buyer_action": "appointment",
+        "editorial_style": "plain"
+      },
+      "stage": "strategy",
+      "assignment": "Which question should the first-class booking guide answer first?",
+      "predecessors": {
+        "research": {
+          "text": "What did you check before choosing your first class?\nCompare different learners before drawing broader conclusions.\nfirst-time participants\nAt the trial desk a first-time participant used the preparation checklist to choose practice fabric.",
+          "sections": {
+            "research_question": "What did you check before choosing your first class?",
+            "evidence_needed": "Compare different learners before drawing broader conclusions.",
+            "segment": "first-time participants",
+            "buyer_problem": "At the trial desk a first-time participant used the preparation checklist to choose practice fabric."
+          },
+          "source_ids": [
+            "studio-fact",
+            "studio-one"
+          ],
+          "raw_reply": {
+            "segment": "first-time participants",
+            "buyer_problem": "At the trial desk a first-time participant used the preparation checklist to choose practice fabric.",
+            "research_question": "What did you check before choosing your first class?",
+            "evidence_needed": "Compare different learners before drawing broader conclusions.",
+            "source_ids": [
+              "studio-fact",
+              "studio-one"
+            ]
+          },
+          "marketing_skills": {
+            "market-research@1": "86eeef60340cfd5035e4ecbba3807b7afca9b4abd4356e047d8806b8c9f77621",
+            "icp-segmentation@1": "b69cd2acdf276b874a4cb956987cfd9ebf00efe4fd286e80d4b835ec6ab5102f"
+          }
+        }
+      }
+    }
+  },
+  "staff_groups": {
+    "research": {
+      "buyer_problem": "At the trial desk a first-time participant used the preparation checklist to choose practice fabric.",
+      "research_question": "What did you check before choosing your first class?",
+      "evidence": "The studio provides practice fabric and basic mending tools for the beginner class. {\"kind\": \"product_fact\", \"permitted_use\": \"internal_strategy\", \"product\": \"Fold Studio\", \"recorded_at\": \"2026-11-12T10:00:00Z\", \"revision\": 1, \"revoked_at\": null, \"sample\": \"One synthetic class specification, revision 1.\", \"segment\": \"*\", \"situation\": \"*\", \"valid_from\": \"2026-11-01T00:00:00Z\", \"valid_until\": null}\nAt the trial desk a first-time participant used the preparation checklist to choose practice fabric. {\"coding_digest\": \"3ccba150ab5be459ef12f20fb892a9c0d3b228616ba5e30d2020b5d1cac279ed\", \"kind\": \"observation\", \"observed_action\": \"used\", \"option\": \"first_visit\", \"permitted_use\": \"internal_strategy\", \"product\": \"Fold Studio\", \"record_id\": \"studio-event-one\", \"recorded_at\": \"2026-11-12T10:00:00Z\", \"revision\": 1, \"revoked_at\": null, \"sample\": \"One staged desk session with a single learner.\", \"segment\": \"first-time participants\", \"situation\": \"choosing a first class\", \"valid_from\": \"2026-11-01T00:00:00Z\", \"valid_until\": null}\nDuring team-event planning the organizer used the private-group enquiry note to prepare a request. {\"coding_digest\": \"6334240834302f9cd0f16eb7ab5bf9de1fa9c7ec1b013555c9fe04758d794f2b\", \"kind\": \"observation\", \"observed_action\": \"used\", \"option\": \"group_booking\", \"permitted_use\": \"internal_strategy\", \"product\": \"Fold Studio\", \"record_id\": \"studio-event-other\", \"recorded_at\": \"2026-11-12T10:00:00Z\", \"revision\": 1, \"revoked_at\": null, \"sample\": \"One synthetic organizer interview.\", \"segment\": \"team organizers\", \"situation\": \"planning a private group\", \"valid_from\": \"2026-11-01T00:00:00Z\", \"valid_until\": null}\nAt a second staged session a first-time participant declined the private-group enquiry note. {\"coding_digest\": \"8ba34a929287eb49e4906d4d647adfc6b8a0cd9e7f428400d3754741ddc71561\", \"kind\": \"observation\", \"observed_action\": \"declined\", \"option\": \"group_booking\", \"permitted_use\": \"internal_strategy\", \"product\": \"Fold Studio\", \"record_id\": \"studio-event-two\", \"recorded_at\": \"2026-11-12T10:00:00Z\", \"revision\": 1, \"revoked_at\": null, \"sample\": \"Another staged visit in the same studio, using a single learner.\", \"segment\": \"first-time participants\", \"situation\": \"choosing a first class\", \"valid_from\": \"2026-11-01T00:00:00Z\", \"valid_until\": null}",
+      "hypothesis": "Hypothesis to test: clearer terms for Fold Studio help first-time participants select a next step."
+    },
+    "strategy": {
+      "positioning": "Help learners prepare for their first mending session.",
+      "channel_choice": "Use paid video ads.",
+      "rationale": "Every learner wants a private group booking.",
+      "execution": "Prepare two presentations of Fold Studio on , keep terms fixed and measure the same action."
+    },
+    "measurement": {
+      "test_hypothesis": "A preparation checklist may clarify what to bring.",
+      "measurable_action": "Request an appointment",
+      "measurement_method": "The appointment KPI has no approved structured definition. Confirm the measure with its owner before reporting a rate."
+    }
+  },
+  "staff_findings": [],
+  "source_report": {
+    "status": "source_handles_only",
+    "facts": [
+      {
+        "handle": "studio-fact",
+        "text": "The studio provides practice fabric and basic mending tools for the beginner class. {\"kind\": \"product_fact\", \"permitted_use\": \"internal_strategy\", \"product\": \"Fold Studio\", \"recorded_at\": \"2026-11-12T10:00:00Z\", \"revision\": 1, \"revoked_at\": null, \"sample\": \"One synthetic class specification, revision 1.\", \"segment\": \"*\", \"situation\": \"*\", \"valid_from\": \"2026-11-01T00:00:00Z\", \"valid_until\": null}"
+      },
+      {
+        "handle": "studio-one",
+        "text": "At the trial desk a first-time participant used the preparation checklist to choose practice fabric. {\"coding_digest\": \"3ccba150ab5be459ef12f20fb892a9c0d3b228616ba5e30d2020b5d1cac279ed\", \"kind\": \"observation\", \"observed_action\": \"used\", \"option\": \"first_visit\", \"permitted_use\": \"internal_strategy\", \"product\": \"Fold Studio\", \"record_id\": \"studio-event-one\", \"recorded_at\": \"2026-11-12T10:00:00Z\", \"revision\": 1, \"revoked_at\": null, \"sample\": \"One staged desk session with a single learner.\", \"segment\": \"first-time participants\", \"situation\": \"choosing a first class\", \"valid_from\": \"2026-11-01T00:00:00Z\", \"valid_until\": null}"
+      },
+      {
+        "handle": "studio-other",
+        "text": "During team-event planning the organizer used the private-group enquiry note to prepare a request. {\"coding_digest\": \"6334240834302f9cd0f16eb7ab5bf9de1fa9c7ec1b013555c9fe04758d794f2b\", \"kind\": \"observation\", \"observed_action\": \"used\", \"option\": \"group_booking\", \"permitted_use\": \"internal_strategy\", \"product\": \"Fold Studio\", \"record_id\": \"studio-event-other\", \"recorded_at\": \"2026-11-12T10:00:00Z\", \"revision\": 1, \"revoked_at\": null, \"sample\": \"One synthetic organizer interview.\", \"segment\": \"team organizers\", \"situation\": \"planning a private group\", \"valid_from\": \"2026-11-01T00:00:00Z\", \"valid_until\": null}"
+      },
+      {
+        "handle": "studio-two",
+        "text": "At a second staged session a first-time participant declined the private-group enquiry note. {\"coding_digest\": \"8ba34a929287eb49e4906d4d647adfc6b8a0cd9e7f428400d3754741ddc71561\", \"kind\": \"observation\", \"observed_action\": \"declined\", \"option\": \"group_booking\", \"permitted_use\": \"internal_strategy\", \"product\": \"Fold Studio\", \"record_id\": \"studio-event-two\", \"recorded_at\": \"2026-11-12T10:00:00Z\", \"revision\": 1, \"revoked_at\": null, \"sample\": \"Another staged visit in the same studio, using a single learner.\", \"segment\": \"first-time participants\", \"situation\": \"choosing a first class\", \"valid_from\": \"2026-11-01T00:00:00Z\", \"valid_until\": null}"
+      }
+    ],
+    "suggested_handles": {
+      "research": [
+        "studio-fact",
+        "studio-one"
+      ],
+      "strategy": [
+        "studio-fact",
+        "studio-one"
+      ]
+    }
+  }
+}

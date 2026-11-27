@@ -1,0 +1,396 @@
+{
+  "scope": {
+    "tenant_id": "synthetic-agency",
+    "client_id": "synthetic-studio",
+    "brand_id": "studio-brand",
+    "campaign_id": "studio-study"
+  },
+  "as_of": "2026-11-15T12:00:00Z",
+  "provenance": {
+    "workflow": "WF-03/research-strategy-draft@3",
+    "catalog_sha256": "cf9078f2aa283cc7a9e9c273abd3077338c94ebe0f51a65e0a30c33254d94969",
+    "roles": {
+      "research": {
+        "adapter": "research@4",
+        "digest": "cb32178ff6ab9076426ab22cbfb8624c282d76e47d6f08a12e4447f504391239",
+        "checkpoint_sha256": "923fe6b9c598bb116a55b6bf1bc63fd47f9dba694fcc637b0cd0aea889a0ccfb",
+        "qa_policy": "c3-research@2"
+      },
+      "strategy": {
+        "adapter": "strategy@4",
+        "digest": "225597105f7168efbf65e5e2e4e9cbb5fd725b2eca9b319fd352d5b39b10bf64",
+        "checkpoint_sha256": "d8601824f9f53031a2b777655db46443bb4a4040ec5238c65d7e8779029ba561",
+        "qa_policy": "c3-strategy@2"
+      }
+    },
+    "packet_sha256": "a65aa36bd7361ef69f41aa294d7e88a71c0c2ad2da45b614da3ad5a1108f3fd8"
+  },
+  "research": {
+    "decision": "Which question should the first-class booking guide answer first?",
+    "segment": "first-time participants",
+    "buying_episode": "choosing a first class",
+    "observations": [
+      {
+        "source_id": "studio-one",
+        "revision": 1,
+        "quote": "At the trial desk a first-time participant used the preparation checklist to choose practice fabric.",
+        "excerpt": "At the trial desk a first-time participant used the preparation checklist to choose practice fabric.",
+        "sample": "One staged desk session with a single learner.",
+        "kind": "observation",
+        "segment": "first-time participants",
+        "situation": "choosing a first class",
+        "recorded_at": "2026-11-12T10:00:00Z",
+        "valid_from": "2026-11-01T00:00:00Z",
+        "valid_until": null,
+        "record_id": "studio-event-one",
+        "option": "first_visit",
+        "observed_action": "used"
+      },
+      {
+        "source_id": "studio-two",
+        "revision": 1,
+        "quote": "At a second staged session a first-time participant declined the private-group enquiry note.",
+        "excerpt": "At a second staged session a first-time participant declined the private-group enquiry note.",
+        "sample": "Another staged visit in the same studio, using a single learner.",
+        "kind": "observation",
+        "segment": "first-time participants",
+        "situation": "choosing a first class",
+        "recorded_at": "2026-11-12T10:00:00Z",
+        "valid_from": "2026-11-01T00:00:00Z",
+        "valid_until": null,
+        "record_id": "studio-event-two",
+        "option": "group_booking",
+        "observed_action": "declined"
+      }
+    ],
+    "context_only": [
+      {
+        "source_id": "studio-other",
+        "revision": 1,
+        "quote": "During team-event planning the organizer used the private-group enquiry note to prepare a request.",
+        "excerpt": "During team-event planning the organizer used the private-group enquiry note to prepare a request.",
+        "sample": "One synthetic organizer interview.",
+        "kind": "observation",
+        "segment": "team organizers",
+        "situation": "planning a private group",
+        "recorded_at": "2026-11-12T10:00:00Z",
+        "valid_from": "2026-11-01T00:00:00Z",
+        "valid_until": null
+      }
+    ],
+    "awaiting_observation_review": [],
+    "counterevidence": [
+      {
+        "source_id": "studio-one",
+        "revision": 1,
+        "quote": "At the trial desk a first-time participant used the preparation checklist to choose practice fabric.",
+        "excerpt": "At the trial desk a first-time participant used the preparation checklist to choose practice fabric.",
+        "sample": "One staged desk session with a single learner.",
+        "kind": "observation",
+        "segment": "first-time participants",
+        "situation": "choosing a first class",
+        "recorded_at": "2026-11-12T10:00:00Z",
+        "valid_from": "2026-11-01T00:00:00Z",
+        "valid_until": null,
+        "record_id": "studio-event-one",
+        "option": "first_visit",
+        "observed_action": "used"
+      },
+      {
+        "source_id": "studio-two",
+        "revision": 1,
+        "quote": "At a second staged session a first-time participant declined the private-group enquiry note.",
+        "excerpt": "At a second staged session a first-time participant declined the private-group enquiry note.",
+        "sample": "Another staged visit in the same studio, using a single learner.",
+        "kind": "observation",
+        "segment": "first-time participants",
+        "situation": "choosing a first class",
+        "recorded_at": "2026-11-12T10:00:00Z",
+        "valid_from": "2026-11-01T00:00:00Z",
+        "valid_until": null,
+        "record_id": "studio-event-two",
+        "option": "group_booking",
+        "observed_action": "declined"
+      }
+    ],
+    "product_facts": [
+      {
+        "source_id": "studio-fact",
+        "revision": 1,
+        "quote": "The studio provides practice fabric and basic mending tools for the beginner class.",
+        "excerpt": "The studio provides practice fabric and basic mending tools for the beginner class.",
+        "sample": "One synthetic class specification, revision 1.",
+        "kind": "product_fact",
+        "segment": "*",
+        "situation": "*",
+        "recorded_at": "2026-11-12T10:00:00Z",
+        "valid_from": "2026-11-01T00:00:00Z",
+        "valid_until": null
+      }
+    ],
+    "working_assumption": "First-time learners primarily want to reserve several seats.",
+    "missing": [
+      "channel",
+      "measurement"
+    ],
+    "questions": [
+      "Walk me through the last time you faced this buying decision. What happened?",
+      "What alternatives did you consider, and what changed your decision?"
+    ],
+    "interpretation": "Test whether this episode merits a draft about Explain what a first-time participant brings. The observation establishes the recorded action; the buyer's reason remains unknown.",
+    "limitations": [
+      "One synthetic class specification, revision 1.",
+      "One staged desk session with a single learner.",
+      "One synthetic organizer interview.",
+      "Another staged visit in the same studio, using a single learner."
+    ],
+    "evidence_matrix": [
+      {
+        "source_id": "studio-fact",
+        "revision": 1,
+        "quote": "The studio provides practice fabric and basic mending tools for the beginner class.",
+        "excerpt": "The studio provides practice fabric and basic mending tools for the beginner class.",
+        "sample": "One synthetic class specification, revision 1.",
+        "kind": "product_fact",
+        "segment": "*",
+        "situation": "*",
+        "recorded_at": "2026-11-12T10:00:00Z",
+        "valid_from": "2026-11-01T00:00:00Z",
+        "valid_until": null
+      },
+      {
+        "source_id": "studio-one",
+        "revision": 1,
+        "quote": "At the trial desk a first-time participant used the preparation checklist to choose practice fabric.",
+        "excerpt": "At the trial desk a first-time participant used the preparation checklist to choose practice fabric.",
+        "sample": "One staged desk session with a single learner.",
+        "kind": "observation",
+        "segment": "first-time participants",
+        "situation": "choosing a first class",
+        "recorded_at": "2026-11-12T10:00:00Z",
+        "valid_from": "2026-11-01T00:00:00Z",
+        "valid_until": null
+      },
+      {
+        "source_id": "studio-two",
+        "revision": 1,
+        "quote": "At a second staged session a first-time participant declined the private-group enquiry note.",
+        "excerpt": "At a second staged session a first-time participant declined the private-group enquiry note.",
+        "sample": "Another staged visit in the same studio, using a single learner.",
+        "kind": "observation",
+        "segment": "first-time participants",
+        "situation": "choosing a first class",
+        "recorded_at": "2026-11-12T10:00:00Z",
+        "valid_from": "2026-11-01T00:00:00Z",
+        "valid_until": null
+      }
+    ],
+    "checkpoint_field_review": [
+      {
+        "role": "research",
+        "field": "research_question",
+        "text_sha256": "4bf2c9d1f31b62228d60728c3e86200cb2c4d3c6f04b763bc428045f481e3424",
+        "status": "needs_editor_review",
+        "literal_sources": [],
+        "cited_sources": [
+          "studio-fact",
+          "studio-one"
+        ]
+      },
+      {
+        "role": "research",
+        "field": "evidence_needed",
+        "text_sha256": "a70c001587b7c172610a24c83e9a854262985a1e1bb9ead93eed90f0fd75a87d",
+        "status": "needs_editor_review",
+        "literal_sources": [],
+        "cited_sources": [
+          "studio-fact",
+          "studio-one"
+        ]
+      },
+      {
+        "role": "research",
+        "field": "segment",
+        "text_sha256": "50420b7aae00602ad33d58531d9c8af0539e0f34b98186eec41b3cf34981e58a",
+        "status": "needs_editor_review",
+        "literal_sources": [],
+        "cited_sources": [
+          "studio-fact",
+          "studio-one"
+        ]
+      },
+      {
+        "role": "research",
+        "field": "buyer_problem",
+        "text_sha256": "f43bf0a06b82167a374d3cb5a11d5c306b842b18e13fffd7e66d7fd037c680cd",
+        "status": "literal_source_text",
+        "literal_sources": [
+          "studio-one"
+        ],
+        "cited_sources": [
+          "studio-fact",
+          "studio-one"
+        ]
+      },
+      {
+        "role": "strategy",
+        "field": "positioning",
+        "text_sha256": "d53279305650f9a8eb83ff5ec936d688ee7a6d7e8f2c15327ba64ce8dc2dbddc",
+        "status": "needs_editor_review",
+        "literal_sources": [],
+        "cited_sources": [
+          "studio-fact",
+          "studio-one"
+        ]
+      },
+      {
+        "role": "strategy",
+        "field": "rationale",
+        "text_sha256": "a0b0f29a623bf72b0e76e1fe55a024b3d9d3a2a48137d046482a6fb5f8a652f8",
+        "status": "needs_editor_review",
+        "literal_sources": [],
+        "cited_sources": [
+          "studio-fact",
+          "studio-one"
+        ]
+      },
+      {
+        "role": "strategy",
+        "field": "channel_choice",
+        "text_sha256": "2c0919b88d471f8561f46417044666e21a8be7a455ec6458dd4829588645aff6",
+        "status": "needs_editor_review",
+        "literal_sources": [],
+        "cited_sources": [
+          "studio-fact",
+          "studio-one"
+        ]
+      },
+      {
+        "role": "strategy",
+        "field": "test_hypothesis",
+        "text_sha256": "bb7d752e171374ad0f2810d6900653cccfb11663c7c903e3330990dc92b72152",
+        "status": "needs_editor_review",
+        "literal_sources": [],
+        "cited_sources": [
+          "studio-fact",
+          "studio-one"
+        ]
+      },
+      {
+        "role": "strategy",
+        "field": "measurable_action",
+        "text_sha256": "7c9e6157b95a40ee6af5fd76c78bad7a685d4f239986019e327108a8aa78348e",
+        "status": "needs_editor_review",
+        "literal_sources": [],
+        "cited_sources": [
+          "studio-fact",
+          "studio-one"
+        ]
+      },
+      {
+        "role": "strategy",
+        "field": "measurement_method",
+        "text_sha256": "6227977529299ecfe1bc8b0c838f9e35521dcee0e933a81e56e5cd9c0ecd727d",
+        "status": "needs_editor_review",
+        "literal_sources": [],
+        "cited_sources": [
+          "studio-fact",
+          "studio-one"
+        ]
+      }
+    ]
+  },
+  "strategy": {
+    "status": "proposed",
+    "selected_option": "first_visit",
+    "options": [
+      {
+        "id": "first_visit",
+        "label": "Explain what a first-time participant brings",
+        "tradeoff": "Resolves a preparation question but uses space that could explain group arrangements.",
+        "asset": "A first-class preparation panel for the booking guide.",
+        "used": [
+          "studio-one"
+        ],
+        "declined": [],
+        "asked": []
+      },
+      {
+        "id": "group_booking",
+        "label": "Explain how an organizer requests group places",
+        "tradeoff": "Helps an organizer coordinate several places but adds steps irrelevant to individual learners.",
+        "asset": "A private-group enquiry note for the booking guide.",
+        "used": [],
+        "declined": [
+          "studio-two"
+        ],
+        "asked": []
+      }
+    ],
+    "rationale": [
+      "studio-one · At the trial desk a first-time participant used the preparation checklist to choose practice fabric."
+    ],
+    "basis_sources": [
+      "studio-one"
+    ],
+    "owner": "Studio programme manager",
+    "positioning": "For first-time participants facing choosing a first class, lead the internal draft with: Explain what a first-time participant brings.",
+    "tradeoff": "Resolves a preparation question but uses space that could explain group arrangements.",
+    "conditions": {
+      "segment": "first-time participants",
+      "episode": "choosing a first class",
+      "as_of": "2026-11-15T12:00:00Z",
+      "claim_limits": [
+        "Describe the practice class only.",
+        "Human approval before any publication.",
+        "Use the records only for internal strategy."
+      ]
+    },
+    "channel": {
+      "status": "unknown",
+      "value": null,
+      "sources": [],
+      "needs_owner_verification": []
+    },
+    "measurement": {
+      "status": "unknown",
+      "value": null,
+      "sources": [],
+      "needs_owner_verification": []
+    },
+    "test_hypothesis": "In another first-time participants episode of choosing a first class, the buyer uses Explain what a first-time participant brings.",
+    "reconsider_if": "A comparable buyer declines the selected approach or uses another, or its source rights change.",
+    "approval": "Owner reviews the alternatives and signed claim wording before any external use."
+  },
+  "department_handoff": {
+    "status": "hold",
+    "recipient": "Content lead",
+    "objective": "Help a first-time participant decide whether to bring their own garment.",
+    "audience": "first-time participants",
+    "situation": "choosing a first class",
+    "asset": null,
+    "internal_concept": {
+      "type": "unplaced internal concept for editor review",
+      "option": "first_visit",
+      "permitted_product_wording": "The studio provides practice fabric and basic mending tools for the beginner class."
+    },
+    "message": null,
+    "sources": [
+      "studio-one",
+      "studio-fact"
+    ],
+    "claim_limits": [
+      "Describe the practice class only.",
+      "Human approval before any publication.",
+      "Use the records only for internal strategy.",
+      "Describe the product only with the permitted fact text and its qualifiers.",
+      "Do not present one observed choice as buyer preference across the segment or as measured lift."
+    ],
+    "channel": null,
+    "approval": {
+      "role": "Studio programme manager",
+      "action": "Review the internal draft and source rights before distribution."
+    }
+  },
+  "level": "internal_synthetic_workpaper"
+}

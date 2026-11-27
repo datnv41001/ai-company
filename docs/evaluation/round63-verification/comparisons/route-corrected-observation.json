@@ -1,0 +1,34 @@
+{
+  "case": "route-corrected-observation",
+  "packet_sha256": "9c77c56d363fb2ee41a8566ff9783534064c83fb5032670db3c2c455e305e8f0",
+  "cutoff": "2026-11-15T12:00:00Z",
+  "expected": {
+    "status": "proposed",
+    "choice": "audit",
+    "channel": "unknown",
+    "measurement": "unknown"
+  },
+  "actual": {
+    "status": "proposed",
+    "choice": "audit",
+    "channel": "unknown",
+    "measurement": "unknown"
+  },
+  "basis": [
+    "tray-one"
+  ],
+  "standard_staff_findings": [],
+  "scripted_baseline_claim": "Both sites requested worker tracking.",
+  "claim_review": {
+    "role": "strategy",
+    "field": "rationale",
+    "text_sha256": "2426fddd7f2535edb6309a8e937bca97d34611eec56302d45da251fe28561e67",
+    "status": "needs_editor_review",
+    "literal_sources": [],
+    "cited_sources": [
+      "tray-fact",
+      "tray-one"
+    ]
+  },
+  "handoff": "hold"
+}

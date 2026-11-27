@@ -1,0 +1,164 @@
+{
+  "packet": {
+    "workflow": "WF-03/research-strategy-draft@3",
+    "scope": {
+      "tenant_id": "synthetic-agency",
+      "client_id": "synthetic-studio",
+      "brand_id": "studio-brand",
+      "campaign_id": "studio-study"
+    },
+    "as_of": "2026-11-15T12:00:00Z",
+    "brief": {
+      "product": "Fold Studio",
+      "buyer_action": "appointment",
+      "decision": "Which question should the first-class booking guide answer first?",
+      "owner": "Studio programme manager",
+      "segment": "first-time participants",
+      "situation": "choosing a first class",
+      "objective": "Help a first-time participant decide whether to bring their own garment.",
+      "assumption": "First-time learners primarily want to reserve several seats.",
+      "assumption_option": "group_booking",
+      "constraints": [
+        "Describe the practice class only.",
+        "Human approval before any publication.",
+        "Use the records only for internal strategy."
+      ],
+      "options": [
+        {
+          "id": "first_visit",
+          "label": "Explain what a first-time participant brings",
+          "tradeoff": "Resolves a preparation question but uses space that could explain group arrangements.",
+          "asset": "A first-class preparation panel for the booking guide."
+        },
+        {
+          "id": "group_booking",
+          "label": "Explain how an organizer requests group places",
+          "tradeoff": "Helps an organizer coordinate several places but adds steps irrelevant to individual learners.",
+          "asset": "A private-group enquiry note for the booking guide."
+        }
+      ]
+    },
+    "sources": [
+      {
+        "id": "studio-fact",
+        "revision": 1,
+        "scope": {
+          "tenant_id": "synthetic-agency",
+          "client_id": "synthetic-studio",
+          "brand_id": "studio-brand",
+          "campaign_id": "studio-study"
+        },
+        "product": "Fold Studio",
+        "kind": "product_fact",
+        "excerpt": "The studio provides practice fabric and basic mending tools for the beginner class.",
+        "recorded_at": "2026-11-12T10:00:00Z",
+        "valid_from": "2026-11-01T00:00:00Z",
+        "valid_until": null,
+        "revoked_at": null,
+        "permitted_use": "internal_strategy",
+        "sample": "One synthetic class specification, revision 1.",
+        "segment": "*",
+        "situation": "*"
+      },
+      {
+        "id": "studio-one",
+        "coding_digest": "3ccba150ab5be459ef12f20fb892a9c0d3b228616ba5e30d2020b5d1cac279ed",
+        "revision": 1,
+        "scope": {
+          "tenant_id": "synthetic-agency",
+          "client_id": "synthetic-studio",
+          "brand_id": "studio-brand",
+          "campaign_id": "studio-study"
+        },
+        "product": "Fold Studio",
+        "kind": "observation",
+        "excerpt": "At the trial desk a first-time participant used the preparation checklist to choose practice fabric.",
+        "recorded_at": "2026-11-12T10:00:00Z",
+        "valid_from": "2026-11-01T00:00:00Z",
+        "valid_until": null,
+        "revoked_at": null,
+        "permitted_use": "internal_strategy",
+        "sample": "One staged desk session with a single learner.",
+        "segment": "first-time participants",
+        "situation": "choosing a first class",
+        "option": "first_visit",
+        "observed_action": "used",
+        "record_id": "studio-event-one"
+      },
+      {
+        "id": "studio-two",
+        "coding_digest": "8ba34a929287eb49e4906d4d647adfc6b8a0cd9e7f428400d3754741ddc71561",
+        "revision": 1,
+        "scope": {
+          "tenant_id": "synthetic-agency",
+          "client_id": "synthetic-studio",
+          "brand_id": "studio-brand",
+          "campaign_id": "studio-study"
+        },
+        "product": "Fold Studio",
+        "kind": "observation",
+        "excerpt": "At a second staged session a first-time participant declined the private-group enquiry note.",
+        "recorded_at": "2026-11-12T10:00:00Z",
+        "valid_from": "2026-11-01T00:00:00Z",
+        "valid_until": null,
+        "revoked_at": null,
+        "permitted_use": "internal_strategy",
+        "sample": "Another staged visit in the same studio, using a single learner.",
+        "segment": "first-time participants",
+        "situation": "choosing a first class",
+        "option": "group_booking",
+        "observed_action": "declined",
+        "record_id": "studio-event-two"
+      },
+      {
+        "id": "studio-other",
+        "coding_digest": "6334240834302f9cd0f16eb7ab5bf9de1fa9c7ec1b013555c9fe04758d794f2b",
+        "revision": 1,
+        "scope": {
+          "tenant_id": "synthetic-agency",
+          "client_id": "synthetic-studio",
+          "brand_id": "studio-brand",
+          "campaign_id": "studio-study"
+        },
+        "product": "Fold Studio",
+        "kind": "observation",
+        "excerpt": "During team-event planning the organizer used the private-group enquiry note to prepare a request.",
+        "recorded_at": "2026-11-12T10:00:00Z",
+        "valid_from": "2026-11-01T00:00:00Z",
+        "valid_until": null,
+        "revoked_at": null,
+        "permitted_use": "internal_strategy",
+        "sample": "One synthetic organizer interview.",
+        "segment": "team organizers",
+        "situation": "planning a private group",
+        "option": "group_booking",
+        "observed_action": "used",
+        "record_id": "studio-event-other"
+      }
+    ]
+  },
+  "controlled_replies": {
+    "research": {
+      "segment": "first-time participants",
+      "buyer_problem": "At the trial desk a first-time participant used the preparation checklist to choose practice fabric.",
+      "research_question": "What did you check before choosing your first class?",
+      "evidence_needed": "Compare different learners before drawing broader conclusions.",
+      "source_ids": [
+        "studio-fact",
+        "studio-one"
+      ]
+    },
+    "strategy": {
+      "positioning": "Help learners prepare for their first mending session.",
+      "rationale": "Every learner wants a private group booking.",
+      "channel_choice": "Use paid video ads.",
+      "test_hypothesis": "A preparation checklist may clarify what to bring.",
+      "measurable_action": "Count requests for a class place.",
+      "measurement_method": "Count every request as paid attendance.",
+      "source_ids": [
+        "studio-fact",
+        "studio-one"
+      ]
+    }
+  }
+}

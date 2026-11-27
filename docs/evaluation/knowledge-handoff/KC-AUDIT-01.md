@@ -54,6 +54,8 @@ Chưa có quyết định mới cho paid inference, benchmark, thay stack, quy�
 
 ## Tái lập và rollback
 
+[Biên nhận checkout sạch, smoke và giới hạn phép thử độc lập](KC-AUDIT-01-DRILL.md). Verdict cho tiêu chí AI mới là **NOT_VERIFIABLE**; audit dừng tại Independent Review.
+
 1. Ghi `git status --short --branch`, `git rev-parse HEAD` và `git rev-parse "HEAD^{tree}"`. Đối chiếu main và head trong biên nhận bằng `gh pr view 64 --json state,isDraft,headRefOid,baseRefOid` và `gh api repos/datnv41001/ai-company/git/ref/heads/main`.
 2. Với từng PR thành phần, chạy `git merge-base --is-ancestor <head> 053410d161b15285a1ef264f853d4920a3d559e1`. Mã thoát 0 xác nhận quan hệ Git. Trạng thái OPEN/MERGED lấy riêng bằng GitHub CLI.
 3. Kiểm file thay đổi bằng `git diff --name-status 053410d161b15285a1ef264f853d4920a3d559e1 HEAD`, rồi `git diff --check 053410d161b15285a1ef264f853d4920a3d559e1 HEAD`. Xem scope diff, biên nhận và giới hạn trong gói đi kèm. Không phát sinh lượt model hoặc CI mới cho các kiểm tra tĩnh.

@@ -64,6 +64,21 @@ def test_staff_read_checked_content_handoff(pool, tmp_path):
                     expect(content).to_contain_text(case["objective"])
                     expect(row.get_by_role("heading", name="Storyboard", exact=True)).to_be_visible()
                     elapsed = round((monotonic() - started) * 1000)
+                    assignment = row.get_by_role("region", name="Phân công của Director")
+                    tasks = report["graph"]["contract"]["nodes"]
+                    items = assignment.locator("ol li")
+                    assert items.locator("strong").all_text_contents() == ["Content", "Storyboard"]
+                    expect(items.nth(0)).to_contain_text("Soạn kịch bản video dọc")
+                    expect(items.nth(1)).to_contain_text("từ bản Content đã kiểm tra")
+                    director_digest = report["checkpoints"][0]["output"]["plan_digest"]
+                    expect(assignment.get_by_text(director_digest, exact=True)).to_be_hidden()
+                    assignment.locator("summary").press("Enter")
+                    expect(assignment.get_by_text(director_digest, exact=True)).to_be_visible()
+                    for task in tasks:
+                        expect(assignment.locator("details")).to_contain_text(task["assignment"])
+                    assignment.locator("summary").press("Enter")
+                    row.get_by_role("heading", name="Director", exact=True).evaluate("e=>e.scrollIntoView({block:'start'})")
+                    capture_themes(page, folder / f"director-assignment-{width}.png")
                     summary = content.locator("summary")
                     summary.focus()
                     summary.press("Enter")
@@ -72,6 +87,12 @@ def test_staff_read_checked_content_handoff(pool, tmp_path):
                     summary.press("Enter")
                     content.evaluate("element => element.scrollIntoView({block: 'start'})")
                     capture_themes(page, folder / f"content-handoff-{width}.png")
+                    source_labels = content.locator(".handoff-declaration strong").evaluate_all("""labels => labels.map(label => {
+                        const range = document.createRange();
+                        range.selectNodeContents(label);
+                        return {source_id: label.textContent, lines: range.getClientRects().length};
+                    })""")
+                    assert source_labels == [{"source_id": fact["source_id"], "lines": 1} for fact in plan["channel_copy"]["declarations"]]
                     audits = []
                     for scheme in ("light", "dark"):
                         page.emulate_media(color_scheme=scheme)
@@ -84,7 +105,17 @@ def test_staff_read_checked_content_handoff(pool, tmp_path):
                     selector = editor.locator("[name=mode]")
                     selector.select_option("controlled_hook")
                     hook = "direct" if width == 820 else "style_alternate"
-                    editor.locator("[name=hook_variant]").select_option(hook)
+                    options = editor.locator("[name=hook_variant]")
+                    assert options.locator("option").evaluate_all("opts=>opts.map(o=>o.value)") == ["", "direct", "style_alternate"]
+                    expect(editor).to_contain_text(plan["channel_copy"]["action"])
+                    options.select_option(hook)
+                    hook_fit = options.evaluate("""el => {
+                        const css = getComputedStyle(el), ctx = document.createElement('canvas').getContext('2d');
+                        ctx.font = css.font;
+                        return {available_px: el.clientWidth - parseFloat(css.paddingLeft) - parseFloat(css.paddingRight) - 22,
+                                widest_label_px: Math.ceil(Math.max(...Array.from(el.options, o => ctx.measureText(o.text).width)))};
+                    }""")
+                    assert hook_fit["available_px"] >= hook_fit["widest_label_px"], hook_fit
                     editor.evaluate("e=>e.scrollIntoView({block:'start'})")
                     capture_themes(page, folder / f"storyboard-editor-{width}.png")
                     with page.expect_response(lambda r: r.request.method == "POST" and r.url.endswith(url + "/storyboard-edition")) as saved:
@@ -97,7 +128,8 @@ def test_staff_read_checked_content_handoff(pool, tmp_path):
                     sessions.append(dict(width=width, height=height, open_to_verified_copy_ms=elapsed,
                                          scroll_width=page.evaluate("document.documentElement.scrollWidth"), contrast=audits,
                                          themes=["light","dark"], keyboard="Enter opens report, toggles evidence and saves a hook edit",
-                                         edited_revision=edited["revision"], edited_digest=edited["content_digest"]))
+                                         edited_revision=edited["revision"], edited_digest=edited["content_digest"],
+                                         source_labels=source_labels, hook_fit=hook_fit, director_plan_digest=director_digest))
                     if width == 390:
                         stale = check_stale_edition(page, editor, pool, owner, url, edited, folder)
                 finally:

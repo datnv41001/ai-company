@@ -95,11 +95,10 @@ def apply_edits(before, body, projection, compose_variant):
         if body.hook_variant in ("direct", "audience"):
             opening = compose_variant(body.hook_variant)["hook"]
         elif body.hook_variant == "style_alternate":
-            from .storyboard_brief import STYLES
-            style = projection["task_intent"].get("editorial_style")
-            if board["version"] != "amc.storyboard/2" or style not in STYLES:
+            from .storyboard_brief import style_hooks
+            if board["version"] != "amc.storyboard/2":
                 raise ValueError("This option requires a commissioned WF-08/2 editorial style")
-            opening = next(s for s in STYLES[style] if s != board["hook"])
+            opening = next(s for s in style_hooks(projection) if s != board["hook"])
         elif body.hook_variant == "product_question":
             opening = f'{projection["product"]} dùng thế nào?'
         else:

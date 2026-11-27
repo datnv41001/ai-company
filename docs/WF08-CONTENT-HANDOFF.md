@@ -28,6 +28,12 @@ Chọn `plain`, `concise`, `formal` hoặc `friendly` để định hình câu m
 
 ## Tái hiện trên máy khác
 
+### Hook, điều kiện thương mại và CTA
+
+Ở bản sửa của draft @2, mỗi cặp hành động người mua và văn phong có hai câu mở. Content chọn câu gốc. Thao tác `style_alternate` thay câu mở trong cùng cặp. CTA đến từ hành động đã ký. Bước QA đọc lại lời thoại và phụ đề hook trên bản đang nộp, mục đích đã ghim, CTA và từng nghĩa vụ của brief.
+
+Brief đặt lịch hoặc chọn buổi có thể yêu cầu trình bày điều kiện thương mại trước CTA. Căn cứ là điều kiện trên dữ kiện giá đã ghim và các thẻ điều kiện hiển thị đúng nguồn. Khi chỉ có yêu cầu trong brief mà thiếu căn cứ, tiêu chí cần được làm rõ. Giữ nguyên CTA đặt lịch hoặc chọn buổi trong cả hai trường hợp. Xem [ma trận và hồ sơ review](evaluation/connected-workforce/SEMANTIC-REVIEW.md).
+
 Chạy `python -m pytest -q tests/test_storyboard_brief.py` trong môi trường acceptance PostgreSQL của repo. Đặt `AMC_BRIEF_EVIDENCE` trỏ vào một thư mục đầu ra mới để xuất brief, bản copy của Content, storyboard gốc và biên nhận QA riêng cho từng ca. Phép thử RFQ so sánh một khay chia linh kiện với brief mới cho thẻ so màu nhà in, thêm một ca bắt buộc ghi âm và một so sánh thay đổi riêng brief trên cùng sản phẩm.
 
 WF-08@1 tiếp tục phục vụ việc tái hiện kết quả nội bộ cũ. Phiên bản @2 mới ghi các bước Content và đối chiếu brief nêu trên. Các bài thử xác nhận quyền, dữ kiện, sự bàn giao và tiêu chí có thể kiểm được. Tỷ lệ chuyển đổi, mức độ thuyết phục của copy, thời gian tiết kiệm cho agency và độ chính xác khi diễn giải mục tiêu tự do vẫn cần người làm Marketing đánh giá.

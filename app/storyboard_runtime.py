@@ -4,7 +4,7 @@ import hashlib
 import json
 from pathlib import Path
 
-from . import storyboard_brief as brief, video_storyboard as legacy
+from . import storyboard_brief as brief, storyboard_editions, video_storyboard as legacy
 from .knowledge_store import canonical, digest
 from .workforce_gateway import GatewayError
 
@@ -21,7 +21,8 @@ ASSIGNMENTS = {
 
 
 def source_digest():
-    code = [legacy.source_digest(), *(Path(f).read_text(encoding="utf8") for f in (brief.__file__, __file__))]
+    paths = (brief.__file__, storyboard_editions.__file__, __file__)
+    code = [legacy.source_digest(), *(Path(f).read_text(encoding="utf8") for f in paths)]
     return hashlib.sha256("\n".join(code).encode()).hexdigest()
 
 

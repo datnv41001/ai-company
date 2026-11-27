@@ -1,5 +1,7 @@
 # Security, Reliability and General Availability (GA) Blockers
 
+**WF-08, AMC-R60-03 — production qualification open.** Preview rendering currently holds database locks while it consumes CPU and writes media. Infrastructure and the Workforce owner must measure lock duration, concurrent work across tenants, request latency, CPU, peak memory, storage and rollback/recovery on synthetic data before production approval. [Test design and decision criteria](evaluation/connected-workforce/SEMANTIC-REVIEW.md#render)
+
 PR #59 merged for internal development at `4140563a89539acd19f1a7d5a16662c8dec5f6af`. Production and Commercial GA remain **NO-GO**. Connected synthetic events establish traceability only. Practitioner acceptance, customer rights, media authority, measured outcomes and full costs are open. [Scope and technical receipts](evaluation/connected-workforce/README.md)
 
 PR #58 merged for internal engineering at `1c40ad3185ac49415c3f555bb5b6406e2cdd8cb1`. The WF-08 follow-up uses synthetic material with a scoped job, revision-bound QA and a local deterministic producer. External publishing, model budgets, customer media rights, real outcomes and practitioner release approval remain separate gates. [Run evidence and outstanding gates](evaluation/workforce-video/README.md)

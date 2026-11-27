@@ -19,11 +19,27 @@ TERMS = "Giải thích điều kiện báo giá trước lời mời hành độ
 COMMERCIAL = "Đối chiếu điều kiện thương mại theo đúng nguồn."
 CAPTIONS = "Có phụ đề tiếng Việt khớp lời thoại."
 UNSUPPORTED = ("Thu âm lời thoại.", "Xuất video quảng cáo có âm thanh.", "Dùng cảnh quay người thật.")
-STYLES = {
-    "plain": ("Cần kiểm tra điều gì?", "Hãy xem điều kiện trước."),
-    "concise": ("Kiểm tra đâu trước?", "Báo giá cần gì?"),
-    "formal": ("Quý vị cần đối chiếu gì?", "Quý vị cần báo giá?"),
-    "friendly": ("Mình cùng xem nhé?", "Mình xem điều kiện nhé?"),
+# Each pair offers two editorial treatments of the same authorized conversion.
+# Approved price declarations and the creative angle never select a different action.
+HOOKS = {
+    "rfq": {
+        "plain": ("Bạn cần báo giá gì?", "Hỏi báo giá cần chuẩn bị gì?"),
+        "concise": ("Cần báo giá?", "Hỏi báo giá cần gì?"),
+        "formal": ("Quý vị cần báo giá?", "Quý vị muốn hỏi báo giá nào?"),
+        "friendly": ("Mình cần báo giá gì nhỉ?", "Mình xem gì trước khi hỏi báo giá?"),
+    },
+    "appointment": {
+        "plain": ("Bạn muốn hẹn lúc nào?", "Bạn cần biết gì trước khi hẹn?"),
+        "concise": ("Hẹn khi nào?", "Cần gì trước khi hẹn?"),
+        "formal": ("Quý vị muốn đề nghị lịch hẹn nào?", "Quý vị cần biết gì trước khi hẹn?"),
+        "friendly": ("Mình muốn hẹn khi nào nhỉ?", "Mình xem gì trước khi hẹn nhé?"),
+    },
+    "choose_session": {
+        "plain": ("Bạn muốn chọn buổi nào?", "Buổi nào hợp với bạn?"),
+        "concise": ("Chọn buổi nào?", "Buổi nào phù hợp?"),
+        "formal": ("Quý vị muốn chọn buổi nào?", "Buổi nào phù hợp với quý vị?"),
+        "friendly": ("Mình chọn buổi nào nhỉ?", "Buổi nào hợp với mình nhỉ?"),
+    },
 }
 PURPOSES = {
     "rfq": ("Nhận yêu cầu báo giá", "Giúp người mua đối chiếu điều kiện báo giá"),
@@ -43,14 +59,26 @@ def purpose_kind(projection):
     return None
 
 
+def style_hooks(projection):
+    intent = projection["task_intent"]
+    return HOOKS[intent["buyer_action"]][intent["editorial_style"]]
+
+
 def handoff(projection, ref):
     intent = projection["task_intent"]
     notes = {normalize(v) for v in [*intent["requirements"], *intent["acceptance_criteria"]]}
     proof = [f for f in projection["facts"] if f["category"] == "description"]
     if not proof:
         raise ValueError("A channel message needs an approved description")
-    terms = normalize(TERMS) in notes or (purpose_kind(projection) == "prepare" and intent["buyer_action"] == "rfq")
-    hook = STYLES[intent["editorial_style"]][int(terms)]
+    rfq = intent["buyer_action"] == "rfq"
+    wants_terms = normalize(TERMS) in notes or (rfq and purpose_kind(projection) == "prepare")
+    has_conditions = any((f.get("price") or {}).get("conditions") for f in projection["facts"])
+    angle = "show_evidence"
+    direction = "Vẽ hai trạng thái minh họa; đặt dữ kiện đã duyệt ngay dưới hình."
+    if wants_terms and (rfq or has_conditions):
+        angle = "quote_conditions" if rfq else "commercial_conditions"
+        direction = "Đặt thẻ điều kiện theo nguồn sau minh họa, trước lời mời hành động đã duyệt."
+    hook = style_hooks(projection)[0]
     copy = [{"source_id": f["id"], "lines": c3_order_units.fact_lines(f, projection)} for f in projection["facts"]]
     return {
         "version": "amc.content-storyboard-handoff/1",
@@ -67,11 +95,10 @@ def handoff(projection, ref):
              "choose_session": "Người học cần biết gì để chọn buổi phù hợp?"}[intent["buyer_action"]]
         ),
         "audience_hypotheses": projection.get("hypotheses", []),
-        "angle": "quote_conditions" if terms else "show_evidence",
+        "angle": angle,
         "message_source_id": proof[0]["id"],
         "channel_copy": {"opening": hook, "declarations": copy, "action": c3_studio.buyer_action(projection)},
-        "production_direction": ("Đặt thẻ điều kiện sau minh họa và trước lời mời báo giá." if terms else
-                                 "Vẽ hai trạng thái minh họa; đặt dữ kiện đã duyệt ngay dưới hình."),
+        "production_direction": direction,
     }
 
 
@@ -107,15 +134,23 @@ def assessment(projection, board):
     facts_covered = set(f["id"] for f in facts) == {f for s in evidence for f in s["source_ids"]}
     action = c3_studio.buyer_action(projection)
     action_words = " ".join(s["voice"] for s in shots if s["purpose"] == "action")
-    action_matches = normalize(action_words) == normalize(action) and board["cta"] == action
+    action_matches = normalize(action_words) == normalize(action) and board["cta"] == action and board["buyer_action"] == intent["buyer_action"]
     terms = [s for s in shots if s["purpose"] in ("terms", "conditions")]
+    # A non-RFQ brief can ask to explain pinned commercial terms before its own
+    # CTA. A listed price or free-text instruction alone does not supply those conditions.
+    conditions_shown = False
+    for fact in facts:
+        required = (fact.get("price") or {}).get("conditions") or []
+        spoken = normalize(" ".join(s["voice"] for s in terms if s["purpose"] == "conditions" and s["source_ids"] == [fact["id"]]))
+        if required and all(normalize(condition) in spoken for condition in required):
+            conditions_shown = True
     instructions = {
         normalize(ILLUSTRATE): (board["rights"] == legacy.RIGHTS and all(s["visual"].strip() for s in shots), "shots[].visual; rights"),
         normalize(PROOF): (facts_covered and bool(evidence) and max(s["end_s"] for s in evidence) <=
                            min((s["start_s"] for s in shots if s["purpose"] == "action"), default=-1), "proof before action; source_ids"),
-        normalize(TERMS): (bool(terms) and bool(evidence) and action_matches and
+        normalize(TERMS): (bool(terms) and bool(evidence) and action_matches and (intent["buyer_action"] == "rfq" or conditions_shown) and
                            max(s["end_s"] for s in terms) <= min((s["start_s"] for s in shots if s["purpose"] == "action"), default=-1),
-                           "approved terms before action"),
+                           "approved commercial terms and source conditions before the signed action"),
         normalize(COMMERCIAL): (facts_covered and bool(evidence) and
                                 (bool(terms) if any(f.get("price") for f in facts) else board["editorial"]["price_status"] == "unavailable"),
                                 "source_refs.declarations; terms or recorded missing price"),
@@ -128,16 +163,20 @@ def assessment(projection, board):
         rows.append(dict(field=field, requested=value, status=status, evidence=evidence))
 
     purpose = purpose_kind(projection)
-    purpose_met = bool(purpose) and action_matches and (purpose != "prepare" or intent["buyer_action"] != "rfq" or bool(terms))
-    record("purpose", intent["purpose"], "met" if purpose_met else "clarify",
-           "signed objective, supported purpose, current action and requested preparation" if purpose_met else
-           "Confirm a supported product objective and its evidence before approval.")
     style = intent["editorial_style"]
+    openings = [s for s in shots if s["purpose"] == "hook"]
+    spoken_hook = " ".join(s["voice"] for s in openings)
+    caption_hook = " ".join(" ".join(s["caption"].splitlines()) for s in openings)
+    hook_matches = board["hook"] == spoken_hook == caption_hook
+    audience_hook = board["hook"] == f"{projection['audience']} cần biết gì?"
+    fits_action = audience_hook or any(board["hook"] in pair for pair in HOOKS[intent["buyer_action"]].values())
+    purpose_met = bool(purpose) and hook_matches and fits_action and action_matches and (purpose != "prepare" or intent["buyer_action"] != "rfq" or bool(terms))
+    record("purpose", intent["purpose"], "met" if purpose_met else "clarify",
+           "signed objective, action-compatible opening, current CTA and requested preparation" if purpose_met else
+           "Confirm a supported product objective and its evidence before approval.")
     # Only the opening has a controlled style. Protected declarations keep their approved wording.
-    style_met = board["hook"] in STYLES[style]
-    if style == "plain" and board["hook"] == f"{projection['audience']} cần biết gì?":
-        style_met = True
-    record("editorial_style", style, "met" if style_met else "clarify", "current opening against approved style alternatives")
+    style_met = hook_matches and (board["hook"] in style_hooks(projection) or (style == "plain" and audience_hook))
+    record("editorial_style", style, "met" if style_met else "clarify", "spoken and captioned opening against action-specific style alternatives")
     for field in ("requirements", "acceptance_criteria"):
         for n, value in enumerate(intent[field]):
             key = normalize(value)

@@ -1,5 +1,7 @@
 # Nghiệm thu nội bộ · Content đến kết quả tiếp nhận
 
+[Vòng phản biện ngữ nghĩa PR #60](SEMANTIC-REVIEW.md) ghi lại lỗi sau lần nghiệm thu kỹ thuật đầu tiên, phạm vi kiểm tra lại và phép đo render còn mở.
+
 **Bắt đầu ở đây.** Người làm Content nhận một brief có dữ kiện đã ký, bàn giao thông điệp cho người dựng và nhận lại quyết định QA trên đúng bản. Studio tạo gói phân phối minh họa nối storyboard với landing đã duyệt và ghi lại đường đi của yêu cầu mua trong sandbox. Mục tiêu nghiệm thu là biết bản nào tạo ra tài sản nào và ai được phép dùng tài sản đó. Việc người mua thật có phản hồi tốt hơn cần phép thử riêng.
 
 ## 1. Tích hợp đã được duyệt
@@ -29,6 +31,8 @@ PR #59 ở head `01295a7eaf8a4650c417df4f9dbcba751addc7c0` được merge vào m
 Khe Gọn cung cấp ca RFQ cũ. Mép Giấy là brief tổng hợp mới cho một thẻ so màu ở nhà in, với đối tượng mua và yêu cầu báo giá riêng. So sánh cả hai brief RFQ và giữ nguyên sản phẩm ở phép thử thứ hai để cô lập ảnh hưởng của purpose/style. Ca có yêu cầu thu âm phải hiện `unsupported`; điều kiện cần xác nhận phải hiện `clarify` và chặn QA. Nguồn giá và qualifier chỉ đi từ manifest. [Dữ liệu thử, Content và các trạng thái QA](../../../tests/test_storyboard_brief.py)
 
 Giữ riêng brief, checkpoint Content, storyboard thô, bản đã sửa, revision, digest, người QA và media bytes. Artifact CI `connected-review-head` hoặc `connected-review-integration` có ba thư mục `content`, `edition` và `journey`. Trong hồ sơ journey, mở `preview.webm`, `captions.vtt` và `landing.html` tại chỗ. Mở `receipt.json` để kiểm trạng thái của cùng lần chạy. So ID trong một bộ hồ sơ; khi chạy lại database sẽ cấp ID mới.
+
+Các ví dụ dưới đây là bản lịch sử trên head `555b968c`. Bản sửa QA có [ma trận trước/sau](SEMANTIC-REVIEW.md).
 
 | Brief tổng hợp | Bản đầu của Content | Chỉ dẫn cho người dựng |
 | --- | --- | --- |

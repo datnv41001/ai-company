@@ -17,6 +17,24 @@ function createWorkforce(root, api, notify, onActivity=()=>{}) {
     b.onclick=async()=>{ b.disabled=true; try {await run();} catch(e){notify(e.message,true);} finally{b.disabled=false;} };
   }
   const labels={director:'Director',research:'Research',strategy:'Strategy',content:'Content',storyboard:'Storyboard',seo:'SEO',creative:'Creative',ads:'Ads',analytics:'Analytics'};
+  function showStoryboardAssignment(host, output, graph) {
+    const tasks=graph?.contract?.nodes;
+    if(!output.plan_digest || graph?.digest!==output.plan_digest || !tasks?.length)return false;
+    const translations=new Map([
+      ['Prepare a source-bound vertical-social script and production direction.','Soạn kịch bản video dọc từ dữ kiện đã duyệt và ghi chỉ dẫn dựng.'],
+      ['Build the storyboard from the verified Content handoff and record brief coverage.','Dựng storyboard từ bản Content đã kiểm tra và đối chiếu từng yêu cầu của brief.'],
+    ]);
+    const panel=node(host,'section');panel.className='director-assignment';panel.setAttribute('aria-label','Phân công của Director');
+    const list=node(panel,'ol');
+    for(const task of tasks){
+      const item=node(list,'li');node(item,'strong',labels[task.skill_type]||task.skill_type);
+      node(item,'p',translations.get(task.assignment)||task.assignment);
+    }
+    const evidence=node(panel,'details');node(evidence,'summary','Căn cứ phân công');
+    node(evidence,'p','SHA-256 của kế hoạch');node(evidence,'code',output.plan_digest);
+    for(const task of tasks)node(evidence,'p',task.node_id+' · '+task.assignment);
+    return true;
+  }
   function showContentHandoff(host, output) {
     let handoff;
     try {handoff=JSON.parse(output.sections.content_handoff);} catch {return false;}
@@ -292,8 +310,9 @@ function createWorkforce(root, api, notify, onActivity=()=>{}) {
             v.checkpoints.forEach(p=>{const info=checkpointHost;node(info,'h4',labels[p.skill]||p.skill);
             if(p.skill==='storyboard'){
               const raw=node(info,'details');node(raw,'summary','Dữ liệu storyboard gốc');node(raw,'pre',p.output.text).className='storyboard-raw';
-            }else if(!(p.skill==='content' && showContentHandoff(info,p.output)))node(info,'p',p.output.text);
-            node(info,'p','Nguồn: '+p.output.source_ids.map(k=>v.source_registry?.[k]?.label||k).join(', '));
+            }else if(!(p.skill==='content' && showContentHandoff(info,p.output)) &&
+                     !(p.skill==='director' && wf==='WF-08/video-storyboard@2' && showStoryboardAssignment(info,p.output,v.graph)))node(info,'p',p.output.text);
+            if(p.output.source_ids.length)node(info,'p','Nguồn: '+p.output.source_ids.map(k=>v.source_registry?.[k]?.label||k).join(', '));
             const qa=p.quality?.role_qa;
             if(qa?.scope==='node_checkpoint'){
               node(info,'h5','QA đầu ra AI · '+qa.node_id+' · '+qa.policy);

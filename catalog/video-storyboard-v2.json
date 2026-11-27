@@ -19,7 +19,7 @@
       "role_id": "ai-managing-director",
       "contract_version": 7,
       "adapter": "director@7",
-      "adapter_digest": "9909b2b2d302e9ba87cb89a6006031cad8fc61183b21a77271ac129cb2a6f73c",
+      "adapter_digest": "5ad26a3fd5c2983051b0f600911a1292cdbf189124a1e2d80d646eae2a4bf348",
       "qa_policy": "wf08-brief-fulfillment@2",
       "model": "local",
       "inputs": [
@@ -67,7 +67,7 @@
       "role_id": "ai-video-storyboard",
       "contract_version": 2,
       "adapter": "storyboard@2",
-      "adapter_digest": "9909b2b2d302e9ba87cb89a6006031cad8fc61183b21a77271ac129cb2a6f73c",
+      "adapter_digest": "5ad26a3fd5c2983051b0f600911a1292cdbf189124a1e2d80d646eae2a4bf348",
       "qa_policy": "wf08-brief-fulfillment@2",
       "model": "local",
       "inputs": [
@@ -117,7 +117,7 @@
       "role_id": "ai-copywriter-content-strategist",
       "contract_version": 5,
       "adapter": "content@5",
-      "adapter_digest": "9909b2b2d302e9ba87cb89a6006031cad8fc61183b21a77271ac129cb2a6f73c",
+      "adapter_digest": "5ad26a3fd5c2983051b0f600911a1292cdbf189124a1e2d80d646eae2a4bf348",
       "qa_policy": "wf08-brief-fulfillment@2",
       "model": "local",
       "inputs": [

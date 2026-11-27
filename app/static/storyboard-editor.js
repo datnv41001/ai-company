@@ -35,10 +35,17 @@ window.storyboardEditor = (() => {
     const form = element(panel, "form");
     const first = cell(form);
     const mode = field(first, "Cách biên tập", "mode", "select", [["editorial","Sửa bản giao"], ["controlled_hook","Thử riêng câu mở"]]);
-    const hooks = [unchanged, ["direct","Mở trực tiếp"], ["audience","Hỏi người xem"], ["product_question","Hỏi về sản phẩm"], ["observation","Gợi quan sát"]];
-    if (board.version === "amc.storyboard/2") hooks.push(["style_alternate","Đổi câu cùng phong cách brief"]);
+    let hooks;
+    if (board.version === "amc.storyboard/2") {
+      const style = board.brief_fulfillment.rows.find(row => row.field === "editorial_style")?.requested;
+      hooks = [unchanged, ["direct","Câu gốc theo brief"], ["style_alternate","Đổi câu cùng giọng"]];
+      if (style === "plain") hooks.push(["audience","Hỏi người xem"]);
+    } else {
+      hooks = [unchanged, ["direct","Mở trực tiếp"], ["audience","Hỏi người xem"], ["product_question","Hỏi về sản phẩm"], ["observation","Gợi quan sát"]];
+    }
     const hook = field(first, "Câu mở", "hook_variant", "select", hooks);
     element(form, "p", "Câu hiện tại · " + board.hook).className = "board-current-hook";
+    if (board.version === "amc.storyboard/2") element(form, "p", "Lời mời hành động · " + board.cta);
     const hold = element(form, "p", "Khóa thân bài, thời lượng từng cảnh, hình, CTA và offer. Hai bản cùng ở chế độ ngoại tuyến, chưa phân phối hoặc gắn trang đích.");
     hold.hidden = true;
     const editorial = element(form, "div");

@@ -43,6 +43,7 @@ jobs:
           export AMC_TEST_PG=1 PYTHONPATH=.
           python migrations/apply.py
           export AMC_BRIEF_EVIDENCE="$RUNNER_TEMP/connected-review/content"
+          export AMC_SEMANTIC_EVIDENCE="$RUNNER_TEMP/connected-review/semantic"
           export AMC_STORYBOARD_EDITION_EVIDENCE="$RUNNER_TEMP/connected-review/edition"
           export AMC_CONNECTED_EVIDENCE="$RUNNER_TEMP/connected-review/journey"
           AMC_CONSULTATION_EVIDENCE="$RUNNER_TEMP/business-intake/consultation" AMC_INTAKE_EVIDENCE="$RUNNER_TEMP/business-intake" AMC_WF03_HOLD_EVIDENCE="$RUNNER_TEMP/wf03-holds" python -m pytest -q -rs --junitxml="$RUNNER_TEMP/api-regression.xml"

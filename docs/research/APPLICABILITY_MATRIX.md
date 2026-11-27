@@ -1,5 +1,7 @@
 # Đối chiếu nghiên cứu với AMC
 
+**Vòng #62 · áp dụng một phần.** Business Desk và intake đã cung cấp nền tảng cho việc truy nguồn. Tách điều kiện theo cutoff, xác nhận Sales và chứng từ thương mại là phạm vi prototype có giới hạn. Chín nhóm Marketing có người nhận, workflow, dependency và phép thử trước khi đưa cải tiến vào backlog. O-09 còn chờ đối chứng trên cohort được giữ kín. [Ma trận theo công việc và nguồn](../evaluation/round62/MARKET.md)
+
 | Kiến thức vòng #61 | Mức áp dụng hiện tại | Phép nghiệm thu tiếp |
 |---|---|---|
 | Handoff cần phân biệt hỏi khách và chuyển chủ chính sách | Một phần. C3 và lab O-09 có authority, fixture và scoring; chưa chứng minh trên cohort kín mới. | Đổi từng điều kiện nguồn, so với hai rule và chấm cả câu hỏi/đích bàn giao. [Workstream B](../evaluation/round61/INTELLIGENCE.md) |

@@ -85,6 +85,10 @@ def approved_destination(lab, base, owner, buyer, prep, board_snapshot, qa):
 @PG
 @pytest.mark.parametrize("release", [1, 2], ids=["legacy", "content-handoff"])
 def test_connected_distribution(pool, release):
+    run_connected_distribution(pool, release, evidence_dir=os.environ.get("AMC_CONNECTED_EVIDENCE"))
+
+
+def run_connected_distribution(pool, release, *, inspect_intake=None, evidence_dir=None):
     lab, api = pool, pool.api
     case = next(c for c in CASES if c["id"] == "index-tray")
     case = case | {"objective": "Nhận yêu cầu báo giá " + case["product"]}
@@ -204,6 +208,8 @@ def test_connected_distribution(pool, release):
     assert primary is None and signed_plan.get("measurement_contract") is None and "primary_measurement" not in observations
     assert metric["window"] == "approved_plan_lifetime" and metric["landing_visits"] == metric["valid_submissions"] == 1
     assert metric["manual_requests"] == metric["orders"] == 0
+    if inspect_intake is not None:
+        inspect_intake(pool, owner, operator, plan, signed_plan, visit, submission, metric, contract)
     if release == 2:
         changed = accepted(put(trace_url + "/storyboard-edition", current | {
             "mode": "controlled_hook", "hook_variant": "style_alternate",
@@ -219,8 +225,8 @@ def test_connected_distribution(pool, release):
                                            "plan_approval": signed_plan["approval"], "landing_manifest": signed_plan["manifests"]["landing"],
                                            "measurement_plan": signed_plan["measurement_plan"], "sandbox_evidence": observations},
                     creative_effectiveness=None, primary_kpi=primary, paid_media_spend=0)
-    if folder := os.environ.get("AMC_CONNECTED_EVIDENCE"):
-        dest = Path(folder) / f"wf08-v{release}"
+    if evidence_dir:
+        dest = Path(evidence_dir) / f"wf08-v{release}"
         dest.mkdir(parents=True, exist_ok=False)
         for name, data in files.items():
             (dest / name).write_bytes(data)

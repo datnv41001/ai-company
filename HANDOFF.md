@@ -1,5 +1,9 @@
 # Bắt đầu ở đây khi tiếp quản AI Marketing Company
 
+## Vòng #62 · Sales đối chiếu yêu cầu báo giá
+
+Từ main `2daa715d`, dùng Python trong môi trường phát triển để chạy `python -m scripts.rfq_card --output rfq-review`. Mở ba tệp HTML để đọc ca Khe Gọn và hai revision của một inquiry tổng hợp riêng. Mỗi bản có JSON đi kèm. [Hồ sơ nghiệm thu, lệnh kiểm thử và quyền đọc](docs/evaluation/round62/README.md)
+
 ## Công việc hiện hành sau nghiệm thu nội bộ #60
 
 Mốc mã sản phẩm là merge `83894ffefa0dbc720ae3d887e2f90e53f4b23ae0`. Kiểm parent, tree và CI ở [biên nhận main](docs/evaluation/round61/MAIN-60.json). Để tiếp quản vòng #61, đọc [quyết định cần Product Owner và Sales Ops duyệt](docs/evaluation/round61/README.md). Ưu tiên đề xuất là một phiếu đối soát RFQ chỉ đọc. Cả thiết kế cohort AI và readiness pilot đều đang ở bước chuẩn bị. Các mục cũ bên dưới mô tả trạng thái tại thời điểm từng vòng.

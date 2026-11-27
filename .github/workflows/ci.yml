@@ -46,8 +46,11 @@ jobs:
           export AMC_SEMANTIC_EVIDENCE="$RUNNER_TEMP/connected-review/semantic"
           export AMC_STORYBOARD_EDITION_EVIDENCE="$RUNNER_TEMP/connected-review/edition"
           export AMC_CONNECTED_EVIDENCE="$RUNNER_TEMP/connected-review/journey"
+          export AMC_RFQ_TEST_EVIDENCE="$RUNNER_TEMP/rfq-evidence/cases"
+          export AMC_RFQ_EVIDENCE="$RUNNER_TEMP/rfq-evidence/desk"
           AMC_CONSULTATION_EVIDENCE="$RUNNER_TEMP/business-intake/consultation" AMC_INTAKE_EVIDENCE="$RUNNER_TEMP/business-intake" AMC_WF03_HOLD_EVIDENCE="$RUNNER_TEMP/wf03-holds" python -m pytest -q -rs --junitxml="$RUNNER_TEMP/api-regression.xml"
           AMC_WORKFORCE_SCREENS="$RUNNER_TEMP/connected-ui" python -m pytest -q tests/browser_storyboard_workforce.py
+          AMC_RFQ_BROWSER_EVIDENCE="$RUNNER_TEMP/rfq-evidence/browser" python -m pytest -q tests/browser_rfq_card.py --junitxml="$RUNNER_TEMP/rfq-evidence/browser.xml"
           python tests/check_sandbox_journal.py --container amc-test-pg
           python tests/check_consultation_cutover.py --container amc-test-pg
           python -c 'import os, sys; sys.path.insert(0, "tests"); from check_postgres_upgrade import rehearse_archive; rehearse_archive(os.environ["AMC_MIGRATION_DSN"], "amc-test-pg", 26)'
@@ -178,6 +181,12 @@ jobs:
           export AMC_MIGRATION_DSN="${AMC_MIGRATION_DSN%/*}/amc_test_isolated_v16"
           export DATABASE_URL="${DATABASE_URL%/*}/amc_test_isolated_v16"
           python tests/check_postgres_upgrade.py --from-isolated-v16
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: rfq-evidence-${{ matrix.revision }}
+          path: ${{ runner.temp }}/rfq-evidence/
+          if-no-files-found: error
       - uses: actions/upload-artifact@v4
         with:
           name: wf03-director-ledger${{ matrix.revision == 'integration' && '-integration' || '' }}

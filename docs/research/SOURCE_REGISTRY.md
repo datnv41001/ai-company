@@ -1,5 +1,7 @@
 # Sổ nguồn nghiên cứu AMC
 
+**27/11/2026 · vòng #62.** Đã đọc cách Fowler phân biệt thời gian hiệu lực/ghi nhận, định nghĩa lifecycle của HubSpot, hai chứng từ ERPNext và nghiên cứu FEVER về chấm kết luận có căn cứ. Ghi riêng phạm vi đọc, loại nguồn, độ tin cậy và giới hạn chuyển giao, kèm nguồn công khai cho các nhóm Marketing. [Hồ sơ nguồn và ứng dụng](../evaluation/round62/MARKET.md)
+
 **27/11/2026 · vòng #61.** Các mục sau dẫn đến URL gốc, phần đã đọc, phiên bản, quyền sử dụng, giới hạn và phép kiểm áp dụng. Bộ nghiên cứu phục vụ việc chọn lát cắt tiếp theo.
 
 | Nguồn mới | Câu hỏi AMC và hồ sơ đọc |

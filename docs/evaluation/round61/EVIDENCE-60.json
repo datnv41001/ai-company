@@ -1,0 +1,22 @@
+[
+  {
+    "commit": "db862100aabf76641fe93fd207868c095f9027eb",
+    "git_blob": "b9d8135b6ed1e097c9a95b3cc5d860e1f2a78555",
+    "path": "docs/evaluation/round60-verification/connected-review.zip",
+    "sha256": "934f81acc5e84fe6e50254ed174265233995f1c6c1b8cc042d7383dfa89c795d",
+    "bytes": 5572587,
+    "members": 159,
+    "crc_verified": 159,
+    "manifest_entries_verified": 0
+  },
+  {
+    "commit": "1fc1e3473a09958187a5655b1a78d472a7a090c3",
+    "git_blob": "0ab18e9691022d6bbf20f34e29d78a992712a43a",
+    "path": "docs/evaluation/round60-semantic-verification/semantic-review.zip",
+    "sha256": "7cd638b2f704b529ff18ec65b18c23e645a80f3e149e51cd3b0f40a4afdeea3e",
+    "bytes": 4191315,
+    "members": 162,
+    "crc_verified": 162,
+    "manifest_entries_verified": 161
+  }
+]

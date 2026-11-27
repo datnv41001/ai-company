@@ -1,0 +1,76 @@
+{
+  "main_before": "4140563a89539acd19f1a7d5a16662c8dec5f6af",
+  "head": "edbca9483f59a20f8c3d1f54123a92e353cc3426",
+  "trial": "7a506789ca4183f59d9e6e0d2b9486a86d692879",
+  "tree": "1c40c678b0556cfa512b0a5f59c4eef457c60ef6",
+  "maintainer": "datnv41001",
+  "merge": "83894ffefa0dbc720ae3d887e2f90e53f4b23ae0",
+  "parents": [
+    "4140563a89539acd19f1a7d5a16662c8dec5f6af",
+    "edbca9483f59a20f8c3d1f54123a92e353cc3426"
+  ],
+  "merged_at": "2026-11-27T02:54:24Z",
+  "main_ci": {
+    "url": "https://github.com/datnv41001/ai-company/actions/runs/45931055472",
+    "jobs": [
+      {
+        "name": "api-tests (head)",
+        "result": "success",
+        "url": "https://github.com/datnv41001/ai-company/actions/runs/45931055472/job/140283517995"
+      },
+      {
+        "name": "workforce-model (head)",
+        "result": "success",
+        "url": "https://github.com/datnv41001/ai-company/actions/runs/45931055472/job/140283518097"
+      },
+      {
+        "name": "compose-browser (head)",
+        "result": "success",
+        "url": "https://github.com/datnv41001/ai-company/actions/runs/45931055472/job/140283518204"
+      },
+      {
+        "name": "matched-model",
+        "result": "skipped",
+        "url": "https://github.com/datnv41001/ai-company/actions/runs/45931055472/job/140285892957"
+      }
+    ],
+    "passed": 684,
+    "skipped": [
+      {
+        "case": "test_wrong_tab_leaves_postgres_family_and_history_unchanged[sqlite]",
+        "reason": "PostgreSQL storage assertions"
+      },
+      {
+        "case": "test_two_workers_commit_orders_and_credential_change[sqlite]",
+        "reason": "real HTTP and PostgreSQL case"
+      }
+    ],
+    "junit_sha256": "a2b8918aed608b69eee15b27ad30e0e447749e4c99eb96fb5e0c0c229498a3e0",
+    "junit_url": "https://github.com/datnv41001/ai-company/actions/runs/45931055472/artifacts/15168144898",
+    "upgrade_from": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17,
+      18,
+      19,
+      20,
+      21,
+      22
+    ],
+    "restored_tables": 34
+  }
+}

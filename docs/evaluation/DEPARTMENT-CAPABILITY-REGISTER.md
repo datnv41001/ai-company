@@ -1,5 +1,7 @@
 # Sổ năng lực phòng Marketing
 
+**Vòng #61.** Ma trận chín nhóm nêu đầu ra cần bàn giao, dependency đã có, quyền dữ liệu, khoảng trống, ước lượng công và phép nghiệm thu. Analytics/Sales là ứng viên ưu tiên vì intake hiện đọc được nhưng trạng thái đủ điều kiện theo thời điểm còn cần đối soát. Chưa nâng cấp mức nghiệm thu của role hoặc workflow từ đề xuất này. [Ma trận năng lực và hợp đồng RFQ](round61/MARKETING.md)
+
 **Vòng R59.** Content cần bàn giao ICP, mục đích, rào cản, kênh và dữ kiện để Video dựng được cảnh. Creative và QA cần xác nhận đúng edition và điều kiện sử dụng trước khi nối sandbox intake. Phân cấp bằng chứng và giới hạn cho từng role trong [hồ sơ liên phòng ban](connected-workforce/README.md). Giữ nguyên 37 vai trò.
 
 **Sau #58, trên nhánh WF-08.** Creative lead có thể giao lát cắt Video/Storyboard cho Workforce với một adapter cục bộ tất định. Giới hạn qua thử nghiệm gồm brief tiếng Việt, tư liệu minh họa tổng hợp, giá/điều kiện theo nguồn, QA theo revision. Làm phim từ footage thật, năng lực mô hình suy rộng, nghiệm thu bởi người dựng và thực thi media còn mở. [Hợp đồng, đầu ra trước/sau QA và receipt](workforce-video/README.md)

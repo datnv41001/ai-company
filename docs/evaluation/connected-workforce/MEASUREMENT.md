@@ -1,5 +1,7 @@
 # Quyết định đo RFQ cho Khe Gọn
 
+**Tiếp quản sau #60.** [Đề xuất vòng #61](../round61/MARKETING.md) nêu đối tượng đủ chuẩn, ai được xác nhận, hiệu lực theo thời điểm, mẫu số phân bổ và cách xử lý mất liên kết. Trạng thái trên main vẫn là `primary_measurement=null`. Sales Ops và chủ KPI cần xem xét trước khi kích hoạt.
+
 **Trạng thái hiện hành.** Khe Gọn có `primary_measurement=null`. `intake-funnel/2` đọc các event thuộc `approved_plan_lifetime`. Một visit, submission hoặc dòng CRM liên kết được với creative trong sandbox là bằng chứng vận hành. Tác động của hook với người mua còn chưa đo. [Đối chứng hai ca](../workforce-video/MEASUREMENT.md)
 
 | Câu hỏi | Định nghĩa và chủ sở hữu |

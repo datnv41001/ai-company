@@ -1,5 +1,13 @@
 # Thẻ kiến thức ứng dụng
 
+## #61 · Đo một quyết định đủ căn cứ
+
+| Bài học và loại bằng chứng | Áp dụng tại AMC | Phép thử có thể bác bỏ |
+|---|---|---|
+| Lịch sử của hồ sơ mua và giai đoạn hiện hành giải đáp hai câu hỏi khác nhau. Tài liệu SaaS và phản hồi cộng đồng gợi ý cách phân biệt. | Intake có snapshot và journal; Sales Ops cần duyệt quy tắc đủ chuẩn. | Tái lập cùng RFQ trước và sau lần bổ sung MOQ; trạng thái đủ dữ kiện và báo giá phải dẫn tới receipt riêng. [Đề xuất](../evaluation/round61/MARKETING.md) |
+| Kiểm hành vi theo một thay đổi có kiểm soát. Hai nghiên cứu NLP cung cấp phương pháp thiết kế. | Lab O-09 đã có nguồn và kiểm scope; cohort mới còn chờ giữ kín. | Đổi thứ tự nguồn giữ kết luận; rút dữ kiện có thẩm quyền có thể buộc hỏi lại. Chấm cả hợp đồng và câu hỏi đầu tiên. [Benchmark](../evaluation/round61/INTELLIGENCE.md) |
+| Tác động AI khác nhau theo công việc và người thực hiện. Đây là kết quả từ các bối cảnh nghiên cứu khác. | Protocol AMC v2 đã khóa first-pass và các vai trò; cần dữ liệu private và consent. | Đối chiếu phút làm với lỗi nguồn, quyết định nhận việc và mọi ca mất mù/bỏ dở trên cùng mẫu số. [Thiết kế đo](../evaluation/round61/PRACTITIONER.md) |
+
 ## K-20 · Phản hồi theo cảnh và kiểm soát biến thử
 
 Một nhận xét có thể thực hiện được cần bản người nhận đã thấy, khoảng thời gian, thay đổi cụ thể, lý do nghiệp vụ và điều kiện nguồn. Chỉnh hook để testing cần giữ toàn bộ thân bài, timeline, visual, quyền, offer, CTA, landing và phân phối. Áp dụng cho Content, Creative, QA; đối chứng bằng so digest và thử sửa từ bản cũ. [Nguồn và các trường hợp](CONNECTED-CREATIVE.md)

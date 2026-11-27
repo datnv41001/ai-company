@@ -1,5 +1,7 @@
 # Trạng thái hiện thực và nghiệm thu V1
 
+**Sau merge #60, vòng #61.** WF-08 @1/@2 có baseline nội bộ trên main `83894ffe`, core v26. R60-01 và R60-02 đã đóng trong phạm vi chứng minh. R60-03 và qualification nghiệp vụ còn mở. Đã chuẩn bị đề xuất RFQ chỉ đọc và pilot tám việc; số việc được người dùng doanh nghiệp tiếp nhận trong vòng này bằng 0. [Biên nhận và trạng thái bốn luồng](evaluation/round61/README.md)
+
 **PR #60 · vòng QA ngữ nghĩa.** Phạm vi là câu mở đầu của bản Content và storyboard tiếng Việt ở WF-08 @2, ba hành động người mua, bốn văn phong và thao tác đổi hook. Người làm Content và QA dùng brief đã duyệt để đối chiếu ý định của câu mở, CTA và nguồn điều kiện thương mại. Đọc [hồ sơ phản biện](evaluation/connected-workforce/SEMANTIC-REVIEW.md) để xác định bản chạy, giới hạn và cổng còn mở. Chưa có phút biên tập/QA hoặc quyết định tiếp nhận từ người hành nghề. Phạm vi V1 vẫn gồm 49 module, 37 vai trò và 24 workflow mẹ.
 
 ## Vòng sau #59 · bàn giao giữa Content, Video, Creative và Sales

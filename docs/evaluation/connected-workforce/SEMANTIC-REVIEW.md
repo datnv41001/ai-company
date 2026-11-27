@@ -1,5 +1,7 @@
 # PR #60 · Câu mở đầu có mời người mua làm đúng việc?
 
+**Quyết định sau phản biện.** Independent Reviewer chấp thuận merge nội bộ ở `edbca948`. Maintainer đã merge đúng cây vào main `83894ffe`. AMC-R60-01 đóng, AMC-R60-02 đóng trong phạm vi đã thử; AMC-R60-03 tiếp tục nằm trong backlog production. Mục HOLD bên dưới là quyết định trước bản sửa. [Biên nhận main](../round61/MAIN-60.json) · [Giới hạn nghiệm thu và hồ sơ #61](../round61/README.md)
+
 Independent Reviewer giữ quyết định HOLD trên head `555b968c85b09d52d50d2fd165ea9ff320e5afcd` (base `4140563a89539acd19f1a7d5a16662c8dec5f6af`). Ở ca Phách Mở, CTA “Chọn buổi” và hook “Quý vị cần báo giá?” có thể cùng vượt qua QA. Thông điệp đầu tiên có thể khiến người học hiểu sai công việc mà đơn vị tổ chức đang mời họ thực hiện. Chuỗi receipt liên phòng ban đã được chấp nhận ở lần review trước. [Gói lịch sử và kết quả kiểm thử trên head cũ](https://github.com/datnv41001/ai-company/tree/db862100aabf76641fe93fd207868c095f9027eb/docs/evaluation/round60-verification)
 
 ## Cách người duyệt đối chiếu

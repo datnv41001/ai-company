@@ -1,5 +1,14 @@
 # Sổ nguồn nghiên cứu AMC
 
+**27/11/2026 · vòng #61.** Các mục sau dẫn đến URL gốc, phần đã đọc, phiên bản, quyền sử dụng, giới hạn và phép kiểm áp dụng. Bộ nghiên cứu phục vụ việc chọn lát cắt tiếp theo.
+
+| Nguồn mới | Câu hỏi AMC và hồ sơ đọc |
+|---|---|
+| PostgreSQL Global Development Group, manual 16 §§13.3, 28.2.3 | Làm sao phân biệt chờ khóa và giữ khóa khi render? [Nguồn và thiết kế đo](../evaluation/round61/ENGINEERING.md) |
+| ACL CheckList (2020), repo GitHub của tác giả có ghim commit; EMNLP ShARC (2018) | Tình huống nào phải đổi quyết định khi nguồn thay đổi và ai được hỏi để làm rõ? [Nguồn gốc và thiết kế offline](../evaluation/round61/INTELLIGENCE.md) |
+| Frappe ERPNext Quotation, dbt Labs về lịch sử thay đổi, phản hồi HubSpot Community 01/04/2024 | Tách hồ sơ mua khỏi người mua và chứng từ báo giá; tái lập quyết định tại cutoff. [Nguồn chính thức và kinh nghiệm người dùng](../evaluation/round61/MARKETING.md) |
+| Brynjolfsson, Li & Raymond (QJE 2025); Dell’Acqua và cộng sự (HBS 2023, Organization Science 2026) | Khi tiết kiệm thời gian, người nhận có dùng được bản giao không? [Các phần đã đọc và điều kiện chuyển giao](../evaluation/round61/PRACTITIONER.md) |
+
 Bổ sung ngày 26/11/2026. Có bản ghim Remotion v4.0.547, hai nguồn Google Ads, hai nguồn TikTok, tài liệu học thuật và quy trình nhận feedback của agency/editor. Sổ ghi rõ phần đã truy cập, quyền và giới hạn. [Nguồn vòng R59](CONNECTED-CREATIVE.md)
 
 Mỗi nguồn mới cần URL, tác giả hoặc đơn vị phát hành, ngày khảo sát, phiên bản/commit nếu có, phần thực sự đọc, loại bằng chứng và giới hạn tin cậy. Ghi quyền truy cập, quyền tái sử dụng và nghĩa vụ attribution theo hành động dự kiến. Theo kiến thức qua thẻ và ma trận tới module/workflow, thử nghiệm, kết quả hoặc lý do chưa áp dụng. Với dữ liệu huấn luyện, phải xác minh quyền cho mục đích đó trước khi nhập.

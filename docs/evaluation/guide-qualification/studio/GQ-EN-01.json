@@ -1,0 +1,42 @@
+{
+  "run": "394fbb9d-93bb-49bf-811c-9872c98b0cdb",
+  "manifest": "fcf08382-32fa-49fb-a5ea-13976448102c",
+  "handoff": "c312be00-d20c-4453-9607-5d5eff686a64",
+  "received_requirements": [
+    "Keep the two checks on separate lines. Either check can be done first.",
+    "Retain the training-list restriction."
+  ],
+  "steps": [
+    "Match the pack code on the label card to the code on the sample list.",
+    "Match the swatch number on the fabric card to the number on the sample list."
+  ],
+  "limitations": [
+    "Use the training sample list only."
+  ],
+  "layout": "checklist",
+  "revision": 2,
+  "content_digest": "4a5cab319cec100e486c03c5742bbf2ced50015a4e071d55d23ce6a2069574cb",
+  "return_receipt": null,
+  "qa_receipt": "5ed89fea-d88f-4b8a-84e4-66f9c059dfa7",
+  "review": {
+    "sequence": "independent",
+    "obligations": {
+      "cta.1": "met",
+      "purpose.1": "met",
+      "audience.1": "met",
+      "placement.1": "met",
+      "exclusions.1": "met",
+      "measurement.1": "met",
+      "buyer_action.1": "met",
+      "claim_limits.1": "met",
+      "claim_limits.2": "met",
+      "requirements.1": "met",
+      "requirements.2": "met",
+      "asset_purpose.1": "met",
+      "editorial_style.1": "met",
+      "acceptance_criteria.1": "met",
+      "measurement_execution.1": "met"
+    },
+    "order_digest": "ba944f6528cf6b8b6e18fb2dfea1a0c1ae3bfc5f78d36f301761dc0eb362b598"
+  }
+}

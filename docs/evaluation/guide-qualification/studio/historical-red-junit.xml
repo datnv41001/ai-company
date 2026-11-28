@@ -1,0 +1,2 @@
+<?xml version='1.0' encoding='utf-8'?>
+<testsuites name="pytest tests"><testsuite name="pytest" errors="0" failures="1" skipped="0" tests="1" time="11.793" timestamp="2026-11-28T20:41:21.557590+07:00"><testcase classname=".pytest_cache.r70_red" name="test_ordered_checklist_should_not_sign" time="9.203"><failure message="Expected HTTP 409; observed HTTP 200 on an ordered procedure displayed as a checklist.">PostgreSQL and the signed reviewer HTTP readback are recorded in historical-red.json.</failure></testcase></testsuite></testsuites>

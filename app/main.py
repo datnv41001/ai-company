@@ -412,7 +412,7 @@ def assess_working_copy(tenant_id: str, deliverable_id: str, user: User = Depend
 def review_deliverable(tenant_id: str, deliverable_id: str, body: DeliverableReviewIn, user: User = Depends(current_user), db: Session = Depends(get_db)):
     member(db, user, tenant_id, "admin")
     item = working_copy(db, tenant_id, deliverable_id)
-    product_guide_studio.check_document(db, user, item, review=True)
+    guide_run = product_guide_studio.check_document(db, user, item, review=True)
     report = item.qa_evidence or {}
     digest = content_digest(item.title, item.content.get("client_preview", ""))
     if (
@@ -426,15 +426,25 @@ def review_deliverable(tenant_id: str, deliverable_id: str, body: DeliverableRev
         raise HTTPException(412, "Content changed or assessment is stale. Reload and reassess before deciding.")
     legacy_approval = item.status == "approved" and item.qa_approved_revision is None
     if body.decision == "approved" and item.status == "approved" and item.qa_approved_revision == item.qa_revision and item.qa_approved_digest == digest and item.reviewed_by == user.id and item.review_note == body.note and c3_boundaries.run_for(db, item):
-        c3_boundaries.boundary(db, user, item, digest, "replay_qa")
+        if guide_run:
+            product_guide_studio.proof(db, user, item, guide_run, digest, "replay_qa", assessment=body.guide_review)
+        else:
+            c3_boundaries.boundary(db, user, item, digest, "replay_qa")
+        return data(item)
+    if guide_run and body.decision == item.status == "rejected" and item.reviewed_by == user.id and item.review_note == body.note:
+        product_guide_studio.proof(db, user, item, guide_run, digest, "replay_return", assessment=body.guide_review)
         return data(item)
     if item.status != "submitted" and not legacy_approval:
         raise HTTPException(409, "Deliverable is not awaiting review")
     if user.id in (item.created_by, item.last_editor_id):
         raise HTTPException(403, "Self-approval is forbidden")
-    if body.decision == "approved" and (gate := c3_boundaries.boundary(db, user, item, digest, "qa")):
-        store, snap, values = gate
-        c3_boundaries.record_approval(store, snap, values)
+    if body.decision == "approved":
+        gate = (product_guide_studio.proof(db, user, item, guide_run, digest, "qa", assessment=body.guide_review)
+                if guide_run else c3_boundaries.boundary(db, user, item, digest, "qa"))
+        if gate:
+            c3_boundaries.record_approval(*gate)
+    elif guide_run:
+        product_guide_studio.record_return(db, user, item, guide_run, digest, body.guide_review)
     item.status, item.reviewed_by, item.review_note = body.decision, user.id, body.note
     item.qa_approved_revision = item.qa_revision if body.decision == "approved" else None
     item.qa_approved_digest = digest if body.decision == "approved" else None

@@ -1,0 +1,43 @@
+{
+  "run": "79649db2-2c1a-4e1a-b145-65ff35456c84",
+  "manifest": "6827a18f-099e-4346-bc22-aab2afc43c81",
+  "handoff": "cd0ac4d5-cb52-4c85-ac91-efd61be1abe5",
+  "received_requirements": [
+    "Đánh số từng bước theo thứ tự mở, đưa thẻ vào rồi gập nắp.",
+    "Giữ nguyên điều kiện dùng thẻ giấy khô."
+  ],
+  "steps": [
+    "Mở nắp túi thẻ trong suốt.",
+    "Đưa thẻ mục lục vào hết trong túi.",
+    "Gập nắp túi để giữ thẻ bên trong."
+  ],
+  "limitations": [
+    "Chỉ dùng thẻ giấy khô."
+  ],
+  "layout": "numbered",
+  "revision": 3,
+  "content_digest": "7d18391a2f27b991fd407aaf4891d8391d8d0e8da57fa26e04d3d5c5077c9367",
+  "return_receipt": "19b67757-5de2-4fa6-bf99-74ee556b315e",
+  "qa_receipt": "01d627d6-508b-4c93-868f-30749a5d97e7",
+  "review": {
+    "sequence": "ordered",
+    "obligations": {
+      "cta.1": "met",
+      "purpose.1": "met",
+      "audience.1": "met",
+      "placement.1": "met",
+      "exclusions.1": "met",
+      "measurement.1": "met",
+      "buyer_action.1": "met",
+      "claim_limits.1": "met",
+      "claim_limits.2": "met",
+      "requirements.1": "met",
+      "requirements.2": "met",
+      "asset_purpose.1": "met",
+      "editorial_style.1": "met",
+      "acceptance_criteria.1": "met",
+      "measurement_execution.1": "met"
+    },
+    "order_digest": "f9b85dffd5d44056410d4af049dbf19adb26ed87dd680973f728d379f4e9c52d"
+  }
+}

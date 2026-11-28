@@ -69,6 +69,55 @@ function mountProductGuide(parent, api, documentPath) {
     add(article, 'p', edition.cta).className = 'guide-cta';
   }
 
+  const fieldLabels = {
+    purpose:'Mục đích trong brief', asset_purpose:'Mục đích của hướng dẫn', audience:'Người đọc', placement:'Vị trí',
+    buyer_action:'Hành động của người mua', cta:'Lời kêu gọi hành động', editorial_style:'Phong cách biên tập',
+    requirements:'Yêu cầu', exclusions:'Nội dung loại trừ', acceptance_criteria:'Tiêu chí nghiệm thu',
+    claim_limits:'Giới hạn nhận định', measurement:'Trạng thái đo lường', measurement_execution:'Quyền thực hiện phép đo'
+  };
+  const meaning = {planned_only:'Mới lập kế hoạch', approved_definition_only:'Đã duyệt định nghĩa phép đo',
+    not_authorized:'Chưa được phép thực hiện', authorized:'Được phép thực hiện'};
+  const verdicts = {'':'Chưa đối chiếu',met:'Đáp ứng',unsupported:'Hướng dẫn chưa đáp ứng',needs_information:'Cần bổ sung thông tin'};
+  const sequences = {'':'Chọn tính chất các bước',ordered:'Phải làm theo thứ tự',independent:'Có thể làm độc lập',unclear:'Cần làm rõ thứ tự'};
+
+  function orderReview(host, view) {
+    const section = add(host, 'section');
+    section.className = 'guide-order';
+    add(section, 'h4', 'Đối chiếu phiếu giao việc');
+    add(section, 'p', view.can_review ? 'So từng mục với bản xem trước và nguồn P1 trước khi ký.'
+      : view.guide_review ? 'Kết quả người duyệt đã ghi cho phiên bản này.'
+      : view.qa_receipt ? 'Quyết định QA lịch sử chưa ghi kết quả cho từng mục.' : 'Các yêu cầu từ phiếu Strategy đã ký.');
+    const results = {};
+    const list = add(section, 'dl');
+    for (const row of view.work_order.obligations) {
+      const group = add(list, 'div');
+      const label = fieldLabels[row.field];
+      add(group, 'dt', label);
+      const vocabulary = row.field === 'buyer_action' ? marketingActionLabels
+        : row.field === 'editorial_style' ? marketingStyleLabels : row.field.startsWith('measurement') ? meaning : {};
+      const text = Object.hasOwn(vocabulary, row.text) ? vocabulary[row.text] : row.text;
+      add(group, 'dd', text);
+      if (view.can_review) {
+        const cell = add(group, 'dd');
+        const status = choices(cell, label + ' · ' + text, verdicts, '');
+        cell.firstChild.firstChild.textContent = '';
+        cell.firstChild.className = 'guide-obligation-control';
+        status.required = true;
+        results[row.id] = status;
+      } else if (view.guide_review) {
+        add(group, 'dd', verdicts[view.guide_review.obligations[row.id]]).className = 'guide-verdict';
+      }
+    }
+    if (!view.work_order.obligations.some(row => row.field === 'exclusions')) {
+      add(section, 'p', 'Phiếu giao việc không có yêu cầu loại trừ riêng.');
+    }
+    if (!view.can_review && view.guide_review) {
+      add(section, 'p', 'Các bước · ' + sequences[view.guide_review.sequence]);
+      add(section, 'p', 'Biên nhận đối chiếu · ' + view.order_review_receipt);
+    }
+    return results;
+  }
+
   function render(view) {
     panel.replaceChildren();
     const edition = view.guide;
@@ -137,23 +186,41 @@ function mountProductGuide(parent, api, documentPath) {
     edition.source_map.steps.forEach((ref, index) => add(refs, 'li', 'Bước '+(index+1)+' · '+ref));
     add(source, 'p', 'Đối tượng và lời kêu gọi hành động lấy từ brief đã duyệt.');
     if (view.qa_receipt) add(source, 'p', 'Biên nhận QA cho phiên bản '+view.revision+' · '+view.qa_receipt);
+    const form = add(panel, view.can_review ? 'form' : 'div');
+    const obligations = orderReview(form, view);
     if (view.can_review) {
-      const form = add(column, 'form');
       add(form, 'h4', 'Quyết định Content QA');
-      const decision = choices(form, 'Kết luận', {approved:'Duyệt nội bộ',rejected:'Từ chối'}, 'approved');
+      const sequence = choices(form, 'Trình tự theo nguồn và phiếu giao việc', sequences, '');
+      sequence.required = true;
+      const decision = choices(form, 'Kết luận', {approved:'Duyệt nội bộ',rejected:'Trả lại để sửa hoặc làm rõ'}, 'approved');
+      const hint = add(form, 'p');
+      hint.setAttribute('role', 'status');
       const note = add(add(form, 'label', 'Nhận xét đối chiếu nguồn'), 'textarea');
       note.required = true;
       note.minLength = 5;
       note.maxLength = 1000;
       const submit = add(form, 'button', 'Ghi quyết định QA');
       submit.type = 'submit';
+      function canSign() {
+        const states = Object.values(obligations).map(input => input.value);
+        const missing = !sequence.value || states.includes('');
+        const mismatch = sequence.value === 'ordered' && edition.choices.layout !== 'numbered';
+        const hold = sequence.value === 'unclear' || states.some(value => value !== 'met');
+        submit.disabled = missing || (decision.value === 'approved' && (mismatch || hold));
+        hint.textContent = missing ? 'Đối chiếu từng mục và xác định thứ tự các bước.'
+          : decision.value === 'approved' && mismatch ? 'Các bước phụ thuộc nhau. Trả lại để người biên tập đổi sang các bước đánh số.'
+          : decision.value === 'approved' && hold ? 'Còn mục cần xử lý. Trả lại để sửa hoặc làm rõ.' : '';
+      }
+      form.addEventListener('change', canSign);
+      canSign();
       form.addEventListener('submit', async event => {
         event.preventDefault();
         if (!form.reportValidity() || submit.disabled) return;
         submit.disabled = true;
         try {
           await api(documentPath+'/review','POST',{expected_qa_revision:view.revision,expected_content_digest:view.content_digest,
-            decision:decision.value,note:note.value.trim()});
+            decision:decision.value,note:note.value.trim(),guide_review:{order_digest:view.work_order.digest,
+              sequence:sequence.value,obligations:Object.fromEntries(Object.entries(obligations).map(([id,input]) => [id,input.value]))}});
           await load();
         } catch (err) { if (panel.isConnected) failed(err); }
       });

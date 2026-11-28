@@ -1,8 +1,10 @@
 # Bắt đầu ở đây khi tiếp quản AI Marketing Company
 
-**WF-06/1 · chờ Independent Review.** Main sau #69 là `1ae4dc24dcae20c13d64f6dfaf887a03af48e6e3`. Release mới dùng Strategy receipt để tạo guide trên trang sản phẩm cho đúng người nhận in-house. Đọc hướng dẫn cấu hình, nguồn đủ điều kiện, bằng chứng hai brief và cách rollback trước khi tiếp quản. [Hồ sơ Product Guide](docs/evaluation/product-guide/README.md) · [Chứng nhận merge #69](docs/evaluation/product-guide/MAIN-69.md)
+**WF-06/1 · đã merge nội bộ tại `3d56073f`.** Người tiếp quản vòng qualification bắt đầu tại [hồ sơ AMC-GUIDE-QUAL-01](docs/evaluation/guide-qualification/README.md) và [chứng nhận main #70](docs/evaluation/guide-qualification/MAIN-70.md).
 
-**AMC-CONTENT-HANDOFF-01 · đã merge #69.** Main sau #68 ở `7446bc8`. Handoff /2 giao được việc cho Content lead; bốn loại tài sản chưa có contract task tương ứng. Ưu tiên quyết định phạm vi một guide trên trang sản phẩm trước khi viết release. [Bảng đối chiếu, receipt PostgreSQL và gói Studio/notes](docs/evaluation/content-handoff/README.md)
+**Lịch sử triển khai #70.** Main sau #69 là `1ae4dc24dcae20c13d64f6dfaf887a03af48e6e3`. Release mới dùng Strategy receipt để tạo guide trên trang sản phẩm cho đúng người nhận in-house. Đọc hướng dẫn cấu hình, nguồn đủ điều kiện, bằng chứng hai brief và cách rollback trước khi tiếp quản. [Hồ sơ Product Guide](docs/evaluation/product-guide/README.md) · [Chứng nhận merge #69](docs/evaluation/product-guide/MAIN-69.md)
+
+**AMC-CONTENT-HANDOFF-01 · chẩn đoán lịch sử tại #69.** Main sau #68 ở `7446bc8`. Handoff /2 giao được việc cho Content lead; bốn loại tài sản chưa có contract task tương ứng. Ưu tiên quyết định phạm vi một guide trên trang sản phẩm trước khi viết release. [Bảng đối chiếu, receipt PostgreSQL và gói Studio/notes](docs/evaluation/content-handoff/README.md)
 
 **AMC-RES-QA-01 · lịch sử #68, đã nghiệm thu nội bộ.** Main sau merge #67 là `fe0110bd`. Reviewer có thể phân loại riêng từng hướng dẫn nghiên cứu nội bộ đủ điều kiện ngay trong mục đối chiếu bằng chứng. [Chứng nhận merge, ca RED/GREEN, receipt, ảnh và cách tái hiện](docs/evaluation/research-instruction/README.md). Người tiếp quản cần kiểm cả thu hồi sau khi ký và câu có claim đứng cạnh câu trung lập.
 

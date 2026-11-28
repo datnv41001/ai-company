@@ -1,8 +1,10 @@
 # Trạng thái hiện thực và nghiệm thu V1
 
-**AMC-CONTENT-GUIDE-01 · candidate.** Trong fixture được kiểm, Content lead nhận đúng work order, chạy worker nội bộ, biên tập bản hướng dẫn và chuyển cho QA độc lập. Guide chưa đạt nghiệm thu người dùng thực hoặc kết quả kinh doanh. [Phạm vi và nguồn chứng minh](evaluation/product-guide/README.md)
+**AMC-GUIDE-QUAL-01 · đang bàn giao cho Independent Review.** Hai fixture đủ nguồn cho thấy tác động riêng của tiêu đề và bố cục. PostgreSQL đã được kiểm với hai thứ tự commit khi worker báo kết quả và chủ nguồn thu hồi quyền. Sự chấp nhận của người thực hành, thời gian tiết kiệm và hiệu quả Marketing còn chờ pilot được phê duyệt. [Từng finding, trạng thái và đường tái lập](evaluation/guide-qualification/README.md)
 
-**Strategy → Content.** Vòng AMC-CONTENT-HANDOFF-01 tái hiện được work order nội bộ đã ký. API từ chối nhận bốn loại guide/panel/card vào Workforce. Trạng thái hiện tại dừng ở work order; chưa có Content execution, Content QA, practitioner acceptance, publication hay business outcome cho đường này. [Bằng chứng và điều kiện để tiếp tục](evaluation/content-handoff/README.md)
+**AMC-CONTENT-GUIDE-01 · đã merge nội bộ tại #70.** Trong fixture được kiểm, Content lead nhận đúng work order, chạy worker nội bộ, biên tập bản hướng dẫn và chuyển cho QA độc lập. Guide chưa đạt nghiệm thu người dùng thực hoặc kết quả kinh doanh. [Phạm vi và nguồn chứng minh](evaluation/product-guide/README.md)
+
+**Strategy → Content · kết quả lịch sử tại #69.** Vòng AMC-CONTENT-HANDOFF-01 tái hiện được work order nội bộ đã ký. API từ chối nhận bốn loại guide/panel/card vào Workforce. Trạng thái hiện tại dừng ở work order; chưa có Content execution, Content QA, practitioner acceptance, publication hay business outcome cho đường này. [Bằng chứng và điều kiện để tiếp tục](evaluation/content-handoff/README.md)
 
 **AMC-RES-QA-01 · đã merge #68.** Runtime có quyết định phân loại thủ tục trên đúng span, reviewer, mandate và revision của Research Studio. Mỗi lần đọc để quyết định tiếp đều đối chiếu quyền và nguồn hiện tại. Đánh giá một kế hoạch, ghi nhận đã nghiên cứu, kiểm chứng dữ kiện, phê duyệt Strategy và giao Content là năm quyết định riêng. [Kiểm thử và giới hạn](evaluation/research-instruction/README.md)
 

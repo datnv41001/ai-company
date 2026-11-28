@@ -1,0 +1,386 @@
+{
+  "main": "3d56073fafeb9d5bd5f39843fc74e11bc378fdab",
+  "parents": [
+    "1ae4dc24dcae20c13d64f6dfaf887a03af48e6e3",
+    "d4c05dd2c681a367fdee0b6b94f687c0fca866bd"
+  ],
+  "trial": "d8de0a68654b29e5d24e494b51036f5f4f7034a5",
+  "tree": "85a92d483ce84c72b243b1f49b7579f3ea737258",
+  "changed_files": 81,
+  "manifest_sha256": "94531c63e4fd828cc48bc7a45c66f6ca589d75b0ec68b96f165b188cea86c23f",
+  "verified_remote_blobs": 80,
+  "workflow": "https://github.com/datnv41001/ai-company/actions/runs/46150710378",
+  "attempt": 1,
+  "jobs": [
+    {
+      "name": "compose-browser (head)",
+      "html_url": "https://github.com/datnv41001/ai-company/actions/runs/46150710378/job/140996536189",
+      "conclusion": "success",
+      "started_at": "2026-11-28T13:39:42Z",
+      "completed_at": "2026-11-28T13:51:00Z"
+    },
+    {
+      "name": "api-tests (head)",
+      "html_url": "https://github.com/datnv41001/ai-company/actions/runs/46150710378/job/140996536379",
+      "conclusion": "success",
+      "started_at": "2026-11-28T13:39:42Z",
+      "completed_at": "2026-11-28T14:09:41Z",
+      "checkout": "3d56073fafeb9d5bd5f39843fc74e11bc378fdab"
+    },
+    {
+      "name": "workforce-model (head)",
+      "html_url": "https://github.com/datnv41001/ai-company/actions/runs/46150710378/job/140996536386",
+      "conclusion": "success",
+      "started_at": "2026-11-28T13:39:41Z",
+      "completed_at": "2026-11-28T13:46:44Z"
+    },
+    {
+      "name": "matched-model",
+      "html_url": "https://github.com/datnv41001/ai-company/actions/runs/46150710378/job/140998315019",
+      "conclusion": "skipped",
+      "started_at": "2026-11-28T13:46:45Z",
+      "completed_at": "2026-11-28T13:46:44Z"
+    }
+  ],
+  "artifacts": {
+    "product-guide-head": {
+      "url": "https://github.com/datnv41001/ai-company/actions/runs/46150710378/artifacts/15266895817",
+      "zip_sha256": "1d2010144ff72c19d1d4c987349d0665a6efffd14358b143793e4f95924172ba",
+      "browser": {
+        "tests": 1,
+        "skipped": 0,
+        "failures": 0,
+        "errors": 0,
+        "sha256": "57eb8cf17b2e3ccc75f782cb113f4f87d0acfa28a9b7cf38503ac2c2c0363518"
+      }
+    },
+    "api-regression-head": {
+      "url": "https://github.com/datnv41001/ai-company/actions/runs/46150710378/artifacts/15266831052",
+      "zip_sha256": "207cb4ed0b4869169cc9c915d4a6bc5426d55cdf670031ef2c93c6d41d09eff2",
+      "junit": {
+        "tests": 826,
+        "skipped": 2,
+        "failures": 0,
+        "errors": 0,
+        "sha256": "9d64e190a7023385299b8eec4e65e26b9fbc6d2888ed0c54b4dd2d2b5936b53d"
+      }
+    },
+    "pool-model-measurements": {
+      "url": "https://github.com/datnv41001/ai-company/actions/runs/46150710378/artifacts/15265767930",
+      "zip_sha256": "4569be9d2c6c12944b95c40fd663d40faed123873738f62ddc11888bbefc17b4"
+    }
+  },
+  "restored_tables": 34,
+  "guides_restored": 4,
+  "paths_to_v26": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12,
+    13,
+    14,
+    15,
+    16,
+    17,
+    18,
+    19,
+    20,
+    21,
+    22
+  ],
+  "model": {
+    "campaign_attempts": 39,
+    "campaign_first": 38,
+    "campaign_first_ok": 34,
+    "campaign_tokens": [
+      11243,
+      3482
+    ],
+    "campaign_unmetered": 3,
+    "campaign_outcomes": {
+      "recipient_revoked": 3,
+      "ok": 35,
+      "invalid_source": 1
+    },
+    "named_attempts": 21,
+    "named_first": 21,
+    "named_outcomes": {
+      "ok": 21
+    },
+    "named_tokens": [
+      12559,
+      2167
+    ],
+    "named_fees": 0,
+    "parallel": {
+      "observed_two_slots": 205,
+      "two_slot_span_ms": 5566.591037,
+      "lease_overlap_ms": 5616.933,
+      "request_overlap_ms": 5611.134269,
+      "real_specialist_calls": 2,
+      "input_tokens": 518,
+      "output_tokens": 203,
+      "estimated_microusd": 0,
+      "approved_snapshots": 1
+    },
+    "scope": "Existing synthetic Workforce CI; no model invocation for guide qualification",
+    "campaign_cases": [
+      {
+        "path": "diamond-measurements.json",
+        "campaign": "A",
+        "state": "failed",
+        "first_attempts": 1,
+        "first_pass": 0,
+        "attempts": 1,
+        "input_tokens": 0,
+        "output_tokens": 0,
+        "unconfirmed_usage": 1,
+        "outcomes": {
+          "recipient_revoked": 1
+        }
+      },
+      {
+        "path": "diamond-measurements.json",
+        "campaign": "B",
+        "state": "awaiting_qa",
+        "first_attempts": 5,
+        "first_pass": 5,
+        "attempts": 5,
+        "input_tokens": 1431,
+        "output_tokens": 517,
+        "unconfirmed_usage": 0,
+        "outcomes": {
+          "ok": 5
+        }
+      },
+      {
+        "path": "diamond-measurements.json",
+        "campaign": "C",
+        "state": "awaiting_qa",
+        "first_attempts": 5,
+        "first_pass": 5,
+        "attempts": 5,
+        "input_tokens": 1378,
+        "output_tokens": 484,
+        "unconfirmed_usage": 0,
+        "outcomes": {
+          "ok": 5
+        }
+      },
+      {
+        "path": "pool-measurements.json",
+        "campaign": "A",
+        "state": "failed",
+        "first_attempts": 1,
+        "first_pass": 0,
+        "attempts": 1,
+        "input_tokens": 0,
+        "output_tokens": 0,
+        "unconfirmed_usage": 1,
+        "outcomes": {
+          "recipient_revoked": 1
+        }
+      },
+      {
+        "path": "pool-measurements.json",
+        "campaign": "B",
+        "state": "awaiting_qa",
+        "first_attempts": 4,
+        "first_pass": 4,
+        "attempts": 4,
+        "input_tokens": 1280,
+        "output_tokens": 411,
+        "unconfirmed_usage": 0,
+        "outcomes": {
+          "ok": 4
+        }
+      },
+      {
+        "path": "pool-measurements.json",
+        "campaign": "C",
+        "state": "awaiting_qa",
+        "first_attempts": 4,
+        "first_pass": 4,
+        "attempts": 4,
+        "input_tokens": 1237,
+        "output_tokens": 402,
+        "unconfirmed_usage": 0,
+        "outcomes": {
+          "ok": 4
+        }
+      },
+      {
+        "path": "dynamic-measurements.json",
+        "campaign": "A",
+        "state": "failed",
+        "first_attempts": 1,
+        "first_pass": 0,
+        "attempts": 1,
+        "input_tokens": 0,
+        "output_tokens": 0,
+        "unconfirmed_usage": 1,
+        "outcomes": {
+          "recipient_revoked": 1
+        }
+      },
+      {
+        "path": "dynamic-measurements.json",
+        "campaign": "B",
+        "state": "awaiting_qa",
+        "first_attempts": 2,
+        "first_pass": 2,
+        "attempts": 2,
+        "input_tokens": 595,
+        "output_tokens": 149,
+        "unconfirmed_usage": 0,
+        "outcomes": {
+          "ok": 2
+        }
+      },
+      {
+        "path": "dynamic-measurements.json",
+        "campaign": "C",
+        "state": "awaiting_qa",
+        "first_attempts": 3,
+        "first_pass": 3,
+        "attempts": 3,
+        "input_tokens": 957,
+        "output_tokens": 297,
+        "unconfirmed_usage": 0,
+        "outcomes": {
+          "ok": 3
+        }
+      },
+      {
+        "path": "registry-measurements.json",
+        "campaign": "Registry",
+        "state": "awaiting_qa",
+        "first_attempts": 3,
+        "first_pass": 3,
+        "attempts": 3,
+        "input_tokens": 991,
+        "output_tokens": 256,
+        "unconfirmed_usage": 0,
+        "outcomes": {
+          "ok": 3
+        }
+      },
+      {
+        "path": "registry-rollout.json",
+        "campaign": "Registry v2",
+        "state": "awaiting_qa",
+        "first_attempts": 3,
+        "first_pass": 3,
+        "attempts": 3,
+        "input_tokens": 1012,
+        "output_tokens": 269,
+        "unconfirmed_usage": 0,
+        "outcomes": {
+          "ok": 3
+        }
+      },
+      {
+        "path": "role-qa-measurements.json",
+        "campaign": "Landing role QA",
+        "state": "awaiting_qa",
+        "first_attempts": 3,
+        "first_pass": 3,
+        "attempts": 3,
+        "input_tokens": 1012,
+        "output_tokens": 272,
+        "unconfirmed_usage": 0,
+        "outcomes": {
+          "ok": 3
+        }
+      },
+      {
+        "path": "research-strategy-measurements.json",
+        "campaign": "Research to Strategy",
+        "state": "awaiting_qa",
+        "first_attempts": 3,
+        "first_pass": 2,
+        "attempts": 4,
+        "input_tokens": 1350,
+        "output_tokens": 425,
+        "unconfirmed_usage": 0,
+        "outcomes": {
+          "ok": 3,
+          "invalid_source": 1
+        }
+      }
+    ],
+    "named_runs": [
+      {
+        "path": "c3-model-receipts/projected/materials/result.json",
+        "run_id": "134a52ab-6bde-4f71-92b0-8300c005b385",
+        "state": "awaiting_qa",
+        "input_tokens": 1610,
+        "output_tokens": 367,
+        "provider_fee_usd": 0,
+        "unmetered_attempts": 0
+      },
+      {
+        "path": "c3-model-receipts/projected/service/result.json",
+        "run_id": "2a9cbe0d-1f05-4cca-9254-35ab71b0e21e",
+        "state": "awaiting_qa",
+        "input_tokens": 1422,
+        "output_tokens": 330,
+        "provider_fee_usd": 0,
+        "unmetered_attempts": 0
+      },
+      {
+        "path": "c3-internal-receipts/materials/result.json",
+        "run_id": "d8218965-998a-4b24-a08b-3d8cafd8740f",
+        "state": "awaiting_qa",
+        "input_tokens": 2481,
+        "output_tokens": 340,
+        "provider_fee_usd": 0,
+        "unmetered_attempts": 0
+      },
+      {
+        "path": "c3-internal-receipts/seller/result.json",
+        "run_id": "363581ca-9416-411d-b542-9db4a9aaff70",
+        "state": "awaiting_qa",
+        "input_tokens": 1620,
+        "output_tokens": 312,
+        "provider_fee_usd": 0,
+        "unmetered_attempts": 0
+      },
+      {
+        "path": "campaign-engine-receipts/acoustic-panel/landing/worker.json",
+        "run_id": "e5f62c3c-0917-4210-9958-33db12ab2676",
+        "state": "awaiting_qa",
+        "input_tokens": 1545,
+        "output_tokens": 262,
+        "provider_fee_usd": 0,
+        "unmetered_attempts": 0
+      },
+      {
+        "path": "campaign-engine-receipts/acoustic-panel/strategy/worker.json",
+        "run_id": "3062e82c-d00a-42e0-afcb-85d674c02c49",
+        "state": "awaiting_qa",
+        "input_tokens": 2317,
+        "output_tokens": 278,
+        "provider_fee_usd": 0,
+        "unmetered_attempts": 0
+      },
+      {
+        "path": "campaign-engine-receipts/pump-service/landing/worker.json",
+        "run_id": "3d89c378-eb8e-481c-ac37-49b09b21441b",
+        "state": "awaiting_qa",
+        "input_tokens": 1564,
+        "output_tokens": 278,
+        "provider_fee_usd": 0,
+        "unmetered_attempts": 0
+      }
+    ]
+  }
+}

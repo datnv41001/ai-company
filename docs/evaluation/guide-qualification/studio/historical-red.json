@@ -1,0 +1,18 @@
+{
+  "requirement": [
+    "Show a numbered sequence. The sleeve must be opened before inserting the card."
+  ],
+  "steps": [
+    "Open the sleeve.",
+    "Insert the batch card into the opened sleeve."
+  ],
+  "layout": "checklist",
+  "visible": false,
+  "review_http": 200,
+  "status": "approved",
+  "qa_receipt": "95d0632b-32ab-42f9-bc3c-2593878925e9",
+  "manifest": "70804481-4119-4d44-93ff-b414b2e39506",
+  "run": "6429fd6c-8133-4f69-a92d-c897bf8c0716",
+  "revision": 2,
+  "content_digest": "b0d3dc14945c138263abb219963691ebf8c49b30f627bf78065283208c0f5271"
+}

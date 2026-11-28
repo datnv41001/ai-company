@@ -117,6 +117,9 @@ def test_guide_in_live_studio(tmp_path):
                 page.close()
                 page, panel, _ = working_guide(browser, origin, ctx, ctx["reviewer"], did, VIEWPORTS[0])
                 expect(panel.get_by_label("Tiêu đề", exact=True)).to_have_count(0)
+                for control in panel.locator(".guide-obligation-control select").all():
+                    control.select_option("met")
+                panel.get_by_label("Trình tự theo nguồn và phiếu giao việc").select_option("independent")
                 panel.get_by_label("Nhận xét đối chiếu nguồn").fill("Reviewed the steps, limitation and CTA against the signed product declaration.")
                 with page.expect_response(lambda res: res.url.endswith("/review") and res.request.method == "POST") as signed:
                     panel.get_by_role("button", name="Ghi quyết định QA").press("Enter")

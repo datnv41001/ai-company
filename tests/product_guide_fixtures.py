@@ -1,6 +1,7 @@
 """Synthetic source, real signed Strategy work order and the ordinary guide worker mailbox."""
 
 import json
+from pathlib import Path
 from time import monotonic, sleep
 from contextlib import contextmanager
 
@@ -16,9 +17,23 @@ LIMIT = "Use dry cards only."
 OBS = "One supervisor put the batch card into the index stand at shift handover."
 
 
+def qualification_cases():
+    path = Path(__file__).resolve().parents[1] / "docs/evaluation/guide-qualification/quality/cases.json"
+    return json.loads(path.read_text(encoding="utf-8"))
+
+
+def order_assessment(view, sequence="independent"):
+    order = view["work_order"]
+    return {"order_digest": order["digest"], "sequence": sequence, "obligations": {row["id"]: "met" for row in order["obligations"]}}
+
+
 @contextmanager
-def guide_case(api, *, instructions=True):
-    if instructions:
+def guide_case(api, *, instructions=True, case=None):
+    if case:
+        product, audience, observation, locale = (case[key] for key in ("product", "audience", "observation", "locale"))
+        steps = case["steps"]
+        fact = {"wording": " ".join(steps), "qualifiers": case["qualifiers"], "guide_procedure": {"version": "amc.product-guide-source/1", "steps": steps}}
+    elif instructions:
         product, audience, observation, locale = "Index Stand", "Shift supervisors", OBS, "en-US"
         fact = {"wording": " ".join(STEPS), "qualifiers": [LIMIT], "guide_procedure": {"version": "amc.product-guide-source/1", "steps": STEPS}}
     else:
@@ -27,7 +42,9 @@ def guide_case(api, *, instructions=True):
         fact = {"wording": "Bảng bàn giao có hai ô.", "qualifiers": ["Chỉ dùng trong nhà."]}
     complete = " ".join([fact["wording"], *fact["qualifiers"]])
     intent = INTENT | {"product": product, "audience": audience, "locale": locale}
-    if not instructions:
+    if case:
+        intent.update({key: case[key] for key in ("purpose", "requirements", "exclusions", "acceptance_criteria")})
+    elif not instructions:
         intent.update(
             purpose="Chuẩn bị hướng dẫn tại thời điểm bàn giao ca.",
             requirements=["Giữ nguyên điều kiện sử dụng."],

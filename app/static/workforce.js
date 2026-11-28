@@ -296,6 +296,7 @@ function createWorkforce(root, api, notify, onActivity=()=>{}) {
             });
           }
           if(v.last_error)node(info,'p',v.last_error==='recipient_revoked'?'Đã hủy do thu hồi quyền của người giao brief.':'Lỗi: '+v.last_error);
+          if(v.product_guide_studio)mountProductGuide(info,api,'/api/tenants/'+encodeURIComponent(tenant)+'/deliverables/'+encodeURIComponent(v.deliverable_id));
             if(v.marketing_provenance)attachMarketingProvenance(info,v.marketing_provenance,api,()=>ticket===revision);
             let checkpointHost=info;
             if(v.marketing_artifacts){

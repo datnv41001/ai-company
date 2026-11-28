@@ -166,6 +166,9 @@ def prepare_database(bind, *, verify_identity=True):
                      to_regprocedure('amc_acl.lock_c3_internal_target(text,text,text,text,text)'), 'EXECUTE'), false)
         """)):
             raise RuntimeError("Run the C3 task migration publisher before starting this API")
+        from migrations.product_guide_contract import GUIDE_FENCE
+        if not conn.scalar(text(GUIDE_FENCE)):
+            raise RuntimeError("Apply the PostgreSQL schema migrations for the product guide authority fence")
         if not verify_identity:
             return
         from .access import set_context

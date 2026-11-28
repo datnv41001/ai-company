@@ -1,5 +1,13 @@
 # PR #9 · Agent Contracts & Marketing Workflow Registry
 
+## Mục bổ sung cho release Product Guide
+
+`WF-06/product-use-guide@1` thuộc Campaign Factory vì đầu vào là chiến lược đã ký. Bản này dùng hai vai trò có sẵn. Director cố định một node Content bằng adapter cục bộ, không gọi model. Content chọn tiêu đề và cách trình bày các bước đã release. Worker lưu lựa chọn gốc vào checkpoint. Studio ghép nguyên bước, giới hạn và CTA thành bản nháp nội bộ để editor sửa rồi gửi QA. Định nghĩa publisher và phiên bản adapter nằm trong [catalog guide](../catalog/product-use-guide-v1.json).
+
+Trên database phát triển, maintainer có thể cài định nghĩa bằng `python migrations/apply.py --publish-registry catalog/product-use-guide-v1.json`. Quản trị viên in-house phải kích hoạt riêng hai skill `director`, `content` cho đúng campaign. Khi cần ngừng nhận việc mới, đặt `action=disable` cho hai skill của chính release đó ở API registry hiện hữu. Để thu hồi cả run đang hoạt động, dùng `action=revoke`. Registry giữ các định nghĩa lịch sử. Phép kiểm PostgreSQL đối chiếu nguyên grant và manifest WF-03 trước và sau khi tắt WF-06, đồng thời kiểm lại định nghĩa guide đã lưu. [Kiểm thử rollback và giới hạn agency](../tests/test_product_guide_runtime.py)
+
+## Đề xuất v14 tại thời điểm PR #9
+
 **Đề xuất để kiểm toán thiết kế.** Mốc đối chiếu là `main@2846c174e393acfcc47526a8da5a62fa77bc87d5`, PostgreSQL v13. Người tiếp quản có thể đánh giá thiết kế bằng một câu hỏi cụ thể. Khi hai node Content viết email và landing page, hệ thống có chỉ ra được hợp đồng, nguồn, quyền, người duyệt và chi phí của từng bản không?
 
 ## 1. Điểm tích hợp trên v13

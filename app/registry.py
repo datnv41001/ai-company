@@ -10,7 +10,7 @@ from sqlalchemy import text
 from sqlalchemy.orm import Session
 
 from .database import get_db
-from .models import Campaign, User
+from .models import Campaign, Tenant, User
 from .security import current_user, require_tenant
 
 router = APIRouter(prefix="/api/tenants/{tenant_id}/workforce/registry")
@@ -57,6 +57,9 @@ def activate(tenant_id: str, campaign: str, body: Activation, db: Session = Depe
     campaign_access(db, user, tenant_id, campaign, "admin")
     if db.get_bind().dialect.name != "postgresql":
         raise HTTPException(409, "Registry requires PostgreSQL")
+    from .product_guide_runtime import RELEASE as PRODUCT_GUIDE
+    if body.workflow == PRODUCT_GUIDE and body.action == "activate" and db.get(Tenant, tenant_id).mode != "inhouse":
+        raise HTTPException(409, "Product guides require an in-house Strategy commission")
     ok = db.scalar(
         text("select amc_ops.change_registry(:t,:c,:w,:mode,cast(:skills as text[]))"),
         {"t": tenant_id, "c": campaign, "w": body.workflow, "mode": body.action, "skills": body.skills},
@@ -68,7 +71,7 @@ def activate(tenant_id: str, campaign: str, body: Activation, db: Session = Depe
 
 
 def pin(db, brief, workflow):
-    from . import storyboard_runtime
+    from . import product_guide_runtime, storyboard_runtime
     from .registry_adapters import resolve
 
     binding = db.scalar(text("select amc_ops.registry_pin(:t,:c,:w)"), {"t": brief.tenant_id, "c": brief.campaign_id, "w": workflow})
@@ -78,4 +81,6 @@ def pin(db, brief, workflow):
     # or approve work from those rows using the revised semantic adapter.
     if workflow == storyboard_runtime.RELEASE and not all(resolve(c) for c in binding["contracts"].values()):
         raise HTTPException(409, "The draft storyboard binding requires its original runtime")
+    if workflow == product_guide_runtime.RELEASE and not all(resolve(c) for c in binding["contracts"].values()):
+        raise HTTPException(409, "The product guide binding requires its pinned runtime")
     return binding

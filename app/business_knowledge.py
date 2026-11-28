@@ -196,6 +196,10 @@ def check_snapshot(s, snap, at, target):
 @router.get("/snapshots/{snapshot_id}")
 def snapshot(snapshot_id: str, s=Depends(reader)):
     snap = s.get(m.KnowledgeSnapshot, snapshot_id)
+    # Only the guide-specific read path can replay its two authorized human roles.
+    from .product_guide_admission import MANIFEST_VERSION
+    if json.loads(snap.canonical).get("version") == MANIFEST_VERSION:
+        missing()
     problem = None
     try:
         target = Target(campaign_id=snap.campaign_id, brief_id=snap.brief_id) if snap.brief_id else None

@@ -57,15 +57,17 @@ jobs:
           export AMC_STRATEGY_CASE_RESULTS="$RUNNER_TEMP/strategy-comparison"
           export AMC_RUNTIME_STRATEGY_EVIDENCE="$RUNNER_TEMP/runtime-strategy/lineage"
           export AMC_RES_QA_EVIDENCE="$RUNNER_TEMP/runtime-strategy/research-instruction"
+          export AMC_PRODUCT_GUIDE_EVIDENCE="$RUNNER_TEMP/product-guide/receipts"
           export AMC_RFQ_EVIDENCE="$RUNNER_TEMP/rfq-evidence/desk"
           AMC_CONSULTATION_EVIDENCE="$RUNNER_TEMP/business-intake/consultation" AMC_INTAKE_EVIDENCE="$RUNNER_TEMP/business-intake" AMC_WF03_HOLD_EVIDENCE="$RUNNER_TEMP/wf03-holds" python -m pytest -q -rs --junitxml="$RUNNER_TEMP/api-regression.xml"
           AMC_WORKFORCE_SCREENS="$RUNNER_TEMP/connected-ui" python -m pytest -q tests/browser_storyboard_workforce.py
           AMC_RFQ_BROWSER_EVIDENCE="$RUNNER_TEMP/rfq-evidence/browser" python -m pytest -q tests/browser_rfq_card.py --junitxml="$RUNNER_TEMP/rfq-evidence/browser.xml"
           AMC_STRATEGY_UI_EVIDENCE="$RUNNER_TEMP/runtime-strategy/screens" python -m pytest -q tests/browser_strategy_handoff.py --junitxml="$RUNNER_TEMP/runtime-strategy/browser.xml"
           AMC_RES_QA_SCREENS="$RUNNER_TEMP/runtime-strategy/research-instruction/screens" python -m pytest -q tests/browser_research_instruction.py --junitxml="$RUNNER_TEMP/runtime-strategy/research-instruction/browser.xml"
+          AMC_PRODUCT_GUIDE_SCREENS="$RUNNER_TEMP/product-guide/screens" python -m pytest -q tests/browser_product_guide.py --junitxml="$RUNNER_TEMP/product-guide/browser.xml"
           python tests/check_sandbox_journal.py --container amc-test-pg
           python tests/check_consultation_cutover.py --container amc-test-pg
-          python -c 'import os, sys; sys.path.insert(0, "tests"); from check_postgres_upgrade import rehearse_archive; rehearse_archive(os.environ["AMC_MIGRATION_DSN"], "amc-test-pg", 26)'
+          python -c 'import os, sys; sys.path.insert(0, "tests"); from check_postgres_upgrade import rehearse_archive; rehearse_archive(os.environ["AMC_MIGRATION_DSN"], "amc-test-pg", 26, require_guide=True)'
           docker exec amc-test-pg createdb -U postgres amc_test_upgrade
           export AMC_MIGRATION_DSN="${AMC_MIGRATION_DSN%/*}/amc_test_upgrade"
           export DATABASE_URL="${DATABASE_URL%/*}/amc_test_upgrade"
@@ -196,6 +198,12 @@ jobs:
       - uses: actions/upload-artifact@v4
         if: always()
         with:
+          name: product-guide-${{ matrix.revision }}
+          path: ${{ runner.temp }}/product-guide/
+          if-no-files-found: error
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
           name: runtime-strategy-${{ matrix.revision }}
           path: ${{ runner.temp }}/runtime-strategy/
           if-no-files-found: error
@@ -217,6 +225,7 @@ jobs:
           path: ${{ runner.temp }}/wf03-holds/*.json
           if-no-files-found: error
       - uses: actions/upload-artifact@v4
+        if: always()
         with:
           name: api-regression-${{ matrix.revision }}
           path: ${{ runner.temp }}/api-regression.xml

@@ -1,0 +1,20 @@
+.product-guide-studio { margin-block: 1rem; border: 1px solid var(--border); padding: clamp(.75rem, 2vw, 1.5rem); border-radius: .75rem; color: var(--ink); background: var(--layer); }
+.product-guide-studio h3, .product-guide-studio h4, .product-guide-studio h5 { margin-block: .4rem .65rem; }
+.guide-grid { display: grid; grid-template-columns: minmax(12rem, 4fr) minmax(18rem, 6fr); align-items: start; gap: 1.3rem; }
+.guide-grid > *, .product-guide-studio select, .product-guide-studio textarea { min-width: 0; max-width: 100%; }
+.product-guide-studio label { display: grid; gap: .35rem; margin-block: .8rem; }
+.product-guide-studio button, .product-guide-studio select, .guide-source summary { min-height: 44px; }
+.guide-source { margin-block: 1rem; }
+.guide-source summary { cursor: pointer; align-content: center; }
+.guide-actions { display: flex; gap: .5rem; flex-wrap: wrap; }
+.guide-component { padding: clamp(1rem, 3vw, 2.25rem); background: var(--paper); border: 1px solid var(--border); border-radius: .75rem; overflow-wrap: anywhere; }
+.guide-component h4 { font-size: clamp(1.25rem, 2.5vw, 1.8rem); line-height: 1.2; }
+.guide-component p, .guide-component li, .guide-source blockquote { line-height: 1.55; }
+.guide-component li { margin-block: .55rem; }
+.guide-steps li::marker { color: var(--accent); font-weight: 700; }
+.guide-checklist { list-style-type: "☐  "; }
+.guide-checklist li::marker { color: var(--accent); }
+.guide-audience { color: var(--muted); }
+.guide-limitations { border-inline-start: 3px solid var(--accent); padding-inline-start: .8rem; }
+.guide-cta { color: var(--accent); font-weight: 650; }
+@media (max-width: 740px) { .guide-grid { grid-template-columns: minmax(0, 1fr); } }

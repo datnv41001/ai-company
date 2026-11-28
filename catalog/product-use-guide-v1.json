@@ -1,0 +1,128 @@
+{
+  "workflow_id": "WF-06/product-use-guide",
+  "workflow_version": 1,
+  "profile": "product-use-guide",
+  "mode": "dynamic-v1",
+  "knowledge_projection": "amc.product-use-guide/1",
+  "required": [
+    "director",
+    "content"
+  ],
+  "required_outputs": [
+    "content"
+  ],
+  "contracts": {
+    "director": {
+      "skill_id": "director",
+      "skill_version": 8,
+      "role_id": "ai-managing-director",
+      "contract_version": 8,
+      "adapter": "director@8",
+      "adapter_digest": "6b86be5bc3a2cf9910bfb89e4a688e0ed54fe9c2bfc25ecef158b30a477e345c",
+      "qa_policy": "wf06-product-use-guide@1",
+      "model": "local",
+      "inputs": [
+        "brief",
+        "brand",
+        "sources"
+      ],
+      "outputs": [
+        "assignment"
+      ],
+      "output_schema": {
+        "type": "object",
+        "properties": {
+          "assignment": {
+            "type": "string",
+            "enum": [
+              "Organize the approved instructions as an internal product-page use guide."
+            ]
+          }
+        },
+        "required": [
+          "assignment"
+        ],
+        "additionalProperties": false
+      },
+      "success_criteria": [
+        "preserve approved procedure",
+        "internal independent QA"
+      ],
+      "predecessors": [],
+      "tools": [],
+      "approval": "independent_internal_revision_qa",
+      "node_cap": 0,
+      "max_attempts": 3,
+      "timeout_seconds": 300,
+      "owner": "Internal Content lead",
+      "objective": "Organize the approved instructions as an internal product-page use guide.",
+      "forbidden_actions": [
+        "external_write",
+        "publish",
+        "spend"
+      ],
+      "fallback": "Content editor"
+    },
+    "content": {
+      "skill_id": "content",
+      "skill_version": 6,
+      "role_id": "ai-copywriter-content-strategist",
+      "contract_version": 6,
+      "adapter": "content@6",
+      "adapter_digest": "6b86be5bc3a2cf9910bfb89e4a688e0ed54fe9c2bfc25ecef158b30a477e345c",
+      "qa_policy": "wf06-product-use-guide@1",
+      "model": "local",
+      "inputs": [
+        "brief",
+        "brand",
+        "sources"
+      ],
+      "outputs": [
+        "heading",
+        "layout"
+      ],
+      "output_schema": {
+        "type": "object",
+        "properties": {
+          "heading": {
+            "type": "string",
+            "enum": [
+              "product",
+              "use_case"
+            ]
+          },
+          "layout": {
+            "type": "string",
+            "enum": [
+              "numbered",
+              "checklist"
+            ]
+          }
+        },
+        "required": [
+          "heading",
+          "layout"
+        ],
+        "additionalProperties": false
+      },
+      "success_criteria": [
+        "preserve approved procedure",
+        "internal independent QA"
+      ],
+      "predecessors": [],
+      "tools": [],
+      "approval": "independent_internal_revision_qa",
+      "node_cap": 1000,
+      "max_attempts": 3,
+      "timeout_seconds": 300,
+      "owner": "Internal Content lead",
+      "objective": "Organize the approved instructions as an internal product-page use guide.",
+      "forbidden_actions": [
+        "external_write",
+        "publish",
+        "spend"
+      ],
+      "fallback": "Content editor"
+    }
+  }
+}

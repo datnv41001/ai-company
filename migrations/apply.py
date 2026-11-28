@@ -197,6 +197,11 @@ def migrate(dsn: str, runtime_password: str | None = None):
             conn.execute((HERE / "campaign_desk_function.sql").read_text(encoding="utf-8"))
         if not conn.execute(ROLE_DESK).fetchone()[0]:
             raise ValueError("Incomplete scoped campaign handoff capability")
+        if not conn.execute("SELECT to_regprocedure('amc_c3.guide_authorized(public.workforce_runs,boolean)')").fetchone()[0]:
+            conn.execute((HERE / "product_guide.sql").read_text(encoding="utf-8"))
+        from migrations.product_guide_contract import GUIDE_FENCE
+        if not conn.execute(GUIDE_FENCE).fetchone()[0]:
+            raise ValueError("Incomplete PostgreSQL product guide authority fence")
 
 
 def install_device_sessions(conn, material):

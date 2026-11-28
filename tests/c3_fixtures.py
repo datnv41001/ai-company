@@ -117,7 +117,8 @@ def prepared(api, admin, base, client, brand, campaign, bid, workflow=c3_marketi
                 "publisher": "PRIVATE_SYNTHETIC_SUPPLIER",
                 "document": "PRIVATE_SYNTHETIC_DOCUMENT",
                 "valid_until": "2099-01-01T00:00:00Z",
-                "entries": [{"locator": "private locator", "excerpt": fact.get("excerpt", "PRIVATE_SYNTHETIC_EXCERPT"), "assertion": statement}],
+"entries": [{"locator": "private locator", "excerpt": fact.get("excerpt", "PRIVATE_SYNTHETIC_EXCERPT"), "assertion": statement,
+                             **({"guide_procedure": fact["guide_procedure"]} if "guide_procedure" in fact else {})}],
             },
             visibility="restricted",
         )

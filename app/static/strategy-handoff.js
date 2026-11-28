@@ -149,6 +149,41 @@ function mountStrategyHandoff(parent, api, path, dirty) {
       field(approval, 'Phê duyệt tiếp theo', order.approval);
       field(approval, 'Đo lường', measurementLabel(order.measurement.status));
       if (order.measurement.execution_authorized === false) field(approval, 'Phạm vi thực hiện', 'Chỉ chuẩn bị bản nháp nội bộ. Chờ duyệt để thực hiện phép đo.');
+      if (view.audience_mode === 'recipient' && order.asset_type === 'web_use_guide') {
+        const start = button(assignment, 'Bắt đầu soạn hướng dẫn', async () => {
+          if (dirty()) {message(result, 'Lưu bản đang biên tập trước khi bắt đầu.'); return;}
+          start.disabled = true;
+          result.replaceChildren();
+          try {
+            const job = await api(path+'/product-guide', 'POST', {receipt_id:view.decision.receipt_id});
+            if (!result.isConnected) return;
+            if (job.status === 'hold') {
+              message(result, job.reasons?.includes('procedure_source_required')
+                ? 'Tạm giữ hướng dẫn. Cần nguồn được duyệt nêu rõ các bước thao tác và điều kiện sử dụng.'
+                : 'Tạm giữ hướng dẫn. Kiểm tra lại nguồn và điều kiện của nhiệm vụ.');
+              start.disabled = false;
+              return;
+            }
+            const tenantPath = path.split('/deliverables/')[0];
+            const state = message(result, 'Đã nhận nhiệm vụ. Kiểm tra tiến độ để mở bản hướng dẫn.');
+            const refresh = button(result, 'Kiểm tra tiến độ hướng dẫn', async () => {
+              refresh.disabled = true;
+              try {
+                const run = await api(tenantPath+'/workforce/runs/'+encodeURIComponent(job.run_id));
+                if (!result.isConnected) return;
+                if (run.product_guide_studio) {
+                  result.replaceChildren();
+                  mountProductGuide(result, api, tenantPath+'/deliverables/'+encodeURIComponent(run.deliverable_id));
+                } else {
+                  state.textContent = run.state === 'failed' ? 'Lần xử lý đã dừng. Kiểm tra nguyên nhân trong Workforce.' : 'Content đang chờ xử lý. Bạn có thể xem lại tiến độ.';
+                  refresh.disabled = false;
+                }
+              } catch (err) { if (result.isConnected) failed(err); }
+            });
+          } catch (err) { if (result.isConnected) failed(err); }
+        });
+        const result = add(assignment, 'div');
+      }
     } else {
       add(banner, 'p', 'Tạm giữ việc giao tài sản theo kênh.');
     }

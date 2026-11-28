@@ -22,6 +22,9 @@ def report(conn, job, result=None, error=None):
 
 def run_job(config, body):
     if "local_adapter" in body:
+        from . import product_guide_runtime
+        if body["local_adapter"] == product_guide_runtime.DIRECTOR:
+            return product_guide_runtime.director_result()
         from .storyboard_runtime import execute
         try:
             return execute(body)

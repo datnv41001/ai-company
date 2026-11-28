@@ -9,6 +9,7 @@ from sqlalchemy.orm import Session
 
 from . import c3_assets, c3_boundaries, c3_customer_assets, c3_evidence_review, c3_order_units, c3_studio
 from . import campaign_channels, c3_strategy_handoff
+from .product_guide_admission import start_guide
 from .database import get_db
 from .delivery import save_working_revision, working_copy
 from .knowledge_contracts import Input
@@ -22,6 +23,7 @@ from .workforce_models import WorkforceBrief
 
 router = APIRouter(prefix="/api/tenants/{tenant_id}/deliverables/{did}/studio", tags=["Marketing Studio"])
 router.include_router(c3_strategy_handoff.router)
+router.add_api_route("/content-handoff/product-guide", start_guide, methods=["POST"])
 Text = Annotated[str, Field(max_length=30000)]
 
 

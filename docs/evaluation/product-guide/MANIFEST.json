@@ -4,8 +4,8 @@
   "files": [
     {
       "path": ".github/workflows/ci.yml",
-      "bytes": 29327,
-      "sha256": "795de1ea24b291189a1435b22b9ee8c7910dfdad8b06235050136ad443a50213"
+      "bytes": 29348,
+      "sha256": "c76681f4155cc925623dfa61f8ae8b3c61eb67dd2e5598e73cef2da565bdd592"
     },
     {
       "path": "HANDOFF.md",
@@ -45,7 +45,7 @@
     {
       "path": "app/database.py",
       "bytes": 12898,
-      "sha256": "b505bb109c64cb37147abbfbacd317496872501d852f0ee7425bff1e86cef478"
+      "sha256": "c4e09c653d06b28729f1dc3cd6d251ee7b189f5785bb2d6d0b25f76cfb1aa6c8"
     },
     {
       "path": "app/delivery.py",
@@ -168,6 +168,11 @@
       "sha256": "4e48ce09aea6514dc50c73bbbbb91cbe1c7237ebabdeeea3311360802e9e710c"
     },
     {
+      "path": "docs/evaluation/product-guide/CI-CUTOVER.md",
+      "bytes": 3474,
+      "sha256": "4eb73a08d568c3ab8d883fe2de5b192827fb11da14b9ed282ca7bedd5b743241"
+    },
+    {
       "path": "docs/evaluation/product-guide/CUTOVER.json",
       "bytes": 2994,
       "sha256": "5107167d02fc7b5219bfd6d41776b34555f754bfb26e1c3d266c8342c2c09915"
@@ -184,8 +189,8 @@
     },
     {
       "path": "docs/evaluation/product-guide/POSTGRESQL.md",
-      "bytes": 4597,
-      "sha256": "38da8db6f9ac023d8e820019b4b3531abda129bce84b27b3886d290e90e17c18"
+      "bytes": 4739,
+      "sha256": "34c89eecb8bdd56c95c3217c2afe75798938b4eee4ad912a881a4aacdac72986"
     },
     {
       "path": "docs/evaluation/product-guide/README.md",
@@ -246,6 +251,16 @@
       "path": "docs/evaluation/product-guide/ledger.json",
       "bytes": 521,
       "sha256": "e969cf899e146026a185cc6cce54e5361269419e259a181e3cb3cb2716ae06b9"
+    },
+    {
+      "path": "docs/evaluation/product-guide/repaired-guide.xml",
+      "bytes": 3319,
+      "sha256": "d33a5121e3d3920c0ffd43e64eda61d79ac67dc7689955fc94a8c5b8392b585e"
+    },
+    {
+      "path": "docs/evaluation/product-guide/repaired-windows.xml",
+      "bytes": 1548,
+      "sha256": "c83820afdac3d7f0c2a9340927e4f73711b3695dbca0b211bee7d320622ec825"
     },
     {
       "path": "docs/evaluation/product-guide/screens/browser.json",
@@ -329,8 +344,8 @@
     },
     {
       "path": "migrations/registry-runtime.lock.json",
-      "bytes": 149953,
-      "sha256": "8baa365de303e81fe3b7bb78af880100cd7d5bc132ee170ab7ddec0d7a69171c"
+      "bytes": 152367,
+      "sha256": "a9e3ac9bc5221320eb6748b84f46c4ac1500345f3bc6f07a4e4ab38f8a02cdc3"
     },
     {
       "path": "tests/browser_product_guide.py",

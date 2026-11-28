@@ -225,6 +225,7 @@ jobs:
           path: ${{ runner.temp }}/wf03-holds/*.json
           if-no-files-found: error
       - uses: actions/upload-artifact@v4
+        if: always()
         with:
           name: api-regression-${{ matrix.revision }}
           path: ${{ runner.temp }}/api-regression.xml

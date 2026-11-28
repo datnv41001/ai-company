@@ -22,3 +22,5 @@ Các ca đã báo hợp lệ ghi nhận 110 token vào, 12 token ra, đóng leas
 
 Production và Commercial GA vẫn NO-GO.
 The [PostgreSQL 16.16 cutover receipt](CUTOVER.json) identifies the predecessor tree, table digests, repeat publication and legacy-reader rehearsal.
+
+The [Studio cutover regression report](CI-CUTOVER.md) preserves the first draft's CI evidence and the reason for the startup-check ordering.

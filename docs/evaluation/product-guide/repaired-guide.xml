@@ -1,0 +1,27 @@
+<?xml version='1.0' encoding='utf-8'?>
+<testsuites name="pytest tests">
+  <testsuite name="pytest" errors="0" failures="0" skipped="0" tests="22" time="121.445">
+    <testcase classname="tests.test_product_guide_authority" name="test_strategy_revocation_and_dispatcher_view" time="5.419" />
+    <testcase classname="tests.test_product_guide_fence" name="test_revocation_at_guide_lease_boundaries[queued-source]" time="8.989" />
+    <testcase classname="tests.test_product_guide_fence" name="test_revocation_at_guide_lease_boundaries[offered-recipient]" time="9.030" />
+    <testcase classname="tests.test_product_guide_fence" name="test_revocation_at_guide_lease_boundaries[sent-mandate]" time="11.809" />
+    <testcase classname="tests.test_product_guide_fence" name="test_revocation_at_guide_lease_boundaries[reported-revision]" time="13.262" />
+    <testcase classname="tests.test_product_guide_production" name="test_source_steps_require_complete_approved_wording" time="0.002" />
+    <testcase classname="tests.test_product_guide_production" name="test_description_without_instructions_holds_before_queue" time="11.145" />
+    <testcase classname="tests.test_product_guide_production" name="test_recipient_commissions_exactly_one_guide_and_edits_for_independent_qa" time="22.412" />
+    <testcase classname="tests.test_product_guide_rollback" name="test_previous_reader_sees_strategy_but_cannot_load_guide" time="10.938" />
+    <testcase classname="tests.test_product_guide_rollback" name="test_report_waits_for_human_transaction_then_keeps_zero_metering" time="8.271" />
+    <testcase classname="tests.test_product_guide_runtime" name="test_guide_release_has_its_own_immutable_versions" time="0.003" />
+    <testcase classname="tests.test_product_guide_runtime" name="test_director_routes_to_one_bound_specialist_without_inference" time="0.001" />
+    <testcase classname="tests.test_product_guide_runtime" name="test_disabling_guide_preserves_existing_release_and_campaign_grants" time="0.741" />
+    <testcase classname="tests.test_product_guide_runtime" name="test_agency_admin_cannot_activate_internal_guide" time="0.787" />
+    <testcase classname="tests.test_product_guide_runtime" name="test_guide_preview_preserves_steps_limits_and_source_mapping[en-US]" time="0.001" />
+    <testcase classname="tests.test_product_guide_runtime" name="test_guide_preview_preserves_steps_limits_and_source_mapping[vi-VN]" time="0.000" />
+    <testcase classname="tests.test_product_guide_runtime" name="test_content_reply_cannot_replace_source_or_inject_copy[bad0]" time="0.001" />
+    <testcase classname="tests.test_product_guide_runtime" name="test_content_reply_cannot_replace_source_or_inject_copy[bad1]" time="0.000" />
+    <testcase classname="tests.test_product_guide_runtime" name="test_content_reply_cannot_replace_source_or_inject_copy[bad2]" time="0.000" />
+    <testcase classname="tests.test_product_guide_runtime" name="test_content_reply_cannot_replace_source_or_inject_copy[None]" time="0.000" />
+    <testcase classname="tests.test_product_guide_runtime" name="test_source_title_is_an_editor_only_verbatim_step_with_all_limits_kept" time="0.000" />
+    <testcase classname="tests.test_product_guide_studio" name="test_guide_editions_qa_and_all_general_reads" time="17.979" />
+  </testsuite>
+</testsuites>

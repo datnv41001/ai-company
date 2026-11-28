@@ -1,0 +1,15 @@
+<?xml version='1.0' encoding='utf-8'?>
+<testsuites name="pytest tests">
+  <testsuite name="pytest" errors="0" failures="0" skipped="0" tests="10" time="128.023">
+    <testcase classname="tests.test_campaign_operations" name="test_scoped_rfq_pipeline_idempotency_and_commission_identity[postgres]" time="23.758" />
+    <testcase classname="tests.test_campaign_unit_ownership" name="test_queue_owner_and_unique_share_group_survive_later_commissions" time="22.566" />
+    <testcase classname="tests.test_department_dispatch_integration" name="test_dispatch_reviewed_channel_editions" time="45.788" />
+    <testcase classname="tests.test_device_sessions" name="test_worker_readiness_does_not_require_end_user_keys" time="3.742" />
+    <testcase classname="tests.test_device_sessions" name="test_two_workers_commit_orders_and_credential_change[postgres]" time="4.536" />
+    <testcase classname="tests.test_wait_diagnostics" name="test_budget_busy_capacity_and_report_match_admission" time="8.036" />
+    <testcase classname="tests.test_wait_diagnostics" name="test_readonly_sql_and_partial_roster" time="6.803" />
+    <testcase classname="tests.test_wait_diagnostics" name="test_busy_worker_despite_stale_poll_and_concurrent_capacity_and_budget" time="4.578" />
+    <testcase classname="tests.test_wf03_budget" name="test_wf03_director_budget_boundary_matches_ledger[exact]" time="4.092" />
+    <testcase classname="tests.test_wf03_budget" name="test_wf03_director_budget_boundary_matches_ledger[one-above]" time="3.776" />
+  </testsuite>
+</testsuites>

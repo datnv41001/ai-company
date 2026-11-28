@@ -138,14 +138,14 @@ def studio_save(api, ctx, groups):
     return accepted(api.patch(studio, headers=headers, json={"expected_revision":current["revision"], "groups":groups}))
 
 
-def prepare_review(api, ctx, *, problem=OBSERVATION, channel="web"):
+def prepare_review(api, ctx, *, problem=OBSERVATION, channel="web", positioning=PRODUCT):
     """Edit an unsupported Research sentence; keep the buyer preview and sign the exact three asset groups."""
     auth, qa = ctx["author"]["headers"], ctx["reviewer"]["headers"]
     studio, doc = ctx["studio"], ctx["doc"]
     start = accepted(api.get(studio, headers=auth))
     groups = {name: deepcopy(start["suggestions"][name]) for name in start["groups"]}
     groups["research"]["buyer_problem"] = problem
-    groups["strategy"]["positioning"] = PRODUCT
+    groups["strategy"]["positioning"] = positioning
     groups["strategy"]["channel_choice"] = channel
     updated = studio_save(api, ctx, groups)
     assert not updated["quality_issues"], updated["quality_issues"]

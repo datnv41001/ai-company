@@ -1,0 +1,13 @@
+{
+  "scope": {
+    "tenant": "e4054160-35e2-44ff-88ac-3426a6baa6e2",
+    "client": "13ad2398-2cfe-4f23-b7a8-1e40674863fb",
+    "brand": "3f296d8d-79f2-4dd6-bdf9-c3ab5299c224",
+    "campaign": "aace193d-7db3-4b37-bbec-473d8ac29c06"
+  },
+  "internal_commission_status": 404,
+  "agency_brief": "64087600-c190-4cc0-b883-a2fdd6f4ef55",
+  "customer_request": "web_terms_panel",
+  "submission_status": 422,
+  "content_admitted": false
+}

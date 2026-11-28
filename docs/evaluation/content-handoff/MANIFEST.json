@@ -1,0 +1,96 @@
+{
+  "baseline": "7446bc8ba32578554d1e9179e2caa3799e474358",
+  "scope": "Changed Git blobs excluding the manifest itself; SHA-256 over Git bytes",
+  "files": [
+    {
+      "path": "HANDOFF.md",
+      "bytes": 143183,
+      "sha256": "9801d275276d75f019bf6482f2d5b968272dd9d62069379ca9ceaa50aaf94447"
+    },
+    {
+      "path": "docs/IMPLEMENTATION_STATUS.md",
+      "bytes": 29001,
+      "sha256": "12cf4d7a39dd0ca7f303272eaede189d14488886302788d9689753273df4dbce"
+    },
+    {
+      "path": "docs/SECURITY_AND_GA_BLOCKERS.md",
+      "bytes": 11596,
+      "sha256": "27545f8e30257495b592f132c212c8bc964f19be65813305b1e95ddf30bb3290"
+    },
+    {
+      "path": "docs/evaluation/DEPARTMENT-CAPABILITY-REGISTER.md",
+      "bytes": 15699,
+      "sha256": "7fe0d4906112b968cec90b5d3d9d1ed65753137408ae1c9cb3ad249ba6687d11"
+    },
+    {
+      "path": "docs/evaluation/content-handoff/MAIN-68.md",
+      "bytes": 4694,
+      "sha256": "c4aa491516f808ebe53c6c94d291739199dfc6e2bbbd94dd3b79d52f8049ed3f"
+    },
+    {
+      "path": "docs/evaluation/content-handoff/README.md",
+      "bytes": 13754,
+      "sha256": "ad126abf5dae9542ff97c9faf6e85900c8e6befa1aec773edc6169d18d2087fa"
+    },
+    {
+      "path": "docs/evaluation/content-handoff/admission.json",
+      "bytes": 5781,
+      "sha256": "776e63febc4353dde94656e5977b1d6e9f25dec10eb322b585dbd0b057a9a8f2"
+    },
+    {
+      "path": "docs/evaluation/content-handoff/agency.json",
+      "bytes": 430,
+      "sha256": "b6f382f318743ca2517a6ba4a81754f61dbc8f0f948fce78fc0f58d805f8b4d7"
+    },
+    {
+      "path": "docs/evaluation/content-handoff/assembled.json",
+      "bytes": 4363,
+      "sha256": "728f02537b8f009d20d13aa5205d19d9f17d14983d9738a25b132ed0bbaa33c0"
+    },
+    {
+      "path": "docs/evaluation/content-handoff/junit-full.xml",
+      "bytes": 115393,
+      "sha256": "c9b444ec15f89d8aec04974d8cfc81cfb1ebc1afa83a8eb2e7a622493f75b72d"
+    },
+    {
+      "path": "docs/evaluation/content-handoff/junit.xml",
+      "bytes": 7270,
+      "sha256": "6f7f4d491cec9fcd84dffbed2f123e3a40bccef4b759bd3cd4c10a47b1cbeeac"
+    },
+    {
+      "path": "docs/evaluation/content-handoff/main-model-usage.json",
+      "bytes": 19013,
+      "sha256": "0cd0fdf64d2fce6f6a55696f82d4da7e6159aa9e4bb713c052726727389cd281"
+    },
+    {
+      "path": "docs/evaluation/content-handoff/main-result.json",
+      "bytes": 2279,
+      "sha256": "110f6593486e318677808eb8604f9c68bd6d69cf60e3b4c76e2dbd40deb29fc7"
+    },
+    {
+      "path": "docs/evaluation/content-handoff/partial-excerpt.json",
+      "bytes": 223,
+      "sha256": "5461070627cd2b47b5c74c65c02e9d412ab0dd395ab9c532612ec0d23af676d1"
+    },
+    {
+      "path": "tests/content_handoff_packet.py",
+      "bytes": 5143,
+      "sha256": "6930320bed91c3a5e0164fdd32b44c0104711f878a894272a09e7d50c6513636"
+    },
+    {
+      "path": "tests/strategy_runtime_fixtures.py",
+      "bytes": 12088,
+      "sha256": "ac190d42477e105222dd7a8b6b3f15eb748ef0db1343d37a1397b94a395671be"
+    },
+    {
+      "path": "tests/test_content_handoff_admission.py",
+      "bytes": 13427,
+      "sha256": "ea7206371116bfd3544b82726073526e1a53ecc12d784da0a4ca8c5e4940365b"
+    },
+    {
+      "path": "tests/test_strategy_runtime_handoff.py",
+      "bytes": 28171,
+      "sha256": "90b9c8c4be440ae42150d31b5cce4e6223d07ec533451898dc63ac3213e24955"
+    }
+  ]
+}

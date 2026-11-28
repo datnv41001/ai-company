@@ -1,5 +1,7 @@
 # Bắt đầu ở đây khi tiếp quản AI Marketing Company
 
+**AMC-CONTENT-HANDOFF-01 · chờ Independent Review.** Main sau #68 ở `7446bc8`. Handoff /2 giao được việc cho Content lead; bốn loại tài sản chưa có contract task tương ứng. Ưu tiên quyết định phạm vi một guide trên trang sản phẩm trước khi viết release. [Bảng đối chiếu, receipt PostgreSQL và gói Studio/notes](docs/evaluation/content-handoff/README.md)
+
 **AMC-RES-QA-01 · candidate chờ phản biện.** Main sau merge #67 là `fe0110bd`. Reviewer có thể phân loại riêng từng hướng dẫn nghiên cứu nội bộ đủ điều kiện ngay trong mục đối chiếu bằng chứng. [Chứng nhận merge, ca RED/GREEN, receipt, ảnh và cách tái hiện](docs/evaluation/research-instruction/README.md). Người tiếp quản cần kiểm cả thu hồi sau khi ký và câu có claim đứng cạnh câu trung lập.
 
 **Nghiên cứu RS-02 · chờ Independent Review.** PR #66 đã merge tại `9cf13803`, giữ kết quả âm của RS-01 và baseline WF-03. [Bàn giao nghiên cứu, phép tái hiện và điều kiện dừng](docs/evaluation/rs02/README.md). Đợt này chỉ dùng replay và fixture tổng hợp.

@@ -1,0 +1,79 @@
+{
+  "contract": "amc.development-staff-evaluation/1",
+  "lineage": {
+    "scope": {
+      "tenant_id": "5b6a7709-1e58-4371-a4fc-73710682c4e8",
+      "client_id": "20f07c84-d33c-42bd-b883-c789d40e9fd0",
+      "brand_id": "6461d0db-df87-4e2b-9a9a-d7774902a54f",
+      "campaign_id": "0f844529-729a-45ff-bc4d-8f051df526ba"
+    },
+    "document": "a4a07da3-1bf0-46e7-a4c0-0cf7392cd3ba",
+    "revision": 2,
+    "preview_digest": "e78b13363a7cc2f47bd3ebe3aef9c1c13fa5fefed5022736e14091faca459b02",
+    "brief": "8a595b12-9f13-5826-b6a1-1a57eb930c1d",
+    "run": "c034c322-901a-44e9-9c6b-7bd8c7dbfe75",
+    "manifest": {
+      "id": "435090dd-9173-4fdf-94ca-4f515f04ce95",
+      "digest": "f7dfd03548877a0335e7203464ea205d7858bb17e791fa1c67763c71f5a2495c"
+    },
+    "qa_receipt": "2b7d1419-d8c0-4488-8096-ac9ef35c454f",
+    "release": "cf9078f2aa283cc7a9e9c273abd3077338c94ebe0f51a65e0a30c33254d94969"
+  },
+  "studio_only": {
+    "groups": {
+      "research": {
+        "buyer_problem": "One shift supervisor used the two-tone tray to separate outgoing batches.",
+        "research_question": "Which alternatives did Shift supervisors compare with Route Tray during their latest purchase?",
+        "evidence": "The passive tray has two separate compartments. For indoor sorting only.\nOne shift supervisor used the two-tone tray to separate outgoing batches.",
+        "hypothesis": "Hypothesis to test: clearer terms for Route Tray help Shift supervisors select a next step."
+      },
+      "strategy": {
+        "positioning": "The passive tray has two separate compartments. For indoor sorting only.",
+        "channel_choice": "web",
+        "rationale": "Test on web, the channel within the approved market.",
+        "execution": "Prepare two presentations of Route Tray on web, keep terms fixed and measure the same action."
+      },
+      "measurement": {
+        "test_hypothesis": "Compare placing facts before versus after the call to action in the same audience.",
+        "measurable_action": "Download the catalogue",
+        "measurement_method": "Track completion after form submission or document download. Deduplicate by event identifier."
+      }
+    },
+    "sha256": "b7774274f2a00bc72b41f050e7b8c8b04b9b00962e1c8d3202aabce454bfa2db"
+  },
+  "worker_research_notes": {
+    "fields": {
+      "segment": "Shift supervisors",
+      "buyer_problem": "Both sites requested individual worker tracking.",
+      "evidence_needed": "Replay two handovers. If both need specifications first, propose terms. If both need sorting help, keep guide. If mixed, hold for owner.",
+      "research_question": "What happened at the last shift handover?"
+    },
+    "sha256": "6a72cd65fb20238bd04c6ca2c75fe4f4399aec37ae3b154eafab172cde73966b",
+    "origin": "controlled first worker checkpoint, before editing"
+  },
+  "assembled_sha256": "a05422db2dc13bd517de02ea132921113d41e8b84a83b0db01b592f9c6e26440",
+  "deterministic_control": {
+    "groups": {
+      "research": {
+        "buyer_problem": "What prevents Shift supervisors from choosing Route Tray?",
+        "research_question": "Which alternatives did Shift supervisors compare with Route Tray during their latest purchase?",
+        "evidence": "The passive tray has two separate compartments. For indoor sorting only.\nOne shift supervisor used the two-tone tray to separate outgoing batches.",
+        "hypothesis": "Hypothesis to test: clearer terms for Route Tray help Shift supervisors select a next step."
+      },
+      "strategy": {
+        "positioning": "Position Route Tray around verifiable specifications.",
+        "channel_choice": "web",
+        "rationale": "Test on web, the channel within the approved market.",
+        "execution": "Prepare two presentations of Route Tray on web, keep terms fixed and measure the same action."
+      },
+      "measurement": {
+        "test_hypothesis": "Compare placing facts before versus after the call to action in the same audience.",
+        "measurable_action": "Download the catalogue",
+        "measurement_method": "Track completion after form submission or document download. Deduplicate by event identifier."
+      }
+    },
+    "sha256": "c9f1296194c4593f1b6de56bbf9d84f52795ebb6c5b6fa8ca877ff56e80fcf1d",
+    "worker_notes": null
+  },
+  "scope_of_use": "Public synthetic calibration only; D has no worker. A and C use the same assembly rule."
+}

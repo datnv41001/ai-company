@@ -1,5 +1,7 @@
 # Security, Reliability and General Availability (GA) Blockers
 
+**AMC-R68-01 · P3 · OPEN (static).** Sau khi phân loại câu thủ tục, trường diagnostic cũ có thể còn trên span. Marketing Studio có thể hiển thị diagnostic trước outcome. Cần phân biệt signoff lịch sử với eligibility QA hiện tại khi mandate bị thu hồi. Chưa tái hiện bằng browser. Trong lần chỉnh presentation có liên quan, viết RED browser/API rồi sửa hiển thị nếu xác nhận; giữ nguyên canonical report và historical receipt digest. [Vị trí cần kiểm](../app/static/marketing-studio.js#L124) · [Nguồn trạng thái](../app/c3_evidence_review.py#L135)
+
 **AMC-R67-01 (P2)** có đường xử lý nội bộ giới hạn theo từng câu và từng lần lưu, chờ Independent Review. **AMC-R67-02 (P2 diagnostic)** tái hiện lời hứa giao nhanh trong Strategy; hai biến thể đều bị từ chối ký và không tạo lệnh bàn giao. Giới hạn phát hiện của structural QA vẫn còn. [Tái hiện, denial và bằng chứng quyết định](evaluation/research-instruction/README.md)
 
 **WF-08, AMC-R60-03 — production qualification open.** Preview rendering currently holds database locks while it consumes CPU and writes media. Infrastructure and the Workforce owner must measure lock duration, concurrent work across tenants, request latency, CPU, peak memory, storage and rollback/recovery on synthetic data before production approval. [Test design and decision criteria](evaluation/connected-workforce/SEMANTIC-REVIEW.md#render)

@@ -1,0 +1,84 @@
+{
+  "source_run": "https://github.com/datnv41001/ai-company/actions/runs/46087196986",
+  "main": "7446bc8ba32578554d1e9179e2caa3799e474358",
+  "attempt": 1,
+  "jobs": [
+    {
+      "name": "api-tests (head)",
+      "html_url": "https://github.com/datnv41001/ai-company/actions/runs/46087196986/job/140799432333",
+      "conclusion": "success",
+      "started_at": "2026-11-28T00:18:43Z",
+      "completed_at": "2026-11-28T00:42:08Z"
+    },
+    {
+      "name": "workforce-model (head)",
+      "html_url": "https://github.com/datnv41001/ai-company/actions/runs/46087196986/job/140799432491",
+      "conclusion": "success",
+      "started_at": "2026-11-28T00:18:42Z",
+      "completed_at": "2026-11-28T00:27:53Z"
+    },
+    {
+      "name": "compose-browser (head)",
+      "html_url": "https://github.com/datnv41001/ai-company/actions/runs/46087196986/job/140799432536",
+      "conclusion": "success",
+      "started_at": "2026-11-28T00:18:42Z",
+      "completed_at": "2026-11-28T00:28:50Z"
+    },
+    {
+      "name": "matched-model",
+      "html_url": "https://github.com/datnv41001/ai-company/actions/runs/46087196986/job/140802062150",
+      "conclusion": "skipped",
+      "started_at": "2026-11-28T00:27:53Z",
+      "completed_at": "2026-11-28T00:27:53Z"
+    }
+  ],
+  "api_junit": {
+    "artifact_id": 15240466937,
+    "filename": "api-regression.xml",
+    "sha256": "34ef186bf2561bd29d4dac60b288ca9fb617729309cadc0df5ebd241015a5d54",
+    "summary": {
+      "tests": "797",
+      "errors": "0",
+      "failures": "0",
+      "skipped": "2",
+      "time": "1066.147"
+    },
+    "skips": [
+      {
+        "case": "test_wrong_tab_leaves_postgres_family_and_history_unchanged[sqlite]",
+        "reason": "PostgreSQL storage assertions"
+      },
+      {
+        "case": "test_two_workers_commit_orders_and_credential_change[sqlite]",
+        "reason": "real HTTP and PostgreSQL case"
+      }
+    ]
+  },
+  "upgrade_to_v26_from": [
+    "1",
+    "2",
+    "3",
+    "4",
+    "5",
+    "6",
+    "7",
+    "8",
+    "9",
+    "10",
+    "11",
+    "12",
+    "13",
+    "14",
+    "15",
+    "16",
+    "17",
+    "18",
+    "19",
+    "20",
+    "21",
+    "22"
+  ],
+  "restore": [
+    "2026-11-28T00:38:49.6377408Z PASS: pg_dump/pg_restore v26 into a separate database; identical rows in 34 tables"
+  ]
+}

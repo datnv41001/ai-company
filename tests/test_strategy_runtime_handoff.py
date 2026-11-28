@@ -31,14 +31,14 @@ def export(name, data):
         path.write_text(json.dumps(data, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
 
 
-def terms(view, ctx, observation=OBSERVATION):
+def terms(view, ctx, observation=OBSERVATION, product_excerpt=PRODUCT):
     handles = {row["excerpt"]: row["handle"] for row in view["references"]}
     return {"expected_revision": view["revision"], "expected_content_digest": view["content_digest"],
             "qualification_revision": ctx["mandate"]["id"], "recipient_id": ctx["recipient"]["id"],
             "option": "explain_use", "asset_type": "web_use_guide", "evidence_state": "supported",
             "release": {"brief_digest":view["brief_release"]["digest"], "review":"aligned",
                         "situation":"work_handover", "direction":"demonstrate_use"},
-            "support_handle": handles[observation], "product_handle": handles[PRODUCT], "observation_kind": "observed_behaviour",
+            "support_handle": handles[observation], "product_handle": handles[product_excerpt], "observation_kind": "observed_behaviour",
             "observation_excerpt": observation, "interpretation": "An annotated use guide could help at shift handover.",
             "buyer_persona": view["audience"], "buying_situation": "A supervisor checks outgoing batches at shift change.",
             "sample_limit": "One observed shift at one site. Use in other sites and buyer segments remains unverified."}

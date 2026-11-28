@@ -1,0 +1,76 @@
+{
+  "projection": {
+    "company": "Material House",
+    "brand": "Sample surface studio",
+    "product": "Modular rack R7",
+    "sku": "TRAY-2",
+    "market": "Vietnam",
+    "audience": "Warehouse buyers",
+    "objective": "Request a delivery-window quote.",
+    "kpi": "Completed request forms · requests · 30 days · Count completed request forms",
+    "locale": "en-US",
+    "region": "HN",
+    "channel": "web",
+    "facts": [
+      {
+        "id": "F1",
+        "wording": "The rack is delivered flat packed.",
+        "qualifiers": [
+          "Carrier availability requires written confirmation; unloading is excluded."
+        ],
+        "category": "description"
+      },
+      {
+        "id": "F2",
+        "wording": "The quote form accepts a site window and access note.",
+        "qualifiers": [
+          "Carrier availability requires written confirmation; unloading is excluded."
+        ],
+        "category": "description"
+      }
+    ],
+    "hypotheses": [
+      "Buyer needs require interviews"
+    ],
+    "gaps": [
+      "Kiểm chứng nhu cầu với khách hàng trong thị trường đã chọn.",
+      "Xác minh số liệu nền và kết quả bằng dữ liệu đo thực tế."
+    ],
+    "task_intent": {
+      "purpose": "Request a delivery-window quote.",
+      "deliverable_type": "marketing_strategy",
+      "audience": "Warehouse buyers",
+      "product": "Modular rack R7",
+      "channel": "web",
+      "region": "HN",
+      "locale": "en-US",
+      "requirements": [
+        "Keep carrier and unloading conditions."
+      ],
+      "exclusions": [
+        "Customer contact"
+      ],
+      "acceptance_criteria": [
+        "Maintain all delivery conditions in the proposal."
+      ],
+      "buyer_action": "rfq",
+      "editorial_style": "concise"
+    },
+    "brand_guidelines": {
+      "revision": 1,
+      "digest": "bcb80b286fa07bef90a075983b2533de0e6d08d9fd210fe72586311208ca7159",
+      "guidance": "Use the approved product description.",
+      "tone": null,
+      "prohibited_claims": []
+    }
+  },
+  "reply": {
+    "segment": "Warehouse buyer arranging inbound delivery.",
+    "buyer_problem": "H1: missing access details delay an RFQ. H2: uncertainty about carrier confirmation delays it.",
+    "research_question": "At the last quote request, which detail did you seek first, and where did you look?",
+    "evidence_needed": "With permission inspect two synthetic walkthroughs. Access first in both: test an access checklist. Timing first in both: clarify written confirmation. Mixed or missing: hold for owner.",
+    "source_ids": [
+      "F2"
+    ]
+  }
+}

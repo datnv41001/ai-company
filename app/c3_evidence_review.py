@@ -4,10 +4,10 @@ from typing import Annotated
 
 from fastapi import APIRouter, Depends, HTTPException
 from pydantic import Field
-from sqlalchemy import select
+from sqlalchemy import or_, select
 from sqlalchemy.orm import Session
 
-from . import c3_boundaries as boundaries, c3_content_evidence as evidence
+from . import c3_assets, c3_boundaries as boundaries, c3_content_evidence as evidence, c3_research_instruction as instruction
 from .c3_projection import unpack
 from .database import get_db
 from .delivery import working_copy
@@ -25,13 +25,16 @@ from .workforce_models import WorkforceBrief
 router = APIRouter(prefix="/api/tenants/{tenant_id}/deliverables/{did}/content-evidence", tags=["Content evidence"])
 
 
-class Resolution(Input):
+class SpanDecision(Input):
     expected_qa_revision: Annotated[int, Field(ge=1, strict=True)]
     expected_content_digest: Annotated[str, Field(pattern=r"^[0-9a-f]{64}$")]
     statement_id: Annotated[str, Field(pattern=r"^[0-9a-f]{64}$")]
-    handle: Annotated[str, Field(pattern=r"^F[1-9][0-9]?$")]
     qualification_revision: Ref
     reason: Annotated[str, Field(min_length=10, max_length=500)]
+
+
+class Resolution(SpanDecision):
+    handle: Annotated[str, Field(pattern=r"^F[1-9][0-9]?$")]
 
 
 def chain(store, payload):
@@ -102,7 +105,8 @@ def current_report(store, snap, doc, run, signature, *, include_sources=False, l
     decisions = store.db.scalars(
         store.query(KnowledgeCommand)
         .filter_by(snapshot_id=snap.id, operation="c3_resolve")
-        .where(KnowledgeCommand.key.startswith(f"claim:{doc.qa_revision}:"))
+        .where(or_(KnowledgeCommand.key.startswith(f"claim:{doc.qa_revision}:"),
+                   KnowledgeCommand.key.startswith(f"instruction-v1:{doc.qa_revision}:")))
         .order_by(KnowledgeCommand.effective_at.desc())
     )
     by_span = {}
@@ -111,11 +115,25 @@ def current_report(store, snap, doc, run, signature, *, include_sources=False, l
         data = receipt.result
         if all(data.get(k) == v for k, v in scope.items()):
             by_span.setdefault(data["statement_id"], []).append(receipt)
+    current_instruction_scope = None
     for row in report["statements"]:
         if row["outcome"] == "unresolved":
             for choice in by_span.get(row["id"], ()):
                 body = choice.result
                 try:
+                    if choice.key.startswith("instruction-v1:"):
+                        approved_mandate(store, body["qualification_revision"], choice.actor, "unclassified", lock=lock_reviewers)
+                        identity = instruction.identity(row, run, snap)
+                        if not instruction.eligible_span(row, payload["projection"]) or any(body.get(k) != v for k, v in identity.items()):
+                            continue
+                        if current_instruction_scope is None:
+                            brief = store.db.get(WorkforceBrief, run.brief_id)
+                            if not boundaries.internal_author(brief) or run.knowledge["registry"]["workflow"] != c3_assets.RESEARCH:
+                                continue
+                            boundaries.checked(store.db, store.db.get(User, store.actor), brief, run.knowledge["c3_manifest"], c3_assets.RESEARCH, "qa", write=False)
+                            current_instruction_scope = True
+                        row.update(outcome="editorial", reason="signed_research_instruction", handles=[], resolution_id=choice.id)
+                        break
                     approved_mandate(store, body["qualification_revision"], choice.actor, row["claim_type"], lock=lock_reviewers)
                 except HTTPException as exc:
                     if exc.status_code in (404, 409):
@@ -144,8 +162,11 @@ def decision_evidence(store, snap, doc, run, signature, *, lock_reviewers=True):
         "content_gate_version": evidence.VERSION,
         "content_gate_digest": digest(canonical(report)),
         "content_sources": {key: {k: ref[k] for k in ("claim_revision", "source_revision", "source_digest")} for key, ref in report["references"].items()},
-        "reviewed_statements": {r["id"]: r["resolution_id"] for r in report["statements"] if r.get("resolution_id")},
+        "reviewed_statements": {r["id"]: r["resolution_id"] for r in report["statements"] if r["outcome"] == "reviewed" and r.get("resolution_id")},
     }
+    classified = {r["id"]: r["resolution_id"] for r in report["statements"] if r["reason"] == "signed_research_instruction"}
+    if classified:
+        decision["internal_research_instructions"] = {"contract": instruction.VERSION, "receipts": classified}
     if (doc.content.get("studio") or {}).get("delivery_version"):
         from .c3_customer_assets import schema
         public = schema(run.knowledge["registry"]["workflow"], doc.content["studio"].get("channel_context"))
@@ -179,6 +200,10 @@ def inspect_gate(tenant_id: str, did: str, user: User = Depends(current_user), d
         return public
     snap, _ = unpack(store, run.knowledge["c3_manifest"]["id"])
     report = current_report(store, snap, doc, run, sig, include_sources=True)
+    if run.knowledge["registry"]["workflow"] == c3_assets.RESEARCH and boundaries.internal_author(db.get(WorkforceBrief, run.brief_id)):
+        for row in report["statements"]:
+            if instruction.eligible_span(row, run.knowledge["c3_projection"]):
+                row["instruction_review_available"] = True
     if (doc.content.get("studio") or {}).get("channel_context"):
         from . import c3_customer_assets
         report["field_labels"] = c3_customer_assets.labels(run.knowledge["c3_projection"]["locale"])
@@ -233,6 +258,15 @@ def historical_report(tenant_id: str, did: str, event_id: str, user: User = Depe
 
 @router.post("/resolutions")
 def resolve(tenant_id: str, did: str, body: Resolution, user: User = Depends(current_user), db: Session = Depends(get_db)):
+    return decide_span(tenant_id, did, body, user, db)
+
+
+@router.post("/research-instructions")
+def classify_instruction(tenant_id: str, did: str, body: SpanDecision, user: User = Depends(current_user), db: Session = Depends(get_db)):
+    return decide_span(tenant_id, did, body, user, db)
+
+
+def decide_span(tenant_id, did, body, user, db):
     require_tenant(db, user, tenant_id, "admin")
     doc, run, sig = staff_document(db, user, tenant_id, did)
     if (body.expected_qa_revision, body.expected_content_digest) != (doc.qa_revision, sig):
@@ -245,7 +279,25 @@ def resolve(tenant_id: str, did: str, body: Resolution, user: User = Depends(cur
     row = next((r for r in report["statements"] if r["id"] == body.statement_id), None)
     if not row or row["outcome"] != "unresolved":
         conflict("Only an unresolved semantic statement may receive a domain decision")
-    approved_mandate(store, body.qualification_revision, user.id, row["claim_type"])
+    is_instruction = instruction.eligible_span(row, run.knowledge["c3_projection"])
+    if not isinstance(body, Resolution):
+        if not (is_instruction and boundaries.internal_author(brief) and run.knowledge["registry"]["workflow"] == c3_assets.RESEARCH):
+            conflict("Only a reviewed neutral instruction in internal Research is eligible")
+        approved_mandate(store, body.qualification_revision, user.id, "unclassified", lock=True)
+        values = {**receipt_scope(doc, sig), **instruction.identity(row, run, snap),
+                  "reviewer": user.id, "qualification_revision": body.qualification_revision, "reason": body.reason}
+        # Keep the existing PostgreSQL reviewer-writer fence; older readers select only claim: keys.
+        key = f"instruction-v1:{doc.qa_revision}:{row['id']}"
+        prior = db.scalar(store.query(KnowledgeCommand).filter_by(snapshot_id=snap.id, actor=user.id, key=key))
+        if prior and prior.result != values:
+            conflict("This reviewer already recorded a different decision for this span")
+        if not prior:
+            boundaries.record(store, snap, "resolve", key, values)
+            db.commit()
+        return values
+    if is_instruction:
+        conflict("Classify this planning instruction independently of source verification")
+    approved_mandate(store, body.qualification_revision, user.id, row["claim_type"], lock=True)
     _, payload = unpack(store, snap.id)
     source = chain(store, payload).get(body.handle)
     if not source or (row["handles"] and body.handle not in row["handles"]):

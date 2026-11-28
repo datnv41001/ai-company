@@ -1,0 +1,54 @@
+{
+  "scope": {
+    "tenant_id": "33e8dabd-d356-48c4-afcf-d7c389e23c0a",
+    "client_id": "fd18d4d9-18a4-4e13-9230-d042a34e60bb",
+    "brand_id": "c7ade80f-7130-4485-b138-c7bb925b5dd3",
+    "campaign_id": "4e34a620-d614-4ba4-a16f-ec563d31ab1a"
+  },
+  "brief": "827c6541-0b65-58c3-a27c-7f7bf5282b4f",
+  "action": "rfq",
+  "manifest": "dc0ec4e2-201e-4ea2-bb3b-148a1a5a480e",
+  "manifest_digest": "3c2da3bcfba33929dbcedffe322569d8e5ab475b4c1b4c46bcbfc80783b06817",
+  "run": "672555ee-54a3-4684-9b20-da66c034faa4",
+  "source_facts": [
+    {
+      "id": "F1",
+      "wording": "The rack is delivered flat packed.",
+      "qualifiers": [
+        "Carrier availability requires written confirmation; unloading is excluded."
+      ],
+      "category": "description"
+    },
+    {
+      "id": "F2",
+      "wording": "The quote form accepts a site window and access note.",
+      "qualifiers": [
+        "Carrier availability requires written confirmation; unloading is excluded."
+      ],
+      "category": "description"
+    }
+  ],
+  "attempt": "69fd4062-bf2b-4023-8732-73dfa512b946",
+  "worker_positioning": "The modular rack ensures quick delivery to the requested site window.",
+  "studio_positioning": "The modular rack ensures quick delivery to the requested site window.",
+  "structural": [],
+  "statement": {
+    "id": "374f7371bb4ada82847f209b26eae09aa82dd4aba38cdb3fc32212d5ad3a2fa1",
+    "field": "studio.strategy.positioning",
+    "start": 0,
+    "end": 69,
+    "text": "The modular rack ensures quick delivery to the requested site window.",
+    "claim_type": "region",
+    "outcome": "contradiction",
+    "reason": "geography",
+    "handles": [],
+    "diagnostic": "known_contradiction",
+    "sources": []
+  },
+  "revision": 2,
+  "digest": "36ba920cdf1fd43f577e21246a59995f1365f1937b692cddd5c333af47191daf",
+  "strategy_signature": 409,
+  "document_approval": 409,
+  "preview": "Modular rack R7\n\nArea: HN\n\nThe rack is delivered flat packed. Carrier availability requires written confirmation; unloading is excluded.\n\nThe quote form accepts a site window and access note. Carrier availability requires written confirmation; unloading is excluded.",
+  "work_order": null
+}

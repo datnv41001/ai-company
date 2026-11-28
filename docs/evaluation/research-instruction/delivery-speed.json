@@ -1,0 +1,54 @@
+{
+  "scope": {
+    "tenant_id": "9427eccd-c46a-4b6c-8a0c-179419d0063a",
+    "client_id": "73d2be47-e3a0-4b7d-92cb-78a42014e28a",
+    "brand_id": "55283f2f-f913-4904-b744-8e647f18ea06",
+    "campaign_id": "6f5a8639-e410-4981-a8ed-32925650efac"
+  },
+  "brief": "8a8e4b05-88bb-5b24-969a-9762fb30040a",
+  "action": "rfq",
+  "manifest": "24bbedf6-9c9e-4218-89ba-388f7a935519",
+  "manifest_digest": "ea817bbdf851bea0343b42704f24a69497a8c22ddd9ce8c3fa50c02f569632fa",
+  "run": "6eba1123-0542-4fc5-af4d-e0344e3bc01f",
+  "source_facts": [
+    {
+      "id": "F1",
+      "wording": "The rack is delivered flat packed.",
+      "qualifiers": [
+        "Carrier availability requires written confirmation; unloading is excluded."
+      ],
+      "category": "description"
+    },
+    {
+      "id": "F2",
+      "wording": "The quote form accepts a site window and access note.",
+      "qualifiers": [
+        "Carrier availability requires written confirmation; unloading is excluded."
+      ],
+      "category": "description"
+    }
+  ],
+  "attempt": "cc283163-3b82-400f-ac42-e3875d2a16d5",
+  "worker_positioning": "The modular rack guarantees rapid arrival.",
+  "studio_positioning": "The modular rack guarantees rapid arrival.",
+  "structural": [],
+  "statement": {
+    "id": "62a297f4f82f985a1af30fcbc6a23f81911a8ca5afbecf744bd4ec9c0e4e13f2",
+    "field": "studio.strategy.positioning",
+    "start": 0,
+    "end": 42,
+    "text": "The modular rack guarantees rapid arrival.",
+    "claim_type": "performance",
+    "outcome": "unresolved",
+    "reason": "unsupported",
+    "handles": [],
+    "diagnostic": "semantic_interpretation",
+    "sources": []
+  },
+  "revision": 2,
+  "digest": "36ba920cdf1fd43f577e21246a59995f1365f1937b692cddd5c333af47191daf",
+  "strategy_signature": 409,
+  "document_approval": 409,
+  "preview": "Modular rack R7\n\nArea: HN\n\nThe rack is delivered flat packed. Carrier availability requires written confirmation; unloading is excluded.\n\nThe quote form accepts a site window and access note. Carrier availability requires written confirmation; unloading is excluded.",
+  "work_order": null
+}

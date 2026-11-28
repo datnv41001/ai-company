@@ -1,5 +1,7 @@
 # Trạng thái hiện thực và nghiệm thu V1
 
+**AMC-RES-QA-01.** Candidate bổ sung quyết định phân loại thủ tục trên đúng span, reviewer, mandate và revision của Research Studio. Mỗi lần đọc để quyết định tiếp đều đối chiếu quyền và nguồn hiện tại. Đánh giá một kế hoạch, ghi nhận đã nghiên cứu, kiểm chứng dữ kiện, phê duyệt Strategy và giao Content là năm quyết định riêng. [Kiểm thử và giới hạn](evaluation/research-instruction/README.md)
+
 **Vòng #64.** Studio chuẩn bị lệnh soạn Content nội bộ từ quyết định Strategy có biên nhận. Phạm vi hiện tại là commission in-house, với nguồn và người nhận đủ quyền trên cùng manifest. Bản thực thi, nghiệp vụ thương mại và kết quả thị trường vẫn chờ các cổng riêng. [Luồng, giới hạn và bằng chứng](evaluation/round64/README.md)
 
 **Vòng #63.** Bản làm việc nội bộ của Marketing lead thử đối chiếu checkpoint Research/Strategy @4 với các quan sát được mã hóa trong brief tổng hợp. Có thể giao Content một bản nháp có điều kiện hoặc giữ việc để làm rõ. Runtime WF-03 @3 vẫn dùng bản registry đã phát hành. Năng lực suy luận trên brief mới và giá trị công việc đối với practitioner còn chờ đánh giá. [Đầu ra đối chứng và trạng thái](evaluation/round63/README.md)

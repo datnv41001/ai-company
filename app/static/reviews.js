@@ -71,17 +71,39 @@ function createReviewPanel(root, api, notify) {
           el('p','Bản làm việc đã thay đổi. Hãy tải lại trước khi quyết định.',area);return;
         }
         el('p','Lần lưu '+report.qa_revision+' · '+report.scope.product+' · '+report.scope.region+' · '+report.scope.channel,area);
-        const records=report.statements.filter(s=>s.outcome!=='editorial');
+        const records=report.statements.filter(s=>s.outcome!=='editorial' || s.reason==='signed_research_instruction');
         if(!records.length) el('p','Bản này chỉ có nội dung biên tập.',area);
         for(const row of records){
           const group=el('article',null,area);group.className='claim-comparison';
           const copy=el('div',null,group), proof=el('div',null,group);
-          el('h5',outcomes[row.outcome],copy);
+          el('h5',row.instruction_review_available?'Chờ phân loại hướng dẫn':outcomes[row.outcome],copy);
           el('blockquote',row.text,copy);
           const key=row.field.split('.')[2];
           const fieldName=row.field.startsWith('studio.')?(studioLabels[key]||report.field_labels?.[key]||key):(row.field==='title'?'Tiêu đề':'Nội dung');
           el('small',fieldName+' · ký tự '+(row.start+1)+'–'+row.end,copy);
-          if(reasons[row.reason])el('p',reasons[row.reason],copy);
+          if(!row.instruction_review_available && reasons[row.reason])el('p',reasons[row.reason],copy);
+          if(row.reason==='signed_research_instruction'){
+            el('p','Đã phân loại cho kế hoạch nghiên cứu nội bộ.',proof);
+            continue;
+          }
+          if(row.instruction_review_available && doc.status==='submitted'){
+            el('h5','Hướng dẫn nghiên cứu nội bộ',proof);
+            el('p','Quyết định chỉ áp dụng cho câu này ở lần lưu hiện tại. Việc phỏng vấn và bàn giao cần được duyệt riêng.',proof);
+            const mandates=report.qualifications.filter(q=>q.category==='unclassified');
+            if(!mandates.length){el('p','Cần người có ủy quyền phù hợp.',proof);continue;}
+            const mandate=field(proof,'Ủy quyền phân loại','select');
+            for(const q of mandates)mandate.add(new Option('Đối chiếu nội dung · '+q.id.slice(0,8),q.id));
+            const reason=field(proof,'Lý do phân loại','textarea');
+            reason.maxLength=500;
+            button(proof,'Xác nhận hướng dẫn nội bộ',async()=>{
+              if(!visible() || reason.value.trim().length<10)throw new Error('Ghi lý do bằng ít nhất 10 ký tự.');
+              await write(ctx,path+'/content-evidence/research-instructions','POST',{statement_id:row.id,
+                qualification_revision:mandate.value,reason:reason.value.trim(),expected_content_digest:report.content_digest,
+                expected_qa_revision:report.qa_revision});
+              if(visible())await show();
+            });
+            continue;
+          }
           el('h5','Bằng chứng đã ghim',proof);
           if(!row.sources?.length)el('p',row.handles.length?row.handles.join(', '):'Chưa xác định được nguồn hỗ trợ.',proof);
           for(const source of row.sources || []){
@@ -121,7 +143,7 @@ function createReviewPanel(root, api, notify) {
             for(const s of old.assessment?.statements || [])if(s.outcome!=='editorial')el('p',outcomes[s.outcome]+' · '+s.text,archive);
           });
           const labels={c3_resolve:'Xác minh nhận định',c3_qa:'Duyệt nội bộ',c3_share:'Bàn giao'};
-          for(const d of report.decisions)el('p',labels[d.operation]+' · lần lưu '+d.qa_revision+(d.reason?' · '+d.reason:''),history);
+          for(const d of report.decisions)el('p',(d.contract==='amc.research-instruction/1'?'Phân loại hướng dẫn nội bộ':labels[d.operation])+' · lần lưu '+d.qa_revision+(d.reason?' · '+d.reason:''),history);
         }
       }catch(error){if(ticket===request && visible()){area.replaceChildren(); el('p',error.message,area);}}
     }

@@ -1,0 +1,151 @@
+{
+  "baseline": "fe0110bd2fa524619c527420478edb9f7b94a0b6",
+  "scope": "All changed Git blobs except this manifest; SHA-256 of Git bytes",
+  "files": [
+    {
+      "path": ".github/workflows/ci.yml",
+      "bytes": 28835,
+      "sha256": "5323d78a92dea635ff5cc1204dd5255fd4bef76c1402a2b5c4d15b3081af5e3d"
+    },
+    {
+      "path": "HANDOFF.md",
+      "bytes": 142774,
+      "sha256": "ad6eafe55d10d8de6d1b3294f57ddd3118f331db728f48cac57202aef0b37794"
+    },
+    {
+      "path": "app/c3_evidence_review.py",
+      "bytes": 17207,
+      "sha256": "261c68f23534c74c775e4dd8bb6cd1ea5405e52923762120bd5a981008702bfc"
+    },
+    {
+      "path": "app/c3_research_instruction.py",
+      "bytes": 1959,
+      "sha256": "eb98cea608671ad71323f80d6a07651ffaa717c015766a381900bc77e1b6109d"
+    },
+    {
+      "path": "app/c3_studio_routes.py",
+      "bytes": 15153,
+      "sha256": "353475569b9becf43ab98b7f9066e4975047607e692704897b853e66fb14320d"
+    },
+    {
+      "path": "app/static/reviews.js",
+      "bytes": 22918,
+      "sha256": "3d7bfed1b86ae843e4002b6cd42bcefda3bf091516b92cc7713707e69569354c"
+    },
+    {
+      "path": "docs/IMPLEMENTATION_STATUS.md",
+      "bytes": 28561,
+      "sha256": "5859bc5ab4177e8b5df8d0fa82e1a281772ed9901dd692596d7f8365f0be841e"
+    },
+    {
+      "path": "docs/SECURITY_AND_GA_BLOCKERS.md",
+      "bytes": 10956,
+      "sha256": "334f66aaea5d7d127187f0023bb7b27513f04051ce6e065c3a71aec920deb30b"
+    },
+    {
+      "path": "docs/evaluation/DEPARTMENT-CAPABILITY-REGISTER.md",
+      "bytes": 15190,
+      "sha256": "0887959ce05c574406b81326e93c9a6db02a954ac77c0b53cb42108c7889c897"
+    },
+    {
+      "path": "docs/evaluation/research-instruction/README.md",
+      "bytes": 10361,
+      "sha256": "7b1cd5cdba723f06d983c3c798b50f2785a2ca39445aa2a0cc38792fb72fcd48"
+    },
+    {
+      "path": "docs/evaluation/research-instruction/delivery-speed.json",
+      "bytes": 2106,
+      "sha256": "4b5147c905d82ddd8c9ce475028ab1e0485b327044436d0dd8dc8d6f9419d654"
+    },
+    {
+      "path": "docs/evaluation/research-instruction/delivery.json",
+      "bytes": 2179,
+      "sha256": "7c7c99e5d1b906e6937b78f0207839b698ef9d586e820f48d48d34a78bff9db2"
+    },
+    {
+      "path": "docs/evaluation/research-instruction/development.json",
+      "bytes": 2612,
+      "sha256": "7658892ee3171ee5136fa0dc81b10604181a86a74ff86ba6d63c5a664f106826"
+    },
+    {
+      "path": "docs/evaluation/research-instruction/en-US.json",
+      "bytes": 2777,
+      "sha256": "19c636d2ab12763c697bb403a32239870237e7ba8a299443cffe2cdadd09d5e9"
+    },
+    {
+      "path": "docs/evaluation/research-instruction/headroom.json",
+      "bytes": 679,
+      "sha256": "49fe4bcda8b8ae4dd3d385f4455e6cf4608ce281820b5a6001fdacea3daf586f"
+    },
+    {
+      "path": "docs/evaluation/research-instruction/junit-local.xml",
+      "bytes": 5087,
+      "sha256": "a64e445e5eea52471dc1a1672cdc8eece81733f3484581c4876cb3645f43a9f5"
+    },
+    {
+      "path": "docs/evaluation/research-instruction/screens/dom.json",
+      "bytes": 1004,
+      "sha256": "b4614898d25168d7e42976acfed9b54f4fb0e77c30129460c2b43fadfe9fdf6d"
+    },
+    {
+      "path": "docs/evaluation/research-instruction/screens/instruction-1280-dark.png",
+      "bytes": 80983,
+      "sha256": "4000952de9c2727755ac5c95b66623b526218eee808a1ed162f129e99acd54b1"
+    },
+    {
+      "path": "docs/evaluation/research-instruction/screens/instruction-1280.png",
+      "bytes": 80572,
+      "sha256": "fb8c235c6910d2e14bbd217620f8770bbe441a6b9135298964502781e4593651"
+    },
+    {
+      "path": "docs/evaluation/research-instruction/screens/instruction-390-dark.png",
+      "bytes": 43979,
+      "sha256": "bd198e0ceb7f1491a18c26a32036879fd3465f0574a1499d987ef89bdfd33f59"
+    },
+    {
+      "path": "docs/evaluation/research-instruction/screens/instruction-390.png",
+      "bytes": 43762,
+      "sha256": "ce8e6f3d2568165d9c022ae0a4af3dd139003a1442b8b1f0a0187497ab93712d"
+    },
+    {
+      "path": "docs/evaluation/research-instruction/screens/instruction-820-dark.png",
+      "bytes": 84594,
+      "sha256": "e57cdbabe6f3a561e366030ab91366cf7b2b22f8db3de3141f4c3969e8059335"
+    },
+    {
+      "path": "docs/evaluation/research-instruction/screens/instruction-820.png",
+      "bytes": 83940,
+      "sha256": "b0af3cb62796c1c3b36ab34eb1b5ec8dfb286e2fad4ccc353e767e501d5f5c64"
+    },
+    {
+      "path": "docs/evaluation/research-instruction/vi-VN.json",
+      "bytes": 2765,
+      "sha256": "ce7904eb37c05da4a4b82f09ff930da27d092efb2dae4089573930574b7ce3aa"
+    },
+    {
+      "path": "migrations/registry-runtime.lock.json",
+      "bytes": 147539,
+      "sha256": "ffa4c4899f3fca73dec4097699bc6e82b2845ccc6e3fc5523c8afd5f2ae5ed9e"
+    },
+    {
+      "path": "tests/browser_research_instruction.py",
+      "bytes": 3202,
+      "sha256": "3553e9e2e66a750e21edff912f46b0f2db41e6681554ad22c949af16f5317796"
+    },
+    {
+      "path": "tests/evaluation/research_instruction_budget.py",
+      "bytes": 3241,
+      "sha256": "e5f7e343e1625d1fb8bf335a67afffa83bef92f507f1cbf3b87ef687c42b0903"
+    },
+    {
+      "path": "tests/strategy_runtime_fixtures.py",
+      "bytes": 12063,
+      "sha256": "33f2fb3a812ef5046e6c7d7e01b79d938dcfee3cd8e43d50ef92c14ea6a35e8f"
+    },
+    {
+      "path": "tests/test_research_instruction.py",
+      "bytes": 17117,
+      "sha256": "1343c71d4e62b91df1b02ec785b77182100d961cdb6a6c3019fd40757aa3bd51"
+    }
+  ]
+}

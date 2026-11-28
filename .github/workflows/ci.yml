@@ -56,11 +56,13 @@ jobs:
           export AMC_RFQ_TEST_EVIDENCE="$RUNNER_TEMP/rfq-evidence/cases"
           export AMC_STRATEGY_CASE_RESULTS="$RUNNER_TEMP/strategy-comparison"
           export AMC_RUNTIME_STRATEGY_EVIDENCE="$RUNNER_TEMP/runtime-strategy/lineage"
+          export AMC_RES_QA_EVIDENCE="$RUNNER_TEMP/runtime-strategy/research-instruction"
           export AMC_RFQ_EVIDENCE="$RUNNER_TEMP/rfq-evidence/desk"
           AMC_CONSULTATION_EVIDENCE="$RUNNER_TEMP/business-intake/consultation" AMC_INTAKE_EVIDENCE="$RUNNER_TEMP/business-intake" AMC_WF03_HOLD_EVIDENCE="$RUNNER_TEMP/wf03-holds" python -m pytest -q -rs --junitxml="$RUNNER_TEMP/api-regression.xml"
           AMC_WORKFORCE_SCREENS="$RUNNER_TEMP/connected-ui" python -m pytest -q tests/browser_storyboard_workforce.py
           AMC_RFQ_BROWSER_EVIDENCE="$RUNNER_TEMP/rfq-evidence/browser" python -m pytest -q tests/browser_rfq_card.py --junitxml="$RUNNER_TEMP/rfq-evidence/browser.xml"
           AMC_STRATEGY_UI_EVIDENCE="$RUNNER_TEMP/runtime-strategy/screens" python -m pytest -q tests/browser_strategy_handoff.py --junitxml="$RUNNER_TEMP/runtime-strategy/browser.xml"
+          AMC_RES_QA_SCREENS="$RUNNER_TEMP/runtime-strategy/research-instruction/screens" python -m pytest -q tests/browser_research_instruction.py --junitxml="$RUNNER_TEMP/runtime-strategy/research-instruction/browser.xml"
           python tests/check_sandbox_journal.py --container amc-test-pg
           python tests/check_consultation_cutover.py --container amc-test-pg
           python -c 'import os, sys; sys.path.insert(0, "tests"); from check_postgres_upgrade import rehearse_archive; rehearse_archive(os.environ["AMC_MIGRATION_DSN"], "amc-test-pg", 26)'

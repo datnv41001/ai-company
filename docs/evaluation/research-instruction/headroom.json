@@ -1,0 +1,28 @@
+{
+  "gguf_sha256": "74a4da8c9fdbcd15bd1f6d01d621410d31c6fc00986f5eb687824e7b93d7a9db",
+  "scope": "one public development fixture, no holdout, no generation",
+  "field_characters": {
+    "research_question": 83,
+    "evidence_needed": 185,
+    "segment": 43,
+    "buyer_problem": 94
+  },
+  "output_json_tokens": 101,
+  "remaining_before_220": 119,
+  "message_body_tokens": {
+    "A": 621,
+    "C": 637
+  },
+  "source_handles": [
+    "F2"
+  ],
+  "visible_in_studio": [
+    "buyer_problem",
+    "research_question"
+  ],
+  "staff_notes_only": [
+    "evidence_needed"
+  ],
+  "exact_templated_request_preflight": "pending for the authorized protocol",
+  "research_performed": false
+}

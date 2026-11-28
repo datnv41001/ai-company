@@ -1,0 +1,11 @@
+{
+  "phase": "queued",
+  "change": "source",
+  "run": "beb66565-ba6d-40dc-a880-77b143be3adc",
+  "task": "80b6e06f-b2b0-51dd-ace0-d3e23b2c24c2",
+  "manifest": "e9d03236-1fc5-4c8b-a7b5-00a99a166ed0",
+  "handoff_receipt": "a72a60e0-adc2-43da-9b23-45fd8133d081",
+  "outcome": "guide_authority_changed",
+  "guide_document": null,
+  "attempts": []
+}

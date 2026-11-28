@@ -84,7 +84,8 @@ def public_brief(b):
 @router.get("/briefs")
 def briefs(tenant_id: str, user: User = Depends(current_user), db: Session = Depends(get_db)):
     member = require_tenant(db, user, tenant_id)
-    return [public_brief(b) for b in db.scalars(brief_query(db, member).order_by(WorkforceBrief.created_at.desc()))]
+    from .product_guide_admission import visible_brief
+    return [public_brief(b) for b in db.scalars(brief_query(db, member).order_by(WorkforceBrief.created_at.desc())) if visible_brief(db, user, b)]
 
 
 @router.post("/briefs", status_code=201)
@@ -146,11 +147,17 @@ def save_submission(db,user,tenant_id,bid,payload):
 
 @router.post("/briefs/{bid}/run")
 def start(tenant_id: str, bid: str, body: Start, user: User = Depends(current_user), db: Session = Depends(get_db)):
-    from . import c3_boundaries, c3_marketing, storyboard_runtime
+    return queue(db, user, tenant_id, bid, body)
+
+
+def queue(db, user, tenant_id, bid, body, *, guide=None):
+    from . import c3_boundaries, c3_marketing, product_guide_admission, storyboard_runtime
+    if body.registry_workflow == product_guide_admission.RELEASE and guide is None:
+        raise HTTPException(409, "Start a product guide from its signed Strategy handoff")
     if body.registry_workflow in storyboard_runtime.RELEASES and (body.max_parallel_nodes != 1 or body.budget_microusd != 0):
         raise HTTPException(422, "This sequential local storyboard release requires a zero provider budget")
     from .c3_projection import TASK_RELEASES
-    backed = body.registry_workflow in c3_marketing.ROLES or body.registry_workflow in TASK_RELEASES
+    backed = guide is not None or body.registry_workflow in c3_marketing.ROLES or body.registry_workflow in TASK_RELEASES
     if backed != bool(body.knowledge_manifest):
         raise HTTPException(422, "Knowledge-backed releases require an exact business knowledge manifest")
     m = require_tenant(db, user, tenant_id, "editor")
@@ -158,7 +165,9 @@ def start(tenant_id: str, bid: str, body: Start, user: User = Depends(current_us
     b = db.scalar(brief_query(db, m).where(WorkforceBrief.id == bid))
     if not b:
         raise HTTPException(404, "Brief unavailable")
-    if b.payload and "sources" not in b.payload and body.registry_workflow not in TASK_RELEASES:
+    if (b.payload or {}).get("task_version") == product_guide_admission.TASK_VERSION and guide is None:
+        raise HTTPException(409, "This guide requires its signed Strategy handoff")
+    if not guide and b.payload and "sources" not in b.payload and body.registry_workflow not in TASK_RELEASES:
         raise HTTPException(409, "Nhiệm vụ này cần quy trình Marketing và manifest yêu cầu công việc đã ghim.")
     if body.max_parallel_nodes == 2 and body.workflow != 'dynamic-v1':
         raise HTTPException(422, 'Two leases require a dynamic workflow')
@@ -194,7 +203,7 @@ def start(tenant_id: str, bid: str, body: Start, user: User = Depends(current_us
         return {"id": prior.id, "state": prior.state}
     if not b.payload:
         raise HTTPException(409, "Waiting for the client's brief")
-    if b.payload.get("task_intent") and body.registry_workflow not in TASK_RELEASES:
+    if not guide and b.payload.get("task_intent") and body.registry_workflow not in TASK_RELEASES:
         from .campaign_planner import commissioned_brief
         _, store = c3_boundaries.context(db, user, b)
         if commissioned_brief(store, bid):
@@ -213,8 +222,10 @@ def start(tenant_id: str, bid: str, body: Start, user: User = Depends(current_us
         from .registry import pin
         from .registry_compatibility import required_outputs
         if backed:
-            store, snap, public = c3_boundaries.checked(db, user, b, body.knowledge_manifest.model_dump(), body.registry_workflow, "queue")
-            if body.registry_workflow in storyboard_runtime.RELEASES:
+            store, snap, public = guide or c3_boundaries.checked(db, user, b, body.knowledge_manifest.model_dump(), body.registry_workflow, "queue")
+            if guide:
+                facts = {"P1": {"label": "P1", "excerpt": public["procedure"]["wording"]}}
+            elif body.registry_workflow in storyboard_runtime.RELEASES:
                 from .c3_order_units import fact_lines
                 facts = {f["id"]:{"label":f["id"],"excerpt":" ".join(fact_lines(f,public))} for f in public["facts"]}
             elif body.registry_workflow in TASK_RELEASES:
@@ -225,6 +236,8 @@ def start(tenant_id: str, bid: str, body: Start, user: User = Depends(current_us
             knowledge = {"title": public["product"], "objective":public["objective"], "audience":public["audience"],
                          "offer":public["product"], "brand_rules":"", "sources":facts, "prompt_version":PROMPT_VERSION,
                          "c3_manifest":body.knowledge_manifest.model_dump(), "c3_projection":public}
+            if guide:
+                knowledge["internal_task"] = True
             if body.registry_workflow in TASK_RELEASES:
                 knowledge.update(objective=public["task_intent"]["purpose"],brand_rules=public["brand_guidelines"]["guidance"],
                                  internal_task=b.origin == "internal")
@@ -392,6 +405,9 @@ def runs(tenant_id: str, user: User = Depends(current_user), db: Session = Depen
     rows = db.scalars(select(WorkforceRun).where(WorkforceRun.tenant_id == tenant_id).order_by(WorkforceRun.created_at.desc()).limit(100))
     summaries = []
     for r in rows:
+        from . import product_guide_runtime, product_guide_studio
+        if product_guide_runtime.is_run(r) and not product_guide_studio.can_read(db, user, r):
+            continue
         graph = None
         if r.knowledge.get("workflow") == "dynamic-v1":
             graph = db.scalar(text("select amc_ops.dag_report(:t,:r)"), {"t": tenant_id, "r": r.id})
@@ -464,6 +480,11 @@ def report(tenant_id: str, rid: str, user: User = Depends(current_user), db: Ses
     if not run:
         raise HTTPException(404, "Run unavailable")
     extra = {}
+    from . import product_guide_runtime
+    if product_guide_runtime.is_run(run):
+        from .product_guide_admission import check_guide_access
+        check_guide_access(db, user, run)
+        extra["product_guide_studio"] = bool(run.deliverable_id)
     if run.knowledge.get("registry", {}).get("workflow") in separated_releases:
         doc = None
         if run.deliverable_id:
@@ -514,6 +535,10 @@ def wait_diagnostics(tenant_id: str, rid: str, user: User = Depends(current_user
     membership = require_tenant(db,user,tenant_id)
     if membership.role not in ("owner","admin") or db.get_bind().dialect.name != "postgresql":
         raise HTTPException(404,"Diagnostics unavailable")
+    from . import product_guide_studio
+    run = product_guide_studio.subject_runs(db, tenant_id, [rid]).get(rid)
+    if run is not None and not product_guide_studio.can_read(db, user, run):
+        raise HTTPException(404, "Diagnostics unavailable")
     snapshot = db.scalar(text("select amc_ops.wait_snapshot(:t,:r)"),{"t":tenant_id,"r":rid})
     if not snapshot:
         raise HTTPException(404,"Diagnostics unavailable")

@@ -20,6 +20,7 @@ from .business_knowledge import router as knowledge_router
 from . import c3_boundaries
 from .c3_evidence_review import router as content_evidence_router
 from .c3_studio_routes import router as studio_router
+from . import product_guide_studio
 from .c3_projection import router as marketing_projection_router
 from .claim_desk import router as claim_desk_router
 from .campaign_lab import replay as replay_campaign_lab
@@ -75,6 +76,7 @@ app.include_router(knowledge_router)
 app.include_router(marketing_projection_router)
 app.include_router(content_evidence_router)
 app.include_router(studio_router)
+app.include_router(product_guide_studio.router)
 app.include_router(claim_desk_router)
 app.include_router(workspace_router)
 app.include_router(catalog_router)
@@ -345,7 +347,8 @@ def list_tasks(tenant_id: str, campaign_id: str, user: User = Depends(current_us
 @app.get("/api/tenants/{tenant_id}/deliverables")
 def list_deliverables(tenant_id: str, user: User = Depends(current_user), db: Session = Depends(get_db)):
     membership = member(db, user, tenant_id)
-    return [data(i) for i in db.scalars(visible(Deliverable, membership))]
+    rows = db.scalars(visible(Deliverable, membership))
+    return [data(i) for i in product_guide_studio.readable(db, user, tenant_id, rows)]
 
 
 @app.get("/api/tenants/{tenant_id}/deliverables/{deliverable_id}")
@@ -354,6 +357,7 @@ def get_working_deliverable(tenant_id: str, deliverable_id: str, user: User = De
     item = db.scalar(visible(Deliverable, membership).where(Deliverable.id == deliverable_id))
     if item is None:
         raise HTTPException(404, "Resource not found")
+    product_guide_studio.check_document(db, user, item)
     return data(item)
 
 
@@ -361,7 +365,7 @@ def get_working_deliverable(tenant_id: str, deliverable_id: str, user: User = De
 def create_deliverable(tenant_id: str, body: DeliverableIn, user: User = Depends(current_user), db: Session = Depends(get_db)):
     member(db, user, tenant_id, "editor")
     campaign_of(db, tenant_id, body.campaign_id)
-    reserved = {'studio', 'qa_claims', 'qa_evidence', 'workforce_run_id', 'source_ids', 'qa_approved_digest', 'qa_revision', 'qa_approved_revision'}
+    reserved = {'studio', 'product_guide', 'qa_claims', 'qa_evidence', 'workforce_run_id', 'source_ids', 'qa_approved_digest', 'qa_revision', 'qa_approved_revision'}
     content = {key: value for key, value in body.content.items() if key not in reserved}
     item = Deliverable(tenant_id=tenant_id, campaign_id=body.campaign_id, title=body.title, content=content, created_by=user.id)
     db.add(item)
@@ -372,9 +376,16 @@ def create_deliverable(tenant_id: str, body: DeliverableIn, user: User = Depends
 
 
 @app.post("/api/tenants/{tenant_id}/deliverables/{deliverable_id}/submit")
-def submit_deliverable(tenant_id: str, deliverable_id: str, user: User = Depends(current_user), db: Session = Depends(get_db)):
+def submit_deliverable(tenant_id: str, deliverable_id: str, body: dict | None = None, user: User = Depends(current_user), db: Session = Depends(get_db)):
     member(db, user, tenant_id, "editor")
     item = working_copy(db, tenant_id, deliverable_id)
+    if product_guide_studio.check_document(db, user, item, edit=True):
+        from pydantic import ValidationError
+        try:
+            version = product_guide_studio.GuideRevision.model_validate(body)
+        except ValidationError:
+            raise HTTPException(422, "Guide submission requires the inspected revision and content digest") from None
+        version.check(item)
     if item.status != "draft":
         raise HTTPException(409, "Only draft deliverables may be submitted")
     if (item.qa_evidence or {}).get("qa_revision") != item.qa_revision:
@@ -388,6 +399,7 @@ def submit_deliverable(tenant_id: str, deliverable_id: str, user: User = Depends
 def assess_working_copy(tenant_id: str, deliverable_id: str, user: User = Depends(current_user), db: Session = Depends(get_db)):
     member(db, user, tenant_id, "editor")
     item = working_copy(db, tenant_id, deliverable_id)
+    product_guide_studio.check_document(db, user, item)
     previous = item.qa_evidence or {}
     report = evaluate(db, item, user.id)
     if any(previous.get(k) != report.get(k) for k in ("qa_revision", "content_digest", "ruleset_version", "state", "findings", "content_evidence")):
@@ -400,6 +412,7 @@ def assess_working_copy(tenant_id: str, deliverable_id: str, user: User = Depend
 def review_deliverable(tenant_id: str, deliverable_id: str, body: DeliverableReviewIn, user: User = Depends(current_user), db: Session = Depends(get_db)):
     member(db, user, tenant_id, "admin")
     item = working_copy(db, tenant_id, deliverable_id)
+    product_guide_studio.check_document(db, user, item, review=True)
     report = item.qa_evidence or {}
     digest = content_digest(item.title, item.content.get("client_preview", ""))
     if (
@@ -488,7 +501,8 @@ def audit_events(tenant_id: str, subject_id: str | None = None, offset: int = Qu
     query = select(AuditEvent).where(AuditEvent.tenant_id == tenant_id)
     if subject_id:
         query = query.where(AuditEvent.subject_id == subject_id)
-    return [data(i) for i in db.scalars(query.order_by(AuditEvent.occurred_at.desc(), AuditEvent.id.desc()).offset(offset).limit(100))]
+    rows = db.scalars(query.order_by(AuditEvent.occurred_at.desc(), AuditEvent.id.desc()).offset(offset).limit(100))
+    return [data(i) for i in product_guide_studio.readable(db, user, tenant_id, rows, key="subject_id")]
 
 
 @app.get("/api/catalog/roles")

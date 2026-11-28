@@ -19,7 +19,7 @@ from .registry_adapters import node_request, validate_output
 from .models import AuditEvent, Deliverable, Membership, utcnow
 from .workforce_gateway import Gateway, GatewayError, PROMPT_VERSION, infer, measured_cost, quality, request_body, reserve_tokens
 from .workforce_models import WorkforceRun
-from . import dynamic_plan, landing_qa, workflow_dag, storyboard_runtime
+from . import dynamic_plan, landing_qa, product_guide_runtime as guide, workflow_dag, storyboard_runtime
 
 MAX_TRIES = 3
 
@@ -84,7 +84,8 @@ def claim(db, scope, config, *, run_id=None, node=None, commit=True):
         stage = run.plan[len(run.checkpoints)]
         body = request_body(run, config.model)
     is_board = storyboard_runtime.is_run(run)
-    reserved = 0 if is_board else config.price(reserve_tokens(body), body["max_tokens"])
+    local_adapter = body.get("local_adapter") if is_board or guide.is_run(run) else None
+    reserved = 0 if local_adapter else config.price(reserve_tokens(body), body["max_tokens"])
     prior_attempts = node.attempts if node else run.attempts
     if prior_attempts >= MAX_TRIES or run.reserved_microusd + reserved > run.budget_microusd or run.knowledge["prompt_version"] != PROMPT_VERSION:
         error = (
@@ -114,8 +115,8 @@ def claim(db, scope, config, *, run_id=None, node=None, commit=True):
             **({"node_id": node.id, "plan_revision": node.revision} if node else {}),
             "skill": stage,
             "attempt": run.attempts,
-            "provider": "deterministic" if is_board else config.provider,
-            "model": storyboard_runtime.adapter_for(run) if is_board else config.model,
+            "provider": "deterministic" if local_adapter else config.provider,
+            "model": local_adapter or config.model,
             "prompt": PROMPT_VERSION,
             "started_at": now.isoformat(),
             "outcome": "running",
@@ -172,7 +173,10 @@ def save_checkpoint(db, scope, run, stage, output, node):
         from .registry_qa import assess_role
         contract = binding["contracts"][stage]
         from . import c3_releases
-        if storyboard_runtime.is_run(run):
+        if guide.is_run(run):
+            record["quality"]["role_qa"] = {"policy": contract["qa_policy"], "source_ids": output["source_ids"],
+                                           "manifest_digest": run.knowledge["c3_manifest"]["digest"]}
+        elif storyboard_runtime.is_run(run):
             record["quality"]["role_qa"] = {"policy": contract["qa_policy"], "manifest_digest": run.knowledge["c3_manifest"]["digest"],
                                            "source_ids":output["source_ids"], "adapter":storyboard_runtime.adapter_for(run)}
         elif binding.get("workflow") in c3_releases.WORKFLOWS:
@@ -199,6 +203,12 @@ def save_checkpoint(db, scope, run, stage, output, node):
         if storyboard_runtime.is_run(run):
             preview = next(p["output"]["text"] for p in run.checkpoints if p["skill"]=="storyboard")
         studio = None
+        edition = None
+        if guide.is_run(run):
+            copy = next(p["output"]["raw_reply"] for p in run.checkpoints if p["skill"] == "content")
+            edition = guide.compose(run.knowledge["c3_projection"], copy)
+            initial = guide.preview(edition)
+            title, preview = initial["title"], initial["body"]
         if binding and binding.get("workflow") in c3_releases.WORKFLOWS:
             from . import c3_marketing, c3_order_units
             renderer = c3_order_units.render if c3_releases.is_current(binding["workflow"]) else c3_marketing.render
@@ -216,9 +226,10 @@ def save_checkpoint(db, scope, run, stage, output, node):
             tenant_id=run.tenant_id,
             campaign_id=run.campaign_id,
             title=title,
-            content={"client_preview": preview, "workforce_run_id": run.id, **({"studio":studio} if studio else {})},
+            content={"client_preview": preview, "workforce_run_id": run.id, **({"studio":studio} if studio else {}),
+                     **({"product_guide": edition} if edition else {})},
             created_by=scope.operator,
-            status="submitted",
+            status="draft" if edition else "submitted",
         )
         db.add(doc)
         db.flush()
@@ -235,7 +246,8 @@ def save_checkpoint(db, scope, run, stage, output, node):
             db.add(AuditEvent(tenant_id=run.tenant_id,user_id=scope.operator,subject_id=doc.id,event="studio.saved",
                               details={"revision":doc.qa_revision,"groups":studio["groups"],"version":studio["version"]}))
         db.add(
-            AuditEvent(tenant_id=run.tenant_id, user_id=scope.operator, subject_id=doc.id, event="workforce.submitted_to_qa", details={"run_id": run.id})
+            AuditEvent(tenant_id=run.tenant_id, user_id=scope.operator, subject_id=doc.id,
+                       event="workforce.product_guide_drafted" if edition else "workforce.submitted_to_qa", details={"run_id": run.id})
         )
 
 
@@ -250,7 +262,7 @@ def finish(db, scope, config, task, result, error, *, node=None, commit=True):
     if result is not None:
         raw, inputs, outputs = result
         try:
-            if storyboard_runtime.is_run(run):
+            if storyboard_runtime.is_run(run) or (guide.is_run(run) and stage == "director"):
                 if type(inputs) is not int or type(outputs) is not int or (inputs, outputs) != (0, 0):
                     raise GatewayError("invalid_usage")
                 cost = 0
@@ -271,7 +283,10 @@ def finish(db, scope, config, task, result, error, *, node=None, commit=True):
                     elif binding.get("contracts",{}).get("director",{}).get("adapter")=="director@2":
                         from .research_strategy import director_proposal
                         raw = director_proposal(raw)
-                    if storyboard_runtime.is_run(run):
+                    if guide.is_run(run):
+                        director_raw = raw
+                        contract, digest = guide.plan(raw, run.knowledge["required_outputs"], binding)
+                    elif storyboard_runtime.is_run(run):
                         from .storyboard_contract import plan
                         contract, digest = plan(raw,run.knowledge["required_outputs"],binding)
                     else:

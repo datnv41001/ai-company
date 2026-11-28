@@ -1,0 +1,126 @@
+{
+  "run": "636ef109-2970-46a0-aa56-53d01aaf8542",
+  "document": "4e319e96-0868-4afe-a0ac-d2415cc4cc34",
+  "approved_revision": 2,
+  "qa_receipt": "20ddbaaa-15c4-4e1e-8cb5-50410205b615",
+  "content_digest": "c0f55735ab7032e439a431b40c44d6226a1d5c0e09608b2db14070721ecbe553",
+  "edited_title": "Place the batch card in the front slot.",
+  "source_handle": "P1",
+  "preview_hidden_after_mandate_withdrawal": true,
+  "sizes": [
+    {
+      "viewport": [
+        1280,
+        850
+      ],
+      "theme": "light",
+      "preview": "guide-1280-light.png",
+      "open_to_preview_ms": 937,
+      "contrast": {
+        "surface": ".product-guide-studio",
+        "view": "light",
+        "checked": 16,
+        "minimum_ratio": 6.113,
+        "failed": [],
+        "unresolved": []
+      },
+      "keyboard_next": "layout",
+      "browser": "158.0.8127.88"
+    },
+    {
+      "viewport": [
+        1280,
+        850
+      ],
+      "theme": "dark",
+      "preview": "guide-1280-dark.png",
+      "open_to_preview_ms": 937,
+      "contrast": {
+        "surface": ".product-guide-studio",
+        "view": "dark",
+        "checked": 16,
+        "minimum_ratio": 7.909,
+        "failed": [],
+        "unresolved": []
+      },
+      "keyboard_next": "layout",
+      "browser": "158.0.8127.88"
+    },
+    {
+      "viewport": [
+        820,
+        1180
+      ],
+      "theme": "light",
+      "preview": "guide-820-light.png",
+      "open_to_preview_ms": 375,
+      "contrast": {
+        "surface": ".product-guide-studio",
+        "view": "light",
+        "checked": 16,
+        "minimum_ratio": 6.113,
+        "failed": [],
+        "unresolved": []
+      },
+      "keyboard_next": "layout",
+      "browser": "158.0.8127.88"
+    },
+    {
+      "viewport": [
+        820,
+        1180
+      ],
+      "theme": "dark",
+      "preview": "guide-820-dark.png",
+      "open_to_preview_ms": 375,
+      "contrast": {
+        "surface": ".product-guide-studio",
+        "view": "dark",
+        "checked": 16,
+        "minimum_ratio": 7.909,
+        "failed": [],
+        "unresolved": []
+      },
+      "keyboard_next": "layout",
+      "browser": "158.0.8127.88"
+    },
+    {
+      "viewport": [
+        390,
+        844
+      ],
+      "theme": "light",
+      "preview": "guide-390-light.png",
+      "open_to_preview_ms": 344,
+      "contrast": {
+        "surface": ".product-guide-studio",
+        "view": "light",
+        "checked": 16,
+        "minimum_ratio": 6.113,
+        "failed": [],
+        "unresolved": []
+      },
+      "keyboard_next": "layout",
+      "browser": "158.0.8127.88"
+    },
+    {
+      "viewport": [
+        390,
+        844
+      ],
+      "theme": "dark",
+      "preview": "guide-390-dark.png",
+      "open_to_preview_ms": 344,
+      "contrast": {
+        "surface": ".product-guide-studio",
+        "view": "dark",
+        "checked": 16,
+        "minimum_ratio": 7.909,
+        "failed": [],
+        "unresolved": []
+      },
+      "keyboard_next": "layout",
+      "browser": "158.0.8127.88"
+    }
+  ]
+}

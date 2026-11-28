@@ -1,0 +1,28 @@
+{
+  "phase": "sent",
+  "change": "mandate",
+  "run": "946ee13e-a71d-4752-86ff-90b59ebac0c8",
+  "task": "a606dbcb-6ef0-512a-99df-c20b4861d7e4",
+  "manifest": "9cee17e8-0b12-4c99-9309-1a11e36a1428",
+  "handoff_receipt": "76532dd4-52ee-4db8-a4bf-68888cd488e8",
+  "outcome": "guide_authority_changed",
+  "guide_document": null,
+  "attempts": [
+    {
+      "status": "closed",
+      "outcome": "ok",
+      "input_tokens": 0,
+      "output_tokens": 0,
+      "net_held": 0,
+      "spent": 0
+    },
+    {
+      "status": "closed",
+      "outcome": "guide_authority_changed",
+      "input_tokens": 110,
+      "output_tokens": 12,
+      "net_held": 0,
+      "spent": 0
+    }
+  ]
+}

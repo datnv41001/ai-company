@@ -42,8 +42,8 @@ def tenant_state_before_c1(conn):
     return {table: conn.execute(f"SELECT to_jsonb(t) FROM {table} t ORDER BY to_jsonb(t)").fetchall() for table in tables}
 
 
-def rehearse_archive(dsn, container, version=16):
-    """Round-trip the populated v16 fixture through matching PostgreSQL client tools."""
+def rehearse_archive(dsn, container, version=16, *, require_guide=False):
+    """Round-trip a populated historical or candidate fixture with matching PostgreSQL clients."""
     tables = ("amc_schema_versions", "users", "memberships", "portal_grants", "portal_invitations",
               "client_reviews", "review_entries", "workforce_runs", "amc_ops.attempts", "amc_ops.ledger",
               "amc_ops.registry_releases", "amc_ops.registry_versions", "amc_ops.dag_nodes")
@@ -63,6 +63,11 @@ def rehearse_archive(dsn, container, version=16):
         return [conn.execute(f"SELECT to_jsonb(t) FROM {table} t ORDER BY to_jsonb(t)").fetchall()
                 for table in tables]
 
+    def guide_documents(conn):
+        return conn.execute("""SELECT to_jsonb(d) FROM public.deliverables d JOIN public.workforce_runs r
+            ON (d.tenant_id,d.campaign_id,d.id)=(r.tenant_id,r.campaign_id,r.deliverable_id)
+            WHERE r.knowledge->'registry'->>'workflow'='WF-06/product-use-guide@1' ORDER BY d.id""").fetchall()
+
     with psycopg.connect(dsn) as source:
         assert source.info.host in ("localhost", "127.0.0.1", "::1") and source.info.dbname.startswith("amc_test")
         assert source.execute("SELECT max(version) FROM amc_schema_versions").fetchone() == (version,)
@@ -81,6 +86,13 @@ def rehearse_archive(dsn, container, version=16):
             tables += task_tables
             workspace_tables += task_tables
         before = snapshot(source)
+        if version >= 26:
+            guides_before = guide_documents(source)
+            has_guide_fence = source.execute(
+                "SELECT to_regprocedure('amc_c3.guide_authorized(public.workforce_runs,boolean)') IS NOT NULL"
+            ).fetchone()[0]
+            if require_guide:
+                assert guides_before, "Candidate restore requires a guide emitted by the synthetic workforce"
     if version >= 22:
         # Older fixtures need only the data introduced at their boundary.
         # On the combined test database both branches must contain real rows.
@@ -108,7 +120,12 @@ def rehearse_archive(dsn, container, version=16):
             assert restored.execute(WRITER_FENCE).fetchone() == (True,), "Restored Studio writer triggers must match the current publisher"
         if version >= 26:
             from migrations.sandbox_contract import SANDBOX_FENCE
+            from migrations.product_guide_contract import GUIDE_FENCE
             assert restored.execute(SANDBOX_FENCE).fetchone() == (True,)
+            assert guide_documents(restored) == guides_before
+            if require_guide or has_guide_fence or guides_before:
+                assert restored.execute(GUIDE_FENCE).fetchone() == (True,)
+                print(f"PASS: restored product guide authority fence and {len(guides_before)} exact guide document(s)")
         if workspace_tables:
             from migrations.claim_display import CURRENT, SIGNATURE
             assert restored.execute(CURRENT).fetchone()==(True,)

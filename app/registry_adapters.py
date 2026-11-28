@@ -11,7 +11,7 @@ from typing import Callable
 from migrations.registry_release import adapter_digest
 from migrations.runtime_bundle import approved_adapter_digests
 from . import dynamic_plan, landing_qa, research_strategy, registry_seo_v2, workforce_gateway as gateway
-from . import c3_marketing, c3_skill_library, storyboard_runtime, video_storyboard
+from . import c3_marketing, c3_skill_library, product_guide_runtime, storyboard_runtime, video_storyboard
 
 V1_DIGEST = "c64cf3e0e691a1bad191b954b07d06a28c7cd8675bb5fe8328ee0ae0e620880a"
 ROLES = {
@@ -76,6 +76,8 @@ def runtimes():
         adapters[f"{skill}@{version}"] = Adapter(skill, version, video_storyboard.source_digest(), video_storyboard.request, video_storyboard.validated)
     for skill, version in storyboard_runtime.VERSIONS.items():
         adapters[f"{skill}@{version}"] = Adapter(skill, version, storyboard_runtime.source_digest(), storyboard_runtime.request, storyboard_runtime.validated)
+    for skill, version in product_guide_runtime.VERSIONS.items():
+        adapters[f"{skill}@{version}"] = Adapter(skill, version, product_guide_runtime.source_digest(), product_guide_runtime.request, product_guide_runtime.validate)
     return {name: adapter for name, adapter in adapters.items() if adapter.digest in approved}
 
 
@@ -140,6 +142,8 @@ def structural_schema(schema):
 @lru_cache(maxsize=None)
 def output_schema(adapter):
     # Inspect the same request builder used to form a real worker envelope.
+    if adapter.request is product_guide_runtime.request:
+        return structural_schema(product_guide_runtime.schema(adapter.skill))
     run = SimpleNamespace(knowledge={"sources": {"brand": {"excerpt": "fact"}}, "required_outputs": ["content", "seo"]}, checkpoints=[], plan=[], journal=[])
     if adapter.skill == "director" and adapter.version == 1:
         body = dynamic_plan.planner_body(run, "local")

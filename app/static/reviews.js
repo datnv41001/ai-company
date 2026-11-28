@@ -208,6 +208,10 @@ function createReviewPanel(root, api, notify) {
     function draw() {
       form.replaceChildren();
       const doc=docs.find(d=>d.id===pick.value);
+      if(doc?.content?.product_guide){
+        mountProductGuide(form,api,url(ctx,'deliverables/'+encodeURIComponent(doc.id)));
+        return;
+      }
       const campaign=field(form,'Chiến dịch','select');
       campaigns.forEach(c=>campaign.add(new Option(c.name,c.id)));
       if(doc){campaign.value=doc.campaign_id;campaign.disabled=true;}

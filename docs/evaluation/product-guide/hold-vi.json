@@ -1,0 +1,70 @@
+{
+  "order": {
+    "recipient": "Content lead",
+    "asset_type": "web_use_guide",
+    "asset": "Product-page use guide",
+    "purpose": "Explain a use case on the product page",
+    "placement": "web",
+    "option": "explain_use",
+    "objective": "Chuẩn bị hướng dẫn tại thời điểm bàn giao ca.",
+    "audience": "Trưởng ca",
+    "buyer_persona": "Trưởng ca",
+    "message": "Bảng bàn giao có hai ô. Chỉ dùng trong nhà.",
+    "claim_limits": [
+      "Use the complete product declaration with its qualifiers.",
+      "Buyer interpretation is limited to the recorded situation."
+    ],
+    "approval": "Internal drafting only. A new asset requires its own independent QA and channel approval.",
+    "brief": {
+      "cta": "Tải danh mục",
+      "purpose": "Chuẩn bị hướng dẫn tại thời điểm bàn giao ca.",
+      "audience": "Trưởng ca",
+      "objective": "Chuẩn bị hướng dẫn tại thời điểm bàn giao ca.",
+      "exclusions": [
+        "theo dõi nhân viên"
+      ],
+      "buyer_action": "catalogue_download",
+      "requirements": [
+        "Giữ nguyên điều kiện sử dụng."
+      ],
+      "editorial_style": "concise",
+      "acceptance_criteria": [
+        "Đối chiếu nội dung với nguồn đã duyệt."
+      ]
+    },
+    "guidance": {
+      "direction": "Show how to use the product in the reviewed situation.",
+      "situation": "At a work or shift handover.",
+      "sample_scope": "The selected source passage informs this handover only. Wider demand or performance remains unverified."
+    },
+    "measurement": {
+      "status": "planned_only",
+      "execution_authorized": false
+    }
+  },
+  "decision": {
+    "status": "hold",
+    "reasons": [
+      "procedure_source_required"
+    ],
+    "task_id": null,
+    "run_id": null,
+    "manifest_id": null
+  },
+  "before": {
+    "workforce_runs": 1,
+    "action_requests": 0,
+    "ledger_events": 6,
+    "other_commands": 38,
+    "tasks": 1,
+    "manifests": 1
+  },
+  "after": {
+    "workforce_runs": 1,
+    "action_requests": 0,
+    "ledger_events": 6,
+    "other_commands": 38,
+    "tasks": 1,
+    "manifests": 1
+  }
+}

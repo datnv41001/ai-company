@@ -46,6 +46,11 @@ def validate_manifest(manifest):
 
 
 def check_workflow(manifest):
+    from . import product_guide_runtime as guide
+    if manifest.get("workflow_id") == guide.WORKFLOW:
+        if manifest != guide.release_manifest() or not all(resolve(c) for c in manifest["contracts"].values()):
+            raise ValueError("Product guide release differs from the installed capability")
+        return
     if manifest.get("workflow_id") == "WF-08/video-storyboard":
         from .storyboard_contract import release_manifest
         if manifest != release_manifest(manifest['workflow_version']) or not all(resolve(c) for c in manifest["contracts"].values()):
@@ -92,6 +97,8 @@ def check_workflow(manifest):
             raise ValueError("Unsupported research strategy adapter")
         if not backed and profile == "landing-seo" and skill in ("director","research","strategy") and contract["adapter"] != skill+"@1":
             raise ValueError("Unsupported landing adapter")
+        if contract.get("adapter") in {f"{s}@{v}" for s, v in guide.VERSIONS.items()}:
+            raise ValueError("The product guide adapter requires its approved guide workflow")
         if contract.get("adapter") in {"director@6","storyboard@1"}:
             raise ValueError("The native storyboard adapter requires its exact scoped workflow")
         adapter = resolve(contract)

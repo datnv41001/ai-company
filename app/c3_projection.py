@@ -327,8 +327,25 @@ def unpack(s, id_):
 
 @router.get("/manifests/{manifest_id}")
 def historical(manifest_id: str, workspace=Depends(ws.reader)):
-    snap, data = unpack(store(workspace, False), manifest_id)
+    s = store(workspace, False)
+    guide = guide_manifest(s, workspace.user, manifest_id)
+    if guide is not None:
+        return guide
+    snap, data = unpack(s, manifest_id)
     return view(snap, data)
+
+
+def guide_manifest(s, user, manifest_id):
+    from .product_guide_admission import MANIFEST_VERSION, RELEASE, check_guide_access
+    from .workforce_models import WorkforceRun
+    snap = s.get(m.KnowledgeSnapshot, manifest_id)
+    if json.loads(snap.canonical).get("version") != MANIFEST_VERSION:
+        return None
+    run = s.db.scalar(select(WorkforceRun).filter_by(tenant_id=snap.tenant_id, brief_id=snap.brief_id))
+    if not run or run.knowledge.get("c3_manifest") != {"id": snap.id, "digest": snap.digest}:
+        missing()
+    public = check_guide_access(s.db, user, run)
+    return {"id": snap.id, "digest": snap.digest, "version": MANIFEST_VERSION, "workflow": RELEASE, "projection": public}
 
 
 @router.get("/manifests/{manifest_id}/provenance")
@@ -337,6 +354,10 @@ def provenance(manifest_id: str, workspace=Depends(ws.reader)):
     s = store(workspace, False)
     if not s.approver:
         missing()
+    guide = guide_manifest(s, workspace.user, manifest_id)
+    if guide is not None:
+        procedure = guide["projection"]["procedure"]
+        return {"manifest_digest": guide["digest"], "entries": [{"handle": "P1", "wording": procedure["wording"]}]}
     snap, data = unpack(s, manifest_id)
     pins = data["pins"]["dependencies"]
     entries = []

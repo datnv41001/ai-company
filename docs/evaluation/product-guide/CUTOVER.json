@@ -1,0 +1,92 @@
+{
+  "predecessor_tree": "edda35771fcee71ded819d85878e947f93ef9127",
+  "core": 26,
+  "postgresql_server_version": 160016,
+  "populated_before_upgrade": {
+    "workforce_briefs": {
+      "rows": 1,
+      "sha256": "083ab3ae522d8d152b6450c075fb5079a5e4c53fe0396e847684ef0ea482ca08"
+    },
+    "deliverables": {
+      "rows": 1,
+      "sha256": "bb33376799e56303bdafc48301b91fc98e66dfc4df6e09afe5fa6144198f88da"
+    },
+    "workforce_runs": {
+      "rows": 1,
+      "sha256": "c90fefbab6ef30d3f3a29f71944b4ce8007f7af25d6c14668fb61ba590fc5fe1"
+    },
+    "knowledge_commands": {
+      "rows": 45,
+      "sha256": "3cdcd65cf87f5c74aa3f99bda560aeccab495f654d460f2c84ad5b96fb1d1c3f"
+    },
+    "knowledge_snapshots": {
+      "rows": 1,
+      "sha256": "094e726e19510eb32b6f46a7caaf7eb4839485f392c2e5d53460c3bce4775459"
+    },
+    "knowledge_revisions": {
+      "rows": 16,
+      "sha256": "cc1d4c6324f32ac77c77ccafe707385ae18acedb09e959c500b627b82cd7abbc"
+    },
+    "knowledge_dependencies": {
+      "rows": 15,
+      "sha256": "f89cad92c139ce61002adf05c8bbc3fd3e18bf54f4acd2a6b2f015c71438fe5e"
+    },
+    "amc_ops.attempts": {
+      "rows": 3,
+      "sha256": "9b6776f3668ed971e22e482d3cab2237905fb1dc36c5af68e54315b727836353"
+    },
+    "amc_ops.ledger": {
+      "rows": 6,
+      "sha256": "65ba53d08b4b999c84ea0133dd60e0b9e16d048d831cffd7cbe07a5adf2f6c0e"
+    },
+    "amc_ops.registry_releases": {
+      "rows": 2,
+      "sha256": "d1e9b8c66b25c7364f118ab12c05b8a617d055cc7336c73376bf507b8f61bce1"
+    }
+  },
+  "repeat_publisher_preserved_rows_and_function_oids": true,
+  "after_guide": {
+    "workforce_briefs": {
+      "rows": 3,
+      "sha256": "c6f0eaa7358911d2200907f0a8d9dde7b9dd07338d05f9dccce22a2c3e918e7c"
+    },
+    "deliverables": {
+      "rows": 3,
+      "sha256": "e4f8d5a2a86b9b6a0071d763170a3875b8d7c403287954dd4622871dfe28e23c"
+    },
+    "workforce_runs": {
+      "rows": 3,
+      "sha256": "559fa7cfb943b08a5c24e28891c0e2897668fc9589d3c12778ae76856a1fc42a"
+    },
+    "knowledge_commands": {
+      "rows": 85,
+      "sha256": "7535c8d24dd6a55f54bff62265c175e0f50a168db8c8df11c37d32a60e143803"
+    },
+    "knowledge_snapshots": {
+      "rows": 3,
+      "sha256": "b27fcb8ac3cac4fb775332e1cb0582c3ca003f573812f5841b906bacfd2f0104"
+    },
+    "knowledge_revisions": {
+      "rows": 32,
+      "sha256": "b5bc1329bf7fb0fa8af0b9e09f3ade6b2f344fffca43f1dc974b90a9cf0ff51d"
+    },
+    "knowledge_dependencies": {
+      "rows": 30,
+      "sha256": "f96ebe902142a8a8d6f6306b613a95898e55aee549504787f81ac0305b42370c"
+    },
+    "amc_ops.attempts": {
+      "rows": 8,
+      "sha256": "3a0c72d95b254e5f319772d71e450d9c8369796c6faf8d4aa1a57537f4f06277"
+    },
+    "amc_ops.ledger": {
+      "rows": 16,
+      "sha256": "634430eea1e89bf4ae354034b742fb314baeb0cb3edf21409353515aaf98292e"
+    },
+    "amc_ops.registry_releases": {
+      "rows": 3,
+      "sha256": "223c565b8815c3885d4972b7d69bb4b86be259859014ea49c18defb4d3f106bb"
+    }
+  },
+  "guide_documents": 1,
+  "native_archive": "not_run"
+}

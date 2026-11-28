@@ -293,10 +293,26 @@ class Assertion(Input):
         return self
 
 
+class GuideProcedure(Input):
+    version: Literal["amc.product-guide-source/1"]
+    steps: Annotated[list[Name], Field(min_length=1, max_length=8)]
+
+
 class Entry(Input):
     locator: Name
     excerpt: Note
     assertion: Assertion
+    guide_procedure: GuideProcedure | None = Field(default=None, exclude_if=lambda value: value is None)
+
+    @model_validator(mode="after")
+    def guide_disclosure(self):
+        if self.guide_procedure:
+            claim = self.assertion
+            steps = self.guide_procedure.steps
+            if (claim.category != "description" or len(set(steps)) != len(steps)
+                    or " ".join(steps) != claim.wording or self.excerpt != " ".join([claim.wording, *claim.qualifiers])):
+                raise ValueError("Guide steps must reproduce the approved description and full qualified excerpt in order")
+        return self
 
 
 class Source(Window):

@@ -1,0 +1,192 @@
+{
+  "strategy": "f139420b-1e67-4ab9-b500-ce3e21999b40",
+  "strategy_document": "41d25df7-b1ad-44a4-a935-6dc6ee5d077b",
+  "handoff": "ba620cf0-7b6e-4219-bbe3-25cd3ef6ea26",
+  "child": {
+    "status": "queued",
+    "reasons": [],
+    "task_id": "b7a23f60-c4bb-516b-914f-c1782271172a",
+    "manifest_id": "f0ee326b-f70f-4d1d-8d73-6aa7632a9fec",
+    "run_id": "3715583c-1838-44bc-b1f7-bbfa4e79a4ad"
+  },
+  "strategy_binding": {
+    "revision": 2,
+    "qa_receipt": "f3e3f4f5-1458-4a4e-bcde-4beb6b2e10cc",
+    "strategy_run": "f139420b-1e67-4ab9-b500-ce3e21999b40",
+    "content_digest": "b2734180fd31535953bcf605b8c379058f606bd521575fc253da967d938c3b29",
+    "handoff_receipt": "ba620cf0-7b6e-4219-bbe3-25cd3ef6ea26",
+    "source_manifest": "4e4acca9-01c4-47a7-9137-405327ea6717",
+    "strategy_document": "41d25df7-b1ad-44a4-a935-6dc6ee5d077b",
+    "source_release_digest": "cf9078f2aa283cc7a9e9c273abd3077338c94ebe0f51a65e0a30c33254d94969",
+    "source_manifest_digest": "82765a1e0915c5da26cc65a5e96070de5e6300a2f41da892858484fa35917bf6"
+  },
+  "manifest": {
+    "id": "f0ee326b-f70f-4d1d-8d73-6aa7632a9fec",
+    "digest": "fda7da71eb32f75d93252487345030f619318a7f2016a7af19c1cfe053653df1",
+    "source_map": {
+      "manifest_digest": "fda7da71eb32f75d93252487345030f619318a7f2016a7af19c1cfe053653df1",
+      "entries": [
+        {
+          "handle": "P1",
+          "wording": "Place the batch card in the front slot. Insert the reference card in the rear slot. Use dry cards only."
+        }
+      ]
+    }
+  },
+  "task_version": "amc.product-use-guide/1",
+  "attempts": [
+    {
+      "stage": "director",
+      "id": "6bb792a6-be2d-43d2-b8d0-cc6e943ee8b6",
+      "raw": {
+        "assignment": "Organize the approved instructions as an internal product-page use guide."
+      },
+      "input_tokens": 0,
+      "output_tokens": 0
+    },
+    {
+      "stage": "content",
+      "id": "8bfc9543-fa8d-4c52-85cb-2cc6ded5c61e",
+      "raw": {
+        "heading": "unsupported claim",
+        "layout": "numbered"
+      },
+      "input_tokens": 110,
+      "output_tokens": 12
+    },
+    {
+      "stage": "content",
+      "id": "f58b349f-06db-4ae8-a469-ce4a1d581f29",
+      "raw": {
+        "heading": "product",
+        "layout": "numbered"
+      },
+      "input_tokens": 110,
+      "output_tokens": 12
+    }
+  ],
+  "initial": {
+    "document_id": "b021892b-b57f-4578-b504-9b3d2318666e",
+    "run_id": "3715583c-1838-44bc-b1f7-bbfa4e79a4ad",
+    "status": "draft",
+    "revision": 1,
+    "content_digest": "d8e9d294febe987cc412b0aca171f3ed93dabc2a752c94e7ee69bfe3b2084a3c",
+    "qa_receipt": null,
+    "guide": {
+      "version": "amc.product-use-guide-edition/1",
+      "choices": {
+        "heading": "product",
+        "layout": "numbered"
+      },
+      "title": "Product use guide",
+      "audience": "Shift supervisors",
+      "use_case": "At a work or shift handover.",
+      "steps": [
+        "Place the batch card in the front slot.",
+        "Insert the reference card in the rear slot."
+      ],
+      "limitations": [
+        "Use dry cards only."
+      ],
+      "wording": "Place the batch card in the front slot. Insert the reference card in the rear slot. Use dry cards only.",
+      "cta": "Download the catalogue",
+      "locale": "en-US",
+      "source_map": {
+        "title": "strategy_order",
+        "steps": [
+          "P1",
+          "P1"
+        ],
+        "limitations": [
+          "P1"
+        ],
+        "wording": "P1",
+        "audience": "strategy_brief",
+        "cta": "strategy_brief",
+        "use_case": "strategy_order"
+      },
+      "qa_status_at_generation": "awaiting_editor_submission"
+    },
+    "titles": {
+      "product": "Product use guide",
+      "use_case": "Using this product at shift handover"
+    },
+    "source_titles": [
+      "Place the batch card in the front slot.",
+      "Guide: Place the batch card in the front slot.",
+      "Insert the reference card in the rear slot.",
+      "Guide: Insert the reference card in the rear slot."
+    ],
+    "can_edit": true,
+    "can_review": false
+  },
+  "edited": {
+    "document_id": "b021892b-b57f-4578-b504-9b3d2318666e",
+    "run_id": "3715583c-1838-44bc-b1f7-bbfa4e79a4ad",
+    "status": "draft",
+    "revision": 2,
+    "content_digest": "9002224ab13a795dd15d0449c810e1377030d66339d841d756a41772bac26c11",
+    "qa_receipt": null,
+    "guide": {
+      "version": "amc.product-use-guide-edition/1",
+      "choices": {
+        "heading": "use_case",
+        "layout": "checklist"
+      },
+      "title": "Using this product at shift handover",
+      "audience": "Shift supervisors",
+      "use_case": "At a work or shift handover.",
+      "steps": [
+        "Place the batch card in the front slot.",
+        "Insert the reference card in the rear slot."
+      ],
+      "limitations": [
+        "Use dry cards only."
+      ],
+      "wording": "Place the batch card in the front slot. Insert the reference card in the rear slot. Use dry cards only.",
+      "cta": "Download the catalogue",
+      "locale": "en-US",
+      "source_map": {
+        "title": "strategy_order",
+        "steps": [
+          "P1",
+          "P1"
+        ],
+        "limitations": [
+          "P1"
+        ],
+        "wording": "P1",
+        "audience": "strategy_brief",
+        "cta": "strategy_brief",
+        "use_case": "strategy_order"
+      },
+      "qa_status_at_generation": "awaiting_editor_submission"
+    },
+    "titles": {
+      "product": "Product use guide",
+      "use_case": "Using this product at shift handover"
+    },
+    "source_titles": [
+      "Place the batch card in the front slot.",
+      "Guide: Place the batch card in the front slot.",
+      "Insert the reference card in the rear slot.",
+      "Guide: Insert the reference card in the rear slot."
+    ],
+    "can_edit": true,
+    "can_review": false
+  },
+  "qa_receipt": "f1d12e38-5159-4ed2-a54e-b7ea708c4a62",
+  "proof": {
+    "run_id": "3715583c-1838-44bc-b1f7-bbfa4e79a4ad",
+    "brief_id": "b7a23f60-c4bb-516b-914f-c1782271172a",
+    "document_id": "b021892b-b57f-4578-b504-9b3d2318666e",
+    "qa_revision": 2,
+    "guide_digest": "eb3fcdede3e0cec59521a5b297f2773b918e97a05e7a015212396f746753953a",
+    "content_digest": "9002224ab13a795dd15d0449c810e1377030d66339d841d756a41772bac26c11",
+    "release_digest": "cb56e4ef1ceaa1f18aa8349dfe469ba5a5c3a691dbc03ffaef904692a7cfca08",
+    "manifest_digest": "fda7da71eb32f75d93252487345030f619318a7f2016a7af19c1cfe053653df1",
+    "strategy_handoff_receipt": "ba620cf0-7b6e-4219-bbe3-25cd3ef6ea26"
+  },
+  "state": "approved",
+  "published": false
+}

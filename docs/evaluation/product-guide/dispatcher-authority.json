@@ -1,0 +1,32 @@
+{
+  "strategy_document": "3b1d582e-fbad-4602-b3a2-461b45ee4a4d",
+  "qa_revision": 2,
+  "receipt": "6c49fe25-1269-46e2-a416-c58b495b813f",
+  "recipient_before": "web_use_guide",
+  "recipient_after": [
+    "qualification_withdrawn"
+  ],
+  "dispatcher_before": {
+    "strategy_run": "4df4555f-72b2-40c5-a8ed-e7ce8b6a9a61",
+    "manifest": {
+      "id": "a1e5f460-4eea-4de6-adca-6a45fadec60a",
+      "digest": "6646616936740f69131c708419405620bd925f245ada9546a3a08c14739c5f27"
+    },
+    "knowledge_public": false,
+    "knowledge_restricted": false,
+    "visible_handoff_receipts": 0,
+    "visible_mandates": 0
+  },
+  "dispatcher_after": {
+    "strategy_run": "4df4555f-72b2-40c5-a8ed-e7ce8b6a9a61",
+    "manifest": {
+      "id": "a1e5f460-4eea-4de6-adca-6a45fadec60a",
+      "digest": "6646616936740f69131c708419405620bd925f245ada9546a3a08c14739c5f27"
+    },
+    "knowledge_public": false,
+    "knowledge_restricted": false,
+    "visible_handoff_receipts": 0,
+    "visible_mandates": 0
+  },
+  "guide_worker_started": false
+}

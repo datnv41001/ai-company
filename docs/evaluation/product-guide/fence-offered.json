@@ -1,0 +1,28 @@
+{
+  "phase": "offered",
+  "change": "recipient",
+  "run": "0566e956-4701-4429-bb95-fcf12447be76",
+  "task": "203751ae-444f-5069-9509-d044280c140c",
+  "manifest": "0cb67ebe-08db-438f-9b71-c281f8579fae",
+  "handoff_receipt": "09fe0a24-b78f-4dfe-af96-626ffaba88c0",
+  "outcome": "guide_authority_changed",
+  "guide_document": null,
+  "attempts": [
+    {
+      "status": "closed",
+      "outcome": "ok",
+      "input_tokens": 0,
+      "output_tokens": 0,
+      "net_held": 0,
+      "spent": 0
+    },
+    {
+      "status": "closed",
+      "outcome": "guide_authority_changed",
+      "input_tokens": null,
+      "output_tokens": null,
+      "net_held": 0,
+      "spent": 0
+    }
+  ]
+}

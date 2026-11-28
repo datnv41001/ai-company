@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<testsuites name="pytest tests">
+  <testsuite name="pytest" errors="0" failures="0" skipped="0" tests="2" time="78.652" timestamp="2026-11-28T08:47:41.423048+07:00">
+    <testcase classname="tests.test_product_guide_studio" name="test_guide_editions_qa_and_all_general_reads" time="23.638" />
+    <testcase classname="tests.browser_product_guide" name="test_guide_in_live_studio" time="53.938" />
+  </testsuite>
+</testsuites>

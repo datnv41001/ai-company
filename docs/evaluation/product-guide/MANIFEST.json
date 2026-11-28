@@ -1,0 +1,391 @@
+{
+  "baseline": "1ae4dc24dcae20c13d64f6dfaf887a03af48e6e3",
+  "scope": "All changed Git blobs except this manifest",
+  "files": [
+    {
+      "path": ".github/workflows/ci.yml",
+      "bytes": 29327,
+      "sha256": "795de1ea24b291189a1435b22b9ee8c7910dfdad8b06235050136ad443a50213"
+    },
+    {
+      "path": "HANDOFF.md",
+      "bytes": 143699,
+      "sha256": "1d2d75f2c02b26109042b6ad39e1918ce99f19d39c38c27785177ac22816bda2"
+    },
+    {
+      "path": "app/access.py",
+      "bytes": 2085,
+      "sha256": "7f74720db161c4edea8bf023f46facede9d5184b734bddcb92031f18247d06a8"
+    },
+    {
+      "path": "app/business_knowledge.py",
+      "bytes": 11696,
+      "sha256": "bc4bc2be624a785504d90ad0b52b2e3dccefa53f29a59604fd65ce4ef4915716"
+    },
+    {
+      "path": "app/c3_boundaries.py",
+      "bytes": 8766,
+      "sha256": "4890157caf46026620bfbb3fc951901904b6a9d6d6df03c00bc69a5cc378627c"
+    },
+    {
+      "path": "app/c3_evidence_review.py",
+      "bytes": 17284,
+      "sha256": "adba232632f7004d6dd606885079ad25c5766461d90b3817984d10a1333db7b7"
+    },
+    {
+      "path": "app/c3_projection.py",
+      "bytes": 21902,
+      "sha256": "c5b9f409d0e533ba884c20b3c2b7455d035ad3b0e1f150dc76e01a8ae0bb42b3"
+    },
+    {
+      "path": "app/c3_studio_routes.py",
+      "bytes": 15288,
+      "sha256": "de6aa1abcb74dcea82fdba5cf3213a4a84e9c2eeba2ad84abd1dc6edd057b963"
+    },
+    {
+      "path": "app/database.py",
+      "bytes": 12898,
+      "sha256": "b505bb109c64cb37147abbfbacd317496872501d852f0ee7425bff1e86cef478"
+    },
+    {
+      "path": "app/delivery.py",
+      "bytes": 16008,
+      "sha256": "a5eabebbefba86baf6edbc23c27ecb38d98e41e5d30497e2292c73c19275ec54"
+    },
+    {
+      "path": "app/knowledge_contracts.py",
+      "bytes": 16793,
+      "sha256": "360626ed1aa10527d9918c26b2ca44d04feee5deddb41dc0633975b3e85e38f7"
+    },
+    {
+      "path": "app/main.py",
+      "bytes": 25689,
+      "sha256": "cc02fdfcbde165eb6af3679acf151970f813ef06342da8d45de83720d9490ac8"
+    },
+    {
+      "path": "app/pool_dispatch.py",
+      "bytes": 11620,
+      "sha256": "c2839196b5e4ae7a108e3c943e42606a96dac2250c0fccf69660044111a32a70"
+    },
+    {
+      "path": "app/pool_worker.py",
+      "bytes": 2470,
+      "sha256": "555fd10f59afd87d74c7ee25027b4ff5a9657d9ebbe1c1c83149a4e7127c227e"
+    },
+    {
+      "path": "app/product_guide_admission.py",
+      "bytes": 8921,
+      "sha256": "3936bea5d468fdc3015c4a56cec374f591769766af3963eed173fcb8dcd61c2c"
+    },
+    {
+      "path": "app/product_guide_runtime.py",
+      "bytes": 10568,
+      "sha256": "6b86be5bc3a2cf9910bfb89e4a688e0ed54fe9c2bfc25ecef158b30a477e345c"
+    },
+    {
+      "path": "app/product_guide_studio.py",
+      "bytes": 8821,
+      "sha256": "b3ab3ef3626de67c397a619d723a239eb10e47e7da73f5d68eb7b5c9f9bee0a3"
+    },
+    {
+      "path": "app/registry.py",
+      "bytes": 3818,
+      "sha256": "cfb62970793563fc752454ba1af668b185071a15b1a891e34cec951fa19b8ab2"
+    },
+    {
+      "path": "app/registry_adapters.py",
+      "bytes": 7596,
+      "sha256": "588660d0052dfdd5aafc6c06f2efebad2b0c6298f17f296e767d488076974a6d"
+    },
+    {
+      "path": "app/registry_compatibility.py",
+      "bytes": 7575,
+      "sha256": "5a99b16054e49d88d3b3bd955a10fd494b418d5b33cf6de19ed496222e7b4501"
+    },
+    {
+      "path": "app/static/index.html",
+      "bytes": 19395,
+      "sha256": "eb75d06e3455ed5f5f99d8b9c8df7289a5541fa9b29b29a0b88cafe001ca11ca"
+    },
+    {
+      "path": "app/static/product-guide.css",
+      "bytes": 1715,
+      "sha256": "907834f4200c98b000fa51bb19e522a0befc7d0d4483d6ca49bc89ea7b60ebae"
+    },
+    {
+      "path": "app/static/product-guide.js",
+      "bytes": 8579,
+      "sha256": "1774f96070a47cbce542929758c474d4ec96998d1658901db7f923be3c864889"
+    },
+    {
+      "path": "app/static/reviews.js",
+      "bytes": 23070,
+      "sha256": "c283dd7abd9d0cd279fa6c2efc0692ca782b2d9fe675915e49024364097c2bed"
+    },
+    {
+      "path": "app/static/strategy-handoff.js",
+      "bytes": 24872,
+      "sha256": "ba63a1ed7141da4e22faebb968743c6d6c024e27b6eccc4796c34fb7fff64fb1"
+    },
+    {
+      "path": "app/static/workforce.js",
+      "bytes": 26380,
+      "sha256": "cb573edff6a2157c07aafca328e53e6e73dadb204e7c43d891ba245b12164a85"
+    },
+    {
+      "path": "app/workforce.py",
+      "bytes": 29333,
+      "sha256": "c89d549e947b5d6175b55ce242ae44faf79c93c3728019e43e494859bc3bd507"
+    },
+    {
+      "path": "app/workforce_worker.py",
+      "bytes": 18273,
+      "sha256": "159db15d0003310925d54940f7cfddc0d1433c19e26c0e960b14ce85d7a2f700"
+    },
+    {
+      "path": "catalog/product-use-guide-v1.json",
+      "bytes": 3274,
+      "sha256": "45ad61485566bb6a390370cb095c6854253f0569febaacf942dcc5697ebf7958"
+    },
+    {
+      "path": "docs/IMPLEMENTATION_STATUS.md",
+      "bytes": 29372,
+      "sha256": "e82002b002f2277e53b6062283c1a84c95d5c5de5745f77ff204c526fb3c97e7"
+    },
+    {
+      "path": "docs/PR9-AGENT-CONTRACTS-WORKFLOW-REGISTRY.md",
+      "bytes": 20728,
+      "sha256": "ec2640df74430f9cae27dee8f88ad9eca758a5553932f6149f6ec367a1624910"
+    },
+    {
+      "path": "docs/SECURITY_AND_GA_BLOCKERS.md",
+      "bytes": 11612,
+      "sha256": "9bfdd4a149a93e87b9b3faff112a4b1956bebbdd49cff2d9612eb68da2489a21"
+    },
+    {
+      "path": "docs/evaluation/DEPARTMENT-CAPABILITY-REGISTER.md",
+      "bytes": 16187,
+      "sha256": "4e48ce09aea6514dc50c73bbbbb91cbe1c7237ebabdeeea3311360802e9e710c"
+    },
+    {
+      "path": "docs/evaluation/product-guide/CUTOVER.json",
+      "bytes": 2994,
+      "sha256": "5107167d02fc7b5219bfd6d41776b34555f754bfb26e1c3d266c8342c2c09915"
+    },
+    {
+      "path": "docs/evaluation/product-guide/GUIDE.md",
+      "bytes": 906,
+      "sha256": "9341858e347a1376f7b336dc9655b6a93c9e088b43bbc74cff1f95fc660b7c57"
+    },
+    {
+      "path": "docs/evaluation/product-guide/MAIN-69.md",
+      "bytes": 2015,
+      "sha256": "6387ed37979098e03494f090a1245311654fc421201a3f7658ef5b95387fd697"
+    },
+    {
+      "path": "docs/evaluation/product-guide/POSTGRESQL.md",
+      "bytes": 4597,
+      "sha256": "38da8db6f9ac023d8e820019b4b3531abda129bce84b27b3886d290e90e17c18"
+    },
+    {
+      "path": "docs/evaluation/product-guide/README.md",
+      "bytes": 9894,
+      "sha256": "7084f48a70732b7d959383fcdb719aa9a359a4eece751dd8348e4387939a8deb"
+    },
+    {
+      "path": "docs/evaluation/product-guide/STUDIO.md",
+      "bytes": 4152,
+      "sha256": "58a1fa85487d4e0e0970073824652b111c411492224711db7b9efbfa9e1bf37b"
+    },
+    {
+      "path": "docs/evaluation/product-guide/dispatcher-authority.json",
+      "bytes": 1022,
+      "sha256": "b9d49f6c6f18577db5f4c5254bf90ed0b093135d0ebbfca9d81822cec2156f25"
+    },
+    {
+      "path": "docs/evaluation/product-guide/fence-offered.json",
+      "bytes": 679,
+      "sha256": "6dc306ab6d324d21c1f61b453c793a7238c3eb79ae0f135ff1597ab031c7cf13"
+    },
+    {
+      "path": "docs/evaluation/product-guide/fence-queued.json",
+      "bytes": 344,
+      "sha256": "f3f4b8cfc90dec07e623cfefa546bc01708af5a99047b609f94d5036a6166405"
+    },
+    {
+      "path": "docs/evaluation/product-guide/fence-reported.json",
+      "bytes": 676,
+      "sha256": "ff3e6bf1f6d159282ac09a5ea6a3bc45531a9b5348a3f16b7ff8f433819476db"
+    },
+    {
+      "path": "docs/evaluation/product-guide/fence-sent.json",
+      "bytes": 671,
+      "sha256": "fadd0a9f8be2dd972f0990023950f4ea98973f8b6e3a46edecd10e93517fb358"
+    },
+    {
+      "path": "docs/evaluation/product-guide/guide-approved.json",
+      "bytes": 6547,
+      "sha256": "8cb4a5a8389344f34e231452de7a88349c7cfe37d174875b968a35d46942c100"
+    },
+    {
+      "path": "docs/evaluation/product-guide/guide-before-edit.json",
+      "bytes": 4880,
+      "sha256": "eb4ca6bfd927825edc36f32ffbd5d183ed9851c20b0a28d97fb027e351ade333"
+    },
+    {
+      "path": "docs/evaluation/product-guide/hold-vi.json",
+      "bytes": 2172,
+      "sha256": "b0bdfc9cb83344cf4a547b5ec7055fb2f3a58c6e5ff7a37f829f84e52deb9575"
+    },
+    {
+      "path": "docs/evaluation/product-guide/junit.xml",
+      "bytes": 3368,
+      "sha256": "47af58dae312588fec2519173815d3953802c3775fb7c876b01e001e68a3ffbf"
+    },
+    {
+      "path": "docs/evaluation/product-guide/ledger.json",
+      "bytes": 521,
+      "sha256": "e969cf899e146026a185cc6cce54e5361269419e259a181e3cb3cb2716ae06b9"
+    },
+    {
+      "path": "docs/evaluation/product-guide/screens/browser.json",
+      "bytes": 3007,
+      "sha256": "d829f711994385c1177b1128f18babb0da02b3a05bbf775c483ee7f071e8481c"
+    },
+    {
+      "path": "docs/evaluation/product-guide/screens/editor-saved.png",
+      "bytes": 54485,
+      "sha256": "9ad39d7f7d234a270a3ac5169b173cc403f0407c13e94e3a4ed08ddb56a84699"
+    },
+    {
+      "path": "docs/evaluation/product-guide/screens/guide-1280-dark.png",
+      "bytes": 66450,
+      "sha256": "7f4623d60bd80f38debf949e12f534e4dca66bb882857530a571647dec67d662"
+    },
+    {
+      "path": "docs/evaluation/product-guide/screens/guide-1280-light.png",
+      "bytes": 66177,
+      "sha256": "8d0f3fda9c7ef1b33fabaee2c555a65803a0b7c75584f7ac45a5468cb9968e86"
+    },
+    {
+      "path": "docs/evaluation/product-guide/screens/guide-390-dark.png",
+      "bytes": 26609,
+      "sha256": "b98abaac23b9f50565c8bf83c22b278459bb468c4bf8b9a7345ac7ea60647350"
+    },
+    {
+      "path": "docs/evaluation/product-guide/screens/guide-390-light.png",
+      "bytes": 26472,
+      "sha256": "b9b56bf7c09d5b9d3277c4cb8bd4b4f75945cac40d1de340056a3d8703501835"
+    },
+    {
+      "path": "docs/evaluation/product-guide/screens/guide-820-dark.png",
+      "bytes": 58708,
+      "sha256": "ab56580ce78e1e5f92e96522890d491477d8155e42d55a23d21e964a39bc42d8"
+    },
+    {
+      "path": "docs/evaluation/product-guide/screens/guide-820-light.png",
+      "bytes": 58507,
+      "sha256": "5a12803fdedc624ae6658b0b900a27b48f0e5d9bbf98ec72cee758b33fe0b108"
+    },
+    {
+      "path": "docs/evaluation/product-guide/screens/independent-qa.png",
+      "bytes": 41066,
+      "sha256": "009e22cf32fd1768e3ba09be4c77d29a7cc6f03462c9a574c4a8f9ebab3d71e8"
+    },
+    {
+      "path": "docs/evaluation/product-guide/screens/junit.xml",
+      "bytes": 464,
+      "sha256": "8c4651f0a5825080adffecb98ff3b001cf531faedfd7d126813bf81fa5d632cd"
+    },
+    {
+      "path": "docs/evaluation/product-guide/screens/source-hold-mobile.png",
+      "bytes": 36155,
+      "sha256": "ee7478559ae0ba1b9739b89021336bcaeea6b3bb405df7c8c2206c0c78ddc9fd"
+    },
+    {
+      "path": "docs/research/APPLICABILITY_MATRIX.md",
+      "bytes": 24360,
+      "sha256": "98a445a610d26022ed6f73534a2d17138f39e51df3890233d677f4aea1d4d1cc"
+    },
+    {
+      "path": "docs/research/SOURCE_REGISTRY.md",
+      "bytes": 37218,
+      "sha256": "c8f55e264e3779388c04a06a5178f8cbd4481b560deaa836c136b674677b3f40"
+    },
+    {
+      "path": "migrations/apply.py",
+      "bytes": 20187,
+      "sha256": "5e867350a492001dd985fd9538b9a62d408288566a282bd493f308a22cf92fca"
+    },
+    {
+      "path": "migrations/product_guide.sql",
+      "bytes": 23917,
+      "sha256": "7d309917ac5941178e09b84a71fbf8bd89e3a066dc1b8a1254b894e6809acea9"
+    },
+    {
+      "path": "migrations/product_guide_contract.py",
+      "bytes": 2126,
+      "sha256": "576e95397c4172be2f82f81ef682170382098edcca52b56a47a6b869f07fc907"
+    },
+    {
+      "path": "migrations/registry-runtime.lock.json",
+      "bytes": 149953,
+      "sha256": "8baa365de303e81fe3b7bb78af880100cd7d5bc132ee170ab7ddec0d7a69171c"
+    },
+    {
+      "path": "tests/browser_product_guide.py",
+      "bytes": 9598,
+      "sha256": "638abdf3c26fc34bf6a17d3c9d9fc2173d51a8db9b5a51a019ea76209312448a"
+    },
+    {
+      "path": "tests/c3_fixtures.py",
+      "bytes": 8715,
+      "sha256": "83776d35eabe91d1ca6737bb86a6e4acafeb04e1e3107f321e941d47260f8dea"
+    },
+    {
+      "path": "tests/check_postgres_upgrade.py",
+      "bytes": 42567,
+      "sha256": "32e9614e27eaa7783da5dc5675de1b5e9da35aad13cd57a74d65d6b8f380a80e"
+    },
+    {
+      "path": "tests/check_product_guide_upgrade.py",
+      "bytes": 5624,
+      "sha256": "a6ccde9d69a83f69ffd88033536c67692dd94b4f6d95f8d6750f6a8f47f78061"
+    },
+    {
+      "path": "tests/product_guide_fixtures.py",
+      "bytes": 4605,
+      "sha256": "761f1492b46eeae3fe808f4a7ed424eecdd4874000af2e048a20c43d9d1bfda5"
+    },
+    {
+      "path": "tests/test_product_guide_authority.py",
+      "bytes": 4141,
+      "sha256": "3213dcad1f182c546cff1bbd9b95520d19458a3e6e5a7fe5ca818653b9038179"
+    },
+    {
+      "path": "tests/test_product_guide_fence.py",
+      "bytes": 5306,
+      "sha256": "3b4401409429cc440f0bd07e6e44bdbb3b889776a5b45c40af8a9efac043a5be"
+    },
+    {
+      "path": "tests/test_product_guide_production.py",
+      "bytes": 10309,
+      "sha256": "70d28dd6279a8f73118c85b1121272fd1b2c17b35bad59cc63b474c3ca2c7ada"
+    },
+    {
+      "path": "tests/test_product_guide_rollback.py",
+      "bytes": 6492,
+      "sha256": "f22f6dfd54790968d0a8977f08df494fb1efbacc4c7b0724fe0a05ae3a2b0736"
+    },
+    {
+      "path": "tests/test_product_guide_runtime.py",
+      "bytes": 9620,
+      "sha256": "b5878646f1edd0e057101bce4db37fe397bfdc9c9f7e9c93898eb1af25821728"
+    },
+    {
+      "path": "tests/test_product_guide_studio.py",
+      "bytes": 5284,
+      "sha256": "4abb45c7c3f1b87d077c8a4d5286575cb34f15367dcf27a42ee34ac1efbeea85"
+    }
+  ]
+}

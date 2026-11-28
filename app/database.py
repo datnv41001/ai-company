@@ -150,6 +150,9 @@ def prepare_database(bind, *, verify_identity=True):
         if not conn.scalar(text(DESK_CURRENT)):
             raise RuntimeError("Apply the current claim desk read capability")
         from migrations.c3_writer_contract import WRITER_FENCE
+        from migrations.product_guide_contract import GUIDE_FENCE
+        if not conn.scalar(text(GUIDE_FENCE)):
+            raise RuntimeError("Apply the PostgreSQL schema migrations for the product guide authority fence")
         if not conn.scalar(text(WRITER_FENCE)):
             raise RuntimeError("Apply the compatible C3 delivery writer fence")
         from migrations.sandbox_contract import BUSINESS_INTAKE, ROLE_DESK, SANDBOX_FENCE

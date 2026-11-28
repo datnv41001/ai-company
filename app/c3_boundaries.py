@@ -34,7 +34,8 @@ def record(store, snap, operation, key, result):
 def run_for(db, doc):
     run = db.scalar(select(WorkforceRun).filter_by(tenant_id=doc.tenant_id, deliverable_id=doc.id))
     from .storyboard_runtime import is_run
-    if c3_content_evidence.marketing_run(run) or is_run(run):
+    from . import product_guide_runtime
+    if c3_content_evidence.marketing_run(run) or is_run(run) or product_guide_runtime.is_run(run):
         return run
     return None
 
@@ -51,6 +52,10 @@ def boundary(db, user, doc, content_digest, stage, *, inspect_only=False):
     run = run_for(db, doc)
     if not run:
         return None
+    from . import product_guide_runtime
+    if product_guide_runtime.is_run(run):
+        from . import product_guide_studio
+        return product_guide_studio.proof(db, user, doc, run, content_digest, stage)
     brief = db.get(WorkforceBrief, run.brief_id)
     if not brief or (brief.tenant_id, brief.client_id, brief.brand_id, brief.campaign_id) != (doc.tenant_id, run.client_id, run.brand_id, doc.campaign_id):
         conflict("Deliverable is outside the pinned campaign")

@@ -1,5 +1,7 @@
 # Đối chiếu nghiên cứu với AMC
 
+**WF-06/1 · áp dụng một phần.** Bản guide dùng nguồn đã khai báo thứ tự thao tác, đối tượng, ngữ cảnh và giới hạn. Kiểm thử so từng bước đã hiển thị và CTA với bản được duyệt. Hiệu quả với người thực hiện lần đầu vẫn cần thử nghiệm. [Ca kiểm và giả thuyết tiếp theo](../evaluation/product-guide/README.md)
+
 | Ứng dụng vòng #64 | Trạng thái | Điều kiện nghiệm thu |
 | --- | --- | --- |
 | Tách trích dẫn, diễn giải về người mua và dữ kiện vào Content | Có một phần qua staff Studio trên WF-03 @3 | Reviewer có mandate đối chiếu đoạn nguồn, xác nhận tình huống và giới hạn mẫu. Câu sản phẩm phải truy được về dữ kiện riêng. |

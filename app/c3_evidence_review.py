@@ -181,10 +181,11 @@ def decision_evidence(store, snap, doc, run, signature, *, lock_reviewers=True):
 
 
 def staff_document(db, user, tenant_id, did):
+    from . import product_guide_runtime
     require_tenant(db, user, tenant_id, "editor")
     doc = working_copy(db, tenant_id, did)
     run = boundaries.run_for(db, doc)
-    if not run:
+    if not run or product_guide_runtime.is_run(run):
         missing()
     sig = content_digest(doc.title, doc.content.get("client_preview", ""))
     return doc, run, sig

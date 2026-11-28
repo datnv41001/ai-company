@@ -1,0 +1,45 @@
+{
+  "run_id": "3715583c-1838-44bc-b1f7-bbfa4e79a4ad",
+  "columns": [
+    "step",
+    "attempt",
+    "status",
+    "outcome",
+    "input_tokens",
+    "output_tokens",
+    "held",
+    "spent"
+  ],
+  "rows": [
+    [
+      0,
+      1,
+      "closed",
+      "ok",
+      0,
+      0,
+      0,
+      0
+    ],
+    [
+      1,
+      1,
+      "closed",
+      "invalid_contract_output",
+      110,
+      12,
+      0,
+      0
+    ],
+    [
+      1,
+      2,
+      "closed",
+      "ok",
+      110,
+      12,
+      0,
+      0
+    ]
+  ]
+}

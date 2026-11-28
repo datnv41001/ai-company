@@ -1,5 +1,7 @@
 # Sổ nguồn nghiên cứu AMC
 
+**28/11/2026 · quy trình sử dụng.** Đã đọc mục Procedures, One action per step, Context và Summary trên Google developer documentation style guide (cập nhật 27/10/2026, văn bản CC BY 4.0). Đây là hướng dẫn biên tập chính thức, có giá trị cho bố cục nhưng chưa đo được hiệu quả của guide trên người mua. AMC diễn giải nguyên tắc theo nhu cầu của editor, dùng nội dung tự viết trong fixture. [Nguồn](https://developers.google.com/style/procedures)
+
 **27/11/2026 · WF-03.** Đã đọc ba trang hướng dẫn của cộng đồng User Research GOV.UK về lập kế hoạch, ghi chép và phân tích, cùng mẫu lập thông điệp của GitLab Product Marketing. Đã đọc lại [SBA](#src-sba) và đoạn transcript [Startup School](#src-yc) đã đăng ký. Phạm vi đọc, thời điểm cập nhật, mức tin cậy và phép kiểm áp dụng cho từng nguồn có trong [hồ sơ Research → Strategy](../evaluation/round63/METHODS.md#sources).
 
 **27/11/2026 · vòng #62.** Đã đọc cách Fowler phân biệt thời gian hiệu lực/ghi nhận, định nghĩa lifecycle của HubSpot, hai chứng từ ERPNext và nghiên cứu FEVER về chấm kết luận có căn cứ. Ghi riêng phạm vi đọc, loại nguồn, độ tin cậy và giới hạn chuyển giao, kèm nguồn công khai cho các nhóm Marketing. [Hồ sơ nguồn và ứng dụng](../evaluation/round62/MARKET.md)

@@ -6,12 +6,13 @@ import time
 from dataclasses import replace
 
 from sqlalchemy import create_engine, text
+from sqlalchemy.exc import OperationalError
 from sqlalchemy.orm import Session
 
 from .registry_adapters import resolve
 
 from . import node_attempts, scheduler_telemetry
-from .workforce_gateway import Gateway
+from .workforce_gateway import Gateway, GatewayError, measured_cost
 from .workforce_models import WorkforceRun
 from .workflow_dag import node_for_slot
 from .workforce_worker import Scope, authorized_queue, claim, finish
@@ -136,7 +137,17 @@ def consume(bind, config, *, worker_names=None):
         for row in pending_reports(db, worker_names):
             token = str(row["id"])
             scope = Scope(*(row[k] for k in ("tenant", "client", "brand", "campaign", "operator")))
-            live_report = row["status"] == "reported" and query(db, "select amc_ops.fence(:id)", id=token).scalar()
+            live_report = False
+            if row["status"] == "reported":
+                # A simultaneous human change can hold Knowledge's scope lock before the
+                # scheduler lock. Defer consumption instead of reversing that lock order.
+                try:
+                    with db.begin_nested():
+                        live_report = query(db, "select amc_ops.fence(:id)", id=token).scalar()
+                except OperationalError as exc:
+                    if getattr(exc.orig, "sqlstate", None) != "55P03":
+                        raise
+                    continue
             if live_report and row["node_id"]:
                 run = db.scalar(authorized_queue(db, scope).where(WorkforceRun.id == row["run"]))
                 binding = run.knowledge.get("registry")
@@ -173,6 +184,22 @@ def consume(bind, config, *, worker_names=None):
                     query(db, "update amc_ops.tasks set done=true where run=:run and step=:step", run=row["run"], step=row["step"])
         if outcome == "lease_expired":
             outcome = query(db, "select amc_ops.retire(:id)", id=token).scalar()
+            if outcome == "guide_authority_changed" and row["status"] == "reported":
+                result = row["result"]
+                if isinstance(result, list) and len(result) == 3:
+                    priced = replace(config, input_rate=row["input_rate"], output_rate=row["output_rate"])
+                    try:
+                        from .product_guide_runtime import DIRECTOR
+                        if row["body"].get("local_adapter") == DIRECTOR:
+                            if any(type(value) is not int or value != 0 for value in result[1:]):
+                                raise GatewayError("invalid_usage")
+                            cost = 0
+                        else:
+                            cost = measured_cost(priced, row["body"], result[1], result[2])
+                    except GatewayError:
+                        pass  # A sent attempt with unconfirmed usage retains its original hold.
+                    else:
+                        event, inputs, outputs = "usage", result[1], result[2]
         if event:
             query(
                 db,

@@ -205,6 +205,11 @@ def edit_draft(tenant_id: str, did: str, body: Edit, user: User = Depends(curren
     from . import storyboard_runtime
     from .workforce_models import WorkforceRun
     producer = db.scalar(select(WorkforceRun).filter_by(tenant_id=tenant_id, deliverable_id=did))
+    from . import product_guide_runtime
+    if product_guide_runtime.is_run(producer):
+        from .product_guide_admission import check_guide_access
+        check_guide_access(db, user, producer)
+        raise HTTPException(409, "Edit the source-bound guide in Marketing Studio")
     if storyboard_runtime.is_run(producer):
         raise HTTPException(409, "Edit this storyboard through its scoped Workforce edition")
     studio = doc.content.get("studio") or {}
@@ -243,6 +248,9 @@ def share(tenant_id: str, did: str, body: Share, user: User = Depends(current_us
     m = require_tenant(db, user, tenant_id, "admin")
     doc = working_copy(db, tenant_id, did)
     if run := c3_boundaries.run_for(db, doc):
+        from . import product_guide_runtime
+        if product_guide_runtime.is_run(run):
+            raise HTTPException(409, "This internal guide has no publication or portal approval")
         if body.expected_qa_revision is None or body.expected_content_digest is None:
             raise HTTPException(422, "The Marketing share request requires the reviewed revision and content digest")
         if body.expected_qa_revision != doc.qa_revision or body.expected_content_digest != content_digest(doc.title, doc.content.get("client_preview", "")):

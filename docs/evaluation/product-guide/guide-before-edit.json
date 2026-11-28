@@ -1,0 +1,156 @@
+{
+  "order": {
+    "recipient": "Content lead",
+    "asset_type": "web_use_guide",
+    "asset": "Product-page use guide",
+    "purpose": "Explain a use case on the product page",
+    "placement": "web",
+    "option": "explain_use",
+    "objective": "Choose a useful product guide for a shift handover.",
+    "audience": "Shift supervisors",
+    "buyer_persona": "Shift supervisors",
+    "message": "Place the batch card in the front slot. Insert the reference card in the rear slot. Use dry cards only.",
+    "claim_limits": [
+      "Use the complete product declaration with its qualifiers.",
+      "Buyer interpretation is limited to the recorded situation."
+    ],
+    "approval": "Internal drafting only. A new asset requires its own independent QA and channel approval.",
+    "brief": {
+      "cta": "Download the catalogue",
+      "purpose": "Choose a useful product guide for a shift handover.",
+      "audience": "Shift supervisors",
+      "objective": "Choose a useful product guide for a shift handover.",
+      "exclusions": [
+        "automatic worker tracking"
+      ],
+      "buyer_action": "catalogue_download",
+      "requirements": [
+        "Prepare a practical guide for one shift handover."
+      ],
+      "editorial_style": "concise",
+      "acceptance_criteria": [
+        "Tie the proposed asset to an observed task."
+      ]
+    },
+    "guidance": {
+      "direction": "Show how to use the product in the reviewed situation.",
+      "situation": "At a work or shift handover.",
+      "sample_scope": "The selected source passage informs this handover only. Wider demand or performance remains unverified."
+    },
+    "measurement": {
+      "status": "planned_only",
+      "execution_authorized": false
+    }
+  },
+  "admission": {
+    "status": "queued",
+    "reasons": [],
+    "task_id": "b7a23f60-c4bb-516b-914f-c1782271172a",
+    "manifest_id": "f0ee326b-f70f-4d1d-8d73-6aa7632a9fec",
+    "run_id": "3715583c-1838-44bc-b1f7-bbfa4e79a4ad"
+  },
+  "draft": {
+    "document_id": "b021892b-b57f-4578-b504-9b3d2318666e",
+    "run_id": "3715583c-1838-44bc-b1f7-bbfa4e79a4ad",
+    "status": "draft",
+    "revision": 1,
+    "content_digest": "d8e9d294febe987cc412b0aca171f3ed93dabc2a752c94e7ee69bfe3b2084a3c",
+    "qa_receipt": null,
+    "guide": {
+      "version": "amc.product-use-guide-edition/1",
+      "choices": {
+        "heading": "product",
+        "layout": "numbered"
+      },
+      "title": "Product use guide",
+      "audience": "Shift supervisors",
+      "use_case": "At a work or shift handover.",
+      "steps": [
+        "Place the batch card in the front slot.",
+        "Insert the reference card in the rear slot."
+      ],
+      "limitations": [
+        "Use dry cards only."
+      ],
+      "wording": "Place the batch card in the front slot. Insert the reference card in the rear slot. Use dry cards only.",
+      "cta": "Download the catalogue",
+      "locale": "en-US",
+      "source_map": {
+        "title": "strategy_order",
+        "steps": [
+          "P1",
+          "P1"
+        ],
+        "limitations": [
+          "P1"
+        ],
+        "wording": "P1",
+        "audience": "strategy_brief",
+        "cta": "strategy_brief",
+        "use_case": "strategy_order"
+      },
+      "qa_status_at_generation": "awaiting_editor_submission"
+    },
+    "titles": {
+      "product": "Product use guide",
+      "use_case": "Using this product at shift handover"
+    },
+    "source_titles": [
+      "Place the batch card in the front slot.",
+      "Guide: Place the batch card in the front slot.",
+      "Insert the reference card in the rear slot.",
+      "Guide: Insert the reference card in the rear slot."
+    ],
+    "can_edit": true,
+    "can_review": false
+  },
+  "attempts": [
+    {
+      "stage": "director",
+      "id": "6bb792a6-be2d-43d2-b8d0-cc6e943ee8b6",
+      "raw": {
+        "assignment": "Organize the approved instructions as an internal product-page use guide."
+      },
+      "input_tokens": 0,
+      "output_tokens": 0
+    },
+    {
+      "stage": "content",
+      "id": "8bfc9543-fa8d-4c52-85cb-2cc6ded5c61e",
+      "raw": {
+        "heading": "unsupported claim",
+        "layout": "numbered"
+      },
+      "input_tokens": 110,
+      "output_tokens": 12
+    },
+    {
+      "stage": "content",
+      "id": "f58b349f-06db-4ae8-a469-ce4a1d581f29",
+      "raw": {
+        "heading": "product",
+        "layout": "numbered"
+      },
+      "input_tokens": 110,
+      "output_tokens": 12
+    }
+  ],
+  "parent": "f139420b-1e67-4ab9-b500-ce3e21999b40",
+  "receipt": "ba620cf0-7b6e-4219-bbe3-25cd3ef6ea26",
+  "before": {
+    "workforce_runs": 1,
+    "action_requests": 0,
+    "ledger_events": 6,
+    "other_commands": 38,
+    "tasks": 1,
+    "manifests": 1
+  },
+  "after_admission": {
+    "workforce_runs": 2,
+    "action_requests": 0,
+    "ledger_events": 6,
+    "other_commands": 39,
+    "tasks": 2,
+    "manifests": 2
+  }
+}

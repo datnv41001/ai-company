@@ -1,0 +1,95 @@
+{
+  "case": "report_commits_first",
+  "postgres_version_num": 160016,
+  "withdrawn_kind": "source",
+  "withdrawn_revision": "f1efb52a-487c-47f2-b437-13624d2de7c9",
+  "run": "b7fb50a7-a00d-44f0-ab1b-5042087966f8",
+  "attempt": "7ca45a24-11f1-4981-b7e4-3530243e7ffb",
+  "source_handoff": "fc2810bc-30d5-4a57-8183-7ea93a6f539e",
+  "transactions": {
+    "report_xid": "827191",
+    "withdraw_xid": "827189",
+    "distinct_postgres_backends": true,
+    "trace": [
+      {
+        "point": "dispatcher_deferred_on_open_withdrawal",
+        "report_then_owner_xid_status": [
+          "committed",
+          "in progress"
+        ]
+      },
+      {
+        "point": "both_committed",
+        "report_then_owner_xid_status": [
+          "committed",
+          "committed"
+        ]
+      }
+    ]
+  },
+  "before_consume": {
+    "status": "reported",
+    "result": [
+      {
+        "heading": "product",
+        "layout": "numbered"
+      },
+      110,
+      12
+    ]
+  },
+  "after_revocation": {
+    "live": false,
+    "fence": false
+  },
+  "effective_readers_tested": {
+    "dispatcher": true,
+    "runtime_login": false,
+    "assigned_worker": false,
+    "database_owner": true
+  },
+  "after_consume": {
+    "status": "closed",
+    "result": null,
+    "envelope": {},
+    "outcome": "guide_authority_changed",
+    "lease": null,
+    "checkpoints": [
+      "director"
+    ],
+    "guide_documents": 0
+  },
+  "metering": {
+    "source": "controlled fixture",
+    "input": 110,
+    "output": 12,
+    "rate_input": 0,
+    "rate_output": 0,
+    "usage_unconfirmed": false,
+    "ledger_event_held_spent": [
+      [
+        "hold",
+        0,
+        0
+      ],
+      [
+        "receipt",
+        0,
+        0
+      ],
+      [
+        "usage",
+        0,
+        0
+      ]
+    ],
+    "run_exposure_microusd": 0
+  },
+  "receipt_replay": [
+    200,
+    200,
+    409
+  ],
+  "post_close_report_accepted": false,
+  "service_inference_calls": 0
+}

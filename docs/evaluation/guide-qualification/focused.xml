@@ -1,0 +1,17 @@
+<?xml version='1.0' encoding='utf8'?>
+<testsuites name="pytest tests">
+  <testsuite name="pytest" errors="0" failures="0" skipped="0" tests="12" time="105.229">
+    <testcase classname="tests.test_product_guide_order_qa" name="test_order_review_preserves_obligations_and_gates_approval[GQ-VI-01]" time="19.790" />
+    <testcase classname="tests.test_product_guide_order_qa" name="test_order_review_preserves_obligations_and_gates_approval[GQ-EN-01]" time="14.066" />
+    <testcase classname="tests.test_product_guide_order_qa" name="test_historical_qa_receipt_remains_identifiable_and_readable" time="9.625" />
+    <testcase classname="tests.test_product_guide_mailbox" name="test_content_report_and_withdrawal_overlap[report_commits_first-mandate]" time="10.988" />
+    <testcase classname="tests.test_product_guide_mailbox" name="test_content_report_and_withdrawal_overlap[report_commits_first-source]" time="9.926" />
+    <testcase classname="tests.test_product_guide_mailbox" name="test_content_report_and_withdrawal_overlap[withdraw_commits_first-mandate]" time="11.451" />
+    <testcase classname="tests.test_product_guide_mailbox" name="test_content_report_and_withdrawal_overlap[withdraw_commits_first-source]" time="10.434" />
+    <testcase classname="tests.test_product_guide_mailbox" name="test_content_report_and_withdrawal_overlap[withdraw_visible_before_report-mandate]" time="9.124" />
+    <testcase classname="tests.test_product_guide_mailbox" name="test_content_report_and_withdrawal_overlap[withdraw_visible_before_report-source]" time="9.445" />
+    <testcase classname="tests.test_guide_selection_comparison" name="test_committed_evidence_reproduces_on_the_released_contract" time="0.002" />
+    <testcase classname="tests.test_guide_selection_comparison" name="test_three_arms_on_both_locales_and_complete_source" time="0.002" />
+    <testcase classname="tests.test_guide_selection_comparison" name="test_content_reply_cannot_replace_instructions" time="0.000" />
+  </testsuite>
+</testsuites>

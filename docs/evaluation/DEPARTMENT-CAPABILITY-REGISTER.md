@@ -1,8 +1,10 @@
 # Sổ năng lực phòng Marketing
 
-**Content · guide trên trang sản phẩm.** WF-06/1 tạo một bản hướng dẫn từ những bước đã được nguồn có thẩm quyền khai báo. Worker Content chọn cách trình bày. Editor biên tập và reviewer đối chiếu bản hiện tại. Thiếu quy trình dùng sản phẩm thì dừng trước queue. Phạm vi là fixture nội bộ và phản hồi worker được kiểm soát. [Contract và bằng chứng](product-guide/README.md)
+**WF-06/1 · qualification nghiệp vụ còn mở.** Hai fixture VI/EN tách lựa chọn tiêu đề/bố cục khỏi các bước, qualifier và CTA được ghép từ nguồn. Một checklist hợp lệ theo schema vẫn không đáp ứng yêu cầu đánh số của brief VI. Giá trị tăng thêm của model, số phút editor tiết kiệm và khả năng làm đúng của người đọc chưa được đo. Chưa ghi guide vào North Star. [Đối chứng ba phương án](guide-qualification/quality/COMPARISON.md) · [Rubric cho editor và người đọc](guide-qualification/quality/RUBRIC.md)
 
-**Content Production từ Strategy Work Order.** Content lead đọc được nhiệm vụ có CTA, placement và giới hạn claim. WF-13 tạo copy/SEO cho landing page. Ca thử trên trang sản phẩm chưa có task contract để worker thực hiện đúng guide; đường qua agency cũng có ranh giới riêng. Researcher có thể đối chiếu bản Studio đã sửa và notes gốc từ cùng run trong gói phát triển tổng hợp. [Ma trận và phép thử](content-handoff/README.md)
+**Content · guide nội bộ trên trang sản phẩm, đã merge #70.** WF-06/1 tạo một bản hướng dẫn từ những bước đã được nguồn có thẩm quyền khai báo. Worker Content chọn cách trình bày. Editor biên tập và reviewer đối chiếu bản hiện tại. Thiếu quy trình dùng sản phẩm thì dừng trước queue. Phạm vi là fixture nội bộ và phản hồi worker được kiểm soát. [Contract và bằng chứng](product-guide/README.md)
+
+**Content Production từ Strategy Work Order · phép thử trước #70.** Content lead đọc được nhiệm vụ có CTA, placement và giới hạn claim. WF-13 tạo copy/SEO cho landing page. Ca thử trên trang sản phẩm chưa có task contract để worker thực hiện đúng guide; đường qua agency cũng có ranh giới riêng. Researcher có thể đối chiếu bản Studio đã sửa và notes gốc từ cùng run trong gói phát triển tổng hợp. [Ma trận và phép thử](content-handoff/README.md)
 
 **AMC-R67-01 / R67-02 · CLOSED trong phạm vi #68.** Marketing Researcher có thể trình reviewer phân loại một câu hướng dẫn trung lập trong danh mục VI/EN. Hai lời hứa giao nhanh trong ca RFQ đều bị chặn trước khi ký. Khả năng thu thập nghiên cứu, hiệu quả mô hình và thời gian tiết kiệm chưa được đo. [Finding, bằng chứng và giới hạn nghiệp vụ](research-instruction/README.md)
 

@@ -1,0 +1,2 @@
+<?xml version='1.0' encoding='utf-8'?>
+<testsuites name="pytest tests"><testsuite name="pytest" errors="0" failures="0" skipped="0" tests="1" time="38.893" timestamp="2026-11-28T20:46:45.472957+07:00"><testcase classname="tests.browser_product_guide_order" name="test_order_in_real_chromium" time="38.449" /></testsuite></testsuites>

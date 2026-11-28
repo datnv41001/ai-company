@@ -5,7 +5,7 @@ from datetime import datetime, timedelta, timezone
 from agency_fixtures import postgres_api
 from c3_fixtures import withdraw
 from knowledge_fixtures import accepted
-from product_guide_fixtures import activate_guide, advance_guide, guide_case
+from product_guide_fixtures import activate_guide, advance_guide, guide_case, order_assessment
 from test_registry import PG
 
 
@@ -51,6 +51,7 @@ def test_guide_editions_qa_and_all_general_reads():
         accepted(api.post(doc + "/submit", headers=editor, json=version(changed)))
         assert api.post(doc + "/review", headers=reviewer, json=first | neutral).status_code == 412
         assert api.post(doc + "/review", headers=editor, json=version(changed) | neutral).status_code == 403
+        neutral["guide_review"] = order_assessment(changed)
         accepted(api.post(doc + "/review", headers=reviewer, json=version(changed) | neutral))
         replay = accepted(api.post(doc + "/review", headers=reviewer, json=version(changed) | neutral))
         assert replay["qa_approved_revision"] == changed["revision"]

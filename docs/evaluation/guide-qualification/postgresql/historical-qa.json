@@ -1,0 +1,41 @@
+{
+  "writer_head": "d4c05dd2c681a367fdee0b6b94f687c0fca866bd",
+  "writer_tree": "85a92d483ce84c72b243b1f49b7579f3ea737258",
+  "writer_runtime_sources": "3cb659e4a2c7b8be397c97275bf5663f1d12386b21301507f8315107dc7720d3",
+  "reader_runtime_sources": "8857942d5c3c3866623040b34801ef61d2ee4e942a5db3facec8062e0715fbc8",
+  "postgres_version_num": 160016,
+  "run": "96050992-45ba-4c77-9565-f849da95e7d2",
+  "guide_document": "9f83e3f8-fdc4-4303-a426-1cce8b2d6718",
+  "guide_manifest": "95371a33-004b-4c35-b16f-3345ebe5ca32",
+  "issuer": "PR70 signed HTTP API, assigned editor submits, separate signer approves",
+  "before_cutover": {
+    "qa_receipt_id": "78411736-3099-4cd2-a5d8-cb891eb01e33",
+    "request_digest": "53a5e2a5ed4476c0319a23d95ca863e5989dcb48df71f7c193f95a07ef08626c",
+    "content_digest": "4e909b55123dfb8ab3e6a190ecf2d62114c450019a8685fa15de143aeaded718",
+    "qa_revision": 2,
+    "release_digest": "cb56e4ef1ceaa1f18aa8349dfe469ba5a5c3a691dbc03ffaef904692a7cfca08",
+    "guide_digest": "812f3122ae1f1442544269361386e46a625528886cdc5a6cc211a7eb2af75e1e",
+    "complete_receipt_row_sha256": "a600dfc2855e8b1844aae65ea7bf43dbd43cbb33b517c3cace71629ff0cbf47b",
+    "complete_document_row_sha256": "aeb39fca2b5fb169f8ed57b33436bc5fc4fbb2950796f46ef78da468fe905e73"
+  },
+  "after_candidate_publish_read_replay_and_refusal": {
+    "qa_receipt_id": "78411736-3099-4cd2-a5d8-cb891eb01e33",
+    "request_digest": "53a5e2a5ed4476c0319a23d95ca863e5989dcb48df71f7c193f95a07ef08626c",
+    "content_digest": "4e909b55123dfb8ab3e6a190ecf2d62114c450019a8685fa15de143aeaded718",
+    "qa_revision": 2,
+    "release_digest": "cb56e4ef1ceaa1f18aa8349dfe469ba5a5c3a691dbc03ffaef904692a7cfca08",
+    "guide_digest": "812f3122ae1f1442544269361386e46a625528886cdc5a6cc211a7eb2af75e1e",
+    "complete_receipt_row_sha256": "a600dfc2855e8b1844aae65ea7bf43dbd43cbb33b517c3cace71629ff0cbf47b",
+    "complete_document_row_sha256": "aeb39fca2b5fb169f8ed57b33436bc5fc4fbb2950796f46ef78da468fe905e73"
+  },
+  "reader_checks": {
+    "assigned_editor_and_signer_saw_original_approval": true,
+    "historical_itemized_assessment": null,
+    "historical_itemized_assessment_receipt": null,
+    "identical_decision_http": 200,
+    "attempt_to_add_assessment_http": 409,
+    "qa_receipts_on_manifest": 1
+  },
+  "worker_output": "controlled fixture",
+  "service_inference_calls": 0
+}

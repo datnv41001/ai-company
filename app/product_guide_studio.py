@@ -1,6 +1,7 @@
 """Human edits and independent QA for the guide produced by a scoped WF-06 run."""
 
 from typing import Annotated, Literal
+from uuid import uuid4
 
 from fastapi import APIRouter, Depends, HTTPException
 from pydantic import Field
@@ -118,18 +119,55 @@ def qa_material(db, user, doc, run, signature, edition, *, write):
     return store, snap, values
 
 
-def approved_receipt(store, snap, values, actor):
+def work_order(projection):
+    """Only fields released to the Content recipient enter this staff-only comparison."""
+    order = projection["order"]
+    brief = order["brief"]
+    fields = {
+        "purpose": brief["purpose"], "asset_purpose": order["purpose"], "audience": brief["audience"],
+        "placement": order["placement"], "buyer_action": brief["buyer_action"], "cta": brief["cta"],
+        "editorial_style": brief["editorial_style"], "requirements": brief["requirements"],
+        "exclusions": brief["exclusions"], "acceptance_criteria": brief["acceptance_criteria"],
+        "claim_limits": order["claim_limits"], "measurement": order["measurement"]["status"],
+        "measurement_execution": "authorized" if order["measurement"]["execution_authorized"] else "not_authorized",
+    }
+    rows = []
+    for field, value in fields.items():
+        values = value if isinstance(value, list) else [value]
+        rows.extend({"id": f"{field}.{i}", "field": field, "text": text} for i, text in enumerate(values, 1))
+    return {"obligations": rows, "digest": digest(canonical(rows))}
+
+
+def checked_assessment(order, edition, assessment, *, approve):
+    if assessment is None:
+        conflict("Record a human assessment of the released work order before deciding")
+    if assessment.order_digest != order["digest"]:
+        raise HTTPException(412, "Reload the current work order before deciding")
+    if set(assessment.obligations) != {row["id"] for row in order["obligations"]}:
+        conflict("Review every released obligation in this work order")
+    if approve:
+        if assessment.sequence == "unclear" or any(value != "met" for value in assessment.obligations.values()):
+            conflict("Return the guide for clarification or correction before approving")
+        if assessment.sequence == "ordered" and edition["choices"]["layout"] != "numbered":
+            conflict("A dependent procedure requires a numbered guide edition")
+    return assessment.model_dump()
+
+
+def decision_receipt(store, snap, values, actor, *, returned=False):
     from .c3_boundaries import decision_key
 
     key = decision_key(values["run_id"], values["qa_revision"], values["content_digest"])
-    query = store.query(KnowledgeCommand).filter_by(snapshot_id=snap.id, operation="c3_qa", actor=actor)
-    approval = store.db.scalar(query.where(KnowledgeCommand.key.startswith(key + ":")).order_by(KnowledgeCommand.effective_at.desc()).limit(1))
-    if not approval or approval.result != values:
+    operation = "c3_guide_return" if returned else "c3_qa"
+    query = store.query(KnowledgeCommand).filter_by(snapshot_id=snap.id, operation=operation, actor=actor)
+    receipt = store.db.scalar(query.where(KnowledgeCommand.key.startswith(key + ":")).order_by(KnowledgeCommand.effective_at.desc()).limit(1))
+    if returned and not receipt:  # Previous releases recorded rejections on the deliverable only.
+        return None
+    if not receipt or {k: v for k, v in receipt.result.items() if k != "guide_review"} != values:
         conflict("A current independent Content QA receipt is required")
-    return approval.id
+    return receipt
 
 
-def proof(db, user, doc, run, signature, stage):
+def proof(db, user, doc, run, signature, stage, *, assessment=None):
     if stage == "share":
         conflict("This internal guide has no publication or portal approval")
     projection = check_guide_access(db, user, run, write=True)
@@ -138,28 +176,45 @@ def proof(db, user, doc, run, signature, stage):
         raise HTTPException(403, "The Content reviewer must be independent of this edition")
     edition = current_edition(doc, run, projection)
     material = qa_material(db, user, doc, run, signature, edition, write=True)
-    if stage == "replay_qa":
-        approved_receipt(*material, user.id)
+    if stage in {"replay_qa", "replay_return"}:
+        receipt = decision_receipt(*material, user.id, returned=stage == "replay_return")
+        if not receipt:
+            conflict("This historical return has no itemized work order assessment")
+        if assessment is not None and assessment.model_dump() != receipt.result.get("guide_review"):
+            conflict("The replay differs from the recorded work order assessment")
+    elif stage in {"qa", "return"}:
+        material[2]["guide_review"] = checked_assessment(work_order(projection), edition, assessment, approve=stage == "qa")
     return material
+
+
+def record_return(db, user, doc, run, signature, assessment):
+    from .c3_boundaries import decision_key, record
+
+    store, snap, values = proof(db, user, doc, run, signature, "return", assessment=assessment)
+    key = decision_key(run.id, doc.qa_revision, signature) + ":" + uuid4().hex[:24]
+    record(store, snap, "guide_return", key, values)
 
 
 def view(db, user, doc, run, projection):
     edition = current_edition(doc, run, projection)
     is_editor = user.id == db.get(WorkforceBrief, run.brief_id).recipient_id
     signature = content_digest(doc.title, doc.content["client_preview"])
-    qa_receipt = None
-    if doc.status == "approved":
-        if (doc.qa_approved_revision, doc.qa_approved_digest) != (doc.qa_revision, signature):
+    receipt = None
+    if doc.status in {"approved", "rejected"}:
+        if doc.status == "approved" and (doc.qa_approved_revision, doc.qa_approved_digest) != (doc.qa_revision, signature):
             conflict("Reload the current approved guide")
         material = qa_material(db, user, doc, run, signature, edition, write=False)
-        qa_receipt = approved_receipt(*material, doc.reviewed_by)
+        receipt = decision_receipt(*material, doc.reviewed_by, returned=doc.status == "rejected")
     return {
         "document_id": doc.id,
         "run_id": run.id,
         "status": doc.status,
         "revision": doc.qa_revision,
         "content_digest": signature,
-        "qa_receipt": qa_receipt,
+        "qa_receipt": receipt.id if receipt and doc.status == "approved" else None,
+        "order_review_receipt": receipt.id if receipt and receipt.result.get("guide_review") else None,
+        "guide_review": receipt.result.get("guide_review") if receipt else None,
+        "work_order": work_order(projection),
         "guide": edition,
         "titles": guide.titles(projection),
         "source_titles": guide.source_titles(projection),

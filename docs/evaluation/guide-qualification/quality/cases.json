@@ -1,0 +1,34 @@
+[
+  {
+    "case_id": "GQ-VI-01",
+    "procedure_kind": "ordered",
+    "locale": "vi-VN",
+    "product": "Túi thẻ mục lục",
+    "audience": "Nhân viên bàn giao quầy mẫu",
+    "observation": "Một nhân viên dùng túi thẻ mục lục ở quầy mẫu khi bàn giao ca.",
+    "purpose": "Giúp nhân viên chuẩn bị thẻ mục lục cho người nhận ca tại quầy mẫu.",
+    "requirements": ["Đánh số từng bước theo thứ tự mở, đưa thẻ vào rồi gập nắp.", "Giữ nguyên điều kiện dùng thẻ giấy khô."],
+    "exclusions": ["Không hứa túi chống nước."],
+    "acceptance_criteria": ["Người đọc nhìn thấy ba số thứ tự và biết loại thẻ được phép dùng."],
+    "steps": ["Mở nắp túi thẻ trong suốt.", "Đưa thẻ mục lục vào hết trong túi.", "Gập nắp túi để giữ thẻ bên trong."],
+    "qualifiers": ["Chỉ dùng thẻ giấy khô."],
+    "editor_choice": {"heading": "use_case", "layout": "numbered"},
+    "controlled_model_reply": {"heading": "use_case", "layout": "checklist"}
+  },
+  {
+    "case_id": "GQ-EN-01",
+    "procedure_kind": "independent",
+    "locale": "en-US",
+    "product": "Training sample kit",
+    "audience": "Sample desk shift leads",
+    "observation": "One shift lead checked the training sample kit against a list at the desk during shift handover.",
+    "purpose": "Help the incoming shift lead check the two samples against the training list.",
+    "requirements": ["Keep the two checks on separate lines. Either check can be done first.", "Retain the training-list restriction."],
+    "exclusions": ["Do not claim the kit verifies a real shipment."],
+    "acceptance_criteria": ["Readers can identify both independent matches and which list they may use."],
+    "steps": ["Match the pack code on the label card to the code on the sample list.", "Match the swatch number on the fabric card to the number on the sample list."],
+    "qualifiers": ["Use the training sample list only."],
+    "editor_choice": {"heading": "use_case", "layout": "checklist"},
+    "controlled_model_reply": {"heading": "use_case", "layout": "checklist"}
+  }
+]

@@ -1,0 +1,122 @@
+{
+  "browser": "158.0.8127.88",
+  "case": "GQ-VI-01",
+  "run": "97f785a3-8233-4a0d-a3da-059a8ff65f30",
+  "manifest": "3755280b-42a7-41c2-b986-f7c7c07c0452",
+  "return_receipt": "162030a4-0b77-42a3-addc-abad91795310",
+  "qa_receipt": "cc3127eb-d1a6-486a-b26a-0951eddb2fa0",
+  "revision": 3,
+  "content_digest": "7d18391a2f27b991fd407aaf4891d8391d8d0e8da57fa26e04d3d5c5077c9367",
+  "decision_to_readback_ms": 906,
+  "readable_obligations": 15,
+  "renders": [
+    {
+      "viewport": [
+        1280,
+        850
+      ],
+      "theme": "light",
+      "screenshot": "order-1280-light.png",
+      "open_to_visible_ms": 906,
+      "contrast": {
+        "surface": ".guide-order",
+        "view": "light",
+        "checked": 5,
+        "minimum_ratio": 6.113,
+        "failed": [],
+        "unresolved": []
+      },
+      "keyboard": "first obligation to second via Tab"
+    },
+    {
+      "viewport": [
+        1280,
+        850
+      ],
+      "theme": "dark",
+      "screenshot": "order-1280-dark.png",
+      "open_to_visible_ms": 906,
+      "contrast": {
+        "surface": ".guide-order",
+        "view": "dark",
+        "checked": 5,
+        "minimum_ratio": 6.113,
+        "failed": [],
+        "unresolved": []
+      },
+      "keyboard": "first obligation to second via Tab"
+    },
+    {
+      "viewport": [
+        820,
+        1180
+      ],
+      "theme": "light",
+      "screenshot": "order-820-light.png",
+      "open_to_visible_ms": 359,
+      "contrast": {
+        "surface": ".guide-order",
+        "view": "light",
+        "checked": 5,
+        "minimum_ratio": 6.113,
+        "failed": [],
+        "unresolved": []
+      },
+      "keyboard": "first obligation to second via Tab"
+    },
+    {
+      "viewport": [
+        820,
+        1180
+      ],
+      "theme": "dark",
+      "screenshot": "order-820-dark.png",
+      "open_to_visible_ms": 359,
+      "contrast": {
+        "surface": ".guide-order",
+        "view": "dark",
+        "checked": 5,
+        "minimum_ratio": 7.909,
+        "failed": [],
+        "unresolved": []
+      },
+      "keyboard": "first obligation to second via Tab"
+    },
+    {
+      "viewport": [
+        390,
+        844
+      ],
+      "theme": "light",
+      "screenshot": "order-390-light.png",
+      "open_to_visible_ms": 359,
+      "contrast": {
+        "surface": ".guide-order",
+        "view": "light",
+        "checked": 5,
+        "minimum_ratio": 6.113,
+        "failed": [],
+        "unresolved": []
+      },
+      "keyboard": "first obligation to second via Tab"
+    },
+    {
+      "viewport": [
+        390,
+        844
+      ],
+      "theme": "dark",
+      "screenshot": "order-390-dark.png",
+      "open_to_visible_ms": 359,
+      "contrast": {
+        "surface": ".guide-order",
+        "view": "dark",
+        "checked": 5,
+        "minimum_ratio": 7.909,
+        "failed": [],
+        "unresolved": []
+      },
+      "keyboard": "first obligation to second via Tab"
+    }
+  ]
+}

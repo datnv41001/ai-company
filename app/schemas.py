@@ -60,7 +60,15 @@ class ReviewIn(BaseModel):
     note: str = Field(default="", max_length=1000)
 
 
+class GuideOrderAssessment(BaseModel):
+    model_config = {"extra": "forbid"}
+    order_digest: str = Field(pattern=r"^[0-9a-f]{64}$")
+    sequence: Literal["ordered", "independent", "unclear"]
+    obligations: dict[str, Literal["met", "unsupported", "needs_information"]] = Field(max_length=100)
+
+
 class DeliverableReviewIn(ReviewIn):
+    guide_review: GuideOrderAssessment | None = None
     expected_qa_revision: int = Field(ge=1, strict=True)
     expected_content_digest: str = Field(pattern=r'^[0-9a-f]{64}$')
 

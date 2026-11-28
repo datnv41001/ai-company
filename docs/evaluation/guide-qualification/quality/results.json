@@ -1,0 +1,292 @@
+{
+  "workflow": "WF-06/product-use-guide@1",
+  "content_contract": {
+    "type": "object",
+    "properties": {
+      "heading": {
+        "type": "string",
+        "enum": [
+          "product",
+          "use_case"
+        ]
+      },
+      "layout": {
+        "type": "string",
+        "enum": [
+          "numbered",
+          "checklist"
+        ]
+      }
+    },
+    "required": [
+      "heading",
+      "layout"
+    ],
+    "additionalProperties": false
+  },
+  "model_invocations": 0,
+  "observed_practitioners": 0,
+  "inference_usage": null,
+  "inference_latency": null,
+  "cases": [
+    {
+      "case_id": "GQ-VI-01",
+      "locale": "vi-VN",
+      "case_sha256": "546fa60ce4cd981b8b5aae5393ac1151ffd8348d7995905f838d1d08b6b6210b",
+      "projection_sha256": "02e3f61195b40a7d64dc10b3d2096efe3c131d31921df6241680ad986f001e2c",
+      "brief": {
+        "purpose": "Giúp nhân viên chuẩn bị thẻ mục lục cho người nhận ca tại quầy mẫu.",
+        "buyer_action": "catalogue_download",
+        "editorial_style": "concise",
+        "requirements": [
+          "Đánh số từng bước theo thứ tự mở, đưa thẻ vào rồi gập nắp.",
+          "Giữ nguyên điều kiện dùng thẻ giấy khô."
+        ],
+        "exclusions": [
+          "Không hứa túi chống nước."
+        ],
+        "acceptance_criteria": [
+          "Người đọc nhìn thấy ba số thứ tự và biết loại thẻ được phép dùng."
+        ],
+        "objective": "Giúp nhân viên chuẩn bị thẻ mục lục cho người nhận ca tại quầy mẫu.",
+        "audience": "Nhân viên bàn giao quầy mẫu",
+        "cta": "Tải danh mục"
+      },
+      "arms": [
+        {
+          "arm": "deterministic",
+          "selection": {
+            "heading": "product",
+            "layout": "numbered"
+          },
+          "page": {
+            "title": "Hướng dẫn sử dụng",
+            "body": "Dành cho: Nhân viên bàn giao quầy mẫu\n\nTình huống sử dụng: Khi bàn giao công việc hoặc bàn giao ca.\n\n1. Mở nắp túi thẻ trong suốt.\n2. Đưa thẻ mục lục vào hết trong túi.\n3. Gập nắp túi để giữ thẻ bên trong.\n\nĐiều kiện sử dụng\nChỉ dùng thẻ giấy khô.\n\nTải danh mục"
+          },
+          "page_sha256": "1cb9c4008a668b0373f87f045bbee0dcdf98cd0e87b5c0b707fd647d08d1e7a0",
+          "checks": {
+            "exact_step_lines_in_source_order": true,
+            "exact_qualifiers_visible": true,
+            "complete_wording_preserved": true,
+            "approved_cta_visible": true,
+            "visible_format_meets_explicit_requirement": true
+          },
+          "status_at_generation": "awaiting_editor_submission",
+          "source_map": {
+            "title": "strategy_order",
+            "steps": [
+              "P1",
+              "P1",
+              "P1"
+            ],
+            "limitations": [
+              "P1"
+            ],
+            "wording": "P1",
+            "audience": "strategy_brief",
+            "cta": "strategy_brief",
+            "use_case": "strategy_order"
+          }
+        },
+        {
+          "arm": "editor_fixture",
+          "selection": {
+            "heading": "use_case",
+            "layout": "numbered"
+          },
+          "page": {
+            "title": "Sử dụng khi bàn giao ca",
+            "body": "Dành cho: Nhân viên bàn giao quầy mẫu\n\nTình huống sử dụng: Khi bàn giao công việc hoặc bàn giao ca.\n\n1. Mở nắp túi thẻ trong suốt.\n2. Đưa thẻ mục lục vào hết trong túi.\n3. Gập nắp túi để giữ thẻ bên trong.\n\nĐiều kiện sử dụng\nChỉ dùng thẻ giấy khô.\n\nTải danh mục"
+          },
+          "page_sha256": "2aa5a40caf01cbaf09dfb53134488f18203f621cd99e761ec560efd50887734b",
+          "checks": {
+            "exact_step_lines_in_source_order": true,
+            "exact_qualifiers_visible": true,
+            "complete_wording_preserved": true,
+            "approved_cta_visible": true,
+            "visible_format_meets_explicit_requirement": true
+          },
+          "status_at_generation": "awaiting_editor_submission",
+          "source_map": {
+            "title": "strategy_order",
+            "steps": [
+              "P1",
+              "P1",
+              "P1"
+            ],
+            "limitations": [
+              "P1"
+            ],
+            "wording": "P1",
+            "audience": "strategy_brief",
+            "cta": "strategy_brief",
+            "use_case": "strategy_order"
+          }
+        },
+        {
+          "arm": "controlled_model",
+          "selection": {
+            "heading": "use_case",
+            "layout": "checklist"
+          },
+          "page": {
+            "title": "Sử dụng khi bàn giao ca",
+            "body": "Dành cho: Nhân viên bàn giao quầy mẫu\n\nTình huống sử dụng: Khi bàn giao công việc hoặc bàn giao ca.\n\n☐ Mở nắp túi thẻ trong suốt.\n☐ Đưa thẻ mục lục vào hết trong túi.\n☐ Gập nắp túi để giữ thẻ bên trong.\n\nĐiều kiện sử dụng\nChỉ dùng thẻ giấy khô.\n\nTải danh mục"
+          },
+          "page_sha256": "c50da76398276fa29c10498102e7e876f71a618fa7ade5847ce13582ea8e1222",
+          "checks": {
+            "exact_step_lines_in_source_order": true,
+            "exact_qualifiers_visible": true,
+            "complete_wording_preserved": true,
+            "approved_cta_visible": true,
+            "visible_format_meets_explicit_requirement": false
+          },
+          "status_at_generation": "awaiting_editor_submission",
+          "source_map": {
+            "title": "strategy_order",
+            "steps": [
+              "P1",
+              "P1",
+              "P1"
+            ],
+            "limitations": [
+              "P1"
+            ],
+            "wording": "P1",
+            "audience": "strategy_brief",
+            "cta": "strategy_brief",
+            "use_case": "strategy_order"
+          }
+        }
+      ]
+    },
+    {
+      "case_id": "GQ-EN-01",
+      "locale": "en-US",
+      "case_sha256": "72e109c04d01a0acafb2170a9139d3c00c3d7cb394662214217e03178d2e45fb",
+      "projection_sha256": "330bde906205bcaeb49ede02e5dbf8d2e7583d475b1a9ca7326bfa7c116be9ab",
+      "brief": {
+        "purpose": "Help the incoming shift lead check the two samples against the training list.",
+        "buyer_action": "catalogue_download",
+        "editorial_style": "concise",
+        "requirements": [
+          "Keep the two checks on separate lines. Either check can be done first.",
+          "Retain the training-list restriction."
+        ],
+        "exclusions": [
+          "Do not claim the kit verifies a real shipment."
+        ],
+        "acceptance_criteria": [
+          "Readers can identify both independent matches and which list they may use."
+        ],
+        "objective": "Help the incoming shift lead check the two samples against the training list.",
+        "audience": "Sample desk shift leads",
+        "cta": "Download the catalogue"
+      },
+      "arms": [
+        {
+          "arm": "deterministic",
+          "selection": {
+            "heading": "product",
+            "layout": "numbered"
+          },
+          "page": {
+            "title": "Product use guide",
+            "body": "For: Sample desk shift leads\n\nUse case: At a work or shift handover.\n\n1. Match the pack code on the label card to the code on the sample list.\n2. Match the swatch number on the fabric card to the number on the sample list.\n\nConditions of use\nUse the training sample list only.\n\nDownload the catalogue"
+          },
+          "page_sha256": "e0cda452a2347a2b9516e4e1582cb2738c92be62ec6520842a13b69eba88e3bf",
+          "checks": {
+            "exact_step_lines_in_source_order": true,
+            "exact_qualifiers_visible": true,
+            "complete_wording_preserved": true,
+            "approved_cta_visible": true,
+            "visible_format_meets_explicit_requirement": true
+          },
+          "status_at_generation": "awaiting_editor_submission",
+          "source_map": {
+            "title": "strategy_order",
+            "steps": [
+              "P1",
+              "P1"
+            ],
+            "limitations": [
+              "P1"
+            ],
+            "wording": "P1",
+            "audience": "strategy_brief",
+            "cta": "strategy_brief",
+            "use_case": "strategy_order"
+          }
+        },
+        {
+          "arm": "editor_fixture",
+          "selection": {
+            "heading": "use_case",
+            "layout": "checklist"
+          },
+          "page": {
+            "title": "Using this product at shift handover",
+            "body": "For: Sample desk shift leads\n\nUse case: At a work or shift handover.\n\n☐ Match the pack code on the label card to the code on the sample list.\n☐ Match the swatch number on the fabric card to the number on the sample list.\n\nConditions of use\nUse the training sample list only.\n\nDownload the catalogue"
+          },
+          "page_sha256": "595383e9946be80219b12af9cc7048f7fddc290acc8215b4639ff1f8640a48dc",
+          "checks": {
+            "exact_step_lines_in_source_order": true,
+            "exact_qualifiers_visible": true,
+            "complete_wording_preserved": true,
+            "approved_cta_visible": true,
+            "visible_format_meets_explicit_requirement": true
+          },
+          "status_at_generation": "awaiting_editor_submission",
+          "source_map": {
+            "title": "strategy_order",
+            "steps": [
+              "P1",
+              "P1"
+            ],
+            "limitations": [
+              "P1"
+            ],
+            "wording": "P1",
+            "audience": "strategy_brief",
+            "cta": "strategy_brief",
+            "use_case": "strategy_order"
+          }
+        },
+        {
+          "arm": "controlled_model",
+          "selection": {
+            "heading": "use_case",
+            "layout": "checklist"
+          },
+          "page": {
+            "title": "Using this product at shift handover",
+            "body": "For: Sample desk shift leads\n\nUse case: At a work or shift handover.\n\n☐ Match the pack code on the label card to the code on the sample list.\n☐ Match the swatch number on the fabric card to the number on the sample list.\n\nConditions of use\nUse the training sample list only.\n\nDownload the catalogue"
+          },
+          "page_sha256": "595383e9946be80219b12af9cc7048f7fddc290acc8215b4639ff1f8640a48dc",
+          "checks": {
+            "exact_step_lines_in_source_order": true,
+            "exact_qualifiers_visible": true,
+            "complete_wording_preserved": true,
+            "approved_cta_visible": true,
+            "visible_format_meets_explicit_requirement": true
+          },
+          "status_at_generation": "awaiting_editor_submission",
+          "source_map": {
+            "title": "strategy_order",
+            "steps": [
+              "P1",
+              "P1"
+            ],
+            "limitations": [
+              "P1"
+            ],
+            "wording": "P1",
+            "audience": "strategy_brief",
+            "cta": "strategy_brief",
+            "use_case": "strategy_order"
+          }
+        }
+      ]
+    }
+  ]
+}

@@ -15,7 +15,7 @@ from app.knowledge_contracts import Entry
 from app.product_guide_admission import RELEASE
 from c3_fixtures import withdraw
 from knowledge_fixtures import accepted
-from product_guide_fixtures import LIMIT, STEPS, activate_guide, advance_guide, guide_case
+from product_guide_fixtures import LIMIT, STEPS, activate_guide, advance_guide, guide_case, order_assessment
 from test_content_handoff_admission import counts
 from test_registry import PG
 
@@ -152,6 +152,7 @@ def test_recipient_commissions_exactly_one_guide_and_edits_for_independent_qa():
         current = {"expected_qa_revision": edited["revision"], "expected_content_digest": edited["content_digest"]}
         accepted(api.post(doc + "/submit", headers=recipient, json=current))
         decision = {**current, "decision": "approved", "note": "Compared each step, limitation and CTA to the authorized source."}
+        decision["guide_review"] = order_assessment(edited)
         assert api.post(doc + "/review", headers=recipient, json=decision).status_code == 403
         approved = accepted(api.post(doc + "/review", headers=reviewer, json=decision))
         assert approved["status"] == "approved"

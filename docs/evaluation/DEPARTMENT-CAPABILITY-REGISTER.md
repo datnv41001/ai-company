@@ -1,5 +1,7 @@
 # Sổ năng lực phòng Marketing
 
+**Content Production từ Strategy Work Order.** Content lead đọc được nhiệm vụ có CTA, placement và giới hạn claim. WF-13 tạo copy/SEO cho landing page. Ca thử trên trang sản phẩm chưa có task contract để worker thực hiện đúng guide; đường qua agency cũng có ranh giới riêng. Researcher có thể đối chiếu bản Studio đã sửa và notes gốc từ cùng run trong gói phát triển tổng hợp. [Ma trận và phép thử](content-handoff/README.md)
+
 **AMC-R67-01 / R67-02 · candidate.** Marketing Researcher có thể trình reviewer phân loại một câu hướng dẫn trung lập trong danh mục VI/EN. Hai lời hứa giao nhanh trong ca RFQ đều bị chặn trước khi ký. Khả năng thu thập nghiên cứu, hiệu quả mô hình và thời gian tiết kiệm chưa được đo. [Finding, bằng chứng và giới hạn nghiệp vụ](research-instruction/README.md)
 
 **RS-02 · Research và Strategy.** Runtime hiện hữu ghép dữ kiện và điều kiện đã duyệt, ghim KPI appointment và giới hạn handoff theo người nhận. Replay cho thấy một lời hứa giao nhanh vẫn nằm ở phần định vị của bản Studio ngoại tuyến. Câu hỏi giúp editor chọn giữa hai phương án hiện mới được minh họa bằng fixture kiểm soát; chưa đo cải thiện năng lực model hoặc thời gian biên tập. [Bảng theo brief và giới hạn QA](rs02/README.md)

@@ -1,0 +1,218 @@
+{
+  "study": "controlled upstream WF-03, no downstream Content worker",
+  "lineage": {
+    "scope": {
+      "tenant_id": "5b6a7709-1e58-4371-a4fc-73710682c4e8",
+      "client_id": "20f07c84-d33c-42bd-b883-c789d40e9fd0",
+      "brand_id": "6461d0db-df87-4e2b-9a9a-d7774902a54f",
+      "campaign_id": "0f844529-729a-45ff-bc4d-8f051df526ba"
+    },
+    "document": "a4a07da3-1bf0-46e7-a4c0-0cf7392cd3ba",
+    "revision": 2,
+    "preview_digest": "e78b13363a7cc2f47bd3ebe3aef9c1c13fa5fefed5022736e14091faca459b02",
+    "brief": "8a595b12-9f13-5826-b6a1-1a57eb930c1d",
+    "run": "c034c322-901a-44e9-9c6b-7bd8c7dbfe75",
+    "manifest": {
+      "id": "435090dd-9173-4fdf-94ca-4f515f04ce95",
+      "digest": "f7dfd03548877a0335e7203464ea205d7858bb17e791fa1c67763c71f5a2495c"
+    },
+    "qa_receipt": "2b7d1419-d8c0-4488-8096-ac9ef35c454f",
+    "release": "cf9078f2aa283cc7a9e9c273abd3077338c94ebe0f51a65e0a30c33254d94969"
+  },
+  "handoff_receipt": "79bf2c30-f2cd-4e58-8349-3407bb029ef9",
+  "strategy_attempts": {
+    "director": "0d36c20d-7fa3-45a0-a06e-47f18d7c509e",
+    "research": "d75e3f88-d9e5-4053-9fe1-cfed2e2438f3",
+    "strategy": "58af7e87-a594-45f7-92b7-6725b75cf5a1"
+  },
+  "recipient_order": {
+    "recipient": "Content lead",
+    "asset_type": "web_use_guide",
+    "asset": "Product-page use guide",
+    "purpose": "Explain a use case on the product page",
+    "placement": "web",
+    "option": "explain_use",
+    "objective": "Choose a useful product guide for a shift handover.",
+    "audience": "Shift supervisors",
+    "buyer_persona": "Shift supervisors",
+    "message": "The passive tray has two separate compartments. For indoor sorting only.",
+    "claim_limits": [
+      "Use the complete product declaration with its qualifiers.",
+      "Buyer interpretation is limited to the recorded situation."
+    ],
+    "approval": "Internal drafting only. A new asset requires its own independent QA and channel approval.",
+    "brief": {
+      "cta": "Download the catalogue",
+      "purpose": "Choose a useful product guide for a shift handover.",
+      "audience": "Shift supervisors",
+      "objective": "Choose a useful product guide for a shift handover.",
+      "exclusions": [
+        "automatic worker tracking"
+      ],
+      "buyer_action": "catalogue_download",
+      "requirements": [
+        "Prepare a practical guide for one shift handover."
+      ],
+      "editorial_style": "concise",
+      "acceptance_criteria": [
+        "Tie the proposed asset to an observed task."
+      ]
+    },
+    "guidance": {
+      "direction": "Show how to use the product in the reviewed situation.",
+      "situation": "At a work or shift handover.",
+      "sample_scope": "The selected source passage informs this handover only. Wider demand or performance remains unverified."
+    },
+    "measurement": {
+      "status": "planned_only",
+      "execution_authorized": false
+    }
+  },
+  "internal_task_api": {
+    "counter_terms_card": {
+      "status": 422,
+      "rejected_fields": [
+        [
+          "body",
+          "intent",
+          "StoryboardIntent",
+          "deliverable_type"
+        ],
+        [
+          "body",
+          "intent",
+          "CommissionIntent",
+          "deliverable_type"
+        ],
+        [
+          "body",
+          "intent",
+          "ActionIntent",
+          "deliverable_type"
+        ],
+        [
+          "body",
+          "intent",
+          "TaskIntent",
+          "deliverable_type"
+        ]
+      ]
+    },
+    "counter_use_card": {
+      "status": 422,
+      "rejected_fields": [
+        [
+          "body",
+          "intent",
+          "StoryboardIntent",
+          "deliverable_type"
+        ],
+        [
+          "body",
+          "intent",
+          "CommissionIntent",
+          "deliverable_type"
+        ],
+        [
+          "body",
+          "intent",
+          "ActionIntent",
+          "deliverable_type"
+        ],
+        [
+          "body",
+          "intent",
+          "TaskIntent",
+          "deliverable_type"
+        ]
+      ]
+    },
+    "web_terms_panel": {
+      "status": 422,
+      "rejected_fields": [
+        [
+          "body",
+          "intent",
+          "StoryboardIntent",
+          "deliverable_type"
+        ],
+        [
+          "body",
+          "intent",
+          "CommissionIntent",
+          "deliverable_type"
+        ],
+        [
+          "body",
+          "intent",
+          "ActionIntent",
+          "deliverable_type"
+        ],
+        [
+          "body",
+          "intent",
+          "TaskIntent",
+          "deliverable_type"
+        ]
+      ]
+    },
+    "web_use_guide": {
+      "status": 422,
+      "rejected_fields": [
+        [
+          "body",
+          "intent",
+          "StoryboardIntent",
+          "deliverable_type"
+        ],
+        [
+          "body",
+          "intent",
+          "CommissionIntent",
+          "deliverable_type"
+        ],
+        [
+          "body",
+          "intent",
+          "ActionIntent",
+          "deliverable_type"
+        ],
+        [
+          "body",
+          "intent",
+          "TaskIntent",
+          "deliverable_type"
+        ]
+      ]
+    }
+  },
+  "same_key_concurrent": [
+    422,
+    422
+  ],
+  "original_task_on_wf13": {
+    "status": 409,
+    "detail": "Loại bản giao của brief khác quy trình đã chọn. Chọn quy trình đúng hoặc làm rõ yêu cầu."
+  },
+  "before": {
+    "workforce_runs": 1,
+    "action_requests": 0,
+    "ledger_events": 6,
+    "other_commands": 38,
+    "tasks": 1,
+    "manifests": 1
+  },
+  "after": {
+    "workforce_runs": 1,
+    "action_requests": 0,
+    "ledger_events": 6,
+    "other_commands": 38,
+    "tasks": 1,
+    "manifests": 1
+  },
+  "content_task": null,
+  "content_manifest": null,
+  "content_run": null,
+  "content_asset": null,
+  "content_qa": null
+}

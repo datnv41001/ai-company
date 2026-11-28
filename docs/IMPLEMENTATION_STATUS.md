@@ -1,5 +1,7 @@
 # Trạng thái hiện thực và nghiệm thu V1
 
+**Strategy → Content.** Vòng AMC-CONTENT-HANDOFF-01 tái hiện được work order nội bộ đã ký. API từ chối nhận bốn loại guide/panel/card vào Workforce. Trạng thái hiện tại dừng ở work order; chưa có Content execution, Content QA, practitioner acceptance, publication hay business outcome cho đường này. [Bằng chứng và điều kiện để tiếp tục](evaluation/content-handoff/README.md)
+
 **AMC-RES-QA-01.** Candidate bổ sung quyết định phân loại thủ tục trên đúng span, reviewer, mandate và revision của Research Studio. Mỗi lần đọc để quyết định tiếp đều đối chiếu quyền và nguồn hiện tại. Đánh giá một kế hoạch, ghi nhận đã nghiên cứu, kiểm chứng dữ kiện, phê duyệt Strategy và giao Content là năm quyết định riêng. [Kiểm thử và giới hạn](evaluation/research-instruction/README.md)
 
 **Vòng #64.** Studio chuẩn bị lệnh soạn Content nội bộ từ quyết định Strategy có biên nhận. Phạm vi hiện tại là commission in-house, với nguồn và người nhận đủ quyền trên cùng manifest. Bản thực thi, nghiệp vụ thương mại và kết quả thị trường vẫn chờ các cổng riêng. [Luồng, giới hạn và bằng chứng](evaluation/round64/README.md)

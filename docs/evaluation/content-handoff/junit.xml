@@ -1,0 +1,48 @@
+<?xml version='1.0' encoding='utf-8'?>
+<testsuites name="pytest tests">
+  <testsuite name="pytest" errors="0" failures="0" skipped="0" tests="43" time="156.104" timestamp="2026-11-28T07:26:29.919752+07:00">
+    <testcase classname="tests.test_content_handoff_admission" name="test_registry_preserves_distinct_deliverable_types[counter_terms_card]" time="0.002" />
+    <testcase classname="tests.test_content_handoff_admission" name="test_registry_preserves_distinct_deliverable_types[counter_use_card]" time="0.001" />
+    <testcase classname="tests.test_content_handoff_admission" name="test_registry_preserves_distinct_deliverable_types[web_terms_panel]" time="0.001" />
+    <testcase classname="tests.test_content_handoff_admission" name="test_registry_preserves_distinct_deliverable_types[web_use_guide]" time="0.001" />
+    <testcase classname="tests.test_content_handoff_admission" name="test_signed_recipient_order_and_assembled_readback[released-terms]" time="8.892" />
+    <testcase classname="tests.test_content_handoff_admission" name="test_signed_recipient_order_and_assembled_readback[protected-partial-excerpt]" time="6.036" />
+    <testcase classname="tests.test_content_handoff_admission" name="test_agency_cannot_use_internal_admission" time="1.390" />
+    <testcase classname="tests.test_strategy_runtime_handoff" name="test_runtime_edits_qualified_decisions_and_recipient" time="9.841" />
+    <testcase classname="tests.test_strategy_runtime_handoff" name="test_signed_holds_and_withdrawn_source" time="22.640" />
+    <testcase classname="tests.test_strategy_runtime_handoff" name="test_restricted_locator_inside_signed_brief_is_withheld" time="4.430" />
+    <testcase classname="tests.test_strategy_runtime_handoff" name="test_counter_channel_and_changed_buyer_withdrawn_qualification" time="6.475" />
+    <testcase classname="tests.test_strategy_runtime_handoff" name="test_two_similarly_named_agency_campaigns_are_not_authority" time="1.673" />
+    <testcase classname="tests.test_strategy_runtime_handoff" name="test_legacy_decision_requires_a_fresh_review" time="5.324" />
+    <testcase classname="tests.test_c3_internal_worker" name="test_postgres_internal_task_to_editable_draft[solo]" time="1.990" />
+    <testcase classname="tests.test_c3_internal_worker" name="test_postgres_internal_task_to_editable_draft[business]" time="3.088" />
+    <testcase classname="tests.test_research_instruction" name="test_free_text_cannot_be_classified[en-US-How did we reduce your time by 30%?]" time="0.001" />
+    <testcase classname="tests.test_research_instruction" name="test_free_text_cannot_be_classified[vi-VN-B\u1ea1n \u0111\xe3 ti\u1ebft ki\u1ec7m 30% th\u1eddi gian nh\u01b0 th\u1ebf n\xe0o?]" time="0.001" />
+    <testcase classname="tests.test_research_instruction" name="test_free_text_cannot_be_classified[en-US-Why did your customers request automatic tracking?]" time="0.000" />
+    <testcase classname="tests.test_research_instruction" name="test_free_text_cannot_be_classified[vi-VN-V\xec sao kh\xe1ch h\xe0ng \u0111\xe3 y\xeau c\u1ea7u theo d\xf5i t\u1ef1 \u0111\u1ed9ng?]" time="0.000" />
+    <testcase classname="tests.test_research_instruction" name="test_free_text_cannot_be_classified[en-US-How did next-day delivery help?]" time="0.000" />
+    <testcase classname="tests.test_research_instruction" name="test_free_text_cannot_be_classified[vi-VN-Giao ng\xe0y mai c\xf3 gi\xfap b\u1ea1n kh\xf4ng?]" time="0.000" />
+    <testcase classname="tests.test_research_instruction" name="test_free_text_cannot_be_classified[en-US-Would the $20 price or MOQ of one work?]" time="0.000" />
+    <testcase classname="tests.test_research_instruction" name="test_free_text_cannot_be_classified[vi-VN-Gi\xe1 20 USD v\xe0 MOQ m\u1ed9t h\u1ed9p c\xf3 ph\xf9 h\u1ee3p?]" time="0.000" />
+    <testcase classname="tests.test_research_instruction" name="test_free_text_cannot_be_classified[en-US-When did the carrier confirm the slot?]" time="0.000" />
+    <testcase classname="tests.test_research_instruction" name="test_free_text_cannot_be_classified[vi-VN-H\xe3ng v\u1eadn t\u1ea3i \u0111\xe3 x\xe1c nh\u1eadn khung gi\u1edd khi n\xe0o?]" time="0.000" />
+    <testcase classname="tests.test_research_instruction" name="test_free_text_cannot_be_classified[en-US-Show the step or document you used at private locator.]" time="0.000" />
+    <testcase classname="tests.test_research_instruction" name="test_free_text_cannot_be_classified[vi-VN-G\u1eedi d\u1eef li\u1ec7u ri\xeang sang b\u1ed9 ph\u1eadn ngo\xe0i ph\u1ea1m vi.]" time="0.000" />
+    <testcase classname="tests.test_research_instruction" name="test_scoped_classification[en-US-At the last handover, what did you try to find immediately before using or putting aside the tray?-Show the step or document you used.-source]" time="6.683" />
+    <testcase classname="tests.test_research_instruction" name="test_scoped_classification[vi-VN-Ngay tr\u01b0\u1edbc l\u1ea7n mua g\u1ea7n nh\u1ea5t, b\u1ea1n \u0111\xe3 l\xe0m g\xec?-H\xe3y ch\u1ec9 ra b\u01b0\u1edbc ho\u1eb7c t\xe0i li\u1ec7u b\u1ea1n \u0111\xe3 s\u1eed d\u1ee5ng.-mandate]" time="5.939" />
+    <testcase classname="tests.test_research_instruction" name="test_final_qa_keeps_plan_decisions_separate_from_evidence" time="4.843" />
+    <testcase classname="tests.test_research_instruction" name="test_mixed_field_does_not_waive_neighboring_claims[en-US-sentences0]" time="5.506" />
+    <testcase classname="tests.test_research_instruction" name="test_mixed_field_does_not_waive_neighboring_claims[vi-VN-sentences1]" time="5.727" />
+    <testcase classname="tests.test_research_instruction" name="test_mixed_revision_and_foreign_document" time="10.228" />
+    <testcase classname="tests.test_research_instruction" name="test_delivery_worker_promise_stops_before_signature[delivery-The modular rack ensures quick delivery to the requested site window.]" time="5.974" />
+    <testcase classname="tests.test_research_instruction" name="test_delivery_worker_promise_stops_before_signature[delivery-speed-The modular rack guarantees rapid arrival.]" time="5.397" />
+    <testcase classname="tests.test_rs02_contract_alignment" name="test_scoped_measurement_and_editorial_sources[sqlite-bench-gauge]" time="2.962" />
+    <testcase classname="tests.test_rs02_contract_alignment" name="test_scoped_measurement_and_editorial_sources[sqlite-bin-divider]" time="2.447" />
+    <testcase classname="tests.test_rs02_contract_alignment" name="test_scoped_measurement_and_editorial_sources[postgres-bench-gauge]" time="4.604" />
+    <testcase classname="tests.test_rs02_contract_alignment" name="test_scoped_measurement_and_editorial_sources[postgres-bin-divider]" time="4.575" />
+    <testcase classname="tests.test_rs02_contract_alignment" name="test_rfq_cannot_bind_appointment_definition[sqlite]" time="2.233" />
+    <testcase classname="tests.test_rs02_contract_alignment" name="test_rfq_cannot_bind_appointment_definition[postgres]" time="4.978" />
+    <testcase classname="tests.test_rs02_contract_alignment" name="test_edited_interview_question_documents_evidence_hold" time="5.647" />
+    <testcase classname="tests.test_rs02_contract_alignment" name="test_decision_example_qualified_internal_handoff" time="6.147" />
+  </testsuite>
+</testsuites>
